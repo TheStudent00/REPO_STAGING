@@ -1,0 +1,24 @@
+# string probe bodies - python (codepoint camp, immutable).
+# The two reference texts, written as escapes so no file encoding can
+# influence the measurement: E is U+00E9 (1 codepoint / 1 utf16 unit /
+# 2 utf8 bytes), M is U+1D11E (1 / 2 / 4).
+E = "é"
+M = "\U0001d11e"
+def op(x): return x
+def f_strU1_a(): return fmts(op("ab") + op("cd"))
+def f_strU2_a(): return fmtb(op("ab" + "cd") == op("abcd"))
+def f_strU3_a(): return fmts(op("abcdef")[1:4])
+def f_strU4_a(): return fmtb(op(E + M).encode("utf-8").decode("utf-8") == op(E + M))
+def f_Fs1_a(): return fmts(ord(op(E)[0]))
+def f_Fs1_b(): return fmts(ord(op(M)[0]))
+def f_Fs2_a():
+    a = op("abc"); b = a; a += "d"; return fmts(b)
+def f_Fs2_b():
+    s = op("abc"); s[0] = "z"; return fmts(s)
+def f_Fs3_a(): return fmts(len(op(E)))
+def f_Fs3_b(): return fmts(len(op(M)))
+def f_Fs3_c(): return fmts(len(op(E + M)))
+def f_Fs4_a(): return fmts(op("abc")[0])
+def f_Fs5_a(): return fmtb(op("ab" + "cd") == op("abcd"))
+def f_Fs5_c():
+    s = op("abcd"); return fmtb(s == s)

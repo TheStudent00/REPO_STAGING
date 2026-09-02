@@ -1,0 +1,28 @@
+
+sp.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <sp_i32>:
+   0:	cmp    %esi,%edi
+   2:	setl   %cl
+   5:	setg   %al
+   8:	sub    %cl,%al
+   a:	ret
+   b:	nopl   0x0(%rax,%rax,1)
+
+0000000000000010 <sp_f64>:
+  10:	ucomisd %xmm1,%xmm0
+  14:	setp   %al
+  17:	setne  %cl
+  1a:	or     %al,%cl
+  1c:	add    %cl,%cl
+  1e:	ucomisd %xmm1,%xmm0
+  22:	movzbl %cl,%eax
+  25:	mov    $0x1,%ecx
+  2a:	cmovbe %eax,%ecx
+  2d:	ucomisd %xmm0,%xmm1
+  31:	mov    $0xff,%eax
+  36:	cmovbe %ecx,%eax
+  39:	ret

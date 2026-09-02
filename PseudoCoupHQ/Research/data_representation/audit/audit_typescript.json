@@ -1,0 +1,749 @@
+{
+ "language": "typescript",
+ "layer": 2,
+ "what": "the load-audit: can each layer-2 representation hold layer-1 content",
+ "evidence": "audit/raw/l2_typescript.txt, produced by audit/lanes/l2_typescript.sh",
+ "cell_count": 26,
+ "probe_count": 109,
+ "verdict_counts": {
+  "LOADS": 23,
+  "PARTIAL": 1,
+  "REFUSES-behavioral": 2,
+  "NOT-RUN": 0
+ },
+ "form_verdicts": {
+  "nothing": "held",
+  "truth": "held",
+  "whole": "held",
+  "fractional": "held",
+  "text": "held",
+  "sequence": "held",
+  "keyed": "held",
+  "nesting": "held",
+  "identity": "held"
+ },
+ "cells": [
+  {
+   "cell": "nothing.null",
+   "form": "nothing",
+   "rep": "null",
+   "kind": "literal",
+   "note": "the value representing a deliberate absence.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "null": {
+     "result": "null",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nothing.undefined",
+   "form": "nothing",
+   "rep": "undefined",
+   "kind": "literal",
+   "note": "the value a variable holds before assignment; a second absence value distinct from null.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "null": {
+     "result": "undefined",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nothing.void",
+   "form": "nothing",
+   "rep": "void",
+   "kind": "literal",
+   "note": "the type used for absence of a return value; under strict null checks the only value assignable to it is undefined.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "null": {
+     "result": "undefined",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "truth.boolean",
+   "form": "truth",
+   "rep": "boolean",
+   "kind": "literal",
+   "note": "two values, no numeric side at the type level (though javascript coerces underneath).",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "true": {
+     "result": "true",
+     "judgement": "loaded"
+    },
+    "false": {
+     "result": "false",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "whole.number",
+   "form": "whole",
+   "rep": "number",
+   "kind": "literal",
+   "note": "IEEE double; every plain integer literal is parsed into this holder, exact only up to 2^53 (the p53_plus1 and u64max edges erode).",
+   "verdict": "PARTIAL",
+   "why": "i64max eroded (9223372036854776000); i64max_plus1 eroded (9223372036854776000); p53_plus1 eroded (9007199254740992); u64max eroded (18446744073709552000)",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854776000",
+     "judgement": "eroded"
+    },
+    "i64max_plus1": {
+     "result": "9223372036854776000",
+     "judgement": "eroded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740992",
+     "judgement": "eroded"
+    },
+    "u64max": {
+     "result": "18446744073709552000",
+     "judgement": "eroded"
+    }
+   }
+  },
+  {
+   "cell": "whole.bigint",
+   "form": "whole",
+   "rep": "bigint",
+   "kind": "literal",
+   "note": "arbitrary-precision integer, a holder separate from number; compiled with --target es2020 so the n-suffixed literal is legal.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "9223372036854775808",
+     "judgement": "loaded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "18446744073709551615",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "fractional.number",
+   "form": "fractional",
+   "rep": "number",
+   "kind": "literal",
+   "note": "IEEE double, the sole fractional holder typescript offers.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_1_5": {
+     "result": "1.5",
+     "judgement": "loaded"
+    },
+    "base_pi": {
+     "result": "3.141592653589793",
+     "judgement": "loaded"
+    },
+    "negzero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "nan": {
+     "result": "NaN",
+     "judgement": "loaded"
+    },
+    "inf": {
+     "result": "Infinity",
+     "judgement": "loaded"
+    },
+    "point1": {
+     "result": "0.1",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.string",
+   "form": "text",
+   "rep": "string",
+   "kind": "literal",
+   "note": "a run of utf-16 code units presented as text; the default text holder.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.string[] (codepoint split)",
+   "form": "text",
+   "rep": "string[] (codepoint split)",
+   "kind": "constructor",
+   "note": "split by unicode codepoint via the string iterator, not by utf-16 code unit; recovers the clef as one element instead of a surrogate pair.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.Uint8Array",
+   "form": "text",
+   "rep": "Uint8Array",
+   "kind": "constructor",
+   "note": "holds text only as encoded utf-8 bytes; the codepoints are gone until decoded.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.array",
+   "form": "sequence",
+   "rep": "array",
+   "kind": "literal",
+   "note": "growable ordered run; element kind widens to unknown/any when the values differ.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "[1,2,3]",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "[\"a\",\"b\"]",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "[1,\"two\",3,true,null]",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "[9223372036854776000]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.readonly tuple",
+   "form": "sequence",
+   "rep": "readonly tuple",
+   "kind": "literal",
+   "note": "fixed length and a declared kind per position, checked at compile time; reassigning an element refuses under readonly.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "[1,2,3]",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "[\"a\",\"b\"]",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "[1,\"two\",3,true,null]",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "[9223372036854776000]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.Set",
+   "form": "sequence",
+   "rep": "Set",
+   "kind": "constructor",
+   "note": "unordered, no duplicates; kept in the table because that loss is the finding.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "[1,2,3]",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "[\"a\",\"b\"]",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "[1,\"two\",3,true,null]",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "[9223372036854776000]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.Int32Array",
+   "form": "sequence",
+   "rep": "Int32Array",
+   "kind": "constructor",
+   "note": "fixed-width 32-bit signed integer elements; every value is coerced through ToInt32, so overflow and non-numeric input wrap or zero out silently instead of refusing.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "[1,2,3]",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "[0,0]",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "[1,0,3,1,0]",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "[0]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.BigInt64Array",
+   "form": "sequence",
+   "rep": "BigInt64Array",
+   "kind": "constructor",
+   "note": "fixed-width 64-bit holder built from bigint elements; reaches exactly the i64 edges the census flags, and refuses non-bigint input at run time with a TypeError.",
+   "verdict": "REFUSES-behavioral",
+   "why": "strs refused (<aborted>); mixed refused (<aborted>)",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "[\"1\",\"2\",\"3\"]",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "<aborted>",
+     "judgement": "refused"
+    },
+    "mixed": {
+     "result": "<aborted>",
+     "judgement": "refused"
+    },
+    "bigint": {
+     "result": "[\"-9223372036854775808\"]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.object literal",
+   "form": "keyed",
+   "rep": "object literal",
+   "kind": "literal",
+   "note": "name to element; the engine keeps insertion order for string keys though the index-signature type does not promise it.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "{}",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "{\"a\":1,\"b\":2,\"c\":3}",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "{\"1\":\"string-one-key\",\"b\":2}",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "{\"\":\"empty-string key\"}",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "{\"outer\":{\"inner\":[1,2]}}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.Map",
+   "form": "keyed",
+   "rep": "Map",
+   "kind": "constructor",
+   "note": "keys of any kind, not just strings, and guaranteed insertion order.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "[[\"a\",1],[\"b\",2],[\"c\",3]]",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "[[\"1\",\"string-one-key\"],[\"b\",2]]",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "[[\"\",\"empty-string key\"]]",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "[[\"outer\",{\"inner\":[1,2]}]]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.Record<string,T>",
+   "form": "keyed",
+   "rep": "Record<string,T>",
+   "kind": "literal",
+   "note": "the mapped-type spelling of the same object-literal holder; a compile-time name for the shape, not a different run-time thing.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "{}",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "{\"a\":1,\"b\":2,\"c\":3}",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "{\"1\":\"string-one-key\",\"b\":2}",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "{\"\":\"empty-string key\"}",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "{\"outer\":{\"inner\":[1,2]}}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.interface-typed object",
+   "form": "keyed",
+   "rep": "interface-typed object",
+   "kind": "literal",
+   "note": "names fixed at compile time by a declared interface; the odd keys still fit since typescript property names may be any string or numeric literal, quoted in the object literal.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "{}",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "{\"a\":1,\"b\":2,\"c\":3}",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "{\"1\":\"string-one-key\",\"b\":2}",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "{\"\":\"empty-string key\"}",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "{\"outer\":{\"inner\":[1,2]}}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.class instance",
+   "form": "keyed",
+   "rep": "class instance",
+   "kind": "constructor",
+   "note": "names fixed when the class is declared, not when data arrives; quoted numeric and empty-string property names are legal in a class body, unlike a plain identifier.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "{}",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "{\"a\":1,\"b\":2,\"c\":3}",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "{\"1\":\"string-one-key\",\"b\":2}",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "{\"\":\"empty-string key\"}",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "{\"outer\":{\"inner\":[1,2]}}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.nested array",
+   "form": "nesting",
+   "rep": "nested array",
+   "kind": "literal",
+   "note": "nesting by repeating the same holder; every level carries the same declared element kind unless widened.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "[[1,2],[3,4]]",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "{\"outer\":{\"inner\":[1,2]}}",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "[1,[2,{\"k\":\"t\"}],true,null]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.nested object",
+   "form": "nesting",
+   "rep": "nested object",
+   "kind": "literal",
+   "note": "nesting by repeating the object-literal holder; each level's fields are fixed at the point the type is written.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "{\"a\":[[1,2],[3,4]]}",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "{\"outer\":{\"inner\":[1,2]}}",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "{\"a\":[1,{\"b\":2}],\"c\":true}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.L1Node union (unknown-typed)",
+   "form": "nesting",
+   "rep": "L1Node union (unknown-typed)",
+   "kind": "constructor",
+   "note": "a hand-written recursive union; the one typescript holder whose declared kind matches every layer-1 form at once, which mixed nesting needs.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "[[1,2],[3,4]]",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "{\"outer\":{\"inner\":[1,2]}}",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "[1,[2,{\"k\":\"t\"}],true,null]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.object references in an array",
+   "form": "identity",
+   "rep": "object references in an array",
+   "kind": "literal",
+   "note": "javascript objects and arrays are held by reference, so two positions can name one object.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "shared": {
+     "result": "shared",
+     "judgement": "loaded"
+    },
+    "diamond": {
+     "result": "same",
+     "judgement": "loaded"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.spread-copy holder",
+   "form": "identity",
+   "rep": "spread-copy holder",
+   "kind": "constructor",
+   "note": "built by copying (spread / structuredClone) rather than referencing; the contrast cell against the reference holders \u2014 expect copied/distinct/no-cycle throughout.",
+   "verdict": "REFUSES-behavioral",
+   "why": "shared not-held (copied); diamond not-held (distinct); cycle not-held (no-cycle)",
+   "probes": {
+    "shared": {
+     "result": "copied",
+     "judgement": "not-held"
+    },
+    "diamond": {
+     "result": "distinct",
+     "judgement": "not-held"
+    },
+    "cycle": {
+     "result": "no-cycle",
+     "judgement": "not-held"
+    }
+   }
+  },
+  {
+   "cell": "identity.Map holding one object twice",
+   "form": "identity",
+   "rep": "Map holding one object twice",
+   "kind": "constructor",
+   "note": "the same object reachable under two keys, an alternative shared-node holder to the array of references.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "shared": {
+     "result": "shared",
+     "judgement": "loaded"
+    },
+    "diamond": {
+     "result": "same",
+     "judgement": "loaded"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  }
+ ]
+}

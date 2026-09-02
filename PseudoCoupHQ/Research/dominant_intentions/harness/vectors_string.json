@@ -1,0 +1,488 @@
+{
+  "schema": "dominant_intentions/harness/vectors v2",
+  "generated": "2026-08-14",
+  "object_key": "string",
+  "run_prefix": "str",
+  "title": "string census verification run",
+  "source_page": "Research/dominant_intentions/census_string.md",
+  "note": "Every structure and operation fact on string's census page as executable vectors; the border facts filed away there (parsing, printing, ordering, interpolation) are OUT of scope. Two reference texts carry the unit fracture: 'e-acute' U+00E9 (1 codepoint / 1 utf16 unit / 2 utf8 bytes) and the musical G-clef U+1D11E (1 / 2 / 4). Both are written as escapes wherever a language spells escapes conveniently, so no file encoding can influence a measurement.",
+  "conventions": {
+    "output_line": "FACT_ID.PROBE|RESULT",
+    "expectation_alphabet": {
+      "<any>": "any result acceptable -- the language guarantees nothing here",
+      "<raise:*>": "must refuse at runtime, by any name",
+      "<compile-error>": "the build refused the program -- for F-s2 and F-s4 this is not a failure but the guarantee itself",
+      "<aborted>": "the program built, then died"
+    }
+  },
+  "languages": [
+    "python",
+    "typescript",
+    "java",
+    "csharp",
+    "go",
+    "rust",
+    "rust-release",
+    "ruby",
+    "php",
+    "kotlin",
+    "cpp",
+    "dart",
+    "dart-web",
+    "swift"
+  ],
+  "run_order": [
+    "python",
+    "ruby",
+    "php",
+    "typescript",
+    "go",
+    "cpp",
+    "java",
+    "rust",
+    "rust-release",
+    "kotlin",
+    "dart",
+    "dart-web"
+  ],
+  "template_of": {
+    "rust-release": "rust",
+    "dart-web": "dart"
+  },
+  "language_status": {
+    "python": "active",
+    "typescript": "active (tsc -> node)",
+    "java": "active",
+    "csharp": "blocked-deliberate (no toolchain in the container; not pursued)",
+    "go": "active",
+    "rust": "active (debug build)",
+    "rust-release": "active (-O build; record-both-modes)",
+    "ruby": "active",
+    "php": "active",
+    "kotlin": "active",
+    "cpp": "active",
+    "dart": "active (native)",
+    "dart-web": "active (dart compile js -> node)",
+    "swift": "not run (bonus language, outside the census's 11 targets)"
+  },
+  "facts": [
+    {
+      "fact_id": "str-U1",
+      "object": "string",
+      "owner": "operation",
+      "kind": "universal",
+      "description": "Concatenation produces the joined text.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_strU1_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "abcd"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "str-U2",
+      "object": "string",
+      "owner": "operation",
+      "kind": "universal",
+      "description": "A CONTENT comparison exists everywhere, spelling aside (==, .equals, eql). Probed with the language's own content comparison over a string built at run time, so no interning can answer it early.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_strU2_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "true"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "str-U3",
+      "object": "string",
+      "owner": "operation",
+      "kind": "universal",
+      "description": "Substring/slice by the language's OWN unit exists. Probed over ascii, where all three units coincide, so this checks that the operation exists and not which unit it counts.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_strU3_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "bcd"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "str-U4",
+      "object": "string",
+      "owner": "operation",
+      "kind": "universal",
+      "description": "A round trip through bytes with a NAMED encoding (utf-8) is exact, for text containing both reference characters.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_strU4_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "true"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "F-s1",
+      "object": "string",
+      "owner": "structure",
+      "kind": "fracture",
+      "description": "What ONE POSITION holds -- the unit. Three camps: utf-16 code unit (java csharp kotlin typescript dart), byte (go rust php cpp), codepoint (python; the census does not place ruby, and this run does). Probed as the NUMERIC value of position 0 of each reference text. For 'e-acute' the codepoint and utf16 camps agree (233) and the byte camp says 195; for the musical-G-clef character the three separate cleanly: 119070 codepoint, 55348 utf16 (a high surrogate), 240 byte. The census does not place ruby among the three camps, so ruby's cell RECORDS rather than checks; its answer is carried into the log as a proposed census addition.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs1_a()"
+          }
+        },
+        {
+          "probe_id": "b",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs1_b()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "233",
+          "b": "119070"
+        },
+        "by_language": {
+          "java": {
+            "a": "233",
+            "b": "55348"
+          },
+          "kotlin": {
+            "a": "233",
+            "b": "55348"
+          },
+          "typescript": {
+            "a": "233",
+            "b": "55348"
+          },
+          "dart": {
+            "a": "233",
+            "b": "55348"
+          },
+          "dart-web": {
+            "a": "233",
+            "b": "55348"
+          },
+          "go": {
+            "a": "195",
+            "b": "240"
+          },
+          "rust": {
+            "a": "195",
+            "b": "240"
+          },
+          "rust-release": {
+            "a": "195",
+            "b": "240"
+          },
+          "php": {
+            "a": "195",
+            "b": "240"
+          },
+          "cpp": {
+            "a": "195",
+            "b": "240"
+          },
+          "python": {
+            "a": "233",
+            "b": "119070"
+          },
+          "ruby": {
+            "a": "<any>",
+            "b": "<any>"
+          }
+        }
+      }
+    },
+    {
+      "fact_id": "F-s2",
+      "object": "string",
+      "owner": "structure",
+      "kind": "fracture",
+      "description": "Whether a string can change IN PLACE. Immutable-value camp: python java csharp go kotlin dart typescript php. Mutable-object camp: ruby, cpp (std::string), rust (String grows in place; &str is the immutable view). Probe a is the one that matters -- two names on one string, edited through the first, read through the second -- and it is the shared-mutation question the census flags as the residue. Probe b is assignment into a position. Both live in their own programs because for several languages the answer is a REFUSAL at build time, which is itself the guarantee: rust's borrow checker forbids editing while a second name reads (probe a), and go, java, kotlin, dart and typescript have no position-assignment at all (probe b). php's expectation on probe b is the census's own placement of php in the immutable-value camp: the string does not change.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs2_a()"
+          },
+          "program": "mutshare"
+        },
+        {
+          "probe_id": "b",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs2_b()"
+          },
+          "program": "mutpos"
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "abc",
+          "b": "<compile-error>"
+        },
+        "by_language": {
+          "ruby": {
+            "a": "abcd",
+            "b": "zbc"
+          },
+          "cpp": {
+            "a": "abcd",
+            "b": "zbc"
+          },
+          "rust": {
+            "a": "<compile-error>"
+          },
+          "rust-release": {
+            "a": "<compile-error>"
+          },
+          "python": {
+            "b": "<raise:TypeError>"
+          },
+          "php": {
+            "b": "abc"
+          }
+        }
+      }
+    },
+    {
+      "fact_id": "F-s3",
+      "object": "string",
+      "owner": "operation",
+      "kind": "fracture",
+      "description": "What `length` counts -- the F-s1 camps seen through one operation. 'e-acute' is 1 codepoint / 1 utf16 unit / 2 utf8 bytes; the musical G-clef is 1 / 2 / 4; the two together are 2 / 3 / 6. The census does not place ruby, so ruby's cell RECORDS rather than checks.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs3_a()"
+          }
+        },
+        {
+          "probe_id": "b",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs3_b()"
+          }
+        },
+        {
+          "probe_id": "c",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs3_c()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "1",
+          "b": "1",
+          "c": "2"
+        },
+        "by_language": {
+          "java": {
+            "a": "1",
+            "b": "2",
+            "c": "3"
+          },
+          "kotlin": {
+            "a": "1",
+            "b": "2",
+            "c": "3"
+          },
+          "typescript": {
+            "a": "1",
+            "b": "2",
+            "c": "3"
+          },
+          "dart": {
+            "a": "1",
+            "b": "2",
+            "c": "3"
+          },
+          "dart-web": {
+            "a": "1",
+            "b": "2",
+            "c": "3"
+          },
+          "go": {
+            "a": "2",
+            "b": "4",
+            "c": "6"
+          },
+          "rust": {
+            "a": "2",
+            "b": "4",
+            "c": "6"
+          },
+          "rust-release": {
+            "a": "2",
+            "b": "4",
+            "c": "6"
+          },
+          "php": {
+            "a": "2",
+            "b": "4",
+            "c": "6"
+          },
+          "cpp": {
+            "a": "2",
+            "b": "4",
+            "c": "6"
+          },
+          "python": {
+            "a": "1",
+            "b": "1",
+            "c": "2"
+          },
+          "ruby": {
+            "a": "<any>",
+            "b": "<any>",
+            "c": "<any>"
+          }
+        }
+      }
+    },
+    {
+      "fact_id": "F-s4",
+      "object": "string",
+      "owner": "operation",
+      "kind": "fracture",
+      "description": "What indexing `s[i]` ANSWERS. A one-character string: python, ruby, php. A utf16 unit as a char: java csharp kotlin typescript; dart spells it codeUnitAt. A byte: go, cpp. REFUSED at the unit level: rust -- probe b does not compile, and probe c shows why, since a byte-range slice landing off a character boundary PANICS. Probe a is over ascii, so what varies is the SHAPE of the answer (a one-character string, or a unit number), not the character.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs4_a()"
+          },
+          "skip": [
+            "rust",
+            "rust-release"
+          ]
+        },
+        {
+          "probe_id": "b",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs4_b()"
+          },
+          "only": [
+            "rust",
+            "rust-release"
+          ],
+          "program": "s4rust"
+        },
+        {
+          "probe_id": "c",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs4_c()"
+          },
+          "only": [
+            "rust",
+            "rust-release"
+          ],
+          "program": "s4panic"
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "a",
+          "b": "<compile-error>",
+          "c": "<raise:panic>"
+        },
+        "by_language": {
+          "go": {
+            "a": "97"
+          },
+          "cpp": {
+            "a": "97"
+          },
+          "dart": {
+            "a": "97"
+          },
+          "dart-web": {
+            "a": "97"
+          }
+        }
+      }
+    },
+    {
+      "fact_id": "F-s5",
+      "object": "string",
+      "owner": "operation",
+      "kind": "fracture",
+      "description": "What the equality OPERATOR does, as distinct from a content comparison existing. `==` compares CONTENT: python go rust kotlin csharp ruby php dart typescript. `==` compares IDENTITY: java, where content is `.equals`. Probe a builds one side at run time so no interning can hide the difference; probe c compares a string with itself, where identity and content agree, and exists so that java's answer on probe a reads as a different question rather than a broken one.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs5_a()"
+          }
+        },
+        {
+          "probe_id": "c",
+          "type": "str",
+          "expr": {
+            "default": "f_Fs5_c()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "true",
+          "c": "true"
+        },
+        "by_language": {
+          "java": {
+            "a": "false"
+          }
+        }
+      }
+    }
+  ]
+}

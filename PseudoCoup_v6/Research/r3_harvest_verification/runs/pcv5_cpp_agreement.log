@@ -1,0 +1,25 @@
+--- (1) modRMByte vs encode_modrm ---
+PASS  modRMByte == encode_modrm over all 256 in-domain combinations  checked=256 mismatches=0
+
+--- (1b) outside the asserted domain (guards bypassed, as in each language's release build) ---
+  Mod=  4 RegOpcode=  0 RM=  0  llvm(unmasked)=0x0100  reference(masked)=0x00  DIVERGE
+  Mod=  0 RegOpcode=  8 RM=  0  llvm(unmasked)=0x0040  reference(masked)=0x00  DIVERGE
+  Mod=  0 RegOpcode=  0 RM=  8  llvm(unmasked)=0x0008  reference(masked)=0x00  DIVERGE
+  Mod=  7 RegOpcode= 15 RM= 15  llvm(unmasked)=0x01ff  reference(masked)=0xff  DIVERGE
+  Mod=255 RegOpcode=255 RM=255  llvm(unmasked)=0x3fff  reference(masked)=0xff  DIVERGE
+  finding: 5/5 sampled out-of-domain inputs diverge once both guards are bypassed -- LLVM's raw formula can exceed a byte (no masking exists at all in the source); the reference encoder's masks make it wrap silently instead. This is a real difference between the two source languages' release-mode behavior, not a transpiler artifact: both this transpile and the sibling Rust transpile reproduce their source's guard faithfully (assert vs debug_assert!), and BOTH guards happen to be Python `assert` today, which is why the guarded functions above look identical in-domain and both raise the same way out-of-domain -- only inspecting the core arithmetic directly (as done here) reveals the divergence.
+
+--- (2) REX byte: X86OpcodePrefixHelper.emit() vs RexPrefix.mem_op/two_op ---
+PASS  REX byte agrees over all 256*256*2 register-encoding x W combinations  checked=131072 mismatches=0
+
+--- (3) SIB byte: emit_sib_byte/modRMByte vs encode_sib ---
+PASS  SIB byte agrees over all 256 in-domain (SS<4, Index<8, Base<8) combinations  checked=256 mismatches=0
+
+--- (4) cut arms raise loudly (VEX2/VEX3/XOP/REX2/EVEX) ---
+  ok    PrefixKind.REX2 raises NotImplementedError as required
+  ok    PrefixKind.VEX2 raises NotImplementedError as required
+  ok    PrefixKind.VEX3 raises NotImplementedError as required
+  ok    PrefixKind.XOP raises NotImplementedError as required
+  ok    PrefixKind.EVEX raises NotImplementedError as required
+
+C++ INGRESS ACCEPTANCE: ALL PASS

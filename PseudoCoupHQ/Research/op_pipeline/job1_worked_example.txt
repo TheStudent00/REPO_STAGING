@@ -1,0 +1,105 @@
+WORKED EXAMPLE -- c/op_501, "a != b" (a: int32_t, b: float)
+==============================================================
+
+BEFORE this lap: c/op_501 was NOT YET CONVERGED. canon23's own refusal
+reason:
+
+  "no return path: expression contains an uninterpreted atom for VEX
+   op 'XorV128' -- SIMD 128-bit xor (not modeled)"
+
+tree_units3.json's own normal_path_raw (the ADOPTED tree_match3.py
+baseline) for this unit:
+
+  ins@0(
+    ins@0(u0:256, F64toF32(And32(3:32,ex32@0(u1:64)),
+                            I32StoF64(ex32@0(in0:64)))),
+    XorV128(4294967295:128,
+            CmpEQ32F0x4(
+              ex128@0(ins@0(u0:256,
+                             F64toF32(And32(3:32,ex32@0(u1:64)),
+                                      I32StoF64(ex32@0(in0:64))))),
+              ex128@0(in1:256))))
+
+Two VEX op names blocked it under the OLD if-chain (tree_match2.py's
+own to_z3_fixed): CmpEQ32F0x4 (a real z3 lane compare that was never
+built) and XorV128 (VEX's own "NOT of a packed-equal mask" -- the
+literal 4294967295:128 is 0xFFFFFFFF confined to the low 32-bit lane,
+i.e. all-ones AT THE COMPARE'S OWN LANE WIDTH). Both fell to the same
+generic 64-bit-defaulted opaque atom, discarding P and Q entirely.
+
+THIS LAP (JOB 1): vex_names.py parses CmpEQ32F0x4 by NAME PATTERN
+(`Cmp(EQ)(32|64)F0x(\d+)`) and recognizes the XorV128-wraps-CmpEQ
+shape as the CMPNEQ COMPOUND (a single real `cmpneqss`, not two
+operations) -- see vex_names.py's own header. canon24.py's driver
+wraps the raw text in an outer `ex32@0(...)` (real ship code only ever
+reads the low 32 bits of this xmm-mask answer through a GP register);
+z3's own simplifier then collapses ALL of the dead ins@0 bookkeeping
+away, mechanically, down to exactly:
+
+  Extract(31, 0, fc_6)
+
+-- one atom, the whole story. canon24_render.py's gen24 recognizes
+this Extract-of-atom shape and renders it directly.
+
+CANDIDATE TEXT canon24.py produced (PROVED_EQUAL, canon24_behaviour_
+check.py's real-z3-FPA gate, bit-level, against this unit's own real
+ship code):
+
+  cvtsi2ss %edi,%xmm2; cmpneqss %xmm0,%xmm2; movd %xmm2,%eax; and $0x1,%eax; ret
+
+This candidate is BYTE-FOR-BYTE the unit's own real ship disassembly
+(canon4_units_c.json's own `mnem`, register-for-register identical) --
+canon24 did not merely find AN equivalent program, it rediscovered the
+compiler's own one.
+
+READING FORM (SPEC_reading_form.md's own two-column style -- one
+instruction in, one reading line out, nothing folded, nothing
+dropped):
+
+  instruction                    plain reading
+  ------------------------------  ------------------------------------
+  cvtsi2ss %edi,%xmm2             %xmm2 = int_to_f32(%edi)
+  cmpneqss %xmm0,%xmm2            %xmm2 = mask_unequal_f32(%xmm2, %xmm0)
+  movd %xmm2,%eax                 %eax = %xmm2
+  and $0x1,%eax                   %eax = %eax & 1
+  ret                             return %eax
+
+IN WORDS: convert the int argument to a 32-bit float; compare it
+against the float argument for INEQUALITY, producing an all-ones mask
+if they differ (NaN counts as differing, IEEE754's own unordered
+rule) or an all-zeros mask if they are equal; move that mask into a
+general-purpose register; keep only its lowest bit (0 or 1); return
+it as the boolean answer to `a != b`.
+
+THREE MORE WORKED SIBLINGS FROM THE SAME 42-UNIT FAMILY (same shape,
+different width/direction -- support for the claim that this is a
+FAMILY, not a one-off):
+
+  c/op_502  (a: int32_t, b: double)
+    cvtsi2sd %edi,%xmm2; cmpneqsd %xmm0,%xmm2; movq %xmm2,%rax; and $0x1,%eax; ret
+      %xmm2 = int_to_f64(%edi)
+      %xmm2 = mask_unequal_f64(%xmm2, %xmm0)
+      %rax = %xmm2
+      %eax = %eax & 1
+      return %eax
+
+  c/op_507  (a: int64_t, b: float)
+    cvtsi2ss %rdi,%xmm2; cmpneqss %xmm0,%xmm2; movd %xmm2,%eax; and $0x1,%eax; ret
+      %xmm2 = int_to_f32(%rdi)
+      %xmm2 = mask_unequal_f32(%xmm2, %xmm0)
+      %eax = %xmm2
+      %eax = %eax & 1
+      return %eax
+
+  c/op_508  (a: int64_t, b: double)
+    cvtsi2sd %rdi,%xmm2; cmpneqsd %xmm0,%xmm2; movq %xmm2,%rax; and $0x1,%eax; ret
+      %rdi -> %xmm2 as f64, compared unequal against %xmm0, narrowed
+      to a boolean the same way as the other three.
+
+EVIDENCE CLASS: forced by construction for the render (candidate text
+matches real ship mnem verbatim) and for the gate (z3 FPA proof, real
+fpEQ/fpIsNaN semantics, bit-level fpToIEEEBV comparison, 15s timeout,
+UNDECIDED counted honestly -- none hit here, all four PROVED_EQUAL).
+The ex32@0(...) wrap's own collapse (dead ins@0 bookkeeping vanishing
+to leave exactly one Extract-of-atom) is forced by construction too --
+z3's own simplifier, not asserted.

@@ -1,0 +1,47 @@
+interp_fastpath_worked_example.txt -- CPython long_add's small-integer fast path, instruction text | reading line, space-aligned.  Carved from interp_cpython.json's ship-build long_add (94 instructions), reachable from long_add+0x68 (function index 26).  See interp_fastpath.json for the full record and the z3 proof against c's i64 add.
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+1. ARRIVAL / UNPACKING -- turns the two incoming pointers into two plain integer values
+    unit: cpython/long_add_fastpath   source: interp_cpython.json (ship), function indices 26-33
+    mov    $0x1,%edx         %edx = $0x1
+    mov    0x18(%rcx),%ecx   %ecx = 0x18(%rcx)   # b's ob_digit[0] (b's pointer, carried in from the prologue outside this unit)
+    mov    %rdx,%rax         %rax = %rdx
+    sub    %r8,%rdx          %rdx = %rdx - %r8   # %r8 = a's sign code (0/1/2)
+    sub    %rsi,%rax         %rax = %rax - %rsi  # %esi = b's sign code
+    imul   %rcx,%rax         %rax = %rax * %rcx  # %rax = medium_value(b)
+    mov    0x18(%rdi),%ecx   %ecx = 0x18(%rdi)   # a's ob_digit[0] -- FIRST use of %rdi since entry
+    imul   %rcx,%rdx         %rdx = %rdx * %rcx  # %rdx = medium_value(a)
+
+----------------------------------------------------------------------------------------------------
+2. THE BOUNDARY -- first instruction to read BOTH unpacked values (function index 34)
+    unit: cpython/long_add_fastpath   source: interp_cpython.json (ship), function index 34
+    lea    (%rax,%rdx,1),%rdi   %rdi = %rax + %rdx   # z = medium_value(a) + medium_value(b) -- THE ADD
+
+----------------------------------------------------------------------------------------------------
+3. c's i64 addition, for comparison (op_units_c.json)
+    unit: c/i64_add   source: op_units_c.json
+    lea (%rdi,%rsi,1),%rax   %rax = %rdi + %rsi
+    ret                      return %rax
+
+    z3, both bounded to the fast-path domain and unbounded: PROVED equal.  See interp_fastpath.json's proof.z3_result.
+
+----------------------------------------------------------------------------------------------------
+4. THE PACKING PHASE -- boxes the already-computed sum back into a PyLongObject (context only; NOT arrival, NOT computation -- see interp_fastpath.json's packing_not_arrival_not_computation)
+    unit: cpython/long_add_fastpath   source: interp_cpython.json (ship), function indices 35-92 (39 instructions, 3 sub-routes)
+    lea    0x5(%rdi),%rax             %rax = %rdi + $0x5
+    cmp    $0x105,%rax                flags = compare(%rax, $0x105)
+    jbe    1374c0 <long_add+0x150>    if flags.below_equal: goto 1374c0 <long_add+0x150>   # small-int table route
+    lea    0x3fffffff(%rdi),%rax      %rax = %rdi + $0x3fffffff
+    cmp    $0x7ffffffe,%rax           flags = compare(%rax, $0x7ffffffe)
+    jbe    1374e0 <long_add+0x170>    if flags.below_equal: goto 1374e0 <long_add+0x170>   # _PyLong_FromMedium route
+    ...                               # (indices 41-64: allocate + pack 2 digits via long_alloc; not reached by the probe's 3+4)
+    add    $0x5,%edi                  %edi = %edi + $0x5
+    lea    0x49fb36(%rip),%rax        %rax = %rip + $0x49fb36   # 5d7000 <_PyRuntime>
+    movslq %edi,%rdi                  %rdi = sign_extend(%edi)
+    shl    $0x5,%rdi                  %rdi = shift_left(%rdi, $0x5)
+    lea    0x36f0(%rax,%rdi,1),%rax   %rax = %rax + %rdi + $0x36f0   # index into _PyLong_SMALL_INTS
+    (00, extraction artifact)         # see interp_fastpath.json carve.extraction_artifact_found; not a real instruction
+    jmp    137474 <long_add+0x104>    goto 137474 <long_add+0x104>
+    add    $0x28,%rsp                 %rsp = %rsp + $0x28
+    ret                               return %rax   # the measured route for the probe's 3+4=7

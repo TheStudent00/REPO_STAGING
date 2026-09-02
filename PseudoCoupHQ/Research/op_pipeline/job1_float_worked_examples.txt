@@ -1,0 +1,49 @@
+job1_float_worked_examples.txt -- JOB 1/2/3 (condition_table4.py's float packed-flags model, canon17_render.py's XMM rendering, the resolve_conditions bug fix), reading-form worked examples (SPEC_reading_form.md's two-column style: instruction text, then plain-language reading, space-aligned). Every example below is a REAL converged unit from this lap's own canon17_units_<lang>.json, PROVED_EQUAL against its own real ship code by canon17_behaviour_check.anchored_check -- see this file's own generator for how the reading column was built.
+====================================================================================================
+
+EXAMPLE 1 -- c/op_663, `a < b`, a:float b:float (f32).
+A pure float-vs-float comparison: real ship code does NOT compare a against b directly with `seta`/`setb` (setb/CondULT would be wrong on NaN -- see this file's own condition_table4.py header). It SWAPS the operand order instead (`ucomiss %xmm0,%xmm1` compares b against a) and reads `seta` (CondUGT = NOT(CF or ZF) -- correctly false on any NaN), which equals `a < b` for every non-NaN pair and correctly answers false whenever either operand is NaN.
+  real ship code:
+    ucomiss %xmm0,%xmm1    flags = fcompare_f32(%xmm1, %xmm0)
+    xor %eax,%eax          %eax = %eax ^ %eax
+    seta %al               %al = flags.above
+  this lap's candidate (canon17_text):
+    ucomiss %xmm0,%xmm1    flags = fcompare_f32(%xmm1, %xmm0)
+    mov $0,%eax            %eax = $0
+    seta %al               %al = flags.above
+    movzx %al,%eax         %eax = zero_extend(%al)
+  both proved equal to real ship code directly (canon17_behaviour_check.anchored_check); the xor-vs-mov difference at the top is the pre-existing canonicalization convention (mov $0 over xor for a written-not-read destination), not a float-comparison difference.
+
+EXAMPLE 2 -- c/op_351, `a && b`, a:bool b:float (f32) -- THE MIXED-SIGNATURE REGISTER RULE.
+Argument a is NOT a float here, so per canon.py's own `designated()` rule ("b takes %xmm1 only when a is ALSO a floating-point value; otherwise b takes %xmm0") the ONLY float argument, b, lives in %xmm0, not %xmm1. Real ship code's own `ucomiss %xmm1,%xmm0` compares b (in %xmm0) against a self-zeroed %xmm1 -- this lap's first rendering attempt assumed b always lives in %xmm1 and was DISPROVED by the ground-truth gate; canon17_render.py's `CURRENT_A_IS_VECTOR` fix (driven by the unit's own recorded meta.lhs_rep) closes exactly this gap.
+  real ship code:
+    xorps %xmm1,%xmm1      zero %xmm1
+    ucomiss %xmm1,%xmm0    flags = fcompare_f32(%xmm0, %xmm1)
+    setp %al               %al = flags.nan
+    setne %cl              %cl = flags.not_equal
+    or %al,%cl             %cl = %cl | %al
+    and %dil,%cl           %cl = %cl & %dil
+    movzbl %cl,%eax        %eax = zero_extend(%cl)
+  this lap's candidate (canon17_text):
+    mov %rdi,%rax          %rax = %rdi
+    and $-1,%al            %al = %al & $-1
+    xorps %xmm2,%xmm2      zero %xmm2
+    ucomiss %xmm2,%xmm0    flags = fcompare_f32(%xmm0, %xmm2)
+    mov $0,%r10d           %r10d = $0
+    setp %r10b             %r10b = flags.nan
+    mov $0,%r11d           %r11d = $0
+    setne %r11b            %r11b = flags.not_equal
+    or %r11b,%r10b         %r10b = %r10b | %r11b
+    and %r10b,%al          %al = %al & %r10b
+    movzx %al,%eax         %eax = zero_extend(%al)
+  reading b's truthiness off the flags: `setp` reads the NaN flag (unordered means "b is truthy" in C, since NaN != 0.0), `setne` reads "ordered and not equal to zero"; ORing them is exactly `is_nan OR (not is_nan AND not is_eq)` -- condition_table4.py's own FCNE-under-Or8-with-FCPAR shape, the SAME algebra AgentMemory's own worked example names for go's `==`.
+
+EXAMPLE 3 -- JOB 3's counterexample, c/op_285 -- stage5_float_conditions_diagnosis.txt's own reported bug, reproduced and fixed.
+  (condition_table4.job3_regression_check(), verbatim -- PASS below means this file's own substitution correctly reads the FIRST amd64g_calculate_condition call (cc=10) as Parity, not the mislabeled CondNE the old positional-pairing machinery would have produced if naively widened to the float family.)
+    input (c/op_285's own raw text, verbatim):
+        zx64(Or8(Or8(zx8(ex1@0(amd64g_calculate_condition(10:64,0:64,And64(69:64,zx64(CmpF64(F32toF64(ex32@0(in1:256)),F32toF64(0:32)))),0:64,u0:64))),zx8(ex1@0(amd64g_calculate_condition(5:64,0:64,And64(69:64,zx64(CmpF64(F32toF64(ex32@0(in1:256)),F32toF64(0:32)))),0:64,u0:64)))),zx8(ex1@0(amd64g_calculate_condition(5:64,19:64,zx64(ex32@0(in0:64)),0:64,u0:64)))))
+    this file's substitution (2 applied, note=None):
+        zx64(Or8(Or8(zx8(FCPAR(CmpF64(F32toF64(ex32@0(in1:256)),F32toF64(0:32)))),zx8(FCNE(CmpF64(F32toF64(ex32@0(in1:256)),F32toF64(0:32))))),zx8(ex1@0(amd64g_calculate_condition(5:64,19:64,zx64(ex32@0(in0:64)),0:64,u0:64)))))
+    
+    WHAT THE OLD (condition_table2/3) MACHINERY WOULD HAVE DONE, reproduced for comparison: both tables' own substitute_conditions[3] SKIP every record whose flagsetter_kind is "float" (`if rec["flagsetter_kind"] not in ("logic", "sub"): continue`) -- so today they leave BOTH calls opaque rather than mislabeling them. The bug stage5_float_conditions_diagnosis.txt names is what would happen if that gate were naively WIDENED to also accept "float" without ALSO switching to a cc-number-direct read: condition_table2's substitute_conditions pairs calls to canonical-text records by `zip(reversed(spans), reversed(canon_records))` -- pure LEFT-TO-RIGHT POSITION, no numeric check at all -- so on a two-float-call unit whose raw-text call order does not match its canonical setcc emission order, the FIRST span (cc=10, really Parity) would be zipped against whichever canon_record happens to sit first, which can be the NE consumer -- exactly the wrong-label failure mode reported. THIS FILE NEVER PAIRS BY POSITION OR BY CANONICAL TEXT AT ALL for the float family: cc is read directly off each call's own first numeric argument, so the bug's entire cause (an order assumption) cannot arise.
+  JOB 3 regression check: PASS

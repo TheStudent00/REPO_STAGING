@@ -1,0 +1,13 @@
+// list probe bodies - kotlin (MutableList; == is content; slice() COPIES).
+fun mkl(): MutableList<Int> = mutableListOf(1, 2, 3)
+fun f_listU1_a(): String { val a = mutableListOf(1, 2); a.add(3); return a.joinToString(",") }
+fun f_listU2_a(): String = mkl()[1].toString()
+fun f_listU3_a(): String { val o = mutableListOf<Int>(); for (x in mkl()) o.add(x); return o.joinToString(",") }
+fun f_listU4_a(): String = mkl().size.toString()
+fun f_Fl3_a(): String { val a = mutableListOf(1, 2); a.add(3); a.add(4); return a.size.toString() }
+fun f_Fl4_a(): String = mkl()[10].toString()
+fun f_Fl5_a(): String = mkl()[-1].toString()
+fun f_Fl6_a(): String { val a = mkl(); val s = a.slice(0..1).toMutableList(); s[0] = 99; return a[0].toString() }
+fun f_Fl7_a(): String = fmtb(mkl() == mkl())
+fun f_Fl8_a(): String { val a = mutableListOf(10, 9, 1); a.sort(); return a.joinToString(",") }
+fun f_Fl9_a(): String { val a = mkl(); val b = a; b[0] = 99; return a[0].toString() }

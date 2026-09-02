@@ -1,0 +1,1074 @@
+{
+ "meta": {
+  "generated_by": "build_verdicts.py",
+  "sources": [
+   "intention_tables_gen.py",
+   "../Research/basis_audit/results.md",
+   "PCv7_policy_decisions.md"
+  ]
+ },
+ "languages": [
+  "Python",
+  "Dart",
+  "Go",
+  "Kotlin",
+  "Java",
+  "C#",
+  "TypeScript",
+  "Swift",
+  "Rust",
+  "C++",
+  "Ruby",
+  "PHP"
+ ],
+ "intent_categories": [
+  {
+   "id": "A",
+   "name": "suspension",
+   "desc": "async/await, coroutines, generators"
+  },
+  {
+   "id": "B",
+   "name": "channels",
+   "desc": "message-passing concurrency"
+  },
+  {
+   "id": "C",
+   "name": "optionals",
+   "desc": "null safety, absence in types"
+  },
+  {
+   "id": "D",
+   "name": "pattern matching",
+   "desc": "structural choice"
+  },
+  {
+   "id": "E",
+   "name": "dispatch",
+   "desc": "interfaces, traits, protocols"
+  },
+  {
+   "id": "F",
+   "name": "generics",
+   "desc": "parameterization by type"
+  },
+  {
+   "id": "G",
+   "name": "scoped cleanup",
+   "desc": "defer, RAII, using, with"
+  },
+  {
+   "id": "H",
+   "name": "events",
+   "desc": "callbacks, delegates, streams"
+  },
+  {
+   "id": "I",
+   "name": "operator overloading",
+   "desc": "user meanings for operators"
+  },
+  {
+   "id": "J",
+   "name": "metaprogramming",
+   "desc": "reflection, macros, codegen"
+  }
+ ],
+ "t1_realizations": {
+  "A": {
+   "Python": "async/await + generators; cooperative event loop (asyncio); interpreted, not compiled transform",
+   "Dart": "async/await + async* generators; one event loop per isolate; compiler state-machine",
+   "Go": "— (goroutines subsume the intent; see channels row)",
+   "Kotlin": "suspend functions; compiler state-machine; adds structured concurrency scopes",
+   "Java": "— as syntax; virtual threads instead: make blocking cheap, hide suspension rather than spell it",
+   "C#": "origin of async/await; Task as first-class handle; the reference state-machine transform",
+   "TypeScript": "async/await lowered to promises/generators; single-threaded event loop",
+   "Swift": "async/await + actors; structured concurrency like Kotlin",
+   "Rust": "async fn compiles to a state-machine VALUE (Future); inert until polled; runtime is a library choice",
+   "C++": "C++20 coroutines: rawest form — transform exposed as customization points; no standard runtime",
+   "Ruby": "Fibers: explicit resume, no async syntax; scheduler hook since 3.0",
+   "PHP": "Fibers since 8.1; no async syntax; rare under request-per-process model"
+  },
+  "B": {
+   "Python": "library queues (queue, asyncio, multiprocessing); GIL limits parallelism",
+   "Dart": "isolates + ports: messaging is the ONLY concurrency; purest actor stance",
+   "Go": "channels + goroutines are the language identity; select is syntax-level",
+   "Kotlin": "Channel/Flow in the coroutines library",
+   "Java": "BlockingQueue library; virtual threads make thread-per-message viable",
+   "C#": "System.Threading.Channels library",
+   "TypeScript": "postMessage between workers; structured clone — no shared objects",
+   "Swift": "actors at language level; AsyncStream",
+   "Rust": "std mpsc; unique: Send trait — transfer safety proven at compile-time",
+   "C++": "— in std; third-party libraries",
+   "Ruby": "Ractors (experimental), isolate-like",
+   "PHP": "—"
+  },
+  "C": {
+   "Python": "None + Optional hint; unenforced",
+   "Dart": "sound null safety in the type system (T?)",
+   "Go": "nil + (value, ok) multiple-return idiom; no type-level option",
+   "Kotlin": "T? enforced in the type system",
+   "Java": "Optional&lt;T&gt; as a library object; null remains everywhere else",
+   "C#": "nullable reference types, opt-in annotations; Nullable&lt;T&gt; for values",
+   "TypeScript": "union types T | null | undefined; strictNullChecks flag",
+   "Swift": "Optional IS an enum — sum type with ? ! sugar",
+   "Rust": "Option&lt;T&gt; pure sum type; no null exists at all — strongest form",
+   "C++": "std::optional for values only; raw pointers still null",
+   "Ruby": "nil object; no static story",
+   "PHP": "?T in declarations; loosely enforced"
+  },
+  "D": {
+   "Python": "match/case (3.10), structural; no exhaustiveness check",
+   "Dart": "patterns (Dart 3); exhaustive over sealed types",
+   "Go": "type switch only",
+   "Kotlin": "when + smart casts; sealed exhaustiveness; shallow destructuring",
+   "Java": "switch patterns + record deconstruction; sealed exhaustive",
+   "C#": "rich patterns in switch expressions",
+   "TypeScript": "— native; discriminated unions + narrowing carry the intent",
+   "Swift": "switch patterns; exhaustiveness enforced",
+   "Rust": "match is central: exhaustive, deep destructuring — reference realization",
+   "C++": "— native; std::visit as workaround",
+   "Ruby": "case/in (3.0), structural",
+   "PHP": "match expression (8.0): value-only, no destructuring"
+  },
+  "E": {
+   "Python": "duck typing; Protocols structural but unenforced; ABCs",
+   "Dart": "every class IS an implicit interface — unique",
+   "Go": "structural interfaces, implicit satisfaction — no conformance declaration",
+   "Kotlin": "nominal interfaces + default methods",
+   "Java": "nominal interfaces; the archetype",
+   "C#": "nominal + default impls; explicit implementation option",
+   "TypeScript": "structural everywhere — interfaces are shapes, not contracts",
+   "Swift": "protocols + extensions + associated types; protocol-oriented identity",
+   "Rust": "traits with coherence (orphan rule); monomorphized by default, dyn opt-in",
+   "C++": "— as such; virtual classes or templates; concepts (C++20) are structural constraints",
+   "Ruby": "duck typing + modules as mixins",
+   "PHP": "nominal interfaces + traits (mixins)"
+  },
+  "F": {
+   "Python": "hints only; erased, unenforced",
+   "Dart": "reified — run-time visible",
+   "Go": "type parameters (1.18), constraint interfaces; deliberately minimal",
+   "Kotlin": "erased on JVM; reified-inline trick",
+   "Java": "erasure — the canonical erased generics",
+   "C#": "reified in the CLR — run-time knows T",
+   "TypeScript": "fully erased; types vanish at run-time",
+   "Swift": "witness tables; associated types",
+   "Rust": "monomorphization: compile-time copy per type; zero-cost",
+   "C++": "templates — monomorphization origin; compile-time duck typing until concepts",
+   "Ruby": "— (RBS external annotations only)",
+   "PHP": "— (docblocks for analyzers only)"
+  },
+  "G": {
+   "Python": "with + context managers (__exit__)",
+   "Dart": "try/finally only",
+   "Go": "defer — fires at FUNCTION exit, not scope exit (unique gotcha)",
+   "Kotlin": "use { } extension function",
+   "Java": "try-with-resources (AutoCloseable)",
+   "C#": "using statement/declaration + IDisposable",
+   "TypeScript": "using declarations (recent TC39)",
+   "Swift": "defer blocks — scope exit",
+   "Rust": "Drop trait: automatic, ownership-driven — no spelling at use site",
+   "C++": "RAII destructors — the origin; deterministic",
+   "Ruby": "ensure + block-form idiom (File.open { })",
+   "PHP": "try/finally; destructors semi-deterministic via refcount"
+  },
+  "H": {
+   "Python": "callables everywhere; no language construct",
+   "Dart": "Streams as the core idiom",
+   "Go": "function values; channels often replace callbacks",
+   "Kotlin": "lambdas + Flow",
+   "Java": "functional interfaces + SAM conversion — function-as-value encoded as interface",
+   "C#": "delegates + event ARE language constructs; multicast — unique",
+   "TypeScript": "first-class functions; EventEmitter/DOM idioms",
+   "Swift": "closures + AsyncSequence/Combine",
+   "Rust": "closures with TYPED capture modes (move) — capture is part of the type",
+   "C++": "lambdas with explicit capture lists — capture spelled manually",
+   "Ruby": "blocks/procs/lambdas — three callable kinds; implicit block argument unique",
+   "PHP": "closures + legacy string/array callables"
+  },
+  "I": {
+   "Python": "dunder methods; open set",
+   "Dart": "operator methods; fixed set",
+   "Go": "— deliberately forbidden",
+   "Kotlin": "operator fun; fixed conventions",
+   "Java": "— forbidden",
+   "C#": "static operator methods",
+   "TypeScript": "— (none in JS)",
+   "Swift": "can define NEW operator symbols + precedence — most permissive",
+   "Rust": "trait-based (Add, Mul): overloading IS trait implementation",
+   "C++": "origin; all existing operators, no new symbols",
+   "Ruby": "operators are ordinary methods; open",
+   "PHP": "—"
+  },
+  "J": {
+   "Python": "maximal run-time: metaclasses, __getattr__, decorators, full introspection",
+   "Dart": "— run-time (mirrors dead in Flutter); dev-time codegen instead",
+   "Go": "reflect package (clunky run-time); go:generate dev-time",
+   "Kotlin": "JVM reflection + KSP dev-time processing",
+   "Java": "reflection + annotations + bytecode-manipulation ecosystem",
+   "C#": "reflection + source generators + expression trees (code as data) — unique",
+   "TypeScript": "metaprograms in the TYPE system (mapped/conditional types), erased — unique",
+   "Swift": "Mirror read-only; macros (recent) dev-time",
+   "Rust": "no run-time reflection; macros — powerful dev-time syntax transforms",
+   "C++": "templates: accidentally Turing-complete dev-time metaprogramming; constexpr; no reflection",
+   "Ruby": "maximal: method_missing, define_method, open classes — the language's identity",
+   "PHP": "run-time reflection API + attributes + magic methods"
+  }
+ },
+ "t2_compatibility": [
+  {
+   "a": "A",
+   "b": "B",
+   "verdict": "coexist",
+   "note": "complementary; Kotlin ships both"
+  },
+  {
+   "a": "A",
+   "b": "C",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "A",
+   "b": "D",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "A",
+   "b": "E",
+   "verdict": "tension",
+   "note": "async functions in interfaces (Rust's long pain); resolvable, now shipped there"
+  },
+  {
+   "a": "A",
+   "b": "F",
+   "verdict": "tension",
+   "note": "generic async fns produce unnameable state-machine types; resolvable"
+  },
+  {
+   "a": "A",
+   "b": "G",
+   "verdict": "tension",
+   "note": "suspension decouples scope exit from time; async cleanup still unsolved in Rust; needs async-aware scopes"
+  },
+  {
+   "a": "A",
+   "b": "H",
+   "verdict": "tension",
+   "note": "overlapping intent: both push values later; canonicalize to streams"
+  },
+  {
+   "a": "A",
+   "b": "I",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "A",
+   "b": "J",
+   "verdict": "tension",
+   "note": "the async transform IS dev-time metaprogramming; run-time reflection sees transformed code, not source; stage it"
+  },
+  {
+   "a": "B",
+   "b": "C",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "B",
+   "b": "D",
+   "verdict": "coexist",
+   "note": "synergy: select is matching over channels"
+  },
+  {
+   "a": "B",
+   "b": "E",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "B",
+   "b": "F",
+   "verdict": "coexist",
+   "note": "synergy: typed channels need generics"
+  },
+  {
+   "a": "B",
+   "b": "G",
+   "verdict": "tension",
+   "note": "handoff moves cleanup responsibility across executors; ownership (Send) resolves"
+  },
+  {
+   "a": "B",
+   "b": "H",
+   "verdict": "coexist",
+   "note": "two spellings of messaging; canonicalizable"
+  },
+  {
+   "a": "B",
+   "b": "I",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "B",
+   "b": "J",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "C",
+   "b": "D",
+   "verdict": "coexist",
+   "note": "designed together: option is a sum type, match consumes it"
+  },
+  {
+   "a": "C",
+   "b": "E",
+   "verdict": "tension",
+   "note": "optional interface members reopen null holes (Swift @objc); forbid them"
+  },
+  {
+   "a": "C",
+   "b": "F",
+   "verdict": "coexist",
+   "note": "synergy: Option&lt;T&gt; requires generics"
+  },
+  {
+   "a": "C",
+   "b": "G",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "C",
+   "b": "H",
+   "verdict": "coexist",
+   "note": "unset-handler nullability is a minor rule"
+  },
+  {
+   "a": "C",
+   "b": "I",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "C",
+   "b": "J",
+   "verdict": "conflict",
+   "note": "run-time attribute synthesis (method_missing) breaks null-safety proofs; only staging metaprogramming to dev-time saves both"
+  },
+  {
+   "a": "D",
+   "b": "E",
+   "verdict": "tension",
+   "note": "exhaustiveness needs closed sets, interfaces are open; sealed hierarchies resolve"
+  },
+  {
+   "a": "D",
+   "b": "F",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "D",
+   "b": "G",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "D",
+   "b": "H",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "D",
+   "b": "I",
+   "verdict": "tension",
+   "note": "custom equality can lie to the matcher (Python __eq__ in match); rule needed"
+  },
+  {
+   "a": "D",
+   "b": "J",
+   "verdict": "conflict",
+   "note": "run-time class mutation invalidates exhaustiveness proofs; stage to dev-time"
+  },
+  {
+   "a": "E",
+   "b": "F",
+   "verdict": "tension",
+   "note": "structural vs nominal conformance both needed; constraint systems differ; origin qualifiers resolve"
+  },
+  {
+   "a": "E",
+   "b": "G",
+   "verdict": "coexist",
+   "note": "synergy: Disposable IS an interface"
+  },
+  {
+   "a": "E",
+   "b": "H",
+   "verdict": "coexist",
+   "note": "synergy: listener interfaces"
+  },
+  {
+   "a": "E",
+   "b": "I",
+   "verdict": "coexist",
+   "note": "synergy: trait-based operators (Rust) is the clean resolution"
+  },
+  {
+   "a": "E",
+   "b": "J",
+   "verdict": "tension",
+   "note": "reflection over structural/erased types is ill-defined; stage it"
+  },
+  {
+   "a": "F",
+   "b": "G",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "F",
+   "b": "H",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "F",
+   "b": "I",
+   "verdict": "coexist",
+   "note": "generic operators are fine"
+  },
+  {
+   "a": "F",
+   "b": "J",
+   "verdict": "tension",
+   "note": "reified-vs-erased decides what reflection sees; C++ templates are BOTH generics and metaprogramming — split into parametric generics + staged macros"
+  },
+  {
+   "a": "G",
+   "b": "H",
+   "verdict": "conflict",
+   "note": "a callback capturing a resource outlives the owning scope; deterministic cleanup vs escaping closures (divergence class 4); ownership or GC must arbitrate"
+  },
+  {
+   "a": "G",
+   "b": "I",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "G",
+   "b": "J",
+   "verdict": "tension",
+   "note": "generated code must join the cleanup discipline; minor"
+  },
+  {
+   "a": "H",
+   "b": "I",
+   "verdict": "coexist",
+   "note": "orthogonal"
+  },
+  {
+   "a": "H",
+   "b": "J",
+   "verdict": "coexist",
+   "note": "synergy: event wiring is metaprogramming's favorite use"
+  },
+  {
+   "a": "I",
+   "b": "J",
+   "verdict": "tension",
+   "note": "both let one spelling mean new things; compounds implicit-uniqueness risk; origin qualifiers mitigate"
+  }
+ ],
+ "t2_diagonal": {
+  "A": "internal merge: event-loop vs polled-future models — pick canonical",
+  "B": "internal merge: channel vs actor vs port — pick canonical",
+  "C": "internal merge: sum type is the canonical; null is the legacy spelling",
+  "D": "internal merge: exhaustive deep matching is the canonical superset",
+  "E": "internal merge: structural vs nominal — both kept, qualifier-selected",
+  "F": "internal merge: reified vs erased vs monomorphized — pick canonical",
+  "G": "internal merge: scope-exit is canonical; function-exit (Go defer) is the variant",
+  "H": "internal merge: streams as canonical superset",
+  "I": "internal merge: fixed operator set is safer; new symbols (Swift) at own risk",
+  "J": "internal merge: dev-time macros canonical; run-time mutation forbidden"
+ },
+ "primitives": [
+  {
+   "id": "P1",
+   "name": "bool",
+   "cells": {
+    "Python": "native; truthiness in conditions",
+    "Dart": "native",
+    "Go": "native, strict",
+    "Kotlin": "native",
+    "Java": "native",
+    "C#": "native",
+    "TypeScript": "native; truthy/falsy",
+    "Swift": "native",
+    "Rust": "native, strict",
+    "C++": "native + int conversion",
+    "Ruby": "native; only nil/false falsy",
+    "PHP": "native; loose truthiness"
+   },
+   "pc_verdict": "type uniform; PC.bool. condition-truthiness legislated: bool only"
+  },
+  {
+   "id": "P2",
+   "name": "fixed-width signed int",
+   "cells": {
+    "Python": "— (bigint only)",
+    "Dart": "int64; web target: JS number caveat",
+    "Go": "int8–64; silent wrap",
+    "Kotlin": "Int/Long; silent wrap",
+    "Java": "int/long; silent wrap",
+    "C#": "wrap default; checked opt-in",
+    "TypeScript": "— (number + bigint)",
+    "Swift": "traps on overflow",
+    "Rust": "debug trap / release wrap; explicit wrapping_* ops",
+    "C++": "signed overflow is UB",
+    "Ruby": "— (auto bigint)",
+    "PHP": "— (overflow becomes float)"
+   },
+   "pc_verdict": "PC.int64: trap on overflow; wrapping only by explicit spelling (Swift/Rust canon)"
+  },
+  {
+   "id": "P3",
+   "name": "unsigned int",
+   "cells": {
+    "Python": "—",
+    "Dart": "—",
+    "Go": "uint8–64",
+    "Kotlin": "UInt family",
+    "Java": "— (helper methods)",
+    "C#": "full family",
+    "TypeScript": "—",
+    "Swift": "full family",
+    "Rust": "full family; explicit conversions",
+    "C++": "full family; permissive mixing",
+    "Ruby": "—",
+    "PHP": "—"
+   },
+   "pc_verdict": "PC.uint*: Rust canon — explicit conversions, no implicit mixing"
+  },
+  {
+   "id": "P4",
+   "name": "big int",
+   "cells": {
+    "Python": "native, seamless literals",
+    "Dart": "— (removed)",
+    "Go": "math/big library",
+    "Kotlin": "java BigInteger",
+    "Java": "BigInteger",
+    "C#": "BigInteger",
+    "TypeScript": "BigInt native",
+    "Swift": "— (libraries)",
+    "Rust": "— (crates)",
+    "C++": "— (libraries)",
+    "Ruby": "native, seamless",
+    "PHP": "GMP extension"
+   },
+   "pc_verdict": "PC.bigint = Python/Ruby seamlessness; polyfilled elsewhere"
+  },
+  {
+   "id": "P5",
+   "name": "float64",
+   "cells": {
+    "Python": "IEEE754",
+    "Dart": "IEEE754",
+    "Go": "IEEE754",
+    "Kotlin": "IEEE754",
+    "Java": "IEEE754",
+    "C#": "IEEE754",
+    "TypeScript": "IEEE754 — the ONLY number type",
+    "Swift": "IEEE754",
+    "Rust": "IEEE754",
+    "C++": "IEEE754; x87/FMA edge cases",
+    "Ruby": "IEEE754",
+    "PHP": "IEEE754"
+   },
+   "pc_verdict": "already uniform; PC.float64; legislate printing + NaN edges"
+  },
+  {
+   "id": "P6",
+   "name": "decimal",
+   "cells": {
+    "Python": "decimal module",
+    "Dart": "— libs",
+    "Go": "— libs",
+    "Kotlin": "java BigDecimal",
+    "Java": "BigDecimal",
+    "C#": "native decimal type",
+    "TypeScript": "— libs",
+    "Swift": "Foundation Decimal",
+    "Rust": "— crates",
+    "C++": "— libs",
+    "Ruby": "BigDecimal stdlib",
+    "PHP": "bcmath"
+   },
+   "pc_verdict": "intent from C# (language-level); PC.decimal as self-hosted polyfill"
+  },
+  {
+   "id": "P7",
+   "name": "string",
+   "cells": {
+    "Python": "code-point sequence",
+    "Dart": "UTF-16 units",
+    "Go": "UTF-8 bytes + runes",
+    "Kotlin": "UTF-16",
+    "Java": "UTF-16",
+    "C#": "UTF-16",
+    "TypeScript": "UTF-16",
+    "Swift": "grapheme clusters + explicit views (utf8/utf16/scalars)",
+    "Rust": "UTF-8; byte-explicit; String/&amp;str",
+    "C++": "bare bytes, encoding-blind",
+    "Ruby": "per-string encoding tag",
+    "PHP": "bytes + mbstring"
+   },
+   "pc_verdict": "PC.string = Swift view model: no default indexing unit; explicit view per access — subsumes every cell"
+  },
+  {
+   "id": "P8",
+   "name": "bytes",
+   "cells": {
+    "Python": "bytes/bytearray",
+    "Dart": "Uint8List",
+    "Go": "[]byte",
+    "Kotlin": "ByteArray",
+    "Java": "byte[]",
+    "C#": "byte[]",
+    "TypeScript": "Uint8Array",
+    "Swift": "Data",
+    "Rust": "Vec&lt;u8&gt;",
+    "C++": "vector&lt;uint8_t&gt;",
+    "Ruby": "String with BINARY encoding (conflated)",
+    "PHP": "string doubles as bytes (conflated)"
+   },
+   "pc_verdict": "uniform; PC.bytes distinct type; Ruby/PHP string-conflation rejected"
+  },
+  {
+   "id": "P9",
+   "name": "list",
+   "cells": {
+    "Python": "list",
+    "Dart": "List",
+    "Go": "slice: shared backing array; append aliasing hazard",
+    "Kotlin": "List/MutableList read-write split",
+    "Java": "ArrayList",
+    "C#": "List&lt;T&gt;",
+    "TypeScript": "Array; sparse holes hazard",
+    "Swift": "value semantics, copy-on-write",
+    "Rust": "Vec: single owner",
+    "C++": "vector",
+    "Ruby": "Array",
+    "PHP": "array = ordered map, not a list"
+   },
+   "pc_verdict": "PC.list = single-owner Vec semantics (no aliasing surprises); go.slice / php.array as borrows"
+  },
+  {
+   "id": "P10",
+   "name": "map",
+   "cells": {
+    "Python": "dict: insertion-ordered",
+    "Dart": "Map default insertion-ordered",
+    "Go": "deliberately randomized order",
+    "Kotlin": "mapOf preserves order",
+    "Java": "HashMap unordered; LinkedHashMap opt-in",
+    "C#": "Dictionary order undefined",
+    "TypeScript": "Map insertion-ordered",
+    "Swift": "unordered",
+    "Rust": "HashMap unordered; BTreeMap sorted",
+    "C++": "map sorted; unordered_map",
+    "Ruby": "Hash insertion-ordered",
+    "PHP": "insertion-ordered"
+   },
+   "pc_verdict": "PC.map = insertion-ordered (majority + determinism); unordered as explicit perf borrow"
+  },
+  {
+   "id": "P11",
+   "name": "set",
+   "cells": {
+    "Python": "set: unordered",
+    "Dart": "Set default insertion-ordered",
+    "Go": "— (map-keys idiom)",
+    "Kotlin": "setOf preserves order",
+    "Java": "HashSet unordered",
+    "C#": "HashSet unordered",
+    "TypeScript": "Set insertion-ordered",
+    "Swift": "unordered",
+    "Rust": "HashSet unordered; BTreeSet sorted",
+    "C++": "set sorted",
+    "Ruby": "Set insertion-ordered",
+    "PHP": "— (array-keys idiom)"
+   },
+   "pc_verdict": "PC.set = insertion-ordered (JS/Dart canon)"
+  },
+  {
+   "id": "P12",
+   "name": "record / struct",
+   "cells": {
+    "Python": "class: reference",
+    "Dart": "class: reference",
+    "Go": "struct: VALUE — copies on assignment",
+    "Kotlin": "data class: reference",
+    "Java": "record: reference, shallow-immutable",
+    "C#": "class ref AND struct value — both",
+    "TypeScript": "object: reference",
+    "Swift": "struct value (COW) AND class ref — both",
+    "Rust": "struct + ownership (move)",
+    "C++": "value by default",
+    "Ruby": "Struct: reference",
+    "PHP": "class: reference"
+   },
+   "pc_verdict": "PC.record = reference + explicit .copy() (policy 6); value structs as go.struct / swift.struct borrows"
+  }
+ ],
+ "operators": [
+  {
+   "id": "O1",
+   "name": "integer division / modulo",
+   "cells": {
+    "Python": "// floor; % sign follows divisor",
+    "Dart": "~/ truncates",
+    "Go": "truncates",
+    "Kotlin": "truncates; floorDiv in stdlib",
+    "Java": "truncates; Math.floorDiv",
+    "C#": "truncates",
+    "TypeScript": "no int div; Math.trunc(a/b)",
+    "Swift": "truncates",
+    "Rust": "truncates; div_euclid available",
+    "C++": "truncates",
+    "Ruby": "floor (like Python)",
+    "PHP": "intdiv truncates"
+   },
+   "pc_verdict": "PC: named family floor_div / trunc_div / euclid_div; bare / on ints requires qualifier"
+  },
+  {
+   "id": "O2",
+   "name": "equality",
+   "cells": {
+    "Python": "== value (__eq__); is = identity",
+    "Dart": "== value, overridable; identical()",
+    "Go": "== structural on comparable types",
+    "Kotlin": "== value / === identity — cleanest split",
+    "Java": "== is IDENTITY; .equals value (hazard)",
+    "C#": "== varies by type (hazard)",
+    "TypeScript": "== coerces / === strict (hazard)",
+    "Swift": "Equatable protocol",
+    "Rust": "PartialEq trait",
+    "C++": "overloadable",
+    "Ruby": "== value",
+    "PHP": "== coerces / === strict (hazard)"
+   },
+   "pc_verdict": "PC: Kotlin split — == trait-based value, === identity; coercive equality rejected"
+  },
+  {
+   "id": "O3",
+   "name": "ordering comparisons",
+   "cells": {
+    "Python": "chaining a&lt;b&lt;c; mixed types error",
+    "Dart": "Comparable",
+    "Go": "ordered on ordered types",
+    "Kotlin": "Comparable",
+    "Java": "Comparable",
+    "C#": "IComparable",
+    "TypeScript": "coerces mixed types (hazard)",
+    "Swift": "Comparable",
+    "Rust": "Ord trait: total order",
+    "C++": "overloadable; spaceship &lt;=&gt;",
+    "Ruby": "&lt;=&gt; combined operator",
+    "PHP": "coerces (hazard)"
+   },
+   "pc_verdict": "PC: Ord-trait total order; no cross-type comparison; chaining kept as sugar (lowers to and)"
+  },
+  {
+   "id": "O4",
+   "name": "shifts",
+   "cells": {
+    "Python": "arbitrary precision shift",
+    "Dart": "arithmetic",
+    "Go": "arithmetic on signed",
+    "Kotlin": "shr / ushr named ops",
+    "Java": "&gt;&gt; arith / &gt;&gt;&gt; logical extra op",
+    "C#": "type decides",
+    "TypeScript": "&gt;&gt; / &gt;&gt;&gt;; 32-bit truncation (hazard)",
+    "Swift": "type decides + masking ops",
+    "Rust": "type decides: signed arith, unsigned logical",
+    "C++": "type decides; UB edges",
+    "Ruby": "arbitrary precision",
+    "PHP": "arithmetic"
+   },
+   "pc_verdict": "PC: Rust canon — shift meaning from operand type; no extra operator"
+  },
+  {
+   "id": "O5",
+   "name": "boolean and/or",
+   "cells": {
+    "Python": "short-circuit; returns OPERAND value",
+    "Dart": "strict bool",
+    "Go": "strict bool",
+    "Kotlin": "strict bool; ?: elvis for defaults",
+    "Java": "strict bool",
+    "C#": "strict bool; ?? for defaults",
+    "TypeScript": "returns operand; ?? added to fix it",
+    "Swift": "strict bool; ?? for optionals",
+    "Rust": "strict bool",
+    "C++": "strict bool (converts)",
+    "Ruby": "returns operand value",
+    "PHP": "strict-ish; ?? added"
+   },
+   "pc_verdict": "PC: strict bool result; the x-or-default intent gets the dedicated ?? spelling"
+  },
+  {
+   "id": "O6",
+   "name": "concatenation / coercion",
+   "cells": {
+    "Python": "+ no coercion; str() required",
+    "Dart": "no implicit coercion; interpolation",
+    "Go": "+ strings only, no coercion",
+    "Kotlin": "\"s\" + any coerces via toString",
+    "Java": "\"s\" + any coerces (hazard)",
+    "C#": "coerces via ToString",
+    "TypeScript": "\"1\"+1 coerces (hazard)",
+    "Swift": "no coercion; interpolation",
+    "Rust": "no + coercion; format!",
+    "C++": "std::string + limited",
+    "Ruby": "no coercion; interpolation",
+    "PHP": ". operator; numeric strings coerce in + (hazard)"
+   },
+   "pc_verdict": "PC: no implicit coercion (Python/Go/Swift canon); interpolation as the ergonomic spelling"
+  },
+  {
+   "id": "O7",
+   "name": "indexing",
+   "cells": {
+    "Python": "checked (IndexError); negative = from-end; slices",
+    "Dart": "checked",
+    "Go": "checked (panic)",
+    "Kotlin": "checked; getOrNull opt-in",
+    "Java": "checked (exception)",
+    "C#": "checked; ^i from-end index — unique",
+    "TypeScript": "out-of-range returns undefined (hazard)",
+    "Swift": "checked (precondition)",
+    "Rust": "checked (panic); .get returns Option",
+    "C++": "[] UNCHECKED UB; .at checked",
+    "Ruby": "out-of-range returns nil (hazard)",
+    "PHP": "notice + null (hazard)"
+   },
+   "pc_verdict": "PC: checked with error; opt-in Option-returning .get; from-end by explicit marker (C# ^), not bare negative"
+  }
+ ],
+ "basis_audit": {
+  "bool": {
+   "Python": "native",
+   "Dart": "native",
+   "Go": "native",
+   "Kotlin": "native",
+   "Java": "native",
+   "C#": "native",
+   "TypeScript": "native",
+   "Swift": "native",
+   "Rust": "native",
+   "C++": "native",
+   "Ruby": "native",
+   "PHP": "native"
+  },
+  "int64": {
+   "Python": "cheap:bigint-mask-trap",
+   "Dart": "native",
+   "Go": "native",
+   "Kotlin": "native+trap",
+   "Java": "native+trap",
+   "C#": "native+trap",
+   "TypeScript": "solved:BigInt.asIntN",
+   "Swift": "native+trap",
+   "Rust": "native+trap",
+   "C++": "native+trap",
+   "Ruby": "cheap:bigint-mask-trap",
+   "PHP": "cheap:float-drift"
+  },
+  "float64": {
+   "Python": "native",
+   "Dart": "native",
+   "Go": "native",
+   "Kotlin": "native",
+   "Java": "native",
+   "C#": "native",
+   "TypeScript": "native",
+   "Swift": "native",
+   "Rust": "native",
+   "C++": "native",
+   "Ruby": "native",
+   "PHP": "native"
+  },
+  "bytes": {
+   "Python": "native",
+   "Dart": "native",
+   "Go": "native",
+   "Kotlin": "native",
+   "Java": "native",
+   "C#": "native",
+   "TypeScript": "native",
+   "Swift": "native",
+   "Rust": "native",
+   "C++": "native",
+   "Ruby": "cheap:conflated",
+   "PHP": "cheap:conflated"
+  },
+  "list": {
+   "Python": "native",
+   "Dart": "native",
+   "Go": "cheap:slice-alias-detach",
+   "Kotlin": "native",
+   "Java": "native",
+   "C#": "native",
+   "TypeScript": "cheap:unchecked-idx",
+   "Swift": "cheap:cow-value-copy",
+   "Rust": "native:move",
+   "C++": "cheap:value-copy",
+   "Ruby": "cheap:nil-idx",
+   "PHP": "cheap:value-copy"
+  },
+  "record": {
+   "Python": "native",
+   "Dart": "native",
+   "Go": "cheap:value-copy",
+   "Kotlin": "native",
+   "Java": "native",
+   "C#": "native",
+   "TypeScript": "native",
+   "Swift": "native",
+   "Rust": "native:move",
+   "C++": "cheap:value-copy",
+   "Ruby": "native",
+   "PHP": "native"
+  },
+  "function_value": {
+   "Python": "native",
+   "Dart": "native",
+   "Go": "native",
+   "Kotlin": "native",
+   "Java": "cheap:functional-interface",
+   "C#": "native",
+   "TypeScript": "native",
+   "Swift": "native",
+   "Rust": "native",
+   "C++": "native",
+   "Ruby": "native",
+   "PHP": "native"
+  },
+  "hashing": {
+   "Python": "native:insertion",
+   "Dart": "native:insertion",
+   "Go": "cheap:randomized",
+   "Kotlin": "native:insertion",
+   "Java": "cheap:LinkedHashMap",
+   "C#": "cheap:undefined-order",
+   "TypeScript": "native:insertion",
+   "Swift": "cheap:unordered",
+   "Rust": "cheap:unordered",
+   "C++": "cheap:order",
+   "Ruby": "native:insertion",
+   "PHP": "native:insertion"
+  },
+  "executor": {
+   "Python": "exposed",
+   "Dart": "withheld",
+   "Go": "exposed",
+   "Kotlin": "exposed",
+   "Java": "exposed",
+   "C#": "exposed",
+   "TypeScript": "withheld",
+   "Swift": "exposed",
+   "Rust": "exposed",
+   "C++": "exposed",
+   "Ruby": "exposed",
+   "PHP": "withheld"
+  }
+ },
+ "border_lattice": [
+  {
+   "class": 1,
+   "name": "value-model",
+   "crossing": "declared width/semantics differs (e.g. int64 -> bigint)",
+   "verdict": "convertible",
+   "spelling": "widen / explicit mask+trap"
+  },
+  {
+   "class": 2,
+   "name": "copy-model",
+   "crossing": "value-semantics object -> reference-model frame",
+   "verdict": "convertible",
+   "spelling": ".copy() at the border"
+  },
+  {
+   "class": 2,
+   "name": "copy-model",
+   "crossing": "aliasing is load-bearing across the border",
+   "verdict": "incompatible",
+   "spelling": null
+  },
+  {
+   "class": 3,
+   "name": "evaluation-order",
+   "crossing": "none — egress rule (temporaries), no border object",
+   "verdict": "identical",
+   "spelling": null
+  },
+  {
+   "class": 4,
+   "name": "lifetime",
+   "crossing": "resource object -> frame with different cleanup regime",
+   "verdict": "convertible",
+   "spelling": "explicit scope wrapper"
+  },
+  {
+   "class": 5,
+   "name": "dispatch",
+   "crossing": "structurally-conforming type -> nominal slot",
+   "verdict": "convertible",
+   "spelling": "as <Interface>"
+  },
+  {
+   "class": 6,
+   "name": "collection-order",
+   "crossing": "unordered (perf-borrow) collection -> ordered frame",
+   "verdict": "convertible",
+   "spelling": "explicit ordering step"
+  },
+  {
+   "class": 7,
+   "name": "concurrency",
+   "crossing": "mutable object across spawn boundary",
+   "verdict": "incompatible",
+   "spelling": "freeze() or .copy() instead"
+  },
+  {
+   "class": 7,
+   "name": "concurrency",
+   "crossing": "immutable / ownership-transferred object across spawn",
+   "verdict": "convertible",
+   "spelling": "send (transfer proof at dev-time)"
+  },
+  {
+   "class": 8,
+   "name": "encoding",
+   "crossing": "string between view expectations",
+   "verdict": "convertible",
+   "spelling": "explicit view (utf8/utf16/points)"
+  },
+  {
+   "class": "J3",
+   "name": "dynamic-mode",
+   "crossing": "object leaving a mode-dynamic frame",
+   "verdict": "convertible",
+   "spelling": "re-validate (proofs stripped)"
+  }
+ ]
+}

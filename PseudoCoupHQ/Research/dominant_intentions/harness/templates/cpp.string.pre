@@ -1,0 +1,18 @@
+// string probe bodies - c++ (std::string: bytes, and a MUTABLE object).
+static const std::string SE = "é";
+static const std::string SM = "\U0001D11E";
+static std::string ops(std::string x) { return x; }
+static std::string f_strU1_a() { return fmts(ops("ab") + ops("cd")); }
+static std::string f_strU2_a() { return fmtb(ops(std::string("ab") + "cd") == ops("abcd")); }
+static std::string f_strU3_a() { return fmts(ops("abcdef").substr(1, 3)); }
+static std::string f_strU4_a() { std::string t = ops(SE + SM); return fmtb(std::string(t.begin(), t.end()) == t); }
+static std::string f_Fs1_a() { return std::to_string((int)(unsigned char)ops(SE)[0]); }
+static std::string f_Fs1_b() { return std::to_string((int)(unsigned char)ops(SM)[0]); }
+static std::string f_Fs2_a() { std::string a = ops("abc"); std::string& b = a; a += "d"; return fmts(b); }
+static std::string f_Fs2_b() { std::string s = ops("abc"); s[0] = 'z'; return fmts(s); }
+static std::string f_Fs3_a() { return std::to_string(ops(SE).size()); }
+static std::string f_Fs3_b() { return std::to_string(ops(SM).size()); }
+static std::string f_Fs3_c() { return std::to_string(ops(SE + SM).size()); }
+static std::string f_Fs4_a() { return std::to_string((int)(unsigned char)ops("abc")[0]); }
+static std::string f_Fs5_a() { return fmtb(ops(std::string("ab") + "cd") == ops("abcd")); }
+static std::string f_Fs5_c() { std::string s = ops("abcd"); return fmtb(s == s); }

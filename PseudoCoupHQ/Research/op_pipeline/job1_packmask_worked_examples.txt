@@ -1,0 +1,69 @@
+job1_packmask_worked_examples.txt -- JOB 1 (condition_table5.py's packed-mask float compare grammar, canon19.py's driver): instruction text | reading line, space-aligned. (presentation-only note: 'movzx' is re-spelled to reading_form.py's own known 'movz<w><d>' width-suffixed form before rendering -- the same instruction, GNU-as's other accepted spelling.)
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+1. c/op_3 (!a, a:f32 -- packed EQ mask truthy)
+    unit: c/op_3   source: canon19_text
+    xorps %xmm3,%xmm3     zero %xmm3
+    movaps %xmm3,%xmm2    %xmm2 = %xmm3
+    cmpeqss %xmm0,%xmm2   %xmm2 = mask_equal_f32(%xmm2, %xmm0)
+    movd %xmm2,%eax       %eax = %xmm2
+    and $1,%al            %al = %al & $1
+    movzbl %al,%eax       %eax = zero_extend(%al)
+    ret                   return eax
+
+----------------------------------------------------------------------------------------------------
+2. c/op_4 (!a, a:f64 -- packed EQ mask truthy)
+    unit: c/op_4   source: canon19_text
+    xorpd %xmm3,%xmm3     zero %xmm3
+    movapd %xmm3,%xmm2    %xmm2 = %xmm3
+    cmpeqsd %xmm0,%xmm2   %xmm2 = mask_equal_f64(%xmm2, %xmm0)
+    movd %xmm2,%eax       %eax = %xmm2
+    and $1,%al            %al = %al & $1
+    movzbl %al,%eax       %eax = zero_extend(%al)
+    ret                   return eax
+
+----------------------------------------------------------------------------------------------------
+3. c/op_303 (a || b, a:f32 b:f32 -- two NE masks ORed)
+    unit: c/op_303   source: canon19_text
+    xorps %xmm3,%xmm3      zero %xmm3
+    movaps %xmm0,%xmm2     %xmm2 = %xmm0
+    cmpneqss %xmm3,%xmm2   %xmm2 = mask_equal_f32(%xmm2, %xmm3)
+    movaps %xmm1,%xmm4     %xmm4 = %xmm1
+    cmpneqss %xmm3,%xmm4   %xmm4 = mask_equal_f32(%xmm4, %xmm3)
+    orps %xmm4,%xmm2       %xmm2 = %xmm2 | %xmm4
+    movd %xmm2,%eax        %eax = %xmm2
+    and $1,%al             %al = %al & $1
+    movzbl %al,%eax        %eax = zero_extend(%al)
+    ret                    return eax
+
+----------------------------------------------------------------------------------------------------
+4. cpp/op_303 (a || b -- the dual ex32@0/ex8@0 extraction shape)
+    unit: cpp/op_303   source: canon19_text
+    mov $0,%eax            %eax = $0
+    shl $24,%rax           %rax = shift_left(%rax, $24)
+    xorps %xmm3,%xmm3      zero %xmm3
+    movaps %xmm0,%xmm2     %xmm2 = %xmm0
+    cmpneqss %xmm3,%xmm2   %xmm2 = mask_equal_f32(%xmm2, %xmm3)
+    movaps %xmm1,%xmm4     %xmm4 = %xmm1
+    cmpneqss %xmm3,%xmm4   %xmm4 = mask_equal_f32(%xmm4, %xmm3)
+    orps %xmm4,%xmm2       %xmm2 = %xmm2 | %xmm4
+    movd %xmm2,%r10d       %r10d = %xmm2
+    shr $8,%r10d           %r10d = shift_right_zeros(%r10d, $8)
+    and $16777215,%r10d    %r10d = %r10d & $16777215
+    or %r10,%rax           %rax = %rax | %r10
+    shl $7,%rax            %rax = shift_left(%rax, $7)
+    mov $0,%r10b           %r10b = $0
+    movzbq %r10b,%r10      %r10 = zero_extend(%r10b)
+    or %r10,%rax           %rax = %rax | %r10
+    shl $1,%rax            %rax = shift_left(%rax, $1)
+    movaps %xmm0,%xmm5     %xmm5 = %xmm0
+    cmpneqss %xmm3,%xmm5   %xmm5 = mask_equal_f32(%xmm5, %xmm3)
+    movaps %xmm1,%xmm6     %xmm6 = %xmm1
+    cmpneqss %xmm3,%xmm6   %xmm6 = mask_equal_f32(%xmm6, %xmm3)
+    orps %xmm6,%xmm5       %xmm5 = %xmm5 | %xmm6
+    movd %xmm5,%r10d       %r10d = %xmm5
+    and $1,%r10b           %r10b = %r10b & $1
+    movzbq %r10b,%r10      %r10 = zero_extend(%r10b)
+    or %r10,%rax           %rax = %rax | %r10
+    ret                    return eax

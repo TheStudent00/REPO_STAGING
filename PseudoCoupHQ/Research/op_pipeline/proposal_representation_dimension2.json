@@ -1,0 +1,734 @@
+{
+ "meta": {
+  "generator": "build_proposal_representation_dimension2.py",
+  "task": "TASK 24 -- regenerate the representation-dimension proposal with the DWARF-typed key",
+  "supersedes": "proposal_representation_dimension.json (round 4), which is left on disk unmodified",
+  "reads": [
+   "proposal_representation_dimension.json (read-only)",
+   "dwarf_typed_key.json (this session's DWARF read)",
+   "interp_fastpath.json (the carve the proof is over)"
+  ],
+  "what_changed": "the MACHINE field type_pair_read.  Round 4 carried bare widths ('ptr64,ptr64', 'tagged64', 'ptr64,tagged64', 'opaque_VALUE_dispatch') while the prose named types.  The field now carries the type the compiler itself recorded in the anchor build's DWARF, or null with a named refusal.",
+  "table_membership_changes": "NONE -- dominant_table24.json and dom_ops22.json are not opened by this script. Membership is the owner's ratification; this artifact is what he ratifies from (log_101 sec4's own words, restated).",
+  "options_context": "log_101 sec4's A/B/C options; option A (weak-provenance table members) is NOT built here -- it was measured against and rejected in log_101, restated, not re-tested.",
+  "dee_lean_context": "option B with a bit of A: the pointer changes ARRIVAL, the core operator is the same; typed pointers group with same-seed units. Both would-be rows (B alone, B-with-A) are built per handler so the owner ratifies from a real comparison, not a single forced framing.",
+  "spelling": "the operator token appears exactly once per handler record, as the 'operator' display label on a unit-identifying dict carrying 'lang' and 'unit'.  No key, grouping, pairing, row structure or candidate selection uses it.  Handler names such as 'rb_fix_plus' are SYMBOL names read out of the binaries' own symbol tables, not tokens chosen here.  Checked by check_no_spelling_keys.py.",
+  "ready_for": "the owner's ratification of option B / option B-with-A"
+ },
+ "dwarf_cross_checks_at_the_other_build": [
+  {
+   "unit": "cpython/long_add",
+   "binary": "/persist/cpython_ship/python",
+   "what": "cpython v3.14.7 ship build (-DNDEBUG -g -O3), the build the carved slice and the z3 proof were taken from",
+   "compilation_unit": "Objects/longobject.c",
+   "dwarf_low_pc": null,
+   "formal_parameters": [
+    {
+     "param_name": "a",
+     "dwarf_type": "PyLongObject*",
+     "byte_size": 8
+    },
+    {
+     "param_name": "b",
+     "dwarf_type": "PyLongObject*",
+     "byte_size": 8
+    }
+   ],
+   "typed_key_at_this_build": "PyLongObject*,PyLongObject*",
+   "typed_key_at_anchor_build": "PyLongObject*,PyLongObject*",
+   "agrees": true
+  }
+ ],
+ "java_units_not_included_and_why": {
+  "what_the_brief_said": "the round-5 brief named 'java's 2 units, ruby's 4, php's 4' as the other eight handlers.  Checked against disk: proposal_representation_dimension.json's nine handler records are ruby 4, php 4, cpython 1 -- zero java.  The two java units live in interp_jvm.json (ids u1 and u2), and they were never handler records in this proposal.",
+  "why_no_dwarf_key_is_possible_for_them": "those two units are nmethods -- machine code the JVM's c2 compiler emitted into its own memory at run time and that the probe dumped from a live process.  There is no ELF file and therefore no DWARF for them at all; DWARF is what a C compiler writes into an object file, and no object file exists here.  The type evidence interp_jvm.json does carry for them is the JVM's own printed parameter comments (recorded there as 'the tool's own testimony'), which is a weaker class than DWARF and is not upgraded by anything done this session.",
+  "outcome": "NAMED REFUSAL.  No java row is added and no java type is guessed.  If java rows are wanted in this proposal they are a separate piece of work, on the JVM's own testimony, with the evidence class stated as such."
+ },
+ "handlers": [
+  {
+   "lang": "ruby",
+   "handler": "vm_opt_plus",
+   "unit": "ruby/vm_opt_plus",
+   "operator": "+",
+   "representation": "tagged-value(VALUE, opaque-dispatch)",
+   "representation_note": "interp_relations.json's own representation_evidence: FIXNUM_2_P tag-tested on both args before any ALU is visible in the stored excerpt -- a dispatcher/inline-cache check, not a computation core. Does not cleanly fit typed-pointer(T) or a single tagged-value scheme; recorded as its own scheme rather than forced into one of the other two.",
+   "type_pair_read": "VALUE,VALUE",
+   "arrival": {
+    "status": "REFUSED -- no full instruction slice was re-extracted and block-cut for this handler in this session (Task 20's re-extraction covered only cpython's long_add). Only the representation-evidence excerpt in interp_relations.json exists, which is a short anchor excerpt, not a full carved slice -- attempting a lineage-confluence boundary from an excerpt would be a guess, not a carve, so none is stated.",
+    "unpacking_prefix_instruction_count": null,
+    "boundary": null
+   },
+   "computation": {
+    "status": "not isolated -- depends on the arrival carve above, which was refused"
+   },
+   "proof": {
+    "attempted": false,
+    "reason": "no isolated computation part to test (arrival carve refused above); interp_relations.json already recorded the cross_unit_prover as refused before any z3 call for this handler's type_pair, for the independent reason that the type_pair is not among dominant_table24.json's 42 present type_pairs -- restated here, not re-run.",
+    "verdict": "UNDECIDED (honest refusal, not forced)"
+   },
+   "would_be_row_option_b": {
+    "family_kind": "NEW representation-keyed family (option B, log_101 sec4)",
+    "family_key": "(representation='tagged-value(VALUE, opaque-dispatch)')",
+    "row": {
+     "representation": "tagged-value(VALUE, opaque-dispatch)",
+     "members": "ruby/vm_opt_plus",
+     "note": "membership key is the representation dimension alone; carries no seed/computation relation to any compiled class."
+    },
+    "family_key_machine_form": "dwarf_type_pair='VALUE,VALUE'"
+   },
+   "would_be_row_option_b_with_a": {
+    "family_kind": "CANNOT STATE -- proof against a candidate compiled class was not attempted (arrival carve refused above, so there is no isolated computation part to prove against anything). Recorded as an honest refusal, not a forced row.",
+    "row": null,
+    "family_key_machine_form": "dwarf_type_pair='VALUE,VALUE'"
+   },
+   "type_pair_read_previous": "opaque_VALUE_dispatch",
+   "type_pair_read_width": "opaque_VALUE_dispatch",
+   "type_pair_read_width_evidence_class": "forced by construction (register width and dereference pattern, read off the unit's own lifted expression) -- fix_cpython_type_key.py's precedent.  Kept because it is true; demoted from being the KEY because a bare width is not a type.",
+   "type_pair_read_status": "READ",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "dwarf_type_read": {
+    "binary": "/persist/ruby_anchor/ruby",
+    "build": "ruby 3.3.0 anchor build, per interp_ruby.json pin",
+    "compilation_unit": "vm.c",
+    "dwarf_low_pc": "0x25aa43",
+    "return_type": "VALUE",
+    "formal_parameters": [
+     {
+      "param_name": "recv",
+      "dwarf_type": "VALUE",
+      "byte_size": 8
+     },
+     {
+      "param_name": "obj",
+      "dwarf_type": "VALUE",
+      "byte_size": 8
+     }
+    ],
+    "operand_selection_rule": "the first two formal parameters are the operands.",
+    "key_invariant_under_operand_choice": true,
+    "byte_sizes": [
+     8,
+     8
+    ]
+   },
+   "representation_note_round5": "The DWARF-declared parameter types (vm.c: recv, obj -- both VALUE, 8 bytes) agree with round 4's representation reading: ruby hands this handler one opaque tagged word per operand and the handler discriminates it, so the declared type carries no operand distinction at all."
+  },
+  {
+   "lang": "ruby",
+   "handler": "rb_fix_plus",
+   "unit": "ruby/rb_fix_plus",
+   "operator": "+",
+   "representation": "tagged-value(Fixnum, 2n+1 encoding)",
+   "representation_note": "interp_relations.json's own representation_evidence: `and esi,0x1` / `test al,0x7` -- the argument register is tag-tested before use, ruby's Fixnum tagged-integer encoding.",
+   "type_pair_read": "VALUE,VALUE",
+   "arrival": {
+    "status": "REFUSED -- no full instruction slice was re-extracted and block-cut for this handler in this session (Task 20's re-extraction covered only cpython's long_add). Only the representation-evidence excerpt in interp_relations.json exists, which is a short anchor excerpt, not a full carved slice -- attempting a lineage-confluence boundary from an excerpt would be a guess, not a carve, so none is stated.",
+    "unpacking_prefix_instruction_count": null,
+    "boundary": null
+   },
+   "computation": {
+    "status": "not isolated -- depends on the arrival carve above, which was refused"
+   },
+   "proof": {
+    "attempted": false,
+    "reason": "no isolated computation part to test (arrival carve refused above); interp_relations.json already recorded the cross_unit_prover as refused before any z3 call for this handler's type_pair, for the independent reason that the type_pair is not among dominant_table24.json's 42 present type_pairs -- restated here, not re-run.",
+    "verdict": "UNDECIDED (honest refusal, not forced)"
+   },
+   "would_be_row_option_b": {
+    "family_kind": "NEW representation-keyed family (option B, log_101 sec4)",
+    "family_key": "(representation='tagged-value(Fixnum, 2n+1 encoding)')",
+    "row": {
+     "representation": "tagged-value(Fixnum, 2n+1 encoding)",
+     "members": "ruby/rb_fix_plus",
+     "note": "membership key is the representation dimension alone; carries no seed/computation relation to any compiled class."
+    },
+    "family_key_machine_form": "dwarf_type_pair='VALUE,VALUE'"
+   },
+   "would_be_row_option_b_with_a": {
+    "family_kind": "CANNOT STATE -- proof against a candidate compiled class was not attempted (arrival carve refused above, so there is no isolated computation part to prove against anything). Recorded as an honest refusal, not a forced row.",
+    "row": null,
+    "family_key_machine_form": "dwarf_type_pair='VALUE,VALUE'"
+   },
+   "type_pair_read_previous": "tagged64",
+   "type_pair_read_width": "tagged64",
+   "type_pair_read_width_evidence_class": "forced by construction (register width and dereference pattern, read off the unit's own lifted expression) -- fix_cpython_type_key.py's precedent.  Kept because it is true; demoted from being the KEY because a bare width is not a type.",
+   "type_pair_read_status": "READ",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "dwarf_type_read": {
+    "binary": "/persist/ruby_anchor/ruby",
+    "build": "ruby 3.3.0 anchor build, per interp_ruby.json pin",
+    "compilation_unit": "numeric.c",
+    "dwarf_low_pc": "0xfedb1",
+    "return_type": "VALUE",
+    "formal_parameters": [
+     {
+      "param_name": "x",
+      "dwarf_type": "VALUE",
+      "byte_size": 8
+     },
+     {
+      "param_name": "y",
+      "dwarf_type": "VALUE",
+      "byte_size": 8
+     }
+    ],
+    "operand_selection_rule": "the first two formal parameters are the operands.",
+    "key_invariant_under_operand_choice": true,
+    "byte_sizes": [
+     8,
+     8
+    ]
+   },
+   "representation_note_round5": "The DWARF-declared parameter types (numeric.c: x, y -- both VALUE) agree with round 4's representation reading of a tagged word."
+  },
+  {
+   "lang": "ruby",
+   "handler": "rb_int_plus",
+   "unit": "ruby/rb_int_plus",
+   "operator": "+",
+   "representation": "tagged-value(Fixnum, 2n+1 encoding)",
+   "representation_note": "interp_relations.json's own representation_evidence: `and esi,0x1` / `test al,0x7` -- the argument register is tag-tested before use, ruby's Fixnum tagged-integer encoding.",
+   "type_pair_read": "VALUE,VALUE",
+   "arrival": {
+    "status": "REFUSED -- no full instruction slice was re-extracted and block-cut for this handler in this session (Task 20's re-extraction covered only cpython's long_add). Only the representation-evidence excerpt in interp_relations.json exists, which is a short anchor excerpt, not a full carved slice -- attempting a lineage-confluence boundary from an excerpt would be a guess, not a carve, so none is stated.",
+    "unpacking_prefix_instruction_count": null,
+    "boundary": null
+   },
+   "computation": {
+    "status": "not isolated -- depends on the arrival carve above, which was refused"
+   },
+   "proof": {
+    "attempted": false,
+    "reason": "no isolated computation part to test (arrival carve refused above); interp_relations.json already recorded the cross_unit_prover as refused before any z3 call for this handler's type_pair, for the independent reason that the type_pair is not among dominant_table24.json's 42 present type_pairs -- restated here, not re-run.",
+    "verdict": "UNDECIDED (honest refusal, not forced)"
+   },
+   "would_be_row_option_b": {
+    "family_kind": "NEW representation-keyed family (option B, log_101 sec4)",
+    "family_key": "(representation='tagged-value(Fixnum, 2n+1 encoding)')",
+    "row": {
+     "representation": "tagged-value(Fixnum, 2n+1 encoding)",
+     "members": "ruby/rb_int_plus",
+     "note": "membership key is the representation dimension alone; carries no seed/computation relation to any compiled class."
+    },
+    "family_key_machine_form": "dwarf_type_pair='VALUE,VALUE'"
+   },
+   "would_be_row_option_b_with_a": {
+    "family_kind": "CANNOT STATE -- proof against a candidate compiled class was not attempted (arrival carve refused above, so there is no isolated computation part to prove against anything). Recorded as an honest refusal, not a forced row.",
+    "row": null,
+    "family_key_machine_form": "dwarf_type_pair='VALUE,VALUE'"
+   },
+   "type_pair_read_previous": "tagged64",
+   "type_pair_read_width": "tagged64",
+   "type_pair_read_width_evidence_class": "forced by construction (register width and dereference pattern, read off the unit's own lifted expression) -- fix_cpython_type_key.py's precedent.  Kept because it is true; demoted from being the KEY because a bare width is not a type.",
+   "type_pair_read_status": "READ",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "dwarf_type_read": {
+    "binary": "/persist/ruby_anchor/ruby",
+    "build": "ruby 3.3.0 anchor build, per interp_ruby.json pin",
+    "compilation_unit": "numeric.c",
+    "dwarf_low_pc": "0xfedda",
+    "return_type": "VALUE",
+    "formal_parameters": [
+     {
+      "param_name": "x",
+      "dwarf_type": "VALUE",
+      "byte_size": 8
+     },
+     {
+      "param_name": "y",
+      "dwarf_type": "VALUE",
+      "byte_size": 8
+     }
+    ],
+    "operand_selection_rule": "the first two formal parameters are the operands.",
+    "key_invariant_under_operand_choice": true,
+    "byte_sizes": [
+     8,
+     8
+    ]
+   },
+   "representation_note_round5": "The DWARF-declared parameter types (numeric.c: x, y -- both VALUE) agree with round 4's representation reading of a tagged word."
+  },
+  {
+   "lang": "ruby",
+   "handler": "rb_big_plus",
+   "unit": "ruby/rb_big_plus",
+   "operator": "+",
+   "representation": "mixed: typed-pointer(RBignum*) + tagged-value(Fixnum)",
+   "representation_note": "rb_big_plus's Bignum side dereferences a pointer; its other operand may still arrive as a tagged Fixnum -- the two operands do not share one representation, recorded as mixed rather than collapsed to either bucket.",
+   "type_pair_read": "VALUE,VALUE",
+   "arrival": {
+    "status": "REFUSED -- no full instruction slice was re-extracted and block-cut for this handler in this session (Task 20's re-extraction covered only cpython's long_add). Only the representation-evidence excerpt in interp_relations.json exists, which is a short anchor excerpt, not a full carved slice -- attempting a lineage-confluence boundary from an excerpt would be a guess, not a carve, so none is stated.",
+    "unpacking_prefix_instruction_count": null,
+    "boundary": null
+   },
+   "computation": {
+    "status": "not isolated -- depends on the arrival carve above, which was refused"
+   },
+   "proof": {
+    "attempted": false,
+    "reason": "no isolated computation part to test (arrival carve refused above); interp_relations.json already recorded the cross_unit_prover as refused before any z3 call for this handler's type_pair, for the independent reason that the type_pair is not among dominant_table24.json's 42 present type_pairs -- restated here, not re-run.",
+    "verdict": "UNDECIDED (honest refusal, not forced)"
+   },
+   "would_be_row_option_b": {
+    "family_kind": "NEW representation-keyed family (option B, log_101 sec4)",
+    "family_key": "(representation='mixed: typed-pointer(RBignum*) + tagged-value(Fixnum)')",
+    "row": {
+     "representation": "mixed: typed-pointer(RBignum*) + tagged-value(Fixnum)",
+     "members": "ruby/rb_big_plus",
+     "note": "membership key is the representation dimension alone; carries no seed/computation relation to any compiled class."
+    },
+    "family_key_machine_form": "dwarf_type_pair='VALUE,VALUE'"
+   },
+   "would_be_row_option_b_with_a": {
+    "family_kind": "CANNOT STATE -- proof against a candidate compiled class was not attempted (arrival carve refused above, so there is no isolated computation part to prove against anything). Recorded as an honest refusal, not a forced row.",
+    "row": null,
+    "family_key_machine_form": "dwarf_type_pair='VALUE,VALUE'"
+   },
+   "type_pair_read_previous": "ptr64,tagged64",
+   "type_pair_read_width": "ptr64,tagged64",
+   "type_pair_read_width_evidence_class": "forced by construction (register width and dereference pattern, read off the unit's own lifted expression) -- fix_cpython_type_key.py's precedent.  Kept because it is true; demoted from being the KEY because a bare width is not a type.",
+   "type_pair_read_status": "READ",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "dwarf_type_read": {
+    "binary": "/persist/ruby_anchor/ruby",
+    "build": "ruby 3.3.0 anchor build, per interp_ruby.json pin",
+    "compilation_unit": "bignum.c",
+    "dwarf_low_pc": "0x3cfaa9",
+    "return_type": "VALUE",
+    "formal_parameters": [
+     {
+      "param_name": "x",
+      "dwarf_type": "VALUE",
+      "byte_size": 8
+     },
+     {
+      "param_name": "y",
+      "dwarf_type": "VALUE",
+      "byte_size": 8
+     }
+    ],
+    "operand_selection_rule": "the first two formal parameters are the operands.",
+    "key_invariant_under_operand_choice": true,
+    "byte_sizes": [
+     8,
+     8
+    ]
+   },
+   "representation_note_round5": "DISAGREEMENT, STATED.  Round 4's prose reads 'mixed: typed-pointer(RBignum*) + tagged-value(Fixnum)' and its machine field read 'ptr64,tagged64'.  The anchor build's DWARF declares BOTH parameters of rb_big_plus as VALUE (bignum.c, 8 bytes each).  Both readings are true of different things: the DECLARED parameter type is one single type, VALUE, for both operands; the REPRESENTATION the handler then discriminates at run time inside that one declared type is Fixnum-tagged on one side and an RBignum object pointer on the other.  The machine field now carries the declared type, because that is what DWARF measures; the run-time discrimination stays in the representation field, where it belongs, and is not passed off as a type key."
+  },
+  {
+   "lang": "php",
+   "handler": "add_function",
+   "unit": "php/add_function",
+   "operator": "+",
+   "representation": "typed-pointer(zval*)",
+   "representation_note": "both operands dereference a pointer at a constant field offset before any add is visible; T is read from the DWARF-recovered type where available (cpython: PyLongObject*, forced by construction, op_units_cpython2_reextracted.json's type_key_evidence), else the language's own runtime struct name (php: zval*, per interp_relations result_family_asserted 'zval_ptr' -- human interpretation of stated design, PHP's zval ABI, not DWARF-verified this session).",
+   "type_pair_read": "zval*,zval*",
+   "arrival": {
+    "status": "REFUSED -- no full instruction slice was re-extracted and block-cut for this handler in this session (Task 20's re-extraction covered only cpython's long_add). Only the representation-evidence excerpt in interp_relations.json exists, which is a short anchor excerpt, not a full carved slice -- attempting a lineage-confluence boundary from an excerpt would be a guess, not a carve, so none is stated.",
+    "unpacking_prefix_instruction_count": null,
+    "boundary": null
+   },
+   "computation": {
+    "status": "not isolated -- depends on the arrival carve above, which was refused"
+   },
+   "proof": {
+    "attempted": false,
+    "reason": "no isolated computation part to test (arrival carve refused above); interp_relations.json already recorded the cross_unit_prover as refused before any z3 call for this handler's type_pair, for the independent reason that the type_pair is not among dominant_table24.json's 42 present type_pairs -- restated here, not re-run.",
+    "verdict": "UNDECIDED (honest refusal, not forced)"
+   },
+   "would_be_row_option_b": {
+    "family_kind": "NEW representation-keyed family (option B, log_101 sec4)",
+    "family_key": "(representation='typed-pointer(zval*)')",
+    "row": {
+     "representation": "typed-pointer(zval*)",
+     "members": "php/add_function",
+     "note": "membership key is the representation dimension alone; carries no seed/computation relation to any compiled class."
+    },
+    "family_key_machine_form": "dwarf_type_pair='zval*,zval*'"
+   },
+   "would_be_row_option_b_with_a": {
+    "family_kind": "CANNOT STATE -- proof against a candidate compiled class was not attempted (arrival carve refused above, so there is no isolated computation part to prove against anything). Recorded as an honest refusal, not a forced row.",
+    "row": null,
+    "family_key_machine_form": "dwarf_type_pair='zval*,zval*'"
+   },
+   "type_pair_read_previous": "ptr64,ptr64",
+   "type_pair_read_width": "ptr64,ptr64",
+   "type_pair_read_width_evidence_class": "forced by construction (register width and dereference pattern, read off the unit's own lifted expression) -- fix_cpython_type_key.py's precedent.  Kept because it is true; demoted from being the KEY because a bare width is not a type.",
+   "type_pair_read_status": "READ",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "dwarf_type_read": {
+    "binary": "/persist/php_anchor/sapi/cli/php",
+    "build": "php 7.4.33 anchor build, per interp_php.json pin",
+    "compilation_unit": "/persist/php/Zend/zend_operators.c",
+    "dwarf_low_pc": "0x7c4001",
+    "return_type": "int",
+    "formal_parameters": [
+     {
+      "param_name": "result",
+      "dwarf_type": "zval*",
+      "byte_size": 8
+     },
+     {
+      "param_name": "op1",
+      "dwarf_type": "zval*",
+      "byte_size": 8
+     },
+     {
+      "param_name": "op2",
+      "dwarf_type": "zval*",
+      "byte_size": 8
+     }
+    ],
+    "operand_selection_rule": "out-parameter shape: three parameters of one type, return type 'int' differs from it, so parameter 0 is the result cell and the operands are parameters 1 and 2.",
+    "key_invariant_under_operand_choice": true,
+    "byte_sizes": [
+     8,
+     8
+    ]
+   },
+   "representation_note_round5": "Round 4 recorded php's zval* as 'human interpretation of stated design, PHP's zval ABI, not DWARF-verified this session'.  It is DWARF-verified NOW: Zend/zend_operators.c declares add_function(zval *result, zval *op1, zval *op2) returning int, so the evidence class of this record's type read is raised from human interpretation to forced by construction.  The key does not depend on which parameters are called the operands: all three carry one and the same type."
+  },
+  {
+   "lang": "php",
+   "handler": "ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "unit": "php/ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "operator": "+",
+   "representation": "typed-pointer(zval*)",
+   "representation_note": "both operands dereference a pointer at a constant field offset before any add is visible; T is read from the DWARF-recovered type where available (cpython: PyLongObject*, forced by construction, op_units_cpython2_reextracted.json's type_key_evidence), else the language's own runtime struct name (php: zval*, per interp_relations result_family_asserted 'zval_ptr' -- human interpretation of stated design, PHP's zval ABI, not DWARF-verified this session).",
+   "type_pair_read": null,
+   "arrival": {
+    "status": "REFUSED -- no full instruction slice was re-extracted and block-cut for this handler in this session (Task 20's re-extraction covered only cpython's long_add). Only the representation-evidence excerpt in interp_relations.json exists, which is a short anchor excerpt, not a full carved slice -- attempting a lineage-confluence boundary from an excerpt would be a guess, not a carve, so none is stated.",
+    "unpacking_prefix_instruction_count": null,
+    "boundary": null
+   },
+   "computation": {
+    "status": "not isolated -- depends on the arrival carve above, which was refused"
+   },
+   "proof": {
+    "attempted": false,
+    "reason": "no isolated computation part to test (arrival carve refused above); interp_relations.json already recorded the cross_unit_prover as refused before any z3 call for this handler's type_pair, for the independent reason that the type_pair is not among dominant_table24.json's 42 present type_pairs -- restated here, not re-run.",
+    "verdict": "UNDECIDED (honest refusal, not forced)"
+   },
+   "would_be_row_option_b": {
+    "family_kind": "NEW representation-keyed family (option B, log_101 sec4)",
+    "family_key": "(representation='typed-pointer(zval*)')",
+    "row": {
+     "representation": "typed-pointer(zval*)",
+     "members": "php/ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+     "note": "membership key is the representation dimension alone; carries no seed/computation relation to any compiled class."
+    },
+    "family_key_machine_form": "REFUSED -- no DWARF-typed key for this handler"
+   },
+   "would_be_row_option_b_with_a": {
+    "family_kind": "CANNOT STATE -- proof against a candidate compiled class was not attempted (arrival carve refused above, so there is no isolated computation part to prove against anything). Recorded as an honest refusal, not a forced row.",
+    "row": null,
+    "family_key_machine_form": "REFUSED -- no DWARF-typed key for this handler"
+   },
+   "type_pair_read_previous": "ptr64,ptr64",
+   "type_pair_read_width": "ptr64,ptr64",
+   "type_pair_read_width_evidence_class": "forced by construction (register width and dereference pattern, read off the unit's own lifted expression) -- fix_cpython_type_key.py's precedent.  Kept because it is true; demoted from being the KEY because a bare width is not a type.",
+   "type_pair_read_status": "REFUSED",
+   "type_pair_read_evidence_class": "refusal, machine-grounded -- the DWARF read ran and found the DIE; the absence of typed operand parameters is itself the measured fact",
+   "type_pair_read_refusal_reason": "the DWARF subprogram DIE for 'ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER' exists in /persist/php/Zend/zend_execute.c but carries 0 formal parameter(s) and no DW_AT_low_pc (no separate machine body of its own in this build).  A two-operand typed key is not expressible for this handler from parameter types, because its operands never arrive as parameters: the specialized executor reaches them through the execute_data frame.  No type is stated -- reading one from a header or from a signature quoted in prose would be an assertion, which this line forbids.",
+   "dwarf_type_read": {
+    "binary": "/persist/php_anchor/sapi/cli/php",
+    "build": "php 7.4.33 anchor build",
+    "compilation_unit": "/persist/php/Zend/zend_execute.c",
+    "dwarf_low_pc": null,
+    "return_type": null,
+    "formal_parameters": []
+   },
+   "representation_note_round5": "Round 4's machine field read 'ptr64,ptr64' for this handler.  That key had no measured basis: the anchor build's DWARF shows this specialized executor handler takes NO formal parameters at all, so there are no declared operand types to read.  The field is therefore null here, with the refusal named.  Removing an unfounded key is a strengthening of the record, not a loss."
+  },
+  {
+   "lang": "php",
+   "handler": "ZEND_ADD_LONG_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "unit": "php/ZEND_ADD_LONG_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "operator": "+",
+   "representation": "typed-pointer(zval*)",
+   "representation_note": "both operands dereference a pointer at a constant field offset before any add is visible; T is read from the DWARF-recovered type where available (cpython: PyLongObject*, forced by construction, op_units_cpython2_reextracted.json's type_key_evidence), else the language's own runtime struct name (php: zval*, per interp_relations result_family_asserted 'zval_ptr' -- human interpretation of stated design, PHP's zval ABI, not DWARF-verified this session).",
+   "type_pair_read": null,
+   "arrival": {
+    "status": "REFUSED -- no full instruction slice was re-extracted and block-cut for this handler in this session (Task 20's re-extraction covered only cpython's long_add). Only the representation-evidence excerpt in interp_relations.json exists, which is a short anchor excerpt, not a full carved slice -- attempting a lineage-confluence boundary from an excerpt would be a guess, not a carve, so none is stated.",
+    "unpacking_prefix_instruction_count": null,
+    "boundary": null
+   },
+   "computation": {
+    "status": "not isolated -- depends on the arrival carve above, which was refused"
+   },
+   "proof": {
+    "attempted": false,
+    "reason": "no isolated computation part to test (arrival carve refused above); interp_relations.json already recorded the cross_unit_prover as refused before any z3 call for this handler's type_pair, for the independent reason that the type_pair is not among dominant_table24.json's 42 present type_pairs -- restated here, not re-run.",
+    "verdict": "UNDECIDED (honest refusal, not forced)"
+   },
+   "would_be_row_option_b": {
+    "family_kind": "NEW representation-keyed family (option B, log_101 sec4)",
+    "family_key": "(representation='typed-pointer(zval*)')",
+    "row": {
+     "representation": "typed-pointer(zval*)",
+     "members": "php/ZEND_ADD_LONG_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+     "note": "membership key is the representation dimension alone; carries no seed/computation relation to any compiled class."
+    },
+    "family_key_machine_form": "REFUSED -- no DWARF-typed key for this handler"
+   },
+   "would_be_row_option_b_with_a": {
+    "family_kind": "CANNOT STATE -- proof against a candidate compiled class was not attempted (arrival carve refused above, so there is no isolated computation part to prove against anything). Recorded as an honest refusal, not a forced row.",
+    "row": null,
+    "family_key_machine_form": "REFUSED -- no DWARF-typed key for this handler"
+   },
+   "type_pair_read_previous": "ptr64,ptr64",
+   "type_pair_read_width": "ptr64,ptr64",
+   "type_pair_read_width_evidence_class": "forced by construction (register width and dereference pattern, read off the unit's own lifted expression) -- fix_cpython_type_key.py's precedent.  Kept because it is true; demoted from being the KEY because a bare width is not a type.",
+   "type_pair_read_status": "REFUSED",
+   "type_pair_read_evidence_class": "refusal, machine-grounded -- the DWARF read ran and found the DIE; the absence of typed operand parameters is itself the measured fact",
+   "type_pair_read_refusal_reason": "the DWARF subprogram DIE for 'ZEND_ADD_LONG_SPEC_TMPVARCV_TMPVARCV_HANDLER' exists in /persist/php/Zend/zend_execute.c but carries 0 formal parameter(s) and no DW_AT_low_pc (no separate machine body of its own in this build).  A two-operand typed key is not expressible for this handler from parameter types, because its operands never arrive as parameters: the specialized executor reaches them through the execute_data frame.  No type is stated -- reading one from a header or from a signature quoted in prose would be an assertion, which this line forbids.",
+   "dwarf_type_read": {
+    "binary": "/persist/php_anchor/sapi/cli/php",
+    "build": "php 7.4.33 anchor build",
+    "compilation_unit": "/persist/php/Zend/zend_execute.c",
+    "dwarf_low_pc": null,
+    "return_type": null,
+    "formal_parameters": []
+   },
+   "representation_note_round5": "Round 4's machine field read 'ptr64,ptr64' for this handler.  That key had no measured basis: the anchor build's DWARF shows this specialized executor handler takes NO formal parameters at all, so there are no declared operand types to read.  The field is therefore null here, with the refusal named.  Removing an unfounded key is a strengthening of the record, not a loss."
+  },
+  {
+   "lang": "php",
+   "handler": "ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "unit": "php/ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "operator": "+",
+   "representation": "typed-pointer(zval*)",
+   "representation_note": "both operands dereference a pointer at a constant field offset before any add is visible; T is read from the DWARF-recovered type where available (cpython: PyLongObject*, forced by construction, op_units_cpython2_reextracted.json's type_key_evidence), else the language's own runtime struct name (php: zval*, per interp_relations result_family_asserted 'zval_ptr' -- human interpretation of stated design, PHP's zval ABI, not DWARF-verified this session).",
+   "type_pair_read": null,
+   "arrival": {
+    "status": "REFUSED -- no full instruction slice was re-extracted and block-cut for this handler in this session (Task 20's re-extraction covered only cpython's long_add). Only the representation-evidence excerpt in interp_relations.json exists, which is a short anchor excerpt, not a full carved slice -- attempting a lineage-confluence boundary from an excerpt would be a guess, not a carve, so none is stated.",
+    "unpacking_prefix_instruction_count": null,
+    "boundary": null
+   },
+   "computation": {
+    "status": "not isolated -- depends on the arrival carve above, which was refused"
+   },
+   "proof": {
+    "attempted": false,
+    "reason": "no isolated computation part to test (arrival carve refused above); interp_relations.json already recorded the cross_unit_prover as refused before any z3 call for this handler's type_pair, for the independent reason that the type_pair is not among dominant_table24.json's 42 present type_pairs -- restated here, not re-run.",
+    "verdict": "UNDECIDED (honest refusal, not forced)"
+   },
+   "would_be_row_option_b": {
+    "family_kind": "NEW representation-keyed family (option B, log_101 sec4)",
+    "family_key": "(representation='typed-pointer(zval*)')",
+    "row": {
+     "representation": "typed-pointer(zval*)",
+     "members": "php/ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+     "note": "membership key is the representation dimension alone; carries no seed/computation relation to any compiled class."
+    },
+    "family_key_machine_form": "REFUSED -- no DWARF-typed key for this handler"
+   },
+   "would_be_row_option_b_with_a": {
+    "family_kind": "CANNOT STATE -- proof against a candidate compiled class was not attempted (arrival carve refused above, so there is no isolated computation part to prove against anything). Recorded as an honest refusal, not a forced row.",
+    "row": null,
+    "family_key_machine_form": "REFUSED -- no DWARF-typed key for this handler"
+   },
+   "type_pair_read_previous": "ptr64,ptr64",
+   "type_pair_read_width": "ptr64,ptr64",
+   "type_pair_read_width_evidence_class": "forced by construction (register width and dereference pattern, read off the unit's own lifted expression) -- fix_cpython_type_key.py's precedent.  Kept because it is true; demoted from being the KEY because a bare width is not a type.",
+   "type_pair_read_status": "REFUSED",
+   "type_pair_read_evidence_class": "refusal, machine-grounded -- the DWARF read ran and found the DIE; the absence of typed operand parameters is itself the measured fact",
+   "type_pair_read_refusal_reason": "the DWARF subprogram DIE for 'ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER' exists in /persist/php/Zend/zend_execute.c but carries 0 formal parameter(s) and no DW_AT_low_pc (no separate machine body of its own in this build).  A two-operand typed key is not expressible for this handler from parameter types, because its operands never arrive as parameters: the specialized executor reaches them through the execute_data frame.  No type is stated -- reading one from a header or from a signature quoted in prose would be an assertion, which this line forbids.",
+   "dwarf_type_read": {
+    "binary": "/persist/php_anchor/sapi/cli/php",
+    "build": "php 7.4.33 anchor build",
+    "compilation_unit": "/persist/php/Zend/zend_execute.c",
+    "dwarf_low_pc": null,
+    "return_type": null,
+    "formal_parameters": []
+   },
+   "representation_note_round5": "Round 4's machine field read 'ptr64,ptr64' for this handler.  That key had no measured basis: the anchor build's DWARF shows this specialized executor handler takes NO formal parameters at all, so there are no declared operand types to read.  The field is therefore null here, with the refusal named.  Removing an unfounded key is a strengthening of the record, not a loss."
+  },
+  {
+   "lang": "cpython",
+   "handler": "long_add",
+   "unit": "cpython/long_add",
+   "operator": "+",
+   "representation": "typed-pointer(PyLongObject*)",
+   "representation_note": "both operands dereference a pointer at a constant field offset before any add is visible; T is read from the DWARF-recovered type where available (cpython: PyLongObject*, forced by construction, op_units_cpython2_reextracted.json's type_key_evidence), else the language's own runtime struct name (php: zval*, per interp_relations result_family_asserted 'zval_ptr' -- human interpretation of stated design, PHP's zval ABI, not DWARF-verified this session).",
+   "type_pair_read": "PyLongObject*,PyLongObject*",
+   "arrival": {
+    "status": "carved this session (reused directly from interp_fastpath.json -- the worked lineage-confluence precedent)",
+    "unpacking_prefix_instruction_count": 8,
+    "unpacking_prefix_reading_form": [
+     "mov    $0x1,%edx              %edx = $0x1",
+     "mov    0x18(%rcx),%ecx        %ecx = 0x18(%rcx)   # b's ob_digit[0] (%rcx = b's pointer, carried from the prologue outside this unit)",
+     "mov    %rdx,%rax              %rax = %rdx",
+     "sub    %r8,%rdx               %rdx = %rdx - %r8   # %r8 = a's sign code (0/1/2), read+masked before this unit",
+     "sub    %rsi,%rax              %rax = %rax - %rsi  # %esi = b's sign code, read+masked before this unit",
+     "imul   %rcx,%rax              %rax = %rax * %rcx  # %rax = medium_value(b): signed(+-1 or 0) * b's digit0",
+     "mov    0x18(%rdi),%ecx        %ecx = 0x18(%rdi)   # a's ob_digit[0] (%rdi = a's pointer -- untouched since entry, its FIRST use in this whole function is right here)",
+     "imul   %rcx,%rdx              %rdx = %rdx * %rcx  # %rdx = medium_value(a): signed(+-1 or 0) * a's digit0"
+    ],
+    "boundary": {
+     "instruction_index_in_unit": 34,
+     "instruction": "lea    (%rax,%rdx,1),%rdi",
+     "address": "1373f4",
+     "why_this_is_the_boundary": "index 34 ('lea (%rax,%rdx,1),%rdi') is the FIRST instruction that reads BOTH unpacked values -- medium_value(b) in %rax and medium_value(a) in %rdx -- and combines them.  Every instruction before it (indices 26-33) touches only ONE operand's fields, or a constant; this is the earliest point either value COULD be summed, and it is exactly where CPython's source sums them ('stwodigits z = medium_value(a) + medium_value(b);', Objects/longobject.c:3741 per interp_cpython.md)."
+    },
+    "evidence_class": "forced by construction -- read directly off the instruction operands and their register-flow (which field offset each mov reads, which register each value lands in by the boundary instruction)."
+   },
+   "computation": {
+    "status": "carved this session (reused from interp_fastpath.json)",
+    "instructions": [
+     "lea    (%rax,%rdx,1),%rdi     %rdi = %rax + %rdx"
+    ],
+    "answer_register": "%rdi (holds z, the plain signed sum, right after this one instruction)"
+   },
+   "proof": {
+    "attempted": true,
+    "against_class": "c i64,i64 + (canonical_text 'lea (%rdi,%rsi,1),%rax; ret', op_units_c.json)",
+    "z3_bounded_domain_check": "unsat  (z3 could not find a,b within the stated domain where the two computations differ)",
+    "z3_unbounded_check": "unsat  (z3 could not find ANY 64-bit a,b, in or out of the domain, where the two computations differ -- the equality is not merely true within the fast-path domain, it is true everywhere a plain add and a 'lea' add ever differ, i.e. never; both instructions are literally the same 2's-complement addition)",
+    "verdict": "PROVED",
+    "reading": "the owner's framing HOLDS for the computation itself: CPython's fast-path add and c's add compute the identical function of their two integer inputs.  The domain constraint the task asked to state turns out NOT to be load-bearing for this particular proof -- it is load-bearing for the ARRIVAL step (digit0 extraction is only valid because the objects are known-compact) and for the PACKING step (which representation to box the answer into), never for the add itself.  Stated honestly rather than only reporting what was asked for.",
+    "rerun_round5": {
+     "rerun_by": "build_proposal_representation_dimension2.py (not copied from round 4 -- the checks were executed again)",
+     "z3_version": "5.1.0",
+     "bounded_domain_check": "unsat",
+     "unbounded_check": "unsat",
+     "verdict": "PROVED"
+    }
+   },
+   "would_be_row_option_b": {
+    "family_kind": "NEW representation-keyed family (option B, log_101 sec4)",
+    "family_key": "(representation='typed-pointer(PyLongObject*)')",
+    "row": {
+     "representation": "typed-pointer(PyLongObject*)",
+     "members": "cpython/long_add",
+     "note": "membership key is the representation dimension alone; carries no seed/computation relation to any compiled class."
+    },
+    "family_key_machine_form": "dwarf_type_pair='PyLongObject*,PyLongObject*'"
+   },
+   "would_be_row_option_b_with_a": {
+    "family_kind": "JOINS the same-seed family (option B-with-A, the owner's lean): representation carried as a DIMENSION on the existing row, membership unchanged",
+    "row": {
+     "joins_class": "c/rust/go/swift/cpp/kotlin i64,i64 + (the seed lea/add family the compiled table already carries -- NOT a new type_pair key, per THE SPELLING BAN and the DOM_OP CONSTRUCTION RULE, the join is machine-evidenced by the z3-proved computation match above, never by the token)",
+     "representation_dimension": "typed-pointer(PyLongObject*)",
+     "arrival_prefix_dimension": "8 instructions (medium_value(a)/medium_value(b) extraction), condition-gated: only reached under _PyLong_BothAreCompact(a,b)",
+     "proof_basis": "PROVED (z3, both bounded and unbounded checks unsat) -- see proof above"
+    },
+    "family_key_machine_form": "dwarf_type_pair='PyLongObject*,PyLongObject*'"
+   },
+   "type_pair_read_previous": "ptr64,ptr64",
+   "type_pair_read_width": "ptr64,ptr64",
+   "type_pair_read_width_evidence_class": "forced by construction (register width and dereference pattern, read off the unit's own lifted expression) -- fix_cpython_type_key.py's precedent.  Kept because it is true; demoted from being the KEY because a bare width is not a type.",
+   "type_pair_read_status": "READ",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "dwarf_type_read": {
+    "binary": "/persist/cpython_anchor/python",
+    "build": "cpython v3.14.7 anchor build (-O0 -g -fwrapv), per interp_cpython.json meta.builds.anchor",
+    "compilation_unit": "Objects/longobject.c",
+    "dwarf_low_pc": "0x170a1b",
+    "return_type": "PyLongObject*",
+    "formal_parameters": [
+     {
+      "param_name": "a",
+      "dwarf_type": "PyLongObject*",
+      "byte_size": 8
+     },
+     {
+      "param_name": "b",
+      "dwarf_type": "PyLongObject*",
+      "byte_size": 8
+     }
+    ],
+    "operand_selection_rule": "the first two formal parameters are the operands.",
+    "key_invariant_under_operand_choice": true,
+    "byte_sizes": [
+     8,
+     8
+    ]
+   },
+   "representation_note_round5": "Round 4's prose already read PyLongObject*, but from long_add's C signature quoted in interp_cpython.md -- human interpretation of stated design, the weaker class, while the machine field carried the bare width 'ptr64,ptr64'.  Both halves are repaired here from one source: the anchor build's own DWARF (Objects/longobject.c, low_pc 0x170a1b, parameters a and b, each PyLongObject*, 8 bytes).  Machine field and prose now say the same thing, and they say it on forced-by-construction evidence."
+  }
+ ],
+ "diff_against_round_4": [
+  {
+   "unit": "ruby/vm_opt_plus",
+   "field": "type_pair_read",
+   "round_4_value": "opaque_VALUE_dispatch",
+   "round_5_value": "VALUE,VALUE",
+   "status": "READ"
+  },
+  {
+   "unit": "ruby/rb_fix_plus",
+   "field": "type_pair_read",
+   "round_4_value": "tagged64",
+   "round_5_value": "VALUE,VALUE",
+   "status": "READ"
+  },
+  {
+   "unit": "ruby/rb_int_plus",
+   "field": "type_pair_read",
+   "round_4_value": "tagged64",
+   "round_5_value": "VALUE,VALUE",
+   "status": "READ"
+  },
+  {
+   "unit": "ruby/rb_big_plus",
+   "field": "type_pair_read",
+   "round_4_value": "ptr64,tagged64",
+   "round_5_value": "VALUE,VALUE",
+   "status": "READ"
+  },
+  {
+   "unit": "php/add_function",
+   "field": "type_pair_read",
+   "round_4_value": "ptr64,ptr64",
+   "round_5_value": "zval*,zval*",
+   "status": "READ"
+  },
+  {
+   "unit": "php/ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "field": "type_pair_read",
+   "round_4_value": "ptr64,ptr64",
+   "round_5_value": null,
+   "status": "REFUSED"
+  },
+  {
+   "unit": "php/ZEND_ADD_LONG_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "field": "type_pair_read",
+   "round_4_value": "ptr64,ptr64",
+   "round_5_value": null,
+   "status": "REFUSED"
+  },
+  {
+   "unit": "php/ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "field": "type_pair_read",
+   "round_4_value": "ptr64,ptr64",
+   "round_5_value": null,
+   "status": "REFUSED"
+  },
+  {
+   "unit": "cpython/long_add",
+   "field": "type_pair_read",
+   "round_4_value": "ptr64,ptr64",
+   "round_5_value": "PyLongObject*,PyLongObject*",
+   "status": "READ"
+  }
+ ],
+ "proof_rerun": {
+  "rerun_by": "build_proposal_representation_dimension2.py (not copied from round 4 -- the checks were executed again)",
+  "z3_version": "5.1.0",
+  "bounded_domain_check": "unsat",
+  "unbounded_check": "unsat",
+  "verdict": "PROVED"
+ },
+ "summary": {
+  "handlers_considered": 9,
+  "typed_keys_read_from_dwarf": 6,
+  "typed_keys_refused": 3,
+  "handlers_with_full_carve_and_proof": 1,
+  "handlers_refused_honestly": 8,
+  "proved_computation_matches": 1,
+  "machine_fields_changed": 9
+ }
+}

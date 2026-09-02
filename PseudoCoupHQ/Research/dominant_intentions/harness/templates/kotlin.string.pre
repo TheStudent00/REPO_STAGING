@@ -1,0 +1,21 @@
+// string probe bodies - kotlin (utf16 code units, immutable, == is CONTENT).
+val SE: String = "é"
+val SM: String = "𝄞"
+fun ops(x: String): String = x
+fun build(a: String, b: String): String = StringBuilder(a).append(b).toString()
+fun f_strU1_a(): String = fmts(ops("ab") + ops("cd"))
+fun f_strU2_a(): String = fmtb(build("ab", "cd") == ops("abcd"))
+fun f_strU3_a(): String = fmts(ops("abcdef").substring(1, 4))
+fun f_strU4_a(): String {
+    val t = ops(SE + SM)
+    return fmtb(String(t.toByteArray(Charsets.UTF_8), Charsets.UTF_8) == t)
+}
+fun f_Fs1_a(): String = ops(SE)[0].code.toString()
+fun f_Fs1_b(): String = ops(SM)[0].code.toString()
+fun f_Fs2_a(): String { var a = ops("abc"); val b = a; a += "d"; return fmts(b) }
+fun f_Fs3_a(): String = ops(SE).length.toString()
+fun f_Fs3_b(): String = ops(SM).length.toString()
+fun f_Fs3_c(): String = ops(SE + SM).length.toString()
+fun f_Fs4_a(): String = ops("abc")[0].toString()
+fun f_Fs5_a(): String = fmtb(build("ab", "cd") == ops("abcd"))
+fun f_Fs5_c(): String { val s = ops("abcd"); return fmtb(s == s) }

@@ -1,0 +1,154 @@
+job2_remaining_refusals_report.txt -- JOB 2: re-run Stage 1/2/4's own
+refused buckets after JOB 1's fix (canon14.py), then work the
+remainder by cause. Evidence class on every claim: forced by
+construction (z3 unsat/sat on the disequality against the unit's own
+real ship code) unless marked otherwise.
+====================================================================================================
+
+PART A -- THE RE-RUN (canon14.py, JOB 1's own driver, already covers
+this: it re-attempts EVERY not_yet_converged unit against
+canon13_units_<lang>.json's baseline, which IS Stage 4's own output,
+itself built on Stage 1/2's).
+
+Stage 1 left 28 refused (4 c + 12 cpp + 0 go + 0 rust + 12 swift, read
+off canon11_units_<lang>.json's own `stage1_tally`, summed).
+Stage 2 left the SAME 28 refused (canon12_units_<lang>.json's own
+`stage2_tally` -- Stage 2's own scope, wide divmod, does not touch
+these units; they pass through unattempted-for-that-cause and stay
+refused for the SAME underlying reason).
+Stage 4 left 32 attempted-but-refused (4 c + 12 cpp + 16 swift,
+canon13_units_<lang>.json's own `stage4_tally` and
+canon13_worked_example.txt's own count) -- Stage 4's deep-dispatch fix
+made 4 more swift units REACHABLE (swift's own diagnosed 4, JOB 1's
+own sighting (b)) on top of the 12 already carried from Stage 1/2, so
+32 = 28 (carried) + 4 (newly reachable) - 0 (none of the carried 28
+became UNreachable).
+
+JOB 1's re-run (canon14.py) attempted exactly this 32-unit set (the
+current not_yet_converged population with ANY reachable z3 tree --
+every other not_yet_converged unit refuses even EARLIER, before any
+node reaches gen14 at all; see PART C). RESULT: 12 accepted (all 4 c;
+8 of cpp's 12), 20 still refused (4 cpp `a <=> b`; all 16 swift).
+
+JOB 1's own diagnosis (canon14_worked_examples.txt) traced ALL 20
+remaining refusals to condition_table2.substitute_conditions's
+POSITIONAL call-site pairing (documented as an assumption in that
+file's own header: "the call sites appear left-to-right in
+normal_path_raw in the same program order as the setcc/cmov/branch
+instructions that read them" -- an assumption, not a proof, and false
+for these 20 units). JOB 2 (canon15.py, condition_table3.py) replaced
+that ONE assumption with a value-based pairing (VEX's own numeric
+`cond` argument, matched against each real setcc's own already-
+resolved condition name -- forced by construction, no text-position
+guess) for exactly this 20-unit target set. RESULT: 12 more accepted
+(all 4 cpp `<=>`; 8 of swift's 16), 8 still refused (swift's remaining
+Int64/Int32-vs-UInt64 mixed-signedness compares where the SIGNED side
+is Int32, specifically).
+
+CUMULATIVE, this lap (JOB 1 + JOB 2), measured programmatically, zero
+regressions in both passes (every already-converged unit keeps byte-
+identical newest-generation text -- checked directly, not sampled):
+
+    converged before (canon13, = task's own "997 of 1,641"):  997
+    converged after JOB 1 (canon14):                         1009  (+12)
+    converged after JOB 2 (canon15):                         1021  (+12)
+    net this lap:                                              +24
+
+----------------------------------------------------------------------------------------------------
+PART B -- THE GROUP THAT REMAINS: swift's 8 Int32-vs-UInt64 units.
+
+    swift/296  a < b   Int32/UInt64   DISPROVED
+    swift/342  a > b   UInt64/Int32   DISPROVED
+    swift/378  a <= b  UInt64/Int32   DISPROVED
+    swift/404  a >= b  Int32/UInt64   DISPROVED
+    swift/440  a != b  Int32/UInt64   DISPROVED
+    swift/450  a != b  UInt64/Int32   DISPROVED
+    swift/512  a == b  Int32/UInt64   DISPROVED
+    swift/522  a == b  UInt64/Int32   DISPROVED
+
+Compare against their OWN Int64-vs-UInt64 siblings (op_302, 343, 379,
+410, 446, 451, 518, 523 -- the SAME 8 operators, the SAME UInt64 other
+side, differing ONLY in the signed side's width) -- every one of THOSE
+8 converged this lap (JOB 2's pairing fix was sufficient for them).
+This isolates the remaining defect to something specific to the
+32-BIT signed operand, not the pairing (already proven fixed for the
+64-bit-signed sibling of every one of these 8) and not the general
+concat-fold (JOB 1, already proven fixed -- these candidates render
+short and clean, no bit-serial reconstruction).
+
+DIAGNOSIS (evidence class: forced by construction, direct read of
+swift/op_296's own job2_pairing_candidate_text): the rendered sign
+test for `a` (Int32) is
+
+    mov $0,%r11; mov %rdi,%r9; and $-1,%r9d; cmp %r9,%r11; setg %r10b
+
+-- i.e. `0 >s zero_extend_64(a)`. A 32-bit value ZERO-extended to 64
+bits is NEVER negative as a 64-bit signed quantity (its bit 63 is
+always 0), so `0 >s zero_extend_64(a)` is ALWAYS FALSE regardless of
+`a`'s own sign -- structurally unable to express "is the 32-bit value
+`a` negative" at all. Real ship code tests this with `test %edi,%edi;
+sets` (the 32-bit sign flag, direct). This is a THIRD, DISTINCT defect
+from both JOB 1's (bit-serial reconstruction) and JOB 2's (call-site
+pairing) -- somewhere in canon12_normalize.py's wide-arithmetic model,
+the 32-bit signed operand's own SIGN acquisition is built as a 64-bit
+comparison against a ZERO-extended (not sign-extended) copy of itself,
+which cannot ever be true. NOT FIXED this lap -- found while closing
+out JOB 2's own target set, reported per the evidence doctrine rather
+than left unexplained or forced to a false converge. A follow-on
+should locate where canon12_normalize.py builds this specific
+sign-test sub-expression for a mixed-width signed/unsigned comparison
+and confirm whether it is a sign-extend that got typo'd to a
+zero-extend, or a genuinely different (and here, wrong) formula.
+
+----------------------------------------------------------------------------------------------------
+PART C -- THE 526 UNITS THAT NEVER REACH A RENDERER AT ALL, GROUPED BY
+STORED REASON (canon14_units_<lang>.json's own `job1_refusal_reason`,
+counted directly, not sampled). These are refused by render_unit7's
+OWN call-atom check, strictly BEFORE gen7/gen11/../gen14 ever sees a
+node -- no amount of concat/bvnot renderer work (JOB 1) or condition-
+pairing work (JOB 2) can reach them; they are Stage 3's and Stage 5's
+own scope (stage3_vector_constants_report.txt,
+stage5_float_conditions_diagnosis.txt), summarized here for
+completeness since JOB 2 asks for every group's reason verbatim:
+
+    largest groups, summed across c+cpp+go+rust+swift:
+      ~208  "...uninterpreted atom for VEX op 'amd64g_calculate_
+             condition'..." (single call, no logic/sub/float
+             flagsetter this table's own gate recognizes -- mostly
+             ucomisd/ucomiss float compares, Stage 5(a)'s own 260-unit
+             scope per stage5_float_conditions_diagnosis.txt)
+      ~86   "...2 distinct uninterpreted atoms (amd64g_calculate_
+             condi[tion]...)..." -- TWO condition calls, at least one
+             float; the SAME call-site-pairing family JOB 2 fixed for
+             the pure-integer case, but these ALSO carry a CmpF64/
+             CmpF32 atom this renderer does not model at all (Stage
+             5(a) again)
+      ~80   "...uninterpreted atom for VEX op 'XorV128'..." -- Stage
+             3's own 80-unit bucket (10 genuine float-negate units +
+             70 float-comparison-driven units mis-filed by VEX-op-name
+             proximity, per stage3_vector_constants_report.txt); JOB 3
+             below targets the 10 genuine ones
+      ~34   "...3 distinct uninterpreted atoms (CmpF64, amd64g_
+             calculate_condi[tion]...)..." -- Stage 5(a)'s own
+             mixed-integer-and-float shape
+      ~34   packed/scalar float ARITHMETIC atoms (Add/Sub/Mul/
+             Div{32F0x4,64F0x2}, CmpEQ{32F0x4,64F0x2}) -- Stage 5(b)'s
+             own ~180-unit scope (this count is the SAMPLE this lap's
+             grouping pass happened to enumerate per-language; the
+             full 180 is stage5's own prior measurement, not
+             re-counted here)
+      ~30   Mul64/DivModS128to64/DivModU128to64/"<width-pad..." --
+             Stage 2's own residual wide-arithmetic shapes not yet
+             modeled
+
+    Every one of these groups needs the SAME missing XMM/float
+    register plumbing (stage3_vector_constants_report.txt's and
+    stage5_float_conditions_diagnosis.txt's own shared finding) or a
+    genuinely new float-condition-code model (Stage 5(a)) -- neither
+    is a JOB 1/JOB 2-shaped fix (concat rendering, condition pairing).
+    JOB 3 below builds the XMM plumbing and picks off the 10 genuinely
+    tractable units (Stage 3's own float-negate-via-sign-mask idiom);
+    the remainder (packed float arithmetic, float condition codes)
+    stays honestly deferred, exactly as stage5_float_conditions_
+    diagnosis.txt already concluded ("a genuine multi-session
+    undertaking, not a same-lap add-on").

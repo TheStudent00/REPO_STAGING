@@ -1,0 +1,396 @@
+{
+ "language": "kotlin",
+ "layer": 2,
+ "purpose": "The ways a running kotlin program can HOLD layer-1 content. Not layer 1 (the data is fixed), not layer 3 (no operations beyond load-and-read-back), not the type system.",
+ "reference": "language knowledge, checked against ../type_vocabulary/raw/kotlin.types.json as a candidate checklist only (superseded node; not a decision instrument).",
+ "probe_style": "probe",
+ "spell": {
+  "nothing": {
+   "null": "null"
+  },
+  "truth": {
+   "true": "true",
+   "false": "false"
+  },
+  "whole": {
+   "base_zero": "0",
+   "base_42": "42",
+   "i64max": "9223372036854775807",
+   "i64max_plus1": "9223372036854775808",
+   "p53_plus1": "9007199254740993",
+   "u64max": "18446744073709551615"
+  },
+  "fractional": {
+   "base_1_5": "1.5",
+   "base_pi": "3.141592653589793",
+   "negzero": "-0.0",
+   "nan": "Double.NaN",
+   "inf": "Double.POSITIVE_INFINITY",
+   "point1": "0.1"
+  },
+  "text": {
+   "base_empty": "\"\"",
+   "base_hello": "\"hello\"",
+   "base_lines": "\"line one\\nline two\"",
+   "eacute": "\"\\u00e9\"",
+   "clef": "\"\\uD834\\uDD1E\"",
+   "escapes": "\"quote \\\" backslash \\\\ tab\\there\""
+  }
+ },
+ "forms": {
+  "nothing": [
+   {
+    "rep": "null",
+    "spelling": "null",
+    "kind": "literal",
+    "note": "the absence value; any nullable type can hold it.",
+    "decl": "val v: Int? = {V};",
+    "read": "v.toString()"
+   },
+   {
+    "rep": "Unit",
+    "spelling": "Unit",
+    "kind": "literal",
+    "note": "a value carrying nothing, the single-inhabitant shape returned by statements; this is a full value, not an absence, unlike the null probe above.",
+    "spell_override": {
+     "null": "Unit"
+    },
+    "decl": "val v: Unit = {V};",
+    "read": "v.toString()"
+   },
+   {
+    "rep": "Nothing?",
+    "spelling": "null",
+    "kind": "literal",
+    "note": "the bottom type; the only value it can ever hold is null itself, so this rep is inhabited by exactly the absence probe and nothing else.",
+    "decl": "val v: Nothing? = {V};",
+    "read": "v.toString()"
+   }
+  ],
+  "truth": [
+   {
+    "rep": "Boolean",
+    "spelling": "true / false",
+    "kind": "literal",
+    "note": "two values, no numeric side.",
+    "decl": "val v: Boolean = {V};",
+    "read": "v.toString()"
+   }
+  ],
+  "whole": [
+   {
+    "rep": "Int",
+    "spelling": "42",
+    "kind": "literal",
+    "note": "signed 32-bit; the default whole-number holder, refuses anything past its own width at compile time.",
+    "decl": "val v: Int = {V};",
+    "read": "v.toString()"
+   },
+   {
+    "rep": "Long",
+    "spelling": "42L",
+    "kind": "literal",
+    "note": "signed 64-bit; reaches i64max cleanly, refuses i64max_plus1 and u64max at compile time.",
+    "spell_override": {
+     "base_zero": "0L",
+     "base_42": "42L",
+     "i64max": "9223372036854775807L",
+     "i64max_plus1": "9223372036854775808L",
+     "p53_plus1": "9007199254740993L",
+     "u64max": "18446744073709551615L"
+    },
+    "decl": "val v: Long = {V};",
+    "read": "v.toString()"
+   },
+   {
+    "rep": "ULong",
+    "spelling": "42uL",
+    "kind": "literal",
+    "note": "unsigned 64-bit; the one whole-holder built to take u64max cleanly, refuses anything below zero.",
+    "spell_override": {
+     "base_zero": "0uL",
+     "base_42": "42uL",
+     "i64max": "9223372036854775807uL",
+     "i64max_plus1": "9223372036854775808uL",
+     "p53_plus1": "9007199254740993uL",
+     "u64max": "18446744073709551615uL"
+    },
+    "decl": "val v: ULong = {V};",
+    "read": "v.toString()"
+   },
+   {
+    "rep": "BigInteger",
+    "spelling": "java.math.BigInteger(\"9223372036854775808\")",
+    "kind": "constructor",
+    "pre": "import java.math.BigInteger",
+    "note": "arbitrary-width whole number built from digit text; every edge in the data file fits with room to spare.",
+    "decl": "val v: BigInteger = BigInteger(\"{V}\");",
+    "read": "v.toString()"
+   }
+  ],
+  "fractional": [
+   {
+    "rep": "Double",
+    "spelling": "1.5",
+    "kind": "literal",
+    "note": "IEEE double, the default fractional holder.",
+    "decl": "val v: Double = {V};",
+    "read": "v.toString()"
+   },
+   {
+    "rep": "Float",
+    "spelling": "1.5f",
+    "kind": "literal",
+    "note": "IEEE single; holds every base value but silently loses precision on the wide whole edges if reused there, and rounds pi to fewer digits.",
+    "spell_override": {
+     "base_1_5": "1.5f",
+     "base_pi": "3.141592653589793f",
+     "negzero": "-0.0f",
+     "nan": "Float.NaN",
+     "inf": "Float.POSITIVE_INFINITY",
+     "point1": "0.1f"
+    },
+    "decl": "val v: Float = {V};",
+    "read": "v.toString()"
+   },
+   {
+    "rep": "BigDecimal",
+    "spelling": "java.math.BigDecimal(\"3.141592653589793\")",
+    "kind": "constructor",
+    "pre": "import java.math.BigDecimal",
+    "note": "arbitrary-precision decimal text with no concept of NaN or Infinity; the special-value probes are natural attempts that throw at run time rather than construct anything.",
+    "decl": "val v: BigDecimal = BigDecimal(\"{V}\");",
+    "read": "v.toString()"
+   }
+  ],
+  "text": [
+   {
+    "rep": "String",
+    "spelling": "\"hello\"",
+    "kind": "literal",
+    "note": "immutable utf-16 text, the default text holder.",
+    "decl": "val v: String = {V};",
+    "read": "v"
+   },
+   {
+    "rep": "CharArray",
+    "spelling": "\"hello\".toCharArray()",
+    "kind": "constructor",
+    "note": "a mutable run of utf-16 code units; the clef codepoint sits across two elements, not one.",
+    "decl": "val v: CharArray = ({V}).toCharArray();",
+    "read": "String(v)"
+   },
+   {
+    "rep": "StringBuilder",
+    "spelling": "StringBuilder(\"hello\")",
+    "kind": "constructor",
+    "note": "a mutable text buffer built by appending onto the base text.",
+    "decl": "val v: StringBuilder = StringBuilder({V});",
+    "read": "v.toString()"
+   },
+   {
+    "rep": "ByteArray",
+    "spelling": "\"hello\".toByteArray(Charsets.UTF_8)",
+    "kind": "constructor",
+    "note": "holds text only as encoded utf-8 bytes; the codepoints are gone until decoded back.",
+    "decl": "val v: ByteArray = ({V}).toByteArray(Charsets.UTF_8);",
+    "read": "String(v, Charsets.UTF_8)"
+   }
+  ],
+  "sequence": [
+   {
+    "rep": "List",
+    "spelling": "listOf(1, 2, 3)",
+    "kind": "constructor",
+    "note": "a read-only ordered run built by a factory function, one declared element kind.",
+    "read": "v.toString()",
+    "probes": {
+     "empty": "val v: List<Long> = listOf()",
+     "base": "val v: List<Long> = listOf(1, 2, 3)",
+     "strs": "val v: List<String> = listOf(\"a\", \"b\")",
+     "mixed": "val v: List<Any?> = listOf(1, \"two\", 3.0, true, null)",
+     "bigint": "val v: List<Long> = listOf(9223372036854775808)"
+    }
+   },
+   {
+    "rep": "MutableList",
+    "spelling": "mutableListOf(1, 2, 3)",
+    "kind": "constructor",
+    "note": "the same ordered run but open to in-place add, remove, and set after it is built.",
+    "read": "v.toString()",
+    "probes": {
+     "empty": "val v: MutableList<Long> = mutableListOf()",
+     "base": "val v: MutableList<Long> = mutableListOf(1, 2, 3)",
+     "strs": "val v: MutableList<String> = mutableListOf(\"a\", \"b\")",
+     "mixed": "val v: MutableList<Any?> = mutableListOf(1, \"two\", 3.0, true, null)",
+     "bigint": "val v: MutableList<Long> = mutableListOf(9223372036854775808)"
+    }
+   },
+   {
+    "rep": "Array<T>",
+    "spelling": "arrayOf(1L, 2L, 3L)",
+    "kind": "constructor",
+    "note": "a fixed-length run backed by a raw array, element kind fixed by the declared type parameter.",
+    "read": "v.contentToString()",
+    "probes": {
+     "empty": "val v: Array<Long> = arrayOf()",
+     "base": "val v: Array<Long> = arrayOf(1, 2, 3)",
+     "strs": "val v: Array<String> = arrayOf(\"a\", \"b\")",
+     "mixed": "val v: Array<Any?> = arrayOf(1, \"two\", 3.0, true, null)",
+     "bigint": "val v: Array<Long> = arrayOf(9223372036854775808)"
+    }
+   },
+   {
+    "rep": "IntArray",
+    "spelling": "intArrayOf(1, 2, 3)",
+    "kind": "constructor",
+    "note": "a specialized primitive-element array with no boxing; the narrowest sequence holder, refuses non-numeric elements outright.",
+    "read": "v.contentToString()",
+    "probes": {
+     "empty": "val v: IntArray = intArrayOf()",
+     "base": "val v: IntArray = intArrayOf(1, 2, 3)",
+     "strs": "val v: IntArray = intArrayOf(\"a\", \"b\")",
+     "mixed": "val v: IntArray = intArrayOf(1, \"two\", 3.0, true, null)",
+     "bigint": "val v: IntArray = intArrayOf(9223372036854775808)"
+    }
+   },
+   {
+    "rep": "ArrayDeque",
+    "spelling": "ArrayDeque(listOf(1L, 2L, 3L))",
+    "kind": "constructor",
+    "note": "an ordered run open to push and pop at both ends.",
+    "read": "v.toString()",
+    "probes": {
+     "empty": "val v: ArrayDeque<Long> = ArrayDeque()",
+     "base": "val v: ArrayDeque<Long> = ArrayDeque(listOf(1, 2, 3))",
+     "strs": "val v: ArrayDeque<String> = ArrayDeque(listOf(\"a\", \"b\"))",
+     "mixed": "val v: ArrayDeque<Any?> = ArrayDeque(listOf(1, \"two\", 3.0, true, null))",
+     "bigint": "val v: ArrayDeque<Long> = ArrayDeque(listOf(9223372036854775808))"
+    }
+   }
+  ],
+  "keyed": [
+   {
+    "rep": "Map",
+    "spelling": "mapOf(\"a\" to 1)",
+    "kind": "constructor",
+    "note": "a read-only name-to-element grouping built by a factory function, insertion order kept for iteration.",
+    "read": "v.toString()",
+    "probes": {
+     "empty": "val v: Map<String, Long> = mapOf()",
+     "flat": "val v: Map<String, Long> = mapOf(\"a\" to 1, \"b\" to 2, \"c\" to 3)",
+     "intlike": "val v: Map<String, String> = mapOf(\"1\" to \"string-one-key\", \"b\" to \"2\")",
+     "emptykey": "val v: Map<String, String> = mapOf(\"\" to \"empty-string key\")",
+     "nested": "val v: Map<String, Map<String, List<Long>>> = mapOf(\"outer\" to mapOf(\"inner\" to listOf(1, 2)))"
+    }
+   },
+   {
+    "rep": "MutableMap",
+    "spelling": "mutableMapOf(\"a\" to 1)",
+    "kind": "constructor",
+    "note": "the same grouping open to in-place put and remove after it is built.",
+    "read": "v.toString()",
+    "probes": {
+     "empty": "val v: MutableMap<String, Long> = mutableMapOf()",
+     "flat": "val v: MutableMap<String, Long> = mutableMapOf(\"a\" to 1, \"b\" to 2, \"c\" to 3)",
+     "intlike": "val v: MutableMap<String, String> = mutableMapOf(\"1\" to \"string-one-key\", \"b\" to \"2\")",
+     "emptykey": "val v: MutableMap<String, String> = mutableMapOf(\"\" to \"empty-string key\")",
+     "nested": "val v: MutableMap<String, MutableMap<String, MutableList<Long>>> = mutableMapOf(\"outer\" to mutableMapOf(\"inner\" to mutableListOf(1, 2)))"
+    }
+   },
+   {
+    "rep": "LinkedHashMap",
+    "spelling": "LinkedHashMap<String, Long>()",
+    "kind": "constructor",
+    "note": "the concrete class behind Kotlin's default map factories, named directly rather than through a factory function; insertion order kept explicitly.",
+    "read": "v.toString()",
+    "probes": {
+     "empty": "val v = LinkedHashMap<String, Long>()",
+     "flat": "val v = LinkedHashMap<String, Long>(); v[\"a\"] = 1; v[\"b\"] = 2; v[\"c\"] = 3",
+     "intlike": "val v = LinkedHashMap<String, String>(); v[\"1\"] = \"string-one-key\"; v[\"b\"] = \"2\"",
+     "emptykey": "val v = LinkedHashMap<String, String>(); v[\"\"] = \"empty-string key\"",
+     "nested": "val v = LinkedHashMap<String, LinkedHashMap<String, List<Long>>>(); val inner = LinkedHashMap<String, List<Long>>(); inner[\"inner\"] = listOf(1, 2); v[\"outer\"] = inner"
+    }
+   },
+   {
+    "rep": "data class",
+    "spelling": "data class R3(val a: Long, val b: Long, val c: Long)",
+    "kind": "constructor",
+    "note": "field names are fixed when the shape is written, not when the data arrives; the odd keys are not spellable as field names at all.",
+    "read": "v.toString()",
+    "probes": {
+     "empty": "class R0\nval v = R0()",
+     "flat": "data class R3(val a: Long, val b: Long, val c: Long)\nval v = R3(1, 2, 3)",
+     "intlike": "data class RI(val `1`: Long, val b: String)\nval v = RI(1, \"2\")",
+     "emptykey": "data class RE(val `` : String)\nval v = RE(\"empty-string key\")",
+     "nested": "data class RN(val outer: List<Long>)\nval v = RN(listOf(1, 2))"
+    }
+   }
+  ],
+  "nesting": [
+   {
+    "rep": "List<List<Any?>>",
+    "spelling": "listOf(listOf(1, 2), listOf(3, 4))",
+    "kind": "constructor",
+    "note": "nesting by repeating the same holder; the element type parameter must widen to Any? once depth or form varies within one run.",
+    "read": "v.toString()",
+    "probes": {
+     "seq_in_seq": "val v: List<List<Long>> = listOf(listOf(1, 2), listOf(3, 4))",
+     "seq_in_map": "val v: Map<String, Map<String, List<Long>>> = mapOf(\"outer\" to mapOf(\"inner\" to listOf(1, 2)))",
+     "mixed_depth": "val v: List<Any?> = listOf(1, listOf(2, mapOf(\"k\" to \"t\")), true, null)"
+    }
+   },
+   {
+    "rep": "sealed class Node",
+    "spelling": "sealed class Node; class Whole(val n: Long): Node(); class Seq(val items: List<Node>): Node() ...",
+    "kind": "constructor",
+    "pre": "sealed class Node\ndata class NNull(val u: Unit = Unit): Node()\ndata class NTruth(val b: Boolean): Node()\ndata class NWhole(val n: Long): Node()\ndata class NText(val s: String): Node()\ndata class NSeq(val items: List<Node>): Node()\ndata class NMap(val entries: Map<String, Node>): Node()",
+    "note": "a hand-written sum shape; the only kotlin holder here that takes every layer-1 form in one element position, which is what mixed-depth nesting needs.",
+    "read": "v.toString()",
+    "probes": {
+     "seq_in_seq": "val v: Node = NSeq(listOf(NSeq(listOf(NWhole(1), NWhole(2))), NSeq(listOf(NWhole(3), NWhole(4)))))",
+     "seq_in_map": "val v: Node = NMap(mapOf(\"outer\" to NMap(mapOf(\"inner\" to NSeq(listOf(NWhole(1), NWhole(2)))))))",
+     "mixed_depth": "val v: Node = NSeq(listOf(NWhole(1), NSeq(listOf(NWhole(2), NMap(mapOf(\"k\" to NText(\"t\"))))), NTruth(true), NNull()))"
+    }
+   }
+  ],
+  "identity": [
+   {
+    "rep": "MutableList<MutableList<T>> (shared reference)",
+    "spelling": "mutableListOf(s, s)",
+    "kind": "constructor",
+    "note": "a mutable holder passed by reference; putting the same object in two positions makes both positions name one node, so a mutation through one is visible through the other.",
+    "read": "r",
+    "probes": {
+     "shared": "val s: MutableList<Long> = mutableListOf(1, 2, 3)\nval v: MutableList<MutableList<Long>> = mutableListOf(s, s)\nv[0].add(99)\nval r: String = if (v[1].last() == 99L) \"shared\" else \"copied\"",
+     "diamond": "val t: MutableList<Long> = mutableListOf(7)\nval v: List<MutableList<Long>> = listOf(t, t)\nval r: String = if (v[0] === v[1]) \"same\" else \"distinct\"",
+     "cycle": "val v: MutableList<Any?> = mutableListOf()\nv.add(v)\nval r: String = if (v[0] === v) \"cycle\" else \"no-cycle\""
+    }
+   },
+   {
+    "rep": "data class holding a reference",
+    "spelling": "data class Box(val items: MutableList<Long>)",
+    "kind": "constructor",
+    "note": "a named shape whose field holds a reference to a sub-node; two boxes built from the same list co-node the one list.",
+    "read": "r",
+    "probes": {
+     "shared": "data class Box(val items: MutableList<Long>)\nval s: MutableList<Long> = mutableListOf(1, 2, 3)\nval left = Box(s)\nval right = Box(s)\nleft.items.add(99)\nval r: String = if (right.items.last() == 99L) \"shared\" else \"copied\"",
+     "diamond": "data class Box(val items: MutableList<Long>)\nval t: MutableList<Long> = mutableListOf(7)\nval viaA = Box(t)\nval viaB = Box(t)\nval r: String = if (viaA.items === viaB.items) \"same\" else \"distinct\"",
+     "cycle": "class Node(var name: String) { var selfref: Node? = null }\nval n = Node(\"loop\")\nn.selfref = n\nval r: String = if (n.selfref === n) \"cycle\" else \"no-cycle\""
+    }
+   },
+   {
+    "rep": "data class of primitives (value holder)",
+    "spelling": "data class Point(val x: Long, val y: Long); p.copy()",
+    "kind": "constructor",
+    "note": "a shape holding only primitive fields, so copying it copies the values rather than sharing a sub-node; mutation is impossible since the fields are val, but a fresh copy still starts equal-by-content and independent, which is the value-copying case rather than a reference-sharing one.",
+    "read": "r",
+    "probes": {
+     "shared": "data class Point(val x: Long, val y: Long)\nval s = Point(1, 2)\nval left = s.copy()\nval right = s.copy()\nval r: String = if (left == right && left !== right) \"copied\" else \"shared\"",
+     "diamond": "data class Point(val x: Long, val y: Long)\nval t = Point(7, 7)\nval viaA = t.copy()\nval viaB = t.copy()\nval r: String = if (viaA === viaB) \"same\" else \"distinct\"",
+     "cycle": "data class Point(val x: Long, val self: Point)\nval n = Point(1, Point(2, Point(3, Point(4, null!!))))\nval r: String = if (n.self.self === n) \"cycle\" else \"no-cycle\""
+    }
+   }
+  ]
+ }
+}

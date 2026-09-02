@@ -1,0 +1,59 @@
+canon22_worked_example.txt -- c/op_537 (`a > b`, a:int32_t, b:float),
+int-to-float conversion + ucomisd/ucomiss flags compare. instruction
+text | plain reading, space-aligned (SPEC_reading_form.md's own
+shape).
+====================================================================================================
+
+REAL SHIP CODE (canon4_units_c.json's own `mnem`, forced by
+construction):
+
+    cvtsi2ss %edi,%xmm1   %xmm1 = int_to_f32(%edi)
+    xor %eax,%eax         %eax = 0
+    ucomiss %xmm0,%xmm1   flags = ucompare_f32(%xmm1, %xmm0)
+    seta %al              %al = 1 if flags say GT else 0
+    ret                   return %eax
+
+THIS LAP'S CANONICAL TEXT (canon22_units_c.json's own `canon22_text`,
+condition_table4.py's UNCHANGED FCxx substitution + condition_table8.
+py's conversion-aware operand classifier + canon22_render.py's
+XMM+conversion rendering, standardized registers -- a's own converted
+value lands in a FRESH temp %xmm2, taken from canon16_xmm.py's own
+ordered pool):
+
+    cvtsi2ss %edi,%xmm2   %xmm2 = int_to_f32(%edi)
+    ucomiss %xmm0,%xmm2   flags = ucompare_f32(%xmm2, %xmm0)
+    mov $0,%eax           %eax = 0
+    seta %al              %al = 1 if flags say GT else 0
+    movzx %al,%eax         %eax = zero_extend(%al)
+    ret                   return %eax
+
+WHY THIS UNIT WAS STUCK BEFORE THIS LAP: condition_table4.py's own
+substitution already turned the `amd64g_calculate_condition` call
+into an `FCUGT(CmpF64(P,Q))` atom (P = a converted to f32 then widened
+to f64 for VEX's own CmpF64 helper, Q = b, native f32 widened the
+same way) -- but canon17_float.classify_float_operand's own six-shape
+whitelist only recognizes P/Q as a NATIVE float register or the
+literal zero; a's own converted value (`F32toF64(F64toF32(<rm>,
+I32StoF64(ex32@0(in0:64))))`) matched none of the six, so canon17_
+render.py refused honestly (`Unsupported`), which downstream reporting
+recorded as the generic "amd64g_calculate_condition... condition-code
+helper call" refusal the task's own brief quoted verbatim.
+condition_table8.classify_float_operand8 recognizes this exact shape
+(condition_table6.classify_conv_expr's own i32_to_f32 kind, unwrapped
+from VEX's own outer ucomiss-compare widen), records the REAL compare
+width (32, ucomiss, not the widened 64), and canon22_render.py emits
+the real `cvtsi2ss` instruction real ship code itself uses.
+
+GATE (canon22_behaviour_check.anchored_check, real z3 FPA --
+fpSignedToFP for the conversion, fpLT/fpEQ/fpIsNaN for the ucomiss
+compare, fpToIEEEBV at every register write): PROVED_EQUAL -- these
+two texts compute the identical %eax value for every possible %edi/
+%xmm0 starting state, byte-different (canon22's own fresh temp %xmm2
+vs real ship's own %xmm1, an extra explicit `mov $0,%eax`/`movzx`
+where real ship's own `xor %eax,%eax` already zeroed the register
+before the compare) but semantically proved, not assumed.
+
+ZERO REGRESSIONS (programmatic, this lap's own report script): every
+one of the 1,231 units already converged before this lap kept its
+newest-generation text byte-identical after canon22.py ran, checked
+directly over all 1,779 units in all five languages, not sampled.

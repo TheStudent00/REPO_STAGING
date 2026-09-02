@@ -1,0 +1,354 @@
+#!/usr/bin/env python3
+"""l3_interval_gen.py -- emit the INTERVAL lanes for the two pilot
+languages (rust, static; ruby, open dispatch / route C).
+
+Pilot scope, the owner 2026-08-21: rust and ruby ONLY.  The other ten follow
+later if the pilot verifies; nothing here touches them.
+
+Lane mechanics are the ones log_027 section 3 settled and the earlier
+campaign used, reused rather than reinvented:
+
+  - a lane is a self-contained `/bin/sh` script dropped into
+    `SandboxDesign/agent/drop/`; the daemon runs it and writes
+    `agent/status/<name>.status`; products land in `/out`.
+  - the payload travels gzip+base64 INSIDE the script, because the
+    runner cannot see this repo.
+  - rust: one rustc compile per chunk of 1500 probes,
+    `rustc -C debug-assertions=on -C opt-level=0`, the SAME flags
+    `l3_exec.py` used, with `unconditional_panic` and
+    `arithmetic_overflow` allowed so an accepted probe still compiles;
+    the panic itself still happens at run time, is caught by
+    `catch_unwind`, and is recorded as `RAISE:panic`.  A probe that
+    stops the process is restarted past, exactly as before, and
+    recorded as an ABORT.
+  - ruby: an `eval` per sample under begin/rescue, address space
+    capped, and a runner that restarts the driver past any probe that
+    stopped it (recording that probe ABORT) -- see l3_interval_ruby.py.
+
+Which cells get an interval row:
+
+  rust  -- the numeric holder pairs the compiler ALREADY ACCEPTED, read
+           straight out of `acceptance_rust_A2.json`.  Acceptance is
+           NOT re-run: every interval sample lives inside its own
+           holder's range, so the verdicts still hold.
+  ruby  -- every ordered numeric holder pair times the operator menu;
+           execution is the only acceptance evidence route C has.
+
+ROW SHAPE (the owner's words, 2026-08-21): "each set of interval inputs and
+outputs to be contained within in their own respective row."  So the
+lane emits one line per SAMPLE, and `l3_interval_read.py` folds the 32
+samples of one (operator, lhs holder, rhs holder, interval spec) into a
+SINGLE row carrying three vectors.  Nothing is padded: a sample with no
+value carries its outcome token in the slot.
+
+VOCABULARY (absolute): super-node / sub-node / co-node / sub-tree;
+the OS-stopped outcome is ABORT.
+"""
+
+import base64
+import gzip
+import io
+import json
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+
+LANES = os.path.join(HERE, "lanes")
+DROP = os.path.abspath(os.path.join(HERE, "..", "..", "..",
+                                    "SandboxDesign", "agent", "drop"))
+
+from l3_accept import holders, ops                          # noqa: E402
+from l3_exec import RT_RUST                                 # noqa: E402
+import l3_interval_values as IV                             # noqa: E402
+import l3_interval_ruby as RB                               # noqa: E402
+
+N = IV.N_SAMPLES
+
+
+def b64gz(text):
+    buf = io.BytesIO()
+    with gzip.GzipFile(fileobj=buf, mode="wb", mtime=0) as g:
+        g.write(text.encode("utf-8"))
+    return base64.b64encode(buf.getvalue()).decode("ascii")
+
+
+def wrap(s, width=76):
+    return "\n".join(s[i:i + width] for i in range(0, len(s), width))
+
+
+# ------------------------------------------------------------------
+# the pilot's numeric holder table, per language
+# ------------------------------------------------------------------
+
+def numeric_table(lang):
+    """[(holder_index, form, holder, ladder_id, [32 decls for `a`],
+         [32 decls for `b`], pre)] in holder-index order."""
+    hs, _ = holders(lang)
+    out = []
+    for i, h in enumerate(hs):
+        key = (lang, h["form"], h["rep"])
+        if key not in IV.NUMERIC_HOLDERS:
+            continue
+        lid, rule, samples = IV.samples_for(lang, h["form"], h["rep"])
+        da = [IV.decl(lang, h["form"], h["rep"], "a", v, samples)
+              for v in samples]
+        db = [IV.decl(lang, h["form"], h["rep"], "b", v, samples)
+              for v in samples]
+        out.append(dict(i=i, form=h["form"], holder=h["rep"],
+                        ladder=lid, a=da, b=db,
+                        pre=(h.get("pre") or "")))
+    return out
+
+
+def rust_cells():
+    """the ACCEPTED numeric (operation, lhs index, rhs index) cells."""
+    acc = json.load(open(os.path.join(HERE, "acceptance_rust_A2.json")))
+    tab = {t["holder"]: t for t in numeric_table("rust")}
+    cells = []
+    for key, cell in acc["cells"].items():
+        if cell["verdict"] != "ACCEPT":
+            continue
+        lh, rh = cell["lhs"]["holder"], cell["rhs"]["holder"]
+        if lh not in tab or rh not in tab:
+            continue
+        cells.append((cell["operation"], tab[lh]["i"], tab[rh]["i"]))
+    return sorted(set(cells))
+
+
+# ------------------------------------------------------------------
+# rust lane
+# ------------------------------------------------------------------
+
+RUST_SH = r'''#!/bin/sh
+# layer-3 INTERVAL lane -- rust -- generated by
+# Research/kind_fuzz_clustering/l3_interval_gen.py .  Do not hand-edit.
+# Static path: the ACCEPTED numeric holder pairs only; acceptance is
+# NOT re-run (every interval sample is inside its own holder's range).
+set -u
+export HOME=/work
+ROOT=/work/iv_rust_00
+rm -rf "$ROOT"; mkdir -p "$ROOT"
+echo "=== layer-3 INTERVAL -- rust -- __NP__ samples over __NC__ cells ==="
+date -u +%Y-%m-%dT%H:%M:%SZ
+df -Pm /work | awk 'NR==2{print "free /work: " $4 " MB"}'
+base64 -d <<'T_EOF' | gunzip > "$ROOT/table.json"
+__TABLE__
+T_EOF
+base64 -d <<'X_EOF' | gunzip > "$ROOT/rt.txt"
+__RT__
+X_EOF
+python3 - "$ROOT" <<'PY_EOF'
+__DRIVER__
+PY_EOF
+rm -rf "$ROOT"
+echo "swept $ROOT; /work free: $(df -Pm /work | awk 'NR==2{print $4}') MB"
+date -u +%Y-%m-%dT%H:%M:%SZ
+echo "=== interval lane rust done ==="
+'''
+
+RUST_DRIVER = r'''
+import json, os, shutil, subprocess, sys, time
+
+ROOT = sys.argv[1]
+OUT = "/out/iv_rust_00.txt"
+CH = 1500
+
+T = json.load(open(os.path.join(ROOT, "table.json")))
+RTX = open(os.path.join(ROOT, "rt.txt")).read()
+HOLD = {h["i"]: h for h in T["holders"]}
+OPS = T["ops"]
+
+ALLOW = ("#![allow(unused, non_snake_case, non_camel_case_types, "
+         "unused_parens, unused_mut, unused_variables, dead_code, "
+         "unconditional_panic, arithmetic_overflow)]\n")
+
+probes = []
+for (op, i, j) in T["cells"]:
+    k = OPS.index(op)
+    for s in range(T["n_samples"]):
+        pid = "V%d_%d_%d_%d" % (k, i, j, s)
+        probes.append((pid, "v_%d_%d_%d_%d" % (k, i, j, s),
+                       HOLD[i]["a"][s], HOLD[j]["b"][s], op))
+print("interval rust: %d cells x %d samples = %d probes"
+      % (len(T["cells"]), T["n_samples"], len(probes)))
+sys.stdout.flush()
+
+
+def build(ps):
+    src = ALLOW + RTX + "\n"
+    for p in ps:
+        src += ("// __PROBE__ %s\nfn %s() {\n    %s\n    %s\n"
+                "    let _r = (a) %s (b);\n    _emit(\"%s\", &_r);\n}\n"
+                % (p[0], p[1], p[2], p[3], p[4], p[0]))
+    src += "// __PROBE__ -\n"
+    src += "\nfn main() {\n    std::panic::set_hook(Box::new(|_| {}));\n"
+    src += "    let ps: Vec<(&str, fn())> = vec![\n"
+    for p in ps:
+        src += '        ("%s", %s),\n' % (p[0], p[1])
+    src += "    ];\n"
+    src += "    let av: Vec<String> = std::env::args().collect();\n"
+    src += ("    let s: usize = if av.len() > 1 "
+            "{ av[1].parse().unwrap_or(0) } else { 0 };\n")
+    src += "    for i in s..ps.len() {\n        let (id, f) = ps[i];\n"
+    src += ("        if std::panic::catch_unwind(f).is_err() "
+            '{ println!("{}|-|RAISE:panic", id); }\n    }\n')
+    src += '    println!("__END__");\n}\n'
+    return src
+
+
+chunks = [probes[x:x + CH] for x in range(0, len(probes), CH)]
+out = open(OUT, "w")
+t0 = time.time()
+answers = raises = aborts = buildfail = 0
+for ci, ps in enumerate(chunks):
+    d = os.path.join(ROOT, "c%03d" % ci)
+    shutil.rmtree(d, ignore_errors=True)
+    os.makedirs(d)
+    src = build(ps)
+    open(os.path.join(d, "chunk.rs"), "w").write(src)
+    tb = time.time()
+    r = subprocess.run(["rustc", "-C", "debug-assertions=on",
+                        "-C", "opt-level=0", "-o", d + "/bin",
+                        d + "/chunk.rs"],
+                       capture_output=True, text=True, cwd=d, timeout=1800)
+    tbuild = time.time() - tb
+    if r.returncode != 0:
+        print("!! chunk %d BUILD FAILED" % ci)
+        print(((r.stderr or "") + (r.stdout or ""))[:4000])
+        open("/out/iv_rust_00.compilefail.%d.txt" % ci, "w").write(
+            ((r.stderr or "") + "\n" + (r.stdout or ""))[:200000])
+        for p in ps:
+            out.write("%s|-|BUILDFAIL\n" % p[0])
+            buildfail += 1
+        out.flush()
+        shutil.rmtree(d, ignore_errors=True)
+        continue
+    ids = [p[0] for p in ps]
+    pos = dict((p, k) for k, p in enumerate(ids))
+    got = {}
+    start = 0
+    restarts = 0
+    while start < len(ids) and restarts < 500:
+        pr = subprocess.Popen([d + "/bin", str(start)],
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL, text=True,
+                              cwd=d, bufsize=1)
+        last = start - 1
+        ended = False
+        for line in pr.stdout:
+            line = line.rstrip("\n")
+            if line == "__END__":
+                ended = True
+                continue
+            if "|" not in line:
+                continue
+            pid = line.split("|", 1)[0]
+            k = pos.get(pid)
+            if k is None:
+                continue
+            got[pid] = line
+            if k > last:
+                last = k
+        pr.wait()
+        if ended or last >= len(ids) - 1:
+            break
+        nxt = last + 1
+        got[ids[nxt]] = "%s|-|ABORT:rc%s" % (ids[nxt], pr.returncode)
+        start = nxt + 1
+        restarts += 1
+    for pid in ids:
+        line = got.get(pid, "%s|-|MISSING" % pid)
+        out.write(line + "\n")
+        if "|-|RAISE:" in line:
+            raises += 1
+        elif "|-|ABORT:" in line:
+            aborts += 1
+        elif "|-|MISSING" in line:
+            pass
+        else:
+            answers += 1
+    out.flush()
+    shutil.rmtree(d, ignore_errors=True)
+    print("[progress] rust chunk %d/%d  build %.1fs  elapsed %.1fs  "
+          "restarts %d" % (ci + 1, len(chunks), tbuild,
+                           time.time() - t0, restarts))
+    sys.stdout.flush()
+
+el = time.time() - t0
+out.write("__SUMMARY__|rust|%d|%d|%d|%d|%d|%.3f\n"
+          % (len(probes), answers, raises, aborts, buildfail, el))
+out.close()
+print("== interval rust: %d probes, %d answers, %d raises, %d aborts, "
+      "%d buildfail, %.2f s" % (len(probes), answers, raises, aborts,
+                                buildfail, el))
+'''
+
+
+def emit_rust(smoke=False):
+    tab = numeric_table("rust")
+    cells = rust_cells()
+    if smoke:
+        cells = cells[:2]
+    payload = dict(language="rust", ops=ops("rust"), n_samples=N,
+                   holders=tab, cells=cells)
+    sh = (RUST_SH
+          .replace("__TABLE__", wrap(b64gz(json.dumps(payload))))
+          .replace("__RT__", wrap(b64gz(RT_RUST)))
+          .replace("__DRIVER__", RUST_DRIVER)
+          .replace("__NP__", str(len(cells) * N))
+          .replace("__NC__", str(len(cells))))
+    name = "iv_rust_smoke.sh" if smoke else "iv_rust_00.sh"
+    if smoke:
+        sh = sh.replace("iv_rust_00", "iv_rust_smoke")
+    return name, sh, len(cells)
+
+
+# ------------------------------------------------------------------
+# ruby lane -- texts live in l3_interval_ruby.py (three nested source
+# languages in one file is how quoting mistakes happen)
+# ------------------------------------------------------------------
+
+
+def emit_ruby(smoke=False):
+    tab = numeric_table("ruby")
+    op_list = ops("ruby")
+    out = "/out/iv_ruby_smoke.txt" if smoke else "/out/iv_ruby_00.txt"
+    payload = dict(language="ruby", ops=op_list, n_samples=N,
+                   holders=tab, out=out)
+    ncell = len(tab) ** 2 * len(op_list)
+    sh = (RB.SH
+          .replace("__TABLE__", wrap(b64gz(json.dumps(payload))))
+          .replace("__DRIVER__", wrap(base64.b64encode(
+              RB.DRIVER.encode("utf-8")).decode("ascii")))
+          .replace("__RUNNER__", RB.RUNNER)
+          .replace("__NP__", str(ncell * N))
+          .replace("__NC__", str(ncell)))
+    name = "iv_ruby_smoke.sh" if smoke else "iv_ruby_00.sh"
+    if smoke:
+        sh = sh.replace("iv_ruby_00", "iv_ruby_smoke")
+    return name, sh, ncell
+
+# ------------------------------------------------------------------
+
+def main():
+    smoke = "--smoke" in sys.argv
+    os.makedirs(LANES, exist_ok=True)
+    print("interval lanes -- pilot: rust (static) + ruby (route C), "
+          "N=%d samples per side, numeric forms only" % N)
+    for name, sh, ncell in (emit_rust(smoke), emit_ruby(smoke)):
+        p = os.path.join(LANES, name)
+        with open(p, "w") as f:
+            f.write(sh)
+        os.chmod(p, 0o755)
+        print("  %-20s %6d cells, %7d samples, %d KB"
+              % (name, ncell, ncell * N, len(sh) // 1024))
+        if os.path.isdir(DROP):
+            with open(os.path.join(DROP, name), "w") as f:
+                f.write(sh)
+            print("      dropped -> %s" % os.path.join(DROP, name))
+
+
+if __name__ == "__main__":
+    main()

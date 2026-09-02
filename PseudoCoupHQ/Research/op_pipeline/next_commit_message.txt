@@ -1,0 +1,89 @@
+round 3: hygiene fix, +84 converged via canon28, 121/189 provenance
+ties broken by reachability, interp handler relations, bank+rebaseline
+
+Task 14 (log_098) -- record hygiene: corrected log_092's false "all
+83 uncrossed rows are java" claim (real split swift 35 / go 30 /
+rust 10 / java 8); moved provenance_is_weaker:true into
+interp_ruby.json, interp_php.json, interp_ruby_handlers.json,
+interp_php_handlers.json; named task10_seed_prove.log formally;
+swept op_pipeline + compiler_graph mtimes for the round-2 window,
+nothing unlisted found.
+
+Task 15 (log_099) -- the 322 unconverged, third attempt: found the
+largest bucket (__no_named_op_found__, 126 units) was never attempted
+by any driver because every driver's shape filter targeted a
+substitution family and 104 of these units need zero substitution.
+New canon28.py / canon28_units_{c,cpp,go,rust,swift}.json: +84
+converged (1,457 -> 1,541), zero regressions (1,457 pre-round-3
+converged units byte-compared, 0 diffs). Remaining 322-84=238 named
+per-bucket with judgments (defer / the owner-reserved / open item).
+
+Task 16 (log_100) -- provenance tie-breaking by reachability: new
+build_super_ops3.py / super_ops3.json. Breaks 121 of 189 ambiguous
+ties in super_ops2.json by parsing the pinned LLVM source's own
+dispatch switches (setOperationAction / LowerOperation / ExpandNode)
+rather than counting opcodes. idiom_0001 resolves uniquely to
+LowerUINT_TO_FP_i64, correcting the prior round's unverified
+"hand-verified" target (ExpandLegalINT_TO_FP). 68 ties remain open,
+named honestly.
+
+Task 17 (log_101) -- interpreter units into the table question: new
+interp_canon_attempt.py / interp_canon_attempt.json (route 1,
+canonicalization, refused for all 9 handlers -- no sem_anchored
+record exists for ruby/php) and interp_relations_build.py /
+interp_relations.json (routes 2/3, bridge/dominance + cross-unit
+prover, all 9 handlers incomparable_by_representation -- tagged or
+boxed-pointer registers, never the plain fixed-width register the
+compiled table is keyed on). No existing table file modified.
+Decision brief for the owner included in the log; membership left to his
+ruling.
+
+Task 18 (log_102) -- bank and re-baseline: re-verified all of the
+above end to end (spelling guard on 15 named artifacts, all pass;
+zero-regressions re-derived independently, 1,457 checked / 0 diffs;
+dominant_table24.json / dom_ops22.json / their b-variants confirmed
+untouched by tasks 14-17, so zero family diff, cause: new artifacts
+are not-yet-merged candidate pools). tree_units/clusters rebuild
+attempted: producer located (match_units.py writes clusters.json
+from sem_anchored_<lang>.json; tree_units3.json is upstream, built
+by expr_to_canon.py from tree_units2.json, and canon28 only reads
+it, never writes it). match_units.py refuses to run (missing
+sem_anchored_java.json -- LANGS includes java/cpython/javascript/
+csharp/dart but only sem_anchored_java2.json exists on disk), a
+pre-existing gap unrelated to Task 15's canon28 work; clusters.json
+left unchanged (byte-identical before/after the attempted run).
+
+New files this round (Aug 31, from the round-2-window sweep onward):
+build_super_ops2.py, build_super_ops3.py, build_table24b.py,
+canon27.py, canon27_units_{c,cpp,go,rust,swift}.json, canon28.py,
+canon28_units_{c,cpp,go,rust,swift}.json, census27.py, census27.json,
+cross_axis_table.py, cross_axis_table.json, dominant_table24b.json,
+dom_ops22b.json, exception_families2.py, exception_families2.json,
+guards4.py, guards4.json, interp_canon_attempt.py,
+interp_canon_attempt.json, interp_e_handlers.sh, interp_e2_handlers.sh,
+interp_e3_php_fix.sh, interp_e4_php_libxml.sh, interp_php.json,
+interp_php_handlers.json, interp_php_handlers.md,
+interp_probe2.sh, interp_probe3.sh, interp_probe4.sh,
+interp_probe_persist.sh, interp_relations_build.py,
+interp_relations.json, interp_ruby.json, interp_ruby_handlers.json,
+interp_ruby_handlers.md, representatives24b.json, super_ops2.json,
+super_ops3.json, task10_seed_prove.py, task10_seed_prove.log,
+task10_seed_prove_results.json, task10_nonzero_pool_dump.txt,
+compiler_graph/build_graph3.py, compiler_graph/graph_cpp3.json,
+DevComms/log_098_task14_record_hygiene.md,
+DevComms/log_099_task15_unconverged_third.md,
+DevComms/log_100_task16_reachability_tiebreak.md,
+DevComms/log_101_task17_interp_relations.md,
+DevComms/log_102_task18_bank_rebaseline.md.
+
+Modified (in place, permitted): DevComms/log_092_task8_guards_record.md
+(one correction pointer line), interp_ruby.json, interp_php.json,
+interp_ruby_handlers.json, interp_php_handlers.json (all four gained
+top-level provenance_is_weaker:true).
+
+No table file (dominant_table24.json, dom_ops22.json, or their
+b-variants) was modified this round. clusters.json / tree_units*.json
+were not modified this round (rebuild attempted, blocked by a
+pre-existing missing-file gap, recorded above).
+
+Not committed or pushed -- staged for the owner to bank.

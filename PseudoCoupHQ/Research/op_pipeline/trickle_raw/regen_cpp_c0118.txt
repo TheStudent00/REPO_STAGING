@@ -1,0 +1,503 @@
+#verbatim-escape v1
+op_47200|SHIP|OK|85 ff 0f 94 c0 40 20 f0 c3|test %edi,%edi;sete %al;and %sil,%al;ret
+op_47200|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 24 01 88 45 fd 0f b7 45 fe 8a 4d fd 80 e1 01 0f b6 c9 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);and $0x1,%al;mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;mov -0x3(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47200|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_47201|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47201|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f b7 45 fe 0f be 4d fd 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;movsbl -0x3(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47201|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_47202|SHIP|OK|66 39 f7 0f 92 c0 c3|cmp %si,%di;setb %al;ret
+op_47202|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f b7 45 fe 0f b7 4d fc 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movzwl -0x2(%rbp),%eax;movzwl -0x4(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47202|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_47203|SHIP|OK|39 fe 0f 97 c0 c3|cmp %edi,%esi;seta %al;ret
+op_47203|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 3b 45 f8 0f 92 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x8(%rbp),%eax;setb %al;and $0x1,%al;pop %rbp;ret
+op_47203|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47204|SHIP|OK|66 39 f7 0f 92 c0 c3|cmp %si,%di;setb %al;ret
+op_47204|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f b7 45 fe 0f b6 4d fd 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;movzbl -0x3(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47204|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_47205|SHIP|OK|f2 0f 2a cf 66 0f 2e c1 0f 97 c0 c3|cvtsi2sd %edi,%xmm1;ucomisd %xmm1,%xmm0;seta %al;ret
+op_47205|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe f2 0f 11 45 f0 0f b7 45 fe f2 0f 2a c8 f2 0f 10 45 f0 66 0f 2e c1 0f 97 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);movsd %xmm0,-0x10(%rbp);movzwl -0x2(%rbp),%eax;cvtsi2sd %eax,%xmm1;movsd -0x10(%rbp),%xmm0;ucomisd %xmm1,%xmm0;seta %al;and $0x1,%al;pop %rbp;ret
+op_47205|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47206|SHIP|OK|f3 0f 2a cf 0f 2e c1 0f 97 c0 c3|cvtsi2ss %edi,%xmm1;ucomiss %xmm1,%xmm0;seta %al;ret
+op_47206|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe f3 0f 11 45 f8 0f b7 45 fe f3 0f 2a c8 f3 0f 10 45 f8 0f 2e c1 0f 97 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);movss %xmm0,-0x8(%rbp);movzwl -0x2(%rbp),%eax;cvtsi2ss %eax,%xmm1;movss -0x8(%rbp),%xmm0;ucomiss %xmm1,%xmm0;seta %al;and $0x1,%al;pop %rbp;ret
+op_47206|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47207|REFUSED|/work/regen_cpp_c0118/u/n47207/unit.cpp:7:28: error: unknown type name 'half'
+op_47208|SHIP|OK|39 fe 0f 9f c0 c3|cmp %edi,%esi;setg %al;ret
+op_47208|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 3b 45 f8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x8(%rbp),%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47208|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47209|SHIP|OK|89 f8 48 39 c6 0f 9f c0 c3|mov %edi,%eax;cmp %rax,%rsi;setg %al;ret
+op_47209|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 3b 45 f0 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x10(%rbp),%rax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47209|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47210|REFUSED|/work/regen_cpp_c0118/u/n47210/unit.cpp:7:40: error: expected ')'
+op_47211|REFUSED|/work/regen_cpp_c0118/u/n47211/unit.cpp:7:40: error: expected ')'
+op_47212|SHIP|OK|db 6c 24 08 89 7c 24 fc db 44 24 fc d9 c9 df e9 dd d8 0f 97 c0 c3|fldt 0x8(%rsp);mov %edi,-0x4(%rsp);fildl -0x4(%rsp);fxch %st(1);fucomip %st(1),%st;fstp %st(0);seta %al;ret
+op_47212|ANCHOR|OK|55 48 89 e5 66 89 f8 db 6d 10 66 89 45 fe db 7d e0 0f b7 45 fe 89 45 dc db 45 dc db 6d e0 df e9 dd d8 0f 97 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;fldt 0x10(%rbp);mov %ax,-0x2(%rbp);fstpt -0x20(%rbp);movzwl -0x2(%rbp),%eax;mov %eax,-0x24(%rbp);fildl -0x24(%rbp);fldt -0x20(%rbp);fucomip %st(1),%st;fstp %st(0);seta %al;and $0x1,%al;pop %rbp;ret
+op_47212|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_47213|SHIP|OK|89 f8 48 39 c6 0f 9f c0 c3|mov %edi,%eax;cmp %rax,%rsi;setg %al;ret
+op_47213|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 3b 45 f0 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x10(%rbp),%rax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47213|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47214|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47214|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f b7 45 fe 0f bf 4d fc 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movzwl -0x2(%rbp),%eax;movswl -0x4(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47214|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_47215|REFUSED|/work/regen_cpp_c0118/u/n47215/unit.cpp:7:41: error: expected ')'
+op_47216|REFUSED|/work/regen_cpp_c0118/u/n47216/unit.cpp:7:41: error: expected ')'
+op_47217|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47217|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f b7 45 fe 0f be 4d fd 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;movsbl -0x3(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47217|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_47218|SHIP|OK|39 fe 0f 9f c0 c3|cmp %edi,%esi;setg %al;ret
+op_47218|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 3b 45 f8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x8(%rbp),%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47218|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47219|SHIP|OK|89 f8 48 39 c6 0f 9f c0 c3|mov %edi,%eax;cmp %rax,%rsi;setg %al;ret
+op_47219|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 3b 45 f0 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x10(%rbp),%rax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47219|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47220|SHIP|OK|89 f8 48 39 c6 0f 9f c0 c3|mov %edi,%eax;cmp %rax,%rsi;setg %al;ret
+op_47220|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 3b 45 f0 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x10(%rbp),%rax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47220|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47221|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47221|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f b7 45 fe 0f bf 4d fc 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movzwl -0x2(%rbp),%eax;movswl -0x4(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47221|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_47222|REFUSED|/work/regen_cpp_c0118/u/n47222/unit.cpp:7:44: error: expected ')'
+op_47223|REFUSED|/work/regen_cpp_c0118/u/n47223/unit.cpp:7:44: error: expected ')'
+op_47224|SHIP|OK|66 39 f7 0f 92 c0 c3|cmp %si,%di;setb %al;ret
+op_47224|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f b7 45 fe 0f b6 4d fd 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;movzbl -0x3(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47224|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_47225|SHIP|OK|39 fe 0f 97 c0 c3|cmp %edi,%esi;seta %al;ret
+op_47225|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 3b 45 f8 0f 92 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x8(%rbp),%eax;setb %al;and $0x1,%al;pop %rbp;ret
+op_47225|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47226|SHIP|OK|89 f8 48 39 c6 0f 97 c0 c3|mov %edi,%eax;cmp %rax,%rsi;seta %al;ret
+op_47226|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 3b 45 f0 0f 92 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x10(%rbp),%rax;setb %al;and $0x1,%al;pop %rbp;ret
+op_47226|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47227|REFUSED|/work/regen_cpp_c0118/u/n47227/unit.cpp:7:49: error: expected ')'
+op_47228|REFUSED|/work/regen_cpp_c0118/u/n47228/unit.cpp:7:49: error: expected ')'
+op_47229|SHIP|OK|89 f8 48 39 c6 0f 97 c0 c3|mov %edi,%eax;cmp %rax,%rsi;seta %al;ret
+op_47229|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 3b 45 f0 0f 92 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x10(%rbp),%rax;setb %al;and $0x1,%al;pop %rbp;ret
+op_47229|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47230|SHIP|OK|66 39 f7 0f 92 c0 c3|cmp %si,%di;setb %al;ret
+op_47230|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f b7 45 fe 0f b7 4d fc 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movzwl -0x2(%rbp),%eax;movzwl -0x4(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47230|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_47231|REFUSED|/work/regen_cpp_c0118/u/n47231/unit.cpp:7:50: error: expected ')'
+op_47232|REFUSED|/work/regen_cpp_c0118/u/n47232/unit.cpp:7:50: error: expected ')'
+op_47233|SHIP|OK|39 fe 0f 9f c0 c3|cmp %edi,%esi;setg %al;ret
+op_47233|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 3b 45 f8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;cmp -0x8(%rbp),%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47233|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47234|REFUSED|/work/regen_cpp_c0118/u/n47234/unit.cpp:7:32: error: expected ')'
+op_47235|REFUSED|/work/regen_cpp_c0118/u/n47235/unit.cpp:7:32: error: expected ')'
+op_47236|REFUSED|/work/regen_cpp_c0118/u/n47236/unit.cpp:7:32: error: expected ')'
+op_47237|REFUSED|/work/regen_cpp_c0118/u/n47237/unit.cpp:7:32: error: expected ')'
+op_47238|REFUSED|/work/regen_cpp_c0118/u/n47238/unit.cpp:7:32: error: expected ')'
+op_47239|REFUSED|/work/regen_cpp_c0118/u/n47239/unit.cpp:7:32: error: expected ')'
+op_47240|REFUSED|/work/regen_cpp_c0118/u/n47240/unit.cpp:7:32: error: expected ')'
+op_47241|REFUSED|/work/regen_cpp_c0118/u/n47241/unit.cpp:7:32: error: expected ')'
+op_47242|REFUSED|/work/regen_cpp_c0118/u/n47242/unit.cpp:7:32: error: expected ')'
+op_47243|REFUSED|/work/regen_cpp_c0118/u/n47243/unit.cpp:7:32: error: expected ')'
+op_47244|REFUSED|/work/regen_cpp_c0118/u/n47244/unit.cpp:7:32: error: expected ')'
+op_47245|REFUSED|/work/regen_cpp_c0118/u/n47245/unit.cpp:7:32: error: expected ')'
+op_47246|REFUSED|/work/regen_cpp_c0118/u/n47246/unit.cpp:7:32: error: expected ')'
+op_47247|REFUSED|/work/regen_cpp_c0118/u/n47247/unit.cpp:7:32: error: expected ')'
+op_47248|REFUSED|/work/regen_cpp_c0118/u/n47248/unit.cpp:7:32: error: expected ')'
+op_47249|REFUSED|/work/regen_cpp_c0118/u/n47249/unit.cpp:7:32: error: expected ')'
+op_47250|REFUSED|/work/regen_cpp_c0118/u/n47250/unit.cpp:7:32: error: expected ')'
+op_47251|REFUSED|/work/regen_cpp_c0118/u/n47251/unit.cpp:7:32: error: expected ')'
+op_47252|REFUSED|/work/regen_cpp_c0118/u/n47252/unit.cpp:7:32: error: expected ')'
+op_47253|REFUSED|/work/regen_cpp_c0118/u/n47253/unit.cpp:7:32: error: expected ')'
+op_47254|REFUSED|/work/regen_cpp_c0118/u/n47254/unit.cpp:7:32: error: expected ')'
+op_47255|REFUSED|/work/regen_cpp_c0118/u/n47255/unit.cpp:7:32: error: expected ')'
+op_47256|REFUSED|/work/regen_cpp_c0118/u/n47256/unit.cpp:7:32: error: expected ')'
+op_47257|REFUSED|/work/regen_cpp_c0118/u/n47257/unit.cpp:7:32: error: expected ')'
+op_47258|REFUSED|/work/regen_cpp_c0118/u/n47258/unit.cpp:7:32: error: expected ')'
+op_47259|REFUSED|/work/regen_cpp_c0118/u/n47259/unit.cpp:7:32: error: expected ')'
+op_47260|REFUSED|/work/regen_cpp_c0118/u/n47260/unit.cpp:7:32: error: expected ')'
+op_47261|REFUSED|/work/regen_cpp_c0118/u/n47261/unit.cpp:7:32: error: expected ')'
+op_47262|REFUSED|/work/regen_cpp_c0118/u/n47262/unit.cpp:7:32: error: expected ')'
+op_47263|REFUSED|/work/regen_cpp_c0118/u/n47263/unit.cpp:7:32: error: expected ')'
+op_47264|REFUSED|/work/regen_cpp_c0118/u/n47264/unit.cpp:7:32: error: expected ')'
+op_47265|REFUSED|/work/regen_cpp_c0118/u/n47265/unit.cpp:7:32: error: expected ')'
+op_47266|REFUSED|/work/regen_cpp_c0118/u/n47266/unit.cpp:7:32: error: expected ')'
+op_47267|REFUSED|/work/regen_cpp_c0118/u/n47267/unit.cpp:7:32: error: expected ')'
+op_47268|REFUSED|/work/regen_cpp_c0118/u/n47268/unit.cpp:7:32: error: expected ')'
+op_47269|REFUSED|/work/regen_cpp_c0118/u/n47269/unit.cpp:7:32: error: expected ')'
+op_47270|REFUSED|/work/regen_cpp_c0118/u/n47270/unit.cpp:7:32: error: expected ')'
+op_47271|REFUSED|/work/regen_cpp_c0118/u/n47271/unit.cpp:7:32: error: expected ')'
+op_47272|REFUSED|/work/regen_cpp_c0118/u/n47272/unit.cpp:7:32: error: expected ')'
+op_47273|REFUSED|/work/regen_cpp_c0118/u/n47273/unit.cpp:7:32: error: expected ')'
+op_47274|REFUSED|/work/regen_cpp_c0118/u/n47274/unit.cpp:7:32: error: expected ')'
+op_47275|REFUSED|/work/regen_cpp_c0118/u/n47275/unit.cpp:7:32: error: expected ')'
+op_47276|REFUSED|/work/regen_cpp_c0118/u/n47276/unit.cpp:7:32: error: expected ')'
+op_47277|REFUSED|/work/regen_cpp_c0118/u/n47277/unit.cpp:7:32: error: expected ')'
+op_47278|REFUSED|/work/regen_cpp_c0118/u/n47278/unit.cpp:7:32: error: expected ')'
+op_47279|REFUSED|/work/regen_cpp_c0118/u/n47279/unit.cpp:7:32: error: expected ')'
+op_47280|REFUSED|/work/regen_cpp_c0118/u/n47280/unit.cpp:7:32: error: expected ')'
+op_47281|REFUSED|/work/regen_cpp_c0118/u/n47281/unit.cpp:7:32: error: expected ')'
+op_47282|REFUSED|/work/regen_cpp_c0118/u/n47282/unit.cpp:7:32: error: expected ')'
+op_47283|REFUSED|/work/regen_cpp_c0118/u/n47283/unit.cpp:7:32: error: expected ')'
+op_47284|REFUSED|/work/regen_cpp_c0118/u/n47284/unit.cpp:7:32: error: expected ')'
+op_47285|REFUSED|/work/regen_cpp_c0118/u/n47285/unit.cpp:7:32: error: expected ')'
+op_47286|REFUSED|/work/regen_cpp_c0118/u/n47286/unit.cpp:7:32: error: expected ')'
+op_47287|REFUSED|/work/regen_cpp_c0118/u/n47287/unit.cpp:7:32: error: expected ')'
+op_47288|REFUSED|/work/regen_cpp_c0118/u/n47288/unit.cpp:7:32: error: expected ')'
+op_47289|REFUSED|/work/regen_cpp_c0118/u/n47289/unit.cpp:7:32: error: expected ')'
+op_47290|REFUSED|/work/regen_cpp_c0118/u/n47290/unit.cpp:7:32: error: expected ')'
+op_47291|REFUSED|/work/regen_cpp_c0118/u/n47291/unit.cpp:7:32: error: expected ')'
+op_47292|REFUSED|/work/regen_cpp_c0118/u/n47292/unit.cpp:7:32: error: expected ')'
+op_47293|REFUSED|/work/regen_cpp_c0118/u/n47293/unit.cpp:7:32: error: expected ')'
+op_47294|REFUSED|/work/regen_cpp_c0118/u/n47294/unit.cpp:7:32: error: expected ')'
+op_47295|REFUSED|/work/regen_cpp_c0118/u/n47295/unit.cpp:7:32: error: expected ')'
+op_47296|REFUSED|/work/regen_cpp_c0118/u/n47296/unit.cpp:7:32: error: expected ')'
+op_47297|REFUSED|/work/regen_cpp_c0118/u/n47297/unit.cpp:7:32: error: expected ')'
+op_47298|REFUSED|/work/regen_cpp_c0118/u/n47298/unit.cpp:7:32: error: expected ')'
+op_47299|REFUSED|/work/regen_cpp_c0118/u/n47299/unit.cpp:7:32: error: expected ')'
+op_47300|REFUSED|/work/regen_cpp_c0118/u/n47300/unit.cpp:7:32: error: expected ')'
+op_47301|REFUSED|/work/regen_cpp_c0118/u/n47301/unit.cpp:7:32: error: expected ')'
+op_47302|REFUSED|/work/regen_cpp_c0118/u/n47302/unit.cpp:7:32: error: expected ')'
+op_47303|REFUSED|/work/regen_cpp_c0118/u/n47303/unit.cpp:7:32: error: expected ')'
+op_47304|REFUSED|/work/regen_cpp_c0118/u/n47304/unit.cpp:7:32: error: expected ')'
+op_47305|REFUSED|/work/regen_cpp_c0118/u/n47305/unit.cpp:7:32: error: expected ')'
+op_47306|REFUSED|/work/regen_cpp_c0118/u/n47306/unit.cpp:7:32: error: expected ')'
+op_47307|REFUSED|/work/regen_cpp_c0118/u/n47307/unit.cpp:7:32: error: expected ')'
+op_47308|REFUSED|/work/regen_cpp_c0118/u/n47308/unit.cpp:7:32: error: expected ')'
+op_47309|REFUSED|/work/regen_cpp_c0118/u/n47309/unit.cpp:7:32: error: expected ')'
+op_47310|REFUSED|/work/regen_cpp_c0118/u/n47310/unit.cpp:7:32: error: expected ')'
+op_47311|REFUSED|/work/regen_cpp_c0118/u/n47311/unit.cpp:7:32: error: expected ')'
+op_47312|REFUSED|/work/regen_cpp_c0118/u/n47312/unit.cpp:7:32: error: expected ')'
+op_47313|REFUSED|/work/regen_cpp_c0118/u/n47313/unit.cpp:7:32: error: expected ')'
+op_47314|REFUSED|/work/regen_cpp_c0118/u/n47314/unit.cpp:7:32: error: expected ')'
+op_47315|REFUSED|/work/regen_cpp_c0118/u/n47315/unit.cpp:7:32: error: expected ')'
+op_47316|REFUSED|/work/regen_cpp_c0118/u/n47316/unit.cpp:7:32: error: expected ')'
+op_47317|REFUSED|/work/regen_cpp_c0118/u/n47317/unit.cpp:7:32: error: expected ')'
+op_47318|REFUSED|/work/regen_cpp_c0118/u/n47318/unit.cpp:7:32: error: expected ')'
+op_47319|REFUSED|/work/regen_cpp_c0118/u/n47319/unit.cpp:7:32: error: expected ')'
+op_47320|REFUSED|/work/regen_cpp_c0118/u/n47320/unit.cpp:7:32: error: expected ')'
+op_47321|REFUSED|/work/regen_cpp_c0118/u/n47321/unit.cpp:7:32: error: expected ')'
+op_47322|REFUSED|/work/regen_cpp_c0118/u/n47322/unit.cpp:7:32: error: expected ')'
+op_47323|REFUSED|/work/regen_cpp_c0118/u/n47323/unit.cpp:7:32: error: expected ')'
+op_47324|REFUSED|/work/regen_cpp_c0118/u/n47324/unit.cpp:7:32: error: expected ')'
+op_47325|REFUSED|/work/regen_cpp_c0118/u/n47325/unit.cpp:7:32: error: expected ')'
+op_47326|REFUSED|/work/regen_cpp_c0118/u/n47326/unit.cpp:7:32: error: expected ')'
+op_47327|REFUSED|/work/regen_cpp_c0118/u/n47327/unit.cpp:7:32: error: expected ')'
+op_47328|REFUSED|/work/regen_cpp_c0118/u/n47328/unit.cpp:7:32: error: expected ')'
+op_47329|REFUSED|/work/regen_cpp_c0118/u/n47329/unit.cpp:7:32: error: expected ')'
+op_47330|REFUSED|/work/regen_cpp_c0118/u/n47330/unit.cpp:7:32: error: expected ')'
+op_47331|REFUSED|/work/regen_cpp_c0118/u/n47331/unit.cpp:7:32: error: expected ')'
+op_47332|REFUSED|/work/regen_cpp_c0118/u/n47332/unit.cpp:7:32: error: expected ')'
+op_47333|REFUSED|/work/regen_cpp_c0118/u/n47333/unit.cpp:7:32: error: expected ')'
+op_47334|REFUSED|/work/regen_cpp_c0118/u/n47334/unit.cpp:7:32: error: expected ')'
+op_47335|REFUSED|/work/regen_cpp_c0118/u/n47335/unit.cpp:7:32: error: expected ')'
+op_47336|REFUSED|/work/regen_cpp_c0118/u/n47336/unit.cpp:7:32: error: expected ')'
+op_47337|REFUSED|/work/regen_cpp_c0118/u/n47337/unit.cpp:7:32: error: expected ')'
+op_47338|REFUSED|/work/regen_cpp_c0118/u/n47338/unit.cpp:7:32: error: expected ')'
+op_47339|REFUSED|/work/regen_cpp_c0118/u/n47339/unit.cpp:7:32: error: expected ')'
+op_47340|REFUSED|/work/regen_cpp_c0118/u/n47340/unit.cpp:7:32: error: expected ')'
+op_47341|REFUSED|/work/regen_cpp_c0118/u/n47341/unit.cpp:7:32: error: expected ')'
+op_47342|REFUSED|/work/regen_cpp_c0118/u/n47342/unit.cpp:7:32: error: expected ')'
+op_47343|REFUSED|/work/regen_cpp_c0118/u/n47343/unit.cpp:7:32: error: expected ')'
+op_47344|REFUSED|/work/regen_cpp_c0118/u/n47344/unit.cpp:7:32: error: expected ')'
+op_47345|REFUSED|/work/regen_cpp_c0118/u/n47345/unit.cpp:7:32: error: expected ')'
+op_47346|REFUSED|/work/regen_cpp_c0118/u/n47346/unit.cpp:7:21: error: unknown type name '_Accum'
+op_47347|REFUSED|/work/regen_cpp_c0118/u/n47347/unit.cpp:7:21: error: unknown type name '_Bool'
+op_47348|SHIP|OK|50 f3 0f 11 44 24 04 0f 57 c0 f3 0f 2a c7 e8 00 00 00 00 e8 00 00 00 00 f3 0f 11 04 24 f3 0f 10 44 24 04 e8 00 00 00 00 0f 2e 04 24 0f 97 c0 59 c3|push %rax;movss %xmm0,0x4(%rsp);xorps %xmm0,%xmm0;cvtsi2ss %edi,%xmm0;call 13 <op_47348+0x13> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;call 18 <op_47348+0x18> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss %xmm0,(%rsp);movss 0x4(%rsp),%xmm0;call 28 <op_47348+0x28> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;ucomiss (%rsp),%xmm0;seta %al;pop %rcx;ret
+op_47348|ANCHOR|OK|55 48 89 e5 48 83 ec 10 89 7d fc 66 0f c5 c0 00 66 89 45 fa f3 0f 2a 45 fc e8 00 00 00 00 66 0f c4 4d fa 00 f3 0f 11 4d f0 e8 00 00 00 00 0f 28 c8 f3 0f 10 45 f0 f3 0f 11 4d f4 e8 00 00 00 00 f3 0f 10 4d f4 0f 2e c1 0f 97 c0 24 01 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;mov %edi,-0x4(%rbp);pextrw $0x0,%xmm0,%eax;mov %ax,-0x6(%rbp);cvtsi2ssl -0x4(%rbp),%xmm0;call 1e <op_47348+0x1e> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;pinsrw $0x0,-0x6(%rbp),%xmm1;movss %xmm1,-0x10(%rbp);call 2e <op_47348+0x2e> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movaps %xmm0,%xmm1;movss -0x10(%rbp),%xmm0;movss %xmm1,-0xc(%rbp);call 40 <op_47348+0x40> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss -0xc(%rbp),%xmm1;ucomiss %xmm1,%xmm0;seta %al;and $0x1,%al;add $0x10,%rsp;pop %rbp;ret
+op_47348|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_47349|REFUSED|/work/regen_cpp_c0118/u/n47349/unit.cpp:7:21: error: unknown type name '_Fract'
+op_47350|REFUSED|/work/regen_cpp_c0118/u/n47350/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47351|REFUSED|/work/regen_cpp_c0118/u/n47351/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47352|REFUSED|/work/regen_cpp_c0118/u/n47352/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47353|REFUSED|/work/regen_cpp_c0118/u/n47353/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47354|REFUSED|/work/regen_cpp_c0118/u/n47354/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47355|REFUSED|/work/regen_cpp_c0118/u/n47355/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47356|REFUSED|/work/regen_cpp_c0118/u/n47356/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47357|REFUSED|/work/regen_cpp_c0118/u/n47357/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47358|REFUSED|/work/regen_cpp_c0118/u/n47358/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47359|REFUSED|/work/regen_cpp_c0118/u/n47359/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47360|REFUSED|/work/regen_cpp_c0118/u/n47360/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47361|REFUSED|/work/regen_cpp_c0118/u/n47361/unit.cpp:7:21: error: unknown type name '_Sat'
+op_47362|SHIP|OK|53 66 0f c5 d8 00 0f 57 c0 f3 0f 2a c7 e8 00 00 00 00 66 0f c5 c0 00 c1 e3 10 66 0f 6e c3 c1 e0 10 66 0f 6e c8 0f 2e c1 0f 97 c0 5b c3|push %rbx;pextrw $0x0,%xmm0,%ebx;xorps %xmm0,%xmm0;cvtsi2ss %edi,%xmm0;call 12 <op_47362+0x12> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;shl $0x10,%ebx;movd %ebx,%xmm0;shl $0x10,%eax;movd %eax,%xmm1;ucomiss %xmm1,%xmm0;seta %al;pop %rbx;ret
+op_47362|ANCHOR|OK|55 48 89 e5 48 83 ec 10 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 89 7d fc e8 00 00 00 00 66 0f c5 c0 00 66 89 45 fa f3 0f 2a 45 fc e8 00 00 00 00 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c8 0f b7 45 fa c1 e0 10 66 0f 6e c0 0f 2e c1 0f 97 c0 24 01 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;mov %edi,-0x4(%rbp);call 22 <op_47362+0x22> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,-0x6(%rbp);cvtsi2ssl -0x4(%rbp),%xmm0;call 35 <op_47362+0x35> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm1;movzwl -0x6(%rbp),%eax;shl $0x10,%eax;movd %eax,%xmm0;ucomiss %xmm1,%xmm0;seta %al;and $0x1,%al;add $0x10,%rsp;pop %rbp;ret
+op_47362|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_47363|SHIP|OK|48 83 ec 18 0f 29 04 24 e8 00 00 00 00 0f 28 c8 0f 28 04 24 e8 00 00 00 00 85 c0 0f 9f c0 48 83 c4 18 c3|sub $0x18,%rsp;movaps %xmm0,(%rsp);call d <op_47363+0xd> !!reloc=R_X86_64_PLT32:__floatsitf-0x4;movaps %xmm0,%xmm1;movaps (%rsp),%xmm0;call 19 <op_47363+0x19> !!reloc=R_X86_64_PLT32:__gttf2-0x4;test %eax,%eax;setg %al;add $0x18,%rsp;ret
+op_47363|ANCHOR|OK|55 48 89 e5 48 83 ec 20 89 7d fc 0f 29 45 e0 8b 7d fc e8 00 00 00 00 0f 28 4d e0 e8 00 00 00 00 85 c0 0f 98 c0 24 01 48 83 c4 20 5d c3|push %rbp;mov %rsp,%rbp;sub $0x20,%rsp;mov %edi,-0x4(%rbp);movaps %xmm0,-0x20(%rbp);mov -0x4(%rbp),%edi;call 17 <op_47363+0x17> !!reloc=R_X86_64_PLT32:__floatsitf-0x4;movaps -0x20(%rbp),%xmm1;call 20 <op_47363+0x20> !!reloc=R_X86_64_PLT32:__lttf2-0x4;test %eax,%eax;sets %al;and $0x1,%al;add $0x20,%rsp;pop %rbp;ret
+op_47363|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_47364|REFUSED|/work/regen_cpp_c0118/u/n47364/unit.cpp:7:28: error: parameters cannot have __fp16 type\s did you forget * ?
+op_47365|REFUSED|/work/regen_cpp_c0118/u/n47365/unit.cpp:7:21: error: __ibm128 is not supported on this target
+op_47366|SHIP|OK|48 63 c7 48 89 c1 48 c1 f9 3f 48 39 f0 48 19 d1 0f 9c c0 c3|movslq %edi,%rax;mov %rax,%rcx;sar $0x3f,%rcx;cmp %rsi,%rax;sbb %rdx,%rcx;setl %al;ret
+op_47366|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 89 7d ec 48 89 4d d8 48 89 45 d0 48 63 55 ec 48 89 d0 48 c1 f8 3f 48 8b 75 d0 48 8b 4d d8 48 29 f2 48 19 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %edi,-0x14(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movslq -0x14(%rbp),%rdx;mov %rdx,%rax;sar $0x3f,%rax;mov -0x30(%rbp),%rsi;mov -0x28(%rbp),%rcx;sub %rsi,%rdx;sbb %rcx,%rax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47366|ANCHOR|DWARF|a=2 byte block: 91 6c (DW_OP_fbreg: -20);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_47367|SHIP|OK|48 63 c7 48 89 c1 48 c1 f9 3f 48 39 f0 48 19 d1 0f 92 c0 c3|movslq %edi,%rax;mov %rax,%rcx;sar $0x3f,%rcx;cmp %rsi,%rax;sbb %rdx,%rcx;setb %al;ret
+op_47367|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 89 7d ec 48 89 4d d8 48 89 45 d0 48 63 55 ec 48 89 d0 48 c1 f8 3f 48 8b 75 d0 48 8b 4d d8 48 29 f2 48 19 c8 0f 92 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %edi,-0x14(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movslq -0x14(%rbp),%rdx;mov %rdx,%rax;sar $0x3f,%rax;mov -0x30(%rbp),%rsi;mov -0x28(%rbp),%rcx;sub %rsi,%rdx;sbb %rcx,%rax;setb %al;and $0x1,%al;pop %rbp;ret
+op_47367|ANCHOR|DWARF|a=2 byte block: 91 6c (DW_OP_fbreg: -20);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_47368|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47368|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 24 01 88 45 fb 8b 45 fc 8a 4d fb 80 e1 01 0f b6 c9 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);and $0x1,%al;mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;mov -0x5(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47368|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_47369|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47369|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f be 4d fb 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movsbl -0x5(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47369|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_47370|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47370|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f b7 4d fa 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movzwl -0x6(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47370|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_47371|SHIP|OK|39 f7 0f 92 c0 c3|cmp %esi,%edi;setb %al;ret
+op_47371|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 3b 45 f8 0f 92 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;cmp -0x8(%rbp),%eax;setb %al;and $0x1,%al;pop %rbp;ret
+op_47371|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47372|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47372|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f b6 4d fb 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movzbl -0x5(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47372|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_47373|SHIP|OK|f2 0f 2a cf 66 0f 2e c1 0f 97 c0 c3|cvtsi2sd %edi,%xmm1;ucomisd %xmm1,%xmm0;seta %al;ret
+op_47373|ANCHOR|OK|55 48 89 e5 89 7d fc f2 0f 11 45 f0 f2 0f 2a 4d fc f2 0f 10 45 f0 66 0f 2e c1 0f 97 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);movsd %xmm0,-0x10(%rbp);cvtsi2sdl -0x4(%rbp),%xmm1;movsd -0x10(%rbp),%xmm0;ucomisd %xmm1,%xmm0;seta %al;and $0x1,%al;pop %rbp;ret
+op_47373|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47374|SHIP|OK|f3 0f 2a cf 0f 2e c1 0f 97 c0 c3|cvtsi2ss %edi,%xmm1;ucomiss %xmm1,%xmm0;seta %al;ret
+op_47374|ANCHOR|OK|55 48 89 e5 89 7d fc f3 0f 11 45 f8 f3 0f 2a 4d fc f3 0f 10 45 f8 0f 2e c1 0f 97 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);movss %xmm0,-0x8(%rbp);cvtsi2ssl -0x4(%rbp),%xmm1;movss -0x8(%rbp),%xmm0;ucomiss %xmm1,%xmm0;seta %al;and $0x1,%al;pop %rbp;ret
+op_47374|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47375|REFUSED|/work/regen_cpp_c0118/u/n47375/unit.cpp:7:21: error: unknown type name 'half'
+op_47376|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47376|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 3b 45 f8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;cmp -0x8(%rbp),%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47376|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47377|SHIP|OK|48 63 c7 48 39 c6 0f 9f c0 c3|movslq %edi,%rax;cmp %rax,%rsi;setg %al;ret
+op_47377|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47377|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47378|REFUSED|/work/regen_cpp_c0118/u/n47378/unit.cpp:7:33: error: expected ')'
+op_47379|REFUSED|/work/regen_cpp_c0118/u/n47379/unit.cpp:7:33: error: expected ')'
+op_47380|SHIP|OK|db 6c 24 08 89 7c 24 fc db 44 24 fc d9 c9 df e9 dd d8 0f 97 c0 c3|fldt 0x8(%rsp);mov %edi,-0x4(%rsp);fildl -0x4(%rsp);fxch %st(1);fucomip %st(1),%st;fstp %st(0);seta %al;ret
+op_47380|ANCHOR|OK|55 48 89 e5 db 6d 10 89 7d fc db 7d e0 8b 45 fc 89 45 dc db 45 dc db 6d e0 df e9 dd d8 0f 97 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;fldt 0x10(%rbp);mov %edi,-0x4(%rbp);fstpt -0x20(%rbp);mov -0x4(%rbp),%eax;mov %eax,-0x24(%rbp);fildl -0x24(%rbp);fldt -0x20(%rbp);fucomip %st(1),%st;fstp %st(0);seta %al;and $0x1,%al;pop %rbp;ret
+op_47380|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_47381|SHIP|OK|48 63 c7 48 39 c6 0f 9f c0 c3|movslq %edi,%rax;cmp %rax,%rsi;setg %al;ret
+op_47381|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47381|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47382|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47382|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f bf 4d fa 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movswl -0x6(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47382|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_47383|REFUSED|/work/regen_cpp_c0118/u/n47383/unit.cpp:7:34: error: expected ')'
+op_47384|REFUSED|/work/regen_cpp_c0118/u/n47384/unit.cpp:7:34: error: expected ')'
+op_47385|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47385|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f be 4d fb 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movsbl -0x5(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47385|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_47386|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47386|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 3b 45 f8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;cmp -0x8(%rbp),%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47386|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47387|SHIP|OK|48 63 c7 48 39 c6 0f 9f c0 c3|movslq %edi,%rax;cmp %rax,%rsi;setg %al;ret
+op_47387|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47387|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47388|SHIP|OK|48 63 c7 48 39 c6 0f 9f c0 c3|movslq %edi,%rax;cmp %rax,%rsi;setg %al;ret
+op_47388|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47388|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47389|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47389|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f bf 4d fa 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movswl -0x6(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47389|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_47390|REFUSED|/work/regen_cpp_c0118/u/n47390/unit.cpp:7:37: error: expected ')'
+op_47391|REFUSED|/work/regen_cpp_c0118/u/n47391/unit.cpp:7:37: error: expected ')'
+op_47392|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47392|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f b6 4d fb 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movzbl -0x5(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47392|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_47393|SHIP|OK|39 f7 0f 92 c0 c3|cmp %esi,%edi;setb %al;ret
+op_47393|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 3b 45 f8 0f 92 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;cmp -0x8(%rbp),%eax;setb %al;and $0x1,%al;pop %rbp;ret
+op_47393|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47394|SHIP|OK|48 63 c7 48 39 c6 0f 97 c0 c3|movslq %edi,%rax;cmp %rax,%rsi;seta %al;ret
+op_47394|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 92 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;setb %al;and $0x1,%al;pop %rbp;ret
+op_47394|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47395|REFUSED|/work/regen_cpp_c0118/u/n47395/unit.cpp:7:42: error: expected ')'
+op_47396|REFUSED|/work/regen_cpp_c0118/u/n47396/unit.cpp:7:42: error: expected ')'
+op_47397|SHIP|OK|48 63 c7 48 39 c6 0f 97 c0 c3|movslq %edi,%rax;cmp %rax,%rsi;seta %al;ret
+op_47397|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 92 c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;setb %al;and $0x1,%al;pop %rbp;ret
+op_47397|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_47398|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47398|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f b7 4d fa 39 c8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movzwl -0x6(%rbp),%ecx;cmp %ecx,%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47398|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_47399|REFUSED|/work/regen_cpp_c0118/u/n47399/unit.cpp:7:43: error: expected ')'
+op_47400|REFUSED|/work/regen_cpp_c0118/u/n47400/unit.cpp:7:43: error: expected ')'
+op_47401|SHIP|OK|39 f7 0f 9c c0 c3|cmp %esi,%edi;setl %al;ret
+op_47401|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 3b 45 f8 0f 9c c0 24 01 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;cmp -0x8(%rbp),%eax;setl %al;and $0x1,%al;pop %rbp;ret
+op_47401|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_47402|REFUSED|/work/regen_cpp_c0118/u/n47402/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47403|REFUSED|/work/regen_cpp_c0118/u/n47403/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47404|REFUSED|/work/regen_cpp_c0118/u/n47404/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47405|REFUSED|/work/regen_cpp_c0118/u/n47405/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47406|REFUSED|/work/regen_cpp_c0118/u/n47406/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47407|REFUSED|/work/regen_cpp_c0118/u/n47407/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47408|REFUSED|/work/regen_cpp_c0118/u/n47408/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47409|REFUSED|/work/regen_cpp_c0118/u/n47409/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47410|REFUSED|/work/regen_cpp_c0118/u/n47410/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47411|REFUSED|/work/regen_cpp_c0118/u/n47411/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47412|REFUSED|/work/regen_cpp_c0118/u/n47412/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47413|REFUSED|/work/regen_cpp_c0118/u/n47413/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47414|REFUSED|/work/regen_cpp_c0118/u/n47414/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47415|REFUSED|/work/regen_cpp_c0118/u/n47415/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47416|REFUSED|/work/regen_cpp_c0118/u/n47416/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47417|REFUSED|/work/regen_cpp_c0118/u/n47417/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47418|REFUSED|/work/regen_cpp_c0118/u/n47418/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47419|REFUSED|/work/regen_cpp_c0118/u/n47419/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47420|REFUSED|/work/regen_cpp_c0118/u/n47420/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47421|REFUSED|/work/regen_cpp_c0118/u/n47421/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47422|REFUSED|/work/regen_cpp_c0118/u/n47422/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47423|REFUSED|/work/regen_cpp_c0118/u/n47423/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47424|REFUSED|/work/regen_cpp_c0118/u/n47424/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47425|REFUSED|/work/regen_cpp_c0118/u/n47425/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47426|REFUSED|/work/regen_cpp_c0118/u/n47426/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47427|REFUSED|/work/regen_cpp_c0118/u/n47427/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47428|REFUSED|/work/regen_cpp_c0118/u/n47428/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47429|REFUSED|/work/regen_cpp_c0118/u/n47429/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47430|REFUSED|/work/regen_cpp_c0118/u/n47430/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47431|REFUSED|/work/regen_cpp_c0118/u/n47431/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47432|REFUSED|/work/regen_cpp_c0118/u/n47432/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47433|REFUSED|/work/regen_cpp_c0118/u/n47433/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47434|REFUSED|/work/regen_cpp_c0118/u/n47434/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47435|REFUSED|/work/regen_cpp_c0118/u/n47435/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47436|REFUSED|/work/regen_cpp_c0118/u/n47436/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47437|REFUSED|/work/regen_cpp_c0118/u/n47437/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47438|REFUSED|/work/regen_cpp_c0118/u/n47438/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47439|REFUSED|/work/regen_cpp_c0118/u/n47439/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47440|REFUSED|/work/regen_cpp_c0118/u/n47440/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47441|REFUSED|/work/regen_cpp_c0118/u/n47441/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47442|REFUSED|/work/regen_cpp_c0118/u/n47442/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47443|REFUSED|/work/regen_cpp_c0118/u/n47443/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47444|REFUSED|/work/regen_cpp_c0118/u/n47444/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47445|REFUSED|/work/regen_cpp_c0118/u/n47445/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47446|REFUSED|/work/regen_cpp_c0118/u/n47446/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47447|REFUSED|/work/regen_cpp_c0118/u/n47447/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47448|REFUSED|/work/regen_cpp_c0118/u/n47448/unit.cpp:7:10: error: unknown type name '_Accum'
+op_47449|REFUSED|/work/regen_cpp_c0118/u/n47449/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47450|REFUSED|/work/regen_cpp_c0118/u/n47450/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47451|REFUSED|/work/regen_cpp_c0118/u/n47451/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47452|REFUSED|/work/regen_cpp_c0118/u/n47452/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47453|REFUSED|/work/regen_cpp_c0118/u/n47453/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47454|REFUSED|/work/regen_cpp_c0118/u/n47454/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47455|REFUSED|/work/regen_cpp_c0118/u/n47455/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47456|REFUSED|/work/regen_cpp_c0118/u/n47456/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47457|REFUSED|/work/regen_cpp_c0118/u/n47457/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47458|REFUSED|/work/regen_cpp_c0118/u/n47458/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47459|REFUSED|/work/regen_cpp_c0118/u/n47459/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47460|REFUSED|/work/regen_cpp_c0118/u/n47460/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47461|REFUSED|/work/regen_cpp_c0118/u/n47461/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47462|REFUSED|/work/regen_cpp_c0118/u/n47462/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47463|REFUSED|/work/regen_cpp_c0118/u/n47463/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47464|REFUSED|/work/regen_cpp_c0118/u/n47464/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47465|REFUSED|/work/regen_cpp_c0118/u/n47465/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47466|REFUSED|/work/regen_cpp_c0118/u/n47466/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47467|REFUSED|/work/regen_cpp_c0118/u/n47467/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47468|REFUSED|/work/regen_cpp_c0118/u/n47468/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47469|REFUSED|/work/regen_cpp_c0118/u/n47469/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47470|REFUSED|/work/regen_cpp_c0118/u/n47470/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47471|REFUSED|/work/regen_cpp_c0118/u/n47471/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47472|REFUSED|/work/regen_cpp_c0118/u/n47472/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47473|REFUSED|/work/regen_cpp_c0118/u/n47473/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47474|REFUSED|/work/regen_cpp_c0118/u/n47474/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47475|REFUSED|/work/regen_cpp_c0118/u/n47475/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47476|REFUSED|/work/regen_cpp_c0118/u/n47476/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47477|REFUSED|/work/regen_cpp_c0118/u/n47477/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47478|REFUSED|/work/regen_cpp_c0118/u/n47478/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47479|REFUSED|/work/regen_cpp_c0118/u/n47479/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47480|REFUSED|/work/regen_cpp_c0118/u/n47480/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47481|REFUSED|/work/regen_cpp_c0118/u/n47481/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47482|REFUSED|/work/regen_cpp_c0118/u/n47482/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47483|REFUSED|/work/regen_cpp_c0118/u/n47483/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47484|REFUSED|/work/regen_cpp_c0118/u/n47484/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47485|REFUSED|/work/regen_cpp_c0118/u/n47485/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47486|REFUSED|/work/regen_cpp_c0118/u/n47486/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47487|REFUSED|/work/regen_cpp_c0118/u/n47487/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47488|REFUSED|/work/regen_cpp_c0118/u/n47488/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47489|REFUSED|/work/regen_cpp_c0118/u/n47489/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47490|REFUSED|/work/regen_cpp_c0118/u/n47490/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47491|REFUSED|/work/regen_cpp_c0118/u/n47491/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47492|REFUSED|/work/regen_cpp_c0118/u/n47492/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47493|REFUSED|/work/regen_cpp_c0118/u/n47493/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47494|REFUSED|/work/regen_cpp_c0118/u/n47494/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47495|REFUSED|/work/regen_cpp_c0118/u/n47495/unit.cpp:7:10: error: unknown type name '_Bool'
+op_47496|REFUSED|/work/regen_cpp_c0118/u/n47496/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47497|REFUSED|/work/regen_cpp_c0118/u/n47497/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47498|REFUSED|/work/regen_cpp_c0118/u/n47498/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47499|REFUSED|/work/regen_cpp_c0118/u/n47499/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47500|REFUSED|/work/regen_cpp_c0118/u/n47500/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47501|REFUSED|/work/regen_cpp_c0118/u/n47501/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47502|REFUSED|/work/regen_cpp_c0118/u/n47502/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47503|REFUSED|/work/regen_cpp_c0118/u/n47503/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47504|REFUSED|/work/regen_cpp_c0118/u/n47504/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47505|REFUSED|/work/regen_cpp_c0118/u/n47505/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47506|REFUSED|/work/regen_cpp_c0118/u/n47506/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47507|REFUSED|/work/regen_cpp_c0118/u/n47507/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47508|REFUSED|/work/regen_cpp_c0118/u/n47508/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47509|REFUSED|/work/regen_cpp_c0118/u/n47509/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47510|REFUSED|/work/regen_cpp_c0118/u/n47510/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47511|REFUSED|/work/regen_cpp_c0118/u/n47511/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47512|REFUSED|/work/regen_cpp_c0118/u/n47512/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47513|REFUSED|/work/regen_cpp_c0118/u/n47513/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47514|REFUSED|/work/regen_cpp_c0118/u/n47514/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47515|REFUSED|/work/regen_cpp_c0118/u/n47515/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47516|REFUSED|/work/regen_cpp_c0118/u/n47516/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47517|REFUSED|/work/regen_cpp_c0118/u/n47517/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47518|REFUSED|/work/regen_cpp_c0118/u/n47518/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47519|REFUSED|/work/regen_cpp_c0118/u/n47519/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47520|REFUSED|/work/regen_cpp_c0118/u/n47520/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47521|REFUSED|/work/regen_cpp_c0118/u/n47521/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47522|REFUSED|/work/regen_cpp_c0118/u/n47522/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47523|REFUSED|/work/regen_cpp_c0118/u/n47523/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47524|REFUSED|/work/regen_cpp_c0118/u/n47524/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47525|REFUSED|/work/regen_cpp_c0118/u/n47525/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47526|REFUSED|/work/regen_cpp_c0118/u/n47526/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47527|REFUSED|/work/regen_cpp_c0118/u/n47527/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47528|REFUSED|/work/regen_cpp_c0118/u/n47528/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47529|REFUSED|/work/regen_cpp_c0118/u/n47529/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47530|REFUSED|/work/regen_cpp_c0118/u/n47530/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47531|REFUSED|/work/regen_cpp_c0118/u/n47531/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47532|REFUSED|/work/regen_cpp_c0118/u/n47532/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47533|REFUSED|/work/regen_cpp_c0118/u/n47533/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47534|REFUSED|/work/regen_cpp_c0118/u/n47534/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47535|REFUSED|/work/regen_cpp_c0118/u/n47535/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47536|REFUSED|/work/regen_cpp_c0118/u/n47536/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47537|REFUSED|/work/regen_cpp_c0118/u/n47537/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47538|REFUSED|/work/regen_cpp_c0118/u/n47538/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47539|REFUSED|/work/regen_cpp_c0118/u/n47539/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47540|REFUSED|/work/regen_cpp_c0118/u/n47540/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47541|REFUSED|/work/regen_cpp_c0118/u/n47541/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47542|REFUSED|/work/regen_cpp_c0118/u/n47542/unit.cpp:7:10: error: unknown type name '_Fract'
+op_47543|REFUSED|/work/regen_cpp_c0118/u/n47543/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47544|REFUSED|/work/regen_cpp_c0118/u/n47544/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47545|REFUSED|/work/regen_cpp_c0118/u/n47545/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47546|REFUSED|/work/regen_cpp_c0118/u/n47546/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47547|REFUSED|/work/regen_cpp_c0118/u/n47547/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47548|REFUSED|/work/regen_cpp_c0118/u/n47548/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47549|REFUSED|/work/regen_cpp_c0118/u/n47549/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47550|REFUSED|/work/regen_cpp_c0118/u/n47550/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47551|REFUSED|/work/regen_cpp_c0118/u/n47551/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47552|REFUSED|/work/regen_cpp_c0118/u/n47552/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47553|REFUSED|/work/regen_cpp_c0118/u/n47553/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47554|REFUSED|/work/regen_cpp_c0118/u/n47554/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47555|REFUSED|/work/regen_cpp_c0118/u/n47555/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47556|REFUSED|/work/regen_cpp_c0118/u/n47556/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47557|REFUSED|/work/regen_cpp_c0118/u/n47557/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47558|REFUSED|/work/regen_cpp_c0118/u/n47558/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47559|REFUSED|/work/regen_cpp_c0118/u/n47559/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47560|REFUSED|/work/regen_cpp_c0118/u/n47560/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47561|REFUSED|/work/regen_cpp_c0118/u/n47561/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47562|REFUSED|/work/regen_cpp_c0118/u/n47562/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47563|REFUSED|/work/regen_cpp_c0118/u/n47563/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47564|REFUSED|/work/regen_cpp_c0118/u/n47564/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47565|REFUSED|/work/regen_cpp_c0118/u/n47565/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47566|REFUSED|/work/regen_cpp_c0118/u/n47566/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47567|REFUSED|/work/regen_cpp_c0118/u/n47567/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47568|REFUSED|/work/regen_cpp_c0118/u/n47568/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47569|REFUSED|/work/regen_cpp_c0118/u/n47569/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47570|REFUSED|/work/regen_cpp_c0118/u/n47570/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47571|REFUSED|/work/regen_cpp_c0118/u/n47571/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47572|REFUSED|/work/regen_cpp_c0118/u/n47572/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47573|REFUSED|/work/regen_cpp_c0118/u/n47573/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47574|REFUSED|/work/regen_cpp_c0118/u/n47574/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47575|REFUSED|/work/regen_cpp_c0118/u/n47575/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47576|REFUSED|/work/regen_cpp_c0118/u/n47576/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47577|REFUSED|/work/regen_cpp_c0118/u/n47577/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47578|REFUSED|/work/regen_cpp_c0118/u/n47578/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47579|REFUSED|/work/regen_cpp_c0118/u/n47579/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47580|REFUSED|/work/regen_cpp_c0118/u/n47580/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47581|REFUSED|/work/regen_cpp_c0118/u/n47581/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47582|REFUSED|/work/regen_cpp_c0118/u/n47582/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47583|REFUSED|/work/regen_cpp_c0118/u/n47583/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47584|REFUSED|/work/regen_cpp_c0118/u/n47584/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47585|REFUSED|/work/regen_cpp_c0118/u/n47585/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47586|REFUSED|/work/regen_cpp_c0118/u/n47586/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47587|REFUSED|/work/regen_cpp_c0118/u/n47587/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47588|REFUSED|/work/regen_cpp_c0118/u/n47588/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47589|REFUSED|/work/regen_cpp_c0118/u/n47589/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47590|REFUSED|/work/regen_cpp_c0118/u/n47590/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47591|REFUSED|/work/regen_cpp_c0118/u/n47591/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47592|REFUSED|/work/regen_cpp_c0118/u/n47592/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47593|REFUSED|/work/regen_cpp_c0118/u/n47593/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47594|REFUSED|/work/regen_cpp_c0118/u/n47594/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47595|REFUSED|/work/regen_cpp_c0118/u/n47595/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47596|REFUSED|/work/regen_cpp_c0118/u/n47596/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47597|REFUSED|/work/regen_cpp_c0118/u/n47597/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47598|REFUSED|/work/regen_cpp_c0118/u/n47598/unit.cpp:7:10: error: unknown type name '_Sat'
+op_47599|REFUSED|/work/regen_cpp_c0118/u/n47599/unit.cpp:7:10: error: unknown type name '_Sat'

@@ -1,0 +1,188 @@
+{
+ "what_this_is": "the measured bit encoding of the C++ ordering result types, read from the compiler rather than from the standard",
+ "why": "dominance.py gives a result type no projection unless it is told the width, and says that reading one off the specification would be interpretation of stated design.  This is the measurement that replaces the interpretation.",
+ "lane": "lanes/pc_ordering_probe.sh",
+ "compiler": [
+  "Ubuntu clang version 21.1.8 (6ubuntu1)",
+  "Target: x86_64-pc-linux-gnu",
+  "Thread model: posix",
+  "GNU objdump (GNU Binutils for Ubuntu) 2.46"
+ ],
+ "reading_a": {
+  "what": "the object representation, executed: each constant memcpy'd into an unsigned char array",
+  "evidence_class": "the tool's own testimony, executed",
+  "values": {
+   "partial_ordering": {
+    "less": {
+     "bytes": [
+      "ff"
+     ],
+     "size": 1,
+     "as_signed_char": -1
+    },
+    "equivalent": {
+     "bytes": [
+      "00"
+     ],
+     "size": 1,
+     "as_signed_char": 0
+    },
+    "greater": {
+     "bytes": [
+      "01"
+     ],
+     "size": 1,
+     "as_signed_char": 1
+    },
+    "unordered": {
+     "bytes": [
+      "02"
+     ],
+     "size": 1,
+     "as_signed_char": 2
+    }
+   },
+   "weak_ordering": {
+    "less": {
+     "bytes": [
+      "ff"
+     ],
+     "size": 1,
+     "as_signed_char": -1
+    },
+    "equivalent": {
+     "bytes": [
+      "00"
+     ],
+     "size": 1,
+     "as_signed_char": 0
+    },
+    "greater": {
+     "bytes": [
+      "01"
+     ],
+     "size": 1,
+     "as_signed_char": 1
+    }
+   },
+   "strong_ordering": {
+    "less": {
+     "bytes": [
+      "ff"
+     ],
+     "size": 1,
+     "as_signed_char": -1
+    },
+    "equal": {
+     "bytes": [
+      "00"
+     ],
+     "size": 1,
+     "as_signed_char": 0
+    },
+    "equivalent": {
+     "bytes": [
+      "00"
+     ],
+     "size": 1,
+     "as_signed_char": 0
+    },
+    "greater": {
+     "bytes": [
+      "01"
+     ],
+     "size": 1,
+     "as_signed_char": 1
+    }
+   }
+  }
+ },
+ "reading_b": {
+  "what": "the emitted code at -O2: the immediate the compiler moves into the result register",
+  "evidence_class": "forced by construction: nothing but that value explains that byte",
+  "values": {
+   "partial_ordering": {
+    "less": {
+     "byte": "ff",
+     "instruction": "0:\tmov    $0xff,%al"
+    },
+    "equivalent": {
+     "byte": "00",
+     "instruction": "10:\txor    %eax,%eax"
+    },
+    "greater": {
+     "byte": "01",
+     "instruction": "20:\tmov    $0x1,%al"
+    },
+    "unordered": {
+     "byte": "02",
+     "instruction": "30:\tmov    $0x2,%al"
+    }
+   },
+   "strong_ordering": {
+    "less": {
+     "byte": "ff",
+     "instruction": "40:\tmov    $0xff,%al"
+    },
+    "equal": {
+     "byte": "00",
+     "instruction": "50:\txor    %eax,%eax"
+    },
+    "greater": {
+     "byte": "01",
+     "instruction": "60:\tmov    $0x1,%al"
+    }
+   }
+  }
+ },
+ "readings_agree": true,
+ "readings_checked": [
+  "partial_ordering::equivalent",
+  "partial_ordering::greater",
+  "partial_ordering::less",
+  "partial_ordering::unordered",
+  "strong_ordering::equal",
+  "strong_ordering::greater",
+  "strong_ordering::less"
+ ],
+ "size_bytes": {
+  "partial_ordering": 1,
+  "weak_ordering": 1,
+  "strong_ordering": 1
+ },
+ "projection": {
+  "partial_ordering": {
+   "bits": 8,
+   "register": "rax",
+   "promise": "the low 8 bits of the result register, holding one of the measured encoding values",
+   "measured_values": {
+    "equivalent": "00",
+    "greater": "01",
+    "less": "ff",
+    "unordered": "02"
+   }
+  },
+  "strong_ordering": {
+   "bits": 8,
+   "register": "rax",
+   "promise": "the low 8 bits of the result register, holding one of the measured encoding values",
+   "measured_values": {
+    "equal": "00",
+    "equivalent": "00",
+    "greater": "01",
+    "less": "ff"
+   }
+  },
+  "weak_ordering": {
+   "bits": 8,
+   "register": "rax",
+   "promise": "the low 8 bits of the result register, holding one of the measured encoding values",
+   "measured_values": {
+    "equivalent": "00",
+    "greater": "01",
+    "less": "ff"
+   }
+  }
+ },
+ "note_on_bool": "this is NOT the bool projection.  A bool return promises 0 or 1 in the low byte; an ordering return uses the same width and a different value set, which is why the measured values travel with the width."
+}

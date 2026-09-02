@@ -1,0 +1,33 @@
+// integer probe bodies - c++. SIGNED overflow and integer division by zero are
+// UNDEFINED here: per the owner's ruling they are probed anyway and their answers
+// recorded as evidence, but no answer can be wrong, because c++ promised none.
+// UNSIGNED wrap IS a guarantee and is checked normally.
+#include <cstdint>
+#include <climits>
+static long long op64(long long x) { return x; }
+static int32_t op32(int32_t x) { return x; }
+static unsigned long long opu64(unsigned long long x) { return x; }
+static std::string f_intU1_a() { return std::to_string(123456 + 654321); }
+static std::string f_intU1_b() { return std::to_string(1000 * 1000); }
+static std::string f_intU1_c() { return std::to_string(5 - 9); }
+static std::string f_intU2_a() { return fmtb(op64(3) < op64(5)); }
+static std::string f_intU2_b() { return fmtb(op64(-7) <= op64(-7)); }
+static std::string f_intU2_c() { return fmtb(op64(10) == op64(10)); }
+static std::string f_intU2_d() { return fmtb(op64(2) > op64(100)); }
+static std::string f_intU3_a() { return std::to_string(op64(42)); }
+static std::string f_intU3_b() { return std::to_string(op64(-12345)); }
+static std::string f_Fi1_a() { return std::to_string(9007199254740993LL); }
+static std::string f_Fi1_b() { return std::to_string(9223372036854775807LL); }
+static std::string f_Fi1_d() { return std::to_string((int)INT8_MAX); }
+static std::string f_Fi1_e() { return std::to_string((int)UINT8_MAX); }
+static std::string f_Fi2_a() { return std::to_string(op64(LLONG_MAX) + 1); }
+static std::string f_Fi2_b() { return std::to_string(opu64(ULLONG_MAX) + 1); }
+static std::string f_Fi3_a() { return std::to_string(op64(7) / op64(2)); }
+static std::string f_Fi3_b() { return std::to_string(op64(-7) / op64(2)); }
+static std::string f_Fi4_a() { return std::to_string(op64(-7) % op64(2)); }
+static std::string f_Fi4_b() { return std::to_string(op64(7) % op64(-2)); }
+static std::string f_Fi4_c() { return std::to_string(op64(7) % op64(2)); }
+static std::string f_Fi5_a() { return std::to_string(op64(7) / op64(0)); }
+static std::string f_Fi5_b() { return std::to_string(op64(7) % op64(0)); }
+static std::string f_Fi6_a() { return std::to_string(op32(1) << 31); }
+static std::string f_Fi6_b() { return std::to_string(op64(1) << 32); }

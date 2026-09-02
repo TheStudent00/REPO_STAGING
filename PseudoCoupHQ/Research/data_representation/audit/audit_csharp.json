@@ -1,0 +1,990 @@
+{
+ "language": "csharp",
+ "layer": 2,
+ "what": "the load-audit: can each layer-2 representation hold layer-1 content",
+ "evidence": "audit/raw/l2_csharp.txt, produced by audit/lanes/l2_csharp.sh",
+ "cell_count": 33,
+ "probe_count": 150,
+ "verdict_counts": {
+  "LOADS": 20,
+  "PARTIAL": 11,
+  "REFUSES-behavioral": 2,
+  "NOT-RUN": 0
+ },
+ "form_verdicts": {
+  "nothing": "held",
+  "truth": "held",
+  "whole": "held",
+  "fractional": "held",
+  "text": "held",
+  "sequence": "held",
+  "keyed": "held",
+  "nesting": "held",
+  "identity": "held"
+ },
+ "cells": [
+  {
+   "cell": "nothing.string? (null reference)",
+   "form": "nothing",
+   "rep": "string? (null reference)",
+   "kind": "literal",
+   "note": "an absent reference; the hole names a declared reference kind.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "null": {
+     "result": "null",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nothing.Nullable<int>",
+   "form": "nothing",
+   "rep": "Nullable<int>",
+   "kind": "literal",
+   "note": "a struct wrapping a value plus a present flag; the hole is a flipped flag, not a missing address.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "null": {
+     "result": "null",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nothing.object (null reference)",
+   "form": "nothing",
+   "rep": "object (null reference)",
+   "kind": "literal",
+   "note": "the widest reference kind; every reference kind's absence collapses to this same null.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "null": {
+     "result": "null",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "truth.bool",
+   "form": "truth",
+   "rep": "bool",
+   "kind": "literal",
+   "note": "two values, one byte, no numeric side (unlike C, bool does not implicitly convert to int).",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "true": {
+     "result": "True",
+     "judgement": "loaded"
+    },
+    "false": {
+     "result": "False",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "whole.int",
+   "form": "whole",
+   "rep": "int",
+   "kind": "literal",
+   "note": "signed 32-bit; the default integer literal type, so it refuses everything past its own width.",
+   "verdict": "PARTIAL",
+   "why": "i64max refused (<compile-error>); i64max_plus1 refused (<compile-error>); p53_plus1 refused (<compile-error>); u64max refused (<compile-error>)",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "i64max_plus1": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "p53_plus1": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "u64max": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    }
+   }
+  },
+  {
+   "cell": "whole.long",
+   "form": "whole",
+   "rep": "long",
+   "kind": "literal",
+   "note": "signed 64-bit; the usual whole-number holder, refuses past i64 max.",
+   "verdict": "PARTIAL",
+   "why": "i64max_plus1 refused (<compile-error>); u64max refused (<compile-error>)",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    }
+   }
+  },
+  {
+   "cell": "whole.ulong",
+   "form": "whole",
+   "rep": "ulong",
+   "kind": "literal",
+   "note": "unsigned 64-bit; reaches u64 max exactly, has no room below zero.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "9223372036854775808",
+     "judgement": "loaded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "18446744073709551615",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "whole.System.Numerics.BigInteger",
+   "form": "whole",
+   "rep": "System.Numerics.BigInteger",
+   "kind": "constructor",
+   "note": "unbounded whole number; every edge in the data file fits with room to spare.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "9223372036854775808",
+     "judgement": "loaded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "18446744073709551615",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "whole.short",
+   "form": "whole",
+   "rep": "short",
+   "kind": "literal",
+   "note": "signed 16-bit; the narrow end, refuses everything above roughly 32000.",
+   "verdict": "PARTIAL",
+   "why": "i64max refused (<compile-error>); i64max_plus1 refused (<compile-error>); p53_plus1 refused (<compile-error>); u64max refused (<compile-error>)",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "i64max_plus1": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "p53_plus1": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "u64max": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    }
+   }
+  },
+  {
+   "cell": "fractional.double",
+   "form": "fractional",
+   "rep": "double",
+   "kind": "literal",
+   "note": "IEEE double; the default fractional literal type.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_1_5": {
+     "result": "1.5",
+     "judgement": "loaded"
+    },
+    "base_pi": {
+     "result": "3.141592653589793",
+     "judgement": "loaded"
+    },
+    "negzero": {
+     "result": "-0",
+     "judgement": "loaded"
+    },
+    "nan": {
+     "result": "NaN",
+     "judgement": "loaded"
+    },
+    "inf": {
+     "result": "Infinity",
+     "judgement": "loaded"
+    },
+    "point1": {
+     "result": "0.1",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "fractional.float",
+   "form": "fractional",
+   "rep": "float",
+   "kind": "literal",
+   "note": "IEEE single; holds every base value at lower precision, needs the f suffix or the literal defaults to double.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_1_5": {
+     "result": "1.5",
+     "judgement": "loaded"
+    },
+    "base_pi": {
+     "result": "3.1415927",
+     "judgement": "loaded"
+    },
+    "negzero": {
+     "result": "-0",
+     "judgement": "loaded"
+    },
+    "nan": {
+     "result": "NaN",
+     "judgement": "loaded"
+    },
+    "inf": {
+     "result": "Infinity",
+     "judgement": "loaded"
+    },
+    "point1": {
+     "result": "0.1",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "fractional.decimal",
+   "form": "fractional",
+   "rep": "decimal",
+   "kind": "literal",
+   "note": "exact base-10 fixed point; no bit pattern for NaN or infinity, so those spellings must go through a checked cast that throws.",
+   "verdict": "PARTIAL",
+   "why": "nan refused (<compile-error>); inf refused (<compile-error>)",
+   "probes": {
+    "base_1_5": {
+     "result": "1.5",
+     "judgement": "loaded"
+    },
+    "base_pi": {
+     "result": "3.141592653589793",
+     "judgement": "loaded"
+    },
+    "negzero": {
+     "result": "0.0",
+     "judgement": "loaded"
+    },
+    "nan": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "inf": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "point1": {
+     "result": "0.1",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.string",
+   "form": "text",
+   "rep": "string",
+   "kind": "literal",
+   "note": "immutable run of utf-16 code units; the default text holder.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.char[]",
+   "form": "text",
+   "rep": "char[]",
+   "kind": "constructor",
+   "note": "an array of utf-16 code units; a codepoint past the basic plane spans two elements.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.System.Text.StringBuilder",
+   "form": "text",
+   "rep": "System.Text.StringBuilder",
+   "kind": "constructor",
+   "note": "mutable text buffer, appended and read back as a string.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.byte[]",
+   "form": "text",
+   "rep": "byte[]",
+   "kind": "constructor",
+   "note": "holds text only as encoded bytes; the codepoints are gone until decoded.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.T[]",
+   "form": "sequence",
+   "rep": "T[]",
+   "kind": "literal",
+   "note": "fixed length once allocated, one declared element kind.",
+   "verdict": "PARTIAL",
+   "why": "mixed refused (<compile-error>); bigint refused (<compile-error>)",
+   "probes": {
+    "empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "1,2,3",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "a,b",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "bigint": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    }
+   }
+  },
+  {
+   "cell": "sequence.List<T>",
+   "form": "sequence",
+   "rep": "List<T>",
+   "kind": "constructor",
+   "note": "growable ordered run, one declared element kind.",
+   "verdict": "PARTIAL",
+   "why": "mixed refused (<compile-error>); bigint refused (<compile-error>)",
+   "probes": {
+    "empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "1,2,3",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "a,b",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "bigint": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    }
+   }
+  },
+  {
+   "cell": "sequence.ReadOnlyCollection<T>",
+   "form": "sequence",
+   "rep": "ReadOnlyCollection<T>",
+   "kind": "constructor",
+   "note": "a read-only window over a growable run that lives elsewhere.",
+   "verdict": "PARTIAL",
+   "why": "mixed refused (<compile-error>); bigint refused (<compile-error>)",
+   "probes": {
+    "empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "1,2,3",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "a,b",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "bigint": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    }
+   }
+  },
+  {
+   "cell": "sequence.LinkedList<T>",
+   "form": "sequence",
+   "rep": "LinkedList<T>",
+   "kind": "constructor",
+   "note": "ordered run open at both ends, one declared element kind.",
+   "verdict": "PARTIAL",
+   "why": "mixed refused (<compile-error>); bigint refused (<compile-error>)",
+   "probes": {
+    "empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "1,2,3",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "a,b",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "bigint": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    }
+   }
+  },
+  {
+   "cell": "sequence.ValueTuple",
+   "form": "sequence",
+   "rep": "ValueTuple",
+   "kind": "literal",
+   "note": "fixed length, and each position may be a different kind; the c# sequence holder that takes the mixed row. A single element needs ValueTuple.Create since (x,) is not tuple syntax here.",
+   "verdict": "REFUSES-behavioral",
+   "why": "empty refused (<compile-error>); bigint refused (<compile-error>)",
+   "probes": {
+    "empty": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "base": {
+     "result": "(1, 2, 3)",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "(a, b)",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "(1, two, 3, True, )",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    }
+   }
+  },
+  {
+   "cell": "sequence.object[]",
+   "form": "sequence",
+   "rep": "object[]",
+   "kind": "constructor",
+   "note": "boxes every element; the one array kind that takes the mixed row, at the cost of losing the declared element kind entirely.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "1,2,3",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "a,b",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "1,two,3,True,null",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "9223372036854775808",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.Dictionary<string,V>",
+   "form": "keyed",
+   "rep": "Dictionary<string,V>",
+   "kind": "constructor",
+   "note": "name to element, no order guaranteed.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "|0",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "a,b,c|3",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "1,b|2",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "|1",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "outer|1",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.SortedDictionary<string,V>",
+   "form": "keyed",
+   "rep": "SortedDictionary<string,V>",
+   "kind": "constructor",
+   "note": "the same grouping held in sorted key order rather than insertion order.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "[a, 1],[b, 2],[c, 3]",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "[1, string-one-key],[b, 2]",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "[, empty-string key]",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "[outer, System.Collections.Generic.SortedDictionary`2[System.String,System.Collections.Generic.List`1[System.Int64]]]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.record",
+   "form": "keyed",
+   "rep": "record",
+   "kind": "constructor",
+   "note": "names fixed when the shape is declared, and C# forbids declaring a type inside a method body, so every probe of this entry shares one set of top-level record declarations; the odd keys cannot be spelled as record parameter names at all, not even locally, so those probes fall back to an anonymous-type attempt that the parser refuses outright.",
+   "verdict": "PARTIAL",
+   "why": "intlike refused (<compile-error>); emptykey refused (<compile-error>)",
+   "probes": {
+    "empty": {
+     "result": "R0 { }",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "R3 { a = 1, b = 2, c = 3 }",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "emptykey": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "nested": {
+     "result": "RN { outer = System.Collections.Generic.Dictionary`2[System.String,System.Collections.Generic.List`1[System.Int64]] }",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.struct",
+   "form": "keyed",
+   "rep": "struct",
+   "kind": "constructor",
+   "note": "a value-type field bag; same top-level-only restriction and same identifier refusal as the record entry.",
+   "verdict": "PARTIAL",
+   "why": "intlike refused (<compile-error>); emptykey refused (<compile-error>)",
+   "probes": {
+    "empty": {
+     "result": "S0",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "S3",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "emptykey": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "nested": {
+     "result": "SN",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.class with fields",
+   "form": "keyed",
+   "rep": "class with fields",
+   "kind": "constructor",
+   "note": "a reference-type field bag; ToString() is not overridden here, so the read-back only ever surfaces the type name, not the fields \u2014 the finding for this cell.",
+   "verdict": "PARTIAL",
+   "why": "intlike refused (<compile-error>); emptykey refused (<compile-error>)",
+   "probes": {
+    "empty": {
+     "result": "C0",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "C3",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "emptykey": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "nested": {
+     "result": "CN",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.List<List<T>>",
+   "form": "nesting",
+   "rep": "List<List<T>>",
+   "kind": "constructor",
+   "note": "nesting by repeating the same holder; every level must carry the same declared kind.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "[[1,2],[3,4]]",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "{\"outer\":{\"inner\":[1,2]}}",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "[[1],[2,3],[]]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.Dictionary<string,object>",
+   "form": "nesting",
+   "rep": "Dictionary<string,object>",
+   "kind": "constructor",
+   "note": "boxes every value; the one keyed holder that takes elements of mixed forms at each level.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "{\"a\":[[1,2],[3,4]]}",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "{\"outer\":{\"inner\":[1,2]}}",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "{\"a\":[1,{\"b\":[2,null]}],\"c\":true}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.object[]",
+   "form": "nesting",
+   "rep": "object[]",
+   "kind": "constructor",
+   "note": "boxes every element; nesting is just an object[] holding more object[] or Dictionary<string,object>.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "[[1,2],[3,4]]",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "[{\"outer\":{\"inner\":[1,2]}}]",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "[1,[2,{\"k\":\"t\"}],true,null]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.struct value holder",
+   "form": "identity",
+   "rep": "struct value holder",
+   "kind": "constructor",
+   "note": "a value type has no reference identity at all; a list of structs stores independent copies, so mutating one never reaches the other, and even two boxed copies of the same source struct compare as different objects.",
+   "verdict": "REFUSES-behavioral",
+   "why": "shared refused (<compile-error>); diamond refused (<compile-error>); cycle refused (<compile-error>)",
+   "probes": {
+    "shared": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "diamond": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    },
+    "cycle": {
+     "result": "<compile-error>",
+     "judgement": "refused"
+    }
+   }
+  },
+  {
+   "cell": "identity.class reference holder",
+   "form": "identity",
+   "rep": "class reference holder",
+   "kind": "constructor",
+   "note": "reference types default to shared storage; two positions can name one object, and a self field can hold a reference to its own object.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "shared": {
+     "result": "shared",
+     "judgement": "loaded"
+    },
+    "diamond": {
+     "result": "same",
+     "judgement": "loaded"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.array of references",
+   "form": "identity",
+   "rep": "array of references",
+   "kind": "constructor",
+   "note": "arrays of a reference kind hold addresses, not copies; an object[] can even hold a reference to the very array it sits in.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "shared": {
+     "result": "shared",
+     "judgement": "loaded"
+    },
+    "diamond": {
+     "result": "same",
+     "judgement": "loaded"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  }
+ ]
+}

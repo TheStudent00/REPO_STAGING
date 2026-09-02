@@ -1,0 +1,120 @@
+{
+ "what_this_is": "the canonicalised JVM unit matched against the equivalence classes by canonical bytes",
+ "match_level": "level 1: byte identity after canonicalisation",
+ "type_reading": {
+  "int32": "i32",
+  "int64": "i64",
+  "float32": "f32",
+  "float64": "f64",
+  "boolean": "bool"
+ },
+ "type_reading_note": "java's own type words read as the pipeline's representation words.  The one assumption in this file.",
+ "java_unit": {
+  "id": "u1",
+  "lang": "java",
+  "operator": "+",
+  "method": "af",
+  "arity": 2,
+  "operand_types": [
+   "int32",
+   "int32"
+  ],
+  "result_type": "int32",
+  "compiler_tier": "c2",
+  "bytes_recovered": 104
+ },
+ "java_canonical_form": "lea (%rdi,%rsi,1),%eax; ret",
+ "java_canonical_bytes": "8d 04 37 c3",
+ "class_key_looked_for": {
+  "operand_types": "i32,i32",
+  "result_type": "i32"
+ },
+ "units_with_equal_canonical_bytes": [
+  "c/op_102",
+  "c/op_107",
+  "c/op_132",
+  "c/op_137",
+  "cpp/op_102",
+  "cpp/op_107",
+  "cpp/op_132",
+  "cpp/op_137",
+  "rust/op_534"
+ ],
+ "matched_class": "K0043",
+ "matched_against": [
+  "c/op_102",
+  "cpp/op_102",
+  "rust/op_534"
+ ],
+ "member_recorded": {
+  "unit": "java/op_1",
+  "lang": "java",
+  "n": "1",
+  "operator": "+",
+  "type_pair": "i32,i32",
+  "mode_count": 0,
+  "result_type": "i32",
+  "result_type_as_the_language_spells_it": "int",
+  "canonical_form": "lea (%rdi,%rsi,1),%eax; ret",
+  "canonicalisation_refused": null,
+  "evictions": [],
+  "evidence_class": "the JVM's own testimony about code it generated at run time, carved out of a print by our lane.  NOT an ELF section a compiler wrote to disk.  This is weaker provenance than every other member of the table and must be marked as such wherever this unit appears.",
+  "provenance": "the JVM's own print of the machine code its C2 compiler produced for a warmed method, carved by the lane; the runtime furniture stripped by named rule",
+  "provenance_is_weaker": true,
+  "matched_by": {
+   "level": "level 1: byte identity after canonicalisation",
+   "canonical_bytes": "8d 04 37 c3",
+   "equal_to": [
+    "c/op_102",
+    "cpp/op_102",
+    "rust/op_534"
+   ],
+   "lifted_form_asked": false,
+   "solver_asked": false,
+   "why_not": "the canonical bytes are equal, so there is nothing the lifted form or the solver could add"
+  },
+  "stripped_furniture": [
+   {
+    "rule": "F1",
+    "what": "frame push",
+    "lines": [
+     "sub $0x18,%rsp",
+     "mov %rbp,0x10(%rsp)"
+    ]
+   },
+   {
+    "rule": "B1",
+    "what": "entry barrier",
+    "lines": [
+     "cmpl $0x0,0x20(%r15)",
+     "jne 0x7f99346aa443"
+    ],
+    "target": "0x7f99346aa443"
+   },
+   {
+    "rule": "F2",
+    "what": "frame pop",
+    "lines": [
+     "add $0x10,%rsp",
+     "pop %rbp"
+    ]
+   },
+   {
+    "rule": "P1",
+    "what": "return safepoint poll",
+    "lines": [
+     "cmp 0x28(%r15),%rsp",
+     "ja 0x7f99346aa42d"
+    ],
+    "target": "0x7f99346aa42d"
+   },
+   {
+    "rule": "O1",
+    "what": "out-of-line remainder",
+    "line_count": 16,
+    "first": "movabs $0x7f99346aa422,%r10",
+    "note": "dropped because both stripped branches land inside it"
+   }
+  ]
+ }
+}

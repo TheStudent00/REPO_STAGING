@@ -1,0 +1,28 @@
+validation of clusters.json against 15 ground-truth rows
+
+row binary_expression    partially  4/5 in c016; strayed: dart:additive_expression->c006
+row if_conditional       partially  3/5 in c049; strayed: rust:if_expression->c048, python:if_statement->c118
+row function_definition  partially  2/5 in c057; strayed: dart:function_signature->c031, c:function_definition->c067, cpp:function_definition->c067
+row call                 fully      all 4 in c034
+row parameter_list       partially  3/5 in c037; strayed: dart:formal_parameter_list->c053, c:parameter_list->c050
+row identifier           partially  2/5 in c003; strayed: dart:identifier->c014, c:identifier->c002, cpp:identifier->c002
+row string_literal       partially  2/5 in c003; strayed: dart:string_literal->c014, c:string_literal->c002, cpp:string_literal->c002
+row number_literal       partially  2/5 in c003; strayed: dart:decimal_integer_literal->c014, c:number_literal->c002, cpp:number_literal->c002
+row assignment           partially  3/5 in c016; strayed: python:assignment->c082, dart:assignment_expression->c080
+row for_loop             partially  2/5 in c012; strayed: rust:for_expression->c047, python:for_statement->c117, dart:for_statement->c036
+row while_loop           partially  3/5 in c012; strayed: rust:while_expression->c047, python:while_statement->c120
+row return               partially  2/5 in c008; strayed: rust:return_expression->c003, python:return_statement->c015, dart:return_statement->c022
+row field_access         partially  2/4 in c002; strayed: rust:field_expression->c041, python:attribute->c003
+row block                partially  3/5 in c008; strayed: rust:block->c002, python:block->c111
+row argument_list        partially  2/5 in c063; strayed: rust:arguments->c077, python:argument_list->c110, cpp:argument_list->c071
+
+over-merge: cluster c002 mixes rows {'identifier': 2, 'string_literal': 2, 'number_literal': 2, 'field_access': 2, 'block': 1}
+over-merge: cluster c003 mixes rows {'identifier': 2, 'string_literal': 2, 'number_literal': 2, 'return': 1, 'field_access': 1}
+over-merge: cluster c008 mixes rows {'return': 2, 'block': 3}
+over-merge: cluster c012 mixes rows {'for_loop': 2, 'while_loop': 3}
+over-merge: cluster c014 mixes rows {'identifier': 1, 'string_literal': 1, 'number_literal': 1}
+over-merge: cluster c016 mixes rows {'binary_expression': 4, 'assignment': 3}
+over-merge: cluster c047 mixes rows {'for_loop': 1, 'while_loop': 1}
+
+purity (majority-row fraction over 73 ground-truth members): 0.685
+rows fully co-clustered: 1/15; partially: 14; scattered: 0

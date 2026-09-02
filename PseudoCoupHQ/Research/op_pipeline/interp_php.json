@@ -1,0 +1,199 @@
+{
+ "meta": {
+  "what": "php pilot of the interpreter track: which interpreter handler executes for a PHP addition on int and float operands, measured by differential gcov coverage.  NO arch-unit extracted -- dispatch (tally) only.",
+  "date": "2026-08-31",
+  "home": "Planning/node_0_3_research/node_0_3_5_compiler_graph/SUPPORT_scaling_design.md, interpreter-track section",
+  "pin": {
+   "project": "php",
+   "tag": "7.4.33",
+   "runtime_banner": "PHP 7.4.33 (cli) (built: Aug 31 2026 05:25:57) ( NTS )",
+   "evidence": "artifact fact (the built interpreter's own --version banner)",
+   "compromise": true,
+   "compromise_note": "7.4.33 is a COMPROMISE pin, not the first choice.  PHP 8.3.0 and 8.2.13 both failed the coverage build in this container: Zend/zend_atomic.h's C11 atomic intrinsics (__c11_atomic_exchange/_load/_store) are used without the matching declaration under this compiler.  7.4 predates that file's C11-atomics path entirely, so it built.  See pin_history for every attempt, pasted from the actual build logs."
+  },
+  "pin_history": [
+   {
+    "tried": "PHP 8.3.0",
+    "outcome": "FAILED",
+    "log": "agent/logs/20260831T051838Z__interp_php_a_build_local.sh.log",
+    "error": "implicit declaration of function '__c11_atomic_exchange'",
+    "stopped_at": "ext/date/php_date.lo"
+   },
+   {
+    "tried": "PHP 8.2.13",
+    "outcome": "FAILED",
+    "log": "agent/logs/20260831T052013Z__interp_php_a_build_local.sh.log",
+    "error": "implicit declaration of function '__c11_atomic_exchange'",
+    "stopped_at": "ext/date/php_date.lo"
+   },
+   {
+    "tried": "PHP 8.2.13",
+    "outcome": "FAILED",
+    "log": "agent/logs/20260831T052342Z__interp_php_a_build_local.sh.log",
+    "error": "implicit declaration of function '__c11_atomic_init'",
+    "stopped_at": "Zend/zend_execute_API.lo"
+   },
+   {
+    "tried": "PHP 7.4.33 (first attempt)",
+    "outcome": "FAILED",
+    "log": "agent/logs/20260831T052441Z__interp_php_a_build_local.sh.log",
+    "error": "make error (unrelated to atomics)",
+    "stopped_at": "ext/standard/scanf.lo"
+   },
+   {
+    "tried": "PHP 7.4.33 (second attempt)",
+    "outcome": "SUCCEEDED",
+    "log": "agent/logs/20260831T052532Z__interp_php_a_build_local.sh.log",
+    "banner": "PHP 7.4.33 (cli) (built: Aug 31 2026 05:25:57) ( NTS )",
+    "elapsed_s": 30.7
+   }
+  ]
+ },
+ "method": {
+  "kind": "differential gcov line coverage (tally, per-run) -- same method as interp_cpython.md and interp_ruby.json.  p0_baseline returns the first argument without adding.",
+  "probes": {
+   "p0_baseline.php": "<?php\nfunction af($a, $b) {\n    return $a;\n}\n$n = 0;\n$i = 0;\nwhile ($i < 100000) {\n    $n = af(3, 4);\n    $i = $i + 1;\n}\necho $n . \"\\n\";\n",
+   "p1_smallint.php": "<?php\nfunction af($a, $b) {\n    return $a + $b;\n}\n$n = 0;\n$i = 0;\nwhile ($i < 100000) {\n    $n = af(3, 4);\n    $i = $i + 1;\n}\necho $n . \"\\n\";\n",
+   "p2_float.php": "<?php\nfunction af($a, $b) {\n    return $a + $b;\n}\n$big1 = 1.2345e+100;\n$big2 = 6.7890e+100;\n$n = 0.0;\n$i = 0;\nwhile ($i < 100000) {\n    $n = af($big1, $big2);\n    $i = $i + 1;\n}\necho \"done\\n\";\n"
+  },
+  "probe_note": "p2 is named 'float' here, not 'bigint': PHP has no arbitrary-precision integer type in its core (GMP is an optional extension, not probed here).  The 'big value' probe instead uses two float literals (1.2345e+100, 6.7890e+100), so this pilot measures int-addition and float-addition dispatch, not int-vs-bignum the way cpython's and ruby's do. Named rather than silently matched to the other two pilots' shape."
+ },
+ "header_counts": {
+  "p0_baseline": {
+   "files": 117,
+   "executed_lines": 8661
+  },
+  "p1_smallint": {
+   "files": 117,
+   "executed_lines": 8666
+  },
+  "p2_float": {
+   "files": 117,
+   "executed_lines": 8987
+  }
+ },
+ "dispatch_top_lines": {
+  "p1_smallint_minus_baseline": [
+   {
+    "file": "Zend/zend_vm_execute.h",
+    "lines": 24,
+    "sum_delta": 1300011
+   },
+   {
+    "file": "Zend/zend_execute.c",
+    "lines": 4,
+    "sum_delta": 400000
+   },
+   {
+    "file": "Zend/zend_language_parser.c",
+    "lines": 57,
+    "sum_delta": 211
+   },
+   {
+    "file": "Zend/zend_language_scanner.c",
+    "lines": 64,
+    "sum_delta": 122
+   },
+   {
+    "file": "Zend/zend_compile.c",
+    "lines": 97,
+    "sum_delta": 112
+   },
+   {
+    "file": "Zend/zend_ast.c",
+    "lines": 45,
+    "sum_delta": 61
+   },
+   {
+    "file": "Zend/zend_opcode.c",
+    "lines": 36,
+    "sum_delta": 37
+   },
+   {
+    "file": "Zend/zend_hash.c",
+    "lines": 14,
+    "sum_delta": 14
+   },
+   {
+    "file": "Zend/zend_string.c",
+    "lines": 3,
+    "sum_delta": 4
+   }
+  ],
+  "p2_float_minus_baseline": [
+   {
+    "file": "Zend/zend_vm_execute.h",
+    "lines": 58,
+    "sum_delta": 3200057
+   },
+   {
+    "file": "Zend/zend_execute.c",
+    "lines": 4,
+    "sum_delta": 400000
+   },
+   {
+    "file": "Zend/zend_strtod.c",
+    "lines": 332,
+    "sum_delta": 1700
+   },
+   {
+    "file": "Zend/zend_language_parser.c",
+    "lines": 72,
+    "sum_delta": 896
+   },
+   {
+    "file": "Zend/zend_language_scanner.c",
+    "lines": 123,
+    "sum_delta": 727
+   },
+   {
+    "file": "Zend/zend_compile.c",
+    "lines": 154,
+    "sum_delta": 471
+   },
+   {
+    "file": "Zend/zend_alloc.c",
+    "lines": 93,
+    "sum_delta": 236
+   },
+   {
+    "file": "Zend/zend_hash.c",
+    "lines": 61,
+    "sum_delta": 234
+   },
+   {
+    "file": "Zend/zend_ast.c",
+    "lines": 54,
+    "sum_delta": 214
+   },
+   {
+    "file": "Zend/zend_string.c",
+    "lines": 41,
+    "sum_delta": 151
+   },
+   {
+    "file": "Zend/zend_opcode.c",
+    "lines": 19,
+    "sum_delta": 37
+   },
+   {
+    "file": "Zend/zend_execute_API.c",
+    "lines": 18,
+    "sum_delta": 36
+   }
+  ],
+  "evidence_class": "tally, per-run -- fact for these runs on this build; no ordering information."
+ },
+ "reading": {
+  "smallint": "Zend/zend_vm_execute.h carries the largest delta (sum_delta=1,300,011 over 100000 calls) -- this is Zend's generated opcode handler table, the interpreted-VM analogue of cpython's generated_cases.c.h and ruby's vm.inc.  Zend/zend_execute.c follows (400,000) -- the ZEND_ADD opcode handler's call site.  Parser/scanner/compiler files carry much smaller deltas, read as one-time compile-time cost, not the addition itself."
+ },
+ "what_was_not_done": [
+  "NO arch-unit extracted -- no anchor/ship compiled pair, no objdump slice, no instruction bytes for the ZEND_ADD opcode handler (zend_vm_execute.h's generated ZEND_ADD_SPEC_* cases / zend_operators.c's add_function fast paths).  This pilot stops at the dispatch layer.",
+  "no diary -- order is unmeasured.",
+  "no normalization to canonical form, no matching against the compiled-language units, no bridge or dominance claim.",
+  "no bignum probe -- PHP core has no arbitrary-precision integer type; the 'big value' probe uses floats instead (see method.probe_note).",
+  "the 8.3.0 / 8.2.13 coverage-build failure was not chased to a fix (patching zend_atomic.h or the compiler's C11-atomics visibility) -- 7.4.33 was taken as the working pin instead.  Whether that failure is worth fixing so a newer PHP can be measured is left open, not decided here.",
+  "scope: x86-64, one pin (php 7.4.33, a compromise), int and float operands only, one operator (+)."
+ ],
+ "provenance_is_weaker": true
+}

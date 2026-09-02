@@ -1,0 +1,669 @@
+{
+ "language": "php",
+ "layer": 2,
+ "what": "the load-audit: can each layer-2 representation hold layer-1 content",
+ "evidence": "audit/raw/l2_php.txt, produced by audit/lanes/l2_php.sh",
+ "cell_count": 22,
+ "probe_count": 100,
+ "verdict_counts": {
+  "LOADS": 20,
+  "PARTIAL": 1,
+  "REFUSES-behavioral": 1,
+  "NOT-RUN": 0
+ },
+ "form_verdicts": {
+  "nothing": "held",
+  "truth": "held",
+  "whole": "held",
+  "fractional": "held",
+  "text": "held",
+  "sequence": "held",
+  "keyed": "held",
+  "nesting": "held",
+  "identity": "held"
+ },
+ "cells": [
+  {
+   "cell": "nothing.null",
+   "form": "nothing",
+   "rep": "null",
+   "kind": "literal",
+   "note": "the one absent value; php's type system treats it as compatible with any type.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "null": {
+     "result": "NULL",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "truth.bool",
+   "form": "truth",
+   "rep": "bool",
+   "kind": "literal",
+   "note": "two values.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "true": {
+     "result": "true",
+     "judgement": "loaded"
+    },
+    "false": {
+     "result": "false",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "whole.int",
+   "form": "whole",
+   "rep": "int",
+   "kind": "literal",
+   "note": "64-bit signed machine integer; a literal past PHP_INT_MAX silently becomes a float, no overflow error at all.",
+   "verdict": "PARTIAL",
+   "why": "i64max_plus1 eroded (float:9.2233720368548E+18); u64max eroded (float:1.844674407371E+19)",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "float:9.2233720368548E+18",
+     "judgement": "eroded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "float:1.844674407371E+19",
+     "judgement": "eroded"
+    }
+   }
+  },
+  {
+   "cell": "whole.GMP (ext-gmp)",
+   "form": "whole",
+   "rep": "GMP (ext-gmp)",
+   "kind": "constructor",
+   "note": "arbitrary-precision integer built from a digit string, so no float ever forms even past int range.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "9223372036854775808",
+     "judgement": "loaded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "18446744073709551615",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "whole.BCMath string-carried number (ext-bcmath)",
+   "form": "whole",
+   "rep": "BCMath string-carried number (ext-bcmath)",
+   "kind": "constructor",
+   "note": "a decimal digit string that never becomes a machine int or float; bcmath functions operate on the string directly.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "9223372036854775808",
+     "judgement": "loaded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "18446744073709551615",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "fractional.float",
+   "form": "fractional",
+   "rep": "float",
+   "kind": "literal",
+   "note": "IEEE double; php's only fractional holder.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_1_5": {
+     "result": "1.5",
+     "judgement": "loaded"
+    },
+    "base_pi": {
+     "result": "3.141592653589793",
+     "judgement": "loaded"
+    },
+    "negzero": {
+     "result": "-0.0",
+     "judgement": "loaded"
+    },
+    "nan": {
+     "result": "NAN",
+     "judgement": "loaded"
+    },
+    "inf": {
+     "result": "INF",
+     "judgement": "loaded"
+    },
+    "point1": {
+     "result": "0.1",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.string",
+   "form": "text",
+   "rep": "string",
+   "kind": "literal",
+   "note": "a byte string; php strings are runs of bytes, not codepoints, and the default text holder.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.array of bytes",
+   "form": "text",
+   "rep": "array of bytes",
+   "kind": "constructor",
+   "note": "the byte run pulled apart into one integer per byte; a multi-byte utf-8 character never gets one array slot.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.array of codepoints (mbstring)",
+   "form": "text",
+   "rep": "array of codepoints (mbstring)",
+   "kind": "constructor",
+   "note": "text pulled apart into one unicode codepoint integer per character, distinct from the raw-byte holder above.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.array (list-shaped)",
+   "form": "sequence",
+   "rep": "array (list-shaped)",
+   "kind": "literal",
+   "note": "ordered, growable, any element; php has one array type serving both list and map shapes.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.SplFixedArray",
+   "form": "sequence",
+   "rep": "SplFixedArray",
+   "kind": "constructor",
+   "note": "fixed length declared up front, one slot per index.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.ArrayObject",
+   "form": "sequence",
+   "rep": "ArrayObject",
+   "kind": "constructor",
+   "note": "an object wrapper around an array, iterable and countable like the array it holds.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.SplDoublyLinkedList",
+   "form": "sequence",
+   "rep": "SplDoublyLinkedList",
+   "kind": "constructor",
+   "note": "ordered run open at both ends, built one push at a time.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.array (associative)",
+   "form": "keyed",
+   "rep": "array (associative)",
+   "kind": "literal",
+   "note": "name to element, insertion order kept; a numeric-string key like \"1\" is silently coerced to the integer key 1, which is the finding in the intlike probe.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.stdClass object",
+   "form": "keyed",
+   "rep": "stdClass object",
+   "kind": "constructor",
+   "note": "names as dynamic properties; a numeric-string or empty name is not a legal bare property name and needs brace access.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.ArrayObject",
+   "form": "keyed",
+   "rep": "ArrayObject",
+   "kind": "constructor",
+   "note": "the same array-wrapper holder listed under sequence, keyed here instead of listed by position.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.declared class",
+   "form": "keyed",
+   "rep": "declared class",
+   "kind": "constructor",
+   "note": "fixed set of names decided when the class is declared; the odd keys are not spellable as declared property names, so they arrive as undeclared dynamic properties instead.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.array (nested)",
+   "form": "nesting",
+   "rep": "array (nested)",
+   "kind": "literal",
+   "note": "elements may be any of the forms, to any depth; the one array type serves every level.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.ArrayObject (nested)",
+   "form": "nesting",
+   "rep": "ArrayObject (nested)",
+   "kind": "constructor",
+   "note": "the same wrapper holder nested inside itself; each level is its own object rather than a plain array slot.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "array (",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "array (",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.array holder (value semantics)",
+   "form": "identity",
+   "rep": "array holder (value semantics)",
+   "kind": "literal",
+   "note": "php arrays are values; assignment and array-literal placement copy (copy-on-write), so two positions never share one array.",
+   "verdict": "REFUSES-behavioral",
+   "why": "shared not-held (copied); diamond not-held (distinct)",
+   "probes": {
+    "shared": {
+     "result": "copied",
+     "judgement": "not-held"
+    },
+    "diamond": {
+     "result": "distinct",
+     "judgement": "not-held"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.object holder (reference semantics)",
+   "form": "identity",
+   "rep": "object holder (reference semantics)",
+   "kind": "literal",
+   "note": "php objects are always references; two positions holding the same object share it, the direct contrast to the array holder above.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "shared": {
+     "result": "shared",
+     "judgement": "loaded"
+    },
+    "diamond": {
+     "result": "same",
+     "judgement": "loaded"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.ArrayObject holder",
+   "form": "identity",
+   "rep": "ArrayObject holder",
+   "kind": "constructor",
+   "note": "an object wrapper around an array payload; sharing follows object reference rules even though the payload looks like an array.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "shared": {
+     "result": "shared",
+     "judgement": "loaded"
+    },
+    "diamond": {
+     "result": "same",
+     "judgement": "loaded"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  }
+ ]
+}

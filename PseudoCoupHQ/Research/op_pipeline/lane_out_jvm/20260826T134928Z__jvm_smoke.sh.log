@@ -1,0 +1,287 @@
+# script: /drop/jvm_smoke.sh
+# started: 2026-08-26T13:49:28+00:00
+# timeout: 3600s
+# work free before: 3824 MB
+------------------------------------------------------------
+=== jvm_smoke ===
+2026-08-26T13:49:28Z
+--- which java/javac ---
+/usr/bin/java
+/usr/bin/javac
+--- java -version ---
+openjdk version "25.0.3" 2026-04-21
+OpenJDK Runtime Environment (build 25.0.3+9-2-26.04.2-Ubuntu)
+OpenJDK 64-Bit Server VM (build 25.0.3+9-2-26.04.2-Ubuntu, mixed mode, sharing)
+--- javac -version ---
+javac 25.0.3
+--- java -XshowSettings:properties (vendor/home/vm) ---
+    java.home = /usr/lib/jvm/java-25-openjdk-amd64
+    java.vendor = Ubuntu
+    java.vendor.url = https://ubuntu.com/
+    java.vendor.url.bug = https://bugs.launchpad.net/ubuntu/+source/openjdk-25
+    java.version = 25.0.3
+    java.version.date = 2026-04-21
+    java.vm.name = OpenJDK 64-Bit Server VM
+    java.vm.version = 25.0.3+9-2-26.04.2-Ubuntu
+    os.arch = amd64
+JAVA_HOME detected = /usr/lib/jvm/java-25-openjdk-amd64
+--- hsdis present in the JDK? (Plan A probe) ---
+(end of hsdis find; empty means none shipped)
+--- JDK lib dir listing ---
+classlist
+ct.sym
+jar.binfmt
+jexec
+jfr
+jrt-fs.jar
+jspawnhelper
+jvm.cfg
+jvm.cfg-default
+libattach.so
+libawt.so
+libawt_headless.so
+libdt_socket.so
+libextnet.so
+libfontmanager.so
+libinstrument.so
+libj2gss.so
+libj2pcsc.so
+libj2pkcs11.so
+libjaas.so
+libjava.so
+libjavajpeg.so
+libjdwp.so
+libjimage.so
+libjli.so
+libjsig.so
+libjsound.so
+libjsvml.so
+liblcms.so
+libmanagement.so
+libmanagement_agent.so
+libmanagement_ext.so
+libmlib_image.so
+libnet.so
+libnio.so
+libprefs.so
+librmi.so
+libsaproc.so
+libsctp.so
+libsimdsort.so
+--- toolchain for a possible Plan B (hsdis build) ---
+  gcc : /usr/bin/gcc
+  make : /usr/bin/make
+  binutils-version : MISSING
+  objdump : /usr/bin/objdump
+  nm : /usr/bin/nm
+  ar : /usr/bin/ar
+  autoconf : MISSING
+  git : /usr/bin/git
+  objdump -v:
+GNU objdump (GNU Binutils for Ubuntu) 2.46
+Copyright (C) 2026 Free Software Foundation, Inc.
+  binutils dev headers (dis-asm.h):
+(end dis-asm.h find)
+--- the probe source ---
+public class Probe {
+    static int af(int a, int b) {
+        return a + b;
+    }
+    static int af2(int a, int b) {
+        return a / b;
+    }
+    public static void main(String[] args) {
+        int n = 200000;
+        int acc = 0;
+        int i = 0;
+        while (i < n) {
+            acc = af(acc, 1);
+            i = i + 1;
+        }
+        int acc2 = 0;
+        int j = 1;
+        while (j < n) {
+            acc2 = af2(j, 3);
+            j = j + 1;
+        }
+        System.out.println("acc=" + acc + " acc2=" + acc2);
+    }
+}
+--- javac ---
+javac exit=0
+total 8
+drwxr-xr-x  2 root root   80 Aug 26 13:49 .
+drwxr-xr-x 34 root root  940 Aug 26 13:49 ..
+-rw-r--r--  1 root root 1109 Aug 26 13:49 Probe.class
+-rw-r--r--  1 root root  538 Aug 26 13:49 Probe.java
+--- javap -c (the bytecode middle form) ---
+Compiled from "Probe.java"
+public class Probe {
+  public Probe();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  static int af(int, int);
+    Code:
+         0: iload_0
+         1: iload_1
+         2: iadd
+         3: ireturn
+
+  static int af2(int, int);
+    Code:
+         0: iload_0
+         1: iload_1
+         2: idiv
+         3: ireturn
+
+  public static void main(java.lang.String[]);
+    Code:
+         0: ldc           #7                  // int 200000
+         2: istore_1
+         3: iconst_0
+         4: istore_2
+         5: iconst_0
+         6: istore_3
+         7: iload_3
+         8: iload_1
+         9: if_icmpge     25
+        12: iload_2
+        13: iconst_1
+        14: invokestatic  #8                  // Method af:(II)I
+        17: istore_2
+        18: iload_3
+        19: iconst_1
+        20: iadd
+        21: istore_3
+        22: goto          7
+        25: iconst_0
+        26: istore        4
+        28: iconst_1
+        29: istore        5
+        31: iload         5
+        33: iload_1
+        34: if_icmpge     54
+        37: iload         5
+        39: iconst_3
+        40: invokestatic  #14                 // Method af2:(II)I
+        43: istore        4
+        45: iload         5
+        47: iconst_1
+        48: iadd
+        49: istore        5
+        51: goto          31
+        54: getstatic     #17                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        57: iload_2
+        58: iload         4
+        60: invokedynamic #23,  0             // InvokeDynamic #0:makeConcatWithConstants:(II)Ljava/lang/String;
+        65: invokevirtual #27                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        68: return
+}
+--- run, plain ---
+acc=200000 acc2=66666
+--- PrintCompilation, first 30 lines (does it tier?) ---
+10    1       3       java.lang.Object::<init> (1 bytes)
+11    2       3       java.lang.Byte::toUnsignedInt (6 bytes)
+11    3       3       java.lang.String::hashCode (60 bytes)
+11    4     n 0       jdk.internal.vm.Continuation::enterSpecial (native)   (static)
+11    5     n 0       jdk.internal.vm.Continuation::doYield (native)   (static)
+11    6     n 0       jdk.internal.misc.Unsafe::getReferenceVolatile (native)   
+12    7       3       java.lang.String::coder (15 bytes)
+12    8       3       Probe::af (4 bytes)
+13    9       4       Probe::af (4 bytes)
+13    8       3       Probe::af (4 bytes)   made not entrant: not used
+14   10 %     3       Probe::main @ 7 (69 bytes)
+14   11       3       Probe::main (69 bytes)
+14   12 %     4       Probe::main @ 7 (69 bytes)
+15   10 %     3       Probe::main @ 7 (69 bytes)   made not entrant: OSR invalidation of lower level
+15   13       3       java.lang.String::isLatin1 (19 bytes)
+16   14     n 0       java.lang.Object::hashCode (native)   
+16   15     n 0       java.lang.invoke.MethodHandle::linkToStatic(LLLLLL)L (native)   (static)
+16   16       1       java.lang.Enum::ordinal (5 bytes)
+16   17     n 0       java.lang.invoke.MethodHandle::invokeBasic(LLLLL)L (native)   
+16   18       3       java.util.Objects::requireNonNull (14 bytes)
+16   19     n 0       java.lang.invoke.MethodHandle::linkToSpecial(LLLLLLL)L (native)   (static)
+17   20       3       java.lang.String::length (11 bytes)
+17   21       3       jdk.internal.util.Preconditions::checkIndex (18 bytes)
+17   22       3       java.lang.String::charAt (25 bytes)
+17   23     n 0       java.lang.System::arraycopy (native)   (static)
+17   24       1       java.lang.Class::isPrimitive (5 bytes)
+17   25       3       java.lang.Enum::<init> (15 bytes)
+17   26       4       java.lang.Object::<init> (1 bytes)
+17    1       3       java.lang.Object::<init> (1 bytes)   made not entrant: not used
+18   27       1       jdk.internal.classfile.impl.AbstractPoolEntry::index (5 bytes)
+--- PrintAssembly attempt WITHOUT hsdis (what does it actually say?) ---
+OpenJDK 64-Bit Server VM warning: PrintAssembly is enabled; turning on DebugNonSafepoints to gain additional output
+
+============================= C1-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+[0.011s][warning][os] Loading hsdis library failed
+
+Compiled method (c1) 11    1       3       java.lang.Object::<init> (1 bytes)
+ total in heap  [0x0000759494647008,0x0000759494647200] = 504
+ main code      [0x0000759494647100,0x00007594946471d0] = 208
+ stub code      [0x00007594946471d0,0x0000759494647200] = 48
+ mutable data [0x000075945001bde0,0x000075945001be20] = 64
+ relocation     [0x000075945001bde0,0x000075945001be10] = 48
+ metadata       [0x000075945001be10,0x000075945001be20] = 16
+ immutable data [0x000075945001bd70,0x000075945001bdd0] = 96
+ dependencies   [0x000075945001bd70,0x000075945001bd78] = 8
+ scopes pcs     [0x000075945001bd78,0x000075945001bdb8] = 64
+ scopes data    [0x000075945001bdb8,0x000075945001bdd0] = 24
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Instructions begin]
+  0x0000759494647100: 660f 1f84 | 0000 0000 | 0066 0f1f | 8400 0000 | 0000 448b | 5608 443b 
+
+  0x0000759494647118: ;   {runtime_call Shared Runtime ic_miss_blob}
+--- PrintOptoAssembly attempt (Plan C probe) ---
+CompileCommand: print Probe.af bool print = true
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+[0.011s][warning][os] Loading hsdis library failed
+
+Compiled method (c2) 11    4             Probe::af (4 bytes)
+ total in heap  [0x00007235986a9b88,0x00007235986a9cf0] = 360
+ main code      [0x00007235986a9c80,0x00007235986a9cd0] = 80
+ stub code      [0x00007235986a9cd0,0x00007235986a9ce8] = 24
+ oops           [0x00007235986a9ce8,0x00007235986a9cf0] = 8
+ mutable data [0x0000723554038110,0x0000723554038128] = 24
+ relocation     [0x0000723554038110,0x0000723554038120] = 16
+ metadata       [0x0000723554038120,0x0000723554038128] = 8
+ immutable data [0x00007235540380d0,0x0000723554038100] = 48
+ dependencies   [0x00007235540380d0,0x00007235540380d8] = 8
+ scopes pcs     [0x00007235540380d8,0x00007235540380f8] = 32
+ scopes data    [0x00007235540380f8,0x0000723554038100] = 8
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Verified Entry Point]
+  # {method} {0x000072356c400380} 'af' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  0x00007235986a9c80: 4881 ec18 | 0000 0048 | 896c 2410 | 4181 7f20 | 0100 0000 | 0f85 2900 | 0000 8d04 | 1648 83c4 
+  0x00007235986a9ca0: ;   {poll_return}
+  0x00007235986a9ca0: 105d 493b | 6728 0f87 | 0100 0000 
+
+  0x00007235986a9cac: ;   {internal_word}
+  0x00007235986a9cac: c349 baa2 | 9c6a 9835 | 7200 004d | 8997 3805 
+
+  0x00007235986a9cbc: ;   {runtime_call SafepointBlob}
+  0x00007235986a9cbc: 0000 e99d 
+
+  0x00007235986a9cc0: ;   {runtime_call Stub::method_entry_barrier}
+  0x00007235986a9cc0: 7efa ffe8 | f8e8 f8ff | e9cd ffff | fff4 f4f4 
+[Exception Handler]
+=== jvm_smoke done ===
+2026-08-26T13:49:31Z
+------------------------------------------------------------
+# exit 0 in 2.5s
+# work free after: 3824 MB (consumed 0 MB)

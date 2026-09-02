@@ -1,0 +1,132 @@
+dominant_table15_report.txt -- the class table and dom_op construction
+re-run on this lap's newest converged text (JOB 1: condition_table5.py's
+packed-mask float compare family / canon19.py; JOB 2: canon12_normalize.
+py's _signed_operand sign-extension fix / canon18.py; JOB 3: condition_
+table6.py's packed float arithmetic grammar, z3-FPA-proved / canon20.py),
+layered on dominant_table14.py's own generations and everything before.
+Same construction dominant_table14.py already used (dom_ops7.py's rule,
+result_type_norm.py's result type), 0-branch population only.
+check_no_spelling_keys.py PASSES on dominant_table15.json (checked IN
+FULL, not exempt) and on dom_ops13.json (exempt as generator provenance,
+per precedent) and on every canon18/19/20_units_<lang>.json this lap
+wrote (all exempt as generator provenance).
+====================================================================================================
+
+AGAINST THE CURRENT BASELINE (dominant_table14.json/dom_ops12.json,
+924 classes / 135 nodes / 26 families / 23 edgeless -- verified by
+reading that file directly, matching the task's own cited figures):
+
+    classes     926  (baseline 924, +2)
+    nodes       135  (baseline 135, unchanged)
+    dom_ops      26  (baseline 26, unchanged)
+    edgeless     23  (baseline 23, unchanged)
+    singletons    0
+
+Population: 1,641 units (0-branch), unchanged -- matches the task's own
+cited "1,641". Generation tally (which generation's text each unit's
+own class membership was built from):
+canon8: 736, canon7: 452, canon10: 134, canon12: 61, canon17: 40,
+canon11: 32, canon20: 88, canon19: 28, canon16: 10, canon9: 16,
+canon14: 12, canon13: 12, canon15: 12, canon18: 8.
+
+CONVERGENCE THIS LAP, measured directly (canon17_units -> canon20_units,
+zero regressions verified programmatically at every step -- every
+already-converged unit's newest-generation text stayed byte-identical,
+checked directly, not sampled):
+
+    converged before this lap (canon17, = task's own "1,071 of 1,641"): 1071
+    converged after JOB 2 (canon18, the sign-extension fix):            1079  (+8)
+    converged after JOB 1 (canon19, packed-mask float compares):        1107  (+28)
+    converged after JOB 3 (canon20, packed float arithmetic, z3 FPA):   1195  (+88)
+    net this lap:                                                       +124
+
+THE +2 CLASSES, READ HONESTLY: NOT new cross-language structure -- a
+pure REFINEMENT. Before this lap, c/op_39 (`a++`, f32) and c/op_45
+(`a--`, f32) shared ONE class row (their pre-JOB-3 canonical text was
+the SAME unresolved placeholder, since neither had a proved candidate
+yet -- confirmed by direct diff of dominant_table14.json's own row
+membership against dominant_table15.json's). JOB 3 resolved `++` to
+`+1.0` and `--` to `-1.0` (condition_table6.py's own CONST_SIGN,
+`operator` field, forced by construction from C/C++/Rust/Swift/Go's
+own language definition of increment/decrement) -- DIFFERENT
+immediate bit patterns, so their now-PROVED canonical text differs and
+they correctly split into two class rows. Same story for the f64 pair
+(c/op_40 `++` / c/op_46 `--`). Net: 2 old (conflated) rows removed, 4
+new (correctly split) rows added = +2, a genuine correctness gain, not
+noise.
+
+WHY THE TOP-5 FAMILIES AND THE FULL DOM_OP GRAPH DID NOT CHANGE AT ALL
+(measured directly: dom_ops13.json's own 26 families have the IDENTICAL
+node membership, by (lang, label, arity) key, to dom_ops12.json's own
+26 -- zero families added, zero removed, zero size changes): every one
+of this lap's 124 newly-converged units belongs to a node ( language,
+grammar-operator, arity) that either (a) already existed with other,
+already-converged members (the `!=`/`==`/`&&`/`||`/`+`/`-`/`*`/`/`/
+`++`/`--` operators on float operands all had non-float members
+converged in earlier laps), so no NEW node was created; or (b) is a
+genuinely NEW node (e.g. a language's own `+`/`-`/`*`/`/` node gains
+its first-ever FLOAT-typed member) but does not connect MUTUALLY-
+STRONGEST to a same-shaped node in another language strongly enough to
+displace that language's existing cross-language edge (AgentMemory's
+own THE DOM_OP CONSTRUCTION RULE: only the SINGLE strongest counterpart
+per foreign language survives, kept only when mutual). Read plainly:
+this lap closed real correctness gaps (124 units that used to be
+permanently opaque now have a proved, canonical rendering, three
+separate root causes fixed) without producing a NEW cross-language
+dom_op of their own -- a legitimate, measured non-result at the
+family-graph level, matching dominant_table14_report.txt's own prior
+lap's identical finding for the SAME reason.
+
+NO NEW CROSS-LANGUAGE FAMILY FORMED THIS LAP -- stated explicitly, per
+the task's own instruction: FALSE would have shown up as a changed
+family count (26 -> something else) or a changed node-set inside an
+existing family; neither happened, checked directly against dom_ops12.
+json's own stored node lists, not assumed.
+
+----------------------------------------------------------------------------------------------------
+THE 5 LARGEST FAMILIES (dom_ops13.json's own `dom_ops`, sorted by
+size, verbatim node list, languages each spans -- BYTE-IDENTICAL to
+dominant_table14_report.txt's own top 5, confirming this lap's work
+did not move any operator into or out of the top five):
+
+D0001 -- size 8, langs [c, cpp, go, swift]
+    c/`+` (unary, 6 units) | c/`__extension__` (unary, 6 units) |
+    cpp/`+` (unary, 6 units) | go/`+` (unary, 5 units) |
+    swift/`+` (unary, 5 units) | swift/`consume` (unary, 6 units) |
+    swift/`try` (unary, 6 units) | swift/`try!` (unary, 6 units)
+    (a coincidence family -- unary identity-shaped operators across
+    four languages, five different spellings)
+
+D0002 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`&` (binary, 16 units) | cpp/`&` (binary, 16 units) |
+    cpp/`bitand` (binary, 16 units) | go/`&` (binary, 3 units) |
+    rust/`&` (binary, 4 units) | swift/`&` (binary, 3 units)
+    (the bitwise-AND family, all five languages, two cpp spellings)
+
+D0003 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`^` (binary, 16 units) | cpp/`^` (binary, 16 units) |
+    cpp/`xor` (binary, 16 units) | go/`^` (binary, 3 units) |
+    rust/`^` (binary, 4 units) | swift/`^` (binary, 3 units)
+    (the bitwise-XOR family, all five languages, two cpp spellings)
+
+D0004 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`|` (binary, 16 units) | cpp/`bitor` (binary, 16 units) |
+    cpp/`|` (binary, 16 units) | go/`|` (binary, 3 units) |
+    rust/`|` (binary, 4 units) | swift/`|` (binary, 3 units)
+    (the bitwise-OR family, all five languages, two cpp spellings)
+
+D0005 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`~` (unary, 4 units) | cpp/`compl` (unary, 4 units) |
+    cpp/`~` (unary, 4 units) | go/`^` (unary, 3 units) |
+    rust/`!` (unary, 4 units) | swift/`~` (unary, 3 units)
+    (the bitwise-NOT family, all five languages, FIVE different
+    spellings -- `~`, `compl`, unary `^`, `!`, `~` -- the exact family
+    AgentMemory's THE DOM_OP CONSTRUCTION RULE names as its own
+    measured example)
+
+These five match the four bitwise families and the one weak-
+coincidence family already on record before this lap. Float
+arithmetic/comparison operators (`+`/`-`/`*`/`/`/`==`/`!=`/`&&`/`||`)
+DID gain many float-typed members this lap (see the generation tally
+above), but none of those nodes' own strongest cross-language edges
+changed rank against the pre-existing top five.

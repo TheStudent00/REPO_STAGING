@@ -1,0 +1,85 @@
+dominant_table13_report.txt -- the class table and dom_op construction
+re-run on this lap's newest converged text (JOB 1's canon14, JOB 2's
+canon15, JOB 3's canon16, layered on Stage 1-4's canon11/12/13 and
+everything before), same construction dominant_table12.py already
+used (dom_ops7.py's rule, result_type_norm.py's result type), 0-branch
+population only. check_no_spelling_keys.py PASSES on both outputs
+(dominant_table13.json, dom_ops11.json) and on every canon14/15/16_
+units_<lang>.json this lap wrote (all exempt as generator provenance,
+or -- dominant_table13.json itself, which is a grouping artifact and
+does NOT claim the exemption -- checked in full and PASSES).
+====================================================================================================
+
+AGAINST THE CURRENT BASELINE (dominant_table12.json/dom_ops10.json,
+926 classes / 135 nodes / 26 families / 23 edgeless -- verified by
+reading that file directly, matching the task's own cited figures):
+
+    classes     924  (baseline 926, -2)
+    nodes       135  (baseline 135, unchanged)
+    dom_ops      26  (baseline 26, unchanged)
+    edgeless     23  (baseline 23, unchanged)
+    singletons    0
+
+Population: 1,641 units (0-branch), unchanged. Generation tally (which
+generation's text each unit's own class membership was built from):
+canon8: 736, canon7: 608, canon10: 134, canon12: 61, canon16: 10,
+canon14: 12, canon9: 16, canon11: 32, canon13: 12, canon15: 20.
+
+THE -2 CLASSES, read plainly: fixing several units' text from WRONG to
+CORRECT this lap did not change the NODE or FAMILY structure at all
+(135 nodes, 26 families, 23 edgeless -- byte-identical to the
+baseline) -- it only MERGED two pairs of classes that used to be split
+by a spurious rendering difference between two units that, once both
+render correctly, compute and render IDENTICALLY. This is the
+EXPECTED direction for a correctness fix (wrong text creates
+accidental, ungrounded distinctions; correct text can only ever merge
+or leave unchanged, never split, two units that are actually the same
+operation) -- consistent with, not contradicting, this lap's own
+"zero regressions" measurement on the unit-level converged-count
+tables (canon14/15/16_worked_examples.txt and job2_remaining_
+refusals_report.txt).
+
+----------------------------------------------------------------------------------------------------
+THE 5 LARGEST FAMILIES (dom_ops11.json's own `dom_ops`, sorted by
+size, verbatim node list, languages each spans):
+
+D0001 -- size 8, langs [c, cpp, go, swift]
+    c/`+` (unary, 6 units) | c/`__extension__` (unary, 6 units) |
+    cpp/`+` (unary, 6 units) | go/`+` (unary, 5 units) |
+    swift/`+` (unary, 5 units) | swift/`consume` (unary, 6 units) |
+    swift/`try` (unary, 6 units) | swift/`try!` (unary, 6 units)
+    (a coincidence family -- unary identity-shaped operators across
+    four languages, five different spellings)
+
+D0002 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`&` (binary, 16 units) | cpp/`&` (binary, 16 units) |
+    cpp/`bitand` (binary, 16 units) | go/`&` (binary, 3 units) |
+    rust/`&` (binary, 4 units) | swift/`&` (binary, 3 units)
+    (the bitwise-AND family, all five languages, two cpp spellings)
+
+D0003 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`^` (binary, 16 units) | cpp/`^` (binary, 16 units) |
+    cpp/`xor` (binary, 16 units) | go/`^` (binary, 3 units) |
+    rust/`^` (binary, 4 units) | swift/`^` (binary, 3 units)
+    (the bitwise-XOR family, all five languages, two cpp spellings)
+
+D0004 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`|` (binary, 16 units) | cpp/`bitor` (binary, 16 units) |
+    cpp/`|` (binary, 16 units) | go/`|` (binary, 3 units) |
+    rust/`|` (binary, 4 units) | swift/`|` (binary, 3 units)
+    (the bitwise-OR family, all five languages, two cpp spellings)
+
+D0005 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`~` (unary, 4 units) | cpp/`compl` (unary, 4 units) |
+    cpp/`~` (unary, 4 units) | go/`^` (unary, 3 units) |
+    rust/`!` (unary, 4 units) | swift/`~` (unary, 3 units)
+    (the bitwise-NOT family, all five languages, FIVE different
+    spellings -- `~`, `compl`, unary `^`, `!`, `~` -- the exact family
+    AgentMemory's THE DOM_OP CONSTRUCTION RULE names as its own
+    measured example, reproduced here unchanged by this lap's work)
+
+These five match the four bitwise families and the one weak-
+coincidence family already on record before this lap (AgentMemory's
+"measured effect" paragraph); this lap's JOB 1-3 fixes did not move
+any operator into or out of the top five, consistent with the -2/0/0/0
+delta above being a narrow, correctness-only effect.

@@ -1,0 +1,21 @@
+go version go1.26.0 linux/amd64
+nproc=6
+probe_count=400
+--- arm 1: per-file serial
+[progress] perfile_ser DONE 400 in 00:00:22
+arm1_perfile_serial_s=22.44
+--- arm 2: per-file parallel
+[progress] perfile_par DONE 400 in 00:00:07
+arm2_perfile_parallel_s=7.76  workers=12
+--- arm 3: batched 100 + bisect
+[progress] batch_bisect DONE 400 in 00:00:42
+batch_compiles_invoked=796
+arm3_batch_bisect_s=42.15
+verdict_accept=25 refuse=375 of 400
+disagree_arm1_vs_arm2=0
+disagree_arm1_vs_arm3=0
+speedup_batch_over_serial=0.5x
+speedup_par_over_serial=2.9x
+speedup_batch_over_par=0.2x
+WINNER=perfile_parallel
+per_probe_ms_serial=56.1 par=19.4 batch=105.4

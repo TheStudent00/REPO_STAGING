@@ -1,0 +1,145 @@
+reading_sample.txt -- 12 hand-picked units, instruction text | reading line, space-aligned.
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+1. c/op_246 (idiv, GLOSSARY's own example)
+    unit: c/op_246   source: op_units
+    mov %edi,%eax   %eax = %edi
+    cltd            %edx = sign_bits(%eax)
+    idiv %esi       %eax, %edx = sdiv(join(%edx, %eax), %esi)
+    mov %edx,%eax   %eax = %edx
+    ret             return %eax
+
+----------------------------------------------------------------------------------------------------
+2. swift/op_150 (division)
+    unit: swift/op_150   source: op_units
+    test %esi,%esi         flags = bit_compare(%esi, %esi)
+    je 17 <op_150+0x17>    if flags.equal: goto 17 <op_150+0x17>
+    cmp $0x80000000,%edi   flags = compare(%edi, $0x80000000)
+    jne 11 <op_150+0x11>   if flags.not_equal: goto 11 <op_150+0x11>
+    cmp $0xffffffff,%esi   flags = compare(%esi, $0xffffffff)
+    je 19 <op_150+0x19>    if flags.equal: goto 19 <op_150+0x19>
+    mov %edi,%eax          %eax = %edi
+    cltd                   %edx = sign_bits(%eax)
+    idiv %esi              %eax, %edx = sdiv(join(%edx, %eax), %esi)
+    ret                    return %eax
+    ud2                    trap()
+    ud2                    trap()
+
+----------------------------------------------------------------------------------------------------
+3. swift/op_186 (modulo)
+    unit: swift/op_186   source: op_units
+    test %esi,%esi         flags = bit_compare(%esi, %esi)
+    je 19 <op_186+0x19>    if flags.equal: goto 19 <op_186+0x19>
+    cmp $0x80000000,%edi   flags = compare(%edi, $0x80000000)
+    jne 11 <op_186+0x11>   if flags.not_equal: goto 11 <op_186+0x11>
+    cmp $0xffffffff,%esi   flags = compare(%esi, $0xffffffff)
+    je 1b <op_186+0x1b>    if flags.equal: goto 1b <op_186+0x1b>
+    mov %edi,%eax          %eax = %edi
+    cltd                   %edx = sign_bits(%eax)
+    idiv %esi              %eax, %edx = sdiv(join(%edx, %eax), %esi)
+    mov %edx,%eax          %eax = %edx
+    ret                    return %eax
+    ud2                    trap()
+    ud2                    trap()
+
+----------------------------------------------------------------------------------------------------
+4. comparison: cmp + setl
+    unit: c/op_535   source: op_units
+    movslq %edi,%rcx   %rcx = sign_extend(%edi)
+    xor %eax,%eax      %eax = %eax ^ %eax
+    cmp %rcx,%rsi      flags = compare(%rsi, %rcx)
+    setl %al           %al = flags.signed_less
+    ret                return %al
+
+----------------------------------------------------------------------------------------------------
+5. float unordered-compare: ucomisd + setp + setne + or
+    unit: c/op_286   source: op_units
+    test %edi,%edi        flags = bit_compare(%edi, %edi)
+    setne %al             %al = flags.not_equal
+    xorpd %xmm1,%xmm1     zero %xmm1
+    ucomisd %xmm1,%xmm0   flags = fcompare_f64(%xmm0, %xmm1)
+    setp %cl              %cl = flags.nan
+    setne %dl             %dl = flags.not_equal
+    or %cl,%dl            %dl = %dl | %cl
+    or %al,%dl            %dl = %dl | %al
+    movzbl %dl,%eax       %eax = zero_extend(%dl)
+    ret                   return %eax
+
+----------------------------------------------------------------------------------------------------
+6. lea as addition: c/op_102
+    unit: c/op_102   source: op_units
+    lea (%rdi,%rsi,1),%eax   %eax = %rdi + %rsi
+    ret                      return %eax
+
+----------------------------------------------------------------------------------------------------
+7. go panic call
+    unit: go/main.op_96   source: op_units
+    push %rbp                           push(%rbp)
+    mov %rsp,%rbp                       %rbp = %rsp
+    test %ebx,%ebx                      flags = bit_compare(%ebx, %ebx)
+    je 47a658 <main.op_96+0x18>         if flags.equal: goto 47a658 <main.op_96+0x18>
+    cmp $0xffffffff,%ebx                flags = compare(%ebx, $0xffffffff)
+    jne 47a653 <main.op_96+0x13>        if flags.not_equal: goto 47a653 <main.op_96+0x13>
+    neg %eax                            %eax = -%eax
+    xor %edx,%edx                       %edx = %edx ^ %edx
+    jmp 47a656 <main.op_96+0x16>        goto 47a656 <main.op_96+0x16>
+    cltd                                %edx = sign_bits(%eax)
+    idiv %ebx                           %eax, %edx = sdiv(join(%edx, %eax), %ebx)
+    pop %rbp                            %rbp = pop()
+    ret                                 return %eax
+    call 43f3c0 <runtime.panicdivide>   call 43f3c0 <runtime.panicdivide>()
+    nop                                 # nothing
+
+----------------------------------------------------------------------------------------------------
+8. cmov
+    unit: c/op_179   source: op_units
+    mov %edi,%eax     %eax = %edi
+    test %esi,%esi    flags = bit_compare(%esi, %esi)
+    cmove %esi,%eax   %eax = %esi if flags.equal else %eax
+    ret               return %eax
+
+----------------------------------------------------------------------------------------------------
+9. shifts (shl/shr/sar)
+    unit: c/op_117   source: op_units
+    test %rdi,%rdi        flags = bit_compare(%rdi, %rdi)
+    js f <op_117+0xf>     if flags.sign: goto f <op_117+0xf>
+    cvtsi2ss %rdi,%xmm1   %xmm1 = int_to_f32(%rdi)
+    addss %xmm1,%xmm0     %xmm0 = %xmm0 + %xmm1
+    ret                   return %rax
+    mov %rdi,%rax         %rax = %rdi
+    shr $1,%rax           %rax = shift_right_zeros(%rax, $1)
+    and $0x1,%edi         %edi = %edi & $0x1
+    or %rax,%rdi          %rdi = %rdi | %rax
+    cvtsi2ss %rdi,%xmm1   %xmm1 = int_to_f32(%rdi)
+    addss %xmm1,%xmm1     %xmm1 = %xmm1 + %xmm1
+    addss %xmm1,%xmm0     %xmm0 = %xmm0 + %xmm1
+    ret                   return %rax
+
+----------------------------------------------------------------------------------------------------
+10. stack push/pop + call
+    unit: go/main.op_110   source: op_units
+    push %rbp                           push(%rbp)
+    mov %rsp,%rbp                       %rbp = %rsp
+    test %rbx,%rbx                      flags = bit_compare(%rbx, %rbx)
+    je 47a670 <main.op_110+0x10>        if flags.equal: goto 47a670 <main.op_110+0x10>
+    xor %edx,%edx                       %edx = %edx ^ %edx
+    div %rbx                            %rax, %rdx = udiv(join(%rdx, %rax), %rbx)
+    pop %rbp                            %rbp = pop()
+    ret                                 return %rax
+    call 43f360 <runtime.panicdivide>   call 43f360 <runtime.panicdivide>()
+    nop                                 # nothing
+
+----------------------------------------------------------------------------------------------------
+11. zero/sign extension: movzbl / movslq
+    unit: c/op_5   source: op_units
+    xor $0x1,%dil      %dil = %dil ^ $0x1
+    movzbl %dil,%eax   %eax = zero_extend(%dil)
+    ret                return %eax
+
+----------------------------------------------------------------------------------------------------
+12. sse scalar move
+    unit: c/op_33   source: op_units
+    movss %xmm0,-0x4(%rsp)   -0x4(%rsp) = %xmm0
+    lea -0x4(%rsp),%rax      %rax = %rsp - 0x4
+    ret                      return %xmm0

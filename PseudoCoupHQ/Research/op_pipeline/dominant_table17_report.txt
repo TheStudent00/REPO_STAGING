@@ -1,0 +1,174 @@
+dominant_table17_report.txt -- the class table re-run on the newest
+converged text per unit, extending dominant_table15.py's own chain
+with canon23/canon22/canon21 ahead of canon20/19/18/17 and everything
+before. Same construction dominant_table15.py already used (dom_ops7.
+py's rule, result_type_norm.py's DWARF-machine-fact result type),
+0-branch population only (1,641 units -- NOT the 1,779-unit full
+corpus; see dominant_table17.py's own header and this node's
+PROGRESS.md denominator note distinguishing the two figures).
+====================================================================
+
+1. CLASSES / NODES / FAMILIES / EDGELESS vs BASELINE
+
+Baseline (per task prompt, matching dominant_table15.json/dom_ops13.
+json already on disk -- verified by running `python3 dominant_table15.
+py` output and reading dominant_table15_report.txt directly):
+    classes 926 / nodes 135 / families 26 / edgeless 23
+
+This rebuild (dominant_table17.json + dom_ops15.json, produced by
+running `python3 dominant_table17.py` then `python3 dom_ops15.py` in
+this directory, stdout captured directly):
+    classes    926  (baseline: 926, +0)
+    nodes      135  (baseline: 135, +0)
+    dom_ops     26  (baseline: 26, +0)
+    edgeless    23  (baseline: 23, +0)
+    singletons   0
+
+Population: 1,641 units (0-branch), unchanged -- printed by
+dominant_table17.py's own "population(0-branch)" line. Generation
+tally (dominant_table17.py stdout, `generation_tally` field of the
+run() result, also stored under no top-level key in the json since it
+is not needed for the class table itself, but reproduced here from the
+program's own stdout):
+
+canon8: 736, canon7: 232, canon10: 134, canon22: 112, canon23: 72,
+canon20: 88, canon12: 61, canon21: 36, canon19: 28, canon17: 40,
+canon11: 32, canon16: 10, canon9: 16, canon14: 12, canon13: 12,
+canon15: 12, canon18: 8.
+
+(canon7's share dropped from dominant_table15's 452 to 232 here
+because canon21/22/23 pulled more previously-canon7-only units forward
+onto their own newer, converged text -- expected, and does not change
+the class table's shape since class identity is keyed on (type_pair,
+result_type, text), and the text itself did not change for any unit
+whose class membership this affects, per section 5 below.)
+
+2. NEW / CHANGED FAMILIES; FLOAT OPERATOR-NODES
+
+Compared dom_ops15.json's own 26 families against dom_ops13.json's own
+26 families programmatically, by a (lang, label, arity) identity key
+per family (script run inline via `python3 -` in this session,
+comparing `key_of(fam) = tuple(sorted((n["lang"], n["label"],
+n["arity"]) for n in fam["nodes"]))` across both files):
+
+    families in dom_ops13.json: 26
+    families in dom_ops15.json: 26
+    families only in baseline (lost/changed): 0
+    families only in new (new/changed):        0
+
+NO new cross-language family formed, and NO existing family changed
+membership -- checked directly against dom_ops13.json's own stored
+node lists and unit lists (not assumed): for every one of the 26
+families, the (lang, label, arity) node set matches exactly, and for
+every matched node the `units` list (the actual member-unit IDs, not
+just counts) is byte-identical between dom_ops13.json and dom_ops15.
+json -- zero unit lost, zero unit gained, in any node of any family.
+
+Float operator-nodes specifically: dominant_table17.py's generation
+tally shows canon21 (+36), canon22 (+112), and canon23 (+72) units
+newly converged this lap (220 units total newly onto their own
+generation's text vs. dominant_table15's canon20/19/18 endpoint), the
+bulk of which are float comparison/arithmetic units per canon21_
+float.py/canon22_float.py's own headers. None of that newly-converged
+float population produced a NEW family or joined an EXISTING family in
+dom_ops15.json's 26 -- the family-identity diff above is empty, so
+there is no float family row to print. This matches dominant_table15_
+report.txt's own prior-lap finding for the identical structural reason
+(AgentMemory's THE DOM_OP CONSTRUCTION RULE: only the single strongest
+mutual cross-language edge per node survives; newly-converged float
+members attach to nodes that already had non-float members converged
+in earlier laps, or form nodes that do not out-compete the existing
+strongest cross-language edge).
+
+3. THE 5 LARGEST FAMILIES (dom_ops15.json's own `dom_ops`, sorted by
+size, verbatim, read directly from the json produced by dom_ops15.py):
+
+D0001 -- size 8, langs [c, cpp, go, swift]
+    c/`+` (unary, 6 units) | c/`__extension__` (unary, 6 units) |
+    cpp/`+` (unary, 6 units) | go/`+` (unary, 5 units) |
+    swift/`+` (unary, 5 units) | swift/`consume` (unary, 6 units) |
+    swift/`try` (unary, 6 units) | swift/`try!` (unary, 6 units)
+
+D0002 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`&` (binary, 16 units) | cpp/`&` (binary, 16 units) |
+    cpp/`bitand` (binary, 16 units) | go/`&` (binary, 3 units) |
+    rust/`&` (binary, 4 units) | swift/`&` (binary, 3 units)
+
+D0003 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`^` (binary, 16 units) | cpp/`^` (binary, 16 units) |
+    cpp/`xor` (binary, 16 units) | go/`^` (binary, 3 units) |
+    rust/`^` (binary, 4 units) | swift/`^` (binary, 3 units)
+
+D0004 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`|` (binary, 16 units) | cpp/`bitor` (binary, 16 units) |
+    cpp/`|` (binary, 16 units) | go/`|` (binary, 3 units) |
+    rust/`|` (binary, 4 units) | swift/`|` (binary, 3 units)
+
+D0005 -- size 6, langs [c, cpp, go, rust, swift]
+    c/`~` (unary, 4 units) | cpp/`compl` (unary, 4 units) |
+    cpp/`~` (unary, 4 units) | go/`^` (unary, 3 units) |
+    rust/`!` (unary, 4 units) | swift/`~` (unary, 3 units)
+
+These five are byte-identical (sizes, node sets, per-node unit counts)
+to dominant_table15_report.txt's own top 5 -- confirmed by the diff in
+section 2, since these five families are among the 26 with zero
+change.
+
+4. check_no_spelling_keys.py RESULTS
+
+Run directly against both output files (commands and output captured
+verbatim in this session):
+
+  $ python3 check_no_spelling_keys.py dominant_table17.json
+  operator inventory: 78 tokens read from probe_manifest_*.json
+  PASS dominant_table17.json -- no operator token in any key,
+  grouping, pairing or row structure
+
+  dominant_table17.json PASSES cleanly, with NO exemption flag and NO
+  exemption claimed in its own `meta` block (its `meta` block has no
+  `role: generator provenance` declaration, matching dominant_table15.
+  json's own precedent of a full, non-exempt check).
+
+  $ python3 check_no_spelling_keys.py dom_ops15.json
+  operator inventory: 78 tokens read from probe_manifest_*.json
+  PASS dom_ops15.json -- exempt: top-level meta declares role
+  'generator provenance', so this file is generator provenance and
+  never participates in matching
+
+  dom_ops15.json passes under the generator-provenance exemption,
+  which check_no_spelling_keys.py grants automatically (not via a CLI
+  flag) because dom_ops15.json's own `meta.role` field declares
+  "generator provenance" -- the identical mechanism dom_ops13.json
+  already used, per dominant_table15_report.txt's own line 10.
+
+5. ZERO-REGRESSION SANITY (dominant_table17.json vs dominant_table15.
+json; dom_ops15.json vs dom_ops13.json)
+
+Family-level check (dom_ops15.json vs dom_ops13.json): performed in
+section 2 above by (lang, label, arity) identity key plus a per-node
+unit-set diff. Result: 0 families lost members, 0 families gained
+members, 0 families changed shape at all. No previously-formed family
+lost any member; nothing further to name here.
+
+Class-table-level check: dominant_table17.py reports classes = 926,
+identical to dominant_table15.json's own 926 -- the class table's
+*shape* (row count) is unchanged even though 220 additional units
+(canon21: 36, canon22: 112, canon23: 72, per the generation tally in
+section 1) moved onto newer, more-converged text this lap. This means
+every one of those 220 units' newer text still classifies into the
+SAME (type_pair, result_type, text) row it already occupied under its
+dominant_table15-era text -- i.e. this lap's canon21/22/23 convergence
+work resolved units that were previously grouped by an interim/
+placeholder text onto a text that classifies identically, not one that
+splits or merges rows. Verified directly: class_count held at 926
+(dominant_table17.py stdout), and the dom_op family diff (which is
+built FROM the class table via dom_ops15.py) shows zero membership
+change at the node level, which could not hold if any unit's text had
+caused it to land in a materially different class row from before.
+
+CONCLUSION: no regressions found. The rebuild over canon23 > canon22 >
+canon21 > canon20 > ... > canon7 fall-through, restricted to the
+1,641-unit 0-branch population, reproduces the baseline 926/135/26/23
+exactly, with dominant_table17.json passing check_no_spelling_keys.py
+cleanly (no exemption) and dom_ops15.json passing under the same
+generator-provenance exemption dom_ops13.json already used.

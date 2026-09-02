@@ -1,0 +1,39 @@
+{
+ "meta": {
+  "generator": "canon_interp_java.py (TASK 21)",
+  "reads": [
+   "add_java.json",
+   "canon29_units_c.json",
+   "interp_jvm.json",
+   "jvm_canon.py (imported, unmodified)"
+  ],
+  "spelling": "the operator token appears exactly once per unit object, as a display label ('operator' field, on an object carrying 'lang' and 'n'). No key, grouping, pairing or row structure in this file uses it."
+ },
+ "unit_1": {
+  "lang": "java",
+  "n": "1",
+  "operator": "+",
+  "real_text_checked": "lea (%rdi,%rsi,1),%eax; ret",
+  "real_text_source": "add_java.json's own java_canonical_form (jvm_canon.py's strip+rename, prior session, level-1 byte match already recorded there)",
+  "candidate_text": "mov %rdi,%rax; and $-1,%eax; mov %rsi,%r10; and $-1,%r10d; add %r10d,%eax; ret",
+  "candidate_source": "canon29_units_c.json, unit c/op_102",
+  "z3_result": "unsat",
+  "provenance_is_weaker": true,
+  "verdict": "PROVED_EQUAL",
+  "canonical_text": "mov %rdi,%rax; and $-1,%eax; mov %rsi,%r10; and $-1,%r10d; add %r10d,%eax; ret"
+ },
+ "unit_2": {
+  "lang": "java",
+  "n": "2",
+  "operator": "/",
+  "provenance_is_weaker": true,
+  "verdict": "REFUSED",
+  "refusal": {
+   "rule": "CORE",
+   "why": "the residual core branches; this file handles one straight run only",
+   "line": "je 0x7f99346a9b46"
+  },
+  "reason": "honest refusal, not forced -- jvm_canon.py's own strip() (imported unmodified) rejects unit 2's residual core with rule CORE: the residual core branches; this file handles one straight run only (at 'je 0x7f99346a9b46'). The core branches (an INT_MIN/-1 division-overflow guard) and strip() only handles one straight run; carving a branching JVM unit needs a new multi-block stripper, out of this task's scope.",
+  "canonical_text": null
+ }
+}

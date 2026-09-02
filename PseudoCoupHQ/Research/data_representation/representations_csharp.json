@@ -1,0 +1,114 @@
+{
+  "language": "csharp",
+  "layer": 2,
+  "purpose": "The ways a running C# program can HOLD layer-1 content. Not layer 1 (the data is fixed), not layer 3 (no operations beyond load-and-read-back), not the type system.",
+  "reference": "language knowledge, checked against ../type_vocabulary/raw/csharp.types.json as a candidate checklist only (superseded node; not a decision instrument). No c# toolchain was reachable in the sandbox; this file is enumerated but not executed here.",
+  "probe_style": "probe",
+  "spell": {
+    "nothing": {"null": "null"},
+    "truth": {"true": "true", "false": "false"},
+    "whole": {
+      "base_zero": "0",
+      "base_42": "42",
+      "i64max": "9223372036854775807",
+      "i64max_plus1": "9223372036854775808",
+      "p53_plus1": "9007199254740993",
+      "u64max": "18446744073709551615"
+    },
+    "fractional": {
+      "base_1_5": "1.5",
+      "base_pi": "3.141592653589793",
+      "negzero": "-0.0",
+      "nan": "double.NaN",
+      "inf": "double.PositiveInfinity",
+      "point1": "0.1"
+    },
+    "text": {
+      "base_empty": "\"\"",
+      "base_hello": "\"hello\"",
+      "base_lines": "\"line one\\nline two\"",
+      "eacute": "\"\\u00e9\"",
+      "clef": "\"\\U0001D11E\"",
+      "escapes": "\"quote \\\" backslash \\\\ tab\\there\""
+    }
+  },
+  "forms": {
+    "nothing": [
+      {"rep": "string? (null reference)", "spelling": "null", "kind": "literal", "note": "an absent reference; the hole names a declared reference kind.", "decl": "string? v = {V};", "read": "v == null ? \"null\" : v"},
+      {"rep": "Nullable<int>", "spelling": "(int?)null", "kind": "literal", "note": "a struct wrapping a value plus a present flag; the hole is a flipped flag, not a missing address.", "spell_override": {"null": "null"}, "decl": "int? v = {V};", "read": "v.HasValue ? v.Value.ToString() : \"null\""},
+      {"rep": "object (null reference)", "spelling": "null", "kind": "literal", "note": "the widest reference kind; every reference kind's absence collapses to this same null.", "decl": "object? v = {V};", "read": "v == null ? \"null\" : v.ToString()!"}
+    ],
+    "truth": [
+      {"rep": "bool", "spelling": "true / false", "kind": "literal", "note": "two values, one byte, no numeric side (unlike C, bool does not implicitly convert to int).", "decl": "bool v = {V};", "read": "v.ToString()"}
+    ],
+    "whole": [
+      {"rep": "int", "spelling": "42", "kind": "literal", "note": "signed 32-bit; the default integer literal type, so it refuses everything past its own width.", "decl": "int v = {V};", "read": "v.ToString()"},
+      {"rep": "long", "spelling": "42L", "kind": "literal", "note": "signed 64-bit; the usual whole-number holder, refuses past i64 max.", "spell_override": {"base_zero": "0L", "base_42": "42L", "i64max": "9223372036854775807L", "i64max_plus1": "9223372036854775808L", "p53_plus1": "9007199254740993L", "u64max": "18446744073709551615L"}, "decl": "long v = {V};", "read": "v.ToString()"},
+      {"rep": "ulong", "spelling": "42UL", "kind": "literal", "note": "unsigned 64-bit; reaches u64 max exactly, has no room below zero.", "spell_override": {"base_zero": "0UL", "base_42": "42UL", "i64max": "9223372036854775807UL", "i64max_plus1": "9223372036854775808UL", "p53_plus1": "9007199254740993UL", "u64max": "18446744073709551615UL"}, "decl": "ulong v = {V};", "read": "v.ToString()"},
+      {"rep": "System.Numerics.BigInteger", "spelling": "BigInteger.Parse(\"42\")", "kind": "constructor", "pre": "using System.Numerics;", "note": "unbounded whole number; every edge in the data file fits with room to spare.", "spell_override": {"base_zero": "BigInteger.Parse(\"0\")", "base_42": "BigInteger.Parse(\"42\")", "i64max": "BigInteger.Parse(\"9223372036854775807\")", "i64max_plus1": "BigInteger.Parse(\"9223372036854775808\")", "p53_plus1": "BigInteger.Parse(\"9007199254740993\")", "u64max": "BigInteger.Parse(\"18446744073709551615\")"}, "decl": "BigInteger v = {V};", "read": "v.ToString()"},
+      {"rep": "short", "spelling": "(short)42", "kind": "literal", "note": "signed 16-bit; the narrow end, refuses everything above roughly 32000.", "spell_override": {"base_zero": "(short)0", "base_42": "(short)42", "i64max": "(short)9223372036854775807", "i64max_plus1": "(short)9223372036854775808", "p53_plus1": "(short)9007199254740993", "u64max": "(short)18446744073709551615"}, "decl": "short v = {V};", "read": "v.ToString()"}
+    ],
+    "fractional": [
+      {"rep": "double", "spelling": "1.5", "kind": "literal", "note": "IEEE double; the default fractional literal type.", "decl": "double v = {V};", "read": "v.ToString(System.Globalization.CultureInfo.InvariantCulture)"},
+      {"rep": "float", "spelling": "1.5f", "kind": "literal", "note": "IEEE single; holds every base value at lower precision, needs the f suffix or the literal defaults to double.", "spell_override": {"base_1_5": "1.5f", "base_pi": "3.141592653589793f", "negzero": "-0.0f", "nan": "float.NaN", "inf": "float.PositiveInfinity", "point1": "0.1f"}, "decl": "float v = {V};", "read": "v.ToString(System.Globalization.CultureInfo.InvariantCulture)"},
+      {"rep": "decimal", "spelling": "1.5m", "kind": "literal", "note": "exact base-10 fixed point; no bit pattern for NaN or infinity, so those spellings must go through a checked cast that throws.", "spell_override": {"base_1_5": "1.5m", "base_pi": "3.141592653589793m", "negzero": "-0.0m", "nan": "(decimal)double.NaN", "inf": "(decimal)double.PositiveInfinity", "point1": "0.1m"}, "decl": "decimal v = {V};", "read": "v.ToString(System.Globalization.CultureInfo.InvariantCulture)"}
+    ],
+    "text": [
+      {"rep": "string", "spelling": "\"hello\"", "kind": "literal", "note": "immutable run of utf-16 code units; the default text holder.", "decl": "string v = {V};", "read": "v"},
+      {"rep": "char[]", "spelling": "\"hello\".ToCharArray()", "kind": "constructor", "note": "an array of utf-16 code units; a codepoint past the basic plane spans two elements.", "decl": "char[] v = ({V}).ToCharArray();", "read": "new string(v)"},
+      {"rep": "System.Text.StringBuilder", "spelling": "new StringBuilder(\"hello\")", "kind": "constructor", "pre": "using System.Text;", "note": "mutable text buffer, appended and read back as a string.", "decl": "StringBuilder v = new StringBuilder({V});", "read": "v.ToString()"},
+      {"rep": "byte[]", "spelling": "System.Text.Encoding.UTF8.GetBytes(\"hello\")", "kind": "constructor", "note": "holds text only as encoded bytes; the codepoints are gone until decoded.", "decl": "byte[] v = System.Text.Encoding.UTF8.GetBytes({V});", "read": "System.Text.Encoding.UTF8.GetString(v)"}
+    ],
+    "sequence": [
+      {"rep": "T[]", "spelling": "new long[]{1,2,3}", "kind": "literal", "note": "fixed length once allocated, one declared element kind.", "read": "string.Join(\",\", v)",
+       "probes": {"empty": "long[] v = new long[0];", "base": "long[] v = new long[]{1, 2, 3};", "strs": "string[] v = new string[]{\"a\", \"b\"};", "mixed": "long[] v = new long[]{1, \"two\", 3.0, true, 0};", "bigint": "long[] v = new long[]{9223372036854775808};"}},
+      {"rep": "List<T>", "spelling": "new List<long>{1,2,3}", "kind": "constructor", "pre": "using System.Collections.Generic;", "note": "growable ordered run, one declared element kind.", "read": "string.Join(\",\", v)",
+       "probes": {"empty": "List<long> v = new List<long>();", "base": "List<long> v = new List<long>{1, 2, 3};", "strs": "List<string> v = new List<string>{\"a\", \"b\"};", "mixed": "List<long> v = new List<long>{1, \"two\", 3.0, true, 0};", "bigint": "List<long> v = new List<long>{9223372036854775808};"}},
+      {"rep": "ReadOnlyCollection<T>", "spelling": "new ReadOnlyCollection<long>(new List<long>{1,2,3})", "kind": "constructor", "pre": "using System.Collections.Generic;\nusing System.Collections.ObjectModel;", "note": "a read-only window over a growable run that lives elsewhere.", "read": "string.Join(\",\", v)",
+       "probes": {"empty": "ReadOnlyCollection<long> v = new ReadOnlyCollection<long>(new List<long>());", "base": "ReadOnlyCollection<long> v = new ReadOnlyCollection<long>(new List<long>{1, 2, 3});", "strs": "ReadOnlyCollection<string> v = new ReadOnlyCollection<string>(new List<string>{\"a\", \"b\"});", "mixed": "ReadOnlyCollection<long> v = new ReadOnlyCollection<long>(new List<long>{1, \"two\", 3.0, true, 0});", "bigint": "ReadOnlyCollection<long> v = new ReadOnlyCollection<long>(new List<long>{9223372036854775808});"}},
+      {"rep": "LinkedList<T>", "spelling": "new LinkedList<long>(new long[]{1,2,3})", "kind": "constructor", "pre": "using System.Collections.Generic;", "note": "ordered run open at both ends, one declared element kind.", "read": "string.Join(\",\", v)",
+       "probes": {"empty": "LinkedList<long> v = new LinkedList<long>(new long[0]);", "base": "LinkedList<long> v = new LinkedList<long>(new long[]{1, 2, 3});", "strs": "LinkedList<string> v = new LinkedList<string>(new string[]{\"a\", \"b\"});", "mixed": "LinkedList<long> v = new LinkedList<long>(new long[]{1, \"two\", 3.0, true, 0});", "bigint": "LinkedList<long> v = new LinkedList<long>(new long[]{9223372036854775808});"}},
+      {"rep": "ValueTuple", "spelling": "(1L, \"two\", 3.0)", "kind": "literal", "note": "fixed length, and each position may be a different kind; the c# sequence holder that takes the mixed row. A single element needs ValueTuple.Create since (x,) is not tuple syntax here.", "read": "v.ToString()!",
+       "probes": {"empty": "ValueTuple v = default;", "base": "var v = (1L, 2L, 3L);", "strs": "var v = (\"a\", \"b\");", "mixed": "var v = (1L, \"two\", 3.0, true, (object?)null);", "bigint": "var v = ValueTuple.Create(9223372036854775808UL);"}},
+      {"rep": "object[]", "spelling": "new object[]{1L,\"two\",3.0,true,null}", "kind": "constructor", "note": "boxes every element; the one array kind that takes the mixed row, at the cost of losing the declared element kind entirely.", "read": "string.Join(\",\", System.Array.ConvertAll(v, x => x?.ToString() ?? \"null\"))",
+       "probes": {"empty": "object[] v = new object[0];", "base": "object[] v = new object[]{1L, 2L, 3L};", "strs": "object[] v = new object[]{\"a\", \"b\"};", "mixed": "object[] v = new object[]{1L, \"two\", 3.0, true, null};", "bigint": "object[] v = new object[]{System.Numerics.BigInteger.Parse(\"9223372036854775808\")};"}}
+    ],
+    "keyed": [
+      {"rep": "Dictionary<string,V>", "spelling": "new Dictionary<string,long>{{\"a\",1}}", "kind": "constructor", "pre": "using System.Collections.Generic;", "note": "name to element, no order guaranteed.", "read": "((System.Func<string>)(() => { var ks = new List<string>(v.Keys); ks.Sort(); return string.Join(\",\", ks) + \"|\" + v.Count; }))()",
+       "probes": {"empty": "Dictionary<string, long> v = new Dictionary<string, long>();", "flat": "Dictionary<string, long> v = new Dictionary<string, long>{{\"a\", 1}, {\"b\", 2}, {\"c\", 3}};", "intlike": "Dictionary<string, string> v = new Dictionary<string, string>{{\"1\", \"string-one-key\"}, {\"b\", \"2\"}};", "emptykey": "Dictionary<string, string> v = new Dictionary<string, string>{{\"\", \"empty-string key\"}};", "nested": "Dictionary<string, Dictionary<string, List<long>>> v = new Dictionary<string, Dictionary<string, List<long>>>{{\"outer\", new Dictionary<string, List<long>>{{\"inner\", new List<long>{1, 2}}}}};"}},
+      {"rep": "SortedDictionary<string,V>", "spelling": "new SortedDictionary<string,long>{{\"a\",1}}", "kind": "constructor", "pre": "using System.Collections.Generic;", "note": "the same grouping held in sorted key order rather than insertion order.", "read": "string.Join(\",\", v)",
+       "probes": {"empty": "SortedDictionary<string, long> v = new SortedDictionary<string, long>();", "flat": "SortedDictionary<string, long> v = new SortedDictionary<string, long>{{\"a\", 1}, {\"b\", 2}, {\"c\", 3}};", "intlike": "SortedDictionary<string, string> v = new SortedDictionary<string, string>{{\"1\", \"string-one-key\"}, {\"b\", \"2\"}};", "emptykey": "SortedDictionary<string, string> v = new SortedDictionary<string, string>{{\"\", \"empty-string key\"}};", "nested": "SortedDictionary<string, SortedDictionary<string, List<long>>> v = new SortedDictionary<string, SortedDictionary<string, List<long>>>{{\"outer\", new SortedDictionary<string, List<long>>{{\"inner\", new List<long>{1, 2}}}}};"}},
+      {"rep": "record", "spelling": "record R(long a); new R(1);", "kind": "constructor", "pre": "using System.Collections.Generic;\nrecord R0();\nrecord R3(long a, long b, long c);\nrecord RN(Dictionary<string, List<long>> outer);", "note": "names fixed when the shape is declared, and C# forbids declaring a type inside a method body, so every probe of this entry shares one set of top-level record declarations; the odd keys cannot be spelled as record parameter names at all, not even locally, so those probes fall back to an anonymous-type attempt that the parser refuses outright.", "read": "v.ToString()!",
+       "probes": {"empty": "var v = new R0();", "flat": "var v = new R3(1, 2, 3);", "intlike": "var v = new { 1 = \"string-one-key\", b = 2 };", "emptykey": "var v = new { = \"empty-string key\" };", "nested": "var v = new RN(new Dictionary<string, List<long>>{{\"inner\", new List<long>{1, 2}}});"}},
+      {"rep": "struct", "spelling": "struct S { public long a; } new S{a=1};", "kind": "constructor", "pre": "using System.Collections.Generic;\nstruct S0 {}\nstruct S3 { public long a; public long b; public long c; }\nstruct SN { public Dictionary<string, List<long>> outer; }", "note": "a value-type field bag; same top-level-only restriction and same identifier refusal as the record entry.", "read": "v.ToString()!",
+       "probes": {"empty": "var v = new S0();", "flat": "var v = new S3{a = 1, b = 2, c = 3};", "intlike": "var v = new { 1 = \"string-one-key\", b = 2 };", "emptykey": "var v = new { = \"empty-string key\" };", "nested": "var v = new SN{outer = new Dictionary<string, List<long>>{{\"inner\", new List<long>{1, 2}}}};"}},
+      {"rep": "class with fields", "spelling": "class C { public long a; } new C{a=1};", "kind": "constructor", "pre": "using System.Collections.Generic;\nclass C0 {}\nclass C3 { public long a; public long b; public long c; }\nclass CN { public Dictionary<string, List<long>> outer; }", "note": "a reference-type field bag; ToString() is not overridden here, so the read-back only ever surfaces the type name, not the fields — the finding for this cell.", "read": "v.ToString()!",
+       "probes": {"empty": "var v = new C0();", "flat": "var v = new C3{a = 1, b = 2, c = 3};", "intlike": "var v = new { 1 = \"string-one-key\", b = 2 };", "emptykey": "var v = new { = \"empty-string key\" };", "nested": "var v = new CN{outer = new Dictionary<string, List<long>>{{\"inner\", new List<long>{1, 2}}}};"}}
+    ],
+    "nesting": [
+      {"rep": "List<List<T>>", "spelling": "new List<List<long>>{new List<long>{1,2}}", "kind": "constructor", "pre": "using System.Collections.Generic;\nusing System.Text.Json;", "note": "nesting by repeating the same holder; every level must carry the same declared kind.", "read": "JsonSerializer.Serialize(v)",
+       "probes": {"seq_in_seq": "List<List<long>> v = new List<List<long>>{new List<long>{1, 2}, new List<long>{3, 4}};", "seq_in_map": "Dictionary<string, Dictionary<string, List<long>>> v = new Dictionary<string, Dictionary<string, List<long>>>{{\"outer\", new Dictionary<string, List<long>>{{\"inner\", new List<long>{1, 2}}}}};", "mixed_depth": "List<List<long>> v = new List<List<long>>{new List<long>{1}, new List<long>{2, 3}, new List<long>()};"}},
+      {"rep": "Dictionary<string,object>", "spelling": "new Dictionary<string,object>{{\"a\",1}}", "kind": "constructor", "pre": "using System.Collections.Generic;\nusing System.Text.Json;", "note": "boxes every value; the one keyed holder that takes elements of mixed forms at each level.", "read": "JsonSerializer.Serialize(v)",
+       "probes": {"seq_in_seq": "Dictionary<string, object> v = new Dictionary<string, object>{{\"a\", new List<object>{new List<long>{1, 2}, new List<long>{3, 4}}}};", "seq_in_map": "Dictionary<string, object> v = new Dictionary<string, object>{{\"outer\", new Dictionary<string, object>{{\"inner\", new List<long>{1, 2}}}}};", "mixed_depth": "Dictionary<string, object> v = new Dictionary<string, object>{{\"a\", new List<object?>{1L, new Dictionary<string, object?>{{\"b\", new List<object?>{2L, null}}}}}, {\"c\", true}};"}},
+      {"rep": "object[]", "spelling": "new object[]{new object[]{1L}}", "kind": "constructor", "pre": "using System.Collections.Generic;\nusing System.Text.Json;", "note": "boxes every element; nesting is just an object[] holding more object[] or Dictionary<string,object>.", "read": "JsonSerializer.Serialize(v)",
+       "probes": {"seq_in_seq": "object[] v = new object[]{new object[]{1L, 2L}, new object[]{3L, 4L}};", "seq_in_map": "object[] v = new object[]{new Dictionary<string, object>{{\"outer\", new Dictionary<string, object>{{\"inner\", new object[]{1L, 2L}}}}}};", "mixed_depth": "object[] v = new object[]{1L, new object[]{2L, new Dictionary<string, object>{{\"k\", \"t\"}}}, true, null};"}}
+    ],
+    "identity": [
+      {"rep": "struct value holder", "spelling": "struct Triple{...}; var v = new List<Triple>{s,s};", "kind": "constructor", "note": "a value type has no reference identity at all; a list of structs stores independent copies, so mutating one never reaches the other, and even two boxed copies of the same source struct compare as different objects.", "read": "r",
+       "probes": {
+         "shared": "struct Triple { public long a; public long b; public long c; }\nvar s = new Triple{a = 1, b = 2, c = 3};\nvar v = new List<Triple>{s, s};\nvar tmp = v[0];\ntmp.a = 99;\nv[0] = tmp;\nstring r = (v[1].a == 99) ? \"shared\" : \"copied\";",
+         "diamond": "struct Triple { public long a; }\nvar t = new Triple{a = 7};\nvar v = new List<Triple>{t, t};\nobject oa = v[0];\nobject ob = v[1];\nstring r = ReferenceEquals(oa, ob) ? \"same\" : \"distinct\";",
+         "cycle": "struct Loop { public string name; public Loop self; }\nvar n = new Loop{name = \"loop\"};\nstring r = \"cycle\";"}},
+      {"rep": "class reference holder", "spelling": "class Box{...}; var v = new List<Box>{s,s};", "kind": "constructor", "pre": "using System.Collections.Generic;\nclass Box { public List<long> items; public Box(List<long> i) { items = i; } }\nclass Node { public string name; public Node? self; }", "note": "reference types default to shared storage; two positions can name one object, and a self field can hold a reference to its own object.", "read": "r",
+       "probes": {
+         "shared": "var baseList = new List<long>{1, 2, 3};\nvar s = new Box(baseList);\nvar v = new List<Box>{s, s};\nv[0].items.Add(99);\nstring r = (v[1].items[v[1].items.Count - 1] == 99 && ReferenceEquals(v[0], v[1])) ? \"shared\" : \"copied\";",
+         "diamond": "var t = new Box(new List<long>{7});\nvar v = new List<Box>{t, t};\nstring r = ReferenceEquals(v[0], v[1]) ? \"same\" : \"distinct\";",
+         "cycle": "var n = new Node{name = \"loop\"};\nn.self = n;\nstring r = ReferenceEquals(n.self, n) ? \"cycle\" : \"no-cycle\";"}},
+      {"rep": "array of references", "spelling": "Box[] v = new Box[]{s,s};", "kind": "constructor", "pre": "using System.Collections.Generic;\nclass Box { public List<long> items; public Box(List<long> i) { items = i; } }", "note": "arrays of a reference kind hold addresses, not copies; an object[] can even hold a reference to the very array it sits in.", "read": "r",
+       "probes": {
+         "shared": "var baseList = new List<long>{1, 2, 3};\nvar s = new Box(baseList);\nBox[] v = new Box[]{s, s};\nv[0].items.Add(99);\nstring r = (v[1].items[v[1].items.Count - 1] == 99 && ReferenceEquals(v[0], v[1])) ? \"shared\" : \"copied\";",
+         "diamond": "var t = new Box(new List<long>{7});\nBox[] v = new Box[]{t, t};\nstring r = ReferenceEquals(v[0], v[1]) ? \"same\" : \"distinct\";",
+         "cycle": "object[] v = new object[1];\nv[0] = v;\nstring r = ReferenceEquals(v[0], v) ? \"cycle\" : \"no-cycle\";"}}
+    ]
+  }
+}

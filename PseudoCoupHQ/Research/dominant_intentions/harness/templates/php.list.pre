@@ -1,0 +1,16 @@
+// list probe bodies - php. php's "list" IS its ordered hash -- the impostor the
+// census flags -- so probe F-l2.b asks it for its keys.
+function mkl() { return [1, 2, 3]; }
+function f_listU1_a() { $a = [1, 2]; $a[] = 3; return implode(",", $a); }
+function f_listU2_a() { $a = mkl(); return fmts($a[1]); }
+function f_listU3_a() { $o = []; foreach (mkl() as $x) { $o[] = $x; } return implode(",", $o); }
+function f_listU4_a() { return fmts(count(mkl())); }
+function f_Fl1_a() { return implode(",", [1, "a"]); }
+function f_Fl2_b() { $a = [1, 2, 3]; unset($a[1]); return implode(",", array_keys($a)); }
+function f_Fl3_a() { $a = [1, 2]; $a[] = 3; $a[] = 4; return fmts(count($a)); }
+function f_Fl4_a() { $a = mkl(); $v = @$a[10]; return $v === null ? "null" : fmts($v); }
+function f_Fl5_a() { $a = mkl(); $v = @$a[-1]; return $v === null ? "null" : fmts($v); }
+function f_Fl6_a() { $a = mkl(); $s = array_slice($a, 0, 2); $s[0] = 99; return fmts($a[0]); }
+function f_Fl7_a() { return fmtb([1, 2, 3] == mkl()); }
+function f_Fl8_a() { $a = [10, 9, 1]; sort($a); return implode(",", $a); }
+function f_Fl9_a() { $a = mkl(); $b = $a; $b[0] = 99; return fmts($a[0]); }

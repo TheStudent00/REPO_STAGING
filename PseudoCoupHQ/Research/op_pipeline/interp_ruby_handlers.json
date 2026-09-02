@@ -1,0 +1,35 @@
+{
+ "pin": "ruby 3.3.0",
+ "arch": "x86-64",
+ "handlers": {
+  "vm_opt_plus": {
+   "anchor_instruction_count": 165,
+   "ship_instruction_count": 0,
+   "ship_absorbed": true,
+   "anchor_excerpt": "000000000025aa43 <vm_opt_plus>:\n  25aa43:\tf3 0f 1e fa          \tendbr64\n  25aa47:\t55                   \tpush   rbp\n  25aa48:\t48 89 e5             \tmov    rbp,rsp\n  25aa4b:\t48 83 ec 20          \tsub    rsp,0x20\n  25aa4f:\t48 89 7d f8          \tmov    QWORD PTR [rbp-0x8],rdi\n  25aa53:\t48 89 75 f0          \tmov    QWORD PTR [rbp-0x10],rsi\n  25aa57:\t48 8b 55 f0          \tmov    rdx,QWORD PTR [rbp-0x10]\n  25aa5b:\t48 8b 45 f8          \tmov    rax,QWORD PTR [rbp-0x8]\n  25aa5f:\t48 89 d6             \tmov    rsi,rdx\n  25aa62:\t48 89 c7             \tmov    rdi,rax\n  25aa65:\te8 29 1f ff ff       \tcall   24c993 <FIXNUM_2_P>\n  25aa6a:\t84 c0                \ttest   al,al\n  25aa6c:\t74 31                \tje     25aa9f <vm_opt_plus+0x5c>",
+   "ship_excerpt": "(no symbol emitted at ship optimization -- absorbed into caller(s))"
+  },
+  "rb_fix_plus": {
+   "anchor_instruction_count": 13,
+   "ship_instruction_count": 136,
+   "ship_absorbed": false,
+   "anchor_excerpt": "00000000000fedb1 <rb_fix_plus>:\n   fedb1:\tf3 0f 1e fa          \tendbr64\n   fedb5:\t55                   \tpush   rbp\n   fedb6:\t48 89 e5             \tmov    rbp,rsp\n   fedb9:\t48 83 ec 10          \tsub    rsp,0x10\n   fedbd:\t48 89 7d f8          \tmov    QWORD PTR [rbp-0x8],rdi\n   fedc1:\t48 89 75 f0          \tmov    QWORD PTR [rbp-0x10],rsi\n   fedc5:\t48 8b 55 f0          \tmov    rdx,QWORD PTR [rbp-0x10]\n   fedc9:\t48 8b 45 f8          \tmov    rax,QWORD PTR [rbp-0x8]\n   fedcd:\t48 89 d6             \tmov    rsi,rdx\n   fedd0:\t48 89 c7             \tmov    rdi,rax\n   fedd3:\te8 e0 fe ff ff       \tcall   fecb8 <fix_plus>\n   fedd8:\tc9                   \tleave\n   fedd9:\tc3                   \tret",
+   "ship_excerpt": "0000000000104750 <rb_fix_plus>:\n  104750:\tf3 0f 1e fa          \tendbr64\n  104754:\t48 83 ec 38          \tsub    rsp,0x38\n  104758:\t64 48 8b 04 25 28 00 \tmov    rax,QWORD PTR fs:0x28\n  10475f:\t00 00 \n  104761:\t48 89 44 24 28       \tmov    QWORD PTR [rsp+0x28],rax\n  104766:\t48 89 f0             \tmov    rax,rsi\n  104769:\t83 e6 01             \tand    esi,0x1\n  10476c:\t0f 85 be 00 00 00    \tjne    104830 <rb_fix_plus+0xe0>\n  104772:\ta8 07                \ttest   al,0x7\n  104774:\t74 6a                \tje     1047e0 <rb_fix_plus+0x90>\n  104776:\t48 89 c2             \tmov    rdx,rax\n  104779:\t83 e2 03             \tand    edx,0x3\n  10477c:\t48 83 fa 02          \tcmp    rdx,0x2"
+  },
+  "rb_int_plus": {
+   "anchor_instruction_count": 37,
+   "ship_instruction_count": 201,
+   "ship_absorbed": false,
+   "anchor_excerpt": "00000000000fedda <rb_int_plus>:\n   fedda:\tf3 0f 1e fa          \tendbr64\n   fedde:\t55                   \tpush   rbp\n   feddf:\t48 89 e5             \tmov    rbp,rsp\n   fede2:\t48 83 ec 10          \tsub    rsp,0x10\n   fede6:\t48 89 7d f8          \tmov    QWORD PTR [rbp-0x8],rdi\n   fedea:\t48 89 75 f0          \tmov    QWORD PTR [rbp-0x10],rsi\n   fedee:\t48 8b 45 f8          \tmov    rax,QWORD PTR [rbp-0x8]\n   fedf2:\t48 89 c7             \tmov    rdi,rax\n   fedf5:\te8 ed 81 ff ff       \tcall   f6fe7 <RB_FIXNUM_P>\n   fedfa:\t84 c0                \ttest   al,al\n   fedfc:\t74 15                \tje     fee13 <rb_int_plus+0x39>\n   fedfe:\t48 8b 55 f0          \tmov    rdx,QWORD PTR [rbp-0x10]\n   fee02:\t48 8b 45 f8          \tmov    rax,QWORD PTR [rbp-0x8]",
+   "ship_excerpt": "00000000000faa90 <rb_int_plus>:\n   faa90:\tf3 0f 1e fa          \tendbr64\n   faa94:\t53                   \tpush   rbx\n   faa95:\t48 83 ec 30          \tsub    rsp,0x30\n   faa99:\t64 48 8b 1c 25 28 00 \tmov    rbx,QWORD PTR fs:0x28\n   faaa0:\t00 00 \n   faaa2:\t48 89 5c 24 28       \tmov    QWORD PTR [rsp+0x28],rbx\n   faaa7:\t48 89 f3             \tmov    rbx,rsi\n   faaaa:\t40 f6 c7 01          \ttest   dil,0x1\n   faaae:\t75 68                \tjne    fab18 <rb_int_plus+0x88>\n   faab0:\t40 f6 c7 07          \ttest   dil,0x7\n   faab4:\t75 09                \tjne    faabf <rb_int_plus+0x2f>\n   faab6:\t48 85 ff             \ttest   rdi,rdi\n   faab9:\t0f 85 c1 00 00 00    \tjne    fab80 <rb_int_plus+0xf0>"
+  },
+  "rb_big_plus": {
+   "anchor_instruction_count": 85,
+   "ship_instruction_count": 146,
+   "ship_absorbed": false,
+   "anchor_excerpt": "00000000003cfaa9 <rb_big_plus>:\n  3cfaa9:\tf3 0f 1e fa          \tendbr64\n  3cfaad:\t55                   \tpush   rbp\n  3cfaae:\t48 89 e5             \tmov    rbp,rsp\n  3cfab1:\t53                   \tpush   rbx\n  3cfab2:\t48 83 ec 38          \tsub    rsp,0x38\n  3cfab6:\t48 89 7d d8          \tmov    QWORD PTR [rbp-0x28],rdi\n  3cfaba:\t48 89 75 d0          \tmov    QWORD PTR [rbp-0x30],rsi\n  3cfabe:\t48 8b 45 d0          \tmov    rax,QWORD PTR [rbp-0x30]\n  3cfac2:\t48 89 c7             \tmov    rdi,rax\n  3cfac5:\te8 16 09 ff ff       \tcall   3c03e0 <RB_FIXNUM_P>\n  3cfaca:\t84 c0                \ttest   al,al\n  3cfacc:\t74 74                \tje     3cfb42 <rb_big_plus+0x99>\n  3cface:\t48 8b 45 d0          \tmov    rax,QWORD PTR [rbp-0x30]",
+   "ship_excerpt": "00000000003b6ad0 <rb_big_plus>:\n  3b6ad0:\tf3 0f 1e fa          \tendbr64\n  3b6ad4:\t40 f6 c6 01          \ttest   sil,0x1\n  3b6ad8:\t74 36                \tje     3b6b10 <rb_big_plus+0x40>\n  3b6ada:\t48 d1 fe             \tsar    rsi,1\n  3b6add:\t0f b6 47 01          \tmovzx  eax,BYTE PTR [rdi+0x1]\n  3b6ae1:\t48 89 f2             \tmov    rdx,rsi\n  3b6ae4:\t48 f7 da             \tneg    rdx\n  3b6ae7:\t48 0f 48 d6          \tcmovs  rdx,rsi\n  3b6aeb:\t48 85 f6             \ttest   rsi,rsi\n  3b6aee:\t0f 9f c1             \tsetg   cl\n  3b6af1:\tc0 e8 05             \tshr    al,0x5\n  3b6af4:\t83 e0 01             \tand    eax,0x1\n  3b6af7:\t48 89 d6             \tmov    rsi,rdx"
+  }
+ },
+ "provenance_is_weaker": true
+}

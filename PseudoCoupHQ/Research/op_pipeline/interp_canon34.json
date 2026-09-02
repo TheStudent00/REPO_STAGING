@@ -1,0 +1,523 @@
+{
+ "meta": {
+  "generator": "interp_canon34.py",
+  "task": "TASK 32 part (a) -- the nine refused interpreter units through the current canonicalizer, with task 30's designated-location scheme",
+  "population": "the nine units log_107 (TASK 21) refused: java unit 2, ruby 4, php 4",
+  "reads_read_only": [
+   "lineage_carve.json",
+   "dwarf_typed_key_t27.json",
+   "proposal_representation_dimension3.json",
+   "interp_jvm.json",
+   "designated_memory.py",
+   "canon.py",
+   "cross_unit_prover.py"
+  ],
+  "new_ground_this_lap": "an operand that arrives in MEMORY is given a designated location rather than refused",
+  "provenance_is_weaker": true
+ },
+ "records": [
+  {
+   "unit": "java/op_2",
+   "language": "java",
+   "symbol": "af2",
+   "operator": "/",
+   "build": "ship (the JIT's own emitted nmethod; there is no anchor build for a JIT -- interp_jvm.json records one tier-c2 compilation)",
+   "provenance_is_weaker": true,
+   "seed_evidence_class": "the tool's own testimony -- the JVM's own printed parameter comments on this nmethod, quoted verbatim from interp_jvm.json unit u2: '# parm0:    rsi       = int' and '# parm1:    rdx       = int'.  Every other fact about this unit below is read from its own bytes.",
+   "walk_instruction_count": 43,
+   "lineage_trace": [
+    {
+     "address": "7f99346a9b1a",
+     "instruction": "mov %edx,%r11d",
+     "lineages_touched": [
+      "argument_lineage_2"
+     ]
+    },
+    {
+     "address": "7f99346a9b1d",
+     "instruction": "test %edx,%edx",
+     "lineages_touched": [
+      "argument_lineage_2"
+     ]
+    },
+    {
+     "address": "7f99346a9b21",
+     "instruction": "mov %esi,%eax",
+     "lineages_touched": [
+      "argument_lineage_1"
+     ]
+    },
+    {
+     "address": "7f99346a9b23",
+     "instruction": "cmp $0x80000000,%eax",
+     "lineages_touched": [
+      "argument_lineage_1"
+     ]
+    },
+    {
+     "address": "7f99346a9b2a",
+     "instruction": "xor %edx,%edx",
+     "lineages_touched": [],
+     "note": "self-xor: a zeroing, no lineage read"
+    },
+    {
+     "address": "7f99346a9b2c",
+     "instruction": "cmp $0xffffffff,%r11d",
+     "lineages_touched": [
+      "argument_lineage_2"
+     ]
+    },
+    {
+     "address": "7f99346a9b32",
+     "instruction": "cltd",
+     "lineages_touched": [
+      "argument_lineage_1"
+     ]
+    },
+    {
+     "address": "7f99346a9b33",
+     "instruction": "idiv %r11d",
+     "lineages_touched": [
+      "argument_lineage_1",
+      "argument_lineage_2"
+     ]
+    }
+   ],
+   "guards_passed_on_the_normal_path": [
+    {
+     "at_address": "7f99346a9b14",
+     "instruction": "jne 0x7f99346a9b72",
+     "preceding_test": "cmpl $0x0,0x20(%r15)"
+    },
+    {
+     "at_address": "7f99346a9b1f",
+     "instruction": "je 0x7f99346a9b46",
+     "preceding_test": "test %edx,%edx"
+    },
+    {
+     "at_address": "7f99346a9b28",
+     "instruction": "jne 0x7f99346a9b32",
+     "preceding_test": "cmp $0x80000000,%eax"
+    },
+    {
+     "at_address": "7f99346a9b30",
+     "instruction": "je 0x7f99346a9b36",
+     "preceding_test": "cmp $0xffffffff,%r11d"
+    }
+   ],
+   "outcome": "CANONICAL_TEXT_PRODUCED",
+   "boundary": {
+    "index": 15,
+    "address": "7f99346a9b33",
+    "instruction": "idiv %r11d",
+    "lineages_read": [
+     "argument_lineage_1",
+     "argument_lineage_2"
+    ],
+    "place_lineages": {
+     "rax": [
+      "argument_lineage_1"
+     ],
+     "r11": [
+      "argument_lineage_2"
+     ]
+    }
+   },
+   "canonical_text": "mov %edi,%eax; cltd; idiv %esi; ret",
+   "canonicalization_note": "the traced values are renamed to their designated registers (dividend -> %edi, divisor -> %esi) and the answer to %eax.  `cltd` is kept because the hardware splits one operation across the pair cltd+idiv (AgentMemory's own alpha example); it is not a move and is not erasable.  No designated location is needed: both operands of this unit arrive in registers.",
+   "seats": {
+    "operand_1": {
+     "seat_kind": "designated register",
+     "designation": "a",
+     "text": "%edi"
+    },
+    "operand_2": {
+     "seat_kind": "designated register",
+     "designation": "b",
+     "text": "%esi"
+    },
+    "answer": {
+     "seat_kind": "designated register",
+     "designation": "answer",
+     "text": "%eax"
+    }
+   },
+   "designated_location_directory": {},
+   "type_pair_read": "int32,int32",
+   "type_pair_read_evidence_class": "the tool's own testimony -- javap's own bytecode listing and the JVM's own parameter comments.  There is no ELF file for a JIT nmethod, so there is no DWARF to raise this to the forced-by-construction class (log_111 recorded the same refusal).",
+   "result_type_read": "int32"
+  },
+  {
+   "unit": "ruby/vm_opt_plus",
+   "language": "ruby",
+   "symbol": "vm_opt_plus",
+   "provenance_is_weaker": true,
+   "operator": "+",
+   "representation": "tagged-value(VALUE, opaque-dispatch)",
+   "type_pair_read": "VALUE,VALUE",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "result_type_read": "VALUE",
+   "carve_outcomes_per_build": [
+    {
+     "build": "anchor",
+     "outcome": "REFUSED",
+     "refusal": "no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call 24c993 <FIXNUM_2_P>; call 2437a5 <rb_fix_plus_fix>; call 24c9c7 <FLONUM_2_P>; call 243bc7 <rb_float_value_inline>; call 243bc7 <rb_float_value_inline>; call 243bff <rb_float_new_inline>"
+    },
+    {
+     "build": "ship",
+     "outcome": "REFUSED",
+     "refusal": "no slice exists for this symbol at this build: the symbol's label line is absent from the dump -- the build has no body for this symbol"
+    }
+   ],
+   "outcome": "REFUSED",
+   "refusal": "no build of this unit carves, so there is no computation part to canonicalise.  The carve refusals, verbatim: no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call 24c993 <FIXNUM_2_P>; call 2437a5 <rb_fix_plus_fix>; call 24c9c7 <FLONUM_2_P>; call 243bc7 <rb_float_value_inline>; call 243bc7 <rb_float_value_inline>; call 243bff <rb_float_new_inline> | no slice exists for this symbol at this build: the symbol's label line is absent from the dump -- the build has no body for this symbol",
+   "what_would_change_it": "nothing in task 30's machinery reaches this: designated memory answers where an operand LIVES, and this unit's refusal is that the two lineages never meet inside the unit at all -- the confluence is in a callee."
+  },
+  {
+   "unit": "ruby/rb_fix_plus",
+   "language": "ruby",
+   "symbol": "rb_fix_plus",
+   "provenance_is_weaker": true,
+   "operator": "+",
+   "representation": "tagged-value(Fixnum, 2n+1 encoding)",
+   "type_pair_read": "VALUE,VALUE",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "result_type_read": "VALUE",
+   "carve_outcomes_per_build": [
+    {
+     "build": "anchor",
+     "outcome": "REFUSED",
+     "refusal": "no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call fecb8 <fix_plus>"
+    },
+    {
+     "build": "ship",
+     "outcome": "CARVED",
+     "refusal": null
+    }
+   ],
+   "build": "ship",
+   "boundary": "add %rdi,%rax",
+   "boundary_address": "0x104834",
+   "computation_core": [
+    "add %rdi,%rax"
+   ],
+   "outcome": "CANONICAL_TEXT_PRODUCED",
+   "canonical_text": "mov %rsi,%rax; add %rdi,%rax; ret",
+   "seats": {
+    "operand_2": {
+     "seat_kind": "designated register",
+     "designation": "b",
+     "text": "%rsi"
+    },
+    "operand_1": {
+     "seat_kind": "designated register",
+     "designation": "a",
+     "text": "%rdi"
+    },
+    "answer": {
+     "seat_kind": "designated register",
+     "designation": "answer",
+     "text": "%rax"
+    }
+   },
+   "designated_location_directory": {},
+   "canonicalization_note": "the traced values are renamed to their designated seats and the answer to %rax.  An operand read through a memory operand at the boundary keeps its seat IN MEMORY -- a designated location, per the owner's 2026-09-01 ruling -- and is brought into the reserved reload register r11 for the length of one instruction.  Nothing is re-plumbed into a register that did not arrive in one."
+  },
+  {
+   "unit": "ruby/rb_int_plus",
+   "language": "ruby",
+   "symbol": "rb_int_plus",
+   "provenance_is_weaker": true,
+   "operator": "+",
+   "representation": "tagged-value(Fixnum, 2n+1 encoding)",
+   "type_pair_read": "VALUE,VALUE",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "result_type_read": "VALUE",
+   "carve_outcomes_per_build": [
+    {
+     "build": "anchor",
+     "outcome": "REFUSED",
+     "refusal": "no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call f6fe7 <RB_FIXNUM_P>; call fecb8 <fix_plus>; call f7484 <RB_TYPE_P>; call 3cfaa9 <rb_big_plus>; call f9158 <rb_num_coerce_bin>"
+    },
+    {
+     "build": "ship",
+     "outcome": "CARVED",
+     "refusal": null
+    }
+   ],
+   "build": "ship",
+   "boundary": "add %rbx,%rax",
+   "boundary_address": "0xfac1f",
+   "computation_core": [
+    "add %rbx,%rax"
+   ],
+   "outcome": "CANONICAL_TEXT_PRODUCED",
+   "canonical_text": "mov %rdi,%rax; add %rsi,%rax; ret",
+   "seats": {
+    "operand_1": {
+     "seat_kind": "designated register",
+     "designation": "a",
+     "text": "%rdi"
+    },
+    "operand_2": {
+     "seat_kind": "designated register",
+     "designation": "b",
+     "text": "%rsi"
+    },
+    "answer": {
+     "seat_kind": "designated register",
+     "designation": "answer",
+     "text": "%rax"
+    }
+   },
+   "designated_location_directory": {},
+   "canonicalization_note": "the traced values are renamed to their designated seats and the answer to %rax.  An operand read through a memory operand at the boundary keeps its seat IN MEMORY -- a designated location, per the owner's 2026-09-01 ruling -- and is brought into the reserved reload register r11 for the length of one instruction.  Nothing is re-plumbed into a register that did not arrive in one."
+  },
+  {
+   "unit": "ruby/rb_big_plus",
+   "language": "ruby",
+   "symbol": "rb_big_plus",
+   "provenance_is_weaker": true,
+   "operator": "+",
+   "representation": "mixed: typed-pointer(RBignum*) + tagged-value(Fixnum)",
+   "type_pair_read": "VALUE,VALUE",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "result_type_read": "VALUE",
+   "carve_outcomes_per_build": [
+    {
+     "build": "anchor",
+     "outcome": "REFUSED",
+     "refusal": "no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call 3c03e0 <RB_FIXNUM_P>; call 3c051d <rb_fix2long>; call 3c0db7 <BIGNUM_SIGN>; call 3cf3da <bigsub_int>; call 3cf69f <bigadd_int>; call 3c079e <RB_TYPE_P>"
+    },
+    {
+     "build": "ship",
+     "outcome": "REFUSED",
+     "refusal": "no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call 3ae420 <big2dbl>; call 3ae420 <big2dbl>; call 44ed50 <rb_warning>; call 3aa330 <bigadd>; call 44ed50 <rb_warning>"
+    }
+   ],
+   "outcome": "REFUSED",
+   "refusal": "no build of this unit carves, so there is no computation part to canonicalise.  The carve refusals, verbatim: no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call 3c03e0 <RB_FIXNUM_P>; call 3c051d <rb_fix2long>; call 3c0db7 <BIGNUM_SIGN>; call 3cf3da <bigsub_int>; call 3cf69f <bigadd_int>; call 3c079e <RB_TYPE_P> | no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call 3ae420 <big2dbl>; call 3ae420 <big2dbl>; call 44ed50 <rb_warning>; call 3aa330 <bigadd>; call 44ed50 <rb_warning>",
+   "what_would_change_it": "nothing in task 30's machinery reaches this: designated memory answers where an operand LIVES, and this unit's refusal is that the two lineages never meet inside the unit at all -- the confluence is in a callee."
+  },
+  {
+   "unit": "php/add_function",
+   "language": "php",
+   "symbol": "add_function",
+   "provenance_is_weaker": true,
+   "operator": "+",
+   "representation": "typed-pointer(zval*)",
+   "type_pair_read": "zval*,zval*",
+   "type_pair_read_evidence_class": "forced by construction -- the compiler's own DWARF DW_AT_type chain on the handler's formal parameters, emitted by the same compile that produced the bytes the arch-unit was carved from  (and the key does not depend on the operand selection rule at all: every parameter of this subprogram carries one and the same type)",
+   "result_type_read": "int",
+   "carve_outcomes_per_build": [
+    {
+     "build": "anchor",
+     "outcome": "CARVED",
+     "refusal": null
+    },
+    {
+     "build": "ship",
+     "outcome": "CARVED",
+     "refusal": null
+    }
+   ],
+   "build": "ship",
+   "boundary": "or 0x8(%rdx),%al",
+   "boundary_address": "0x40c05b",
+   "computation_core": [
+    "or 0x8(%rdx),%al",
+    "cmp $0x44,%al"
+   ],
+   "outcome": "REFUSED",
+   "canonical_text": null,
+   "refusal": "the core's last instruction 'cmp $0x44,%al' leaves its result in the FLAGS, not in a register: the unit never materialises a value here, and materialising one so an answer register could be named would be inventing computation, not canonicalising it"
+  },
+  {
+   "unit": "php/ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "language": "php",
+   "symbol": "ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "provenance_is_weaker": true,
+   "operator": "+",
+   "representation": "typed-pointer(zval*)",
+   "type_pair_read": null,
+   "type_pair_read_evidence_class": "refusal, machine-grounded -- the DWARF read ran and found the DIE; the absence of typed operand parameters is itself the measured fact",
+   "result_type_read": null,
+   "carve_outcomes_per_build": [
+    {
+     "build": "anchor",
+     "outcome": "CARVED",
+     "refusal": null
+    },
+    {
+     "build": "ship",
+     "outcome": "CARVED",
+     "refusal": null
+    }
+   ],
+   "build": "ship",
+   "boundary": "add (%rsi),%rax",
+   "boundary_address": "0x228ca1",
+   "computation_core": [
+    "add (%rsi),%rax"
+   ],
+   "outcome": "CANONICAL_TEXT_PRODUCED",
+   "canonical_text": "mov %rdi,%rax; mov -0x8(%rsp),%r11; add %r11,%rax; ret",
+   "seats": {
+    "operand_1": {
+     "seat_kind": "designated register",
+     "designation": "a",
+     "text": "%rdi"
+    },
+    "operand_2": {
+     "seat_kind": "designated location",
+     "designation": "S0",
+     "text": "-0x8(%rsp)"
+    },
+    "answer": {
+     "seat_kind": "designated register",
+     "designation": "answer",
+     "text": "%rax"
+    }
+   },
+   "designated_location_directory": {
+    "S0": {
+     "designation": "S0",
+     "slot_index": 0,
+     "offset": -8,
+     "text": "-0x8(%rsp)",
+     "file": "general",
+     "holds": "operand_2"
+    }
+   },
+   "canonicalization_note": "the traced values are renamed to their designated seats and the answer to %rax.  An operand read through a memory operand at the boundary keeps its seat IN MEMORY -- a designated location, per the owner's 2026-09-01 ruling -- and is brought into the reserved reload register r11 for the length of one instruction.  Nothing is re-plumbed into a register that did not arrive in one."
+  },
+  {
+   "unit": "php/ZEND_ADD_LONG_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "language": "php",
+   "symbol": "ZEND_ADD_LONG_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "provenance_is_weaker": true,
+   "operator": "+",
+   "representation": "typed-pointer(zval*)",
+   "type_pair_read": null,
+   "type_pair_read_evidence_class": "refusal, machine-grounded -- the DWARF read ran and found the DIE; the absence of typed operand parameters is itself the measured fact",
+   "result_type_read": null,
+   "carve_outcomes_per_build": [
+    {
+     "build": "anchor",
+     "outcome": "CARVED",
+     "refusal": null
+    },
+    {
+     "build": "ship",
+     "outcome": "CARVED",
+     "refusal": null
+    }
+   ],
+   "build": "ship",
+   "boundary": "add (%rcx),%rax",
+   "boundary_address": "0x2257fc",
+   "computation_core": [
+    "add (%rcx),%rax"
+   ],
+   "outcome": "CANONICAL_TEXT_PRODUCED",
+   "canonical_text": "mov %rdi,%rax; mov -0x8(%rsp),%r11; add %r11,%rax; ret",
+   "seats": {
+    "operand_1": {
+     "seat_kind": "designated register",
+     "designation": "a",
+     "text": "%rdi"
+    },
+    "operand_2": {
+     "seat_kind": "designated location",
+     "designation": "S0",
+     "text": "-0x8(%rsp)"
+    },
+    "answer": {
+     "seat_kind": "designated register",
+     "designation": "answer",
+     "text": "%rax"
+    }
+   },
+   "designated_location_directory": {
+    "S0": {
+     "designation": "S0",
+     "slot_index": 0,
+     "offset": -8,
+     "text": "-0x8(%rsp)",
+     "file": "general",
+     "holds": "operand_2"
+    }
+   },
+   "canonicalization_note": "the traced values are renamed to their designated seats and the answer to %rax.  An operand read through a memory operand at the boundary keeps its seat IN MEMORY -- a designated location, per the owner's 2026-09-01 ruling -- and is brought into the reserved reload register r11 for the length of one instruction.  Nothing is re-plumbed into a register that did not arrive in one."
+  },
+  {
+   "unit": "php/ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "language": "php",
+   "symbol": "ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER",
+   "provenance_is_weaker": true,
+   "operator": "+",
+   "representation": "typed-pointer(zval*)",
+   "type_pair_read": null,
+   "type_pair_read_evidence_class": "refusal, machine-grounded -- the DWARF read ran and found the DIE; the absence of typed operand parameters is itself the measured fact",
+   "result_type_read": null,
+   "carve_outcomes_per_build": [
+    {
+     "build": "anchor",
+     "outcome": "CARVED",
+     "refusal": null
+    },
+    {
+     "build": "ship",
+     "outcome": "CARVED",
+     "refusal": null
+    }
+   ],
+   "build": "ship",
+   "boundary": "add (%r14,%rcx,1),%rax",
+   "boundary_address": "0x2257ce",
+   "computation_core": [
+    "add (%r14,%rcx,1),%rax"
+   ],
+   "outcome": "CANONICAL_TEXT_PRODUCED",
+   "canonical_text": "mov %rsi,%rax; mov -0x8(%rsp),%r11; add %r11,%rax; ret",
+   "seats": {
+    "operand_2": {
+     "seat_kind": "designated register",
+     "designation": "b",
+     "text": "%rsi"
+    },
+    "operand_1": {
+     "seat_kind": "designated location",
+     "designation": "S0",
+     "text": "-0x8(%rsp)"
+    },
+    "answer": {
+     "seat_kind": "designated register",
+     "designation": "answer",
+     "text": "%rax"
+    }
+   },
+   "designated_location_directory": {
+    "S0": {
+     "designation": "S0",
+     "slot_index": 0,
+     "offset": -8,
+     "text": "-0x8(%rsp)",
+     "file": "general",
+     "holds": "operand_1"
+    }
+   },
+   "canonicalization_note": "the traced values are renamed to their designated seats and the answer to %rax.  An operand read through a memory operand at the boundary keeps its seat IN MEMORY -- a designated location, per the owner's 2026-09-01 ruling -- and is brought into the reserved reload register r11 for the length of one instruction.  Nothing is re-plumbed into a register that did not arrive in one."
+  }
+ ],
+ "summary": {
+  "population": 9,
+  "canonical_text_produced": 6,
+  "refused": 3,
+  "refusals_by_unit": {
+   "ruby/vm_opt_plus": "no build of this unit carves, so there is no computation part to canonicalise.  The carve refusals, verbatim: no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call 24c993 <FIXNUM_2_P>; call 2437a5 <rb_fix_plus_fix>; call 24c9c7 <FLONUM_2_P>; call 243bc7 <rb_float_value_inline>; call 243bc7 <rb_float_value_inline>; call 243bff <rb_float_new_inline> | no slice exists for this symbol at this build: the symbol's label line is absent from the dump -- the build has no body for this symbol",
+   "ruby/rb_big_plus": "no build of this unit carves, so there is no computation part to canonicalise.  The carve refusals, verbatim: no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call 3c03e0 <RB_FIXNUM_P>; call 3c051d <rb_fix2long>; call 3c0db7 <BIGNUM_SIGN>; call 3cf3da <bigsub_int>; call 3cf69f <bigadd_int>; call 3c079e <RB_TYPE_P> | no instruction in this unit reads both lineages: the lineages leave this unit through a call, so the confluence is inside a callee, not here.  Call instructions reached: call 3ae420 <big2dbl>; call 3ae420 <big2dbl>; call 44ed50 <rb_warning>; call 3aa330 <bigadd>; call 44ed50 <rb_warning>",
+   "php/add_function": "the core's last instruction 'cmp $0x44,%al' leaves its result in the FLAGS, not in a register: the unit never materialises a value here, and materialising one so an answer register could be named would be inventing computation, not canonicalising it"
+  }
+ }
+}

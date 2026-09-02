@@ -1,0 +1,585 @@
+{
+ "members": {
+  "rust/786": {
+   "candidate_differs_from_ship_text": true,
+   "canonical_text": [
+    "mov %esi,(%rdi)",
+    "mov %edx,0x4(%rdi)",
+    "movb $0x0,0x8(%rdi)",
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "declared_entry_contract_before": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "destination_register": "rdi",
+   "detail": "z3 proved the candidate equal to the unit's own real ship code in every one of the 4 compared places (answer register %rax; image cell base=%rdi offset=0x0 width=32; image cell base=%rdi offset=0x4 width=32; image cell base=%rdi offset=0x8 width=8), for every value of every register either text reads before writing",
+   "entry_contract_after": {
+    "abi": "sysv-displaced",
+    "displaced": true,
+    "exit": {
+     "answer": "the 9-byte image at the result destination",
+     "fields": [
+      {
+       "offset": 0,
+       "width_bits": 32
+      },
+      {
+       "offset": 4,
+       "width_bits": 32
+      },
+      {
+       "offset": 8,
+       "width_bits": 8
+      }
+     ],
+     "image_bytes": 9,
+     "register": "rax",
+     "register_holds": "the result destination address, returned unchanged"
+    },
+    "seats": [
+     {
+      "class": "integer",
+      "designation": "result-destination",
+      "register": "rdi",
+      "role": "the address of the caller-allocated answer image; stored through, never read as data"
+     },
+     {
+      "class": "integer",
+      "designation": "a",
+      "register": "rsi"
+     },
+     {
+      "class": "integer",
+      "designation": "b",
+      "register": "rdx"
+     }
+    ]
+   },
+   "erased_form": {
+    "exit_adapter": {
+     "from": "result-destination",
+     "kind": "exit-adapter",
+     "to": "answer-register"
+    },
+    "steps": [
+     {
+      "class": "integer",
+      "kind": "store-value",
+      "offset": 0,
+      "value": "a",
+      "width_bits": 32
+     },
+     {
+      "class": "integer",
+      "kind": "store-value",
+      "offset": 4,
+      "value": "b",
+      "width_bits": 32
+     },
+     {
+      "kind": "store-immediate",
+      "offset": 8,
+      "value": "$0x0",
+      "width_bits": 8
+     }
+    ]
+   },
+   "ground_truth_check": "canon4's `mnem` is line-identical to op_units' own ship `mnem` (5 lines)",
+   "lang": "rust",
+   "n": "786",
+   "operator": "..=",
+   "prior_refusal": "erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it",
+   "prior_status": null,
+   "result_type_for_reading": "core::ops::RangeInclusive<i32>",
+   "ship_mnem": [
+    "mov %rdi,%rax",
+    "mov %esi,(%rdi)",
+    "mov %edx,0x4(%rdi)",
+    "movb $0x0,0x8(%rdi)",
+    "ret"
+   ],
+   "store_offsets": [
+    0,
+    4,
+    8
+   ],
+   "store_widths_bits": [
+    32,
+    32,
+    8
+   ],
+   "verdict": "PROVED_EQUAL"
+  },
+  "rust/793": {
+   "candidate_differs_from_ship_text": true,
+   "canonical_text": [
+    "mov %rsi,(%rdi)",
+    "mov %rdx,0x8(%rdi)",
+    "movb $0x0,0x10(%rdi)",
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "declared_entry_contract_before": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "destination_register": "rdi",
+   "detail": "z3 proved the candidate equal to the unit's own real ship code in every one of the 4 compared places (answer register %rax; image cell base=%rdi offset=0x0 width=64; image cell base=%rdi offset=0x8 width=64; image cell base=%rdi offset=0x10 width=8), for every value of every register either text reads before writing",
+   "entry_contract_after": {
+    "abi": "sysv-displaced",
+    "displaced": true,
+    "exit": {
+     "answer": "the 17-byte image at the result destination",
+     "fields": [
+      {
+       "offset": 0,
+       "width_bits": 64
+      },
+      {
+       "offset": 8,
+       "width_bits": 64
+      },
+      {
+       "offset": 16,
+       "width_bits": 8
+      }
+     ],
+     "image_bytes": 17,
+     "register": "rax",
+     "register_holds": "the result destination address, returned unchanged"
+    },
+    "seats": [
+     {
+      "class": "integer",
+      "designation": "result-destination",
+      "register": "rdi",
+      "role": "the address of the caller-allocated answer image; stored through, never read as data"
+     },
+     {
+      "class": "integer",
+      "designation": "a",
+      "register": "rsi"
+     },
+     {
+      "class": "integer",
+      "designation": "b",
+      "register": "rdx"
+     }
+    ]
+   },
+   "erased_form": {
+    "exit_adapter": {
+     "from": "result-destination",
+     "kind": "exit-adapter",
+     "to": "answer-register"
+    },
+    "steps": [
+     {
+      "class": "integer",
+      "kind": "store-value",
+      "offset": 0,
+      "value": "a",
+      "width_bits": 64
+     },
+     {
+      "class": "integer",
+      "kind": "store-value",
+      "offset": 8,
+      "value": "b",
+      "width_bits": 64
+     },
+     {
+      "kind": "store-immediate",
+      "offset": 16,
+      "value": "$0x0",
+      "width_bits": 8
+     }
+    ]
+   },
+   "ground_truth_check": "canon4's `mnem` is line-identical to op_units' own ship `mnem` (5 lines)",
+   "lang": "rust",
+   "n": "793",
+   "operator": "..=",
+   "prior_refusal": "erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it",
+   "prior_status": null,
+   "result_type_for_reading": "core::ops::RangeInclusive<i64>",
+   "ship_mnem": [
+    "mov %rdi,%rax",
+    "mov %rsi,(%rdi)",
+    "mov %rdx,0x8(%rdi)",
+    "movb $0x0,0x10(%rdi)",
+    "ret"
+   ],
+   "store_offsets": [
+    0,
+    8,
+    16
+   ],
+   "store_widths_bits": [
+    64,
+    64,
+    8
+   ],
+   "verdict": "PROVED_EQUAL"
+  },
+  "rust/800": {
+   "candidate_differs_from_ship_text": true,
+   "canonical_text": [
+    "mov %rsi,(%rdi)",
+    "mov %rdx,0x8(%rdi)",
+    "movb $0x0,0x10(%rdi)",
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "declared_entry_contract_before": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "destination_register": "rdi",
+   "detail": "z3 proved the candidate equal to the unit's own real ship code in every one of the 4 compared places (answer register %rax; image cell base=%rdi offset=0x0 width=64; image cell base=%rdi offset=0x8 width=64; image cell base=%rdi offset=0x10 width=8), for every value of every register either text reads before writing",
+   "entry_contract_after": {
+    "abi": "sysv-displaced",
+    "displaced": true,
+    "exit": {
+     "answer": "the 17-byte image at the result destination",
+     "fields": [
+      {
+       "offset": 0,
+       "width_bits": 64
+      },
+      {
+       "offset": 8,
+       "width_bits": 64
+      },
+      {
+       "offset": 16,
+       "width_bits": 8
+      }
+     ],
+     "image_bytes": 17,
+     "register": "rax",
+     "register_holds": "the result destination address, returned unchanged"
+    },
+    "seats": [
+     {
+      "class": "integer",
+      "designation": "result-destination",
+      "register": "rdi",
+      "role": "the address of the caller-allocated answer image; stored through, never read as data"
+     },
+     {
+      "class": "integer",
+      "designation": "a",
+      "register": "rsi"
+     },
+     {
+      "class": "integer",
+      "designation": "b",
+      "register": "rdx"
+     }
+    ]
+   },
+   "erased_form": {
+    "exit_adapter": {
+     "from": "result-destination",
+     "kind": "exit-adapter",
+     "to": "answer-register"
+    },
+    "steps": [
+     {
+      "class": "integer",
+      "kind": "store-value",
+      "offset": 0,
+      "value": "a",
+      "width_bits": 64
+     },
+     {
+      "class": "integer",
+      "kind": "store-value",
+      "offset": 8,
+      "value": "b",
+      "width_bits": 64
+     },
+     {
+      "kind": "store-immediate",
+      "offset": 16,
+      "value": "$0x0",
+      "width_bits": 8
+     }
+    ]
+   },
+   "ground_truth_check": "canon4's `mnem` is line-identical to op_units' own ship `mnem` (5 lines)",
+   "lang": "rust",
+   "n": "800",
+   "operator": "..=",
+   "prior_refusal": "erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it",
+   "prior_status": null,
+   "result_type_for_reading": "core::ops::RangeInclusive<u64>",
+   "ship_mnem": [
+    "mov %rdi,%rax",
+    "mov %rsi,(%rdi)",
+    "mov %rdx,0x8(%rdi)",
+    "movb $0x0,0x10(%rdi)",
+    "ret"
+   ],
+   "store_offsets": [
+    0,
+    8,
+    16
+   ],
+   "store_widths_bits": [
+    64,
+    64,
+    8
+   ],
+   "verdict": "PROVED_EQUAL"
+  },
+  "rust/807": {
+   "candidate_differs_from_ship_text": true,
+   "canonical_text": [
+    "movss %xmm0,(%rdi)",
+    "movss %xmm1,0x4(%rdi)",
+    "movb $0x0,0x8(%rdi)",
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "declared_entry_contract_before": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "destination_register": "rdi",
+   "detail": "z3 proved the candidate equal to the unit's own real ship code in every one of the 4 compared places (answer register %rax; image cell base=%rdi offset=0x0 width=32; image cell base=%rdi offset=0x4 width=32; image cell base=%rdi offset=0x8 width=8), for every value of every register either text reads before writing",
+   "entry_contract_after": {
+    "abi": "sysv-displaced",
+    "displaced": true,
+    "exit": {
+     "answer": "the 9-byte image at the result destination",
+     "fields": [
+      {
+       "offset": 0,
+       "width_bits": 32
+      },
+      {
+       "offset": 4,
+       "width_bits": 32
+      },
+      {
+       "offset": 8,
+       "width_bits": 8
+      }
+     ],
+     "image_bytes": 9,
+     "register": "rax",
+     "register_holds": "the result destination address, returned unchanged"
+    },
+    "seats": [
+     {
+      "class": "integer",
+      "designation": "result-destination",
+      "register": "rdi",
+      "role": "the address of the caller-allocated answer image; stored through, never read as data"
+     },
+     {
+      "class": "float",
+      "designation": "a",
+      "register": "xmm0"
+     },
+     {
+      "class": "float",
+      "designation": "b",
+      "register": "xmm1"
+     }
+    ]
+   },
+   "erased_form": {
+    "exit_adapter": {
+     "from": "result-destination",
+     "kind": "exit-adapter",
+     "to": "answer-register"
+    },
+    "steps": [
+     {
+      "class": "float",
+      "kind": "store-value",
+      "offset": 0,
+      "value": "a",
+      "width_bits": 32
+     },
+     {
+      "class": "float",
+      "kind": "store-value",
+      "offset": 4,
+      "value": "b",
+      "width_bits": 32
+     },
+     {
+      "kind": "store-immediate",
+      "offset": 8,
+      "value": "$0x0",
+      "width_bits": 8
+     }
+    ]
+   },
+   "ground_truth_check": "canon4's `mnem` is line-identical to op_units' own ship `mnem` (5 lines)",
+   "lang": "rust",
+   "n": "807",
+   "operator": "..=",
+   "prior_refusal": "erasure_refused: the answer value never entered a tracked register (a passthrough this builder does not model)",
+   "prior_status": null,
+   "result_type_for_reading": "core::ops::RangeInclusive<f32>",
+   "ship_mnem": [
+    "mov %rdi,%rax",
+    "movss %xmm0,(%rdi)",
+    "movss %xmm1,0x4(%rdi)",
+    "movb $0x0,0x8(%rdi)",
+    "ret"
+   ],
+   "store_offsets": [
+    0,
+    4,
+    8
+   ],
+   "store_widths_bits": [
+    32,
+    32,
+    8
+   ],
+   "verdict": "PROVED_EQUAL"
+  },
+  "rust/814": {
+   "candidate_differs_from_ship_text": true,
+   "canonical_text": [
+    "movsd %xmm0,(%rdi)",
+    "movsd %xmm1,0x8(%rdi)",
+    "movb $0x0,0x10(%rdi)",
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "declared_entry_contract_before": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "destination_register": "rdi",
+   "detail": "z3 proved the candidate equal to the unit's own real ship code in every one of the 4 compared places (answer register %rax; image cell base=%rdi offset=0x0 width=64; image cell base=%rdi offset=0x8 width=64; image cell base=%rdi offset=0x10 width=8), for every value of every register either text reads before writing",
+   "entry_contract_after": {
+    "abi": "sysv-displaced",
+    "displaced": true,
+    "exit": {
+     "answer": "the 17-byte image at the result destination",
+     "fields": [
+      {
+       "offset": 0,
+       "width_bits": 64
+      },
+      {
+       "offset": 8,
+       "width_bits": 64
+      },
+      {
+       "offset": 16,
+       "width_bits": 8
+      }
+     ],
+     "image_bytes": 17,
+     "register": "rax",
+     "register_holds": "the result destination address, returned unchanged"
+    },
+    "seats": [
+     {
+      "class": "integer",
+      "designation": "result-destination",
+      "register": "rdi",
+      "role": "the address of the caller-allocated answer image; stored through, never read as data"
+     },
+     {
+      "class": "float",
+      "designation": "a",
+      "register": "xmm0"
+     },
+     {
+      "class": "float",
+      "designation": "b",
+      "register": "xmm1"
+     }
+    ]
+   },
+   "erased_form": {
+    "exit_adapter": {
+     "from": "result-destination",
+     "kind": "exit-adapter",
+     "to": "answer-register"
+    },
+    "steps": [
+     {
+      "class": "float",
+      "kind": "store-value",
+      "offset": 0,
+      "value": "a",
+      "width_bits": 64
+     },
+     {
+      "class": "float",
+      "kind": "store-value",
+      "offset": 8,
+      "value": "b",
+      "width_bits": 64
+     },
+     {
+      "kind": "store-immediate",
+      "offset": 16,
+      "value": "$0x0",
+      "width_bits": 8
+     }
+    ]
+   },
+   "ground_truth_check": "canon4's `mnem` is line-identical to op_units' own ship `mnem` (5 lines)",
+   "lang": "rust",
+   "n": "814",
+   "operator": "..=",
+   "prior_refusal": "erasure_refused: the answer value never entered a tracked register (a passthrough this builder does not model)",
+   "prior_status": null,
+   "result_type_for_reading": "core::ops::RangeInclusive<f64>",
+   "ship_mnem": [
+    "mov %rdi,%rax",
+    "movsd %xmm0,(%rdi)",
+    "movsd %xmm1,0x8(%rdi)",
+    "movb $0x0,0x10(%rdi)",
+    "ret"
+   ],
+   "store_offsets": [
+    0,
+    8,
+    16
+   ],
+   "store_widths_bits": [
+    64,
+    64,
+    8
+   ],
+   "verdict": "PROVED_EQUAL"
+  }
+ },
+ "meta": {
+  "corpus_units_surveyed": 1779,
+  "member_count": 5,
+  "membership_key": "machine form, four tests on the unit's own ship text: one store base; that base never written; that base copied into the answer register; that base never read as data",
+  "non_member_reason_tally": {
+   "t1-many-bases": 6,
+   "t1-no-store": 1756,
+   "t1-own-frame": 12
+  },
+  "produced_by": "canon32_sret.py",
+  "role": "grouping artifact -- checked in full by check_no_spelling_keys.py, no provenance exemption claimed",
+  "verdict_tally": {
+   "PROVED_EQUAL": 5
+  },
+  "what": "the displaced-ABI (memory-return) family: the three-seat entry contract, the erased form, the canonical re-render, and the verdict against each unit's own ship code"
+ }
+}

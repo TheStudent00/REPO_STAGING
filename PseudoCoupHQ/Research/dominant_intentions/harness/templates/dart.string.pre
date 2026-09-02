@@ -1,0 +1,20 @@
+// string probe bodies - dart (utf16 code units, immutable).
+const String SE = "é";
+const String SM = "\u{1D11E}";
+String ops(String x) => x;
+String f_strU1_a() => fmts(ops("ab") + ops("cd"));
+String f_strU2_a() => fmtb(ops("ab" + "cd") == ops("abcd"));
+String f_strU3_a() => fmts(ops("abcdef").substring(1, 4));
+String f_strU4_a() {
+  final t = ops(SE + SM);
+  return fmtb(utf8.decode(utf8.encode(t)) == t);
+}
+String f_Fs1_a() => ops(SE).codeUnitAt(0).toString();
+String f_Fs1_b() => ops(SM).codeUnitAt(0).toString();
+String f_Fs2_a() { var a = ops("abc"); final b = a; a += "d"; return fmts(b); }
+String f_Fs3_a() => ops(SE).length.toString();
+String f_Fs3_b() => ops(SM).length.toString();
+String f_Fs3_c() => ops(SE + SM).length.toString();
+String f_Fs4_a() => ops("abc").codeUnitAt(0).toString();
+String f_Fs5_a() => fmtb(ops("ab" + "cd") == ops("abcd"));
+String f_Fs5_c() { final s = ops("abcd"); return fmtb(s == s); }

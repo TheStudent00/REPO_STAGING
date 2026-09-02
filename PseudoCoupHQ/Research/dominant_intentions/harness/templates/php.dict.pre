@@ -1,0 +1,16 @@
+// dict probe bodies - php. php's array is ONE structure serving list and dict:
+// an ordered hash whose string keys that look like integers BECOME integers.
+function mkd() { return ["k" => "v1"]; }
+function f_dictU1_a() { $d = mkd(); return fmts($d["k"]); }
+function f_dictU2_a() { $d = ["k" => "v1"]; $d["k"] = "v2"; return fmts($d["k"]); }
+function f_dictU3_a() { $d = mkd(); unset($d["k"]); return fmtb(array_key_exists("k", $d)); }
+function f_dictU4_a() { $d = []; $d["a"] = 1; $d["b"] = 2; $d["c"] = 3; return fmts(count($d)); }
+function f_Fd1_a() { $d = []; $d[1] = "int"; $d["1"] = "str"; return fmts($d[1]); }
+function f_Fd2_a() { $d = []; $d["z"] = 1; $d["a"] = 1; $d["m"] = 1; return implode(",", array_keys($d)); }
+function f_Fd3_a() { $d = mkd(); $v = @$d["nope"]; return $v === null ? "null" : fmts($v); }
+function f_Fd4_a() {
+  $d = ["a" => 1, "b" => 2, "c" => 3, "d" => 4, "e" => 5];
+  foreach ($d as $k => $v) { if ($k === "c") { unset($d[$k]); } }
+  return "ok";
+}
+function f_Fl9d_a() { $a = mkd(); $b = $a; $b["k"] = "99"; return fmts($a["k"]); }

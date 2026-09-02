@@ -1,0 +1,31 @@
+// integer probe bodies - go (fixed width, developer-chosen, unsigned exists).
+// Every probe goes through an op helper so the value is a RUNTIME value: go's
+// untyped constants are arbitrary precision and a constant overflow or a
+// constant zero divisor is a compile error, which is a different question.
+func op64(x int64) int64          { return x }
+func op32(x int32) int32          { return x }
+func opu64(x uint64) uint64       { return x }
+func f_intU1_a() string           { return fmt.Sprint(123456 + 654321) }
+func f_intU1_b() string           { return fmt.Sprint(1000 * 1000) }
+func f_intU1_c() string           { return fmt.Sprint(5 - 9) }
+func f_intU2_a() string           { return fmtb(op64(3) < op64(5)) }
+func f_intU2_b() string           { return fmtb(op64(-7) <= op64(-7)) }
+func f_intU2_c() string           { return fmtb(op64(10) == op64(10)) }
+func f_intU2_d() string           { return fmtb(op64(2) > op64(100)) }
+func f_intU3_a() string           { return fmt.Sprint(op64(42)) }
+func f_intU3_b() string           { return fmt.Sprint(op64(-12345)) }
+func f_Fi1_a() string             { return fmt.Sprint(int64(9007199254740993)) }
+func f_Fi1_b() string             { return fmt.Sprint(int64(9223372036854775807)) }
+func f_Fi1_d() string             { return fmt.Sprint(int8(math.MaxInt8)) }
+func f_Fi1_e() string             { return fmt.Sprint(uint8(math.MaxUint8)) }
+func f_Fi2_a() string             { return fmt.Sprint(op64(math.MaxInt64) + 1) }
+func f_Fi2_b() string             { return fmt.Sprint(opu64(math.MaxUint64) + 1) }
+func f_Fi3_a() string             { return fmt.Sprint(op64(7) / op64(2)) }
+func f_Fi3_b() string             { return fmt.Sprint(op64(-7) / op64(2)) }
+func f_Fi4_a() string             { return fmt.Sprint(op64(-7) % op64(2)) }
+func f_Fi4_b() string             { return fmt.Sprint(op64(7) % op64(-2)) }
+func f_Fi4_c() string             { return fmt.Sprint(op64(7) % op64(2)) }
+func f_Fi5_a() string             { return fmt.Sprint(op64(7) / op64(0)) }
+func f_Fi5_b() string             { return fmt.Sprint(op64(7) % op64(0)) }
+func f_Fi6_a() string             { return fmt.Sprint(op32(1) << 31) }
+func f_Fi6_b() string             { return fmt.Sprint(op64(1) << 32) }

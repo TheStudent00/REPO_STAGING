@@ -1,0 +1,152 @@
+canon16_worked_examples.txt -- JOB 3 (vector register plumbing), two
+worked examples in reading_sample.txt's own instruction | reading
+form, plus measured counts. Evidence class: forced by construction (z3
+unsat on the disequality against the unit's own real ship code, via a
+new narrowly-scoped simulator, Sim16 -- see canon16.py's own header
+for exactly which mnemonics it models and why) unless marked otherwise.
+====================================================================================================
+
+THE GAP (measured, canon14_units_c.json's own stored refusal text for
+c/op_15, unchanged since Stage 3/5's own diagnosis, evidence class:
+stored text, verbatim):
+
+    "no return path: expression contains an uninterpreted atom for
+    VEX op 'XorV128' -- SIMD 128-bit xor (not modeled)"
+
+c/op_15 is `-a` for a:float. gen7 through gen14's entire register
+model is GP-integer only: REGMAP has no %xmm0/%xmm1/... entries at
+all, nothing anywhere in this lineage knows how to emit movss/movsd/
+movd/movq/xorps/xorpd, or to treat %xmm0/%xmm1 as the designated
+argument registers a float-typed unit's real ship code actually uses
+-- confirmed independently by stage3_vector_constants_report.txt and
+stage5_float_conditions_diagnosis.txt, the SAME finding both times.
+
+----------------------------------------------------------------------------------------------------
+WORKED EXAMPLE 1 -- c/op_15 (`-a`, a:float)
+
+BEFORE (canon15_units_c.json, status: not_yet_converged -- no
+rendering path at all, refused before ever reaching the gate):
+    unit: c/op_15   source: op_units
+    (no rendering -- render_unit7's own early call-atom check raised
+    on 'XorV128'; nothing to gate)
+
+    real ship code (canon4_units_c.json's own `mnem`, the ground
+    truth this stage's gate proves against):
+    xorps 0x0(%rip),%xmm0   %xmm0 = %xmm0 ^ [rip-relative 128-bit
+                              constant, low 32 bits 0x80000000]
+    ret                       return %xmm0
+
+AFTER (canon16_units_c.json, status: converged, canon16_text,
+PROVED_EQUAL against the real ship code above):
+    unit: c/op_15   source: op_units, canon16_xmm.py
+    mov $-2147483648,%eax     %eax = 0x80000000 (signed reading)
+    movd %eax,%xmm2             %xmm2 = zero_extend(%eax)  (GP->XMM)
+    xorps %xmm2,%xmm0             %xmm0 = %xmm0 ^ %xmm2
+    ret                              return %xmm0
+
+    Entry contract: a arrives in %xmm0 (the ratified designated
+    register); answer leaves in %xmm0; %xmm2 is the FIRST member of
+    the ordered XMM temp pool (%xmm2, %xmm3, %xmm4, ... %xmm15,
+    canon16_xmm.py's own XMM_TEMP_POOL_ORDER). The sign-mask constant
+    (0x80000000) is stage3_vector_constants_report.txt's own resolved
+    value, materialized in a GP register and moved across (`movd`)
+    instead of loaded from a `.rodata` address this renderer has no
+    mechanism to allocate -- see canon16_xmm.py's own header for why
+    this is sound, and canon16.py's `Sim16` for the z3 proof.
+
+----------------------------------------------------------------------------------------------------
+WORKED EXAMPLE 2 -- go/op_10 (`-a`, a:double)
+
+BEFORE (canon15_units_go.json, status: not_yet_converged, same shape
+of refusal):
+    unit: go/op_10   source: op_units
+    (no rendering -- 'XorV128' call atom)
+
+    real ship code (canon4_units_go.json's own `mnem` -- go's OWN
+    compiler emits a DIFFERENT idiom than c/cpp/rust/swift's `xorps`):
+    movsd 0x1d5c0(%rip),%xmm1   %xmm1 = [rip-relative 64-bit double
+                                   constant, 0x8000000000000000]
+    pxor %xmm1,%xmm0              %xmm0 = %xmm0 ^ %xmm1  (PACKED
+                                     INTEGER xor -- bitwise identical
+                                     to xorpd for every bit position;
+                                     real x86-64 hardware defines all
+                                     three of xorps/xorpd/pxor as a
+                                     plain 128-bit XOR)
+    ret                              return %xmm0
+
+AFTER (canon16_units_go.json, status: converged, canon16_text,
+PROVED_EQUAL):
+    unit: go/op_10   source: op_units, canon16_xmm.py
+    movabs $-9223372036854775808,%rax   %rax = 0x8000000000000000
+    movq %rax,%xmm2                       %xmm2 = %rax  (GP->XMM,
+                                             64-bit)
+    xorpd %xmm2,%xmm0                       %xmm0 = %xmm0 ^ %xmm2
+    ret                                        return %xmm0
+
+    A DEFECT FOUND AND FIXED BUILDING THIS: an early version of
+    canon16.py's own gate picked which sign-mask CONSTANT to
+    substitute for a `(%rip)` memory operand by READING THE MNEMONIC
+    (xorps -> the float mask, xorpd/movsd -> the double mask). That is
+    WRONG -- measured directly, c/op_16 (a DOUBLE negate): real ship
+    code uses `xorps` (the single-precision-NAMED instruction) for the
+    double case too, because xorps/xorpd/pxor are bitwise IDENTICAL
+    128-bit XORs and gcc picks the shortest encoding regardless of the
+    operand's true type. THE FIX: the gate's own mask choice (and the
+    XOR's own OBSERVED width) is keyed on the UNIT's own recorded
+    `lhs_rep` (f32/f64, already-trusted evidence this pipeline has
+    carried since canon4), never on which mnemonic spelling real ship
+    code happened to pick. Reported here per the evidence doctrine --
+    a wrong turn caught and undone, not just the final answer.
+
+----------------------------------------------------------------------------------------------------
+MEASURED COUNTS (canon16_units_<lang>.json's own `job3_xmm_tally`,
+evidence class: forced by construction / gate-proved):
+
+    c:      2 attempted, 2 accepted, 0 refused
+    cpp:    2 attempted, 2 accepted, 0 refused
+    go:     2 attempted, 2 accepted, 0 refused
+    rust:   2 attempted, 2 accepted, 0 refused
+    swift:  2 attempted, 2 accepted, 0 refused
+    TOTAL: 10 attempted, 10 accepted, 0 refused
+
+    ALL 10 genuine float-negate-via-sign-mask units (the whole target
+    stage3_vector_constants_report.txt named) converged.
+
+    converged before (canon15):  1021
+    converged after (canon16):   1031  (+10)
+
+    zero-regression check: every unit already `converged` in
+    canon15_units_<lang>.json keeps BYTE-IDENTICAL newest-generation
+    text in canon16_units_<lang>.json -- 0 differences, all 5
+    languages, checked programmatically.
+
+----------------------------------------------------------------------------------------------------
+HONEST REMAINDER -- what JOB 3 does NOT close:
+
+  - Stage 3's OTHER 70 "XorV128"-adjacent units (float COMPARISON-
+    driven, `!=`/`==`/`||`/`&&` on float operands -- stage3_vector_
+    constants_report.txt's own finding that these are mis-filed under
+    this bucket by VEX-op-name proximity, their real blocker is a
+    packed-float COMPARE producing a mask, Stage 5(b)'s own scope).
+    NOT attempted this lap -- out of JOB 3's own stated 10-unit target.
+  - Stage 5(a)/(b) (float condition codes and packed/scalar float
+    ARITHMETIC, ~440 units combined) still need the SAME XMM register
+    plumbing this file adds, PLUS z3's FPA theory for the actual
+    arithmetic/NaN semantics -- this file's own `canon16_xmm.py`
+    deliberately does not attempt to generalize beyond the fixed
+    sign-mask-negate shape (a general float ALU is Stage 5(b)'s own,
+    larger, separately-diagnosed scope; see stage5_float_conditions_
+    diagnosis.txt for why that is a multi-session undertaking, not a
+    same-lap add-on).
+  - `Sim16` (canon16.py) is a NEW, narrowly-scoped simulator, not an
+    extension of the Sim7-10 lineage every other gate in this line
+    reuses -- it has not been separately cross-checked the way that
+    lineage's own header cites (angr-proved condition tables, etc.).
+    Its own semantics (GP-immediate load, movd/movq GP->XMM, xorps/
+    xorpd/pxor as bit-identical 128-bit XOR, movss/movsd memory load
+    zero-extending per the Intel SDM) were checked against this
+    corpus's own real disassembly for exactly the two mnemonic/width
+    mismatches this file's worked examples name, and no others were
+    found in the 10-unit target -- but a wider XMM population would
+    need Sim16's own coverage widened and re-justified before being
+    trusted the way the GP lineage already is.

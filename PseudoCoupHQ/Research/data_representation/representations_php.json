@@ -1,0 +1,99 @@
+{
+  "language": "php",
+  "layer": 2,
+  "purpose": "The ways a running php program can HOLD layer-1 content. Not layer 1 (the data is fixed), not layer 3 (no operations beyond load-and-read-back), not the type system.",
+  "reference": "language knowledge, checked against ../type_vocabulary/raw/php.types.json as a candidate checklist only (superseded node; not a decision instrument).",
+  "probe_style": "cell",
+  "spell": {
+    "nothing": {"null": "null"},
+    "truth": {"true": "true", "false": "false"},
+    "whole": {
+      "base_zero": "0",
+      "base_42": "42",
+      "i64max": "9223372036854775807",
+      "i64max_plus1": "9223372036854775808",
+      "p53_plus1": "9007199254740993",
+      "u64max": "18446744073709551615"
+    },
+    "fractional": {
+      "base_1_5": "1.5",
+      "base_pi": "3.141592653589793",
+      "negzero": "-0.0",
+      "nan": "NAN",
+      "inf": "INF",
+      "point1": "0.1"
+    },
+    "text": {
+      "base_empty": "\"\"",
+      "base_hello": "\"hello\"",
+      "base_lines": "\"line one\\nline two\"",
+      "eacute": "\"\\u{00e9}\"",
+      "clef": "\"\\u{1D11E}\"",
+      "escapes": "\"quote \\\" backslash \\\\ tab\\there\""
+    }
+  },
+  "forms": {
+    "nothing": [
+      {"rep": "null", "spelling": "null", "kind": "literal", "note": "the one absent value; php's type system treats it as compatible with any type.", "decl": "$v = {V};", "read": "var_export($v, true)"}
+    ],
+    "truth": [
+      {"rep": "bool", "spelling": "true / false", "kind": "literal", "note": "two values.", "decl": "$v = {V};", "read": "var_export($v, true)"}
+    ],
+    "whole": [
+      {"rep": "int", "spelling": "42", "kind": "literal", "note": "64-bit signed machine integer; a literal past PHP_INT_MAX silently becomes a float, no overflow error at all.", "decl": "$v = {V};", "read": "is_int($v) ? (string)$v : \"float:\" . $v"},
+      {"rep": "GMP (ext-gmp)", "spelling": "gmp_init(\"42\")", "kind": "constructor", "pre": "// requires ext-gmp", "note": "arbitrary-precision integer built from a digit string, so no float ever forms even past int range.", "decl": "$v = gmp_init(\"{V}\");", "read": "gmp_strval($v)"},
+      {"rep": "BCMath string-carried number (ext-bcmath)", "spelling": "\"42\" plus bcmath functions", "kind": "constructor", "pre": "// requires ext-bcmath", "note": "a decimal digit string that never becomes a machine int or float; bcmath functions operate on the string directly.", "decl": "$v = \"{V}\";", "read": "bcadd($v, \"0\")"}
+    ],
+    "fractional": [
+      {"rep": "float", "spelling": "1.5", "kind": "literal", "note": "IEEE double; php's only fractional holder.", "decl": "$v = {V};", "read": "var_export($v, true)"}
+    ],
+    "text": [
+      {"rep": "string", "spelling": "\"hello\"", "kind": "literal", "note": "a byte string; php strings are runs of bytes, not codepoints, and the default text holder.", "decl": "$v = {V};", "read": "$v"},
+      {"rep": "array of bytes", "spelling": "array_map('ord', str_split(\"hello\"))", "kind": "constructor", "note": "the byte run pulled apart into one integer per byte; a multi-byte utf-8 character never gets one array slot.", "decl": "$v = array_map('ord', str_split({V}));", "read": "implode('', array_map('chr', $v))"},
+      {"rep": "array of codepoints (mbstring)", "spelling": "array_map('mb_ord', mb_str_split(\"hello\"))", "kind": "constructor", "pre": "// requires ext-mbstring", "note": "text pulled apart into one unicode codepoint integer per character, distinct from the raw-byte holder above.", "decl": "$v = array_map(function ($c) { return mb_ord($c, 'UTF-8'); }, mb_str_split({V}, 1, 'UTF-8'));", "read": "implode('', array_map(function ($cp) { return mb_chr($cp, 'UTF-8'); }, $v))"}
+    ],
+    "sequence": [
+      {"rep": "array (list-shaped)", "spelling": "[1, 2, 3]", "kind": "literal", "note": "ordered, growable, any element; php has one array type serving both list and map shapes.", "read": "var_export(array_values($v), true)",
+       "probes": {"empty": "$v = [];", "base": "$v = [1, 2, 3];", "strs": "$v = [\"a\", \"b\"];", "mixed": "$v = [1, \"two\", 3.0, true, null];", "bigint": "$v = [9223372036854775808];"}},
+      {"rep": "SplFixedArray", "spelling": "SplFixedArray::fromArray([1, 2, 3])", "kind": "constructor", "note": "fixed length declared up front, one slot per index.", "read": "var_export($v->toArray(), true)",
+       "probes": {"empty": "$v = new SplFixedArray(0);", "base": "$v = SplFixedArray::fromArray([1, 2, 3]);", "strs": "$v = SplFixedArray::fromArray([\"a\", \"b\"]);", "mixed": "$v = SplFixedArray::fromArray([1, \"two\", 3.0, true, null]);", "bigint": "$v = SplFixedArray::fromArray([9223372036854775808]);"}},
+      {"rep": "ArrayObject", "spelling": "new ArrayObject([1, 2, 3])", "kind": "constructor", "note": "an object wrapper around an array, iterable and countable like the array it holds.", "read": "var_export($v->getArrayCopy(), true)",
+       "probes": {"empty": "$v = new ArrayObject([]);", "base": "$v = new ArrayObject([1, 2, 3]);", "strs": "$v = new ArrayObject([\"a\", \"b\"]);", "mixed": "$v = new ArrayObject([1, \"two\", 3.0, true, null]);", "bigint": "$v = new ArrayObject([9223372036854775808]);"}},
+      {"rep": "SplDoublyLinkedList", "spelling": "(new SplDoublyLinkedList())->push(...)", "kind": "constructor", "note": "ordered run open at both ends, built one push at a time.", "read": "var_export(iterator_to_array($v), true)",
+       "probes": {"empty": "$v = new SplDoublyLinkedList();", "base": "$v = new SplDoublyLinkedList();\n$v->push(1);\n$v->push(2);\n$v->push(3);", "strs": "$v = new SplDoublyLinkedList();\n$v->push(\"a\");\n$v->push(\"b\");", "mixed": "$v = new SplDoublyLinkedList();\n$v->push(1);\n$v->push(\"two\");\n$v->push(3.0);\n$v->push(true);\n$v->push(null);", "bigint": "$v = new SplDoublyLinkedList();\n$v->push(9223372036854775808);"}}
+    ],
+    "keyed": [
+      {"rep": "array (associative)", "spelling": "[\"a\" => 1]", "kind": "literal", "note": "name to element, insertion order kept; a numeric-string key like \"1\" is silently coerced to the integer key 1, which is the finding in the intlike probe.", "read": "var_export($v, true)",
+       "probes": {"empty": "$v = [];", "flat": "$v = [\"a\" => 1, \"b\" => 2, \"c\" => 3];", "intlike": "$v = [\"1\" => \"string-one-key\", \"b\" => 2];", "emptykey": "$v = [\"\" => \"empty-string key\"];", "nested": "$v = [\"outer\" => [\"inner\" => [1, 2]]];"}},
+      {"rep": "stdClass object", "spelling": "(object)[\"a\" => 1]", "kind": "constructor", "note": "names as dynamic properties; a numeric-string or empty name is not a legal bare property name and needs brace access.", "read": "var_export((array)$v, true)",
+       "probes": {"empty": "$v = new stdClass();", "flat": "$v = new stdClass();\n$v->a = 1;\n$v->b = 2;\n$v->c = 3;", "intlike": "$v = new stdClass();\n$v->{\"1\"} = \"string-one-key\";\n$v->b = 2;", "emptykey": "$v = new stdClass();\n$v->{\"\"} = \"empty-string key\";", "nested": "$v = new stdClass();\n$v->outer = [\"inner\" => [1, 2]];"}},
+      {"rep": "ArrayObject", "spelling": "new ArrayObject([\"a\" => 1])", "kind": "constructor", "note": "the same array-wrapper holder listed under sequence, keyed here instead of listed by position.", "read": "var_export($v->getArrayCopy(), true)",
+       "probes": {"empty": "$v = new ArrayObject([]);", "flat": "$v = new ArrayObject([\"a\" => 1, \"b\" => 2, \"c\" => 3]);", "intlike": "$v = new ArrayObject([\"1\" => \"string-one-key\", \"b\" => 2]);", "emptykey": "$v = new ArrayObject([\"\" => \"empty-string key\"]);", "nested": "$v = new ArrayObject([\"outer\" => [\"inner\" => [1, 2]]]);"}},
+      {"rep": "declared class", "spelling": "class R { public $a; }", "kind": "constructor", "note": "fixed set of names decided when the class is declared; the odd keys are not spellable as declared property names, so they arrive as undeclared dynamic properties instead.", "read": "var_export(get_object_vars($v), true)",
+       "probes": {"empty": "class R0 {}\n$v = new R0();", "flat": "class R3 { public $a; public $b; public $c; }\n$v = new R3();\n$v->a = 1;\n$v->b = 2;\n$v->c = 3;", "intlike": "class RI { public $b; }\n$v = new RI();\n$v->{\"1\"} = \"string-one-key\";\n$v->b = 2;", "emptykey": "class RE {}\n$v = new RE();\n$v->{\"\"} = \"empty-string key\";", "nested": "class RN { public $outer; }\n$v = new RN();\n$v->outer = [\"inner\" => [1, 2]];"}}
+    ],
+    "nesting": [
+      {"rep": "array (nested)", "spelling": "[[1, 2], [3, 4]]", "kind": "literal", "note": "elements may be any of the forms, to any depth; the one array type serves every level.", "read": "var_export($v, true)",
+       "probes": {"seq_in_seq": "$v = [[1, 2], [3, 4]];", "seq_in_map": "$v = [\"outer\" => [\"inner\" => [1, 2]]];", "mixed_depth": "$v = [1, [2, [\"k\" => [3, null, \"t\"]]], true];"}},
+      {"rep": "ArrayObject (nested)", "spelling": "new ArrayObject([\"outer\" => new ArrayObject([\"inner\" => [1, 2]])])", "kind": "constructor", "note": "the same wrapper holder nested inside itself; each level is its own object rather than a plain array slot.", "read": "var_export($v->getArrayCopy(), true)",
+       "probes": {"seq_in_seq": "$v = new ArrayObject([new ArrayObject([1, 2]), new ArrayObject([3, 4])]);", "seq_in_map": "$v = new ArrayObject([\"outer\" => new ArrayObject([\"inner\" => [1, 2]])]);", "mixed_depth": "$v = new ArrayObject([1, new ArrayObject([2, [\"k\" => [3, null, \"t\"]]]), true]);"}}
+    ],
+    "identity": [
+      {"rep": "array holder (value semantics)", "spelling": "$s = [1, 2, 3]; $v = [$s, $s]", "kind": "literal", "note": "php arrays are values; assignment and array-literal placement copy (copy-on-write), so two positions never share one array.", "read": "$r",
+       "probes": {
+         "shared": "$s = [1, 2, 3];\n$v = [$s, $s];\n$v[0][] = 99;\n$r = (count($v[1]) === 4) ? \"shared\" : \"copied\";",
+         "diamond": "$t = [\"payload\" => 7];\n$v = [$t, $t];\n$r = \"distinct\"; // arrays are values in php; there is no object identity between two array copies",
+         "cycle": "$v = [\"name\" => \"loop\"];\n$v[\"self\"] = &$v;\n$r = (is_array($v[\"self\"]) && array_key_exists(\"self\", $v[\"self\"])) ? \"cycle\" : \"no-cycle\";"}},
+      {"rep": "object holder (reference semantics)", "spelling": "$s = (object)[...]; $v = [$s, $s]", "kind": "literal", "note": "php objects are always references; two positions holding the same object share it, the direct contrast to the array holder above.", "read": "$r",
+       "probes": {
+         "shared": "$s = (object)[\"items\" => [1, 2, 3]];\n$v = [$s, $s];\n$v[0]->items[] = 99;\n$r = (count($v[1]->items) === 4 && $v[0] === $v[1]) ? \"shared\" : \"copied\";",
+         "diamond": "$t = (object)[\"payload\" => 7];\n$v = [$t, $t];\n$r = ($v[0] === $v[1]) ? \"same\" : \"distinct\";",
+         "cycle": "$v = new stdClass();\n$v->name = \"loop\";\n$v->self = $v;\n$r = ($v->self === $v) ? \"cycle\" : \"no-cycle\";"}},
+      {"rep": "ArrayObject holder", "spelling": "$s = new ArrayObject([1, 2, 3]); $v = [$s, $s]", "kind": "constructor", "note": "an object wrapper around an array payload; sharing follows object reference rules even though the payload looks like an array.", "read": "$r",
+       "probes": {
+         "shared": "$s = new ArrayObject([1, 2, 3]);\n$v = [$s, $s];\n$v[0]->append(99);\n$r = ($v[1]->count() === 4 && $v[0] === $v[1]) ? \"shared\" : \"copied\";",
+         "diamond": "$t = new ArrayObject([\"payload\" => 7]);\n$v = [$t, $t];\n$r = ($v[0] === $v[1]) ? \"same\" : \"distinct\";",
+         "cycle": "$v = new ArrayObject([]);\n$v->offsetSet(\"self\", $v);\n$r = ($v->offsetGet(\"self\") === $v) ? \"cycle\" : \"no-cycle\";"}}
+    ]
+  }
+}

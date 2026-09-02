@@ -1,0 +1,155 @@
+# acceptance query, lap two.  Map graph_go2.json built by resolve_dots.py
+# on top of graph_go.json; graph_go.json itself is untouched.
+#
+# The second resolution step, in numbers:
+#   lap-one frontier records with the reason
+#     "field or method selector; no type information in lap one"   19447
+#   plus lap-one frontier records "name not in file scope or package"  769
+#     -- 19447 + 769 = 20216, the figure carried in CORE 0_3_5
+#   selector frontier records CLOSED by the declared-type rule        8424
+#   selector frontier records that STAY, reason unchanged           11023
+#   the 769 name-not-in-scope records are not selectors; untouched
+#
+#   selectors crossed anywhere in the region                        12730
+#   selectors the rule refused                                      29489
+#   named types declared in the region                                197
+#   struct field nodes added to the map                               748
+#   methods indexed by receiver type                                  803
+#   resolves_to/field_via_declared_type + /method_via_declared_type edges added 12730
+#   calls/method_via_declared_type edges added                       4637
+#   map: nodes 182935 -> 175259, edges 234312 -> 242592,
+#        frontier records 34996 -> 26572
+#
+# READ LEG 2c WITH CARE.  It walks flows_into and resolves_to BACKWARDS as
+# well as forwards, so several of its hops mean "this same declaration is
+# also read over here", not "this value moves to there".  It shows that the
+# new dot edges do join the abi region to internal/amd64; it is NOT by
+# itself a dataflow proof that af's parameter becomes that operand.  Legs 2
+# and 2b, which walk calls and dataflow forwards only, still find NO PATH.
+
+# leg 1 (regression): parameter-list iteration in abi.ABIAnalyzeFuncType -> allocateRegs
+# graph: graph_go2.json
+START:
+  src/cmd/compile/internal/abi/abiutils.go:362 local_var          param
+GOAL: name~'allocateRegs' kind='method' file~None
+visited 88 nodes
+
+PATH (8 hops):
+  [0] src/cmd/compile/internal/abi/abiutils.go:362 local_var          param
+       --resolves_to (reversed)-->
+  [1] src/cmd/compile/internal/abi/abiutils.go:367 ref                param
+       --flows_into/selector_base-->
+  [2] src/cmd/compile/internal/abi/abiutils.go:367 ref                param.Type
+       --flows_into/argument-->
+  [3] src/cmd/compile/internal/abi/abiutils.go:367 call               s.assignParam
+       --calls/indirect-->
+  [4] src/cmd/compile/internal/abi/abiutils.go:603 method             assignParam
+       --contains-->
+  [5] src/cmd/compile/internal/abi/abiutils.go:604 call               state.tryAllocRegs
+       --calls/indirect-->
+  [6] src/cmd/compile/internal/abi/abiutils.go:623 method             tryAllocRegs
+       --contains-->
+  [7] src/cmd/compile/internal/abi/abiutils.go:634 call               state.allocateRegs
+       --calls/indirect-->
+  [8] src/cmd/compile/internal/abi/abiutils.go:514 method             allocateRegs
+
+(this leg's json is one entry of acceptance_query2.json)
+
+# leg 2 (lap-one settings repeated): same start, goal = any method in internal/amd64
+# graph: graph_go2.json
+START:
+  src/cmd/compile/internal/abi/abiutils.go:362 local_var          param
+GOAL: name~None kind='method' file~'internal/amd64/'
+visited 391 nodes
+
+NO PATH. Every branch died. Terminal nodes reached: 6
+  call                        5   e.g. src/cmd/compile/internal/abi/abiutils.go:617 int32 | src/cmd/compile/internal/abi/abiutils.go:629 int | src/cmd/compile/internal/abi/abiutils.go:629 int
+  local_var                   1   e.g. src/cmd/compile/internal/abi/abiutils.go:546 _
+
+(this leg's json is one entry of acceptance_query2.json)
+
+# leg 2b: start at allocateRegs, goal = anything in internal/amd64, lap-one edge settings
+# graph: graph_go2.json
+START:
+  src/cmd/compile/internal/abi/abiutils.go:514 method             allocateRegs
+GOAL: name~None kind=None file~'internal/amd64/'
+visited 226 nodes
+
+NO PATH. Every branch died. Terminal nodes reached: 3
+  call                        2   e.g. src/cmd/compile/internal/abi/abiutils.go:559 panic | src/cmd/compile/internal/abi/abiutils.go:297 int64
+  local_var                   1   e.g. src/cmd/compile/internal/abi/abiutils.go:546 _
+
+(this leg's json is one entry of acceptance_query2.json)
+
+# leg 2c: start at allocateRegs, goal = anything in internal/amd64, flows_into also walked backwards
+# graph: graph_go2.json
+START:
+  src/cmd/compile/internal/abi/abiutils.go:514 method             allocateRegs
+GOAL: name~None kind=None file~'internal/amd64/'
+visited 3921 nodes
+
+PATH (24 hops):
+  [0] src/cmd/compile/internal/abi/abiutils.go:514 method             allocateRegs
+       --contains-->
+  [1] src/cmd/compile/internal/abi/abiutils.go:518 local_var          ri
+       --flows_into/value (reversed)-->
+  [2] src/cmd/compile/internal/abi/abiutils.go:518 ref                state.rUsed.intRegs
+       --resolves_to/field_via_declared_type-->
+  [3] src/cmd/compile/internal/abi/abiutils.go:262 field              intRegs
+       --resolves_to/field_via_declared_type (reversed)-->
+  [4] src/cmd/compile/internal/abi/abiutils.go:462 ref                config.regAmounts.intRegs
+       --flows_into/argument-->
+  [5] src/cmd/compile/internal/abi/abiutils.go:462 call               fmt.Sprintf
+       --flows_into/call_result-->
+  [6] src/cmd/compile/internal/abi/abiutils.go:450 local_var          regs
+       --flows_into/call_result (reversed)-->
+  [7] src/cmd/compile/internal/abi/abiutils.go:456 call               config.regAmounts.regString
+       --flows_into/argument (reversed)-->
+  [8] src/cmd/compile/internal/abi/abiutils.go:456 ref                r
+       --resolves_to-->
+  [9] src/cmd/compile/internal/abi/abiutils.go:455 local_var          r
+       --flows_into/value (reversed)-->
+  [10] src/cmd/compile/internal/abi/abiutils.go:455 ref                ri.Registers
+       --resolves_to/field_via_declared_type-->
+  [11] src/cmd/compile/internal/abi/abiutils.go:102 field              Registers
+       --resolves_to/field_via_declared_type (reversed)-->
+  [12] src/cmd/compile/internal/ssagen/ssa.go:628 ref                paramAssignment.Registers
+       --flows_into/value-->
+  [13] src/cmd/compile/internal/ssagen/ssa.go:628 local_var          r
+       --resolves_to (reversed)-->
+  [14] src/cmd/compile/internal/ssagen/ssa.go:630 ref                r
+       --flows_into/argument-->
+  [15] src/cmd/compile/internal/ssagen/ssa.go:630 call               ssa.ArgOpAndRegisterFor
+       --calls/cross_package_in_region-->
+  [16] src/cmd/compile/internal/ssa/expand_calls.go:876 method             ArgOpAndRegisterFor
+       --resolves_to/method_candidate (reversed)-->
+  [17] src/cmd/compile/internal/ssa/expand_calls.go:647 ref                rc.ArgOpAndRegisterFor
+       --flows_into/selector_base (reversed)-->
+  [18] src/cmd/compile/internal/ssa/expand_calls.go:647 ref                rc
+       --resolves_to-->
+  [19] src/cmd/compile/internal/ssa/expand_calls.go:491 param              rc
+       --resolves_to (reversed)-->
+  [20] src/cmd/compile/internal/ssa/expand_calls.go:651 ref                rc
+       --flows_into/selector_base-->
+  [21] src/cmd/compile/internal/ssa/expand_calls.go:651 ref                rc.storeOffset
+       --flows_into/value-->
+  [22] src/cmd/compile/internal/ssa/expand_calls.go:651 ref                a.Aux
+       --resolves_to/field_via_declared_type-->
+  [23] src/cmd/compile/internal/ssa/value.go:41 field              Aux
+       --resolves_to/field_via_declared_type (reversed)-->
+  [24] src/cmd/compile/internal/amd64/ssa.go:814 ref                v.Aux
+
+(this leg's json is one entry of acceptance_query2.json)
+
+# leg 2c CONTROL on the LAP ONE map: identical query, graph_go.json
+# graph: graph_go.json
+START:
+  src/cmd/compile/internal/abi/abiutils.go:514 method             allocateRegs
+GOAL: name~None kind=None file~'internal/amd64/'
+visited 657 nodes
+
+NO PATH. Every branch died. Terminal nodes reached: 8
+  unresolved_indirect         7   e.g. src/cmd/compile/internal/abi/abiutils.go:580 fname("ptr") | src/cmd/compile/internal/abi/abiutils.go:581 fname("len") | src/cmd/compile/internal/abi/abiutils.go:582 fname("cap")
+  call                        1   e.g. src/cmd/compile/internal/abi/abiutils.go:559 panic
+
+(this leg's json is one entry of acceptance_query2.json)

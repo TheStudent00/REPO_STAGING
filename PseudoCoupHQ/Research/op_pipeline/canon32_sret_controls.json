@@ -1,0 +1,341 @@
+{
+ "meta": {
+  "control_1_negative_mutation": {
+   "applied": 22,
+   "not_applicable": 3,
+   "rejected": 22,
+   "still_proved": 0
+  },
+  "control_2_positive_real_against_real": {
+   "not_proved": 0,
+   "proved": 5,
+   "tested": 5
+  },
+  "control_3_harmless_reorder": {
+   "not_applicable": 0,
+   "not_proved": 0,
+   "proved": 5,
+   "tested": 5
+  },
+  "produced_by": "canon32_sret_controls.py",
+  "role": "generator provenance",
+  "what": "the three controls on the displaced-ABI gate"
+ },
+ "per_unit": {
+  "rust/786": {
+   "mutations": {
+    "drop-write": {
+     "detail": "the two texts write DIFFERENT cells of the answer image: only the real ship code writes [('rdi', 0, 32)], only the candidate writes [] (each cell is base family, byte offset, width in bits)",
+     "text": [
+      "mov %edx,0x4(%rdi)",
+      "movb $0x0,0x8(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "flip-immediate": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x8 width=8: []",
+     "text": [
+      "mov %esi,(%rdi)",
+      "mov %edx,0x4(%rdi)",
+      "movb $0x1,0x8(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "narrow-write": "not applicable",
+    "swap-values": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x0 width=32: [seed_rsi = 4294967295, seed_rdx = 0]",
+     "text": [
+      "mov %edx,(%rdi)",
+      "mov %esi,0x4(%rdi)",
+      "movb $0x0,0x8(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "wrong-exit": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the answer register %rax: [seed_rdi = 18446744073709551615, seed_rsi = 0]",
+     "text": [
+      "mov %esi,(%rdi)",
+      "mov %edx,0x4(%rdi)",
+      "movb $0x0,0x8(%rdi)",
+      "mov %rsi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    }
+   },
+   "real_against_real": "PROVED_EQUAL",
+   "reordered_writes": {
+    "text": [
+     "movb $0x0,0x8(%rdi)",
+     "mov %edx,0x4(%rdi)",
+     "mov %esi,(%rdi)",
+     "mov %rdi,%rax",
+     "ret"
+    ],
+    "verdict": "PROVED_EQUAL"
+   }
+  },
+  "rust/793": {
+   "mutations": {
+    "drop-write": {
+     "detail": "the two texts write DIFFERENT cells of the answer image: only the real ship code writes [('rdi', 0, 64)], only the candidate writes [] (each cell is base family, byte offset, width in bits)",
+     "text": [
+      "mov %rdx,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "flip-immediate": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x10 width=8: []",
+     "text": [
+      "mov %rsi,(%rdi)",
+      "mov %rdx,0x8(%rdi)",
+      "movb $0x1,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "narrow-write": {
+     "detail": "the two texts write DIFFERENT cells of the answer image: only the real ship code writes [('rdi', 0, 64)], only the candidate writes [('rdi', 0, 32)] (each cell is base family, byte offset, width in bits)",
+     "text": [
+      "mov %esi,(%rdi)",
+      "mov %rdx,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "swap-values": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x0 width=64: [seed_rsi = 18446744073709551615, seed_rdx = 0]",
+     "text": [
+      "mov %rdx,(%rdi)",
+      "mov %rsi,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "wrong-exit": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the answer register %rax: [seed_rdi = 18446744073709551615, seed_rsi = 0]",
+     "text": [
+      "mov %rsi,(%rdi)",
+      "mov %rdx,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rsi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    }
+   },
+   "real_against_real": "PROVED_EQUAL",
+   "reordered_writes": {
+    "text": [
+     "movb $0x0,0x10(%rdi)",
+     "mov %rdx,0x8(%rdi)",
+     "mov %rsi,(%rdi)",
+     "mov %rdi,%rax",
+     "ret"
+    ],
+    "verdict": "PROVED_EQUAL"
+   }
+  },
+  "rust/800": {
+   "mutations": {
+    "drop-write": {
+     "detail": "the two texts write DIFFERENT cells of the answer image: only the real ship code writes [('rdi', 0, 64)], only the candidate writes [] (each cell is base family, byte offset, width in bits)",
+     "text": [
+      "mov %rdx,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "flip-immediate": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x10 width=8: []",
+     "text": [
+      "mov %rsi,(%rdi)",
+      "mov %rdx,0x8(%rdi)",
+      "movb $0x1,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "narrow-write": {
+     "detail": "the two texts write DIFFERENT cells of the answer image: only the real ship code writes [('rdi', 0, 64)], only the candidate writes [('rdi', 0, 32)] (each cell is base family, byte offset, width in bits)",
+     "text": [
+      "mov %esi,(%rdi)",
+      "mov %rdx,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "swap-values": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x0 width=64: [seed_rsi = 18446744073709551615, seed_rdx = 0]",
+     "text": [
+      "mov %rdx,(%rdi)",
+      "mov %rsi,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "wrong-exit": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the answer register %rax: [seed_rdi = 18446744073709551615, seed_rsi = 0]",
+     "text": [
+      "mov %rsi,(%rdi)",
+      "mov %rdx,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rsi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    }
+   },
+   "real_against_real": "PROVED_EQUAL",
+   "reordered_writes": {
+    "text": [
+     "movb $0x0,0x10(%rdi)",
+     "mov %rdx,0x8(%rdi)",
+     "mov %rsi,(%rdi)",
+     "mov %rdi,%rax",
+     "ret"
+    ],
+    "verdict": "PROVED_EQUAL"
+   }
+  },
+  "rust/807": {
+   "mutations": {
+    "drop-write": {
+     "detail": "the two texts write DIFFERENT cells of the answer image: only the real ship code writes [('rdi', 0, 32)], only the candidate writes [] (each cell is base family, byte offset, width in bits)",
+     "text": [
+      "movss %xmm1,0x4(%rdi)",
+      "movb $0x0,0x8(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "flip-immediate": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x8 width=8: []",
+     "text": [
+      "movss %xmm0,(%rdi)",
+      "movss %xmm1,0x4(%rdi)",
+      "movb $0x1,0x8(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "narrow-write": "not applicable",
+    "swap-values": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x0 width=32: [seed_xmm0 = 4294967295, seed_xmm1 = 0]",
+     "text": [
+      "movss %xmm1,(%rdi)",
+      "movss %xmm0,0x4(%rdi)",
+      "movb $0x0,0x8(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "wrong-exit": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the answer register %rax: [seed_rdi = 18446744073709551615, seed_rsi = 0]",
+     "text": [
+      "movss %xmm0,(%rdi)",
+      "movss %xmm1,0x4(%rdi)",
+      "movb $0x0,0x8(%rdi)",
+      "mov %rsi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    }
+   },
+   "real_against_real": "PROVED_EQUAL",
+   "reordered_writes": {
+    "text": [
+     "movb $0x0,0x8(%rdi)",
+     "movss %xmm1,0x4(%rdi)",
+     "movss %xmm0,(%rdi)",
+     "mov %rdi,%rax",
+     "ret"
+    ],
+    "verdict": "PROVED_EQUAL"
+   }
+  },
+  "rust/814": {
+   "mutations": {
+    "drop-write": {
+     "detail": "the two texts write DIFFERENT cells of the answer image: only the real ship code writes [('rdi', 0, 64)], only the candidate writes [] (each cell is base family, byte offset, width in bits)",
+     "text": [
+      "movsd %xmm1,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "flip-immediate": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x10 width=8: []",
+     "text": [
+      "movsd %xmm0,(%rdi)",
+      "movsd %xmm1,0x8(%rdi)",
+      "movb $0x1,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "narrow-write": "not applicable",
+    "swap-values": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the image cell base=%rdi offset=0x0 width=64: [seed_xmm0 = 18446744073709551615, seed_xmm1 = 0]",
+     "text": [
+      "movsd %xmm1,(%rdi)",
+      "movsd %xmm0,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rdi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    },
+    "wrong-exit": {
+     "detail": "z3 found a counterexample under which the candidate and the unit's own real ship code disagree in the answer register %rax: [seed_rdi = 18446744073709551615, seed_rsi = 0]",
+     "text": [
+      "movsd %xmm0,(%rdi)",
+      "movsd %xmm1,0x8(%rdi)",
+      "movb $0x0,0x10(%rdi)",
+      "mov %rsi,%rax",
+      "ret"
+     ],
+     "verdict": "DISPROVED"
+    }
+   },
+   "real_against_real": "PROVED_EQUAL",
+   "reordered_writes": {
+    "text": [
+     "movb $0x0,0x10(%rdi)",
+     "movsd %xmm1,0x8(%rdi)",
+     "movsd %xmm0,(%rdi)",
+     "mov %rdi,%rax",
+     "ret"
+    ],
+    "verdict": "PROVED_EQUAL"
+   }
+  }
+ }
+}

@@ -1,0 +1,30 @@
+// list probe bodies - go (slices: a WINDOW onto a shared backing array).
+// A small insertion sort lives here rather than an import of "sort", so the
+// runner template's import list stays exactly as the calibration run left it.
+func mkl() []int { return []int{1, 2, 3} }
+func joinInts(v []int) string {
+	out := ""
+	for i, x := range v {
+		if i > 0 {
+			out += ","
+		}
+		out += strconv.Itoa(x)
+	}
+	return out
+}
+func sortInts(v []int) {
+	for i := 1; i < len(v); i++ {
+		for j := i; j > 0 && v[j-1] > v[j]; j-- {
+			v[j-1], v[j] = v[j], v[j-1]
+		}
+	}
+}
+func f_listU1_a() string { a := []int{1, 2}; a = append(a, 3); return joinInts(a) }
+func f_listU2_a() string { return strconv.Itoa(mkl()[1]) }
+func f_listU3_a() string { o := []int{}; for _, x := range mkl() { o = append(o, x) }; return joinInts(o) }
+func f_listU4_a() string { return strconv.Itoa(len(mkl())) }
+func f_Fl3_a() string    { a := []int{1, 2}; a = append(a, 3); a = append(a, 4); return strconv.Itoa(len(a)) }
+func f_Fl4_a() string    { return strconv.Itoa(mkl()[10]) }
+func f_Fl6_a() string    { a := mkl(); s := a[0:2]; s[0] = 99; return strconv.Itoa(a[0]) }
+func f_Fl8_a() string    { a := []int{10, 9, 1}; sortInts(a); return joinInts(a) }
+func f_Fl9_a() string    { a := mkl(); b := a; b[0] = 99; return strconv.Itoa(a[0]) }

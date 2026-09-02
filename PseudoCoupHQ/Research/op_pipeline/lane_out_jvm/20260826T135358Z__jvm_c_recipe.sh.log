@@ -1,0 +1,57 @@
+# script: /drop/jvm_c_recipe.sh
+# started: 2026-08-26T13:53:58+00:00
+# timeout: 3600s
+# work free before: 3824 MB
+------------------------------------------------------------
+=== jvm_c_recipe ===
+2026-08-26T13:53:58Z
+
+### fine sweep, -XX:-TieredCompilation (C2 only), 3 reps each ###
+n=5000 rep=1 wall=0.029s af=0 af2=0
+n=5000 rep=2 wall=0.025s af=0 af2=0
+n=5000 rep=3 wall=0.028s af=0 af2=0
+n=6000 rep=1 wall=0.026s af=0 af2=0
+n=6000 rep=2 wall=0.026s af=0 af2=0
+n=6000 rep=3 wall=0.025s af=0 af2=0
+n=7000 rep=1 wall=0.026s af=1 af2=0
+n=7000 rep=2 wall=0.027s af=1 af2=1
+n=7000 rep=3 wall=0.025s af=1 af2=1
+n=8000 rep=1 wall=0.025s af=1 af2=1
+n=8000 rep=2 wall=0.026s af=1 af2=1
+n=8000 rep=3 wall=0.026s af=1 af2=1
+n=9000 rep=1 wall=0.024s af=1 af2=1
+n=9000 rep=2 wall=0.028s af=1 af2=1
+n=9000 rep=3 wall=0.029s af=1 af2=1
+n=9500 rep=1 wall=0.026s af=1 af2=1
+n=9500 rep=2 wall=0.033s af=1 af2=1
+n=9500 rep=3 wall=0.029s af=1 af2=1
+n=10000 rep=1 wall=0.025s af=1 af2=1
+n=10000 rep=2 wall=0.027s af=1 af2=1
+n=10000 rep=3 wall=0.027s af=1 af2=1
+n=11000 rep=1 wall=0.028s af=1 af2=1
+n=11000 rep=2 wall=0.029s af=1 af2=1
+n=11000 rep=3 wall=0.032s af=1 af2=1
+n=12000 rep=1 wall=0.027s af=1 af2=1
+n=12000 rep=2 wall=0.029s af=1 af2=1
+n=12000 rep=3 wall=0.026s af=1 af2=1
+
+### same sweep, DEFAULT tiers (for contrast) ###
+n=200  af_at_tier3=0  af_at_tier4=0
+n=500  af_at_tier3=1  af_at_tier4=0
+n=1000  af_at_tier3=1  af_at_tier4=0
+n=2000  af_at_tier3=1  af_at_tier4=0
+n=5000  af_at_tier3=2  af_at_tier4=1
+n=10000  af_at_tier3=2  af_at_tier4=1
+
+### total cost of the whole JVM pilot, measured here ###
+one C2-only warmed run, timed 5x:
+  rep1 0.028s
+  rep2 0.026s
+  rep3 0.025s
+  rep4 0.025s
+  rep5 0.026s
+=== jvm_c_recipe done ===
+2026-08-26T13:53:59Z
+------------------------------------------------------------
+# exit 0 in 1.6s
+# work free after: 3824 MB (consumed 0 MB)

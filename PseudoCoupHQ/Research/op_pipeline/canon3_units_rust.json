@@ -1,0 +1,6564 @@
+{
+ "language": "rust",
+ "meta": {
+  "role": "generator provenance",
+  "form": "canon3: total canonical coverage (branching per-block runnable derivation, temps-exhausted stack spill, honest per-path join blocks)",
+  "spelling": "the operator token appears once per unit, as the display label `operator` on a unit object",
+  "generator": "canon3.py",
+  "generated_at": "2026-08-27T20:04:06Z"
+ },
+ "units_read": 125,
+ "canonical_text_ok": 114,
+ "still_refused": 11,
+ "still_refused_reasons": {
+  "erasure_refused: erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice": 4,
+  "assemble_failed: /sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.s: Assembler messages:\n/sessions/fervent-trusting-darwin/tmp": 2,
+  "erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it": 3,
+  "erasure_refused: the answer value never entered a tracked register (a passthrough this builder does not model)": 2
+ },
+ "units": {
+  "0": {
+   "lang": "rust",
+   "n": "0",
+   "unit": "rust/op_0",
+   "operator": "-",
+   "meta": {
+    "n": 0,
+    "operator": "-",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "-a",
+    "result_type": "<i32 as core::ops::Neg>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_0",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "neg %eax",
+    "ret"
+   ],
+   "bytes": "89 f8 f7 d8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = neg(a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "neg %eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; neg %eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tneg    %eax\n   4:\tret    \n",
+    "bytes": "89 f8 f7 d8 c3"
+   }
+  },
+  "1": {
+   "lang": "rust",
+   "n": "1",
+   "unit": "rust/op_1",
+   "operator": "-",
+   "meta": {
+    "n": 1,
+    "operator": "-",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "-a",
+    "result_type": "<i64 as core::ops::Neg>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_1",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "neg %rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 f7 d8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = neg(a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "neg %rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; neg %rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tneg    %rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 f7 d8 c3"
+   }
+  },
+  "3": {
+   "lang": "rust",
+   "n": "3",
+   "unit": "rust/op_3",
+   "operator": "-",
+   "meta": {
+    "n": 3,
+    "operator": "-",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "-a",
+    "result_type": "<f32 as core::ops::Neg>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_3",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "xorps 0x0(%rip),%xmm0 !!reloc=R_X86_64_PC32:.LCPI0_0-0x4",
+    "ret"
+   ],
+   "bytes": "0f 57 05 00 00 00 00 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = xorps(k0,a)"
+   ],
+   "derived_text": [
+    "xorps 0x0(%rip),%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "xorps 0x0(%rip),%xmm0; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\txorps  0x0(%rip),%xmm0        # 7 <op_unit+0x7>\n   7:\tret    \n",
+    "bytes": "0f 57 05 00 00 00 00 c3"
+   }
+  },
+  "4": {
+   "lang": "rust",
+   "n": "4",
+   "unit": "rust/op_4",
+   "operator": "-",
+   "meta": {
+    "n": 4,
+    "operator": "-",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "-a",
+    "result_type": "<f64 as core::ops::Neg>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_4",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "xorps 0x0(%rip),%xmm0 !!reloc=R_X86_64_PC32:.LCPI0_0-0x4",
+    "ret"
+   ],
+   "bytes": "0f 57 05 00 00 00 00 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = xorps(k0,a)"
+   ],
+   "derived_text": [
+    "xorps 0x0(%rip),%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "xorps 0x0(%rip),%xmm0; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\txorps  0x0(%rip),%xmm0        # 7 <op_unit+0x7>\n   7:\tret    \n",
+    "bytes": "0f 57 05 00 00 00 00 c3"
+   }
+  },
+  "12": {
+   "lang": "rust",
+   "n": "12",
+   "unit": "rust/op_12",
+   "operator": "!",
+   "meta": {
+    "n": 12,
+    "operator": "!",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "!a",
+    "result_type": "<i32 as core::ops::Not>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_12",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "not %eax",
+    "ret"
+   ],
+   "bytes": "89 f8 f7 d0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = not(a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "not %eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; not %eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tnot    %eax\n   4:\tret    \n",
+    "bytes": "89 f8 f7 d0 c3"
+   }
+  },
+  "13": {
+   "lang": "rust",
+   "n": "13",
+   "unit": "rust/op_13",
+   "operator": "!",
+   "meta": {
+    "n": 13,
+    "operator": "!",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "!a",
+    "result_type": "<i64 as core::ops::Not>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_13",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "not %rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 f7 d0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = not(a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "not %rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; not %rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tnot    %rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 f7 d0 c3"
+   }
+  },
+  "14": {
+   "lang": "rust",
+   "n": "14",
+   "unit": "rust/op_14",
+   "operator": "!",
+   "meta": {
+    "n": 14,
+    "operator": "!",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "!a",
+    "result_type": "<u64 as core::ops::Not>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_14",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "not %rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 f7 d0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = not(a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "not %rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; not %rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tnot    %rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 f7 d0 c3"
+   }
+  },
+  "17": {
+   "lang": "rust",
+   "n": "17",
+   "unit": "rust/op_17",
+   "operator": "!",
+   "meta": {
+    "n": 17,
+    "operator": "!",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "!a",
+    "result_type": "<bool as core::ops::Not>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_17",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "xor $0x1,%al",
+    "ret"
+   ],
+   "bytes": "89 f8 34 01 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = xor(_,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "xor $0x1,%al",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; xor $0x1,%al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\txor    $0x1,%al\n   4:\tret    \n",
+    "bytes": "89 f8 34 01 c3"
+   }
+  },
+  "36": {
+   "lang": "rust",
+   "n": "36",
+   "unit": "rust/op_36",
+   "operator": "..",
+   "meta": {
+    "n": 36,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<i32>",
+    "result_rule": "range_type",
+    "symbol": "op_36",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "37": {
+   "lang": "rust",
+   "n": "37",
+   "unit": "rust/op_37",
+   "operator": "..",
+   "meta": {
+    "n": 37,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<i64>",
+    "result_rule": "range_type",
+    "symbol": "op_37",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "38": {
+   "lang": "rust",
+   "n": "38",
+   "unit": "rust/op_38",
+   "operator": "..",
+   "meta": {
+    "n": 38,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<u64>",
+    "result_rule": "range_type",
+    "symbol": "op_38",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "39": {
+   "lang": "rust",
+   "n": "39",
+   "unit": "rust/op_39",
+   "operator": "..",
+   "meta": {
+    "n": 39,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<f32>",
+    "result_rule": "range_type",
+    "symbol": "op_39",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ret"
+   ],
+   "bytes": "c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "ret"
+   ],
+   "derived_mnem_joined": "ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tret    \n",
+    "bytes": "c3"
+   }
+  },
+  "40": {
+   "lang": "rust",
+   "n": "40",
+   "unit": "rust/op_40",
+   "operator": "..",
+   "meta": {
+    "n": 40,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<f64>",
+    "result_rule": "range_type",
+    "symbol": "op_40",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ret"
+   ],
+   "bytes": "c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "ret"
+   ],
+   "derived_mnem_joined": "ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tret    \n",
+    "bytes": "c3"
+   }
+  },
+  "41": {
+   "lang": "rust",
+   "n": "41",
+   "unit": "rust/op_41",
+   "operator": "..",
+   "meta": {
+    "n": 41,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<bool>",
+    "result_rule": "range_type",
+    "symbol": "op_41",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "42": {
+   "lang": "rust",
+   "n": "42",
+   "unit": "rust/op_42",
+   "operator": "..=",
+   "meta": {
+    "n": 42,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<i32>",
+    "result_rule": "range_type",
+    "symbol": "op_42",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "43": {
+   "lang": "rust",
+   "n": "43",
+   "unit": "rust/op_43",
+   "operator": "..=",
+   "meta": {
+    "n": 43,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<i64>",
+    "result_rule": "range_type",
+    "symbol": "op_43",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "44": {
+   "lang": "rust",
+   "n": "44",
+   "unit": "rust/op_44",
+   "operator": "..=",
+   "meta": {
+    "n": 44,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<u64>",
+    "result_rule": "range_type",
+    "symbol": "op_44",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "45": {
+   "lang": "rust",
+   "n": "45",
+   "unit": "rust/op_45",
+   "operator": "..=",
+   "meta": {
+    "n": 45,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<f32>",
+    "result_rule": "range_type",
+    "symbol": "op_45",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ret"
+   ],
+   "bytes": "c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "ret"
+   ],
+   "derived_mnem_joined": "ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tret    \n",
+    "bytes": "c3"
+   }
+  },
+  "46": {
+   "lang": "rust",
+   "n": "46",
+   "unit": "rust/op_46",
+   "operator": "..=",
+   "meta": {
+    "n": 46,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<f64>",
+    "result_rule": "range_type",
+    "symbol": "op_46",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ret"
+   ],
+   "bytes": "c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "ret"
+   ],
+   "derived_mnem_joined": "ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tret    \n",
+    "bytes": "c3"
+   }
+  },
+  "47": {
+   "lang": "rust",
+   "n": "47",
+   "unit": "rust/op_47",
+   "operator": "..=",
+   "meta": {
+    "n": 47,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<bool>",
+    "result_rule": "range_type",
+    "symbol": "op_47",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": null,
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "101": {
+   "lang": "rust",
+   "n": "101",
+   "unit": "rust/op_101",
+   "operator": "&&",
+   "meta": {
+    "n": 101,
+    "operator": "&&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a && b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_101",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "and %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 21 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = and(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "and %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; and %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tand    %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 21 f0 c3"
+   }
+  },
+  "137": {
+   "lang": "rust",
+   "n": "137",
+   "unit": "rust/op_137",
+   "operator": "||",
+   "meta": {
+    "n": 137,
+    "operator": "||",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a || b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_137",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "or %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 09 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = or(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "or %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; or %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tor     %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 09 f0 c3"
+   }
+  },
+  "138": {
+   "lang": "rust",
+   "n": "138",
+   "unit": "rust/op_138",
+   "operator": "&",
+   "meta": {
+    "n": 138,
+    "operator": "&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a & b",
+    "result_type": "<i32 as core::ops::BitAnd<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_138",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "and %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 21 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = and(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "and %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; and %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tand    %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 21 f0 c3"
+   }
+  },
+  "145": {
+   "lang": "rust",
+   "n": "145",
+   "unit": "rust/op_145",
+   "operator": "&",
+   "meta": {
+    "n": 145,
+    "operator": "&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a & b",
+    "result_type": "<i64 as core::ops::BitAnd<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_145",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "and %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 21 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = and(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "and %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; and %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tand    %rsi,%rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 21 f0 c3"
+   }
+  },
+  "152": {
+   "lang": "rust",
+   "n": "152",
+   "unit": "rust/op_152",
+   "operator": "&",
+   "meta": {
+    "n": 152,
+    "operator": "&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a & b",
+    "result_type": "<u64 as core::ops::BitAnd<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_152",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "and %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 21 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = and(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "and %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; and %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tand    %rsi,%rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 21 f0 c3"
+   }
+  },
+  "173": {
+   "lang": "rust",
+   "n": "173",
+   "unit": "rust/op_173",
+   "operator": "&",
+   "meta": {
+    "n": 173,
+    "operator": "&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a & b",
+    "result_type": "<bool as core::ops::BitAnd<bool>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_173",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "and %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 21 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = and(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "and %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; and %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tand    %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 21 f0 c3"
+   }
+  },
+  "174": {
+   "lang": "rust",
+   "n": "174",
+   "unit": "rust/op_174",
+   "operator": "|",
+   "meta": {
+    "n": 174,
+    "operator": "|",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a | b",
+    "result_type": "<i32 as core::ops::BitOr<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_174",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "or %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 09 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = or(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "or %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; or %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tor     %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 09 f0 c3"
+   }
+  },
+  "181": {
+   "lang": "rust",
+   "n": "181",
+   "unit": "rust/op_181",
+   "operator": "|",
+   "meta": {
+    "n": 181,
+    "operator": "|",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a | b",
+    "result_type": "<i64 as core::ops::BitOr<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_181",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "or %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 09 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = or(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "or %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; or %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tor     %rsi,%rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 09 f0 c3"
+   }
+  },
+  "188": {
+   "lang": "rust",
+   "n": "188",
+   "unit": "rust/op_188",
+   "operator": "|",
+   "meta": {
+    "n": 188,
+    "operator": "|",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a | b",
+    "result_type": "<u64 as core::ops::BitOr<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_188",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "or %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 09 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = or(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "or %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; or %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tor     %rsi,%rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 09 f0 c3"
+   }
+  },
+  "209": {
+   "lang": "rust",
+   "n": "209",
+   "unit": "rust/op_209",
+   "operator": "|",
+   "meta": {
+    "n": 209,
+    "operator": "|",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a | b",
+    "result_type": "<bool as core::ops::BitOr<bool>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_209",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "or %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 09 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = or(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "or %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; or %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tor     %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 09 f0 c3"
+   }
+  },
+  "210": {
+   "lang": "rust",
+   "n": "210",
+   "unit": "rust/op_210",
+   "operator": "^",
+   "meta": {
+    "n": 210,
+    "operator": "^",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a ^ b",
+    "result_type": "<i32 as core::ops::BitXor<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_210",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "xor %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 31 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = xor(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "xor %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; xor %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\txor    %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 31 f0 c3"
+   }
+  },
+  "217": {
+   "lang": "rust",
+   "n": "217",
+   "unit": "rust/op_217",
+   "operator": "^",
+   "meta": {
+    "n": 217,
+    "operator": "^",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a ^ b",
+    "result_type": "<i64 as core::ops::BitXor<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_217",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "xor %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 31 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = xor(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "xor %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; xor %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\txor    %rsi,%rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 31 f0 c3"
+   }
+  },
+  "224": {
+   "lang": "rust",
+   "n": "224",
+   "unit": "rust/op_224",
+   "operator": "^",
+   "meta": {
+    "n": 224,
+    "operator": "^",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a ^ b",
+    "result_type": "<u64 as core::ops::BitXor<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_224",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "xor %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 31 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = xor(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "xor %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; xor %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\txor    %rsi,%rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 31 f0 c3"
+   }
+  },
+  "245": {
+   "lang": "rust",
+   "n": "245",
+   "unit": "rust/op_245",
+   "operator": "^",
+   "meta": {
+    "n": 245,
+    "operator": "^",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a ^ b",
+    "result_type": "<bool as core::ops::BitXor<bool>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_245",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "xor %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 31 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = xor(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "xor %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; xor %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\txor    %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 31 f0 c3"
+   }
+  },
+  "246": {
+   "lang": "rust",
+   "n": "246",
+   "unit": "rust/op_246",
+   "operator": "==",
+   "meta": {
+    "n": 246,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_246",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %esi,%edi",
+    "sete %al",
+    "ret"
+   ],
+   "bytes": "39 f7 0f 94 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = sete(_)"
+   ],
+   "derived_text": [
+    "cmp %esi,%edi",
+    "sete %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %esi,%edi; sete %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %esi,%edi\n   2:\tsete   %al\n   5:\tret    \n",
+    "bytes": "39 f7 0f 94 c0 c3"
+   }
+  },
+  "253": {
+   "lang": "rust",
+   "n": "253",
+   "unit": "rust/op_253",
+   "operator": "==",
+   "meta": {
+    "n": 253,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_253",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "sete %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 94 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = sete(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "sete %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; sete %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsete   %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 94 c0 c3"
+   }
+  },
+  "260": {
+   "lang": "rust",
+   "n": "260",
+   "unit": "rust/op_260",
+   "operator": "==",
+   "meta": {
+    "n": 260,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_260",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "sete %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 94 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = sete(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "sete %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; sete %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsete   %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 94 c0 c3"
+   }
+  },
+  "267": {
+   "lang": "rust",
+   "n": "267",
+   "unit": "rust/op_267",
+   "operator": "==",
+   "meta": {
+    "n": 267,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_267",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmpeqss %xmm1,%xmm0",
+    "movd %xmm0,%eax",
+    "and $0x1,%eax",
+    "ret"
+   ],
+   "bytes": "f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = cmpeqss(b,a)",
+    "u1 = movd(u0,_)",
+    "answer = and(_,u1)"
+   ],
+   "derived_text": [
+    "cmpeqss %xmm1,%xmm0",
+    "movd %xmm0,%r10d",
+    "mov %r10d,%eax",
+    "and $0x1,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmpeqss %xmm1,%xmm0; movd %xmm0,%r10d; mov %r10d,%eax; and $0x1,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmpeqss %xmm1,%xmm0\n   5:\tmovd   %xmm0,%r10d\n   a:\tmov    %r10d,%eax\n   d:\tand    $0x1,%eax\n  10:\tret    \n",
+    "bytes": "f3 0f c2 c1 00 66 41 0f 7e c2 44 89 d0 83 e0 01 c3"
+   }
+  },
+  "274": {
+   "lang": "rust",
+   "n": "274",
+   "unit": "rust/op_274",
+   "operator": "==",
+   "meta": {
+    "n": 274,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_274",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmpeqsd %xmm1,%xmm0",
+    "movq %xmm0,%rax",
+    "and $0x1,%eax",
+    "ret"
+   ],
+   "bytes": "f2 0f c2 c1 00 66 48 0f 7e c0 83 e0 01 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = cmpeqsd(b,a)",
+    "answer = and(_,u0)"
+   ],
+   "derived_text": [
+    "cmpeqsd %xmm1,%xmm0",
+    "movq %xmm0,%r10",
+    "mov %r10d,%eax",
+    "and $0x1,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmpeqsd %xmm1,%xmm0; movq %xmm0,%r10; mov %r10d,%eax; and $0x1,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmpeqsd %xmm1,%xmm0\n   5:\tmovq   %xmm0,%r10\n   a:\tmov    %r10d,%eax\n   d:\tand    $0x1,%eax\n  10:\tret    \n",
+    "bytes": "f2 0f c2 c1 00 66 49 0f 7e c2 44 89 d0 83 e0 01 c3"
+   }
+  },
+  "281": {
+   "lang": "rust",
+   "n": "281",
+   "unit": "rust/op_281",
+   "operator": "==",
+   "meta": {
+    "n": 281,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_281",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "xor %esi,%eax",
+    "xor $0x1,%al",
+    "ret"
+   ],
+   "bytes": "89 f8 31 f0 34 01 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = xor(b,a)",
+    "answer = xor(_,u0)"
+   ],
+   "derived_text": [
+    "xor %esi,%edi",
+    "mov %edi,%eax",
+    "xor $0x1,%al",
+    "ret"
+   ],
+   "derived_mnem_joined": "xor %esi,%edi; mov %edi,%eax; xor $0x1,%al; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\txor    %esi,%edi\n   2:\tmov    %edi,%eax\n   4:\txor    $0x1,%al\n   6:\tret    \n",
+    "bytes": "31 f7 89 f8 34 01 c3"
+   }
+  },
+  "282": {
+   "lang": "rust",
+   "n": "282",
+   "unit": "rust/op_282",
+   "operator": "!=",
+   "meta": {
+    "n": 282,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_282",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %esi,%edi",
+    "setne %al",
+    "ret"
+   ],
+   "bytes": "39 f7 0f 95 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setne(_)"
+   ],
+   "derived_text": [
+    "cmp %esi,%edi",
+    "setne %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %esi,%edi; setne %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %esi,%edi\n   2:\tsetne  %al\n   5:\tret    \n",
+    "bytes": "39 f7 0f 95 c0 c3"
+   }
+  },
+  "289": {
+   "lang": "rust",
+   "n": "289",
+   "unit": "rust/op_289",
+   "operator": "!=",
+   "meta": {
+    "n": 289,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_289",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "setne %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 95 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setne(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "setne %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; setne %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsetne  %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 95 c0 c3"
+   }
+  },
+  "296": {
+   "lang": "rust",
+   "n": "296",
+   "unit": "rust/op_296",
+   "operator": "!=",
+   "meta": {
+    "n": 296,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_296",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "setne %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 95 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setne(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "setne %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; setne %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsetne  %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 95 c0 c3"
+   }
+  },
+  "303": {
+   "lang": "rust",
+   "n": "303",
+   "unit": "rust/op_303",
+   "operator": "!=",
+   "meta": {
+    "n": 303,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_303",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmpneqss %xmm1,%xmm0",
+    "movd %xmm0,%eax",
+    "and $0x1,%eax",
+    "ret"
+   ],
+   "bytes": "f3 0f c2 c1 04 66 0f 7e c0 83 e0 01 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = cmpneqss(b,a)",
+    "u1 = movd(u0,_)",
+    "answer = and(_,u1)"
+   ],
+   "derived_text": [
+    "cmpneqss %xmm1,%xmm0",
+    "movd %xmm0,%r10d",
+    "mov %r10d,%eax",
+    "and $0x1,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmpneqss %xmm1,%xmm0; movd %xmm0,%r10d; mov %r10d,%eax; and $0x1,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmpneqss %xmm1,%xmm0\n   5:\tmovd   %xmm0,%r10d\n   a:\tmov    %r10d,%eax\n   d:\tand    $0x1,%eax\n  10:\tret    \n",
+    "bytes": "f3 0f c2 c1 04 66 41 0f 7e c2 44 89 d0 83 e0 01 c3"
+   }
+  },
+  "310": {
+   "lang": "rust",
+   "n": "310",
+   "unit": "rust/op_310",
+   "operator": "!=",
+   "meta": {
+    "n": 310,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_310",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmpneqsd %xmm1,%xmm0",
+    "movq %xmm0,%rax",
+    "and $0x1,%eax",
+    "ret"
+   ],
+   "bytes": "f2 0f c2 c1 04 66 48 0f 7e c0 83 e0 01 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = cmpneqsd(b,a)",
+    "answer = and(_,u0)"
+   ],
+   "derived_text": [
+    "cmpneqsd %xmm1,%xmm0",
+    "movq %xmm0,%r10",
+    "mov %r10d,%eax",
+    "and $0x1,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmpneqsd %xmm1,%xmm0; movq %xmm0,%r10; mov %r10d,%eax; and $0x1,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmpneqsd %xmm1,%xmm0\n   5:\tmovq   %xmm0,%r10\n   a:\tmov    %r10d,%eax\n   d:\tand    $0x1,%eax\n  10:\tret    \n",
+    "bytes": "f2 0f c2 c1 04 66 49 0f 7e c2 44 89 d0 83 e0 01 c3"
+   }
+  },
+  "317": {
+   "lang": "rust",
+   "n": "317",
+   "unit": "rust/op_317",
+   "operator": "!=",
+   "meta": {
+    "n": 317,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_317",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "xor %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 31 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = xor(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "xor %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; xor %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\txor    %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 31 f0 c3"
+   }
+  },
+  "318": {
+   "lang": "rust",
+   "n": "318",
+   "unit": "rust/op_318",
+   "operator": "<",
+   "meta": {
+    "n": 318,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_318",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %esi,%edi",
+    "setl %al",
+    "ret"
+   ],
+   "bytes": "39 f7 0f 9c c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setl(_)"
+   ],
+   "derived_text": [
+    "cmp %esi,%edi",
+    "setl %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %esi,%edi; setl %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %esi,%edi\n   2:\tsetl   %al\n   5:\tret    \n",
+    "bytes": "39 f7 0f 9c c0 c3"
+   }
+  },
+  "325": {
+   "lang": "rust",
+   "n": "325",
+   "unit": "rust/op_325",
+   "operator": "<",
+   "meta": {
+    "n": 325,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_325",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "setl %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 9c c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setl(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "setl %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; setl %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsetl   %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 9c c0 c3"
+   }
+  },
+  "332": {
+   "lang": "rust",
+   "n": "332",
+   "unit": "rust/op_332",
+   "operator": "<",
+   "meta": {
+    "n": 332,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_332",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "setb %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 92 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setb(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "setb %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; setb %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsetb   %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 92 c0 c3"
+   }
+  },
+  "339": {
+   "lang": "rust",
+   "n": "339",
+   "unit": "rust/op_339",
+   "operator": "<",
+   "meta": {
+    "n": 339,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_339",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ucomiss %xmm0,%xmm1",
+    "seta %al",
+    "ret"
+   ],
+   "bytes": "0f 2e c8 0f 97 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = ucomiss(a,b)",
+    "answer = seta(_)"
+   ],
+   "derived_text": [
+    "ucomiss %xmm0,%xmm1",
+    "seta %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "ucomiss %xmm0,%xmm1; seta %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tucomiss %xmm0,%xmm1\n   3:\tseta   %al\n   6:\tret    \n",
+    "bytes": "0f 2e c8 0f 97 c0 c3"
+   }
+  },
+  "346": {
+   "lang": "rust",
+   "n": "346",
+   "unit": "rust/op_346",
+   "operator": "<",
+   "meta": {
+    "n": 346,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_346",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ucomisd %xmm0,%xmm1",
+    "seta %al",
+    "ret"
+   ],
+   "bytes": "66 0f 2e c8 0f 97 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = ucomisd(a,b)",
+    "answer = seta(_)"
+   ],
+   "derived_text": [
+    "ucomisd %xmm0,%xmm1",
+    "seta %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "ucomisd %xmm0,%xmm1; seta %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tucomisd %xmm0,%xmm1\n   4:\tseta   %al\n   7:\tret    \n",
+    "bytes": "66 0f 2e c8 0f 97 c0 c3"
+   }
+  },
+  "353": {
+   "lang": "rust",
+   "n": "353",
+   "unit": "rust/op_353",
+   "operator": "<",
+   "meta": {
+    "n": 353,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_353",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "xor $0x1,%al",
+    "and %sil,%al",
+    "ret"
+   ],
+   "bytes": "89 f8 34 01 40 20 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = xor(_,a)",
+    "answer = and(b,u0)"
+   ],
+   "derived_text": [
+    "xor $0x1,%dil",
+    "mov %edi,%eax",
+    "and %sil,%al",
+    "ret"
+   ],
+   "derived_mnem_joined": "xor $0x1,%dil; mov %edi,%eax; and %sil,%al; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\txor    $0x1,%dil\n   4:\tmov    %edi,%eax\n   6:\tand    %sil,%al\n   9:\tret    \n",
+    "bytes": "40 80 f7 01 89 f8 40 20 f0 c3"
+   }
+  },
+  "354": {
+   "lang": "rust",
+   "n": "354",
+   "unit": "rust/op_354",
+   "operator": "<=",
+   "meta": {
+    "n": 354,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_354",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %esi,%edi",
+    "setle %al",
+    "ret"
+   ],
+   "bytes": "39 f7 0f 9e c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setle(_)"
+   ],
+   "derived_text": [
+    "cmp %esi,%edi",
+    "setle %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %esi,%edi; setle %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %esi,%edi\n   2:\tsetle  %al\n   5:\tret    \n",
+    "bytes": "39 f7 0f 9e c0 c3"
+   }
+  },
+  "361": {
+   "lang": "rust",
+   "n": "361",
+   "unit": "rust/op_361",
+   "operator": "<=",
+   "meta": {
+    "n": 361,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_361",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "setle %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 9e c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setle(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "setle %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; setle %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsetle  %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 9e c0 c3"
+   }
+  },
+  "368": {
+   "lang": "rust",
+   "n": "368",
+   "unit": "rust/op_368",
+   "operator": "<=",
+   "meta": {
+    "n": 368,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_368",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "setbe %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 96 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setbe(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "setbe %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; setbe %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsetbe  %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 96 c0 c3"
+   }
+  },
+  "375": {
+   "lang": "rust",
+   "n": "375",
+   "unit": "rust/op_375",
+   "operator": "<=",
+   "meta": {
+    "n": 375,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_375",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ucomiss %xmm0,%xmm1",
+    "setae %al",
+    "ret"
+   ],
+   "bytes": "0f 2e c8 0f 93 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = ucomiss(a,b)",
+    "answer = setae(_)"
+   ],
+   "derived_text": [
+    "ucomiss %xmm0,%xmm1",
+    "setae %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "ucomiss %xmm0,%xmm1; setae %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tucomiss %xmm0,%xmm1\n   3:\tsetae  %al\n   6:\tret    \n",
+    "bytes": "0f 2e c8 0f 93 c0 c3"
+   }
+  },
+  "382": {
+   "lang": "rust",
+   "n": "382",
+   "unit": "rust/op_382",
+   "operator": "<=",
+   "meta": {
+    "n": 382,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_382",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ucomisd %xmm0,%xmm1",
+    "setae %al",
+    "ret"
+   ],
+   "bytes": "66 0f 2e c8 0f 93 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = ucomisd(a,b)",
+    "answer = setae(_)"
+   ],
+   "derived_text": [
+    "ucomisd %xmm0,%xmm1",
+    "setae %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "ucomisd %xmm0,%xmm1; setae %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tucomisd %xmm0,%xmm1\n   4:\tsetae  %al\n   7:\tret    \n",
+    "bytes": "66 0f 2e c8 0f 93 c0 c3"
+   }
+  },
+  "389": {
+   "lang": "rust",
+   "n": "389",
+   "unit": "rust/op_389",
+   "operator": "<=",
+   "meta": {
+    "n": 389,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_389",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "xor $0x1,%al",
+    "or %sil,%al",
+    "ret"
+   ],
+   "bytes": "89 f8 34 01 40 08 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = xor(_,a)",
+    "answer = or(b,u0)"
+   ],
+   "derived_text": [
+    "xor $0x1,%dil",
+    "mov %edi,%eax",
+    "or %sil,%al",
+    "ret"
+   ],
+   "derived_mnem_joined": "xor $0x1,%dil; mov %edi,%eax; or %sil,%al; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\txor    $0x1,%dil\n   4:\tmov    %edi,%eax\n   6:\tor     %sil,%al\n   9:\tret    \n",
+    "bytes": "40 80 f7 01 89 f8 40 08 f0 c3"
+   }
+  },
+  "390": {
+   "lang": "rust",
+   "n": "390",
+   "unit": "rust/op_390",
+   "operator": ">",
+   "meta": {
+    "n": 390,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_390",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %esi,%edi",
+    "setg %al",
+    "ret"
+   ],
+   "bytes": "39 f7 0f 9f c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setg(_)"
+   ],
+   "derived_text": [
+    "cmp %esi,%edi",
+    "setg %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %esi,%edi; setg %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %esi,%edi\n   2:\tsetg   %al\n   5:\tret    \n",
+    "bytes": "39 f7 0f 9f c0 c3"
+   }
+  },
+  "397": {
+   "lang": "rust",
+   "n": "397",
+   "unit": "rust/op_397",
+   "operator": ">",
+   "meta": {
+    "n": 397,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_397",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "setg %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 9f c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setg(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "setg %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; setg %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsetg   %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 9f c0 c3"
+   }
+  },
+  "404": {
+   "lang": "rust",
+   "n": "404",
+   "unit": "rust/op_404",
+   "operator": ">",
+   "meta": {
+    "n": 404,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_404",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "seta %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 97 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = seta(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "seta %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; seta %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tseta   %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 97 c0 c3"
+   }
+  },
+  "411": {
+   "lang": "rust",
+   "n": "411",
+   "unit": "rust/op_411",
+   "operator": ">",
+   "meta": {
+    "n": 411,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_411",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ucomiss %xmm1,%xmm0",
+    "seta %al",
+    "ret"
+   ],
+   "bytes": "0f 2e c1 0f 97 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = ucomiss(b,a)",
+    "answer = seta(_)"
+   ],
+   "derived_text": [
+    "ucomiss %xmm1,%xmm0",
+    "seta %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "ucomiss %xmm1,%xmm0; seta %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tucomiss %xmm1,%xmm0\n   3:\tseta   %al\n   6:\tret    \n",
+    "bytes": "0f 2e c1 0f 97 c0 c3"
+   }
+  },
+  "418": {
+   "lang": "rust",
+   "n": "418",
+   "unit": "rust/op_418",
+   "operator": ">",
+   "meta": {
+    "n": 418,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_418",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ucomisd %xmm1,%xmm0",
+    "seta %al",
+    "ret"
+   ],
+   "bytes": "66 0f 2e c1 0f 97 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = ucomisd(b,a)",
+    "answer = seta(_)"
+   ],
+   "derived_text": [
+    "ucomisd %xmm1,%xmm0",
+    "seta %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "ucomisd %xmm1,%xmm0; seta %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tucomisd %xmm1,%xmm0\n   4:\tseta   %al\n   7:\tret    \n",
+    "bytes": "66 0f 2e c1 0f 97 c0 c3"
+   }
+  },
+  "425": {
+   "lang": "rust",
+   "n": "425",
+   "unit": "rust/op_425",
+   "operator": ">",
+   "meta": {
+    "n": 425,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_425",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%eax",
+    "xor $0x1,%al",
+    "and %dil,%al",
+    "ret"
+   ],
+   "bytes": "89 f0 34 01 40 20 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = xor(_,b)",
+    "answer = and(a,u0)"
+   ],
+   "derived_text": [
+    "xor $0x1,%sil",
+    "mov %esi,%eax",
+    "and %dil,%al",
+    "ret"
+   ],
+   "derived_mnem_joined": "xor $0x1,%sil; mov %esi,%eax; and %dil,%al; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\txor    $0x1,%sil\n   4:\tmov    %esi,%eax\n   6:\tand    %dil,%al\n   9:\tret    \n",
+    "bytes": "40 80 f6 01 89 f0 40 20 f8 c3"
+   }
+  },
+  "426": {
+   "lang": "rust",
+   "n": "426",
+   "unit": "rust/op_426",
+   "operator": ">=",
+   "meta": {
+    "n": 426,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_426",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %esi,%edi",
+    "setge %al",
+    "ret"
+   ],
+   "bytes": "39 f7 0f 9d c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setge(_)"
+   ],
+   "derived_text": [
+    "cmp %esi,%edi",
+    "setge %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %esi,%edi; setge %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %esi,%edi\n   2:\tsetge  %al\n   5:\tret    \n",
+    "bytes": "39 f7 0f 9d c0 c3"
+   }
+  },
+  "433": {
+   "lang": "rust",
+   "n": "433",
+   "unit": "rust/op_433",
+   "operator": ">=",
+   "meta": {
+    "n": 433,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_433",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "setge %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 9d c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setge(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "setge %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; setge %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsetge  %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 9d c0 c3"
+   }
+  },
+  "440": {
+   "lang": "rust",
+   "n": "440",
+   "unit": "rust/op_440",
+   "operator": ">=",
+   "meta": {
+    "n": 440,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_440",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "cmp %rsi,%rdi",
+    "setae %al",
+    "ret"
+   ],
+   "bytes": "48 39 f7 0f 93 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = cmp(b,a)",
+    "answer = setae(_)"
+   ],
+   "derived_text": [
+    "cmp %rsi,%rdi",
+    "setae %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "cmp %rsi,%rdi; setae %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tcmp    %rsi,%rdi\n   3:\tsetae  %al\n   6:\tret    \n",
+    "bytes": "48 39 f7 0f 93 c0 c3"
+   }
+  },
+  "447": {
+   "lang": "rust",
+   "n": "447",
+   "unit": "rust/op_447",
+   "operator": ">=",
+   "meta": {
+    "n": 447,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_447",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ucomiss %xmm1,%xmm0",
+    "setae %al",
+    "ret"
+   ],
+   "bytes": "0f 2e c1 0f 93 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = ucomiss(b,a)",
+    "answer = setae(_)"
+   ],
+   "derived_text": [
+    "ucomiss %xmm1,%xmm0",
+    "setae %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "ucomiss %xmm1,%xmm0; setae %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tucomiss %xmm1,%xmm0\n   3:\tsetae  %al\n   6:\tret    \n",
+    "bytes": "0f 2e c1 0f 93 c0 c3"
+   }
+  },
+  "454": {
+   "lang": "rust",
+   "n": "454",
+   "unit": "rust/op_454",
+   "operator": ">=",
+   "meta": {
+    "n": 454,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_454",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ucomisd %xmm1,%xmm0",
+    "setae %al",
+    "ret"
+   ],
+   "bytes": "66 0f 2e c1 0f 93 c0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "_ = ucomisd(b,a)",
+    "answer = setae(_)"
+   ],
+   "derived_text": [
+    "ucomisd %xmm1,%xmm0",
+    "setae %al",
+    "ret"
+   ],
+   "derived_mnem_joined": "ucomisd %xmm1,%xmm0; setae %al; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tucomisd %xmm1,%xmm0\n   4:\tsetae  %al\n   7:\tret    \n",
+    "bytes": "66 0f 2e c1 0f 93 c0 c3"
+   }
+  },
+  "461": {
+   "lang": "rust",
+   "n": "461",
+   "unit": "rust/op_461",
+   "operator": ">=",
+   "meta": {
+    "n": 461,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_461",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%eax",
+    "xor $0x1,%al",
+    "or %dil,%al",
+    "ret"
+   ],
+   "bytes": "89 f0 34 01 40 08 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = xor(_,b)",
+    "answer = or(a,u0)"
+   ],
+   "derived_text": [
+    "xor $0x1,%sil",
+    "mov %esi,%eax",
+    "or %dil,%al",
+    "ret"
+   ],
+   "derived_mnem_joined": "xor $0x1,%sil; mov %esi,%eax; or %dil,%al; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\txor    $0x1,%sil\n   4:\tmov    %esi,%eax\n   6:\tor     %dil,%al\n   9:\tret    \n",
+    "bytes": "40 80 f6 01 89 f0 40 08 f8 c3"
+   }
+  },
+  "462": {
+   "lang": "rust",
+   "n": "462",
+   "unit": "rust/op_462",
+   "operator": "<<",
+   "meta": {
+    "n": 462,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a << b",
+    "result_type": "<i32 as core::ops::Shl<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_462",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%eax",
+    "ret"
+   ],
+   "bytes": "89 f1 89 f8 d3 e0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shl(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshl    %cl,%eax\n   6:\tret    \n",
+    "bytes": "89 f1 89 f8 d3 e0 c3"
+   }
+  },
+  "463": {
+   "lang": "rust",
+   "n": "463",
+   "unit": "rust/op_463",
+   "operator": "<<",
+   "meta": {
+    "n": 463,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a << b",
+    "result_type": "<i32 as core::ops::Shl<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_463",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %edi,%eax",
+    "shl %cl,%eax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 89 f8 d3 e0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shl(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshl    %cl,%eax\n   6:\tret    \n",
+    "bytes": "89 f1 89 f8 d3 e0 c3"
+   }
+  },
+  "464": {
+   "lang": "rust",
+   "n": "464",
+   "unit": "rust/op_464",
+   "operator": "<<",
+   "meta": {
+    "n": 464,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a << b",
+    "result_type": "<i32 as core::ops::Shl<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_464",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %edi,%eax",
+    "shl %cl,%eax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 89 f8 d3 e0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shl(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshl    %cl,%eax\n   6:\tret    \n",
+    "bytes": "89 f1 89 f8 d3 e0 c3"
+   }
+  },
+  "468": {
+   "lang": "rust",
+   "n": "468",
+   "unit": "rust/op_468",
+   "operator": "<<",
+   "meta": {
+    "n": 468,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a << b",
+    "result_type": "<i64 as core::ops::Shl<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_468",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%ecx",
+    "mov %rdi,%rax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "bytes": "89 f1 48 89 f8 48 d3 e0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shl(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshl    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 e0 c3"
+   }
+  },
+  "469": {
+   "lang": "rust",
+   "n": "469",
+   "unit": "rust/op_469",
+   "operator": "<<",
+   "meta": {
+    "n": 469,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a << b",
+    "result_type": "<i64 as core::ops::Shl<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_469",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %rdi,%rax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 48 89 f8 48 d3 e0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shl(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshl    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 e0 c3"
+   }
+  },
+  "470": {
+   "lang": "rust",
+   "n": "470",
+   "unit": "rust/op_470",
+   "operator": "<<",
+   "meta": {
+    "n": 470,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a << b",
+    "result_type": "<i64 as core::ops::Shl<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_470",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %rdi,%rax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 48 89 f8 48 d3 e0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shl(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshl    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 e0 c3"
+   }
+  },
+  "474": {
+   "lang": "rust",
+   "n": "474",
+   "unit": "rust/op_474",
+   "operator": "<<",
+   "meta": {
+    "n": 474,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a << b",
+    "result_type": "<u64 as core::ops::Shl<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_474",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%ecx",
+    "mov %rdi,%rax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "bytes": "89 f1 48 89 f8 48 d3 e0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shl(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshl    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 e0 c3"
+   }
+  },
+  "475": {
+   "lang": "rust",
+   "n": "475",
+   "unit": "rust/op_475",
+   "operator": "<<",
+   "meta": {
+    "n": 475,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a << b",
+    "result_type": "<u64 as core::ops::Shl<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_475",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %rdi,%rax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 48 89 f8 48 d3 e0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shl(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshl    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 e0 c3"
+   }
+  },
+  "476": {
+   "lang": "rust",
+   "n": "476",
+   "unit": "rust/op_476",
+   "operator": "<<",
+   "meta": {
+    "n": 476,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a << b",
+    "result_type": "<u64 as core::ops::Shl<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_476",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %rdi,%rax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 48 89 f8 48 d3 e0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shl(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shl %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshl    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 e0 c3"
+   }
+  },
+  "498": {
+   "lang": "rust",
+   "n": "498",
+   "unit": "rust/op_498",
+   "operator": ">>",
+   "meta": {
+    "n": 498,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a >> b",
+    "result_type": "<i32 as core::ops::Shr<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_498",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "sar %cl,%eax",
+    "ret"
+   ],
+   "bytes": "89 f1 89 f8 d3 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = sar(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "sar %cl,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; sar %cl,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tsar    %cl,%eax\n   6:\tret    \n",
+    "bytes": "89 f1 89 f8 d3 f8 c3"
+   }
+  },
+  "499": {
+   "lang": "rust",
+   "n": "499",
+   "unit": "rust/op_499",
+   "operator": ">>",
+   "meta": {
+    "n": 499,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a >> b",
+    "result_type": "<i32 as core::ops::Shr<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_499",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %edi,%eax",
+    "sar %cl,%eax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 89 f8 d3 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = sar(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "sar %cl,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; sar %cl,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tsar    %cl,%eax\n   6:\tret    \n",
+    "bytes": "89 f1 89 f8 d3 f8 c3"
+   }
+  },
+  "500": {
+   "lang": "rust",
+   "n": "500",
+   "unit": "rust/op_500",
+   "operator": ">>",
+   "meta": {
+    "n": 500,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a >> b",
+    "result_type": "<i32 as core::ops::Shr<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_500",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %edi,%eax",
+    "sar %cl,%eax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 89 f8 d3 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = sar(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "sar %cl,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; sar %cl,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tsar    %cl,%eax\n   6:\tret    \n",
+    "bytes": "89 f1 89 f8 d3 f8 c3"
+   }
+  },
+  "504": {
+   "lang": "rust",
+   "n": "504",
+   "unit": "rust/op_504",
+   "operator": ">>",
+   "meta": {
+    "n": 504,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a >> b",
+    "result_type": "<i64 as core::ops::Shr<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_504",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%ecx",
+    "mov %rdi,%rax",
+    "sar %cl,%rax",
+    "ret"
+   ],
+   "bytes": "89 f1 48 89 f8 48 d3 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = sar(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "sar %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; sar %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tsar    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 f8 c3"
+   }
+  },
+  "505": {
+   "lang": "rust",
+   "n": "505",
+   "unit": "rust/op_505",
+   "operator": ">>",
+   "meta": {
+    "n": 505,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a >> b",
+    "result_type": "<i64 as core::ops::Shr<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_505",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %rdi,%rax",
+    "sar %cl,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 48 89 f8 48 d3 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = sar(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "sar %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; sar %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tsar    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 f8 c3"
+   }
+  },
+  "506": {
+   "lang": "rust",
+   "n": "506",
+   "unit": "rust/op_506",
+   "operator": ">>",
+   "meta": {
+    "n": 506,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a >> b",
+    "result_type": "<i64 as core::ops::Shr<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_506",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %rdi,%rax",
+    "sar %cl,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 48 89 f8 48 d3 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = sar(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "sar %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; sar %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tsar    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 f8 c3"
+   }
+  },
+  "510": {
+   "lang": "rust",
+   "n": "510",
+   "unit": "rust/op_510",
+   "operator": ">>",
+   "meta": {
+    "n": 510,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a >> b",
+    "result_type": "<u64 as core::ops::Shr<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_510",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%ecx",
+    "mov %rdi,%rax",
+    "shr %cl,%rax",
+    "ret"
+   ],
+   "bytes": "89 f1 48 89 f8 48 d3 e8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shr(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shr %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shr %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshr    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 e8 c3"
+   }
+  },
+  "511": {
+   "lang": "rust",
+   "n": "511",
+   "unit": "rust/op_511",
+   "operator": ">>",
+   "meta": {
+    "n": 511,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a >> b",
+    "result_type": "<u64 as core::ops::Shr<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_511",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %rdi,%rax",
+    "shr %cl,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 48 89 f8 48 d3 e8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shr(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shr %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shr %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshr    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 e8 c3"
+   }
+  },
+  "512": {
+   "lang": "rust",
+   "n": "512",
+   "unit": "rust/op_512",
+   "operator": ">>",
+   "meta": {
+    "n": 512,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a >> b",
+    "result_type": "<u64 as core::ops::Shr<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_512",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rcx",
+    "mov %rdi,%rax",
+    "shr %cl,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f1 48 89 f8 48 d3 e8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = shr(b,a)"
+   ],
+   "derived_text": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "shr %cl,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %esi,%ecx; mov %edi,%eax; shr %cl,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %esi,%ecx\n   2:\tmov    %edi,%eax\n   4:\tshr    %cl,%rax\n   7:\tret    \n",
+    "bytes": "89 f1 89 f8 48 d3 e8 c3"
+   }
+  },
+  "534": {
+   "lang": "rust",
+   "n": "534",
+   "unit": "rust/op_534",
+   "operator": "+",
+   "meta": {
+    "n": 534,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a + b",
+    "result_type": "<i32 as core::ops::Add<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_534",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "lea (%rdi,%rsi,1),%eax",
+    "ret"
+   ],
+   "bytes": "8d 04 37 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = lea(_,_)"
+   ],
+   "derived_text": [
+    "lea (%rdi,%rsi,1),%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "lea (%rdi,%rsi,1),%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tlea    (%rdi,%rsi,1),%eax\n   3:\tret    \n",
+    "bytes": "8d 04 37 c3"
+   }
+  },
+  "541": {
+   "lang": "rust",
+   "n": "541",
+   "unit": "rust/op_541",
+   "operator": "+",
+   "meta": {
+    "n": 541,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a + b",
+    "result_type": "<i64 as core::ops::Add<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_541",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "lea (%rdi,%rsi,1),%rax",
+    "ret"
+   ],
+   "bytes": "48 8d 04 37 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = lea(_,_)"
+   ],
+   "derived_text": [
+    "lea (%rdi,%rsi,1),%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "lea (%rdi,%rsi,1),%rax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tlea    (%rdi,%rsi,1),%rax\n   4:\tret    \n",
+    "bytes": "48 8d 04 37 c3"
+   }
+  },
+  "548": {
+   "lang": "rust",
+   "n": "548",
+   "unit": "rust/op_548",
+   "operator": "+",
+   "meta": {
+    "n": 548,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a + b",
+    "result_type": "<u64 as core::ops::Add<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_548",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "lea (%rdi,%rsi,1),%rax",
+    "ret"
+   ],
+   "bytes": "48 8d 04 37 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = lea(_,_)"
+   ],
+   "derived_text": [
+    "lea (%rdi,%rsi,1),%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "lea (%rdi,%rsi,1),%rax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tlea    (%rdi,%rsi,1),%rax\n   4:\tret    \n",
+    "bytes": "48 8d 04 37 c3"
+   }
+  },
+  "555": {
+   "lang": "rust",
+   "n": "555",
+   "unit": "rust/op_555",
+   "operator": "+",
+   "meta": {
+    "n": 555,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a + b",
+    "result_type": "<f32 as core::ops::Add<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_555",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "addss %xmm1,%xmm0",
+    "ret"
+   ],
+   "bytes": "f3 0f 58 c1 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = addss(b,a)"
+   ],
+   "derived_text": [
+    "addss %xmm1,%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "addss %xmm1,%xmm0; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\taddss  %xmm1,%xmm0\n   4:\tret    \n",
+    "bytes": "f3 0f 58 c1 c3"
+   }
+  },
+  "562": {
+   "lang": "rust",
+   "n": "562",
+   "unit": "rust/op_562",
+   "operator": "+",
+   "meta": {
+    "n": 562,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a + b",
+    "result_type": "<f64 as core::ops::Add<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_562",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "addsd %xmm1,%xmm0",
+    "ret"
+   ],
+   "bytes": "f2 0f 58 c1 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = addsd(b,a)"
+   ],
+   "derived_text": [
+    "addsd %xmm1,%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "addsd %xmm1,%xmm0; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\taddsd  %xmm1,%xmm0\n   4:\tret    \n",
+    "bytes": "f2 0f 58 c1 c3"
+   }
+  },
+  "570": {
+   "lang": "rust",
+   "n": "570",
+   "unit": "rust/op_570",
+   "operator": "-",
+   "meta": {
+    "n": 570,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a - b",
+    "result_type": "<i32 as core::ops::Sub<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_570",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "sub %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 29 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = sub(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "sub %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; sub %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tsub    %esi,%eax\n   4:\tret    \n",
+    "bytes": "89 f8 29 f0 c3"
+   }
+  },
+  "577": {
+   "lang": "rust",
+   "n": "577",
+   "unit": "rust/op_577",
+   "operator": "-",
+   "meta": {
+    "n": 577,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a - b",
+    "result_type": "<i64 as core::ops::Sub<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_577",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "sub %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 29 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = sub(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "sub %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; sub %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tsub    %rsi,%rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 29 f0 c3"
+   }
+  },
+  "584": {
+   "lang": "rust",
+   "n": "584",
+   "unit": "rust/op_584",
+   "operator": "-",
+   "meta": {
+    "n": 584,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a - b",
+    "result_type": "<u64 as core::ops::Sub<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_584",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "sub %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 29 f0 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = sub(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "sub %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; sub %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tsub    %rsi,%rax\n   5:\tret    \n",
+    "bytes": "89 f8 48 29 f0 c3"
+   }
+  },
+  "591": {
+   "lang": "rust",
+   "n": "591",
+   "unit": "rust/op_591",
+   "operator": "-",
+   "meta": {
+    "n": 591,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a - b",
+    "result_type": "<f32 as core::ops::Sub<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_591",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "subss %xmm1,%xmm0",
+    "ret"
+   ],
+   "bytes": "f3 0f 5c c1 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = subss(b,a)"
+   ],
+   "derived_text": [
+    "subss %xmm1,%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "subss %xmm1,%xmm0; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tsubss  %xmm1,%xmm0\n   4:\tret    \n",
+    "bytes": "f3 0f 5c c1 c3"
+   }
+  },
+  "598": {
+   "lang": "rust",
+   "n": "598",
+   "unit": "rust/op_598",
+   "operator": "-",
+   "meta": {
+    "n": 598,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a - b",
+    "result_type": "<f64 as core::ops::Sub<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_598",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "subsd %xmm1,%xmm0",
+    "ret"
+   ],
+   "bytes": "f2 0f 5c c1 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = subsd(b,a)"
+   ],
+   "derived_text": [
+    "subsd %xmm1,%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "subsd %xmm1,%xmm0; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tsubsd  %xmm1,%xmm0\n   4:\tret    \n",
+    "bytes": "f2 0f 5c c1 c3"
+   }
+  },
+  "606": {
+   "lang": "rust",
+   "n": "606",
+   "unit": "rust/op_606",
+   "operator": "*",
+   "meta": {
+    "n": 606,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a * b",
+    "result_type": "<i32 as core::ops::Mul<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_606",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %edi,%eax",
+    "imul %esi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f8 0f af c6 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = imul(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "imul %esi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; imul %esi,%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\timul   %esi,%eax\n   5:\tret    \n",
+    "bytes": "89 f8 0f af c6 c3"
+   }
+  },
+  "613": {
+   "lang": "rust",
+   "n": "613",
+   "unit": "rust/op_613",
+   "operator": "*",
+   "meta": {
+    "n": 613,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a * b",
+    "result_type": "<i64 as core::ops::Mul<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_613",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "imul %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 0f af c6 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = imul(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "imul %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; imul %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\timul   %rsi,%rax\n   6:\tret    \n",
+    "bytes": "89 f8 48 0f af c6 c3"
+   }
+  },
+  "620": {
+   "lang": "rust",
+   "n": "620",
+   "unit": "rust/op_620",
+   "operator": "*",
+   "meta": {
+    "n": 620,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a * b",
+    "result_type": "<u64 as core::ops::Mul<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_620",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "imul %rsi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 0f af c6 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "answer = imul(b,a)"
+   ],
+   "derived_text": [
+    "mov %edi,%eax",
+    "imul %rsi,%rax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; imul %rsi,%rax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\timul   %rsi,%rax\n   6:\tret    \n",
+    "bytes": "89 f8 48 0f af c6 c3"
+   }
+  },
+  "627": {
+   "lang": "rust",
+   "n": "627",
+   "unit": "rust/op_627",
+   "operator": "*",
+   "meta": {
+    "n": 627,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a * b",
+    "result_type": "<f32 as core::ops::Mul<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_627",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mulss %xmm1,%xmm0",
+    "ret"
+   ],
+   "bytes": "f3 0f 59 c1 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = mulss(b,a)"
+   ],
+   "derived_text": [
+    "mulss %xmm1,%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "mulss %xmm1,%xmm0; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmulss  %xmm1,%xmm0\n   4:\tret    \n",
+    "bytes": "f3 0f 59 c1 c3"
+   }
+  },
+  "634": {
+   "lang": "rust",
+   "n": "634",
+   "unit": "rust/op_634",
+   "operator": "*",
+   "meta": {
+    "n": 634,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a * b",
+    "result_type": "<f64 as core::ops::Mul<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_634",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mulsd %xmm1,%xmm0",
+    "ret"
+   ],
+   "bytes": "f2 0f 59 c1 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = mulsd(b,a)"
+   ],
+   "derived_text": [
+    "mulsd %xmm1,%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "mulsd %xmm1,%xmm0; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmulsd  %xmm1,%xmm0\n   4:\tret    \n",
+    "bytes": "f2 0f 59 c1 c3"
+   }
+  },
+  "642": {
+   "lang": "rust",
+   "n": "642",
+   "unit": "rust/op_642",
+   "operator": "/",
+   "meta": {
+    "n": 642,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a / b",
+    "result_type": "<i32 as core::ops::Div<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_642",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "push %rax",
+    "test %esi,%esi",
+    "je 1a <op_642+0x1a>",
+    "mov %esi,%eax",
+    "not %eax",
+    "lea -0x80000000(%rdi),%ecx",
+    "or %eax,%ecx",
+    "je 27 <op_642+0x27>",
+    "mov %edi,%eax",
+    "cltd",
+    "idiv %esi",
+    "pop %rcx",
+    "ret",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e999d8e928eeaaa2810ddee94f44a439.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e999d8e928eeaaa2810ddee94f44a439.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4"
+   ],
+   "bytes": "50 85 f6 74 15 89 f0 f7 d0 8d 8f 00 00 00 80 09 c1 74 14 89 f8 99 f7 fe 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "erasure": "erasure_refused: erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice",
+   "blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "_ = test(b,b)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L3",
+     "steps": [
+      "u0 = lea(k0,_)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L1",
+     "steps": [
+      "u1 = not(b)",
+      "u2 = lea(_,_)",
+      "u3 = or(u1,u2)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L4",
+     "steps": [
+      "u4 = lea(k1,_)"
+     ],
+     "erasure": "erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice"
+    },
+    {
+     "label": "L4_p1",
+     "steps": [
+      "u5 = lea(k2,_)"
+     ],
+     "erasure": "erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice"
+    },
+    {
+     "label": "L2",
+     "steps": [
+      "u6 = cltd(a)",
+      "u7, u8 = idiv(u6:a, b)"
+     ],
+     "erasure": null
+    }
+   ]
+  },
+  "649": {
+   "lang": "rust",
+   "n": "649",
+   "unit": "rust/op_649",
+   "operator": "/",
+   "meta": {
+    "n": 649,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a / b",
+    "result_type": "<i64 as core::ops::Div<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_649",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "push %rax",
+    "test %rsi,%rsi",
+    "je 28 <op_649+0x28>",
+    "mov %rsi,%rax",
+    "not %rax",
+    "movabs $0x8000000000000000,%rcx",
+    "xor %rdi,%rcx",
+    "or %rax,%rcx",
+    "je 35 <op_649+0x35>",
+    "mov %rdi,%rax",
+    "cqto",
+    "idiv %rsi",
+    "pop %rcx",
+    "ret",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.f827e8a11002c08557cadc9bf0371c45.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.f827e8a11002c08557cadc9bf0371c45.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4"
+   ],
+   "bytes": "50 48 85 f6 74 22 48 89 f0 48 f7 d0 48 b9 00 00 00 00 00 00 00 80 48 31 f9 48 09 c1 74 17 48 89 f8 48 99 48 f7 fe 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "erasure": "erasure_refused: erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice",
+   "blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "_ = test(b,b)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L3",
+     "steps": [
+      "u0 = lea(k0,_)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L1",
+     "steps": [
+      "u1 = not(b)",
+      "u2 = movabs(_,_)",
+      "u3 = xor(a,u2)",
+      "u4 = or(u1,u3)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L4",
+     "steps": [
+      "u5 = lea(k1,_)"
+     ],
+     "erasure": "erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice"
+    },
+    {
+     "label": "L4_p1",
+     "steps": [
+      "u6 = lea(k2,_)"
+     ],
+     "erasure": "erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice"
+    },
+    {
+     "label": "L2",
+     "steps": [
+      "u7 = cqto(a)",
+      "u8, u9 = idiv(u7:a, b)"
+     ],
+     "erasure": null
+    }
+   ]
+  },
+  "656": {
+   "lang": "rust",
+   "n": "656",
+   "unit": "rust/op_656",
+   "operator": "/",
+   "meta": {
+    "n": 656,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a / b",
+    "result_type": "<u64 as core::ops::Div<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_656",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "test %rsi,%rsi",
+    "je e <op_656+0xe>",
+    "mov %rdi,%rax",
+    "xor %edx,%edx",
+    "div %rsi",
+    "ret",
+    "push %rax",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.91eb4167174939f1625900c289bf79c5.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4"
+   ],
+   "bytes": "48 85 f6 74 09 48 89 f8 31 d2 48 f7 f6 c3 50 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "test %rsi,%rsi",
+      "je L2",
+      "jmp L1"
+     ]
+    },
+    {
+     "label": "L2",
+     "steps": [
+      "lea 0x0(%rip),%r10",
+      "call *0x0(%rip)"
+     ]
+    },
+    {
+     "label": "L1",
+     "steps": [
+      "xor %r11d,%r11d",
+      "mov %edi,%eax",
+      "mov %r11d,%edx",
+      "div %rsi",
+      "ret"
+     ]
+    }
+   ],
+   "erased_form": [
+    "L0:",
+    "  _ = test(b,b)",
+    "L2:",
+    "  u0 = lea(k0,_)",
+    "L1:",
+    "  u1 = xor(_,_)",
+    "  u2, u3 = div(u1:a, b)"
+   ],
+   "derived_blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "test %rsi,%rsi",
+      "je L2",
+      "jmp L1"
+     ]
+    },
+    {
+     "label": "L2",
+     "steps": [
+      "lea 0x0(%rip),%r10",
+      "call *0x0(%rip)"
+     ]
+    },
+    {
+     "label": "L1",
+     "steps": [
+      "xor %r11d,%r11d",
+      "mov %edi,%eax",
+      "mov %r11d,%edx",
+      "div %rsi",
+      "ret"
+     ]
+    }
+   ],
+   "derived_text_flat": [
+    "L0:",
+    "  test %rsi,%rsi",
+    "  je L2",
+    "  jmp L1",
+    "L2:",
+    "  lea 0x0(%rip),%r10",
+    "  call *0x0(%rip)",
+    "L1:",
+    "  xor %r11d,%r11d",
+    "  mov %edi,%eax",
+    "  mov %r11d,%edx",
+    "  div %rsi",
+    "  ret"
+   ],
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\ttest   %rsi,%rsi\n   3:\tje     7 <L2>\n   5:\tjmp    14 <L1>\n\n0000000000000007 <L2>:\n   7:\tlea    0x0(%rip),%r10        # e <L2+0x7>\n   e:\tcall   *0x0(%rip)        # 14 <L1>\n\n0000000000000014 <L1>:\n  14:\txor    %r11d,%r11d\n  17:\tmov    %edi,%eax\n  19:\tmov    %r11d,%edx\n  1c:\tdiv    %rsi\n  1f:\tret    \n",
+    "bytes": "48 85 f6 74 02 eb 0d 4c 8d 15 00 00 00 00 ff 15 00 00 00 00 45 31 db 89 f8 44 89 da 48 f7 f6 c3"
+   }
+  },
+  "663": {
+   "lang": "rust",
+   "n": "663",
+   "unit": "rust/op_663",
+   "operator": "/",
+   "meta": {
+    "n": 663,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a / b",
+    "result_type": "<f32 as core::ops::Div<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_663",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "divss %xmm1,%xmm0",
+    "ret"
+   ],
+   "bytes": "f3 0f 5e c1 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = divss(b,a)"
+   ],
+   "derived_text": [
+    "divss %xmm1,%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "divss %xmm1,%xmm0; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tdivss  %xmm1,%xmm0\n   4:\tret    \n",
+    "bytes": "f3 0f 5e c1 c3"
+   }
+  },
+  "670": {
+   "lang": "rust",
+   "n": "670",
+   "unit": "rust/op_670",
+   "operator": "/",
+   "meta": {
+    "n": 670,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a / b",
+    "result_type": "<f64 as core::ops::Div<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_670",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "divsd %xmm1,%xmm0",
+    "ret"
+   ],
+   "bytes": "f2 0f 5e c1 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = divsd(b,a)"
+   ],
+   "derived_text": [
+    "divsd %xmm1,%xmm0",
+    "ret"
+   ],
+   "derived_mnem_joined": "divsd %xmm1,%xmm0; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tdivsd  %xmm1,%xmm0\n   4:\tret    \n",
+    "bytes": "f2 0f 5e c1 c3"
+   }
+  },
+  "678": {
+   "lang": "rust",
+   "n": "678",
+   "unit": "rust/op_678",
+   "operator": "%",
+   "meta": {
+    "n": 678,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a % b",
+    "result_type": "<i32 as core::ops::Rem<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_678",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "push %rax",
+    "test %esi,%esi",
+    "je 1c <op_678+0x1c>",
+    "mov %esi,%eax",
+    "not %eax",
+    "lea -0x80000000(%rdi),%ecx",
+    "or %eax,%ecx",
+    "je 29 <op_678+0x29>",
+    "mov %edi,%eax",
+    "cltd",
+    "idiv %esi",
+    "mov %edx,%eax",
+    "pop %rcx",
+    "ret",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.6364bd5e4af95d439b41ec18c8aa3e42.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero-0x4",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.6364bd5e4af95d439b41ec18c8aa3e42.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow-0x4"
+   ],
+   "bytes": "50 85 f6 74 17 89 f0 f7 d0 8d 8f 00 00 00 80 09 c1 74 16 89 f8 99 f7 fe 89 d0 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "erasure": "erasure_refused: erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice",
+   "blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "_ = test(b,b)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L3",
+     "steps": [
+      "u0 = lea(k0,_)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L1",
+     "steps": [
+      "u1 = not(b)",
+      "u2 = lea(_,_)",
+      "u3 = or(u1,u2)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L4",
+     "steps": [
+      "u4 = lea(k1,_)"
+     ],
+     "erasure": "erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice"
+    },
+    {
+     "label": "L4_p1",
+     "steps": [
+      "u5 = lea(k2,_)"
+     ],
+     "erasure": "erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice"
+    },
+    {
+     "label": "L2",
+     "steps": [
+      "u6 = cltd(a)",
+      "u7, u8 = idiv(u6:a, b)"
+     ],
+     "erasure": null
+    }
+   ]
+  },
+  "685": {
+   "lang": "rust",
+   "n": "685",
+   "unit": "rust/op_685",
+   "operator": "%",
+   "meta": {
+    "n": 685,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a % b",
+    "result_type": "<i64 as core::ops::Rem<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_685",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "push %rax",
+    "test %rsi,%rsi",
+    "je 2b <op_685+0x2b>",
+    "mov %rsi,%rax",
+    "not %rax",
+    "movabs $0x8000000000000000,%rcx",
+    "xor %rdi,%rcx",
+    "or %rax,%rcx",
+    "je 38 <op_685+0x38>",
+    "mov %rdi,%rax",
+    "cqto",
+    "idiv %rsi",
+    "mov %rdx,%rax",
+    "pop %rcx",
+    "ret",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.59c7b7ded09d4d41cf4c16e5b51ce86c.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero-0x4",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.59c7b7ded09d4d41cf4c16e5b51ce86c.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow-0x4"
+   ],
+   "bytes": "50 48 85 f6 74 25 48 89 f0 48 f7 d0 48 b9 00 00 00 00 00 00 00 80 48 31 f9 48 09 c1 74 1a 48 89 f8 48 99 48 f7 fe 48 89 d0 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "erasure": "erasure_refused: erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice",
+   "blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "_ = test(b,b)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L3",
+     "steps": [
+      "u0 = lea(k0,_)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L1",
+     "steps": [
+      "u1 = not(b)",
+      "u2 = movabs(_,_)",
+      "u3 = xor(a,u2)",
+      "u4 = or(u1,u3)"
+     ],
+     "erasure": null
+    },
+    {
+     "label": "L4",
+     "steps": [
+      "u5 = lea(k1,_)"
+     ],
+     "erasure": "erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice"
+    },
+    {
+     "label": "L4_p1",
+     "steps": [
+      "u6 = lea(k2,_)"
+     ],
+     "erasure": "erasure_refused: two stack-spilled operands in one instruction -- not attempted this slice"
+    },
+    {
+     "label": "L2",
+     "steps": [
+      "u7 = cqto(a)",
+      "u8, u9 = idiv(u7:a, b)"
+     ],
+     "erasure": null
+    }
+   ]
+  },
+  "692": {
+   "lang": "rust",
+   "n": "692",
+   "unit": "rust/op_692",
+   "operator": "%",
+   "meta": {
+    "n": 692,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a % b",
+    "result_type": "<u64 as core::ops::Rem<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_692",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "test %rsi,%rsi",
+    "je 11 <op_692+0x11>",
+    "mov %rdi,%rax",
+    "xor %edx,%edx",
+    "div %rsi",
+    "mov %rdx,%rax",
+    "ret",
+    "push %rax",
+    "lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.3f7f0ae03a52655030587681e383e4de.1-0x4",
+    "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero-0x4"
+   ],
+   "bytes": "48 85 f6 74 0c 48 89 f8 31 d2 48 f7 f6 48 89 d0 c3 50 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "test %rsi,%rsi",
+      "je L2",
+      "jmp L1"
+     ]
+    },
+    {
+     "label": "L2",
+     "steps": [
+      "lea 0x0(%rip),%r10",
+      "call *0x0(%rip)"
+     ]
+    },
+    {
+     "label": "L1",
+     "steps": [
+      "xor %r11d,%r11d",
+      "mov %edi,%eax",
+      "mov %r11d,%edx",
+      "div %rsi",
+      "mov %edx,%eax",
+      "ret"
+     ]
+    }
+   ],
+   "erased_form": [
+    "L0:",
+    "  _ = test(b,b)",
+    "L2:",
+    "  u0 = lea(k0,_)",
+    "L1:",
+    "  u1 = xor(_,_)",
+    "  u2, u3 = div(u1:a, b)"
+   ],
+   "derived_blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "test %rsi,%rsi",
+      "je L2",
+      "jmp L1"
+     ]
+    },
+    {
+     "label": "L2",
+     "steps": [
+      "lea 0x0(%rip),%r10",
+      "call *0x0(%rip)"
+     ]
+    },
+    {
+     "label": "L1",
+     "steps": [
+      "xor %r11d,%r11d",
+      "mov %edi,%eax",
+      "mov %r11d,%edx",
+      "div %rsi",
+      "mov %edx,%eax",
+      "ret"
+     ]
+    }
+   ],
+   "derived_text_flat": [
+    "L0:",
+    "  test %rsi,%rsi",
+    "  je L2",
+    "  jmp L1",
+    "L2:",
+    "  lea 0x0(%rip),%r10",
+    "  call *0x0(%rip)",
+    "L1:",
+    "  xor %r11d,%r11d",
+    "  mov %edi,%eax",
+    "  mov %r11d,%edx",
+    "  div %rsi",
+    "  mov %edx,%eax",
+    "  ret"
+   ],
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\ttest   %rsi,%rsi\n   3:\tje     7 <L2>\n   5:\tjmp    14 <L1>\n\n0000000000000007 <L2>:\n   7:\tlea    0x0(%rip),%r10        # e <L2+0x7>\n   e:\tcall   *0x0(%rip)        # 14 <L1>\n\n0000000000000014 <L1>:\n  14:\txor    %r11d,%r11d\n  17:\tmov    %edi,%eax\n  19:\tmov    %r11d,%edx\n  1c:\tdiv    %rsi\n  1f:\tmov    %edx,%eax\n  21:\tret    \n",
+    "bytes": "48 85 f6 74 02 eb 0d 4c 8d 15 00 00 00 00 ff 15 00 00 00 00 45 31 db 89 f8 44 89 da 48 f7 f6 89 d0 c3"
+   }
+  },
+  "699": {
+   "lang": "rust",
+   "n": "699",
+   "unit": "rust/op_699",
+   "operator": "%",
+   "meta": {
+    "n": 699,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a % b",
+    "result_type": "<f32 as core::ops::Rem<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_699",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "jmp *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:fmodf-0x4"
+   ],
+   "bytes": "ff 25 00 00 00 00",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "jmp L?"
+     ]
+    }
+   ],
+   "erased_form": [
+    "L0:"
+   ],
+   "derived_blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "jmp L?"
+     ]
+    }
+   ],
+   "derived_text_flat": [
+    "L0:",
+    "  jmp L?"
+   ],
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": false,
+    "as_stderr": "/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.s: Assembler messages:\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.s:6: Error: invalid character '?' in operand 1"
+   }
+  },
+  "706": {
+   "lang": "rust",
+   "n": "706",
+   "unit": "rust/op_706",
+   "operator": "%",
+   "meta": {
+    "n": 706,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a % b",
+    "result_type": "<f64 as core::ops::Rem<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_706",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "jmp *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:fmod-0x4"
+   ],
+   "bytes": "ff 25 00 00 00 00",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "jmp L?"
+     ]
+    }
+   ],
+   "erased_form": [
+    "L0:"
+   ],
+   "derived_blocks": [
+    {
+     "label": "L0",
+     "steps": [
+      "jmp L?"
+     ]
+    }
+   ],
+   "derived_text_flat": [
+    "L0:",
+    "  jmp L?"
+   ],
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": false,
+    "as_stderr": "/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.s: Assembler messages:\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.s:6: Error: invalid character '?' in operand 1"
+   }
+  },
+  "714": {
+   "lang": "rust",
+   "n": "714",
+   "unit": "rust/op_714",
+   "operator": "..",
+   "meta": {
+    "n": 714,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<i32>",
+    "result_rule": "range_type",
+    "symbol": "op_714",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%edx",
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f2 89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "721": {
+   "lang": "rust",
+   "n": "721",
+   "unit": "rust/op_721",
+   "operator": "..",
+   "meta": {
+    "n": 721,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<i64>",
+    "result_rule": "range_type",
+    "symbol": "op_721",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rdx",
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f2 48 89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "728": {
+   "lang": "rust",
+   "n": "728",
+   "unit": "rust/op_728",
+   "operator": "..",
+   "meta": {
+    "n": 728,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<u64>",
+    "result_rule": "range_type",
+    "symbol": "op_728",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rsi,%rdx",
+    "mov %rdi,%rax",
+    "ret"
+   ],
+   "bytes": "48 89 f2 48 89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "735": {
+   "lang": "rust",
+   "n": "735",
+   "unit": "rust/op_735",
+   "operator": "..",
+   "meta": {
+    "n": 735,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<f32>",
+    "result_rule": "range_type",
+    "symbol": "op_735",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ret"
+   ],
+   "bytes": "c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "ret"
+   ],
+   "derived_mnem_joined": "ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tret    \n",
+    "bytes": "c3"
+   }
+  },
+  "742": {
+   "lang": "rust",
+   "n": "742",
+   "unit": "rust/op_742",
+   "operator": "..",
+   "meta": {
+    "n": 742,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<f64>",
+    "result_rule": "range_type",
+    "symbol": "op_742",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "ret"
+   ],
+   "bytes": "c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "ret"
+   ],
+   "derived_mnem_joined": "ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tret    \n",
+    "bytes": "c3"
+   }
+  },
+  "749": {
+   "lang": "rust",
+   "n": "749",
+   "unit": "rust/op_749",
+   "operator": "..",
+   "meta": {
+    "n": 749,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<bool>",
+    "result_rule": "range_type",
+    "symbol": "op_749",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %esi,%edx",
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "bytes": "89 f2 89 f8 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [],
+   "derived_text": [
+    "mov %edi,%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "mov %edi,%eax; ret",
+   "exact_regeneration": false,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tmov    %edi,%eax\n   2:\tret    \n",
+    "bytes": "89 f8 c3"
+   }
+  },
+  "786": {
+   "lang": "rust",
+   "n": "786",
+   "unit": "rust/op_786",
+   "operator": "..=",
+   "meta": {
+    "n": 786,
+    "operator": "..=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a ..= b",
+    "result_type": "core::ops::RangeInclusive<i32>",
+    "result_rule": "range_type",
+    "symbol": "op_786",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "mov %esi,(%rdi)",
+    "mov %edx,0x4(%rdi)",
+    "movb $0x0,0x8(%rdi)",
+    "ret"
+   ],
+   "bytes": "48 89 f8 89 37 89 57 04 c6 47 08 00 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "mem = mov(b)",
+    "mem = mov(w0)",
+    "mem = movb(_)"
+   ],
+   "derived_text": "refused: erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it",
+   "derive_refused": "erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it"
+  },
+  "793": {
+   "lang": "rust",
+   "n": "793",
+   "unit": "rust/op_793",
+   "operator": "..=",
+   "meta": {
+    "n": 793,
+    "operator": "..=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a ..= b",
+    "result_type": "core::ops::RangeInclusive<i64>",
+    "result_rule": "range_type",
+    "symbol": "op_793",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "mov %rsi,(%rdi)",
+    "mov %rdx,0x8(%rdi)",
+    "movb $0x0,0x10(%rdi)",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 89 37 48 89 57 08 c6 47 10 00 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "mem = mov(b)",
+    "mem = mov(w0)",
+    "mem = movb(_)"
+   ],
+   "derived_text": "refused: erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it",
+   "derive_refused": "erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it"
+  },
+  "800": {
+   "lang": "rust",
+   "n": "800",
+   "unit": "rust/op_800",
+   "operator": "..=",
+   "meta": {
+    "n": 800,
+    "operator": "..=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a ..= b",
+    "result_type": "core::ops::RangeInclusive<u64>",
+    "result_rule": "range_type",
+    "symbol": "op_800",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "mov %rsi,(%rdi)",
+    "mov %rdx,0x8(%rdi)",
+    "movb $0x0,0x10(%rdi)",
+    "ret"
+   ],
+   "bytes": "48 89 f8 48 89 37 48 89 57 08 c6 47 10 00 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "mem = mov(b)",
+    "mem = mov(w0)",
+    "mem = movb(_)"
+   ],
+   "derived_text": "refused: erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it",
+   "derive_refused": "erasure_refused: value w0 is read before it is defined or before the unit's entry contract names it"
+  },
+  "807": {
+   "lang": "rust",
+   "n": "807",
+   "unit": "rust/op_807",
+   "operator": "..=",
+   "meta": {
+    "n": 807,
+    "operator": "..=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a ..= b",
+    "result_type": "core::ops::RangeInclusive<f32>",
+    "result_rule": "range_type",
+    "symbol": "op_807",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "movss %xmm0,(%rdi)",
+    "movss %xmm1,0x4(%rdi)",
+    "movb $0x0,0x8(%rdi)",
+    "ret"
+   ],
+   "bytes": "48 89 f8 f3 0f 11 07 f3 0f 11 4f 04 c6 47 08 00 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "mem = movss(a)",
+    "mem = movss(b)",
+    "mem = movb(_)"
+   ],
+   "derived_text": "refused: erasure_refused: the answer value never entered a tracked register (a passthrough this builder does not model)",
+   "derive_refused": "erasure_refused: the answer value never entered a tracked register (a passthrough this builder does not model)"
+  },
+  "814": {
+   "lang": "rust",
+   "n": "814",
+   "unit": "rust/op_814",
+   "operator": "..=",
+   "meta": {
+    "n": 814,
+    "operator": "..=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a ..= b",
+    "result_type": "core::ops::RangeInclusive<f64>",
+    "result_rule": "range_type",
+    "symbol": "op_814",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "mov %rdi,%rax",
+    "movsd %xmm0,(%rdi)",
+    "movsd %xmm1,0x8(%rdi)",
+    "movb $0x0,0x10(%rdi)",
+    "ret"
+   ],
+   "bytes": "48 89 f8 f2 0f 11 07 f2 0f 11 4f 08 c6 47 10 00 c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "xmm0",
+    "b": "xmm1",
+    "result": "rax"
+   },
+   "erased_form": [
+    "mem = movsd(a)",
+    "mem = movsd(b)",
+    "mem = movb(_)"
+   ],
+   "derived_text": "refused: erasure_refused: the answer value never entered a tracked register (a passthrough this builder does not model)",
+   "derive_refused": "erasure_refused: the answer value never entered a tracked register (a passthrough this builder does not model)"
+  },
+  "821": {
+   "lang": "rust",
+   "n": "821",
+   "unit": "rust/op_821",
+   "operator": "..=",
+   "meta": {
+    "n": 821,
+    "operator": "..=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a ..= b",
+    "result_type": "core::ops::RangeInclusive<bool>",
+    "result_rule": "range_type",
+    "symbol": "op_821",
+    "symbol_exact": true
+   },
+   "mnem": [
+    "shl $0x8,%esi",
+    "lea (%rsi,%rdi,1),%eax",
+    "ret"
+   ],
+   "bytes": "c1 e6 08 8d 04 3e c3",
+   "erasure": "ok",
+   "entry_contract": {
+    "a": "rdi",
+    "b": "rsi",
+    "result": "rax"
+   },
+   "erased_form": [
+    "u0 = shl(_,b)",
+    "answer = lea(_,_)"
+   ],
+   "derived_text": [
+    "shl $0x8,%esi",
+    "lea (%rsi,%rdi,1),%eax",
+    "ret"
+   ],
+   "derived_mnem_joined": "shl $0x8,%esi; lea (%rsi,%rdi,1),%eax; ret",
+   "exact_regeneration": true,
+   "overflow_slots_used": 0,
+   "roundtrip": {
+    "assembled": true,
+    "objdump_text": "\n/sessions/fervent-trusting-darwin/tmp/canon3_asm_5xj0dyzu/u.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <op_unit>:\n   0:\tshl    $0x8,%esi\n   3:\tlea    (%rsi,%rdi,1),%eax\n   6:\tret    \n",
+    "bytes": "c1 e6 08 8d 04 3e c3"
+   }
+  }
+ }
+}

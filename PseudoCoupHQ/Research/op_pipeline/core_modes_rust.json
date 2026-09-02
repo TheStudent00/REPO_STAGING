@@ -1,0 +1,4256 @@
+{
+ "language": "rust",
+ "shape": "every accepted ship unit as a core and a list of modes",
+ "core_note": "the normal-path lifted form: verdicts.core_values over the blocks that are not trap/panic response blocks.  UNVERIFIED that every such block reaches `ret` -- in this corpus each one does, which is an observation over these units and not a proof.",
+ "detection_routes": [
+  "branch-to-response",
+  "solver-localized"
+ ],
+ "predicate_templates": [
+  "T1 unsigned threshold on one input: in_i >=u k, k in (8, 16, 32, 64)",
+  "T2 sign test on one input: in_i <s 0",
+  "T3 equality with a constant: in_i == c, c in (0, 1, -1, -2147483648, -9223372036854775808)"
+ ],
+ "budget": "at most 40 solver queries per pair, 1000 ms each, at most 20 seconds of wall clock per pair; when the budget is spent with nothing accepted no mode is claimed and the difference stays a core difference",
+ "solver_scope": "route 2 is not asked about a pair whose operands are IEEE floats: every template is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  Such a pair keeps a core difference and each unit records the skip.",
+ "vocabulary": "`wrapping`, `growing` and `approximating` are the interval-probe names (kind_fuzz_clustering, log_067).  A `wrap-continue` response IS `wrapping` and carries that name.  `clamp-continue` carries no name from that vocabulary: the three names describe what happens to the answer when the operation overflows, and clamping a shift to zero is not one of them.  `growing` and `approximating` do not occur here -- no unit in this corpus widens its result or returns an approximation -- and the tally says 0 rather than the name being left out.",
+ "spelling": "the operator token appears once per unit, as the display label `operator` beside `lang` and `n`.  No key, grouping or selection uses it.",
+ "solver_run": true,
+ "units": {
+  "0": {
+   "lang": "rust",
+   "n": "0",
+   "operator": "-",
+   "type_pair": "i32,None",
+   "meta": {
+    "n": 0,
+    "operator": "-",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "-a",
+    "result_type": "<i32 as core::ops::Neg>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_0",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 f7 d8 c3",
+   "core": [
+    "zx64(Sub32(0:32,ex32@0(in0:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "0 - in0 overflows 32 bits (signed)",
+     "lifted": "ex1@0(amd64g_calculate_condition(0:64,7:64,0:64,zx64(ex32@0(in0:64)),u0:64))",
+     "response": "wrap-continue",
+     "detection": "branch-to-response",
+     "read_from": {
+      "lang": "swift",
+      "n": "12",
+      "operator": "-"
+     },
+     "note": "this unit carries no branch to a response, and a unit machine-form evidence connects it to guards on this condition; the condition is read from that unit's own lifted guard and never from this one",
+     "mode_name": "wrapping"
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "1": {
+   "lang": "rust",
+   "n": "1",
+   "operator": "-",
+   "type_pair": "i64,None",
+   "meta": {
+    "n": 1,
+    "operator": "-",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "-a",
+    "result_type": "<i64 as core::ops::Neg>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_1",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 f7 d8 c3",
+   "core": [
+    "Sub64(0:64,in0:64)"
+   ],
+   "modes": [
+    {
+     "condition": "0 - in0 overflows 64 bits (signed)",
+     "lifted": "ex1@0(amd64g_calculate_condition(0:64,8:64,0:64,in0:64,u0:64))",
+     "response": "wrap-continue",
+     "detection": "branch-to-response",
+     "read_from": {
+      "lang": "swift",
+      "n": "13",
+      "operator": "-"
+     },
+     "note": "this unit carries no branch to a response, and a unit machine-form evidence connects it to guards on this condition; the condition is read from that unit's own lifted guard and never from this one",
+     "mode_name": "wrapping"
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "3": {
+   "lang": "rust",
+   "n": "3",
+   "operator": "-",
+   "type_pair": "f32,None",
+   "meta": {
+    "n": 3,
+    "operator": "-",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "-a",
+    "result_type": "<f32 as core::ops::Neg>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_3",
+    "symbol_exact": true
+   },
+   "bytes": "0f 57 05 00 00 00 00 c3",
+   "core": [
+    "XorV128(ex128@0(in0:256),ld128/g0(7:64))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "4": {
+   "lang": "rust",
+   "n": "4",
+   "operator": "-",
+   "type_pair": "f64,None",
+   "meta": {
+    "n": 4,
+    "operator": "-",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "-a",
+    "result_type": "<f64 as core::ops::Neg>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_4",
+    "symbol_exact": true
+   },
+   "bytes": "0f 57 05 00 00 00 00 c3",
+   "core": [
+    "XorV128(ex128@0(in0:256),ld128/g0(7:64))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "12": {
+   "lang": "rust",
+   "n": "12",
+   "operator": "!",
+   "type_pair": "i32,None",
+   "meta": {
+    "n": 12,
+    "operator": "!",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "!a",
+    "result_type": "<i32 as core::ops::Not>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_12",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 f7 d0 c3",
+   "core": [
+    "zx64(Not32(ex32@0(in0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "13": {
+   "lang": "rust",
+   "n": "13",
+   "operator": "!",
+   "type_pair": "i64,None",
+   "meta": {
+    "n": 13,
+    "operator": "!",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "!a",
+    "result_type": "<i64 as core::ops::Not>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_13",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 f7 d0 c3",
+   "core": [
+    "Not64(in0:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "14": {
+   "lang": "rust",
+   "n": "14",
+   "operator": "!",
+   "type_pair": "u64,None",
+   "meta": {
+    "n": 14,
+    "operator": "!",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "!a",
+    "result_type": "<u64 as core::ops::Not>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_14",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 f7 d0 c3",
+   "core": [
+    "Not64(in0:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "17": {
+   "lang": "rust",
+   "n": "17",
+   "operator": "!",
+   "type_pair": "bool,None",
+   "meta": {
+    "n": 17,
+    "operator": "!",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "!a",
+    "result_type": "<bool as core::ops::Not>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_17",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 34 01 c3",
+   "core": [
+    "ins@0(zx64(ex32@0(in0:64)),Xor8(1:8,ex8@0(in0:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in0 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "solver_queries": 1,
+     "contrast": {
+      "lang": "c",
+      "n": "5",
+      "operator": "!"
+     }
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "36": {
+   "lang": "rust",
+   "n": "36",
+   "operator": "..",
+   "type_pair": "i32,None",
+   "meta": {
+    "n": 36,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<i32>",
+    "result_rule": "range_type",
+    "symbol": "op_36",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "37": {
+   "lang": "rust",
+   "n": "37",
+   "operator": "..",
+   "type_pair": "i64,None",
+   "meta": {
+    "n": 37,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<i64>",
+    "result_rule": "range_type",
+    "symbol": "op_37",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "38": {
+   "lang": "rust",
+   "n": "38",
+   "operator": "..",
+   "type_pair": "u64,None",
+   "meta": {
+    "n": 38,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<u64>",
+    "result_rule": "range_type",
+    "symbol": "op_38",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "39": {
+   "lang": "rust",
+   "n": "39",
+   "operator": "..",
+   "type_pair": "f32,None",
+   "meta": {
+    "n": 39,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<f32>",
+    "result_rule": "range_type",
+    "symbol": "op_39",
+    "symbol_exact": true
+   },
+   "bytes": "c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "40": {
+   "lang": "rust",
+   "n": "40",
+   "operator": "..",
+   "type_pair": "f64,None",
+   "meta": {
+    "n": 40,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<f64>",
+    "result_rule": "range_type",
+    "symbol": "op_40",
+    "symbol_exact": true
+   },
+   "bytes": "c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "41": {
+   "lang": "rust",
+   "n": "41",
+   "operator": "..",
+   "type_pair": "bool,None",
+   "meta": {
+    "n": 41,
+    "operator": "..",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..a",
+    "result_type": "core::ops::RangeTo<bool>",
+    "result_rule": "range_type",
+    "symbol": "op_41",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "42": {
+   "lang": "rust",
+   "n": "42",
+   "operator": "..=",
+   "type_pair": "i32,None",
+   "meta": {
+    "n": 42,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<i32>",
+    "result_rule": "range_type",
+    "symbol": "op_42",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "43": {
+   "lang": "rust",
+   "n": "43",
+   "operator": "..=",
+   "type_pair": "i64,None",
+   "meta": {
+    "n": 43,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<i64>",
+    "result_rule": "range_type",
+    "symbol": "op_43",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "44": {
+   "lang": "rust",
+   "n": "44",
+   "operator": "..=",
+   "type_pair": "u64,None",
+   "meta": {
+    "n": 44,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<u64>",
+    "result_rule": "range_type",
+    "symbol": "op_44",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "45": {
+   "lang": "rust",
+   "n": "45",
+   "operator": "..=",
+   "type_pair": "f32,None",
+   "meta": {
+    "n": 45,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<f32>",
+    "result_rule": "range_type",
+    "symbol": "op_45",
+    "symbol_exact": true
+   },
+   "bytes": "c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "46": {
+   "lang": "rust",
+   "n": "46",
+   "operator": "..=",
+   "type_pair": "f64,None",
+   "meta": {
+    "n": 46,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<f64>",
+    "result_rule": "range_type",
+    "symbol": "op_46",
+    "symbol_exact": true
+   },
+   "bytes": "c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "47": {
+   "lang": "rust",
+   "n": "47",
+   "operator": "..=",
+   "type_pair": "bool,None",
+   "meta": {
+    "n": 47,
+    "operator": "..=",
+    "arity": "unary",
+    "position": "prefix",
+    "bucket": "unary_prefix",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": null,
+    "rhs_type": null,
+    "expression": "..=a",
+    "result_type": "core::ops::RangeToInclusive<bool>",
+    "result_rule": "range_type",
+    "symbol": "op_47",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "101": {
+   "lang": "rust",
+   "n": "101",
+   "operator": "&&",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 101,
+    "operator": "&&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a && b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_101",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 21 f0 c3",
+   "core": [
+    "zx64(And32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "137": {
+   "lang": "rust",
+   "n": "137",
+   "operator": "||",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 137,
+    "operator": "||",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a || b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_137",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 09 f0 c3",
+   "core": [
+    "zx64(Or32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "138": {
+   "lang": "rust",
+   "n": "138",
+   "operator": "&",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 138,
+    "operator": "&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a & b",
+    "result_type": "<i32 as core::ops::BitAnd<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_138",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 21 f0 c3",
+   "core": [
+    "zx64(And32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "145": {
+   "lang": "rust",
+   "n": "145",
+   "operator": "&",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 145,
+    "operator": "&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a & b",
+    "result_type": "<i64 as core::ops::BitAnd<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_145",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 21 f0 c3",
+   "core": [
+    "And64(in0:64,in1:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "152": {
+   "lang": "rust",
+   "n": "152",
+   "operator": "&",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 152,
+    "operator": "&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a & b",
+    "result_type": "<u64 as core::ops::BitAnd<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_152",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 21 f0 c3",
+   "core": [
+    "And64(in0:64,in1:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "173": {
+   "lang": "rust",
+   "n": "173",
+   "operator": "&",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 173,
+    "operator": "&",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a & b",
+    "result_type": "<bool as core::ops::BitAnd<bool>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_173",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 21 f0 c3",
+   "core": [
+    "zx64(And32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "174": {
+   "lang": "rust",
+   "n": "174",
+   "operator": "|",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 174,
+    "operator": "|",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a | b",
+    "result_type": "<i32 as core::ops::BitOr<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_174",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 09 f0 c3",
+   "core": [
+    "zx64(Or32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "181": {
+   "lang": "rust",
+   "n": "181",
+   "operator": "|",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 181,
+    "operator": "|",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a | b",
+    "result_type": "<i64 as core::ops::BitOr<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_181",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 09 f0 c3",
+   "core": [
+    "Or64(in0:64,in1:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "swift op_157 is not straight-line: 8 blocks",
+    "swift op_193 is not straight-line: 8 blocks"
+   ]
+  },
+  "188": {
+   "lang": "rust",
+   "n": "188",
+   "operator": "|",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 188,
+    "operator": "|",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a | b",
+    "result_type": "<u64 as core::ops::BitOr<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_188",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 09 f0 c3",
+   "core": [
+    "Or64(in0:64,in1:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "swift op_164 is not straight-line: 5 blocks",
+    "swift op_200 is not straight-line: 5 blocks"
+   ]
+  },
+  "209": {
+   "lang": "rust",
+   "n": "209",
+   "operator": "|",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 209,
+    "operator": "|",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a | b",
+    "result_type": "<bool as core::ops::BitOr<bool>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_209",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 09 f0 c3",
+   "core": [
+    "zx64(Or32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "210": {
+   "lang": "rust",
+   "n": "210",
+   "operator": "^",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 210,
+    "operator": "^",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a ^ b",
+    "result_type": "<i32 as core::ops::BitXor<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_210",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 31 f0 c3",
+   "core": [
+    "zx64(Xor32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "217": {
+   "lang": "rust",
+   "n": "217",
+   "operator": "^",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 217,
+    "operator": "^",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a ^ b",
+    "result_type": "<i64 as core::ops::BitXor<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_217",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 31 f0 c3",
+   "core": [
+    "Xor64(in0:64,in1:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "224": {
+   "lang": "rust",
+   "n": "224",
+   "operator": "^",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 224,
+    "operator": "^",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a ^ b",
+    "result_type": "<u64 as core::ops::BitXor<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_224",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 31 f0 c3",
+   "core": [
+    "Xor64(in0:64,in1:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "245": {
+   "lang": "rust",
+   "n": "245",
+   "operator": "^",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 245,
+    "operator": "^",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a ^ b",
+    "result_type": "<bool as core::ops::BitXor<bool>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_245",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 31 f0 c3",
+   "core": [
+    "zx64(Xor32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "246": {
+   "lang": "rust",
+   "n": "246",
+   "operator": "==",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 246,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_246",
+    "symbol_exact": true
+   },
+   "bytes": "39 f7 0f 94 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(4:64,7:64,zx64(ex32@0(in0:64)),zx64(ex32@0(in1:64)),u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "253": {
+   "lang": "rust",
+   "n": "253",
+   "operator": "==",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 253,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_253",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 94 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(4:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "260": {
+   "lang": "rust",
+   "n": "260",
+   "operator": "==",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 260,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_260",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 94 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(4:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "267": {
+   "lang": "rust",
+   "n": "267",
+   "operator": "==",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 267,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_267",
+    "symbol_exact": true
+   },
+   "bytes": "f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 c3",
+   "core": [
+    "zx64(And32(1:32,ex32@0(ins@0(in0:256,CmpEQ32F0x4(ex128@0(in0:256),ex128@0(in1:256))))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "274": {
+   "lang": "rust",
+   "n": "274",
+   "operator": "==",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 274,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_274",
+    "symbol_exact": true
+   },
+   "bytes": "f2 0f c2 c1 00 66 48 0f 7e c0 83 e0 01 c3",
+   "core": [
+    "zx64(And32(1:32,ex32@0(ins@0(in0:256,CmpEQ64F0x2(ex128@0(in0:256),ex128@0(in1:256))))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "281": {
+   "lang": "rust",
+   "n": "281",
+   "operator": "==",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 281,
+    "operator": "==",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a == b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_281",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 31 f0 34 01 c3",
+   "core": [
+    "ins@0(zx64(Xor32(ex32@0(in0:64),ex32@0(in1:64))),Xor8(1:8,Xor8(ex8@0(in0:64),ex8@0(in1:64))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "282": {
+   "lang": "rust",
+   "n": "282",
+   "operator": "!=",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 282,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_282",
+    "symbol_exact": true
+   },
+   "bytes": "39 f7 0f 95 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(5:64,7:64,zx64(ex32@0(in0:64)),zx64(ex32@0(in1:64)),u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "289": {
+   "lang": "rust",
+   "n": "289",
+   "operator": "!=",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 289,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_289",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 95 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(5:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "296": {
+   "lang": "rust",
+   "n": "296",
+   "operator": "!=",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 296,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_296",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 95 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(5:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "303": {
+   "lang": "rust",
+   "n": "303",
+   "operator": "!=",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 303,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_303",
+    "symbol_exact": true
+   },
+   "bytes": "f3 0f c2 c1 04 66 0f 7e c0 83 e0 01 c3",
+   "core": [
+    "zx64(And32(1:32,ex32@0(XorV128(4294967295:128,CmpEQ32F0x4(ex128@0(in0:256),ex128@0(in1:256))))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "310": {
+   "lang": "rust",
+   "n": "310",
+   "operator": "!=",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 310,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_310",
+    "symbol_exact": true
+   },
+   "bytes": "f2 0f c2 c1 04 66 48 0f 7e c0 83 e0 01 c3",
+   "core": [
+    "zx64(And32(1:32,ex32@0(XorV128(18446744073709551615:128,CmpEQ64F0x2(ex128@0(in0:256),ex128@0(in1:256))))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "317": {
+   "lang": "rust",
+   "n": "317",
+   "operator": "!=",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 317,
+    "operator": "!=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a != b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_317",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 31 f0 c3",
+   "core": [
+    "zx64(Xor32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "318": {
+   "lang": "rust",
+   "n": "318",
+   "operator": "<",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 318,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_318",
+    "symbol_exact": true
+   },
+   "bytes": "39 f7 0f 9c c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(12:64,7:64,zx64(ex32@0(in0:64)),zx64(ex32@0(in1:64)),u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "325": {
+   "lang": "rust",
+   "n": "325",
+   "operator": "<",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 325,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_325",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 9c c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(12:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "332": {
+   "lang": "rust",
+   "n": "332",
+   "operator": "<",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 332,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_332",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 92 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(2:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only",
+    "swift op_272 is not straight-line: 3 blocks"
+   ]
+  },
+  "339": {
+   "lang": "rust",
+   "n": "339",
+   "operator": "<",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 339,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_339",
+    "symbol_exact": true
+   },
+   "bytes": "0f 2e c8 0f 97 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(7:64,0:64,And64(69:64,zx64(CmpF64(F32toF64(ex32@0(in1:256)),F32toF64(ex32@0(in0:256))))),0:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "346": {
+   "lang": "rust",
+   "n": "346",
+   "operator": "<",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 346,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_346",
+    "symbol_exact": true
+   },
+   "bytes": "66 0f 2e c8 0f 97 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(7:64,0:64,And64(69:64,zx64(CmpF64(ex64@0(in1:256),ex64@0(in0:256)))),0:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "353": {
+   "lang": "rust",
+   "n": "353",
+   "operator": "<",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 353,
+    "operator": "<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a < b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_353",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 34 01 40 20 f0 c3",
+   "core": [
+    "ins@0(zx64(ex32@0(in0:64)),And8(Xor8(1:8,ex8@0(in0:64)),ex8@0(in1:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in0 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "solver_queries": 1,
+     "contrast": {
+      "lang": "c",
+      "n": "677",
+      "operator": "<"
+     }
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "354": {
+   "lang": "rust",
+   "n": "354",
+   "operator": "<=",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 354,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_354",
+    "symbol_exact": true
+   },
+   "bytes": "39 f7 0f 9e c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(14:64,7:64,zx64(ex32@0(in0:64)),zx64(ex32@0(in1:64)),u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "361": {
+   "lang": "rust",
+   "n": "361",
+   "operator": "<=",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 361,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_361",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 9e c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(14:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "368": {
+   "lang": "rust",
+   "n": "368",
+   "operator": "<=",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 368,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_368",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 96 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(6:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "375": {
+   "lang": "rust",
+   "n": "375",
+   "operator": "<=",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 375,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_375",
+    "symbol_exact": true
+   },
+   "bytes": "0f 2e c8 0f 93 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(3:64,0:64,And64(69:64,zx64(CmpF64(F32toF64(ex32@0(in1:256)),F32toF64(ex32@0(in0:256))))),0:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "382": {
+   "lang": "rust",
+   "n": "382",
+   "operator": "<=",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 382,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_382",
+    "symbol_exact": true
+   },
+   "bytes": "66 0f 2e c8 0f 93 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(3:64,0:64,And64(69:64,zx64(CmpF64(ex64@0(in1:256),ex64@0(in0:256)))),0:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "389": {
+   "lang": "rust",
+   "n": "389",
+   "operator": "<=",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 389,
+    "operator": "<=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a <= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_389",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 34 01 40 08 f0 c3",
+   "core": [
+    "ins@0(zx64(ex32@0(in0:64)),Or8(Xor8(1:8,ex8@0(in0:64)),ex8@0(in1:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in0 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "solver_queries": 1,
+     "contrast": {
+      "lang": "c",
+      "n": "641",
+      "operator": "<="
+     }
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "390": {
+   "lang": "rust",
+   "n": "390",
+   "operator": ">",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 390,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_390",
+    "symbol_exact": true
+   },
+   "bytes": "39 f7 0f 9f c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(15:64,7:64,zx64(ex32@0(in0:64)),zx64(ex32@0(in1:64)),u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "397": {
+   "lang": "rust",
+   "n": "397",
+   "operator": ">",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 397,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_397",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 9f c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(15:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "404": {
+   "lang": "rust",
+   "n": "404",
+   "operator": ">",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 404,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_404",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 97 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(7:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "411": {
+   "lang": "rust",
+   "n": "411",
+   "operator": ">",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 411,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_411",
+    "symbol_exact": true
+   },
+   "bytes": "0f 2e c1 0f 97 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(7:64,0:64,And64(69:64,zx64(CmpF64(F32toF64(ex32@0(in0:256)),F32toF64(ex32@0(in1:256))))),0:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "418": {
+   "lang": "rust",
+   "n": "418",
+   "operator": ">",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 418,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_418",
+    "symbol_exact": true
+   },
+   "bytes": "66 0f 2e c1 0f 97 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(7:64,0:64,And64(69:64,zx64(CmpF64(ex64@0(in0:256),ex64@0(in1:256)))),0:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "425": {
+   "lang": "rust",
+   "n": "425",
+   "operator": ">",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 425,
+    "operator": ">",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a > b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_425",
+    "symbol_exact": true
+   },
+   "bytes": "89 f0 34 01 40 20 f8 c3",
+   "core": [
+    "ins@0(zx64(ex32@0(in1:64)),And8(Xor8(1:8,ex8@0(in1:64)),ex8@0(in0:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "solver_queries": 1,
+     "contrast": {
+      "lang": "c",
+      "n": "569",
+      "operator": ">"
+     }
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "426": {
+   "lang": "rust",
+   "n": "426",
+   "operator": ">=",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 426,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_426",
+    "symbol_exact": true
+   },
+   "bytes": "39 f7 0f 9d c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(13:64,7:64,zx64(ex32@0(in0:64)),zx64(ex32@0(in1:64)),u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "433": {
+   "lang": "rust",
+   "n": "433",
+   "operator": ">=",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 433,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_433",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 9d c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(13:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "440": {
+   "lang": "rust",
+   "n": "440",
+   "operator": ">=",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 440,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_440",
+    "symbol_exact": true
+   },
+   "bytes": "48 39 f7 0f 93 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(3:64,8:64,in0:64,in1:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "the two units do not disagree on any input at the common width, so the core difference is textual only"
+   ]
+  },
+  "447": {
+   "lang": "rust",
+   "n": "447",
+   "operator": ">=",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 447,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_447",
+    "symbol_exact": true
+   },
+   "bytes": "0f 2e c1 0f 93 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(3:64,0:64,And64(69:64,zx64(CmpF64(F32toF64(ex32@0(in0:256)),F32toF64(ex32@0(in1:256))))),0:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "454": {
+   "lang": "rust",
+   "n": "454",
+   "operator": ">=",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 454,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_454",
+    "symbol_exact": true
+   },
+   "bytes": "66 0f 2e c1 0f 93 c0 c3",
+   "core": [
+    "zx8(ex1@0(amd64g_calculate_condition(3:64,0:64,And64(69:64,zx64(CmpF64(ex64@0(in0:256),ex64@0(in1:256)))),0:64,u0:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference.",
+    "route 2 was not run on this pair: an operand is floating point, and every predicate template here is an integer predicate, so an accepted region would be a statement about the bit pattern and not about the number.  The difference stays a core difference."
+   ]
+  },
+  "461": {
+   "lang": "rust",
+   "n": "461",
+   "operator": ">=",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 461,
+    "operator": ">=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a >= b",
+    "result_type": "bool",
+    "result_rule": "cmp_is_bool",
+    "symbol": "op_461",
+    "symbol_exact": true
+   },
+   "bytes": "89 f0 34 01 40 08 f8 c3",
+   "core": [
+    "ins@0(zx64(ex32@0(in1:64)),Or8(Xor8(1:8,ex8@0(in1:64)),ex8@0(in0:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "solver_queries": 1,
+     "contrast": {
+      "lang": "c",
+      "n": "605",
+      "operator": ">="
+     }
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "462": {
+   "lang": "rust",
+   "n": "462",
+   "operator": "<<",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 462,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a << b",
+    "result_type": "<i32 as core::ops::Shl<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_462",
+    "symbol_exact": true
+   },
+   "bytes": "89 f1 89 f8 d3 e0 c3",
+   "core": [
+    "zx64(ex32@0(Shl64(zx64(ex32@0(in0:64)),And8(31:8,ex8@0(in1:64)))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_168 is not straight-line: 3 blocks"
+   ]
+  },
+  "463": {
+   "lang": "rust",
+   "n": "463",
+   "operator": "<<",
+   "type_pair": "i32,i64",
+   "meta": {
+    "n": 463,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a << b",
+    "result_type": "<i32 as core::ops::Shl<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_463",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 89 f8 d3 e0 c3",
+   "core": [
+    "zx64(ex32@0(Shl64(zx64(ex32@0(in0:64)),And8(31:8,ex8@0(in1:64)))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_169 is not straight-line: 3 blocks"
+   ]
+  },
+  "464": {
+   "lang": "rust",
+   "n": "464",
+   "operator": "<<",
+   "type_pair": "i32,u64",
+   "meta": {
+    "n": 464,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a << b",
+    "result_type": "<i32 as core::ops::Shl<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_464",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 89 f8 d3 e0 c3",
+   "core": [
+    "zx64(ex32@0(Shl64(zx64(ex32@0(in0:64)),And8(31:8,ex8@0(in1:64)))))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 >= 32 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero; the claim is about the ABI's result register only (result_register_by_convention: UNVERIFIED)",
+     "solver_queries": 1,
+     "contrast": {
+      "lang": "go",
+      "n": "170",
+      "operator": "<<"
+     }
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "468": {
+   "lang": "rust",
+   "n": "468",
+   "operator": "<<",
+   "type_pair": "i64,i32",
+   "meta": {
+    "n": 468,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a << b",
+    "result_type": "<i64 as core::ops::Shl<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_468",
+    "symbol_exact": true
+   },
+   "bytes": "89 f1 48 89 f8 48 d3 e0 c3",
+   "core": [
+    "Shl64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_174 is not straight-line: 3 blocks"
+   ]
+  },
+  "469": {
+   "lang": "rust",
+   "n": "469",
+   "operator": "<<",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 469,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a << b",
+    "result_type": "<i64 as core::ops::Shl<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_469",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 48 89 f8 48 d3 e0 c3",
+   "core": [
+    "Shl64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_175 is not straight-line: 3 blocks"
+   ]
+  },
+  "470": {
+   "lang": "rust",
+   "n": "470",
+   "operator": "<<",
+   "type_pair": "i64,u64",
+   "meta": {
+    "n": 470,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a << b",
+    "result_type": "<i64 as core::ops::Shl<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_470",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 48 89 f8 48 d3 e0 c3",
+   "core": [
+    "Shl64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "solver_queries": 1,
+     "contrast": {
+      "lang": "go",
+      "n": "176",
+      "operator": "<<"
+     }
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "474": {
+   "lang": "rust",
+   "n": "474",
+   "operator": "<<",
+   "type_pair": "u64,i32",
+   "meta": {
+    "n": 474,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a << b",
+    "result_type": "<u64 as core::ops::Shl<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_474",
+    "symbol_exact": true
+   },
+   "bytes": "89 f1 48 89 f8 48 d3 e0 c3",
+   "core": [
+    "Shl64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_180 is not straight-line: 3 blocks",
+    "go op_216 is not straight-line: 3 blocks"
+   ]
+  },
+  "475": {
+   "lang": "rust",
+   "n": "475",
+   "operator": "<<",
+   "type_pair": "u64,i64",
+   "meta": {
+    "n": 475,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a << b",
+    "result_type": "<u64 as core::ops::Shl<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_475",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 48 89 f8 48 d3 e0 c3",
+   "core": [
+    "Shl64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_181 is not straight-line: 3 blocks",
+    "go op_217 is not straight-line: 3 blocks",
+    "swift op_703 is not straight-line: 7 blocks",
+    "swift op_739 is not straight-line: 7 blocks"
+   ]
+  },
+  "476": {
+   "lang": "rust",
+   "n": "476",
+   "operator": "<<",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 476,
+    "operator": "<<",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a << b",
+    "result_type": "<u64 as core::ops::Shl<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_476",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 48 89 f8 48 d3 e0 c3",
+   "core": [
+    "Shl64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "solver_queries": 1,
+     "contrast": {
+      "lang": "go",
+      "n": "182",
+      "operator": "<<"
+     }
+    },
+    {
+     "condition": "in1 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "templates_tried": 5,
+     "solver_queries": 8,
+     "witness": "in0_64 = 4294967295, in1_64 = 64",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "contrast": {
+      "lang": "swift",
+      "n": "704",
+      "operator": "<<"
+     }
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "498": {
+   "lang": "rust",
+   "n": "498",
+   "operator": ">>",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 498,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a >> b",
+    "result_type": "<i32 as core::ops::Shr<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_498",
+    "symbol_exact": true
+   },
+   "bytes": "89 f1 89 f8 d3 f8 c3",
+   "core": [
+    "zx64(ex32@0(Sar64(sx64(ex32@0(in0:64)),And8(31:8,ex8@0(in1:64)))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_168 is not straight-line: 3 blocks"
+   ]
+  },
+  "499": {
+   "lang": "rust",
+   "n": "499",
+   "operator": ">>",
+   "type_pair": "i32,i64",
+   "meta": {
+    "n": 499,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a >> b",
+    "result_type": "<i32 as core::ops::Shr<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_499",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 89 f8 d3 f8 c3",
+   "core": [
+    "zx64(ex32@0(Sar64(sx64(ex32@0(in0:64)),And8(31:8,ex8@0(in1:64)))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_169 is not straight-line: 3 blocks"
+   ]
+  },
+  "500": {
+   "lang": "rust",
+   "n": "500",
+   "operator": ">>",
+   "type_pair": "i32,u64",
+   "meta": {
+    "n": 500,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a >> b",
+    "result_type": "<i32 as core::ops::Shr<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_500",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 89 f8 d3 f8 c3",
+   "core": [
+    "zx64(ex32@0(Sar64(sx64(ex32@0(in0:64)),And8(31:8,ex8@0(in1:64)))))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "504": {
+   "lang": "rust",
+   "n": "504",
+   "operator": ">>",
+   "type_pair": "i64,i32",
+   "meta": {
+    "n": 504,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a >> b",
+    "result_type": "<i64 as core::ops::Shr<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_504",
+    "symbol_exact": true
+   },
+   "bytes": "89 f1 48 89 f8 48 d3 f8 c3",
+   "core": [
+    "Sar64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_174 is not straight-line: 3 blocks"
+   ]
+  },
+  "505": {
+   "lang": "rust",
+   "n": "505",
+   "operator": ">>",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 505,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a >> b",
+    "result_type": "<i64 as core::ops::Shr<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_505",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 48 89 f8 48 d3 f8 c3",
+   "core": [
+    "Sar64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_175 is not straight-line: 3 blocks"
+   ]
+  },
+  "506": {
+   "lang": "rust",
+   "n": "506",
+   "operator": ">>",
+   "type_pair": "i64,u64",
+   "meta": {
+    "n": 506,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a >> b",
+    "result_type": "<i64 as core::ops::Shr<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_506",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 48 89 f8 48 d3 f8 c3",
+   "core": [
+    "Sar64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "510": {
+   "lang": "rust",
+   "n": "510",
+   "operator": ">>",
+   "type_pair": "u64,i32",
+   "meta": {
+    "n": 510,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a >> b",
+    "result_type": "<u64 as core::ops::Shr<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_510",
+    "symbol_exact": true
+   },
+   "bytes": "89 f1 48 89 f8 48 d3 e8 c3",
+   "core": [
+    "Shr64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_180 is not straight-line: 3 blocks",
+    "go op_216 is not straight-line: 3 blocks"
+   ]
+  },
+  "511": {
+   "lang": "rust",
+   "n": "511",
+   "operator": ">>",
+   "type_pair": "u64,i64",
+   "meta": {
+    "n": 511,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a >> b",
+    "result_type": "<u64 as core::ops::Shr<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_511",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 48 89 f8 48 d3 e8 c3",
+   "core": [
+    "Shr64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "go op_181 is not straight-line: 3 blocks",
+    "go op_217 is not straight-line: 3 blocks",
+    "swift op_703 is not straight-line: 7 blocks",
+    "swift op_739 is not straight-line: 7 blocks"
+   ]
+  },
+  "512": {
+   "lang": "rust",
+   "n": "512",
+   "operator": ">>",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 512,
+    "operator": ">>",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a >> b",
+    "result_type": "<u64 as core::ops::Shr<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_512",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f1 48 89 f8 48 d3 e8 c3",
+   "core": [
+    "Shr64(in0:64,And8(63:8,ex8@0(in1:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "solver_queries": 1,
+     "contrast": {
+      "lang": "go",
+      "n": "218",
+      "operator": ">>"
+     }
+    },
+    {
+     "condition": "in1 >= 64 (unsigned)",
+     "lifted": "(solver-localized; no branch carries this condition)",
+     "response": "continue-with-a-different-answer",
+     "detection": "solver-localized",
+     "templates_tried": 5,
+     "solver_queries": 8,
+     "witness": "in0_64 = 18446744069414584320, in1_64 = 64",
+     "response_ground": "z3 found a point in the region where this unit's result is not 0, so the region is not a clamp to zero",
+     "contrast": {
+      "lang": "swift",
+      "n": "740",
+      "operator": ">>"
+     }
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": [
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808",
+    "no template fitted the disagreement region after 21 queries; the templates tried were: in0 >= 64 (unsigned); in0 >= 32 (unsigned); in0 >= 16 (unsigned); in0 >= 8 (unsigned); in1 >= 64 (unsigned); in1 >= 32 (unsigned); in1 >= 16 (unsigned); in1 >= 8 (unsigned); in0 < 0 (signed); in1 < 0 (signed); in0 == 0; in0 == 1; in0 == -1; in0 == -2147483648; in0 == -9223372036854775808; in1 == 0; in1 == 1; in1 == -1; in1 == -2147483648; in1 == -9223372036854775808"
+   ]
+  },
+  "534": {
+   "lang": "rust",
+   "n": "534",
+   "operator": "+",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 534,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a + b",
+    "result_type": "<i32 as core::ops::Add<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_534",
+    "symbol_exact": true
+   },
+   "bytes": "8d 04 37 c3",
+   "core": [
+    "zx64(Add32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in0 + in1 overflows 32 bits (signed)",
+     "lifted": "ex1@0(amd64g_calculate_condition(0:64,3:64,zx64(ex32@0(in0:64)),zx64(ex32@0(in1:64)),u0:64))",
+     "response": "wrap-continue",
+     "detection": "branch-to-response",
+     "read_from": {
+      "lang": "swift",
+      "n": "222",
+      "operator": "+"
+     },
+     "note": "this unit carries no branch to a response, and a unit machine-form evidence connects it to guards on this condition; the condition is read from that unit's own lifted guard and never from this one",
+     "mode_name": "wrapping"
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "541": {
+   "lang": "rust",
+   "n": "541",
+   "operator": "+",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 541,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a + b",
+    "result_type": "<i64 as core::ops::Add<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_541",
+    "symbol_exact": true
+   },
+   "bytes": "48 8d 04 37 c3",
+   "core": [
+    "Add64(in0:64,in1:64)"
+   ],
+   "modes": [
+    {
+     "condition": "in0 + in1 overflows 64 bits (signed)",
+     "lifted": "ex1@0(amd64g_calculate_condition(0:64,4:64,in0:64,in1:64,u0:64))",
+     "response": "wrap-continue",
+     "detection": "branch-to-response",
+     "read_from": {
+      "lang": "swift",
+      "n": "229",
+      "operator": "+"
+     },
+     "note": "this unit carries no branch to a response, and a unit machine-form evidence connects it to guards on this condition; the condition is read from that unit's own lifted guard and never from this one",
+     "mode_name": "wrapping"
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "548": {
+   "lang": "rust",
+   "n": "548",
+   "operator": "+",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 548,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a + b",
+    "result_type": "<u64 as core::ops::Add<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_548",
+    "symbol_exact": true
+   },
+   "bytes": "48 8d 04 37 c3",
+   "core": [
+    "Add64(in0:64,in1:64)"
+   ],
+   "modes": [
+    {
+     "condition": "in0 + in1 carries out of 64 bits (unsigned)",
+     "lifted": "ex1@0(amd64g_calculate_condition(2:64,4:64,in0:64,in1:64,u0:64))",
+     "response": "wrap-continue",
+     "detection": "branch-to-response",
+     "read_from": {
+      "lang": "swift",
+      "n": "236",
+      "operator": "+"
+     },
+     "note": "this unit carries no branch to a response, and a unit machine-form evidence connects it to guards on this condition; the condition is read from that unit's own lifted guard and never from this one",
+     "mode_name": "wrapping"
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "555": {
+   "lang": "rust",
+   "n": "555",
+   "operator": "+",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 555,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a + b",
+    "result_type": "<f32 as core::ops::Add<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_555",
+    "symbol_exact": true
+   },
+   "bytes": "f3 0f 58 c1 c3",
+   "core": [
+    "Add32F0x4(ex128@0(in0:256),ex128@0(in1:256))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "562": {
+   "lang": "rust",
+   "n": "562",
+   "operator": "+",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 562,
+    "operator": "+",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a + b",
+    "result_type": "<f64 as core::ops::Add<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_562",
+    "symbol_exact": true
+   },
+   "bytes": "f2 0f 58 c1 c3",
+   "core": [
+    "Add64F0x2(ex128@0(in0:256),ex128@0(in1:256))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "570": {
+   "lang": "rust",
+   "n": "570",
+   "operator": "-",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 570,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a - b",
+    "result_type": "<i32 as core::ops::Sub<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_570",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 29 f0 c3",
+   "core": [
+    "zx64(Sub32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in0 - in1 overflows 32 bits (signed)",
+     "lifted": "ex1@0(amd64g_calculate_condition(0:64,7:64,zx64(ex32@0(in0:64)),zx64(ex32@0(in1:64)),u0:64))",
+     "response": "wrap-continue",
+     "detection": "branch-to-response",
+     "read_from": {
+      "lang": "swift",
+      "n": "258",
+      "operator": "-"
+     },
+     "note": "this unit carries no branch to a response, and a unit machine-form evidence connects it to guards on this condition; the condition is read from that unit's own lifted guard and never from this one",
+     "mode_name": "wrapping"
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "577": {
+   "lang": "rust",
+   "n": "577",
+   "operator": "-",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 577,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a - b",
+    "result_type": "<i64 as core::ops::Sub<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_577",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 29 f0 c3",
+   "core": [
+    "Sub64(in0:64,in1:64)"
+   ],
+   "modes": [
+    {
+     "condition": "in0 - in1 overflows 64 bits (signed)",
+     "lifted": "ex1@0(amd64g_calculate_condition(0:64,8:64,in0:64,in1:64,u0:64))",
+     "response": "wrap-continue",
+     "detection": "branch-to-response",
+     "read_from": {
+      "lang": "swift",
+      "n": "265",
+      "operator": "-"
+     },
+     "note": "this unit carries no branch to a response, and a unit machine-form evidence connects it to guards on this condition; the condition is read from that unit's own lifted guard and never from this one",
+     "mode_name": "wrapping"
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "584": {
+   "lang": "rust",
+   "n": "584",
+   "operator": "-",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 584,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a - b",
+    "result_type": "<u64 as core::ops::Sub<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_584",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 29 f0 c3",
+   "core": [
+    "Sub64(in0:64,in1:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "591": {
+   "lang": "rust",
+   "n": "591",
+   "operator": "-",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 591,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a - b",
+    "result_type": "<f32 as core::ops::Sub<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_591",
+    "symbol_exact": true
+   },
+   "bytes": "f3 0f 5c c1 c3",
+   "core": [
+    "Sub32F0x4(ex128@0(in0:256),ex128@0(in1:256))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "598": {
+   "lang": "rust",
+   "n": "598",
+   "operator": "-",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 598,
+    "operator": "-",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a - b",
+    "result_type": "<f64 as core::ops::Sub<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_598",
+    "symbol_exact": true
+   },
+   "bytes": "f2 0f 5c c1 c3",
+   "core": [
+    "Sub64F0x2(ex128@0(in0:256),ex128@0(in1:256))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "606": {
+   "lang": "rust",
+   "n": "606",
+   "operator": "*",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 606,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a * b",
+    "result_type": "<i32 as core::ops::Mul<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_606",
+    "symbol_exact": true
+   },
+   "bytes": "89 f8 0f af c6 c3",
+   "core": [
+    "zx64(Mul32(ex32@0(in0:64),ex32@0(in1:64)))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 * in0 overflows 32 bits (signed)",
+     "lifted": "ex1@0(amd64g_calculate_condition(0:64,51:64,zx64(ex32@0(in1:64)),zx64(ex32@0(in0:64)),u0:64))",
+     "response": "wrap-continue",
+     "detection": "branch-to-response",
+     "read_from": {
+      "lang": "swift",
+      "n": "114",
+      "operator": "*"
+     },
+     "note": "this unit carries no branch to a response, and a unit machine-form evidence connects it to guards on this condition; the condition is read from that unit's own lifted guard and never from this one",
+     "mode_name": "wrapping"
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "613": {
+   "lang": "rust",
+   "n": "613",
+   "operator": "*",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 613,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a * b",
+    "result_type": "<i64 as core::ops::Mul<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_613",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 0f af c6 c3",
+   "core": [
+    "Mul64(in0:64,in1:64)"
+   ],
+   "modes": [
+    {
+     "condition": "in1 * in0 overflows 64 bits (signed)",
+     "lifted": "ex1@0(amd64g_calculate_condition(0:64,52:64,in1:64,in0:64,u0:64))",
+     "response": "wrap-continue",
+     "detection": "branch-to-response",
+     "read_from": {
+      "lang": "swift",
+      "n": "121",
+      "operator": "*"
+     },
+     "note": "this unit carries no branch to a response, and a unit machine-form evidence connects it to guards on this condition; the condition is read from that unit's own lifted guard and never from this one",
+     "mode_name": "wrapping"
+    }
+   ],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "620": {
+   "lang": "rust",
+   "n": "620",
+   "operator": "*",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 620,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a * b",
+    "result_type": "<u64 as core::ops::Mul<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_620",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 48 0f af c6 c3",
+   "core": [
+    "Mul64(in0:64,in1:64)"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "627": {
+   "lang": "rust",
+   "n": "627",
+   "operator": "*",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 627,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a * b",
+    "result_type": "<f32 as core::ops::Mul<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_627",
+    "symbol_exact": true
+   },
+   "bytes": "f3 0f 59 c1 c3",
+   "core": [
+    "Mul32F0x4(ex128@0(in0:256),ex128@0(in1:256))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "634": {
+   "lang": "rust",
+   "n": "634",
+   "operator": "*",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 634,
+    "operator": "*",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a * b",
+    "result_type": "<f64 as core::ops::Mul<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_634",
+    "symbol_exact": true
+   },
+   "bytes": "f2 0f 59 c1 c3",
+   "core": [
+    "Mul64F0x2(ex128@0(in0:256),ex128@0(in1:256))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "642": {
+   "lang": "rust",
+   "n": "642",
+   "operator": "/",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 642,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a / b",
+    "result_type": "<i32 as core::ops::Div<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_642",
+    "symbol_exact": true
+   },
+   "bytes": "50 85 f6 74 15 89 f0 f7 d0 8d 8f 00 00 00 80 09 c1 74 14 89 f8 99 f7 fe 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "core": [
+    "zx64(ex32@0(DivModS64to32(32HLto64(Sar32(ex32@0(in0:64),31:8),ex32@0(in0:64)),ex32@0(in1:64))))",
+    "zx64(ex32@32(DivModS64to32(32HLto64(Sar32(ex32@0(in0:64),31:8),ex32@0(in0:64)),ex32@0(in1:64))))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,19:64,zx64(ex32@0(in1:64)),0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero",
+     "detection": "branch-to-response",
+     "branch": "je -> B3",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero(%rip)"
+    },
+    {
+     "condition": "((-2147483648 + in0) | ~in1) == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,19:64,zx64(Or32(Add32(2147483648:32,ex32@0(in0:64)),Not32(ex32@0(in1:64)))),0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow",
+     "detection": "branch-to-response",
+     "branch": "je -> B4",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow(%rip)"
+    }
+   ],
+   "response_blocks": [
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero(%rip)",
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow(%rip)"
+   ],
+   "solver_notes": [
+    "rust op_642 is not straight-line: 5 blocks",
+    "rust op_642 is not straight-line: 5 blocks",
+    "go op_132 is not straight-line: 6 blocks",
+    "rust op_642 is not straight-line: 5 blocks",
+    "go op_96 is not straight-line: 6 blocks",
+    "rust op_642 is not straight-line: 5 blocks"
+   ]
+  },
+  "649": {
+   "lang": "rust",
+   "n": "649",
+   "operator": "/",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 649,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a / b",
+    "result_type": "<i64 as core::ops::Div<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_649",
+    "symbol_exact": true
+   },
+   "bytes": "50 48 85 f6 74 22 48 89 f0 48 f7 d0 48 b9 00 00 00 00 00 00 00 80 48 31 f9 48 09 c1 74 17 48 89 f8 48 99 48 f7 fe 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "core": [
+    "ex64@0(DivModS128to64(64HLto128(Sar64(in0:64,63:8),in0:64),in1:64))",
+    "ex64@64(DivModS128to64(64HLto128(Sar64(in0:64,63:8),in0:64),in1:64))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,20:64,in1:64,0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero",
+     "detection": "branch-to-response",
+     "branch": "je -> B3",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero(%rip)"
+    },
+    {
+     "condition": "(~in1 | (-9223372036854775808 ^ in0)) == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,20:64,Or64(Not64(in1:64),Xor64(9223372036854775808:64,in0:64)),0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow",
+     "detection": "branch-to-response",
+     "branch": "je -> B4",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow(%rip)"
+    }
+   ],
+   "response_blocks": [
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero(%rip)",
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow(%rip)"
+   ],
+   "solver_notes": [
+    "rust op_649 is not straight-line: 5 blocks",
+    "rust op_649 is not straight-line: 5 blocks",
+    "go op_103 is not straight-line: 6 blocks",
+    "go op_139 is not straight-line: 6 blocks",
+    "rust op_649 is not straight-line: 5 blocks",
+    "rust op_649 is not straight-line: 5 blocks",
+    "rust op_649 is not straight-line: 5 blocks"
+   ]
+  },
+  "656": {
+   "lang": "rust",
+   "n": "656",
+   "operator": "/",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 656,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a / b",
+    "result_type": "<u64 as core::ops::Div<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_656",
+    "symbol_exact": true
+   },
+   "bytes": "48 85 f6 74 09 48 89 f8 31 d2 48 f7 f6 c3 50 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "core": [
+    "ex64@0(DivModU128to64(64HLto128(0:64,in0:64),in1:64))",
+    "ex64@64(DivModU128to64(64HLto128(0:64,in0:64),in1:64))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,20:64,in1:64,0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero",
+     "detection": "branch-to-response",
+     "branch": "je -> B2",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero(%rip)"
+    }
+   ],
+   "response_blocks": [
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero(%rip)"
+   ],
+   "solver_notes": [
+    "rust op_656 is not straight-line: 3 blocks",
+    "rust op_656 is not straight-line: 3 blocks",
+    "go op_146 is not straight-line: 3 blocks",
+    "rust op_656 is not straight-line: 3 blocks",
+    "rust op_656 is not straight-line: 3 blocks"
+   ]
+  },
+  "663": {
+   "lang": "rust",
+   "n": "663",
+   "operator": "/",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 663,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a / b",
+    "result_type": "<f32 as core::ops::Div<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_663",
+    "symbol_exact": true
+   },
+   "bytes": "f3 0f 5e c1 c3",
+   "core": [
+    "Div32F0x4(ex128@0(in0:256),ex128@0(in1:256))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "670": {
+   "lang": "rust",
+   "n": "670",
+   "operator": "/",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 670,
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a / b",
+    "result_type": "<f64 as core::ops::Div<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_670",
+    "symbol_exact": true
+   },
+   "bytes": "f2 0f 5e c1 c3",
+   "core": [
+    "Div64F0x2(ex128@0(in0:256),ex128@0(in1:256))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "678": {
+   "lang": "rust",
+   "n": "678",
+   "operator": "%",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 678,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a % b",
+    "result_type": "<i32 as core::ops::Rem<i32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_678",
+    "symbol_exact": true
+   },
+   "bytes": "50 85 f6 74 17 89 f0 f7 d0 8d 8f 00 00 00 80 09 c1 74 16 89 f8 99 f7 fe 89 d0 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "core": [
+    "zx64(ex32@32(DivModS64to32(32HLto64(Sar32(ex32@0(in0:64),31:8),ex32@0(in0:64)),ex32@0(in1:64))))",
+    "zx64(ex32@32(DivModS64to32(32HLto64(Sar32(ex32@0(in0:64),31:8),ex32@0(in0:64)),ex32@0(in1:64))))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,19:64,zx64(ex32@0(in1:64)),0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero",
+     "detection": "branch-to-response",
+     "branch": "je -> B3",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero(%rip)"
+    },
+    {
+     "condition": "((-2147483648 + in0) | ~in1) == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,19:64,zx64(Or32(Add32(2147483648:32,ex32@0(in0:64)),Not32(ex32@0(in1:64)))),0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow",
+     "detection": "branch-to-response",
+     "branch": "je -> B4",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow(%rip)"
+    }
+   ],
+   "response_blocks": [
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero(%rip)",
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow(%rip)"
+   ],
+   "solver_notes": [
+    "rust op_678 is not straight-line: 5 blocks",
+    "rust op_678 is not straight-line: 5 blocks",
+    "go op_132 is not straight-line: 6 blocks",
+    "rust op_678 is not straight-line: 5 blocks",
+    "go op_96 is not straight-line: 6 blocks",
+    "rust op_678 is not straight-line: 5 blocks"
+   ]
+  },
+  "685": {
+   "lang": "rust",
+   "n": "685",
+   "operator": "%",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 685,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a % b",
+    "result_type": "<i64 as core::ops::Rem<i64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_685",
+    "symbol_exact": true
+   },
+   "bytes": "50 48 85 f6 74 25 48 89 f0 48 f7 d0 48 b9 00 00 00 00 00 00 00 80 48 31 f9 48 09 c1 74 1a 48 89 f8 48 99 48 f7 fe 48 89 d0 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "core": [
+    "ex64@64(DivModS128to64(64HLto128(Sar64(in0:64,63:8),in0:64),in1:64))",
+    "ex64@64(DivModS128to64(64HLto128(Sar64(in0:64,63:8),in0:64),in1:64))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,20:64,in1:64,0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero",
+     "detection": "branch-to-response",
+     "branch": "je -> B3",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero(%rip)"
+    },
+    {
+     "condition": "(~in1 | (-9223372036854775808 ^ in0)) == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,20:64,Or64(Not64(in1:64),Xor64(9223372036854775808:64,in0:64)),0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow",
+     "detection": "branch-to-response",
+     "branch": "je -> B4",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow(%rip)"
+    }
+   ],
+   "response_blocks": [
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero(%rip)",
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow(%rip)"
+   ],
+   "solver_notes": [
+    "rust op_685 is not straight-line: 5 blocks",
+    "rust op_685 is not straight-line: 5 blocks",
+    "go op_103 is not straight-line: 6 blocks",
+    "go op_139 is not straight-line: 6 blocks",
+    "rust op_685 is not straight-line: 5 blocks",
+    "rust op_685 is not straight-line: 5 blocks",
+    "rust op_685 is not straight-line: 5 blocks"
+   ]
+  },
+  "692": {
+   "lang": "rust",
+   "n": "692",
+   "operator": "%",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 692,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a % b",
+    "result_type": "<u64 as core::ops::Rem<u64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_692",
+    "symbol_exact": true
+   },
+   "bytes": "48 85 f6 74 0c 48 89 f8 31 d2 48 f7 f6 48 89 d0 c3 50 48 8d 3d 00 00 00 00 ff 15 00 00 00 00",
+   "core": [
+    "ex64@64(DivModU128to64(64HLto128(0:64,in0:64),in1:64))",
+    "ex64@64(DivModU128to64(64HLto128(0:64,in0:64),in1:64))"
+   ],
+   "modes": [
+    {
+     "condition": "in1 == 0",
+     "lifted": "ex1@0(amd64g_calculate_condition(4:64,20:64,in1:64,0:64,u0:64))",
+     "response": "panic-call:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero",
+     "detection": "branch-to-response",
+     "branch": "je -> B2",
+     "lands_in": "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero(%rip)"
+    }
+   ],
+   "response_blocks": [
+    "call *_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero(%rip)"
+   ],
+   "solver_notes": [
+    "rust op_692 is not straight-line: 3 blocks",
+    "rust op_692 is not straight-line: 3 blocks",
+    "go op_110 is not straight-line: 3 blocks",
+    "rust op_692 is not straight-line: 3 blocks",
+    "rust op_692 is not straight-line: 3 blocks"
+   ]
+  },
+  "699": {
+   "lang": "rust",
+   "n": "699",
+   "operator": "%",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 699,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a % b",
+    "result_type": "<f32 as core::ops::Rem<f32>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_699",
+    "symbol_exact": true
+   },
+   "bytes": "ff 25 00 00 00 00",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "706": {
+   "lang": "rust",
+   "n": "706",
+   "operator": "%",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 706,
+    "operator": "%",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a % b",
+    "result_type": "<f64 as core::ops::Rem<f64>>::Output",
+    "result_rule": "operator_trait_output",
+    "symbol": "op_706",
+    "symbol_exact": true
+   },
+   "bytes": "ff 25 00 00 00 00",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "714": {
+   "lang": "rust",
+   "n": "714",
+   "operator": "..",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 714,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "i32",
+    "rhs_rep": "i32",
+    "rhs_type": "i32",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<i32>",
+    "result_rule": "range_type",
+    "symbol": "op_714",
+    "symbol_exact": true
+   },
+   "bytes": "89 f2 89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "721": {
+   "lang": "rust",
+   "n": "721",
+   "operator": "..",
+   "type_pair": "i64,i64",
+   "meta": {
+    "n": 721,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i64",
+    "lhs_type": "i64",
+    "rhs_rep": "i64",
+    "rhs_type": "i64",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<i64>",
+    "result_rule": "range_type",
+    "symbol": "op_721",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f2 48 89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "728": {
+   "lang": "rust",
+   "n": "728",
+   "operator": "..",
+   "type_pair": "u64,u64",
+   "meta": {
+    "n": 728,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "u64",
+    "lhs_type": "u64",
+    "rhs_rep": "u64",
+    "rhs_type": "u64",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<u64>",
+    "result_rule": "range_type",
+    "symbol": "op_728",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f2 48 89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "735": {
+   "lang": "rust",
+   "n": "735",
+   "operator": "..",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 735,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<f32>",
+    "result_rule": "range_type",
+    "symbol": "op_735",
+    "symbol_exact": true
+   },
+   "bytes": "c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "742": {
+   "lang": "rust",
+   "n": "742",
+   "operator": "..",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 742,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<f64>",
+    "result_rule": "range_type",
+    "symbol": "op_742",
+    "symbol_exact": true
+   },
+   "bytes": "c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "749": {
+   "lang": "rust",
+   "n": "749",
+   "operator": "..",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 749,
+    "operator": "..",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a .. b",
+    "result_type": "core::ops::Range<bool>",
+    "result_rule": "range_type",
+    "symbol": "op_749",
+    "symbol_exact": true
+   },
+   "bytes": "89 f2 89 f8 c3",
+   "core": [],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "807": {
+   "lang": "rust",
+   "n": "807",
+   "operator": "..=",
+   "type_pair": "f32,f32",
+   "meta": {
+    "n": 807,
+    "operator": "..=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f32",
+    "lhs_type": "f32",
+    "rhs_rep": "f32",
+    "rhs_type": "f32",
+    "expression": "a ..= b",
+    "result_type": "core::ops::RangeInclusive<f32>",
+    "result_rule": "range_type",
+    "symbol": "op_807",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 f3 0f 11 07 f3 0f 11 4f 04 c6 47 08 00 c3",
+   "core": [
+    "st32(Add64(4:64,u0:64))=ex32@0(in1:256)",
+    "st32(u0:64)=ex32@0(in0:256)",
+    "st8(Add64(8:64,u0:64))=0:8"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "814": {
+   "lang": "rust",
+   "n": "814",
+   "operator": "..=",
+   "type_pair": "f64,f64",
+   "meta": {
+    "n": 814,
+    "operator": "..=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "f64",
+    "lhs_type": "f64",
+    "rhs_rep": "f64",
+    "rhs_type": "f64",
+    "expression": "a ..= b",
+    "result_type": "core::ops::RangeInclusive<f64>",
+    "result_rule": "range_type",
+    "symbol": "op_814",
+    "symbol_exact": true
+   },
+   "bytes": "48 89 f8 f2 0f 11 07 f2 0f 11 4f 08 c6 47 10 00 c3",
+   "core": [
+    "st64(Add64(8:64,u0:64))=ex64@0(in1:256)",
+    "st64(u0:64)=ex64@0(in0:256)",
+    "st8(Add64(16:64,u0:64))=0:8"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  },
+  "821": {
+   "lang": "rust",
+   "n": "821",
+   "operator": "..=",
+   "type_pair": "bool,bool",
+   "meta": {
+    "n": 821,
+    "operator": "..=",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "bool",
+    "lhs_type": "bool",
+    "rhs_rep": "bool",
+    "rhs_type": "bool",
+    "expression": "a ..= b",
+    "result_type": "core::ops::RangeInclusive<bool>",
+    "result_rule": "range_type",
+    "symbol": "op_821",
+    "symbol_exact": true
+   },
+   "bytes": "c1 e6 08 8d 04 3e c3",
+   "core": [
+    "zx64(Add32(ex32@0(Shl64(zx64(ex32@0(in1:64)),8:8)),ex32@0(in0:64)))",
+    "zx64(ex32@0(Shl64(zx64(ex32@0(in1:64)),8:8)))"
+   ],
+   "modes": [],
+   "response_blocks": [],
+   "solver_notes": []
+  }
+ },
+ "z3": "5.1.0",
+ "lifter": "pyvex 9.2.213 / archinfo 9.2.213 / libVEX via ArchAMD64"
+}

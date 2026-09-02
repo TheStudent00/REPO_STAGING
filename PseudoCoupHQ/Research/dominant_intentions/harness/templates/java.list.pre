@@ -1,0 +1,38 @@
+  // list probe bodies - java (ArrayList; == is identity, .equals is content).
+  static java.util.List<Integer> mkl() {
+    return new java.util.ArrayList<Integer>(java.util.Arrays.asList(1, 2, 3));
+  }
+  static String joinInts(java.util.List<Integer> v) {
+    StringBuilder b = new StringBuilder();
+    for (int i = 0; i < v.size(); i++) { if (i > 0) b.append(","); b.append(v.get(i)); }
+    return b.toString();
+  }
+  static String f_listU1_a() {
+    java.util.List<Integer> a = new java.util.ArrayList<Integer>();
+    a.add(1); a.add(2); a.add(3); return joinInts(a);
+  }
+  static String f_listU2_a() { return Integer.toString(mkl().get(1)); }
+  static String f_listU3_a() {
+    java.util.List<Integer> o = new java.util.ArrayList<Integer>();
+    for (int x : mkl()) o.add(x); return joinInts(o);
+  }
+  static String f_listU4_a() { return Integer.toString(mkl().size()); }
+  static String f_Fl3_a() {
+    java.util.List<Integer> a = new java.util.ArrayList<Integer>();
+    a.add(1); a.add(2); a.add(3); a.add(4); return Integer.toString(a.size());
+  }
+  static String f_Fl4_a() { return Integer.toString(mkl().get(10)); }
+  static String f_Fl5_a() { return Integer.toString(mkl().get(-1)); }
+  static String f_Fl6_a() {
+    java.util.List<Integer> a = mkl(); java.util.List<Integer> s = a.subList(0, 2);
+    s.set(0, 99); return Integer.toString(a.get(0));
+  }
+  static String f_Fl7_a() { return fmtb(mkl() == mkl()); }
+  static String f_Fl8_a() {
+    java.util.List<Integer> a = new java.util.ArrayList<Integer>(java.util.Arrays.asList(10, 9, 1));
+    java.util.Collections.sort(a); return joinInts(a);
+  }
+  static String f_Fl9_a() {
+    java.util.List<Integer> a = mkl(); java.util.List<Integer> b = a;
+    b.set(0, 99); return Integer.toString(a.get(0));
+  }

@@ -1,0 +1,43 @@
+canon21_worked_example.txt -- c/op_465 (`a == b`, a:i32, b:f32), int-to-
+float conversion + packed-mask float compare. instruction text | plain
+reading, space-aligned (SPEC_reading_form.md's own shape).
+====================================================================================================
+
+REAL SHIP CODE (canon4_units_c.json's own `mnem`, forced by
+construction):
+
+    cvtsi2ss %edi,%xmm2   %xmm2 = int_to_f32(%edi)
+    cmpeqss %xmm0,%xmm2   %xmm2 = fcompare_eq_mask_f32(%xmm2, %xmm0)
+    movd %xmm2,%r10d      %r10d = low32(%xmm2)
+    mov %r10d,%eax        %eax = %r10d
+    and $0x1,%eax         %eax = %eax & $0x1
+    ret                   return %eax
+
+THIS LAP'S CANONICAL TEXT (canon21_units_c.json's own `canon21_text`,
+condition_table7.py's substitution + canon21_render.py's rendering,
+standardized registers -- a's own designated home %xmm0/%rdi is never
+clobbered, the conversion lands in a FRESH temp %xmm3, the compare's
+own destination is a SEPARATE fresh temp %xmm2):
+
+    cvtsi2ss %edi,%xmm3   %xmm3 = int_to_f32(%edi)
+    movaps %xmm3,%xmm2    %xmm2 = %xmm3
+    cmpeqss %xmm0,%xmm2   %xmm2 = fcompare_eq_mask_f32(%xmm2, %xmm0)
+    movd %xmm2,%eax       %eax = low32(%xmm2)
+    and $1,%al            %al = %al & $1
+    movzx %al,%eax        %eax = zero_extend(%al)
+    ret                   return %eax
+
+GATE (canon21_behaviour_check.anchored_check, real z3 FPA --
+fpSignedToFP for the conversion, fpEQ/fpIsNaN for the compare,
+fpToIEEEBV at every register write, exactly the way real hardware's
+own registers hold "a bag of bits; the instruction decides what they
+mean"): PROVED_EQUAL -- these two texts compute the identical %eax
+value for every possible %edi/%xmm0 starting state, byte-different
+(different register choices, an extra movaps/movzx real ship's own
+register-pressure choices happened to avoid) but semantically proved,
+not assumed.
+
+ZERO REGRESSIONS (programmatic, this lap's own report script): every
+one of the 1,195 units already converged before this lap kept its
+newest-generation text byte-identical after canon21.py ran, checked
+directly over all 1,779 units in all five languages, not sampled.

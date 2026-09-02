@@ -1,0 +1,26 @@
+// dict probe bodies - c++ (std::map / unordered_map). operator[] on a MISSING
+// key INSERTS a default and answers it: probe F-d3.a reports the value AND the
+// size afterwards, because the size is where the insertion shows.
+#include <map>
+#include <unordered_map>
+static std::map<std::string, std::string> mkd() {
+  std::map<std::string, std::string> d; d["k"] = "v1"; return d;
+}
+static std::string f_dictU1_a() { auto d = mkd(); return d["k"]; }
+static std::string f_dictU2_a() { std::map<std::string, std::string> d; d["k"] = "v1"; d["k"] = "v2"; return d["k"]; }
+static std::string f_dictU3_a() { auto d = mkd(); d.erase("k"); return fmtb(d.count("k") > 0); }
+static std::string f_dictU4_a() { std::map<std::string, int> d; d["a"] = 1; d["b"] = 2; d["c"] = 3; return std::to_string(d.size()); }
+static std::string f_Fd1_b() { std::map<int, std::string> d; d[1] = "v"; return d[1]; }
+static std::string f_Fd2_a() {
+  std::unordered_map<std::string, int> d; d["z"] = 1; d["a"] = 1; d["m"] = 1;
+  std::string out; for (auto& kv : d) { if (!out.empty()) out += ","; out += kv.first; }
+  return out;
+}
+static std::string f_Fd3_a() { auto d = mkd(); std::string v = d["nope"]; return "\"" + v + "\"/" + std::to_string(d.size()); }
+static std::string f_Fd3_b() { auto d = mkd(); return d.at("nope"); }
+static std::string f_Fd4_a() {
+  std::map<std::string, int> d{{"a",1},{"b",2},{"c",3},{"d",4},{"e",5}};
+  for (auto it = d.begin(); it != d.end(); ++it) { if (it->first == "c") { d.erase(it); } }
+  return "ok";
+}
+static std::string f_Fl9d_a() { auto a = mkd(); auto b = a; b["k"] = "99"; return a["k"]; }

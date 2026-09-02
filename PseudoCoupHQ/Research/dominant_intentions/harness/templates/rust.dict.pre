@@ -1,0 +1,23 @@
+// dict probe bodies - rust (HashMap: order explicitly NOT promised; indexing
+// panics on a missing key while .get answers None -- two spellings, two
+// guarantees).
+use std::collections::HashMap;
+fn mkd() -> HashMap<String, String> {
+    let mut d = HashMap::new(); d.insert("k".to_string(), "v1".to_string()); d
+}
+fn f_dictU1_a() -> String { mkd()["k"].clone() }
+fn f_dictU2_a() -> String {
+    let mut d = HashMap::new(); d.insert("k", "v1"); d.insert("k", "v2"); d["k"].to_string()
+}
+fn f_dictU3_a() -> String { let mut d = mkd(); d.remove("k"); fmtb(d.contains_key("k")) }
+fn f_dictU4_a() -> String {
+    let mut d = HashMap::new(); d.insert("a", 1); d.insert("b", 2); d.insert("c", 3);
+    format!("{}", d.len())
+}
+fn f_Fd1_b() -> String { let mut d = HashMap::new(); d.insert(1, "v"); d[&1].to_string() }
+fn f_Fd2_a() -> String {
+    let mut d = HashMap::new(); d.insert("z", 1); d.insert("a", 1); d.insert("m", 1);
+    d.keys().map(|k| k.to_string()).collect::<Vec<String>>().join(",")
+}
+fn f_Fd3_a() -> String { let d = mkd(); d[&"nope".to_string()].clone() }
+fn f_Fd3_c() -> String { let d = mkd(); format!("{:?}", d.get(&"nope".to_string())) }

@@ -1,0 +1,358 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Operation clustering &mdash; the threshold sweep</title>
+<style>
+ :root { color-scheme: light dark; }
+ body { font: 14px/1.5 ui-sans-serif, system-ui, sans-serif;
+        margin: 0; padding: 18px 24px; }
+ h1 { font-size: 18px; margin: 0 0 4px; }
+ h2 { font-size: 15px; margin: 22px 0 4px; }
+ .meta { opacity: .65; margin-bottom: 10px; font-size: 13px; }
+ #bar { display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+        margin-bottom: 8px; }
+ input { font: inherit; padding: 4px 8px; border-radius: 6px;
+         border: 1px solid rgba(128,128,128,.5); background: transparent;
+         color: inherit; width: 220px; }
+ button { font: inherit; padding: 3px 10px; border-radius: 6px;
+          border: 1px solid rgba(128,128,128,.5); background: transparent;
+          color: inherit; cursor: pointer; }
+ .legend { display: flex; gap: 12px; font-size: 12px; align-items: center;
+           flex-wrap: wrap; }
+ .sw { display: inline-block; width: 11px; height: 11px; border-radius: 2px;
+       margin-right: 4px; vertical-align: -1px; }
+ #count { font-weight: 650; font-variant-numeric: tabular-nums; }
+ #chart, #curve { position: relative; overflow-x: auto; }
+ svg { display: block; user-select: none; }
+ #tip { position: fixed; pointer-events: none; display: none;
+        max-width: 420px; font-size: 12px; line-height: 1.4;
+        background: rgba(30,30,30,.96); color: #eee; padding: 8px 10px;
+        border-radius: 6px; z-index: 5; }
+ #tip .hd { font-weight: 650; margin-bottom: 3px; }
+ .hint { font-size: 12px; opacity: .6; margin-top: 6px; }
+ table { border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+ th, td { border: 1px solid rgba(128,128,128,.35); padding: 2px 8px;
+          text-align: left; }
+ td.n { text-align: right; font-variant-numeric: tabular-nums; }
+</style>
+<h1>Operation clustering &mdash; the threshold sweep</h1>
+<div class="meta">123 CONSTRUCT signatures over 12 languages, on the
+ shared 64-cell form space &middot; value matrix as the primary domain for
+ the nine statically checked languages (2,221,643 probes), route-C
+ behaviour for python, ruby and php &middot; average linkage over
+ 1&nbsp;&minus;&nbsp;Jaccard &middot; every horizontal line is a threshold
+ slice, and there is NO chosen cut &mdash; the sweep is the result</div>
+<div id="bar">
+ <span>threshold <span id="thval">0.700</span> &rarr;
+   <span id="count">?</span> clusters</span>
+ <input id="search" placeholder="search language.operation… (Enter)">
+ <button id="reset">reset view</button>
+ <label style="font-size:12px;opacity:.75">width
+   <input id="zoom" type="range" min="6" max="40" value="13"
+          style="width:120px;vertical-align:-4px"></label>
+</div>
+<div id="bar2" style="margin-bottom:8px">
+ <span class="legend" id="legend"></span>
+ <span class="legend" style="margin-left:10px">
+   <span class="sw" style="background:#8a8a8a"></span>single-language merge
+   <span class="sw" style="background:#b03ad6;margin-left:10px"></span>strong
+   language mix</span>
+</div>
+<div id="chart"><div id="tip"></div></div>
+<div class="hint">Drag the dashed line DOWN for fewer clusters (lower
+ similarity) or UP toward 123 singletons. Every rectangle is a
+ cluster and its HEIGHT is its stability band &mdash; the range of
+ thresholds over which it exists unchanged. <b>Tall blocks are the stable
+ readings</b>; a sliver is an artefact of where the line happens to sit.
+ Hover any block for its members. Yellow outline = a cluster at the
+ current threshold.</div>
+
+<h2>Cluster count against threshold &mdash; the sweep itself</h2>
+<div id="curve"></div>
+<div class="hint">Shaded bands are the stability plateaus: threshold ranges
+ over which the clustering does not move at all. A WIDE band is a natural
+ reading of the data in a way that a chosen number is not.</div>
+
+<h2>The widest plateaus</h2>
+<div id="plateaus"></div>
+
+<script>
+const TREE = {"n_leaves":123,"leaf_order":["cpp.Kaccess.subscript","csharp.Kaccess.subscript","go.Kaccess.subscript","kotlin.Kaccess.subscript","swift.Kaccess.subscript","java.Kaccess.subscript","typescript.Kaccess.subscript","python.Kaccess.subscript","rust.Kaccess.subscript","cpp.Kbinding.augassign*=","python.Kbinding.augassign-=","cpp.Kbinding.augassign+=","cpp.Kbinding.augassign-=","php.Kbinding.augassign*=","php.Kbinding.augassign-=","php.Kaccess.subscript","python.Kbinding.augassign*=","csharp.Kbinding.augassign+=","java.Kbinding.augassign+=","typescript.Kbinding.augassign+=","csharp.Kbinding.augassign*=","csharp.Kbinding.augassign-=","dart.Kbinding.augassign*=","dart.Kbinding.augassign-=","java.Kbinding.augassign*=","java.Kbinding.augassign-=","typescript.Kbinding.augassign*=","typescript.Kbinding.augassign-=","kotlin.Kbinding.augassign*=","go.Kbinding.augassign*=","go.Kbinding.augassign-=","rust.Kbinding.augassign*=","rust.Kbinding.augassign-=","go.Kbinding.augassign+=","rust.Kbinding.augassign+=","dart.Kaccess.subscript","ruby.Kaccess.subscript","kotlin.Kbinding.augassign+=","kotlin.Kbinding.augassign-=","ruby.Kbinding.augassign*=","dart.Kbinding.augassign+=","ruby.Kbinding.augassign+=","ruby.Kbinding.augassign-=","php.Kbinding.augassign+=","python.Kbinding.augassign+=","cpp.Kbinding.assign","csharp.Kbinding.assign","dart.Kbinding.assign","go.Kbinding.assign","java.Kbinding.assign","kotlin.Kbinding.assign","php.Kaccess.member","php.Kbinding.assign","php.Kflow.for","php.Kflow.if","php.Kflow.try","php.Kflow.while","python.Kbinding.assign","python.Kflow.if","python.Kflow.try","python.Kflow.while","ruby.Kbinding.assign","ruby.Kbinding.unpack","ruby.Kflow.if","ruby.Kflow.try","ruby.Kflow.while","rust.Kbinding.assign","swift.Kbinding.assign","typescript.Kbinding.assign","typescript.Kflow.if","typescript.Kflow.while","cpp.Kflow.if","cpp.Kflow.while","cpp.Kflow.for","cpp.Kflow.try","csharp.Kaccess.slice","dart.Kflow.for","go.Kaccess.slice","java.Kflow.for","java.Kflow.try","kotlin.Kflow.try","csharp.Kflow.try","csharp.Kflow.for","kotlin.Kbinding.unpack","kotlin.Kflow.for","python.Kaccess.slice","python.Kbinding.unpack","python.Kflow.for","ruby.Kflow.for","swift.Kflow.for","typescript.Kbinding.unpack","typescript.Kflow.for","typescript.Kflow.try","dart.Kflow.try","rust.Kflow.for","go.Kflow.for","ruby.Kaccess.member","typescript.Kaccess.member","cpp.Kbinding.unpack","csharp.Kbinding.unpack","dart.Kbinding.unpack","rust.Kbinding.unpack","swift.Kbinding.unpack","csharp.Kflow.if","csharp.Kflow.while","dart.Kflow.if","dart.Kflow.while","go.Kflow.if","java.Kflow.if","java.Kflow.while","kotlin.Kflow.if","kotlin.Kflow.while","rust.Kflow.if","rust.Kflow.while","swift.Kflow.if","swift.Kflow.while","php.Kflow.break","php.Kflow.continue","ruby.Kflow.break","ruby.Kflow.continue","python.Kflow.break","python.Kflow.continue","rust.Kflow.try"],"nodes":[{"id":244,"label":null,"x0":0,"x1":123,"birth":0.0,"death":0.0,"size":123,"counts":{"cpp":10,"csharp":11,"go":8,"kotlin":10,"swift":6,"java":9,"typescript":11,"python":13,"rust":10,"php":12,"dart":10,"ruby":13},"subs":[243,242],"language":null,"operation":null,"domain":null},{"id":243,"label":null,"x0":0,"x1":45,"birth":0.052885,"death":0.0,"size":45,"counts":{"cpp":4,"csharp":4,"go":4,"kotlin":4,"swift":1,"java":4,"typescript":4,"python":4,"rust":4,"php":4,"dart":4,"ruby":4},"subs":[240,239],"language":null,"operation":null,"domain":null},{"id":240,"label":null,"x0":0,"x1":9,"birth":0.132639,"death":0.052885,"size":9,"counts":{"cpp":1,"csharp":1,"go":1,"kotlin":1,"swift":1,"java":1,"typescript":1,"python":1,"rust":1},"subs":[238,96],"language":null,"operation":null,"domain":null},{"id":238,"label":null,"x0":0,"x1":8,"birth":0.189527,"death":0.132639,"size":8,"counts":{"cpp":1,"csharp":1,"go":1,"kotlin":1,"swift":1,"java":1,"typescript":1,"python":1},"subs":[0,229],"language":null,"operation":null,"domain":null},{"id":0,"label":"cpp.Kaccess.subscript","x0":0,"x1":1,"birth":1.0,"death":0.189527,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kaccess.subscript","domain":10},{"id":229,"label":null,"x0":1,"x1":8,"birth":0.389153,"death":0.189527,"size":7,"counts":{"csharp":1,"go":1,"kotlin":1,"swift":1,"java":1,"typescript":1,"python":1},"subs":[227,71],"language":null,"operation":null,"domain":null},{"id":227,"label":null,"x0":1,"x1":7,"birth":0.44,"death":0.389153,"size":6,"counts":{"csharp":1,"go":1,"kotlin":1,"swift":1,"java":1,"typescript":1},"subs":[215,113],"language":null,"operation":null,"domain":null},{"id":215,"label":null,"x0":1,"x1":6,"birth":0.6375,"death":0.44,"size":5,"counts":{"csharp":1,"go":1,"kotlin":1,"swift":1,"java":1},"subs":[203,39],"language":null,"operation":null,"domain":null},{"id":203,"label":null,"x0":1,"x1":5,"birth":0.8,"death":0.6375,"size":4,"counts":{"csharp":1,"go":1,"kotlin":1,"swift":1},"subs":[11,187],"language":null,"operation":null,"domain":null},{"id":11,"label":"csharp.Kaccess.subscript","x0":1,"x1":2,"birth":1.0,"death":0.8,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kaccess.subscript","domain":4},{"id":187,"label":null,"x0":2,"x1":5,"birth":1.0,"death":0.8,"size":3,"counts":{"go":1,"kotlin":1,"swift":1},"subs":[186,106],"language":null,"operation":null,"domain":null},{"id":186,"label":null,"x0":2,"x1":4,"birth":1.0,"death":1.0,"size":2,"counts":{"go":1,"kotlin":1},"subs":[32,48],"language":null,"operation":null,"domain":null},{"id":32,"label":"go.Kaccess.subscript","x0":2,"x1":3,"birth":1.0,"death":1.0,"size":1,"counts":{"go":1},"subs":[],"language":"go","operation":"Kaccess.subscript","domain":5},{"id":48,"label":"kotlin.Kaccess.subscript","x0":3,"x1":4,"birth":1.0,"death":1.0,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kaccess.subscript","domain":5},{"id":106,"label":"swift.Kaccess.subscript","x0":4,"x1":5,"birth":1.0,"death":1.0,"size":1,"counts":{"swift":1},"subs":[],"language":"swift","operation":"Kaccess.subscript","domain":5},{"id":39,"label":"java.Kaccess.subscript","x0":5,"x1":6,"birth":1.0,"death":0.6375,"size":1,"counts":{"java":1},"subs":[],"language":"java","operation":"Kaccess.subscript","domain":3},{"id":113,"label":"typescript.Kaccess.subscript","x0":6,"x1":7,"birth":1.0,"death":0.44,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kaccess.subscript","domain":10},{"id":71,"label":"python.Kaccess.subscript","x0":7,"x1":8,"birth":1.0,"death":0.389153,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kaccess.subscript","domain":9},{"id":96,"label":"rust.Kaccess.subscript","x0":8,"x1":9,"birth":1.0,"death":0.132639,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kaccess.subscript","domain":1},{"id":239,"label":null,"x0":9,"x1":45,"birth":0.167759,"death":0.052885,"size":36,"counts":{"cpp":3,"python":3,"php":4,"csharp":3,"java":3,"typescript":3,"dart":4,"kotlin":3,"go":3,"rust":3,"ruby":4},"subs":[236,233],"language":null,"operation":null,"domain":null},{"id":236,"label":null,"x0":9,"x1":35,"birth":0.199046,"death":0.167759,"size":26,"counts":{"cpp":3,"python":2,"php":3,"csharp":3,"java":3,"typescript":3,"dart":2,"kotlin":1,"go":3,"rust":3},"subs":[234,225],"language":null,"operation":null,"domain":null},{"id":234,"label":null,"x0":9,"x1":20,"birth":0.217211,"death":0.199046,"size":11,"counts":{"cpp":3,"python":2,"php":3,"csharp":1,"java":1,"typescript":1},"subs":[232,218],"language":null,"operation":null,"domain":null},{"id":232,"label":null,"x0":9,"x1":17,"birth":0.323284,"death":0.217211,"size":8,"counts":{"cpp":3,"python":2,"php":3},"subs":[224,223],"language":null,"operation":null,"domain":null},{"id":224,"label":null,"x0":9,"x1":15,"birth":0.479228,"death":0.323284,"size":6,"counts":{"cpp":3,"python":1,"php":2},"subs":[217,192],"language":null,"operation":null,"domain":null},{"id":217,"label":null,"x0":9,"x1":13,"birth":0.591144,"death":0.479228,"size":4,"counts":{"cpp":3,"python":1},"subs":[199,206],"language":null,"operation":null,"domain":null},{"id":199,"label":null,"x0":9,"x1":11,"birth":0.9,"death":0.591144,"size":2,"counts":{"cpp":1,"python":1},"subs":[2,75],"language":null,"operation":null,"domain":null},{"id":2,"label":"cpp.Kbinding.augassign*=","x0":9,"x1":10,"birth":1.0,"death":0.9,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kbinding.augassign*=","domain":9},{"id":75,"label":"python.Kbinding.augassign-=","x0":10,"x1":11,"birth":1.0,"death":0.9,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kbinding.augassign-=","domain":10},{"id":206,"label":null,"x0":11,"x1":13,"birth":0.764706,"death":0.591144,"size":2,"counts":{"cpp":2},"subs":[3,4],"language":null,"operation":null,"domain":null},{"id":3,"label":"cpp.Kbinding.augassign+=","x0":11,"x1":12,"birth":1.0,"death":0.764706,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kbinding.augassign+=","domain":17},{"id":4,"label":"cpp.Kbinding.augassign-=","x0":12,"x1":13,"birth":1.0,"death":0.764706,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kbinding.augassign-=","domain":13},{"id":192,"label":null,"x0":13,"x1":15,"birth":1.0,"death":0.479228,"size":2,"counts":{"php":2},"subs":[61,63],"language":null,"operation":null,"domain":null},{"id":61,"label":"php.Kbinding.augassign*=","x0":13,"x1":14,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kbinding.augassign*=","domain":16},{"id":63,"label":"php.Kbinding.augassign-=","x0":14,"x1":15,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kbinding.augassign-=","domain":16},{"id":223,"label":null,"x0":15,"x1":17,"birth":0.480769,"death":0.323284,"size":2,"counts":{"php":1,"python":1},"subs":[59,73],"language":null,"operation":null,"domain":null},{"id":59,"label":"php.Kaccess.subscript","x0":15,"x1":16,"birth":1.0,"death":0.480769,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kaccess.subscript","domain":52},{"id":73,"label":"python.Kbinding.augassign*=","x0":16,"x1":17,"birth":1.0,"death":0.480769,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kbinding.augassign*=","domain":25},{"id":218,"label":null,"x0":17,"x1":20,"birth":0.547619,"death":0.217211,"size":3,"counts":{"csharp":1,"java":1,"typescript":1},"subs":[198,116],"language":null,"operation":null,"domain":null},{"id":198,"label":null,"x0":17,"x1":19,"birth":0.95,"death":0.547619,"size":2,"counts":{"csharp":1,"java":1},"subs":[14,42],"language":null,"operation":null,"domain":null},{"id":14,"label":"csharp.Kbinding.augassign+=","x0":17,"x1":18,"birth":1.0,"death":0.95,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kbinding.augassign+=","domain":19},{"id":42,"label":"java.Kbinding.augassign+=","x0":18,"x1":19,"birth":1.0,"death":0.95,"size":1,"counts":{"java":1},"subs":[],"language":"java","operation":"Kbinding.augassign+=","domain":20},{"id":116,"label":"typescript.Kbinding.augassign+=","x0":19,"x1":20,"birth":1.0,"death":0.547619,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kbinding.augassign+=","domain":13},{"id":225,"label":null,"x0":20,"x1":35,"birth":0.453086,"death":0.199046,"size":15,"counts":{"csharp":2,"dart":2,"java":2,"typescript":2,"kotlin":1,"go":3,"rust":3},"subs":[220,213],"language":null,"operation":null,"domain":null},{"id":220,"label":null,"x0":20,"x1":29,"birth":0.504082,"death":0.453086,"size":9,"counts":{"csharp":2,"dart":2,"java":2,"typescript":2,"kotlin":1},"subs":[158,209],"language":null,"operation":null,"domain":null},{"id":158,"label":null,"x0":20,"x1":22,"birth":1.0,"death":0.504082,"size":2,"counts":{"csharp":2},"subs":[13,15],"language":null,"operation":null,"domain":null},{"id":13,"label":"csharp.Kbinding.augassign*=","x0":20,"x1":21,"birth":1.0,"death":1.0,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kbinding.augassign*=","domain":5},{"id":15,"label":"csharp.Kbinding.augassign-=","x0":21,"x1":22,"birth":1.0,"death":1.0,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kbinding.augassign-=","domain":5},{"id":209,"label":null,"x0":22,"x1":29,"birth":0.725,"death":0.504082,"size":7,"counts":{"dart":2,"java":2,"typescript":2,"kotlin":1},"subs":[204,50],"language":null,"operation":null,"domain":null},{"id":204,"label":null,"x0":22,"x1":28,"birth":0.8,"death":0.725,"size":6,"counts":{"dart":2,"java":2,"typescript":2},"subs":[23,184],"language":null,"operation":null,"domain":null},{"id":23,"label":"dart.Kbinding.augassign*=","x0":22,"x1":23,"birth":1.0,"death":0.8,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kbinding.augassign*=","domain":5},{"id":184,"label":null,"x0":23,"x1":28,"birth":1.0,"death":0.8,"size":5,"counts":{"dart":1,"java":2,"typescript":2},"subs":[183,117],"language":null,"operation":null,"domain":null},{"id":183,"label":null,"x0":23,"x1":27,"birth":1.0,"death":1.0,"size":4,"counts":{"dart":1,"java":2,"typescript":1},"subs":[182,115],"language":null,"operation":null,"domain":null},{"id":182,"label":null,"x0":23,"x1":26,"birth":1.0,"death":1.0,"size":3,"counts":{"dart":1,"java":2},"subs":[181,43],"language":null,"operation":null,"domain":null},{"id":181,"label":null,"x0":23,"x1":25,"birth":1.0,"death":1.0,"size":2,"counts":{"dart":1,"java":1},"subs":[25,41],"language":null,"operation":null,"domain":null},{"id":25,"label":"dart.Kbinding.augassign-=","x0":23,"x1":24,"birth":1.0,"death":1.0,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kbinding.augassign-=","domain":4},{"id":41,"label":"java.Kbinding.augassign*=","x0":24,"x1":25,"birth":1.0,"death":1.0,"size":1,"counts":{"java":1},"subs":[],"language":"java","operation":"Kbinding.augassign*=","domain":4},{"id":43,"label":"java.Kbinding.augassign-=","x0":25,"x1":26,"birth":1.0,"death":1.0,"size":1,"counts":{"java":1},"subs":[],"language":"java","operation":"Kbinding.augassign-=","domain":4},{"id":115,"label":"typescript.Kbinding.augassign*=","x0":26,"x1":27,"birth":1.0,"death":1.0,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kbinding.augassign*=","domain":4},{"id":117,"label":"typescript.Kbinding.augassign-=","x0":27,"x1":28,"birth":1.0,"death":1.0,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kbinding.augassign-=","domain":4},{"id":50,"label":"kotlin.Kbinding.augassign*=","x0":28,"x1":29,"birth":1.0,"death":0.725,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kbinding.augassign*=","domain":3},{"id":213,"label":null,"x0":29,"x1":35,"birth":0.666667,"death":0.453086,"size":6,"counts":{"go":3,"rust":3},"subs":[190,191],"language":null,"operation":null,"domain":null},{"id":190,"label":null,"x0":29,"x1":33,"birth":1.0,"death":0.666667,"size":4,"counts":{"go":2,"rust":2},"subs":[189,100],"language":null,"operation":null,"domain":null},{"id":189,"label":null,"x0":29,"x1":32,"birth":1.0,"death":1.0,"size":3,"counts":{"go":2,"rust":1},"subs":[188,98],"language":null,"operation":null,"domain":null},{"id":188,"label":null,"x0":29,"x1":31,"birth":1.0,"death":1.0,"size":2,"counts":{"go":2},"subs":[34,36],"language":null,"operation":null,"domain":null},{"id":34,"label":"go.Kbinding.augassign*=","x0":29,"x1":30,"birth":1.0,"death":1.0,"size":1,"counts":{"go":1},"subs":[],"language":"go","operation":"Kbinding.augassign*=","domain":2},{"id":36,"label":"go.Kbinding.augassign-=","x0":30,"x1":31,"birth":1.0,"death":1.0,"size":1,"counts":{"go":1},"subs":[],"language":"go","operation":"Kbinding.augassign-=","domain":2},{"id":98,"label":"rust.Kbinding.augassign*=","x0":31,"x1":32,"birth":1.0,"death":1.0,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kbinding.augassign*=","domain":2},{"id":100,"label":"rust.Kbinding.augassign-=","x0":32,"x1":33,"birth":1.0,"death":1.0,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kbinding.augassign-=","domain":2},{"id":191,"label":null,"x0":33,"x1":35,"birth":1.0,"death":0.666667,"size":2,"counts":{"go":1,"rust":1},"subs":[35,99],"language":null,"operation":null,"domain":null},{"id":35,"label":"go.Kbinding.augassign+=","x0":33,"x1":34,"birth":1.0,"death":1.0,"size":1,"counts":{"go":1},"subs":[],"language":"go","operation":"Kbinding.augassign+=","domain":3},{"id":99,"label":"rust.Kbinding.augassign+=","x0":34,"x1":35,"birth":1.0,"death":1.0,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kbinding.augassign+=","domain":3},{"id":233,"label":null,"x0":35,"x1":45,"birth":0.295969,"death":0.167759,"size":10,"counts":{"dart":2,"ruby":4,"kotlin":2,"php":1,"python":1},"subs":[231,222],"language":null,"operation":null,"domain":null},{"id":231,"label":null,"x0":35,"x1":40,"birth":0.327363,"death":0.295969,"size":5,"counts":{"dart":1,"ruby":2,"kotlin":2},"subs":[228,86],"language":null,"operation":null,"domain":null},{"id":228,"label":null,"x0":35,"x1":39,"birth":0.418304,"death":0.327363,"size":4,"counts":{"dart":1,"ruby":1,"kotlin":2},"subs":[210,216],"language":null,"operation":null,"domain":null},{"id":210,"label":null,"x0":35,"x1":37,"birth":0.72,"death":0.418304,"size":2,"counts":{"dart":1,"ruby":1},"subs":[21,84],"language":null,"operation":null,"domain":null},{"id":21,"label":"dart.Kaccess.subscript","x0":35,"x1":36,"birth":1.0,"death":0.72,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kaccess.subscript","domain":18},{"id":84,"label":"ruby.Kaccess.subscript","x0":36,"x1":37,"birth":1.0,"death":0.72,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kaccess.subscript","domain":25},{"id":216,"label":null,"x0":37,"x1":39,"birth":0.612903,"death":0.418304,"size":2,"counts":{"kotlin":2},"subs":[51,52],"language":null,"operation":null,"domain":null},{"id":51,"label":"kotlin.Kbinding.augassign+=","x0":37,"x1":38,"birth":1.0,"death":0.612903,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kbinding.augassign+=","domain":29},{"id":52,"label":"kotlin.Kbinding.augassign-=","x0":38,"x1":39,"birth":1.0,"death":0.612903,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kbinding.augassign-=","domain":21},{"id":86,"label":"ruby.Kbinding.augassign*=","x0":39,"x1":40,"birth":1.0,"death":0.327363,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kbinding.augassign*=","domain":13},{"id":222,"label":null,"x0":40,"x1":45,"birth":0.487648,"death":0.295969,"size":5,"counts":{"dart":1,"ruby":2,"php":1,"python":1},"subs":[201,212],"language":null,"operation":null,"domain":null},{"id":201,"label":null,"x0":40,"x1":43,"birth":0.857143,"death":0.487648,"size":3,"counts":{"dart":1,"ruby":2},"subs":[24,197],"language":null,"operation":null,"domain":null},{"id":24,"label":"dart.Kbinding.augassign+=","x0":40,"x1":41,"birth":1.0,"death":0.857143,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kbinding.augassign+=","domain":12},{"id":197,"label":null,"x0":41,"x1":43,"birth":1.0,"death":0.857143,"size":2,"counts":{"ruby":2},"subs":[87,88],"language":null,"operation":null,"domain":null},{"id":87,"label":"ruby.Kbinding.augassign+=","x0":41,"x1":42,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kbinding.augassign+=","domain":14},{"id":88,"label":"ruby.Kbinding.augassign-=","x0":42,"x1":43,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kbinding.augassign-=","domain":14},{"id":212,"label":null,"x0":43,"x1":45,"birth":0.6875,"death":0.487648,"size":2,"counts":{"php":1,"python":1},"subs":[62,74],"language":null,"operation":null,"domain":null},{"id":62,"label":"php.Kbinding.augassign+=","x0":43,"x1":44,"birth":1.0,"death":0.6875,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kbinding.augassign+=","domain":32},{"id":74,"label":"python.Kbinding.augassign+=","x0":44,"x1":45,"birth":1.0,"death":0.6875,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kbinding.augassign+=","domain":22},{"id":242,"label":null,"x0":45,"x1":123,"birth":0.05521,"death":0.0,"size":78,"counts":{"cpp":6,"csharp":7,"dart":6,"go":4,"java":5,"kotlin":6,"php":8,"python":9,"ruby":9,"rust":6,"swift":5,"typescript":7},"subs":[241,104],"language":null,"operation":null,"domain":null},{"id":241,"label":null,"x0":45,"x1":122,"birth":0.095589,"death":0.05521,"size":77,"counts":{"cpp":6,"csharp":7,"dart":6,"go":4,"java":5,"kotlin":6,"php":8,"python":9,"ruby":9,"rust":5,"swift":5,"typescript":7},"subs":[237,230],"language":null,"operation":null,"domain":null},{"id":237,"label":null,"x0":45,"x1":103,"birth":0.192475,"death":0.095589,"size":58,"counts":{"cpp":6,"csharp":5,"dart":4,"go":3,"java":3,"kotlin":4,"php":6,"python":7,"ruby":7,"rust":3,"swift":3,"typescript":7},"subs":[235,126],"language":null,"operation":null,"domain":null},{"id":235,"label":null,"x0":45,"x1":98,"birth":0.209734,"death":0.192475,"size":53,"counts":{"cpp":5,"csharp":4,"dart":3,"go":3,"java":3,"kotlin":4,"php":6,"python":7,"ruby":7,"rust":2,"swift":2,"typescript":7},"subs":[226,221],"language":null,"operation":null,"domain":null},{"id":226,"label":null,"x0":45,"x1":96,"birth":0.445754,"death":0.209734,"size":51,"counts":{"cpp":5,"csharp":4,"dart":3,"go":3,"java":3,"kotlin":4,"php":6,"python":7,"ruby":6,"rust":2,"swift":2,"typescript":6},"subs":[207,219],"language":null,"operation":null,"domain":null},{"id":207,"label":null,"x0":45,"x1":73,"birth":0.754121,"death":0.445754,"size":28,"counts":{"cpp":3,"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":5,"rust":1,"swift":1,"typescript":3},"subs":[200,128],"language":null,"operation":null,"domain":null},{"id":200,"label":null,"x0":45,"x1":71,"birth":0.875,"death":0.754121,"size":26,"counts":{"cpp":1,"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":5,"rust":1,"swift":1,"typescript":3},"subs":[1,157],"language":null,"operation":null,"domain":null},{"id":1,"label":"cpp.Kbinding.assign","x0":45,"x1":46,"birth":1.0,"death":0.875,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kbinding.assign","domain":7},{"id":157,"label":null,"x0":46,"x1":71,"birth":1.0,"death":0.875,"size":25,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":5,"rust":1,"swift":1,"typescript":3},"subs":[156,122],"language":null,"operation":null,"domain":null},{"id":156,"label":null,"x0":46,"x1":70,"birth":1.0,"death":1.0,"size":24,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":5,"rust":1,"swift":1,"typescript":2},"subs":[155,120],"language":null,"operation":null,"domain":null},{"id":155,"label":null,"x0":46,"x1":69,"birth":1.0,"death":1.0,"size":23,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":5,"rust":1,"swift":1,"typescript":1},"subs":[154,114],"language":null,"operation":null,"domain":null},{"id":154,"label":null,"x0":46,"x1":68,"birth":1.0,"death":1.0,"size":22,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":5,"rust":1,"swift":1},"subs":[153,107],"language":null,"operation":null,"domain":null},{"id":153,"label":null,"x0":46,"x1":67,"birth":1.0,"death":1.0,"size":21,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":5,"rust":1},"subs":[152,97],"language":null,"operation":null,"domain":null},{"id":152,"label":null,"x0":46,"x1":66,"birth":1.0,"death":1.0,"size":20,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":5},"subs":[151,95],"language":null,"operation":null,"domain":null},{"id":151,"label":null,"x0":46,"x1":65,"birth":1.0,"death":1.0,"size":19,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":4},"subs":[150,94],"language":null,"operation":null,"domain":null},{"id":150,"label":null,"x0":46,"x1":64,"birth":1.0,"death":1.0,"size":18,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":3},"subs":[149,93],"language":null,"operation":null,"domain":null},{"id":149,"label":null,"x0":46,"x1":63,"birth":1.0,"death":1.0,"size":17,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":2},"subs":[148,89],"language":null,"operation":null,"domain":null},{"id":148,"label":null,"x0":46,"x1":62,"birth":1.0,"death":1.0,"size":16,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4,"ruby":1},"subs":[147,85],"language":null,"operation":null,"domain":null},{"id":147,"label":null,"x0":46,"x1":61,"birth":1.0,"death":1.0,"size":15,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":4},"subs":[146,82],"language":null,"operation":null,"domain":null},{"id":146,"label":null,"x0":46,"x1":60,"birth":1.0,"death":1.0,"size":14,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":3},"subs":[145,81],"language":null,"operation":null,"domain":null},{"id":145,"label":null,"x0":46,"x1":59,"birth":1.0,"death":1.0,"size":13,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":2},"subs":[144,80],"language":null,"operation":null,"domain":null},{"id":144,"label":null,"x0":46,"x1":58,"birth":1.0,"death":1.0,"size":12,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6,"python":1},"subs":[143,72],"language":null,"operation":null,"domain":null},{"id":143,"label":null,"x0":46,"x1":57,"birth":1.0,"death":1.0,"size":11,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":6},"subs":[142,69],"language":null,"operation":null,"domain":null},{"id":142,"label":null,"x0":46,"x1":56,"birth":1.0,"death":1.0,"size":10,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":5},"subs":[141,68],"language":null,"operation":null,"domain":null},{"id":141,"label":null,"x0":46,"x1":55,"birth":1.0,"death":1.0,"size":9,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":4},"subs":[140,67],"language":null,"operation":null,"domain":null},{"id":140,"label":null,"x0":46,"x1":54,"birth":1.0,"death":1.0,"size":8,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":3},"subs":[139,66],"language":null,"operation":null,"domain":null},{"id":139,"label":null,"x0":46,"x1":53,"birth":1.0,"death":1.0,"size":7,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":2},"subs":[138,60],"language":null,"operation":null,"domain":null},{"id":138,"label":null,"x0":46,"x1":52,"birth":1.0,"death":1.0,"size":6,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1,"php":1},"subs":[137,58],"language":null,"operation":null,"domain":null},{"id":137,"label":null,"x0":46,"x1":51,"birth":1.0,"death":1.0,"size":5,"counts":{"csharp":1,"dart":1,"go":1,"java":1,"kotlin":1},"subs":[136,49],"language":null,"operation":null,"domain":null},{"id":136,"label":null,"x0":46,"x1":50,"birth":1.0,"death":1.0,"size":4,"counts":{"csharp":1,"dart":1,"go":1,"java":1},"subs":[135,40],"language":null,"operation":null,"domain":null},{"id":135,"label":null,"x0":46,"x1":49,"birth":1.0,"death":1.0,"size":3,"counts":{"csharp":1,"dart":1,"go":1},"subs":[134,33],"language":null,"operation":null,"domain":null},{"id":134,"label":null,"x0":46,"x1":48,"birth":1.0,"death":1.0,"size":2,"counts":{"csharp":1,"dart":1},"subs":[12,22],"language":null,"operation":null,"domain":null},{"id":12,"label":"csharp.Kbinding.assign","x0":46,"x1":47,"birth":1.0,"death":1.0,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kbinding.assign","domain":8},{"id":22,"label":"dart.Kbinding.assign","x0":47,"x1":48,"birth":1.0,"death":1.0,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kbinding.assign","domain":8},{"id":33,"label":"go.Kbinding.assign","x0":48,"x1":49,"birth":1.0,"death":1.0,"size":1,"counts":{"go":1},"subs":[],"language":"go","operation":"Kbinding.assign","domain":8},{"id":40,"label":"java.Kbinding.assign","x0":49,"x1":50,"birth":1.0,"death":1.0,"size":1,"counts":{"java":1},"subs":[],"language":"java","operation":"Kbinding.assign","domain":8},{"id":49,"label":"kotlin.Kbinding.assign","x0":50,"x1":51,"birth":1.0,"death":1.0,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kbinding.assign","domain":8},{"id":58,"label":"php.Kaccess.member","x0":51,"x1":52,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kaccess.member","domain":8},{"id":60,"label":"php.Kbinding.assign","x0":52,"x1":53,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kbinding.assign","domain":8},{"id":66,"label":"php.Kflow.for","x0":53,"x1":54,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kflow.for","domain":8},{"id":67,"label":"php.Kflow.if","x0":54,"x1":55,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kflow.if","domain":8},{"id":68,"label":"php.Kflow.try","x0":55,"x1":56,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kflow.try","domain":8},{"id":69,"label":"php.Kflow.while","x0":56,"x1":57,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kflow.while","domain":8},{"id":72,"label":"python.Kbinding.assign","x0":57,"x1":58,"birth":1.0,"death":1.0,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kbinding.assign","domain":8},{"id":80,"label":"python.Kflow.if","x0":58,"x1":59,"birth":1.0,"death":1.0,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kflow.if","domain":8},{"id":81,"label":"python.Kflow.try","x0":59,"x1":60,"birth":1.0,"death":1.0,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kflow.try","domain":8},{"id":82,"label":"python.Kflow.while","x0":60,"x1":61,"birth":1.0,"death":1.0,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kflow.while","domain":8},{"id":85,"label":"ruby.Kbinding.assign","x0":61,"x1":62,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kbinding.assign","domain":8},{"id":89,"label":"ruby.Kbinding.unpack","x0":62,"x1":63,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kbinding.unpack","domain":8},{"id":93,"label":"ruby.Kflow.if","x0":63,"x1":64,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kflow.if","domain":8},{"id":94,"label":"ruby.Kflow.try","x0":64,"x1":65,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kflow.try","domain":8},{"id":95,"label":"ruby.Kflow.while","x0":65,"x1":66,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kflow.while","domain":8},{"id":97,"label":"rust.Kbinding.assign","x0":66,"x1":67,"birth":1.0,"death":1.0,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kbinding.assign","domain":8},{"id":107,"label":"swift.Kbinding.assign","x0":67,"x1":68,"birth":1.0,"death":1.0,"size":1,"counts":{"swift":1},"subs":[],"language":"swift","operation":"Kbinding.assign","domain":8},{"id":114,"label":"typescript.Kbinding.assign","x0":68,"x1":69,"birth":1.0,"death":1.0,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kbinding.assign","domain":8},{"id":120,"label":"typescript.Kflow.if","x0":69,"x1":70,"birth":1.0,"death":1.0,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kflow.if","domain":8},{"id":122,"label":"typescript.Kflow.while","x0":70,"x1":71,"birth":1.0,"death":1.0,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kflow.while","domain":8},{"id":128,"label":null,"x0":71,"x1":73,"birth":1.0,"death":0.754121,"size":2,"counts":{"cpp":2},"subs":[7,9],"language":null,"operation":null,"domain":null},{"id":7,"label":"cpp.Kflow.if","x0":71,"x1":72,"birth":1.0,"death":1.0,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kflow.if","domain":6},{"id":9,"label":"cpp.Kflow.while","x0":72,"x1":73,"birth":1.0,"death":1.0,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kflow.while","domain":6},{"id":219,"label":null,"x0":73,"x1":96,"birth":0.533333,"death":0.445754,"size":23,"counts":{"cpp":2,"csharp":3,"dart":2,"go":2,"java":2,"kotlin":3,"python":3,"ruby":1,"swift":1,"typescript":3,"rust":1},"subs":[127,211],"language":null,"operation":null,"domain":null},{"id":127,"label":null,"x0":73,"x1":75,"birth":1.0,"death":0.533333,"size":2,"counts":{"cpp":2},"subs":[6,8],"language":null,"operation":null,"domain":null},{"id":6,"label":"cpp.Kflow.for","x0":73,"x1":74,"birth":1.0,"death":1.0,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kflow.for","domain":2},{"id":8,"label":"cpp.Kflow.try","x0":74,"x1":75,"birth":1.0,"death":1.0,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kflow.try","domain":2},{"id":211,"label":null,"x0":75,"x1":96,"birth":0.704082,"death":0.533333,"size":21,"counts":{"csharp":3,"dart":2,"go":2,"java":2,"kotlin":3,"python":3,"ruby":1,"swift":1,"typescript":3,"rust":1},"subs":[208,205],"language":null,"operation":null,"domain":null},{"id":208,"label":null,"x0":75,"x1":82,"birth":0.75,"death":0.704082,"size":7,"counts":{"csharp":2,"dart":1,"go":1,"java":2,"kotlin":1},"subs":[133,19],"language":null,"operation":null,"domain":null},{"id":133,"label":null,"x0":75,"x1":81,"birth":1.0,"death":0.75,"size":6,"counts":{"csharp":1,"dart":1,"go":1,"java":2,"kotlin":1},"subs":[132,56],"language":null,"operation":null,"domain":null},{"id":132,"label":null,"x0":75,"x1":80,"birth":1.0,"death":1.0,"size":5,"counts":{"csharp":1,"dart":1,"go":1,"java":2},"subs":[131,46],"language":null,"operation":null,"domain":null},{"id":131,"label":null,"x0":75,"x1":79,"birth":1.0,"death":1.0,"size":4,"counts":{"csharp":1,"dart":1,"go":1,"java":1},"subs":[130,44],"language":null,"operation":null,"domain":null},{"id":130,"label":null,"x0":75,"x1":78,"birth":1.0,"death":1.0,"size":3,"counts":{"csharp":1,"dart":1,"go":1},"subs":[129,31],"language":null,"operation":null,"domain":null},{"id":129,"label":null,"x0":75,"x1":77,"birth":1.0,"death":1.0,"size":2,"counts":{"csharp":1,"dart":1},"subs":[10,27],"language":null,"operation":null,"domain":null},{"id":10,"label":"csharp.Kaccess.slice","x0":75,"x1":76,"birth":1.0,"death":1.0,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kaccess.slice","domain":3},{"id":27,"label":"dart.Kflow.for","x0":76,"x1":77,"birth":1.0,"death":1.0,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kflow.for","domain":3},{"id":31,"label":"go.Kaccess.slice","x0":77,"x1":78,"birth":1.0,"death":1.0,"size":1,"counts":{"go":1},"subs":[],"language":"go","operation":"Kaccess.slice","domain":3},{"id":44,"label":"java.Kflow.for","x0":78,"x1":79,"birth":1.0,"death":1.0,"size":1,"counts":{"java":1},"subs":[],"language":"java","operation":"Kflow.for","domain":3},{"id":46,"label":"java.Kflow.try","x0":79,"x1":80,"birth":1.0,"death":1.0,"size":1,"counts":{"java":1},"subs":[],"language":"java","operation":"Kflow.try","domain":3},{"id":56,"label":"kotlin.Kflow.try","x0":80,"x1":81,"birth":1.0,"death":1.0,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kflow.try","domain":3},{"id":19,"label":"csharp.Kflow.try","x0":81,"x1":82,"birth":1.0,"death":0.75,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kflow.try","domain":4},{"id":205,"label":null,"x0":82,"x1":96,"birth":0.779487,"death":0.704082,"size":14,"counts":{"csharp":1,"kotlin":2,"python":3,"ruby":1,"swift":1,"typescript":3,"dart":1,"rust":1,"go":1},"subs":[202,37],"language":null,"operation":null,"domain":null},{"id":202,"label":null,"x0":82,"x1":95,"birth":0.8,"death":0.779487,"size":13,"counts":{"csharp":1,"kotlin":2,"python":3,"ruby":1,"swift":1,"typescript":3,"dart":1,"rust":1},"subs":[168,185],"language":null,"operation":null,"domain":null},{"id":168,"label":null,"x0":82,"x1":93,"birth":1.0,"death":0.8,"size":11,"counts":{"csharp":1,"kotlin":2,"python":3,"ruby":1,"swift":1,"typescript":3},"subs":[167,121],"language":null,"operation":null,"domain":null},{"id":167,"label":null,"x0":82,"x1":92,"birth":1.0,"death":1.0,"size":10,"counts":{"csharp":1,"kotlin":2,"python":3,"ruby":1,"swift":1,"typescript":2},"subs":[166,119],"language":null,"operation":null,"domain":null},{"id":166,"label":null,"x0":82,"x1":91,"birth":1.0,"death":1.0,"size":9,"counts":{"csharp":1,"kotlin":2,"python":3,"ruby":1,"swift":1,"typescript":1},"subs":[165,118],"language":null,"operation":null,"domain":null},{"id":165,"label":null,"x0":82,"x1":90,"birth":1.0,"death":1.0,"size":8,"counts":{"csharp":1,"kotlin":2,"python":3,"ruby":1,"swift":1},"subs":[164,109],"language":null,"operation":null,"domain":null},{"id":164,"label":null,"x0":82,"x1":89,"birth":1.0,"death":1.0,"size":7,"counts":{"csharp":1,"kotlin":2,"python":3,"ruby":1},"subs":[163,92],"language":null,"operation":null,"domain":null},{"id":163,"label":null,"x0":82,"x1":88,"birth":1.0,"death":1.0,"size":6,"counts":{"csharp":1,"kotlin":2,"python":3},"subs":[162,79],"language":null,"operation":null,"domain":null},{"id":162,"label":null,"x0":82,"x1":87,"birth":1.0,"death":1.0,"size":5,"counts":{"csharp":1,"kotlin":2,"python":2},"subs":[161,76],"language":null,"operation":null,"domain":null},{"id":161,"label":null,"x0":82,"x1":86,"birth":1.0,"death":1.0,"size":4,"counts":{"csharp":1,"kotlin":2,"python":1},"subs":[160,70],"language":null,"operation":null,"domain":null},{"id":160,"label":null,"x0":82,"x1":85,"birth":1.0,"death":1.0,"size":3,"counts":{"csharp":1,"kotlin":2},"subs":[159,54],"language":null,"operation":null,"domain":null},{"id":159,"label":null,"x0":82,"x1":84,"birth":1.0,"death":1.0,"size":2,"counts":{"csharp":1,"kotlin":1},"subs":[17,53],"language":null,"operation":null,"domain":null},{"id":17,"label":"csharp.Kflow.for","x0":82,"x1":83,"birth":1.0,"death":1.0,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kflow.for","domain":4},{"id":53,"label":"kotlin.Kbinding.unpack","x0":83,"x1":84,"birth":1.0,"death":1.0,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kbinding.unpack","domain":4},{"id":54,"label":"kotlin.Kflow.for","x0":84,"x1":85,"birth":1.0,"death":1.0,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kflow.for","domain":4},{"id":70,"label":"python.Kaccess.slice","x0":85,"x1":86,"birth":1.0,"death":1.0,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kaccess.slice","domain":4},{"id":76,"label":"python.Kbinding.unpack","x0":86,"x1":87,"birth":1.0,"death":1.0,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kbinding.unpack","domain":4},{"id":79,"label":"python.Kflow.for","x0":87,"x1":88,"birth":1.0,"death":1.0,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kflow.for","domain":4},{"id":92,"label":"ruby.Kflow.for","x0":88,"x1":89,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kflow.for","domain":4},{"id":109,"label":"swift.Kflow.for","x0":89,"x1":90,"birth":1.0,"death":1.0,"size":1,"counts":{"swift":1},"subs":[],"language":"swift","operation":"Kflow.for","domain":4},{"id":118,"label":"typescript.Kbinding.unpack","x0":90,"x1":91,"birth":1.0,"death":1.0,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kbinding.unpack","domain":4},{"id":119,"label":"typescript.Kflow.for","x0":91,"x1":92,"birth":1.0,"death":1.0,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kflow.for","domain":4},{"id":121,"label":"typescript.Kflow.try","x0":92,"x1":93,"birth":1.0,"death":1.0,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kflow.try","domain":4},{"id":185,"label":null,"x0":93,"x1":95,"birth":1.0,"death":0.8,"size":2,"counts":{"dart":1,"rust":1},"subs":[29,102],"language":null,"operation":null,"domain":null},{"id":29,"label":"dart.Kflow.try","x0":93,"x1":94,"birth":1.0,"death":1.0,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kflow.try","domain":5},{"id":102,"label":"rust.Kflow.for","x0":94,"x1":95,"birth":1.0,"death":1.0,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kflow.for","domain":5},{"id":37,"label":"go.Kflow.for","x0":95,"x1":96,"birth":1.0,"death":0.779487,"size":1,"counts":{"go":1},"subs":[],"language":"go","operation":"Kflow.for","domain":5},{"id":221,"label":null,"x0":96,"x1":98,"birth":0.5,"death":0.209734,"size":2,"counts":{"ruby":1,"typescript":1},"subs":[83,112],"language":null,"operation":null,"domain":null},{"id":83,"label":"ruby.Kaccess.member","x0":96,"x1":97,"birth":1.0,"death":0.5,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kaccess.member","domain":1},{"id":112,"label":"typescript.Kaccess.member","x0":97,"x1":98,"birth":1.0,"death":0.5,"size":1,"counts":{"typescript":1},"subs":[],"language":"typescript","operation":"Kaccess.member","domain":2},{"id":126,"label":null,"x0":98,"x1":103,"birth":1.0,"death":0.192475,"size":5,"counts":{"cpp":1,"csharp":1,"dart":1,"rust":1,"swift":1},"subs":[125,108],"language":null,"operation":null,"domain":null},{"id":125,"label":null,"x0":98,"x1":102,"birth":1.0,"death":1.0,"size":4,"counts":{"cpp":1,"csharp":1,"dart":1,"rust":1},"subs":[124,101],"language":null,"operation":null,"domain":null},{"id":124,"label":null,"x0":98,"x1":101,"birth":1.0,"death":1.0,"size":3,"counts":{"cpp":1,"csharp":1,"dart":1},"subs":[123,26],"language":null,"operation":null,"domain":null},{"id":123,"label":null,"x0":98,"x1":100,"birth":1.0,"death":1.0,"size":2,"counts":{"cpp":1,"csharp":1},"subs":[5,16],"language":null,"operation":null,"domain":null},{"id":5,"label":"cpp.Kbinding.unpack","x0":98,"x1":99,"birth":1.0,"death":1.0,"size":1,"counts":{"cpp":1},"subs":[],"language":"cpp","operation":"Kbinding.unpack","domain":1},{"id":16,"label":"csharp.Kbinding.unpack","x0":99,"x1":100,"birth":1.0,"death":1.0,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kbinding.unpack","domain":1},{"id":26,"label":"dart.Kbinding.unpack","x0":100,"x1":101,"birth":1.0,"death":1.0,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kbinding.unpack","domain":1},{"id":101,"label":"rust.Kbinding.unpack","x0":101,"x1":102,"birth":1.0,"death":1.0,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kbinding.unpack","domain":1},{"id":108,"label":"swift.Kbinding.unpack","x0":102,"x1":103,"birth":1.0,"death":1.0,"size":1,"counts":{"swift":1},"subs":[],"language":"swift","operation":"Kbinding.unpack","domain":1},{"id":230,"label":null,"x0":103,"x1":122,"birth":0.388889,"death":0.095589,"size":19,"counts":{"csharp":2,"dart":2,"go":1,"java":2,"kotlin":2,"rust":2,"swift":2,"php":2,"ruby":2,"python":2},"subs":[180,214],"language":null,"operation":null,"domain":null},{"id":180,"label":null,"x0":103,"x1":116,"birth":1.0,"death":0.388889,"size":13,"counts":{"csharp":2,"dart":2,"go":1,"java":2,"kotlin":2,"rust":2,"swift":2},"subs":[179,111],"language":null,"operation":null,"domain":null},{"id":179,"label":null,"x0":103,"x1":115,"birth":1.0,"death":1.0,"size":12,"counts":{"csharp":2,"dart":2,"go":1,"java":2,"kotlin":2,"rust":2,"swift":1},"subs":[178,110],"language":null,"operation":null,"domain":null},{"id":178,"label":null,"x0":103,"x1":114,"birth":1.0,"death":1.0,"size":11,"counts":{"csharp":2,"dart":2,"go":1,"java":2,"kotlin":2,"rust":2},"subs":[177,105],"language":null,"operation":null,"domain":null},{"id":177,"label":null,"x0":103,"x1":113,"birth":1.0,"death":1.0,"size":10,"counts":{"csharp":2,"dart":2,"go":1,"java":2,"kotlin":2,"rust":1},"subs":[176,103],"language":null,"operation":null,"domain":null},{"id":176,"label":null,"x0":103,"x1":112,"birth":1.0,"death":1.0,"size":9,"counts":{"csharp":2,"dart":2,"go":1,"java":2,"kotlin":2},"subs":[175,57],"language":null,"operation":null,"domain":null},{"id":175,"label":null,"x0":103,"x1":111,"birth":1.0,"death":1.0,"size":8,"counts":{"csharp":2,"dart":2,"go":1,"java":2,"kotlin":1},"subs":[174,55],"language":null,"operation":null,"domain":null},{"id":174,"label":null,"x0":103,"x1":110,"birth":1.0,"death":1.0,"size":7,"counts":{"csharp":2,"dart":2,"go":1,"java":2},"subs":[173,47],"language":null,"operation":null,"domain":null},{"id":173,"label":null,"x0":103,"x1":109,"birth":1.0,"death":1.0,"size":6,"counts":{"csharp":2,"dart":2,"go":1,"java":1},"subs":[172,45],"language":null,"operation":null,"domain":null},{"id":172,"label":null,"x0":103,"x1":108,"birth":1.0,"death":1.0,"size":5,"counts":{"csharp":2,"dart":2,"go":1},"subs":[171,38],"language":null,"operation":null,"domain":null},{"id":171,"label":null,"x0":103,"x1":107,"birth":1.0,"death":1.0,"size":4,"counts":{"csharp":2,"dart":2},"subs":[170,30],"language":null,"operation":null,"domain":null},{"id":170,"label":null,"x0":103,"x1":106,"birth":1.0,"death":1.0,"size":3,"counts":{"csharp":2,"dart":1},"subs":[169,28],"language":null,"operation":null,"domain":null},{"id":169,"label":null,"x0":103,"x1":105,"birth":1.0,"death":1.0,"size":2,"counts":{"csharp":2},"subs":[18,20],"language":null,"operation":null,"domain":null},{"id":18,"label":"csharp.Kflow.if","x0":103,"x1":104,"birth":1.0,"death":1.0,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kflow.if","domain":1},{"id":20,"label":"csharp.Kflow.while","x0":104,"x1":105,"birth":1.0,"death":1.0,"size":1,"counts":{"csharp":1},"subs":[],"language":"csharp","operation":"Kflow.while","domain":1},{"id":28,"label":"dart.Kflow.if","x0":105,"x1":106,"birth":1.0,"death":1.0,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kflow.if","domain":1},{"id":30,"label":"dart.Kflow.while","x0":106,"x1":107,"birth":1.0,"death":1.0,"size":1,"counts":{"dart":1},"subs":[],"language":"dart","operation":"Kflow.while","domain":1},{"id":38,"label":"go.Kflow.if","x0":107,"x1":108,"birth":1.0,"death":1.0,"size":1,"counts":{"go":1},"subs":[],"language":"go","operation":"Kflow.if","domain":1},{"id":45,"label":"java.Kflow.if","x0":108,"x1":109,"birth":1.0,"death":1.0,"size":1,"counts":{"java":1},"subs":[],"language":"java","operation":"Kflow.if","domain":1},{"id":47,"label":"java.Kflow.while","x0":109,"x1":110,"birth":1.0,"death":1.0,"size":1,"counts":{"java":1},"subs":[],"language":"java","operation":"Kflow.while","domain":1},{"id":55,"label":"kotlin.Kflow.if","x0":110,"x1":111,"birth":1.0,"death":1.0,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kflow.if","domain":1},{"id":57,"label":"kotlin.Kflow.while","x0":111,"x1":112,"birth":1.0,"death":1.0,"size":1,"counts":{"kotlin":1},"subs":[],"language":"kotlin","operation":"Kflow.while","domain":1},{"id":103,"label":"rust.Kflow.if","x0":112,"x1":113,"birth":1.0,"death":1.0,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kflow.if","domain":1},{"id":105,"label":"rust.Kflow.while","x0":113,"x1":114,"birth":1.0,"death":1.0,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kflow.while","domain":1},{"id":110,"label":"swift.Kflow.if","x0":114,"x1":115,"birth":1.0,"death":1.0,"size":1,"counts":{"swift":1},"subs":[],"language":"swift","operation":"Kflow.if","domain":1},{"id":111,"label":"swift.Kflow.while","x0":115,"x1":116,"birth":1.0,"death":1.0,"size":1,"counts":{"swift":1},"subs":[],"language":"swift","operation":"Kflow.while","domain":1},{"id":214,"label":null,"x0":116,"x1":122,"birth":0.666667,"death":0.388889,"size":6,"counts":{"php":2,"ruby":2,"python":2},"subs":[195,196],"language":null,"operation":null,"domain":null},{"id":195,"label":null,"x0":116,"x1":120,"birth":1.0,"death":0.666667,"size":4,"counts":{"php":2,"ruby":2},"subs":[194,91],"language":null,"operation":null,"domain":null},{"id":194,"label":null,"x0":116,"x1":119,"birth":1.0,"death":1.0,"size":3,"counts":{"php":2,"ruby":1},"subs":[193,90],"language":null,"operation":null,"domain":null},{"id":193,"label":null,"x0":116,"x1":118,"birth":1.0,"death":1.0,"size":2,"counts":{"php":2},"subs":[64,65],"language":null,"operation":null,"domain":null},{"id":64,"label":"php.Kflow.break","x0":116,"x1":117,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kflow.break","domain":3},{"id":65,"label":"php.Kflow.continue","x0":117,"x1":118,"birth":1.0,"death":1.0,"size":1,"counts":{"php":1},"subs":[],"language":"php","operation":"Kflow.continue","domain":3},{"id":90,"label":"ruby.Kflow.break","x0":118,"x1":119,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kflow.break","domain":3},{"id":91,"label":"ruby.Kflow.continue","x0":119,"x1":120,"birth":1.0,"death":1.0,"size":1,"counts":{"ruby":1},"subs":[],"language":"ruby","operation":"Kflow.continue","domain":3},{"id":196,"label":null,"x0":120,"x1":122,"birth":1.0,"death":0.666667,"size":2,"counts":{"python":2},"subs":[77,78],"language":null,"operation":null,"domain":null},{"id":77,"label":"python.Kflow.break","x0":120,"x1":121,"birth":1.0,"death":1.0,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kflow.break","domain":2},{"id":78,"label":"python.Kflow.continue","x0":121,"x1":122,"birth":1.0,"death":1.0,"size":1,"counts":{"python":1},"subs":[],"language":"python","operation":"Kflow.continue","domain":2},{"id":104,"label":"rust.Kflow.try","x0":122,"x1":123,"birth":1.0,"death":0.05521,"size":1,"counts":{"rust":1},"subs":[],"language":"rust","operation":"Kflow.try","domain":1}],"root_id":244};
+const SWEEP = {"curve":[[1.0,48],[0.99,48],[0.98,48],[0.97,48],[0.96,48],[0.95,47],[0.94,47],[0.93,47],[0.92,47],[0.91,47],[0.9,46],[0.89,46],[0.88,46],[0.87,45],[0.86,45],[0.85,44],[0.84,44],[0.83,44],[0.82,44],[0.81,44],[0.8,41],[0.79,41],[0.78,41],[0.77,40],[0.76,39],[0.75,37],[0.74,37],[0.73,37],[0.72,35],[0.71,35],[0.7,34],[0.69,34],[0.68,33],[0.67,33],[0.66,31],[0.65,31],[0.64,31],[0.63,30],[0.62,30],[0.61,29],[0.6,29],[0.59,28],[0.58,28],[0.57,28],[0.56,28],[0.55,28],[0.54,27],[0.53,26],[0.52,26],[0.51,26],[0.5,24],[0.49,24],[0.48,22],[0.47,21],[0.46,21],[0.45,20],[0.44,18],[0.43,18],[0.42,18],[0.41,17],[0.4,17],[0.39,17],[0.38,15],[0.37,15],[0.36,15],[0.35,15],[0.34,15],[0.33,15],[0.32,13],[0.31,13],[0.3,13],[0.29,12],[0.28,12],[0.27,12],[0.26,12],[0.25,12],[0.24,12],[0.23,12],[0.22,12],[0.21,11],[0.2,10],[0.19,8],[0.18,7],[0.17,7],[0.16,6],[0.15,6],[0.14,6],[0.13,5],[0.12,5],[0.11,5],[0.1,5],[0.09,4],[0.08,4],[0.07,4],[0.06,4],[0.05,2],[0.04,2],[0.03,2],[0.02,2],[0.01,2],[0.0,1]],"plateaus":[{"clusters":12,"high":0.29,"low":0.22,"width":0.07},{"clusters":15,"high":0.38,"low":0.33,"width":0.05}],"merge_sims":[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.95,0.9,0.875,0.857143,0.8,0.8,0.8,0.779487,0.764706,0.754121,0.75,0.725,0.72,0.704082,0.6875,0.666667,0.666667,0.6375,0.612903,0.591144,0.547619,0.533333,0.504082,0.5,0.487648,0.480769,0.479228,0.453086,0.445754,0.44,0.418304,0.389153,0.388889,0.327363,0.323284,0.295969,0.217211,0.209734,0.199046,0.192475,0.189527,0.167759,0.132639,0.095589,0.05521,0.052885,0.0]};
+
+const LANG_COLOR = {"go": "#00ADD8", "rust": "#dea584", "cpp": "#f34b7d", "swift": "#F05138", "dart": "#00B4AB", "csharp": "#178600", "kotlin": "#A97BFF", "java": "#b07219", "typescript": "#3178c6", "python": "#3572A5", "ruby": "#701516", "php": "#4F5D95"};
+const LANGS = Object.keys(LANG_COLOR);
+
+// ---- nodes, bands ---------------------------------------------------
+const nodes = TREE.nodes;
+const byId = new Map(nodes.map(r => [r.id, r]));
+const leaves = nodes.filter(r => r.label !== null)
+                    .sort((a, b) => a.x0 - b.x0);
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+function hex(c) { return "#" + c.map(v =>
+  Math.max(0, Math.min(255, Math.round(v))).toString(16)
+    .padStart(2, "0")).join(""); }
+const GRAY = [138, 138, 138], PURPLE = [176, 58, 214];
+function entropy(counts, total) {
+  let e = 0, n = 0;
+  for (const k in counts) { n++; const p = counts[k] / total; e -= p * Math.log2(p); }
+  return n > 1 ? e / Math.log2(LANGS.length) : 0;
+}
+for (const r of nodes) {
+  if (r.label !== null) { r.fill = LANG_COLOR[r.language] || "#8a8a8a"; }
+  else {
+    const t = Math.min(1, entropy(r.counts, r.size) * 1.6);
+    r.fill = hex([lerp(GRAY[0], PURPLE[0], t), lerp(GRAY[1], PURPLE[1], t),
+                  lerp(GRAY[2], PURPLE[2], t)]);
+  }
+}
+function membersOf(r, cap) {
+  const out = [];
+  (function g(n) {
+    if (out.length > cap + 1) return;
+    if (n.label !== null) { out.push(n.label); return; }
+    for (const sid of n.subs) g(byId.get(sid));
+  })(r);
+  return out;
+}
+
+// ---- layout ---------------------------------------------------------
+const M = { top: 10, right: 14, bottom: 118, left: 52 };
+const H = 620;
+let leafW = 13;
+let W = M.left + M.right + TREE.n_leaves * leafW;
+const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+document.getElementById("chart").appendChild(svg);
+function SV(tag, at) {
+  const e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (const k in at) e.setAttribute(k, at[k]);
+  return e;
+}
+function xs(v) { return M.left + v * leafW; }
+function ys(t) { return M.top + (1 - t) * (H - M.top - M.bottom); }
+function yinv(py) { return 1 - (py - M.top) / (H - M.top - M.bottom); }
+
+let thr = 0.70, matches = new Set();
+function isCurrent(r) { return r.death < thr && thr <= r.birth; }
+function clustersAt(t) {
+  let c = 0;
+  (function g(r) {
+    if (r.birth >= t) { c++; return; }
+    for (const sid of r.subs) g(byId.get(sid));
+  })(byId.get(TREE.root_id));
+  return c;
+}
+// the walk above depends on band identity; the exact count is also
+// available directly from the merge history, and the two are compared
+// on every move -- the same self-check the earlier explorer carried.
+function clustersExact(t) {
+  return TREE.n_leaves - SWEEP.merge_sims.filter(s => s >= t).length;
+}
+
+function draw() {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  W = M.left + M.right + TREE.n_leaves * leafW;
+  svg.setAttribute("width", W); svg.setAttribute("height", H);
+  // axis
+  const gA = SV("g", {});
+  for (let i = 0; i <= 10; i++) {
+    const t = i / 10, py = ys(t);
+    gA.appendChild(SV("line", { x1: M.left - 5, x2: W - M.right, y1: py,
+      y2: py, stroke: "currentColor", "stroke-opacity": i % 5 ? .08 : .2 }));
+    const tx = SV("text", { x: M.left - 9, y: py + 4, "text-anchor": "end",
+      "font-size": 11, fill: "currentColor", "fill-opacity": .75 });
+    tx.textContent = t.toFixed(1); gA.appendChild(tx);
+  }
+  const lab = SV("text", { transform: "translate(14," + (H / 2) + ") rotate(-90)",
+    "text-anchor": "middle", fill: "currentColor", "font-size": 12 });
+  lab.textContent = "similarity threshold"; gA.appendChild(lab);
+  svg.appendChild(gA);
+
+  // segments
+  const g = SV("g", {});
+  for (const r of nodes) {
+    const y0 = ys(r.birth), y1 = ys(r.death);
+    const rect = SV("rect", {
+      x: xs(r.x0) + 0.25, width: Math.max(0.5, (r.x1 - r.x0) * leafW - 0.5),
+      y: y0, height: Math.max(1, y1 - y0), fill: r.fill,
+      "fill-opacity": r.birth < thr ? 0.3 : (isCurrent(r) ? 1 : 0.85),
+      stroke: matches.has(r.id) ? "#ff2d78" : (isCurrent(r) ? "#ffd400" : "none"),
+      "stroke-width": matches.has(r.id) ? 1.5 : (isCurrent(r) ? 1.25 : 0) });
+    rect.__d = r;
+    g.appendChild(rect);
+  }
+  svg.appendChild(g);
+
+  // leaf labels
+  if (leafW >= 8) {
+    const gl = SV("g", {});
+    for (const l of leaves) {
+      const t = SV("text", {
+        transform: "translate(" + (xs(l.x0) + leafW / 2 + 4) + ","
+                   + (H - M.bottom + 6) + ") rotate(90)",
+        "font-size": Math.min(11, leafW - 2), fill: "currentColor",
+        "fill-opacity": matches.has(l.id) ? 1 : .8,
+        "font-weight": matches.has(l.id) ? 700 : 400 });
+      t.textContent = l.label;
+      gl.appendChild(t);
+    }
+    svg.appendChild(gl);
+  }
+
+  // threshold line
+  const py = ys(thr);
+  const gt = SV("g", { style: "cursor:ns-resize" });
+  gt.appendChild(SV("line", { x1: M.left, x2: W - M.right, y1: py, y2: py,
+    stroke: "#ff2d78", "stroke-width": 1.5, "stroke-dasharray": "6 4" }));
+  const tag = SV("text", { x: W - M.right - 4, y: py - 5,
+    "text-anchor": "end", "font-size": 12, fill: "#ff2d78",
+    "font-weight": 650 });
+  tag.textContent = clustersAt(thr) + " clusters";
+  gt.appendChild(tag);
+  svg.appendChild(gt);
+}
+
+function setThr(t) {
+  thr = Math.max(0, Math.min(1, t));
+  const c = clustersAt(thr), e = clustersExact(thr);
+  if (c !== e) console.warn("cluster count mismatch at t=" + thr
+    + ": walk says " + c + ", merge history says " + e);
+  document.getElementById("thval").textContent = thr.toFixed(3);
+  document.getElementById("count").textContent = e;
+  draw(); drawCurve();
+}
+
+// ---- drag on the threshold line -------------------------------------
+let dragging = false;
+svg.addEventListener("mousedown", ev => {
+  const r = svg.getBoundingClientRect();
+  if (Math.abs(ev.clientY - r.top - ys(thr)) < 12) { dragging = true; ev.preventDefault(); }
+});
+window.addEventListener("mousemove", ev => {
+  if (!dragging) return;
+  const r = svg.getBoundingClientRect();
+  setThr(yinv(ev.clientY - r.top));
+});
+window.addEventListener("mouseup", () => { dragging = false; });
+svg.addEventListener("click", ev => {
+  const r = svg.getBoundingClientRect();
+  if (ev.shiftKey) setThr(yinv(ev.clientY - r.top));
+});
+
+// ---- hover -----------------------------------------------------------
+const tip = document.getElementById("tip");
+svg.addEventListener("mousemove", ev => {
+  const r = ev.target.__d;
+  if (!r) { tip.style.display = "none"; return; }
+  const CAP = 24;
+  const mem = membersOf(r, CAP);
+  const shown = mem.slice(0, CAP).join(", ")
+    + (mem.length > CAP ? " … (" + r.size + " signatures total)" : "");
+  const mix = Object.keys(r.counts).sort((a, b) => r.counts[b] - r.counts[a])
+    .map(k => k + " " + r.counts[k]).join(" · ");
+  tip.style.display = "block";
+  tip.innerHTML = "<div class='hd'>"
+    + (r.label !== null
+       ? r.label + " — domain " + r.domain + " of 64 cells"
+       : r.size + " signatures over " + Object.keys(r.counts).length
+         + " languages")
+    + "</div>" + mix + "<br>exists as a cluster for thresholds ("
+    + r.death.toFixed(3) + ", " + r.birth.toFixed(3)
+    + "] — stability band " + (r.birth - r.death).toFixed(3)
+    + "<br>" + shown;
+  tip.style.left = Math.min(ev.clientX + 14, innerWidth - 440) + "px";
+  tip.style.top = (ev.clientY + 12) + "px";
+});
+svg.addEventListener("mouseleave", () => { tip.style.display = "none"; });
+
+// ---- search ----------------------------------------------------------
+document.getElementById("search").addEventListener("keydown", ev => {
+  if (ev.key !== "Enter") return;
+  const q = ev.target.value.trim().toLowerCase();
+  matches = new Set();
+  if (!q) { draw(); return; }
+  const hit = leaves.filter(l => l.label.toLowerCase().includes(q));
+  hit.forEach(l => matches.add(l.id));
+  draw();
+  if (hit.length) document.getElementById("chart").scrollLeft =
+    Math.max(0, xs(hit[0].x0) - 300);
+});
+document.getElementById("reset").addEventListener("click", () => {
+  matches = new Set(); document.getElementById("search").value = "";
+  leafW = 13; setThr(0.70); document.getElementById("chart").scrollLeft = 0;
+  document.getElementById("zoom").value = 13;
+});
+document.getElementById("zoom").addEventListener("input", ev => {
+  leafW = +ev.target.value; draw();
+});
+
+// ---- the curve -------------------------------------------------------
+const CW = 900, CH = 260, CM = { top: 10, right: 14, bottom: 34, left: 52 };
+const csvg = SV("svg", { width: CW, height: CH });
+document.getElementById("curve").appendChild(csvg);
+const maxc = Math.max.apply(null, SWEEP.curve.map(p => p.clusters));
+function cx(t) { return CM.left + t * (CW - CM.left - CM.right); }
+function cy(n) { return CH - CM.bottom - (n / maxc) * (CH - CM.top - CM.bottom); }
+function drawCurve() {
+  while (csvg.firstChild) csvg.removeChild(csvg.firstChild);
+  for (const p of SWEEP.plateaus) {
+    if (p.degenerate || p.width < 0.012) continue;
+    csvg.appendChild(SV("rect", { x: cx(p.low), y: CM.top,
+      width: Math.max(1, cx(p.high) - cx(p.low)),
+      height: CH - CM.top - CM.bottom, fill: "#ffd400", "fill-opacity": .18 }));
+  }
+  for (let i = 0; i <= 10; i++) {
+    const t = i / 10;
+    csvg.appendChild(SV("line", { x1: cx(t), x2: cx(t), y1: CM.top,
+      y2: CH - CM.bottom, stroke: "currentColor", "stroke-opacity": .08 }));
+    const tx = SV("text", { x: cx(t), y: CH - CM.bottom + 15,
+      "text-anchor": "middle", "font-size": 11, fill: "currentColor",
+      "fill-opacity": .75 });
+    tx.textContent = t.toFixed(1); csvg.appendChild(tx);
+  }
+  for (const n of [0, 50, 100, 150, 200, maxc]) {
+    if (n > maxc) continue;
+    csvg.appendChild(SV("line", { x1: CM.left, x2: CW - CM.right, y1: cy(n),
+      y2: cy(n), stroke: "currentColor", "stroke-opacity": .12 }));
+    const tx = SV("text", { x: CM.left - 8, y: cy(n) + 4, "text-anchor": "end",
+      "font-size": 11, fill: "currentColor", "fill-opacity": .75 });
+    tx.textContent = n; csvg.appendChild(tx);
+  }
+  let d = "";
+  const pts = SWEEP.curve.slice().sort((a, b) => a.threshold - b.threshold);
+  for (let i = 0; i < pts.length; i++) {
+    d += (i ? "L" : "M") + cx(pts[i].threshold) + " " + cy(pts[i].clusters);
+  }
+  csvg.appendChild(SV("path", { d: d, fill: "none", stroke: "#3178c6",
+    "stroke-width": 2 }));
+  csvg.appendChild(SV("line", { x1: cx(thr), x2: cx(thr), y1: CM.top,
+    y2: CH - CM.bottom, stroke: "#ff2d78", "stroke-width": 1.5,
+    "stroke-dasharray": "6 4" }));
+  const t2 = SV("text", { x: cx(thr) + 5, y: CM.top + 12, "font-size": 12,
+    fill: "#ff2d78", "font-weight": 650 });
+  t2.textContent = clustersExact(thr) + " at " + thr.toFixed(3);
+  csvg.appendChild(t2);
+  const ax = SV("text", { x: CW / 2, y: CH - 4, "text-anchor": "middle",
+    "font-size": 12, fill: "currentColor" });
+  ax.textContent = "similarity threshold"; csvg.appendChild(ax);
+}
+
+// ---- plateau table ---------------------------------------------------
+(function () {
+  const rows = SWEEP.plateaus.filter(p => !p.degenerate).slice(0, 12);
+  let h = "<table><tr><th>threshold range</th><th>width</th>"
+        + "<th>clusters</th></tr>";
+  for (const p of rows) {
+    h += "<tr><td>[" + p.low.toFixed(3) + ", " + p.high.toFixed(3)
+       + ")</td><td class='n'>" + p.width.toFixed(3) + "</td><td class='n'>"
+       + p.clusters + "</td></tr>";
+  }
+  document.getElementById("plateaus").innerHTML = h + "</table>";
+})();
+
+document.getElementById("legend").innerHTML = LANGS.map(l =>
+  "<span><span class='sw' style='background:" + LANG_COLOR[l]
+  + "'></span>" + l + "</span>").join("");
+
+setThr(0.70);
+</script>

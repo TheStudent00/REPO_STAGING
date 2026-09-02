@@ -1,0 +1,8 @@
+// The borrow checker REFUSES deletion during iteration, at build time. That is
+// rust's whole answer to F-d4, and it costs nothing at run time.
+fn f_Fd4_a() -> String {
+    let mut d = HashMap::new();
+    for (i, k) in ["a", "b", "c", "d", "e"].iter().enumerate() { d.insert(k.to_string(), i); }
+    for k in d.keys() { if k == "c" { d.remove(k); } }
+    "ok".to_string()
+}

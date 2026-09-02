@@ -1,0 +1,30 @@
+# dict probe bodies - ruby (insertion-ordered, nil on a missing key).
+def mkd() = {"k" => "v1"}
+def f_dictU1_a() = fmts(mkd()["k"])
+def f_dictU2_a()
+  d = {"k" => "v1"}; d["k"] = "v2"; fmts(d["k"])
+end
+def f_dictU3_a()
+  d = mkd(); d.delete("k"); fmtb(d.key?("k"))
+end
+def f_dictU4_a()
+  d = {}; d["a"] = 1; d["b"] = 2; d["c"] = 3; fmts(d.length)
+end
+def f_Fd1_a()
+  d = {}; d[1] = "int"; d["1"] = "str"; fmts(d[1])
+end
+def f_Fd2_a()
+  d = {}; d["z"] = 1; d["a"] = 1; d["m"] = 1; d.keys.join(",")
+end
+def f_Fd3_a() = fmts(mkd()["nope"].inspect)
+def f_Fd4_a()
+  d = {"a" => 1, "b" => 2, "c" => 3, "d" => 4, "e" => 5}
+  d.each_key { |k| d.delete(k) if k == "c" }
+  "ok"
+end
+def f_Fd5_a()
+  d = {}; d[[1, 2]] = "x"; d[[1, 2]] = "y"; fmts(d.length)
+end
+def f_Fl9d_a()
+  a = mkd(); b = a; b["k"] = "99"; fmts(a["k"])
+end

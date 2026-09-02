@@ -1,0 +1,23 @@
+// list probe bodies - c++ (std::vector). Out-of-range operator[] is UNDEFINED,
+// per the owner's ruling probed anyway and recorded, but no answer can be wrong;
+// .at() throws, and both spellings are separate guarantees.
+#include <algorithm>
+#include <vector>
+static std::vector<int> mkl() { return std::vector<int>{1, 2, 3}; }
+static std::string joinInts(const std::vector<int>& v) {
+  std::string out;
+  for (size_t i = 0; i < v.size(); i++) { if (i) out += ","; out += std::to_string(v[i]); }
+  return out;
+}
+static std::string f_listU1_a() { std::vector<int> a{1, 2}; a.push_back(3); return joinInts(a); }
+static std::string f_listU2_a() { return std::to_string(mkl()[1]); }
+static std::string f_listU3_a() { std::vector<int> o; for (int x : mkl()) o.push_back(x); return joinInts(o); }
+static std::string f_listU4_a() { return std::to_string(mkl().size()); }
+static std::string f_Fl3_a() { std::vector<int> a{1, 2}; a.push_back(3); a.push_back(4); return std::to_string(a.size()); }
+static std::string f_Fl4_a() { std::vector<int> a = mkl(); return std::to_string(a[10]); }
+static std::string f_Fl4_b() { std::vector<int> a = mkl(); return std::to_string(a.at(10)); }
+static std::string f_Fl5_a() { std::vector<int> a = mkl(); return std::to_string(a[-1]); }
+static std::string f_Fl6_a() { std::vector<int> a = mkl(); std::vector<int> s(a.begin(), a.begin() + 2); s[0] = 99; return std::to_string(a[0]); }
+static std::string f_Fl7_a() { return fmtb(mkl() == mkl()); }
+static std::string f_Fl8_a() { std::vector<int> a{10, 9, 1}; std::sort(a.begin(), a.end()); return joinInts(a); }
+static std::string f_Fl9_a() { std::vector<int> a = mkl(); std::vector<int> b = a; b[0] = 99; return std::to_string(a[0]); }

@@ -1,0 +1,437 @@
+# acceptance query, lap four -- THE REGISTER INDEX, END TO END.
+# Map graph_go4.json.  Built by, in order:
+#     build_graph.py    lap one, UNTOUCHED           -> graph_go.json
+#     fix_bindings.py   lap four, fix 1              -> (intermediate)
+#     resolve_dots2.py  lap four, fix 2              -> (intermediate)
+#     flow_forward.py   lap three, re-run UNCHANGED  -> graph_go4.json
+# graph_go.json, graph_go2.json, graph_go3.json, build_graph.py, resolve_dots.py
+# and flow_forward.py are byte-identical to what earlier laps produced.  The
+# intermediates are not kept: they are reproducible by re-running the two new
+# co-modules in that order, and only the endpoints are artifacts.
+#
+# Every query below is run with flows_into edges only and NO reversal.  Not one
+# edge in any leg here is walked backwards.
+#
+# ------------------------------- CAVEAT (read before any result) -------------
+# The movement edges OVER-APPROXIMATE, in four named ways.
+#
+#  1. OBJECT-INSENSITIVE.  Field-sensitive (which field f is matters),
+#     object-insensitive (which x holds f does not).  A store into a.f reaches
+#     every read of .f anywhere in the parsed region, b.f included.  Wherever a
+#     path below crosses a field node, that hop carries this looseness.
+#  2. FLOW-INSENSITIVE.  Statement order inside a function is not modelled.
+#  3. DISPATCH.  Call binding re-uses the map's own call edges, candidate sets
+#     included, so an argument binds to the matching parameter of EVERY
+#     candidate callee.
+#  4. THE CALL NODE IS A PASS-THROUGH.  An argument flows INTO a call node and
+#     the call's result flows OUT of it, so a two-line walk through a call node
+#     will carry any argument to any result.  Leg 2 below therefore refuses to
+#     use that shortcut and goes through the callee's BODY instead.
+#
+# Therefore every path here is a BOUND OVER ALL RUNS: it says these hops exist
+# in the compiler's source and are joined forwards.  It does NOT say any single
+# compilation took them.  The diary (per-run fact, subject column) and the arch
+# campaign's forced probe stay the judges; the diary cross-check is at the end.
+
+# ------------------------------- what lap four changed -----------------------
+#
+# FIX 1 -- fix_bindings.py, the name-collision keying defect.
+#   names in the region held by BOTH a package-scope declaration and a method
+#   of the same spelling: 22
+#   rule A (a package qualifier can never name a method): 8822 call sites
+#       already correct 8817, CHANGED 2
+#   rule B (a bare identifier can never name a method): 74 bindings landed on
+#       a method, CHANGED 34, left alone 40 (no package-scope name to move to)
+#   BINDINGS CHANGED, both rules: 36.  Every one of them is method -> func.
+#   No binding was narrowed to a guess; where a package-qualified name had no
+#   package-scope declaration in the region the tool leaves the map alone.
+#
+#   The named case, before and after:
+#     ssagen/ssa.go:630   op, reg := ssa.ArgOpAndRegisterFor(r, abi)
+#     BEFORE (graph_go.json / graph_go3.json):
+#       ...ssagen/ssa.go:25992-26023:call  --calls/cross_package_in_region-->
+#       ...ssa/expand_calls.go:27767-27896:method  ArgOpAndRegisterFor  (line 876,
+#           `func (c *registerCursor) ArgOpAndRegisterFor() (Op, int64)` -- ZERO
+#           parameters, so positional argument binding had nothing to bind)
+#     AFTER (graph_go4.json):
+#       ...ssagen/ssa.go:25992-26023:call  --calls/cross_package_in_region-->
+#       ...ssa/expand_calls.go:28008-28207:func    ArgOpAndRegisterFor  (line 883,
+#           `func ArgOpAndRegisterFor(r abi.RegIndex, abiConfig *abi.ABIConfig)`)
+#     and the same correction on the resolves_to edge from the ref node
+#       ...ssagen/ssa.go:25992-26015:ref.
+#
+# FIX 2 -- resolve_dots2.py, qualified types in the dot resolver.
+#   rule 1: a declared type spelled pkg.T is resolved through the imports of
+#           the file the DECLARATION is written in.
+#   rule 2: `x := call(...)` binds x to the callee's ONE declared result type,
+#           when the callee is declared in the parsed region.
+#   lap-one selector frontier records            19447
+#   closed by lap two (resolve_dots.py)          8424
+#   closed by lap four (resolve_dots2.py)        9524
+#   NEW this lap                                 1100  (of the 11,023 that remained)
+#   still refused                                9923
+#   crossings that used a QUALIFIED field type   604
+#   crossings that used a DECLARED RESULT type   1707
+#   refusals whose reason now NAMES the package they wait on: 282
+#       cmd/compile/internal/types               153
+#       cmd/internal/src                         40
+#       cmd/compile/internal/ir                  34
+#       cmd/compile/internal/objw                32
+#       cmd/internal/obj                         15
+#       cmd/compile/internal/liveness            5
+#       cmd/compile/internal/abt                 2
+#       internal/buildcfg                        1
+#
+#   The two frontier records lap three pasted as its stops are GONE:
+#     s.curBlock.NewValue0I    frontier:src/cmd/compile/internal/ssagen/ssa.go:46894-46915:unresolved_import  present in graph_go4: False
+#     v.AuxInt                 frontier:src/cmd/compile/internal/ssa/func.go:14935-14943:unresolved_import  present in graph_go4: False
+#     s.curBlock.NewValue0I now resolves_to/method_via_declared_type -> src/cmd/compile/internal/ssa/func.go:467 method NewValue0I
+#     v.AuxInt now resolves_to/field_via_declared_type -> src/cmd/compile/internal/ssa/value.go:40 field AuxInt
+#
+# THE MAP.  nodes 174159, edges 335547, frontier records 25472.
+#     calls/cross_package_in_region                114
+#     calls/direct                                 3179
+#     calls/indirect                               17629
+#     calls/method_via_declared_type               5427
+#     contains                                     31877
+#     flows_into/argument                          29795
+#     flows_into/argument_to_param                 18614
+#     flows_into/call_result                       4803
+#     flows_into/decl_to_read                      43694
+#     flows_into/field_to_read                     8812
+#     flows_into/literal_to_field                  383
+#     flows_into/result_param_to_call              388
+#     flows_into/return_to_call                    19114
+#     flows_into/selector_base                     25161
+#     flows_into/store_to_field                    1353
+#     flows_into/value                             10423
+#     resolves_to                                  54140
+#     resolves_to/cross_package_in_region          8705
+#     resolves_to/cross_package_type_in_region     2011
+#     resolves_to/field_via_declared_type          8812
+#     resolves_to/frontier                         20102
+#     resolves_to/method_candidate                 10832
+#     resolves_to/method_via_declared_type         5287
+#     resolves_to/type                             4892
+#   (meta['counts']['edge_types'] inside graph_go4.json is lap ONE's own
+#    tally and was never re-written by the co-modules; the list above is
+#    recounted from the edge list itself and is the one to read.)
+
+# ============================ CONTROL: the lap-three map ====================
+# The 25 hops of leg 2 below, each checked for existence on graph_go3.json.
+# MISSING on graph_go3.json: 4 of 25.
+#   hop  9->10  src/cmd/compile/internal/ssagen/ssa.go:630 ref r
+#              ==> src/cmd/compile/internal/ssa/expand_calls.go:883 param r
+#   hop 12->13  src/cmd/compile/internal/ssa/expand_calls.go:888 call int64
+#              ==> src/cmd/compile/internal/ssagen/ssa.go:630 call ssa.ArgOpAndRegisterFor
+#   hop 17->18  src/cmd/compile/internal/ssagen/ssa.go:1258 ref auxint
+#              ==> src/cmd/compile/internal/ssa/func.go:467 param auxint
+#   hop 19->20  src/cmd/compile/internal/ssa/func.go:469 ref auxint
+#              ==> src/cmd/compile/internal/ssa/value.go:40 field AuxInt
+# Two of those four are fix 1's (the call into ArgOpAndRegisterFor and the
+# return back out of it); two are fix 2's (the call into NewValue0I, and the
+# store v.AuxInt = auxint inside it).
+#
+# Honest qualifier: a BFS on graph_go3.json from the same start DOES reach
+# the same end node (34 hops, 18749 nodes visited).  It gets there by the loose
+# route lap three itself flagged -- hops [7]-[12] carry `len(pa.Registers)`,
+# the COUNT of registers, not the index.  That is exactly why leg 2 is
+# waypointed rather than BFS'd: BFS finds the shortest chain, not the one
+# that carries the value in question.
+
+# ============================ LEG 1: BFS forward, start -> internal/amd64 ==
+# START: abiutils.go:514 `regs`, the []RegIndex list allocateRegs builds.
+# GOAL:  any node in internal/amd64.  Forward edges only, BFS.
+visited 1800 nodes
+
+PATH (18 hops):
+  [0] src/cmd/compile/internal/abi/abiutils.go:514         param       regs
+       --flows_into/decl_to_read-->
+  [1] src/cmd/compile/internal/abi/abiutils.go:516         ref         regs
+       --flows_into/return_to_call-->
+  [2] src/cmd/compile/internal/abi/abiutils.go:634         call        state.allocateRegs
+       --flows_into/return_to_call-->
+  [3] src/cmd/compile/internal/abi/abiutils.go:604         call        state.tryAllocRegs
+       --flows_into/call_result-->
+  [4] src/cmd/compile/internal/abi/abiutils.go:604         local_var   registers
+       --flows_into/decl_to_read-->
+  [5] src/cmd/compile/internal/abi/abiutils.go:616         ref         registers
+       --flows_into/literal_to_field-->
+  [6] src/cmd/compile/internal/abi/abiutils.go:102         field       Registers
+       --flows_into/field_to_read-->
+  [7] src/cmd/compile/internal/ssagen/ssa.go:628           ref         paramAssignment.Registers
+       --flows_into/value-->
+  [8] src/cmd/compile/internal/ssagen/ssa.go:628           local_var   r
+       --flows_into/decl_to_read-->
+  [9] src/cmd/compile/internal/ssagen/ssa.go:630           ref         r
+       --flows_into/argument-->
+  [10] src/cmd/compile/internal/ssagen/ssa.go:630           call        ssa.ArgOpAndRegisterFor
+       --flows_into/call_result-->
+  [11] src/cmd/compile/internal/ssagen/ssa.go:630           local_var   reg
+       --flows_into/decl_to_read-->
+  [12] src/cmd/compile/internal/ssagen/ssa.go:632           ref         reg
+       --flows_into/argument_to_param-->
+  [13] src/cmd/compile/internal/ssagen/ssa.go:1257          param       auxint
+       --flows_into/decl_to_read-->
+  [14] src/cmd/compile/internal/ssagen/ssa.go:1258          ref         auxint
+       --flows_into/argument_to_param-->
+  [15] src/cmd/compile/internal/ssa/func.go:467             param       auxint
+       --flows_into/decl_to_read-->
+  [16] src/cmd/compile/internal/ssa/func.go:469             ref         auxint
+       --flows_into/store_to_field-->
+  [17] src/cmd/compile/internal/ssa/value.go:40             field       AuxInt
+       --flows_into/field_to_read-->
+  [18] src/cmd/compile/internal/amd64/ssa.go:290            ref         v.AuxInt
+
+# Read hop [18] with the caveat in hand.  amd64/ssa.go:290 is
+#     case ssa.OpAMD64PSHUFLW:
+#         p := s.Prog(v.Op.Asm())
+#         imm := v.AuxInt
+# -- a read of .AuxInt in a DIFFERENT opcode's arm.  Object-insensitivity put
+# it there: the store `v.AuxInt = auxint` reaches every read of .AuxInt in the
+# region.  Leg 1 is honest as `the register index reaches internal/amd64 by a
+# forward chain through the AuxInt slot'; it is NOT honest as `THIS is the
+# operand emitted for af's parameter'.  Hops [0]-[17] are the index itself and
+# are the same hops as leg 2's [0]-[20], modulo the call-node shortcut at [9].
+
+# ============================ LEG 2: the register index's own chain ========
+# Waypointed, not BFS'd: each hop was looked up in graph_go4.json by
+# (file, line, kind, name) and the edge between consecutive hops asserted to
+# exist.  A missing edge aborts the check.  Forward only, and the walk goes
+# through the CALLEE BODY at hops [9]-[13] rather than through the call node,
+# so caveat 4 does not apply to that crossing.
+
+PATH (25 hops):
+  [0] src/cmd/compile/internal/abi/abiutils.go:514         param       regs
+       --flows_into/decl_to_read-->
+  [1] src/cmd/compile/internal/abi/abiutils.go:516         ref         regs
+       --flows_into/return_to_call-->
+  [2] src/cmd/compile/internal/abi/abiutils.go:634         call        state.allocateRegs
+       --flows_into/return_to_call-->
+  [3] src/cmd/compile/internal/abi/abiutils.go:604         call        state.tryAllocRegs
+       --flows_into/call_result-->
+  [4] src/cmd/compile/internal/abi/abiutils.go:604         local_var   registers
+       --flows_into/decl_to_read-->
+  [5] src/cmd/compile/internal/abi/abiutils.go:616         ref         registers
+       --flows_into/literal_to_field-->
+  [6] src/cmd/compile/internal/abi/abiutils.go:102         field       Registers
+       --flows_into/field_to_read-->
+  [7] src/cmd/compile/internal/ssagen/ssa.go:628           ref         paramAssignment.Registers
+       --flows_into/value-->
+  [8] src/cmd/compile/internal/ssagen/ssa.go:628           local_var   r
+       --flows_into/decl_to_read-->
+  [9] src/cmd/compile/internal/ssagen/ssa.go:630           ref         r
+       --flows_into/argument_to_param-->
+  [10] src/cmd/compile/internal/ssa/expand_calls.go:883     param       r
+       --flows_into/decl_to_read-->
+  [11] src/cmd/compile/internal/ssa/expand_calls.go:888     ref         r
+       --flows_into/argument-->
+  [12] src/cmd/compile/internal/ssa/expand_calls.go:888     call        int64
+       --flows_into/return_to_call-->
+  [13] src/cmd/compile/internal/ssagen/ssa.go:630           call        ssa.ArgOpAndRegisterFor
+       --flows_into/call_result-->
+  [14] src/cmd/compile/internal/ssagen/ssa.go:630           local_var   reg
+       --flows_into/decl_to_read-->
+  [15] src/cmd/compile/internal/ssagen/ssa.go:632           ref         reg
+       --flows_into/argument_to_param-->
+  [16] src/cmd/compile/internal/ssagen/ssa.go:1257          param       auxint
+       --flows_into/decl_to_read-->
+  [17] src/cmd/compile/internal/ssagen/ssa.go:1258          ref         auxint
+       --flows_into/argument_to_param-->
+  [18] src/cmd/compile/internal/ssa/func.go:467             param       auxint
+       --flows_into/decl_to_read-->
+  [19] src/cmd/compile/internal/ssa/func.go:469             ref         auxint
+       --flows_into/store_to_field-->
+  [20] src/cmd/compile/internal/ssa/value.go:40             field       AuxInt
+       --flows_into/field_to_read-->
+  [21] src/cmd/compile/internal/ssa/value.go:85             ref         v.AuxInt
+       --flows_into/argument-->
+  [22] src/cmd/compile/internal/ssa/value.go:85             call        int8
+       --flows_into/return_to_call-->
+  [23] src/cmd/compile/internal/ssa/regalloc.go:1039        call        v.AuxInt8
+       --flows_into/call_result-->
+  [24] src/cmd/compile/internal/ssa/regalloc.go:1039        local_var   reg
+       --flows_into/decl_to_read-->
+  [25] src/cmd/compile/internal/ssa/regalloc.go:1040        ref         reg
+
+# What each stretch is, in the compiler's own words.
+#
+#  [0]-[6]   abiutils.go.  allocateRegs returns the register index list; it
+#            reaches tryAllocRegs and lands in the ABIParamAssignment record:
+#              abiutils.go:616   Registers: registers,
+#              abiutils.go:102   Registers []RegIndex
+#
+#  [7]-[9]   ssagen/ssa.go:622-630, storeParameterRegsToStack:
+#              r := paramAssignment.Registers[i]
+#              op, reg := ssa.ArgOpAndRegisterFor(r, abi)
+#
+# [10]-[13]  the crossing FIX 1 opened.  ssa/expand_calls.go:883-889:
+#              func ArgOpAndRegisterFor(r abi.RegIndex, abiConfig *abi.ABIConfig) (Op, int64) {
+#                      i := abiConfig.FloatIndexFor(r)
+#                      if i >= 0 { // float PR
+#                              return OpArgFloatReg, i
+#                      }
+#                      return OpArgIntReg, int64(r)
+#              }
+#            The abi register index becomes the ssa Op's auxint.  Before fix 1
+#            this call bound to the ZERO-PARAMETER method at line 876 and the
+#            chain could not enter the function at all.
+#
+# [14]-[17]  ssagen/ssa.go:632 and 1256-1258:
+#              v := s.newValue0I(op, t, reg)
+#              func (s *state) newValue0I(op ssa.Op, t *types.Type, auxint int64) *ssa.Value {
+#                      return s.curBlock.NewValue0I(s.peekPos(), op, t, auxint)
+#              }
+#
+# [18]-[20]  the crossing FIX 2 opened.  ssa/func.go:466-471:
+#              func (b *Block) NewValue0I(pos src.XPos, op Op, t *types.Type, auxint int64) *Value {
+#                      v := b.Func.newValue(op, t, b, pos)
+#                      v.AuxInt = auxint
+#            `s.curBlock` is declared `curBlock *ssa.Block` -- a QUALIFIED type,
+#            which lap two refused; rule 1 resolves it.  `v` is declared by
+#            `v := b.Func.newValue(...)` with no written type; rule 2 takes the
+#            callee's declared result `*Value`.  Both refusals were the two
+#            frontier records lap three pasted.
+#
+# [21]-[25]  ssa/value.go:40, :85 and ssa/regalloc.go:1029-1041:
+#              AuxInt  int64
+#              func (v *Value) AuxInt8() int8 { ...; return int8(v.AuxInt) }
+#              if op == OpArgIntReg {
+#                      reg := v.Block.Func.Config.intParamRegs[v.AuxInt8()]
+#                      return regInfo{outputs: []outputInfo{{regs: regMaskAt(register(reg))}}}
+#              }
+#            This is the spot where the ABI register INDEX selects the PHYSICAL
+#            register.  regalloc.go:1040 `reg` is a machine register number.
+
+# ============================ THE HONEST STOP ==============================
+# Leg 2 ends at ssa/regalloc.go:1040, one step short of internal/amd64, and
+# the step that is missing is NOT a parsing gap this node can close by
+# resolving more names.  amd64 emits the operand as
+#
+#     amd64/ssa.go:1283   p.To.Reg = v.Reg()
+#     ssa/value.go:504    func (v *Value) Reg() int16 {
+#                                 reg := v.Block.Func.RegAlloc[v.ID]
+#
+# and RegAlloc is written by the register allocator's SEARCH, not by a
+# dataflow move: regalloc.go:1040 produces a register MASK of the registers
+# the value may live in, and the allocator then picks one by an algorithm over
+# live ranges and pressure.  A static forward-movement map cannot cross a
+# search; the value at the far side is a CHOICE, not a copy.  Naming that is
+# the frontier is the honest answer, and it is a frontier of a different KIND
+# from the three lap three named -- those were unresolved names and a keying
+# defect, all three now closed; this one is an unmodelled COMPUTATION.
+#
+# For the record, the map does join regalloc.go:1040 to internal/amd64
+# forwards.  Pasted because it is what the map says, not because it carries
+# the index:
+
+PATH (12 hops):
+  [0] src/cmd/compile/internal/ssa/regalloc.go:1040        ref         reg
+       --flows_into/argument-->
+  [1] src/cmd/compile/internal/ssa/regalloc.go:1040        call        register
+       --flows_into/argument_to_param-->
+  [2] src/cmd/compile/internal/ssa/regalloc.go:199         param       i
+       --flows_into/decl_to_read-->
+  [3] src/cmd/compile/internal/ssa/regalloc.go:201         ref         i
+       --flows_into/literal_to_field-->
+  [4] src/cmd/compile/internal/ssa/regalloc.go:169         field       v1
+       --flows_into/field_to_read-->
+  [5] src/cmd/compile/internal/ssa/regalloc.go:173         ref         r.v1
+       --flows_into/return_to_call-->
+  [6] src/cmd/compile/internal/ssa/regalloc.go:1008        call        s.f.Config.simdRegMask.intersect
+       --flows_into/return_to_call-->
+  [7] src/cmd/compile/internal/ssa/regalloc.go:2044        call        s.compatRegs
+       --flows_into/argument-->
+  [8] src/cmd/compile/internal/ssa/regalloc.go:2044        call        s.allocValToReg
+       --flows_into/argument_to_param-->
+  [9] src/cmd/compile/internal/ssa/block.go:210            param       v
+       --flows_into/decl_to_read-->
+  [10] src/cmd/compile/internal/ssa/block.go:212            ref         v
+       --flows_into/store_to_field-->
+  [11] src/cmd/compile/internal/ssa/block.go:58             field       Controls
+       --flows_into/field_to_read-->
+  [12] src/cmd/compile/internal/amd64/ssa.go:2498           ref         b.Controls
+
+# It leaves the index at hop [1] (`register(reg)` is a type conversion whose
+# result goes into a mask) and wanders through simdRegMask, allocValToReg and
+# Block.Controls.  That is over-approximation doing what over-approximation
+# does; it is not a result.
+
+# ============================ DIARY CROSS-CHECK =============================
+# Per-run fact, one probe compile, from diary_go2.txt (337 events, 45
+# instrumented spots).  Only functions that were instrumented can appear;
+# absence here is silence, never evidence that a function did not run.
+#
+# The stretches of leg 2 that sit inside an instrumented function, with the
+# lines showing that function running with subject `af`:
+#
+#   leg 2 [0]-[6]: abiutils.go allocateRegs / tryAllocRegs / assignParam,
+#     25	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#     27	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#     28	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#     34	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#     35	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#     37	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#     43	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#     44	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#     46	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#     168	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#     169	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#     171	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#     177	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#     178	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#     179	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#     185	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#     186	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#     187	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#
+#   Six af triples, each in the order assignParam -> tryAllocRegs ->
+#   allocateRegs.  They are NOT exclusive: events 26, 36, 45 and 170 are the
+#   other subject (`main`) running between them --
+#     26	main	...exprCheckPtr	ssagen/ssa.go:3028
+#     36	main	...ABIAnalyzeFuncType	abi/abiutils.go:353
+#     45	main	...ABIAnalyzeFuncType.params_loop	abi/abiutils.go:362
+#     170	main	...InRegistersUsed	abi/abiutils.go:51
+#   -- which is the interleave lap two found and is why the subject column
+#   exists.  What the diary supports is: for subject af, this run entered
+#   those three spots in that order, six times.  PER-RUN FACT.
+#
+#   leg 2 [10]-[13], the crossing fix 1 opened.  ArgOpAndRegisterFor itself
+#   is NOT instrumented, so there is no direct per-run word on it.  The nearest
+#   per-run evidence is FloatIndexFor, which IS instrumented and which the
+#   region calls from exactly TWO places:
+#       ssa/expand_calls.go:884   i := abiConfig.FloatIndexFor(r)   <- inside
+#                                 ArgOpAndRegisterFor, one line into its body
+#       ssa/debug.go:467          i := f.ABISelf.FloatIndexFor(reg)
+#   So events 98 and 102 say: with subject af, this run entered one of those
+#   two call sites, twice.  That is a CANDIDATE SET OF TWO, not a singleton,
+#   and it is recorded as such.  It corroborates the leg; it does not prove it.
+#   The lines:
+#   
+#     98	af	src/cmd/compile/internal/abi/abiutils.go:9746-9858:method	FloatIndexFor	src/cmd/compile/internal/abi/abiutils.go:296
+#     102	af	src/cmd/compile/internal/abi/abiutils.go:9746-9858:method	FloatIndexFor	src/cmd/compile/internal/abi/abiutils.go:296
+#
+#
+#   Not instrumented, so no per-run word either way, on leg 2's remaining
+#   hops: ssagen storeParameterRegsToStack:622 and newValue0I:1257, ssa
+#   Block.NewValue0I:467, Value.AuxInt8:84, regalloc regspec:1029, and every
+#   field node (abiutils.go:102 Registers, ssa/value.go:40 AuxInt).
+#
+#   The amd64 end of leg 1: ssaGenValue ran with subject af (events 159-161),
+#   inside genssa for af (event 139).  The lines:
+#   
+#     139	af	-	subject_enter:genssa	-
+#     159	af	src/cmd/compile/internal/amd64/ssa.go:5467-60141:func	ssaGenValue	src/cmd/compile/internal/amd64/ssa.go:227
+#     160	af	src/cmd/compile/internal/amd64/ssa.go:5467-60141:func	ssaGenValue	src/cmd/compile/internal/amd64/ssa.go:227
+#     161	af	src/cmd/compile/internal/amd64/ssa.go:5467-60141:func	ssaGenValue	src/cmd/compile/internal/amd64/ssa.go:227
+#     164	af	-	subject_enter:PopulateABIInRegArgOps	-
+#
+#   That places af's compilation inside the
+#   goal file for this run.  The diary does NOT say which value ssaGenValue was
+#   emitting at each of those three events, so it cannot confirm hop [18]
+#   specifically -- that gap is real and is the same gap lap three recorded.
+#
+# Evidence classes, stated: leg 1 and leg 2 are STATIC BOUNDS OVER ALL RUNS.
+# The diary lines above are PER-RUN FACT for one probe compile of `af`.  The
+# honest stop at regalloc.go:1040 is forced by construction -- the map has no
+# rule that can cross a search, and none was invented to make the query land.

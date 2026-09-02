@@ -1,0 +1,86 @@
+Compiled from "Probe.java"
+public class Probe {
+  static int sink;
+
+  public Probe();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  static int af(int, int);
+    Code:
+         0: iload_0
+         1: iload_1
+         2: iadd
+         3: ireturn
+
+  static int af2(int, int);
+    Code:
+         0: iload_0
+         1: iload_1
+         2: idiv
+         3: ireturn
+
+  public static void main(java.lang.String[]);
+    Code:
+         0: aload_0
+         1: iconst_0
+         2: aaload
+         3: invokestatic  #7                  // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+         6: istore_1
+         7: invokestatic  #13                 // Method java/lang/System.nanoTime:()J
+        10: lstore_2
+        11: iconst_0
+        12: istore        4
+        14: iconst_0
+        15: istore        5
+        17: iload         5
+        19: iload_1
+        20: if_icmpge     40
+        23: iload         4
+        25: iconst_1
+        26: invokestatic  #19                 // Method af:(II)I
+        29: istore        4
+        31: iload         5
+        33: iconst_1
+        34: iadd
+        35: istore        5
+        37: goto          17
+        40: iconst_0
+        41: istore        6
+        43: iconst_1
+        44: istore        7
+        46: iload         7
+        48: iload_1
+        49: if_icmpge     69
+        52: iload         7
+        54: iconst_3
+        55: invokestatic  #25                 // Method af2:(II)I
+        58: istore        6
+        60: iload         7
+        62: iconst_1
+        63: iadd
+        64: istore        7
+        66: goto          46
+        69: invokestatic  #13                 // Method java/lang/System.nanoTime:()J
+        72: lstore        8
+        74: iload         4
+        76: iload         6
+        78: iadd
+        79: putstatic     #28                 // Field sink:I
+        82: lload         8
+        84: lload_2
+        85: lsub
+        86: ldc2_w        #32                 // long 1000000l
+        89: ldiv
+        90: lstore        10
+        92: getstatic     #34                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        95: iload_1
+        96: iload         4
+        98: iload         6
+       100: lload         10
+       102: invokedynamic #38,  0             // InvokeDynamic #0:makeConcatWithConstants:(IIIJ)Ljava/lang/String;
+       107: invokevirtual #42                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       110: return
+}

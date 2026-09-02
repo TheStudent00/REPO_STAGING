@@ -1,0 +1,27 @@
+// runner template - rust.
+#![allow(unused)]
+fn identb(x: bool) -> bool { x }
+fn notb(x: bool) -> bool { (!x) }
+fn d(x: f64) -> f64 { x }
+fn z() -> f64 { 0.0 }
+fn one() -> f64 { 1.0 }
+fn negone() -> f64 { -1.0 }
+fn nan() -> f64 { f64::NAN }
+fn inf() -> f64 { f64::INFINITY }
+fn ninf() -> f64 { f64::NEG_INFINITY }
+fn fmtb(v: bool) -> String { if v { "true".to_string() } else { "false".to_string() } }
+fn fmtf(v: f64) -> String {
+    if v.is_nan() { return "nan".to_string(); }
+    if v == f64::INFINITY { return "inf".to_string(); }
+    if v == f64::NEG_INFINITY { return "-inf".to_string(); }
+    format!("{:?}", v)
+}
+
+fn fmts(v: String) -> String { v }
+
+{{PREAMBLE}}
+
+fn main() {
+    std::panic::set_hook(Box::new(|_| {}));
+{{PROBES}}
+}

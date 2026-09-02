@@ -1,0 +1,28 @@
+import 'dart:convert';
+// runner template - dart. ONE source, TWO modes (the record-both-modes rule):
+//   dart-native  = `dart run main.dart`
+//   dart-web     = `dart compile js` then node
+// The two modes disagree about integers, which is exactly why both run.
+bool identb(bool x) => x;
+bool notb(bool x) => (!x);
+double d(double x) => x;
+double z() => 0.0;
+double one() => 1.0;
+double negone() => -1.0;
+double nan() => double.nan;
+double inf() => double.infinity;
+double ninf() => double.negativeInfinity;
+String fmtb(bool v) => v ? "true" : "false";
+String fmtf(double v) {
+  if (v.isNaN) return "nan";
+  if (v == double.infinity) return "inf";
+  if (v == double.negativeInfinity) return "-inf";
+  return v.toString();
+}
+String fmts(String v) => v;
+
+{{PREAMBLE}}
+
+void main() {
+{{PROBES}}
+}

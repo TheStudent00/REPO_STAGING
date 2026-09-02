@@ -1,0 +1,107 @@
+{
+  "language": "dart",
+  "layer": 2,
+  "purpose": "The ways a running dart program can HOLD layer-1 content. Not layer 1 (the data is fixed), not layer 3 (no operations beyond load-and-read-back), not the type system.",
+  "reference": "language knowledge, checked against ../type_vocabulary/raw/dart.types.json as a candidate checklist only (superseded node; not a decision instrument).",
+  "probe_style": "probe",
+  "spell": {
+    "nothing": {"null": "null"},
+    "truth": {"true": "true", "false": "false"},
+    "whole": {
+      "base_zero": "0",
+      "base_42": "42",
+      "i64max": "9223372036854775807",
+      "i64max_plus1": "9223372036854775808",
+      "p53_plus1": "9007199254740993",
+      "u64max": "18446744073709551615"
+    },
+    "fractional": {
+      "base_1_5": "1.5",
+      "base_pi": "3.141592653589793",
+      "negzero": "-0.0",
+      "nan": "double.nan",
+      "inf": "double.infinity",
+      "point1": "0.1"
+    },
+    "text": {
+      "base_empty": "\"\"",
+      "base_hello": "\"hello\"",
+      "base_lines": "\"line one\\nline two\"",
+      "eacute": "\"\\u00e9\"",
+      "clef": "\"\\u{1D11E}\"",
+      "escapes": "\"quote \\\" backslash \\\\ tab\\there\""
+    }
+  },
+  "forms": {
+    "nothing": [
+      {"rep": "dynamic null", "spelling": "null", "kind": "literal", "note": "the single absence value, held in an untyped variable.", "decl": "dynamic v = {V};", "read": "v.toString()"},
+      {"rep": "Null (declared type)", "spelling": "null", "kind": "literal", "note": "the type whose only value is null, named explicitly rather than inferred.", "decl": "Null v = {V};", "read": "v.toString()"},
+      {"rep": "nullable typed variable (T?)", "spelling": "null", "kind": "literal", "note": "a normally-typed variable widened with ? to accept null alongside its usual values.", "decl": "int? v = {V};", "read": "v.toString()"}
+    ],
+    "truth": [
+      {"rep": "bool", "spelling": "true / false", "kind": "literal", "note": "two values, no numeric side in dart.", "decl": "bool v = {V};", "read": "v.toString()"}
+    ],
+    "whole": [
+      {"rep": "int", "spelling": "42", "kind": "literal", "note": "on the native VM a signed 64-bit word that wraps past i64 edges; compiled to javascript the same code spells int as a double and erodes past 2^53 instead (dart-web finding, log_020) — this probe targets the native VM.", "decl": "int v = {V};", "read": "v.toString()"},
+      {"rep": "BigInt", "spelling": "BigInt.parse(\"42\")", "kind": "constructor", "note": "arbitrary-precision whole number holder, built from a decimal string rather than an integer literal.", "spell_override": {"base_zero": "BigInt.parse(\"0\")", "base_42": "BigInt.parse(\"42\")", "i64max": "BigInt.parse(\"9223372036854775807\")", "i64max_plus1": "BigInt.parse(\"9223372036854775808\")", "p53_plus1": "BigInt.parse(\"9007199254740993\")", "u64max": "BigInt.parse(\"18446744073709551615\")"}, "decl": "BigInt v = {V};", "read": "v.toString()"},
+      {"rep": "double (whole number)", "spelling": "42.0", "kind": "literal", "note": "IEEE double pressed into holding a whole number; exact only up to 2^53, so it erodes at the p53_plus1 and u64max edges even though it accepts the literal.", "spell_override": {"base_zero": "0.0", "base_42": "42.0", "i64max": "9223372036854775807.0", "i64max_plus1": "9223372036854775808.0", "p53_plus1": "9007199254740993.0", "u64max": "18446744073709551615.0"}, "decl": "double v = {V};", "read": "v.toString()"}
+    ],
+    "fractional": [
+      {"rep": "double", "spelling": "1.5", "kind": "literal", "note": "IEEE double, the default fractional holder.", "decl": "double v = {V};", "read": "v.toString()"},
+      {"rep": "num", "spelling": "1.5", "kind": "literal", "note": "the common super-type of int and double; a fractional literal picks the double branch at run time.", "decl": "num v = {V};", "read": "v.toString()"}
+    ],
+    "text": [
+      {"rep": "String", "spelling": "\"hello\"", "kind": "literal", "note": "a run of utf-16 code units presented as unicode text; the default text holder.", "decl": "String v = {V};", "read": "v"},
+      {"rep": "List<int> (code units)", "spelling": "\"hello\".codeUnits", "kind": "constructor", "note": "utf-16 code units, not codepoints; a codepoint outside the basic plane is split into a surrogate pair.", "decl": "List<int> v = ({V}).codeUnits;", "read": "String.fromCharCodes(v)"},
+      {"rep": "Runes", "spelling": "\"hello\".runes", "kind": "constructor", "note": "unicode codepoints, not code units; recovers the clef as a single element instead of a surrogate pair.", "decl": "Runes v = ({V}).runes;", "read": "String.fromCharCodes(v)"},
+      {"rep": "StringBuffer", "spelling": "StringBuffer(\"hello\")", "kind": "constructor", "note": "a mutable text builder; holds the same content as String but changeable in place.", "decl": "StringBuffer v = StringBuffer({V});", "read": "v.toString()"}
+    ],
+    "sequence": [
+      {"rep": "List<T>", "spelling": "[1, 2, 3]", "kind": "literal", "note": "growable ordered run, one declared element kind.", "read": "v.toString()",
+       "probes": {"empty": "List<int> v = [];", "base": "List<int> v = [1, 2, 3];", "strs": "List<String> v = [\"a\", \"b\"];", "mixed": "List<Object?> v = [1, \"two\", 3.0, true, null];", "bigint": "List<int> v = [9223372036854775808];"}},
+      {"rep": "fixed-length List", "spelling": "List<int>.from([1,2,3], growable: false)", "kind": "constructor", "note": "length fixed at construction; growth operations refuse at run time even though element mutation still works.", "read": "v.toString()",
+       "probes": {"empty": "List<int> v = List<int>.from([], growable: false);", "base": "List<int> v = List<int>.from([1, 2, 3], growable: false);", "strs": "List<String> v = List<String>.from([\"a\", \"b\"], growable: false);", "mixed": "List<Object?> v = List<Object?>.from([1, \"two\", 3.0, true, null], growable: false);", "bigint": "List<int> v = List<int>.from([9223372036854775808], growable: false);"}},
+      {"rep": "Set<T>", "spelling": "{1, 2, 3}", "kind": "literal", "note": "unordered, no duplicates; kept in the table because that loss is the finding.", "read": "v.toString()",
+       "probes": {"empty": "Set<int> v = <int>{};", "base": "Set<int> v = {1, 2, 3};", "strs": "Set<String> v = {\"a\", \"b\"};", "mixed": "Set<Object?> v = {1, \"two\", 3.0, true, null};", "bigint": "Set<int> v = {9223372036854775808};"}},
+      {"rep": "Iterable (List.unmodifiable)", "spelling": "List.unmodifiable([1, 2, 3])", "kind": "constructor", "note": "a read-only view; write operations refuse at run time, not at compile time.", "read": "v.toString()",
+       "probes": {"empty": "List<int> v = List.unmodifiable(<int>[]);", "base": "List<int> v = List.unmodifiable([1, 2, 3]);", "strs": "List<String> v = List.unmodifiable([\"a\", \"b\"]);", "mixed": "List<Object?> v = List.unmodifiable([1, \"two\", 3.0, true, null]);", "bigint": "List<int> v = List.unmodifiable([9223372036854775808]);"}},
+      {"rep": "record", "spelling": "(1, 2, 3)", "kind": "literal", "note": "fixed length, and each position may carry a different declared kind; the one dart sequence holder that takes the mixed row without widening to Object?.", "read": "v.toString()",
+       "probes": {"empty": "var v = ();", "base": "var v = (1, 2, 3);", "strs": "var v = (\"a\", \"b\");", "mixed": "var v = (1, \"two\", 3.0, true, null);", "bigint": "var v = (9223372036854775808,);"}}
+    ],
+    "keyed": [
+      {"rep": "Map<String,V>", "spelling": "{\"a\": 1}", "kind": "literal", "note": "name to element; dart's map literal is a LinkedHashMap by default, so insertion order is kept.", "read": "v.toString()",
+       "probes": {"empty": "Map<String, int> v = {};", "flat": "Map<String, int> v = {\"a\": 1, \"b\": 2, \"c\": 3};", "intlike": "Map<String, Object> v = {\"1\": \"string-one-key\", \"b\": 2};", "emptykey": "Map<String, String> v = {\"\": \"empty-string key\"};", "nested": "Map<String, Map<String, List<int>>> v = {\"outer\": {\"inner\": [1, 2]}};"}},
+      {"rep": "LinkedHashMap", "spelling": "LinkedHashMap<String,int>.from({\"a\": 1})", "kind": "constructor", "pre": "import 'dart:collection';", "note": "the same insertion-order holder spelled explicitly rather than via the map literal default.", "read": "v.toString()",
+       "probes": {"empty": "LinkedHashMap<String, int> v = LinkedHashMap<String, int>.from({});", "flat": "LinkedHashMap<String, int> v = LinkedHashMap<String, int>.from({\"a\": 1, \"b\": 2, \"c\": 3});", "intlike": "LinkedHashMap<String, Object> v = LinkedHashMap<String, Object>.from({\"1\": \"string-one-key\", \"b\": 2});", "emptykey": "LinkedHashMap<String, String> v = LinkedHashMap<String, String>.from({\"\": \"empty-string key\"});", "nested": "LinkedHashMap<String, dynamic> v = LinkedHashMap<String, dynamic>.from({\"outer\": {\"inner\": [1, 2]}});"}},
+      {"rep": "SplayTreeMap", "spelling": "SplayTreeMap<String,int>.from({\"a\": 1})", "kind": "constructor", "pre": "import 'dart:collection';", "note": "the same grouping held in sorted key order rather than insertion order.", "read": "v.toString()",
+       "probes": {"empty": "SplayTreeMap<String, int> v = SplayTreeMap<String, int>.from({});", "flat": "SplayTreeMap<String, int> v = SplayTreeMap<String, int>.from({\"a\": 1, \"b\": 2, \"c\": 3});", "intlike": "SplayTreeMap<String, Object> v = SplayTreeMap<String, Object>.from({\"1\": \"string-one-key\", \"b\": 2});", "emptykey": "SplayTreeMap<String, String> v = SplayTreeMap<String, String>.from({\"\": \"empty-string key\"});", "nested": "SplayTreeMap<String, dynamic> v = SplayTreeMap<String, dynamic>.from({\"outer\": {\"inner\": [1, 2]}});"}},
+      {"rep": "class with fields", "spelling": "class R3 { final int a, b, c; R3(this.a, this.b, this.c); } R3(1, 2, 3)", "kind": "constructor", "pre": "class R0 { @override String toString() => 'R0()'; }\nclass R3 { final int a, b, c; R3(this.a, this.b, this.c); @override String toString() => 'R3(a: $a, b: $b, c: $c)'; }\nclass RI { final int 1; final int b; RI(this.1, this.b); }\nclass RE { final String  ; RE(this. ); }\nclass RN { final Map<String, List<int>> outer; RN(this.outer); @override String toString() => 'RN(outer: $outer)'; }", "note": "names fixed when the shape is written, not when the data arrives; the odd keys (a digit, an empty string) are not spellable as dart field identifiers, so RI and RE are written honestly and left to refuse at compile time.", "read": "v.toString()",
+       "probes": {"empty": "R0 v = R0();", "flat": "R3 v = R3(1, 2, 3);", "intlike": "RI v = RI(1, 2);", "emptykey": "RE v = RE(\"empty-string key\");", "nested": "RN v = RN({\"inner\": [1, 2]});"}}
+    ],
+    "nesting": [
+      {"rep": "nested List", "spelling": "[[1, 2], [3, 4]]", "kind": "literal", "note": "nesting by repeating the same holder; every level carries the same declared element kind unless widened.", "read": "v.toString()",
+       "probes": {"seq_in_seq": "List<List<int>> v = [[1, 2], [3, 4]];", "seq_in_map": "Map<String, Map<String, List<int>>> v = {\"outer\": {\"inner\": [1, 2]}};", "mixed_depth": "List<Object?> v = [1, [2, {\"k\": \"t\"}], true, null];"}},
+      {"rep": "Map<String,dynamic>", "spelling": "{\"outer\": {\"inner\": [1, 2]}}", "kind": "literal", "note": "values typed dynamic so each level may switch form freely.", "read": "v.toString()",
+       "probes": {"seq_in_seq": "Map<String, List<List<int>>> v = {\"a\": [[1, 2], [3, 4]]};", "seq_in_map": "Map<String, dynamic> v = {\"outer\": {\"inner\": [1, 2]}};", "mixed_depth": "Map<String, dynamic> v = {\"a\": [1, {\"b\": 2}], \"c\": true};"}},
+      {"rep": "List<Object?>", "spelling": "[1, [2, 3], {\"k\": true}]", "kind": "literal", "note": "every element widened to Object?; the dart holder that takes any layer-1 form in one position, which mixed nesting needs.", "read": "v.toString()",
+       "probes": {"seq_in_seq": "List<Object?> v = [[1, 2], [3, 4]];", "seq_in_map": "List<Object?> v = [{\"outer\": {\"inner\": [1, 2]}}];", "mixed_depth": "List<Object?> v = [1, [2, {\"k\": 3}], true, null];"}}
+    ],
+    "identity": [
+      {"rep": "List of object references", "spelling": "s = [1,2,3]; v = [s, s]", "kind": "literal", "note": "dart lists hold references, so two positions can name one object.", "read": "r",
+       "probes": {
+         "shared": "List<int> s = [1, 2, 3];\nList<List<int>> v = [s, s];\nv[0].add(99);\nString r = (v[1].last == 99 && identical(v[0], v[1])) ? \"shared\" : \"copied\";",
+         "diamond": "Map<String, int> t = {\"payload\": 7};\nList<Map<String, int>> v = [t, t];\nString r = identical(v[0], v[1]) ? \"same\" : \"distinct\";",
+         "cycle": "List<dynamic> v = [];\nv.add(v);\nString r = identical(v[0], v) ? \"cycle\" : \"no-cycle\";"}},
+      {"rep": "copying holder (List.from)", "spelling": "List<int>.from(s)", "kind": "constructor", "note": "built by copying rather than referencing; the contrast cell against the reference holders above.", "read": "r",
+       "probes": {
+         "shared": "List<int> s = [1, 2, 3];\nList<List<int>> v = [List<int>.from(s), List<int>.from(s)];\nv[0].add(99);\nString r = (v[1].length > 3 && v[1].last == 99) ? \"shared\" : \"copied\";",
+         "diamond": "Map<String, int> t = {\"payload\": 7};\nList<Map<String, int>> v = [Map<String, int>.from(t), Map<String, int>.from(t)];\nString r = identical(v[0], v[1]) ? \"same\" : \"distinct\";",
+         "cycle": "List<dynamic> inner = [1, 2];\nList<dynamic> v = [inner];\nv[0] = List<dynamic>.from(v);\nString r = identical(v[0], v) ? \"cycle\" : \"no-cycle\";"}},
+      {"rep": "class instance holder", "spelling": "class Box { List<int> items; Box(this.items); } b = Box([1,2,3]); v = [b, b]", "kind": "constructor", "pre": "class Box { List<int> items; Box(this.items); }\nclass Node { String name; Node? self; Node(this.name); }", "note": "an ordinary mutable object reference; the class instance itself, not a field, is what two positions can share.", "read": "r",
+       "probes": {
+         "shared": "Box s = Box([1, 2, 3]);\nList<Box> v = [s, s];\nv[0].items.add(99);\nString r = (v[1].items.last == 99 && identical(v[0], v[1])) ? \"shared\" : \"copied\";",
+         "diamond": "Box t = Box([7]);\nList<Box> v = [t, t];\nString r = identical(v[0], v[1]) ? \"same\" : \"distinct\";",
+         "cycle": "Node n = Node(\"loop\");\nn.self = n;\nString r = identical(n.self, n) ? \"cycle\" : \"no-cycle\";"}}
+    ]
+  }
+}

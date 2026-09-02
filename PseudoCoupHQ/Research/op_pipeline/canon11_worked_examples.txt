@@ -1,0 +1,160 @@
+canon11_worked_examples.txt -- STAGE 1's two worked examples, reading
+line, space-aligned, SPEC_reading_form.md's vocabulary (movzx/movsxd
+are gas's WIDTH-GENERIC spellings of movzbl-family/movslq -- the same
+pipeline convention already used by 379 of the 892 units converged
+before this lap; canon7_render.py/expr_to_canon.py emit these generic
+forms throughout, unchanged by this lap's fixes).
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+FIX (a) worked example -- c/op_534 (`a > b`, a,b:int32_t)
+
+BEFORE (canon10, the KEPT-OLD fallback -- correct, but the renderer
+could never independently re-derive it, so the unit stayed
+not_yet_converged):
+    unit: c/op_534   source: canon10_text (kept)
+    xor %r10d,%r10d   %r10d = %r10d ^ %r10d
+    cmp %esi,%edi     flags = compare(%edi, %esi)
+    mov %r10d,%eax    %eax = %r10d
+    setg %al          %al = flags.signed_greater
+    ret               return %al
+
+REJECTED (canon9's own attempt, DISPROVED by the ground-truth gate --
+z3 counterexample seed_rdi=0, seed_rsi=4294967294: real "0 > -2" is
+true, this candidate said false):
+    unit: c/op_534   source: job2_candidate_text (rejected)
+    mov $0,%rax                             %rax = $0
+    shr $8,%rax                             %rax = shift_right_zeros(%rax, $8)
+    movabs $72057594037927935,%r10          %r10 = $72057594037927935
+    and %r10,%rax                           %rax = %rax & %r10
+    shl $7,%rax                             %rax = shift_left(%rax, $7)
+    mov $0,%r10b                            %r10b = $0
+    movzx %r10b,%r10                        %r10 = zero_extend(%r10b)
+    or %r10,%rax                            %rax = %rax | %r10
+    shl $1,%rax                             %rax = shift_left(%rax, $1)
+    mov %rdi,%r11                           %r11 = %rdi
+    and $-1,%r11d                           %r11d = %r11d & $-1
+    mov %rsi,%r9                            %r9 = %rsi
+    and $-1,%r9d                            %r9d = %r9d & $-1
+    cmp %r9,%r11                            flags = compare(%r11, %r9)
+    setg %r10b                              %r10b = flags.signed_greater
+    movzx %r10b,%r10                        %r10 = zero_extend(%r10b)
+    or %r10,%rax                            %rax = %rax | %r10
+    ret                                      return %rax
+
+    ROOT CAUSE: `%r11`/`%r9` are zero-extended 32-bit fields (the
+    `and $-1,%r11d` truncation is legitimate -- it is what makes the
+    low 32 bits clean in the parent 64-bit register); the BUG is the
+    `cmp` two lines later comparing the FULL 64-bit registers instead
+    of the 32-bit halves gen7() had actually just established clean,
+    so `setg` (signed greater) reads a 64-bit-zero-extended-therefore-
+    always-non-negative pair, which is a DIFFERENT relation than the
+    32-bit signed compare the source `a > b` means whenever a or b's
+    32-bit top bit is a genuine sign bit.
+
+AFTER (canon11 -- FIX (a): the `if` node handler now uses the width
+gen11() actually returned for its left operand, not the z3 node's own
+static/padded size, so the `cmp`/`setg` land at 32 bits):
+    unit: c/op_534   source: canon11_text (STAGE 1, PROVED_EQUAL)
+    mov $0,%rax                             %rax = $0
+    shr $8,%rax                             %rax = shift_right_zeros(%rax, $8)
+    movabs $72057594037927935,%r10          %r10 = $72057594037927935
+    and %r10,%rax                           %rax = %rax & %r10
+    shl $7,%rax                             %rax = shift_left(%rax, $7)
+    mov $0,%r10b                            %r10b = $0
+    movzx %r10b,%r10                        %r10 = zero_extend(%r10b)
+    or %r10,%rax                            %rax = %rax | %r10
+    shl $1,%rax                             %rax = shift_left(%rax, $1)
+    mov %rdi,%r11                           %r11 = %rdi
+    and $-1,%r11d                           %r11d = %r11d & $-1
+    mov %rsi,%r9                            %r9 = %rsi
+    and $-1,%r9d                            %r9d = %r9d & $-1
+    cmp %r9d,%r11d                          flags = compare(%r11d, %r9d)
+    setg %r10b                              %r10b = flags.signed_greater
+    movzx %r10b,%r10                        %r10 = zero_extend(%r10b)
+    or %r10,%rax                            %rax = %rax | %r10
+    ret                                      return %rax
+
+    ONE INSTRUCTION CHANGED (`cmp %r9,%r11` -> `cmp %r9d,%r11d`); z3
+    now proves this text equal to the unit's own real ship code for
+    EVERY register value (register-identity-bound, shift-masked,
+    logic-flag-aware model) -- PROVED_EQUAL, converged.
+
+----------------------------------------------------------------------------------------------------
+FIX (b) worked example -- c/op_427 (`(int64_t)(int32_t)a & b`)
+
+BEFORE (canon4/5/7's own "good" text -- ALSO wrong, a pre-existing
+canon4 erasure defect documented independently by canon8_behaviour_
+check.py's own header before this lap started):
+    unit: c/op_427   source: canon10_text (kept, itself defective)
+    movslq %edi,%r10   %r10 = sign_extend(%edi)
+    mov %r10d,%eax      %eax = %r10d
+    and %rsi,%rax        %rax = %rax & %rsi
+    ret                    return %rax
+
+    `mov %r10d,%eax` is a 32-BIT WRITE -- it auto-zero-extends %rax's
+    upper 32 bits, silently DESTROYING the sign-extension `movslq`
+    just performed. Real ship code (canon4's own `mnem`): `movslq
+    %edi,%rax; and %rsi,%rax; ret` -- no intermediate 32-bit copy at
+    all.
+
+REJECTED (canon9's own attempt -- correct-looking but DISPROVED,
+60+ instructions bit-serially reconstructing the sign bit 33 times):
+    unit: c/op_427   source: job2_candidate_text (rejected, abridged)
+    mov %rsi,%rax; not %rax; mov %rdi,%r10; shr $31,%r10; and $1,%r10b;
+    not %r10b; shl $1,%r10b; ... [30 more shr/and/not/shl/or steps,
+    one per sign-bit copy] ...; shl $32,%r10; mov %rdi,%r11;
+    and $-1,%r11d; not %r11d; or %r11,%r10; or %r10,%rax; not %rax; ret
+
+    ROOT CAUSE: z3's own simplify() normal form does not only push
+    NOT through AND/OR (De Morgan, already recognized) -- it ALSO
+    pushes NOT through CONCAT (`~Concat(A,B) == Concat(~A,~B)`, bit-
+    exact, concatenation only places bits). The sign-extension of `a`
+    (VEX's own idiom: 33 copies of bit 31, concatenated with `a`
+    itself) sat inside a De Morgan'd OR operand that z3 had already
+    NOT-distributed through its Concat, so the renderer's De Morgan
+    recognizer (which only checked for a bare `bvnot`-wrapped operand)
+    missed it, fell through to the raw bit-serial reconstruction, and
+    never gave the concat's own "this is a sign-extend" recognizer a
+    chance to see the pattern.
+
+AFTER (canon11 -- FIX (b): `_negate_of()` also recognizes a concat of
+all-bvnot parts as a negation, so the sign-extend concat is un-
+negated, the existing De Morgan fold and sign-extend-concat
+recognizer both fire, and the 33-part reconstruction collapses to one
+`movsxd`):
+    unit: c/op_427   source: canon11_text (STAGE 1, PROVED_EQUAL)
+    mov %rsi,%rax        %rax = %rsi
+    mov %rdi,%r10          %r10 = %rdi
+    and $-1,%r10d             %r10d = %r10d & $-1
+    movsxd %r10d,%r10           %r10 = sign_extend(%r10d)
+    and %r10,%rax                 %rax = %rax & %r10
+    ret                              return %rax
+
+    z3 proves this text equal to the unit's own real ship code for
+    every register value -- PROVED_EQUAL, converged. Not byte-
+    identical to canon4's `mnem` (5 lines vs. 3: the extract-then-
+    sign-extend still goes through the generic `extract`+`movsxd`
+    path rather than fusing into one `movslq`) -- CORRECT, proven,
+    but not maximally terse; fusing that pair into a single `movslq`
+    is a legitimate follow-on, left honestly unfinished rather than
+    claimed done.
+
+====================================================================================================
+STAGE 1 TALLY (measured, canon11_units_<lang>.json's own
+`stage1_tally`, summed): 60 units attempted (the diagnosed bucket --
+the task brief's "60 DISPROVED + 12 movslq = 72" turned out, on
+inspection, to be a SUBSET relationship, not a disjoint sum: all 12
+movslq units are already members of the 60-unit DISPROVED bucket, so
+the true diagnosed population is 60 unique units, not 72; reported
+honestly rather than silently reconciled to the brief's arithmetic).
+32 accepted (all 12 of the movslq/sign-destroy units; 20 of the
+remaining 48 and-$-1-ahead-of-signed-compare units). 28 still refused
+-- see the main report for the honest breakdown of what those 28
+actually are (three DIFFERENT, UNDIAGNOSED defects this lap found but
+did not fix, out of Stage 1's declared two-defect scope).
+
+Zero-regression check: every unit already `converged` in
+canon10_units_<lang>.json has BYTE-IDENTICAL text in
+canon11_units_<lang>.json (programmatic diff, all 5 languages, 0
+differences).

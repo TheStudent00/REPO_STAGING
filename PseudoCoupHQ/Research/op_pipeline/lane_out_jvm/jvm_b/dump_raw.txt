@@ -1,0 +1,133 @@
+CompileCommand: print Probe.af bool print = true
+CompileCommand: print Probe.af2 bool print = true
+CompileCommand: dontinline Probe.af bool dontinline = true
+CompileCommand: dontinline Probe.af2 bool dontinline = true
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+[0.012s][warning][os] Loading hsdis library failed
+
+Compiled method (c2) 12    4             Probe::af (4 bytes)
+ total in heap  [0x00007f99346aa308,0x00007f99346aa470] = 360
+ main code      [0x00007f99346aa400,0x00007f99346aa450] = 80
+ stub code      [0x00007f99346aa450,0x00007f99346aa468] = 24
+ oops           [0x00007f99346aa468,0x00007f99346aa470] = 8
+ mutable data [0x00007f98f004fd10,0x00007f98f004fd28] = 24
+ relocation     [0x00007f98f004fd10,0x00007f98f004fd20] = 16
+ metadata       [0x00007f98f004fd20,0x00007f98f004fd28] = 8
+ immutable data [0x00007f98f004fcd0,0x00007f98f004fd00] = 48
+ dependencies   [0x00007f98f004fcd0,0x00007f98f004fcd8] = 8
+ scopes pcs     [0x00007f98f004fcd8,0x00007f98f004fcf8] = 32
+ scopes data    [0x00007f98f004fcf8,0x00007f98f004fd00] = 8
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Verified Entry Point]
+  # {method} {0x00007f9908400428} 'af' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  0x00007f99346aa400: 4881 ec18 | 0000 0048 | 896c 2410 | 4181 7f20 | 0000 0000 | 0f85 2900 | 0000 8d04 | 1648 83c4 
+  0x00007f99346aa420: ;   {poll_return}
+  0x00007f99346aa420: 105d 493b | 6728 0f87 | 0100 0000 
+
+  0x00007f99346aa42c: ;   {internal_word}
+  0x00007f99346aa42c: c349 ba22 | a46a 3499 | 7f00 004d | 8997 3805 
+
+  0x00007f99346aa43c: ;   {runtime_call SafepointBlob}
+  0x00007f99346aa43c: 0000 e91d 
+
+  0x00007f99346aa440: ;   {runtime_call Stub::method_entry_barrier}
+  0x00007f99346aa440: 77fa ffe8 | 78e1 f8ff | e9cd ffff | fff4 f4f4 
+[Exception Handler]
+  0x00007f99346aa450: ;   {runtime_call ExceptionBlob}
+  0x00007f99346aa450: e98b 37ff | ffe8 0000 | 0000 4883 
+
+  0x00007f99346aa45c: ;   {runtime_call DeoptimizationBlob}
+  0x00007f99346aa45c: 2c24 05e9 | 7c5e faff | f4f4 f4f4 
+[/MachCode]
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+
+Compiled method (c2) 14    7             Probe::af2 (4 bytes)
+ total in heap  [0x00007f99346a9a08,0x00007f99346a9ba0] = 408
+ main code      [0x00007f99346a9b00,0x00007f99346a9b80] = 128
+ stub code      [0x00007f99346a9b80,0x00007f99346a9b98] = 24
+ oops           [0x00007f99346a9b98,0x00007f99346a9ba0] = 8
+ mutable data [0x00007f98f00695a0,0x00007f98f00695c0] = 32
+ relocation     [0x00007f98f00695a0,0x00007f98f00695b8] = 24
+ metadata       [0x00007f98f00695b8,0x00007f98f00695c0] = 8
+ immutable data [0x00007f98f0069540,0x00007f98f0069590] = 80
+ dependencies   [0x00007f98f0069540,0x00007f98f0069548] = 8
+ scopes pcs     [0x00007f98f0069548,0x00007f98f0069578] = 48
+ scopes data    [0x00007f98f0069578,0x00007f98f0069590] = 24
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Verified Entry Point]
+  # {method} {0x00007f99084004c0} 'af2' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  0x00007f99346a9b00: 8984 2400 | c0fe ff55 | 4883 ec10 | 4181 7f20 | 0000 0000 | 0f85 5800 | 0000 448b | da85 d274 
+  0x00007f99346a9b20: 258b c63d | 0000 0080 | 7508 33d2 | 4183 fbff | 7404 9941 | f7fb 4883 
+
+  0x00007f99346a9b38: ;   {poll_return}
+  0x00007f99346a9b38: c410 5d49 | 3b67 280f | 8717 0000 | 00c3 8bee | be7e ffff 
+
+  0x00007f99346a9b4c: ;   {runtime_call UncommonTrapBlob}
+  0x00007f99346a9b4c: ff66 90e8 
+
+  0x00007f99346a9b50: ; ImmutableOopMap {}
+                      ;*idiv {reexecute=0 rethrow=0 return_oop=0}
+                      ; - Probe::af2@2 (line 6)
+  0x00007f99346a9b50: 8c3d ffff 
+
+  0x00007f99346a9b54: ;   {post_call_nop}
+  0x00007f99346a9b54: 0f1f 8400 | 4c01 0000 
+
+  0x00007f99346a9b5c: ;   {internal_word}
+  0x00007f99346a9b5c: 49ba 3b9b | 6a34 997f | 0000 4d89 | 9738 0500 
+
+  0x00007f99346a9b6c: ;   {runtime_call SafepointBlob}
+  0x00007f99346a9b6c: 00e9 ee7f 
+
+  0x00007f99346a9b70: ;   {runtime_call Stub::method_entry_barrier}
+  0x00007f99346a9b70: faff e849 | eaf8 ffe9 | 9eff ffff | f4f4 f4f4 
+[Exception Handler]
+  0x00007f99346a9b80: ;   {runtime_call ExceptionBlob}
+  0x00007f99346a9b80: e95b 40ff | ffe8 0000 | 0000 4883 
+
+  0x00007f99346a9b8c: ;   {runtime_call DeoptimizationBlob}
+  0x00007f99346a9b8c: 2c24 05e9 | 4c67 faff | f4f4 f4f4 
+[/MachCode]
+WARMED n=200000 acc=200000 acc2=66666 ms=4
+------------------------------------------------------------------------
+static Probe::af(II)I
+  interpreter_invocation_count:        6784
+  invocation_counter:                  6784
+  backedge_counter:                       0
+  decompile_count:                        0
+  mdo size: 248 bytes
+
+   0 iload_0
+   1 iload_1
+   2 iadd
+   3 ireturn
+------------------------------------------------------------------------
+static Probe::af2(II)I
+  interpreter_invocation_count:        6784
+  invocation_counter:                  6784
+  backedge_counter:                       0
+  decompile_count:                        0
+  mdo size: 256 bytes
+
+   0 iload_0
+   1 iload_1
+   2 idiv
+   3 ireturn
+------------------------------------------------------------------------
+Total MDO size: 504 bytes

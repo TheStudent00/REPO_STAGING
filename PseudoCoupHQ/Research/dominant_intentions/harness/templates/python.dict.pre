@@ -1,0 +1,25 @@
+# dict probe bodies - python (insertion-ordered, any hashable key, KeyError).
+def mkd(): return {"k": "v1"}
+def f_dictU1_a(): return fmts(mkd()["k"])
+def f_dictU2_a():
+    d = {"k": "v1"}; d["k"] = "v2"; return fmts(d["k"])
+def f_dictU3_a():
+    d = mkd(); del d["k"]; return fmtb("k" in d)
+def f_dictU4_a():
+    d = {}; d["a"] = 1; d["b"] = 2; d["c"] = 3; return fmts(len(d))
+def f_Fd1_a():
+    d = {}; d[1] = "int"; d["1"] = "str"; return fmts(d[1])
+def f_Fd2_a():
+    d = {}; d["z"] = 1; d["a"] = 1; d["m"] = 1; return ",".join(d.keys())
+def f_Fd3_a(): return fmts(mkd()["nope"])
+def f_Fd4_a():
+    d = {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5}
+    for k in d:
+        if k == "c": del d[k]
+    return "ok"
+def f_Fd5_a():
+    d = {}; d[(1, 2)] = "x"; d[(1, 2)] = "y"; return fmts(len(d))
+def f_Fd5_b():
+    d = {}; d[float("nan")] = "x"; return fmts(d[float("nan")])
+def f_Fl9d_a():
+    a = mkd(); b = a; b["k"] = "99"; return fmts(a["k"])

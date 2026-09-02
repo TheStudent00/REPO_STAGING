@@ -1,0 +1,70 @@
+=== PINS ===
+{
+  "tree_sitter": "0.26.0",
+  "tree_sitter_cpp": "0.23.4",
+  "llvm_tag": "llvmorg-21.1.8",
+  "llvm_commit": "42befb84c672d78de430feb4c96710e6aa4fc774",
+  "llvm_repo_head_commit_MISMATCH": "6a33b69d8bae737e5e1d60c7b7776a0b1f885bfa",
+  "pinned_compiler_per_op_pipeline": "Ubuntu clang version 21.1.8 (6ubuntu1)"
+}
+
+=== PATH QUERY: unsigned i64 -> f32 (op_117's case) ===
+X86TargetLowering::LowerOperation
+  --[calls, forced-by-construction: switch case ISD::UINT_TO_FP]-->
+X86TargetLowering::LowerUINT_TO_FP
+  --[declines_custom_lowering, guard: is64Bit && SrcVT==i64 &&
+     (DstVT==f32||DstVT==f64) -> return SDValue()]-->
+SelectionDAGLegalize::LegalizeOp
+  --[calls: case TargetLowering::Custom, TLI.LowerOperation
+     returned null -> [[fallthrough]] to case Expand]-->
+SelectionDAGLegalize::ExpandNode
+  --[calls: case ISD::UINT_TO_FP, TLI.expandUINT_TO_FP(...)]-->
+TargetLowering::expandUINT_TO_FP
+  --[declines: early return false, DstVT.getScalarType() != f64]-->
+  (back in ExpandNode, expandUINT_TO_FP returned false)
+  --[[fallthrough]] case ISD::SINT_TO_FP: ExpandLegalINT_TO_FP(...)]-->
+SelectionDAGLegalize::ExpandLegalINT_TO_FP
+
+=== SUB-BLOCK: the specific unsigned-i64/i32->f32/f64 branch ===
+LegalizeDAG.cpp lines 2754-2808 (inside ExpandLegalINT_TO_FP, 55 source lines)
+emit_count (SDNode-constructing calls) in this block, ALL sub-branches (strict + non-strict) combined: 14
+    DAG.getSetCC('dl')  [relative source line offset 19]
+    DAG.getConstant('0')  [relative source line offset 20]
+    DAG.getConstant('1')  [relative source line offset 23]
+    DAG.getNode('ISD::SRL')  [relative source line offset 24]
+    DAG.getConstant('1')  [relative source line offset 25]
+    DAG.getNode('ISD::AND')  [relative source line offset 26]
+    DAG.getNode('ISD::OR')  [relative source line offset 27]
+    DAG.getSelect('dl')  [relative source line offset 33]
+    DAG.getNode('ISD::STRICT_SINT_TO_FP')  [relative source line offset 34]
+    DAG.getNode('ISD::STRICT_FADD')  [relative source line offset 36]
+    DAG.getNode('ISD::SINT_TO_FP')  [relative source line offset 48]
+    DAG.getNode('ISD::FADD')  [relative source line offset 49]
+    DAG.getNode('ISD::SINT_TO_FP')  [relative source line offset 50]
+    DAG.getSelect('dl')  [relative source line offset 53]
+contains a guard/select (branch-shaped) node: True
+
+as-run emit count for op_117's actual instance (non-strict, i64->f32, drops the 3 strict-only emits ['DAG.getSelect', 'DAG.getNode', 'DAG.getNode']): 11
+    DAG.getSetCC('dl')
+    DAG.getConstant('0')
+    DAG.getConstant('1')
+    DAG.getNode('ISD::SRL')
+    DAG.getConstant('1')
+    DAG.getNode('ISD::AND')
+    DAG.getNode('ISD::OR')
+    DAG.getNode('ISD::SINT_TO_FP')
+    DAG.getNode('ISD::FADD')
+    DAG.getNode('ISD::SINT_TO_FP')
+    DAG.getSelect('dl')
+
+=== PATH QUERY: signed i32 -> float (op_501's case) ===
+ISD::any_sint_to_fp(GR32:$src)
+  --[isel_pattern_match, TableGen Pat, X86InstrSSE.td]-->
+defm CVTSI2SS : sse12_cvt_s<0x2A, GR32, FR32, any_sint_to_fp, ...>
+  file=X86InstrSSE.td  defm_line=1010  multiclass_line=855  emit_count=1
+  pattern: [(set DstRC:$dst, (OpNode SrcRC:$src))]
+  defm text: defm CVTSI2SS  : sse12_cvt_s<0x2A, GR32, FR32, any_sint_to_fp, i32mem, loadi32,
+
+=== VERDICT INPUTS (no interpretation, just the two numbers) ===
+unsigned i64->f32 sub-block emit_count = 14  (branch present: True)
+signed   i32->f32 pattern emit_count   = 1  (branch present: False)

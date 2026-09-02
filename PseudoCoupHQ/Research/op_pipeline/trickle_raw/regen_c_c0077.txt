@@ -1,0 +1,661 @@
+#verbatim-escape v1
+op_30800|SHIP|OK|48 63 cf 48 31 ce 48 c1 f9 3f 48 31 d1 31 c0 48 09 f1 0f 94 c0 c3|movslq %edi,%rcx;xor %rcx,%rsi;sar $0x3f,%rcx;xor %rdx,%rcx;xor %eax,%eax;or %rsi,%rcx;sete %al;ret
+op_30800|ANCHOR|OK|55 48 89 e5 48 89 d0 40 88 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 88 55 ef 48 89 4d d8 48 89 45 d0 48 0f be 45 ef 66 48 0f 6e c0 48 c1 f8 3f 66 48 0f 6e c8 66 0f 6c c1 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %dil,%dl;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dl,-0x11(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movsbq -0x11(%rbp),%rax;movq %rax,%xmm0;sar $0x3f,%rax;movq %rax,%xmm1;punpcklqdq %xmm1,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30800|ANCHOR|DWARF|a=2 byte block: 91 6f (DW_OP_fbreg: -17);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_30801|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30801|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 24 01 88 45 fe 0f be 45 ff 8a 4d fe 80 e1 01 0f b6 c9 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);and $0x1,%al;mov %al,-0x2(%rbp);movsbl -0x1(%rbp),%eax;mov -0x2(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30801|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_30802|SHIP|OK|31 c0 40 38 f7 0f 94 c0 c3|xor %eax,%eax;cmp %sil,%dil;sete %al;ret
+op_30802|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f be 45 ff 0f be 4d fe 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movsbl -0x1(%rbp),%eax;movsbl -0x2(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30802|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_30803|REFUSED|/work/regen_c_c0077/u/n30803/unit.c:5:33: error: use of undeclared identifier 'char16_t'
+op_30804|REFUSED|/work/regen_c_c0077/u/n30804/unit.c:5:33: error: use of undeclared identifier 'char32_t'
+op_30805|REFUSED|/work/regen_c_c0077/u/n30805/unit.c:5:33: error: use of undeclared identifier 'char8_t'
+op_30806|SHIP|OK|f2 0f 2a cf f2 0f c2 c8 00 66 48 0f 7e c8 83 e0 01 c3|cvtsi2sd %edi,%xmm1;cmpeqsd %xmm0,%xmm1;movq %xmm1,%rax;and $0x1,%eax;ret
+op_30806|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff f2 0f 11 45 f0 0f be 45 ff f2 0f 2a c0 66 0f 2e 45 f0 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);movsd %xmm0,-0x10(%rbp);movsbl -0x1(%rbp),%eax;cvtsi2sd %eax,%xmm0;ucomisd -0x10(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30806|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30807|SHIP|OK|f3 0f 2a cf f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 c3|cvtsi2ss %edi,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;ret
+op_30807|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff f3 0f 11 45 f8 0f be 45 ff f3 0f 2a c0 0f 2e 45 f8 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);movss %xmm0,-0x8(%rbp);movsbl -0x1(%rbp),%eax;cvtsi2ss %eax,%xmm0;ucomiss -0x8(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30807|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_30808|REFUSED|/work/regen_c_c0077/u/n30808/unit.c:5:33: error: use of undeclared identifier 'half'
+op_30809|SHIP|OK|31 c0 39 fe 0f 94 c0 c3|xor %eax,%eax;cmp %edi,%esi;sete %al;ret
+op_30809|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f be 45 ff 3b 45 f8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movsbl -0x1(%rbp),%eax;cmp -0x8(%rbp),%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30809|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_30810|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30810|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 48 0f be 45 ff 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbq -0x1(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30810|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30811|REFUSED|/work/regen_c_c0077/u/n30811/unit.c:5:38: error: expected ')'
+op_30812|REFUSED|/work/regen_c_c0077/u/n30812/unit.c:5:38: error: expected ')'
+op_30813|SHIP|OK|db 6c 24 08 66 89 7c 24 fe df 44 24 fe df e9 dd d8 0f 9b c0 0f 94 c1 20 c1 0f b6 c1 c3|fldt 0x8(%rsp);mov %di,-0x2(%rsp);filds -0x2(%rsp);fucomip %st(1),%st;fstp %st(0);setnp %al;sete %cl;and %al,%cl;movzbl %cl,%eax;ret
+op_30813|ANCHOR|OK|55 48 89 e5 40 88 f8 db 6d 10 88 45 ff db 7d e0 0f be 45 ff 89 45 dc db 45 dc db 6d e0 d9 c9 df e9 dd d8 0f 9b c1 0f 94 c0 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;fldt 0x10(%rbp);mov %al,-0x1(%rbp);fstpt -0x20(%rbp);movsbl -0x1(%rbp),%eax;mov %eax,-0x24(%rbp);fildl -0x24(%rbp);fldt -0x20(%rbp);fxch %st(1);fucomip %st(1),%st;fstp %st(0);setnp %cl;sete %al;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30813|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_30814|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30814|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 48 0f be 45 ff 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbq -0x1(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30814|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30815|SHIP|OK|31 c0 66 39 fe 0f 94 c0 c3|xor %eax,%eax;cmp %di,%si;sete %al;ret
+op_30815|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f be 45 ff 0f bf 4d fc 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movsbl -0x1(%rbp),%eax;movswl -0x4(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30815|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_30816|REFUSED|/work/regen_c_c0077/u/n30816/unit.c:5:39: error: expected ')'
+op_30817|REFUSED|/work/regen_c_c0077/u/n30817/unit.c:5:39: error: expected ')'
+op_30818|SHIP|OK|31 c0 40 38 f7 0f 94 c0 c3|xor %eax,%eax;cmp %sil,%dil;sete %al;ret
+op_30818|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f be 45 ff 0f be 4d fe 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movsbl -0x1(%rbp),%eax;movsbl -0x2(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30818|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_30819|SHIP|OK|31 c0 39 fe 0f 94 c0 c3|xor %eax,%eax;cmp %edi,%esi;sete %al;ret
+op_30819|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f be 45 ff 3b 45 f8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movsbl -0x1(%rbp),%eax;cmp -0x8(%rbp),%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30819|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_30820|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30820|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 48 0f be 45 ff 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbq -0x1(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30820|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30821|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30821|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 48 0f be 45 ff 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbq -0x1(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30821|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30822|SHIP|OK|31 c0 66 39 fe 0f 94 c0 c3|xor %eax,%eax;cmp %di,%si;sete %al;ret
+op_30822|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f be 45 ff 0f bf 4d fc 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movsbl -0x1(%rbp),%eax;movswl -0x4(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30822|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_30823|REFUSED|/work/regen_c_c0077/u/n30823/unit.c:5:42: error: expected ')'
+op_30824|REFUSED|/work/regen_c_c0077/u/n30824/unit.c:5:42: error: expected ')'
+op_30825|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30825|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f be 45 ff 0f b6 4d fe 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movsbl -0x1(%rbp),%eax;movzbl -0x2(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30825|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_30826|SHIP|OK|31 c0 39 fe 0f 94 c0 c3|xor %eax,%eax;cmp %edi,%esi;sete %al;ret
+op_30826|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f be 45 ff 3b 45 f8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movsbl -0x1(%rbp),%eax;cmp -0x8(%rbp),%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30826|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_30827|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30827|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 48 0f be 45 ff 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbq -0x1(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30827|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30828|REFUSED|/work/regen_c_c0077/u/n30828/unit.c:5:47: error: expected ')'
+op_30829|REFUSED|/work/regen_c_c0077/u/n30829/unit.c:5:47: error: expected ')'
+op_30830|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30830|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 48 0f be 45 ff 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbq -0x1(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30830|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30831|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30831|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f be 45 ff 0f b7 4d fc 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movsbl -0x1(%rbp),%eax;movzwl -0x4(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30831|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_30832|REFUSED|/work/regen_c_c0077/u/n30832/unit.c:5:48: error: expected ')'
+op_30833|REFUSED|/work/regen_c_c0077/u/n30833/unit.c:5:48: error: expected ')'
+op_30834|REFUSED|/work/regen_c_c0077/u/n30834/unit.c:5:33: error: use of undeclared identifier 'wchar_t'
+op_30835|REFUSED|/work/regen_c_c0077/u/n30835/unit.c:5:32: error: use of undeclared identifier '_Accum'
+op_30836|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30836|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 24 01 88 45 fb 8b 45 fc 8a 4d fb 80 e1 01 0f b6 c9 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);and $0x1,%al;mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;mov -0x5(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30836|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_30837|SHIP|OK|50 f3 0f 11 44 24 04 0f 57 c0 f3 0f 2a c7 e8 00 00 00 00 e8 00 00 00 00 f3 0f 11 04 24 f3 0f 10 44 24 04 e8 00 00 00 00 f3 0f c2 04 24 00 66 0f 7e c0 83 e0 01 59 c3|push %rax;movss %xmm0,0x4(%rsp);xorps %xmm0,%xmm0;cvtsi2ss %edi,%xmm0;call 13 <op_30837+0x13> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;call 18 <op_30837+0x18> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss %xmm0,(%rsp);movss 0x4(%rsp),%xmm0;call 28 <op_30837+0x28> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;cmpeqss (%rsp),%xmm0;movd %xmm0,%eax;and $0x1,%eax;pop %rcx;ret
+op_30837|ANCHOR|OK|55 48 89 e5 48 83 ec 10 89 7d fc 66 0f c5 c0 00 66 89 45 fa f3 0f 2a 45 fc e8 00 00 00 00 f3 0f 11 45 f0 66 0f c4 45 fa 00 e8 00 00 00 00 0f 28 c8 f3 0f 10 45 f0 f3 0f 11 4d f4 e8 00 00 00 00 f3 0f 10 4d f4 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;mov %edi,-0x4(%rbp);pextrw $0x0,%xmm0,%eax;mov %ax,-0x6(%rbp);cvtsi2ssl -0x4(%rbp),%xmm0;call 1e <op_30837+0x1e> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;movss %xmm0,-0x10(%rbp);pinsrw $0x0,-0x6(%rbp),%xmm0;call 2e <op_30837+0x2e> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movaps %xmm0,%xmm1;movss -0x10(%rbp),%xmm0;movss %xmm1,-0xc(%rbp);call 40 <op_30837+0x40> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss -0xc(%rbp),%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x10,%rsp;pop %rbp;ret
+op_30837|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_30838|REFUSED|/work/regen_c_c0077/u/n30838/unit.c:5:32: error: use of undeclared identifier '_Fract'
+op_30839|REFUSED|/work/regen_c_c0077/u/n30839/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30840|REFUSED|/work/regen_c_c0077/u/n30840/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30841|REFUSED|/work/regen_c_c0077/u/n30841/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30842|REFUSED|/work/regen_c_c0077/u/n30842/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30843|REFUSED|/work/regen_c_c0077/u/n30843/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30844|REFUSED|/work/regen_c_c0077/u/n30844/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30845|REFUSED|/work/regen_c_c0077/u/n30845/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30846|REFUSED|/work/regen_c_c0077/u/n30846/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30847|REFUSED|/work/regen_c_c0077/u/n30847/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30848|REFUSED|/work/regen_c_c0077/u/n30848/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30849|REFUSED|/work/regen_c_c0077/u/n30849/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30850|REFUSED|/work/regen_c_c0077/u/n30850/unit.c:5:32: error: use of undeclared identifier '_Sat'
+op_30851|SHIP|OK|53 66 0f c5 d8 00 0f 57 c0 f3 0f 2a c7 e8 00 00 00 00 66 0f c5 c0 00 c1 e3 10 66 0f 6e c3 c1 e0 10 66 0f 6e c8 f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 5b c3|push %rbx;pextrw $0x0,%xmm0,%ebx;xorps %xmm0,%xmm0;cvtsi2ss %edi,%xmm0;call 12 <op_30851+0x12> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;shl $0x10,%ebx;movd %ebx,%xmm0;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;pop %rbx;ret
+op_30851|ANCHOR|OK|55 48 89 e5 48 83 ec 10 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 89 7d fc e8 00 00 00 00 66 0f c5 c0 00 66 89 45 fa f3 0f 2a 45 fc e8 00 00 00 00 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 0f b7 45 fa c1 e0 10 66 0f 6e c8 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;mov %edi,-0x4(%rbp);call 22 <op_30851+0x22> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,-0x6(%rbp);cvtsi2ssl -0x4(%rbp),%xmm0;call 35 <op_30851+0x35> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;movzwl -0x6(%rbp),%eax;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x10,%rsp;pop %rbp;ret
+op_30851|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_30852|SHIP|OK|48 83 ec 18 0f 29 04 24 e8 00 00 00 00 0f 28 c8 0f 28 04 24 e8 00 00 00 00 31 c9 85 c0 0f 94 c1 89 c8 48 83 c4 18 c3|sub $0x18,%rsp;movaps %xmm0,(%rsp);call d <op_30852+0xd> !!reloc=R_X86_64_PLT32:__floatsitf-0x4;movaps %xmm0,%xmm1;movaps (%rsp),%xmm0;call 19 <op_30852+0x19> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;xor %ecx,%ecx;test %eax,%eax;sete %cl;mov %ecx,%eax;add $0x18,%rsp;ret
+op_30852|ANCHOR|OK|55 48 89 e5 48 83 ec 20 89 7d fc 0f 29 45 e0 8b 7d fc e8 00 00 00 00 0f 28 4d e0 e8 00 00 00 00 85 c0 0f 94 c0 24 01 0f b6 c0 48 83 c4 20 5d c3|push %rbp;mov %rsp,%rbp;sub $0x20,%rsp;mov %edi,-0x4(%rbp);movaps %xmm0,-0x20(%rbp);mov -0x4(%rbp),%edi;call 17 <op_30852+0x17> !!reloc=R_X86_64_PLT32:__floatsitf-0x4;movaps -0x20(%rbp),%xmm1;call 20 <op_30852+0x20> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;test %eax,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;add $0x20,%rsp;pop %rbp;ret
+op_30852|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_30853|REFUSED|/work/regen_c_c0077/u/n30853/unit.c:6:31: error: parameters cannot have __fp16 type\s did you forget * ?
+op_30854|REFUSED|/work/regen_c_c0077/u/n30854/unit.c:5:32: error: __ibm128 is not supported on this target
+op_30855|SHIP|OK|48 63 cf 48 31 ce 48 c1 f9 3f 48 31 d1 31 c0 48 09 f1 0f 94 c0 c3|movslq %edi,%rcx;xor %rcx,%rsi;sar $0x3f,%rcx;xor %rdx,%rcx;xor %eax,%eax;or %rsi,%rcx;sete %al;ret
+op_30855|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 89 7d ec 48 89 4d d8 48 89 45 d0 48 63 45 ec 66 48 0f 6e c0 48 c1 f8 3f 66 48 0f 6e c8 66 0f 6c c1 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %edi,-0x14(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movslq -0x14(%rbp),%rax;movq %rax,%xmm0;sar $0x3f,%rax;movq %rax,%xmm1;punpcklqdq %xmm1,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30855|ANCHOR|DWARF|a=2 byte block: 91 6c (DW_OP_fbreg: -20);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_30856|SHIP|OK|48 63 cf 48 31 ce 48 c1 f9 3f 48 31 d1 31 c0 48 09 f1 0f 94 c0 c3|movslq %edi,%rcx;xor %rcx,%rsi;sar $0x3f,%rcx;xor %rdx,%rcx;xor %eax,%eax;or %rsi,%rcx;sete %al;ret
+op_30856|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 89 7d ec 48 89 4d d8 48 89 45 d0 48 63 45 ec 66 48 0f 6e c0 48 c1 f8 3f 66 48 0f 6e c8 66 0f 6c c1 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %edi,-0x14(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movslq -0x14(%rbp),%rax;movq %rax,%xmm0;sar $0x3f,%rax;movq %rax,%xmm1;punpcklqdq %xmm1,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30856|ANCHOR|DWARF|a=2 byte block: 91 6c (DW_OP_fbreg: -20);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_30857|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30857|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 24 01 88 45 fb 8b 45 fc 8a 4d fb 80 e1 01 0f b6 c9 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);and $0x1,%al;mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;mov -0x5(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30857|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_30858|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30858|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f be 4d fb 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movsbl -0x5(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30858|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_30859|REFUSED|/work/regen_c_c0077/u/n30859/unit.c:5:32: error: use of undeclared identifier 'char16_t'
+op_30860|REFUSED|/work/regen_c_c0077/u/n30860/unit.c:5:32: error: use of undeclared identifier 'char32_t'
+op_30861|REFUSED|/work/regen_c_c0077/u/n30861/unit.c:5:32: error: use of undeclared identifier 'char8_t'
+op_30862|SHIP|OK|f2 0f 2a cf f2 0f c2 c8 00 66 48 0f 7e c8 83 e0 01 c3|cvtsi2sd %edi,%xmm1;cmpeqsd %xmm0,%xmm1;movq %xmm1,%rax;and $0x1,%eax;ret
+op_30862|ANCHOR|OK|55 48 89 e5 89 7d fc f2 0f 11 45 f0 f2 0f 2a 45 fc 66 0f 2e 45 f0 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);movsd %xmm0,-0x10(%rbp);cvtsi2sdl -0x4(%rbp),%xmm0;ucomisd -0x10(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30862|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30863|SHIP|OK|f3 0f 2a cf f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 c3|cvtsi2ss %edi,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;ret
+op_30863|ANCHOR|OK|55 48 89 e5 89 7d fc f3 0f 11 45 f8 f3 0f 2a 45 fc 0f 2e 45 f8 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);movss %xmm0,-0x8(%rbp);cvtsi2ssl -0x4(%rbp),%xmm0;ucomiss -0x8(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30863|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_30864|REFUSED|/work/regen_c_c0077/u/n30864/unit.c:5:32: error: use of undeclared identifier 'half'
+op_30865|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30865|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 3b 45 f8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;cmp -0x8(%rbp),%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30865|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_30866|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30866|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30866|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30867|REFUSED|/work/regen_c_c0077/u/n30867/unit.c:5:37: error: expected ')'
+op_30868|REFUSED|/work/regen_c_c0077/u/n30868/unit.c:5:37: error: expected ')'
+op_30869|SHIP|OK|db 6c 24 08 89 7c 24 fc db 44 24 fc df e9 dd d8 0f 9b c0 0f 94 c1 20 c1 0f b6 c1 c3|fldt 0x8(%rsp);mov %edi,-0x4(%rsp);fildl -0x4(%rsp);fucomip %st(1),%st;fstp %st(0);setnp %al;sete %cl;and %al,%cl;movzbl %cl,%eax;ret
+op_30869|ANCHOR|OK|55 48 89 e5 db 6d 10 89 7d fc db 7d e0 8b 45 fc 89 45 dc db 45 dc db 6d e0 d9 c9 df e9 dd d8 0f 9b c1 0f 94 c0 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;fldt 0x10(%rbp);mov %edi,-0x4(%rbp);fstpt -0x20(%rbp);mov -0x4(%rbp),%eax;mov %eax,-0x24(%rbp);fildl -0x24(%rbp);fldt -0x20(%rbp);fxch %st(1);fucomip %st(1),%st;fstp %st(0);setnp %cl;sete %al;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30869|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_30870|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30870|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30870|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30871|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30871|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f bf 4d fa 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movswl -0x6(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30871|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_30872|REFUSED|/work/regen_c_c0077/u/n30872/unit.c:5:38: error: expected ')'
+op_30873|REFUSED|/work/regen_c_c0077/u/n30873/unit.c:5:38: error: expected ')'
+op_30874|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30874|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f be 4d fb 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movsbl -0x5(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30874|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_30875|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30875|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 3b 45 f8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;cmp -0x8(%rbp),%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30875|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_30876|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30876|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30876|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30877|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30877|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30877|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30878|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30878|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f bf 4d fa 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movswl -0x6(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30878|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_30879|REFUSED|/work/regen_c_c0077/u/n30879/unit.c:5:41: error: expected ')'
+op_30880|REFUSED|/work/regen_c_c0077/u/n30880/unit.c:5:41: error: expected ')'
+op_30881|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30881|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f b6 4d fb 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movzbl -0x5(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30881|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_30882|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30882|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 3b 45 f8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;cmp -0x8(%rbp),%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30882|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_30883|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30883|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30883|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30884|REFUSED|/work/regen_c_c0077/u/n30884/unit.c:5:46: error: expected ')'
+op_30885|REFUSED|/work/regen_c_c0077/u/n30885/unit.c:5:46: error: expected ')'
+op_30886|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_30886|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 48 63 45 fc 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);movslq -0x4(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30886|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30887|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_30887|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f b7 4d fa 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movzwl -0x6(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30887|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_30888|REFUSED|/work/regen_c_c0077/u/n30888/unit.c:5:47: error: expected ')'
+op_30889|REFUSED|/work/regen_c_c0077/u/n30889/unit.c:5:47: error: expected ')'
+op_30890|REFUSED|/work/regen_c_c0077/u/n30890/unit.c:5:32: error: use of undeclared identifier 'wchar_t'
+op_30891|REFUSED|/work/regen_c_c0077/u/n30891/unit.c:5:33: error: use of undeclared identifier '_Accum'
+op_30892|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30892|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 24 01 88 45 f7 48 8b 45 f8 8a 4d f7 80 e1 01 0f b6 c9 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);and $0x1,%al;mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;mov -0x9(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30892|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30893|SHIP|OK|50 f3 0f 11 44 24 04 0f 57 c0 f3 48 0f 2a c7 e8 00 00 00 00 e8 00 00 00 00 f3 0f 11 04 24 f3 0f 10 44 24 04 e8 00 00 00 00 f3 0f c2 04 24 00 66 0f 7e c0 83 e0 01 59 c3|push %rax;movss %xmm0,0x4(%rsp);xorps %xmm0,%xmm0;cvtsi2ss %rdi,%xmm0;call 14 <op_30893+0x14> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;call 19 <op_30893+0x19> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss %xmm0,(%rsp);movss 0x4(%rsp),%xmm0;call 29 <op_30893+0x29> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;cmpeqss (%rsp),%xmm0;movd %xmm0,%eax;and $0x1,%eax;pop %rcx;ret
+op_30893|ANCHOR|OK|55 48 89 e5 48 83 ec 20 48 89 7d f8 66 0f c5 c0 00 66 89 45 f6 f3 48 0f 2a 45 f8 e8 00 00 00 00 f3 0f 11 45 ec 66 0f c4 45 f6 00 e8 00 00 00 00 0f 28 c8 f3 0f 10 45 ec f3 0f 11 4d f0 e8 00 00 00 00 f3 0f 10 4d f0 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 20 5d c3|push %rbp;mov %rsp,%rbp;sub $0x20,%rsp;mov %rdi,-0x8(%rbp);pextrw $0x0,%xmm0,%eax;mov %ax,-0xa(%rbp);cvtsi2ssq -0x8(%rbp),%xmm0;call 20 <op_30893+0x20> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;movss %xmm0,-0x14(%rbp);pinsrw $0x0,-0xa(%rbp),%xmm0;call 30 <op_30893+0x30> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movaps %xmm0,%xmm1;movss -0x14(%rbp),%xmm0;movss %xmm1,-0x10(%rbp);call 42 <op_30893+0x42> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss -0x10(%rbp),%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x20,%rsp;pop %rbp;ret
+op_30893|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_30894|REFUSED|/work/regen_c_c0077/u/n30894/unit.c:5:33: error: use of undeclared identifier '_Fract'
+op_30895|REFUSED|/work/regen_c_c0077/u/n30895/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30896|REFUSED|/work/regen_c_c0077/u/n30896/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30897|REFUSED|/work/regen_c_c0077/u/n30897/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30898|REFUSED|/work/regen_c_c0077/u/n30898/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30899|REFUSED|/work/regen_c_c0077/u/n30899/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30900|REFUSED|/work/regen_c_c0077/u/n30900/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30901|REFUSED|/work/regen_c_c0077/u/n30901/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30902|REFUSED|/work/regen_c_c0077/u/n30902/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30903|REFUSED|/work/regen_c_c0077/u/n30903/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30904|REFUSED|/work/regen_c_c0077/u/n30904/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30905|REFUSED|/work/regen_c_c0077/u/n30905/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30906|REFUSED|/work/regen_c_c0077/u/n30906/unit.c:5:33: error: use of undeclared identifier '_Sat'
+op_30907|SHIP|OK|53 66 0f c5 d8 00 0f 57 c0 f3 48 0f 2a c7 e8 00 00 00 00 66 0f c5 c0 00 c1 e3 10 66 0f 6e c3 c1 e0 10 66 0f 6e c8 f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 5b c3|push %rbx;pextrw $0x0,%xmm0,%ebx;xorps %xmm0,%xmm0;cvtsi2ss %rdi,%xmm0;call 13 <op_30907+0x13> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;shl $0x10,%ebx;movd %ebx,%xmm0;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;pop %rbx;ret
+op_30907|ANCHOR|OK|55 48 89 e5 48 83 ec 10 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 48 89 7d f8 e8 00 00 00 00 66 0f c5 c0 00 66 89 45 f6 f3 48 0f 2a 45 f8 e8 00 00 00 00 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 0f b7 45 f6 c1 e0 10 66 0f 6e c8 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;mov %rdi,-0x8(%rbp);call 23 <op_30907+0x23> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,-0xa(%rbp);cvtsi2ssq -0x8(%rbp),%xmm0;call 37 <op_30907+0x37> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;movzwl -0xa(%rbp),%eax;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x10,%rsp;pop %rbp;ret
+op_30907|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_30908|SHIP|OK|48 83 ec 18 0f 29 04 24 e8 00 00 00 00 0f 28 c8 0f 28 04 24 e8 00 00 00 00 31 c9 85 c0 0f 94 c1 89 c8 48 83 c4 18 c3|sub $0x18,%rsp;movaps %xmm0,(%rsp);call d <op_30908+0xd> !!reloc=R_X86_64_PLT32:__floatditf-0x4;movaps %xmm0,%xmm1;movaps (%rsp),%xmm0;call 19 <op_30908+0x19> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;xor %ecx,%ecx;test %eax,%eax;sete %cl;mov %ecx,%eax;add $0x18,%rsp;ret
+op_30908|ANCHOR|OK|55 48 89 e5 48 83 ec 20 48 89 7d f8 0f 29 45 e0 48 8b 7d f8 e8 00 00 00 00 0f 28 4d e0 e8 00 00 00 00 85 c0 0f 94 c0 24 01 0f b6 c0 48 83 c4 20 5d c3|push %rbp;mov %rsp,%rbp;sub $0x20,%rsp;mov %rdi,-0x8(%rbp);movaps %xmm0,-0x20(%rbp);mov -0x8(%rbp),%rdi;call 19 <op_30908+0x19> !!reloc=R_X86_64_PLT32:__floatditf-0x4;movaps -0x20(%rbp),%xmm1;call 22 <op_30908+0x22> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;test %eax,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;add $0x20,%rsp;pop %rbp;ret
+op_30908|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_30909|REFUSED|/work/regen_c_c0077/u/n30909/unit.c:6:32: error: parameters cannot have __fp16 type\s did you forget * ?
+op_30910|REFUSED|/work/regen_c_c0077/u/n30910/unit.c:5:33: error: __ibm128 is not supported on this target
+op_30911|SHIP|OK|48 31 fe 48 c1 ff 3f 48 31 d7 31 c0 48 09 f7 0f 94 c0 c3|xor %rdi,%rsi;sar $0x3f,%rdi;xor %rdx,%rdi;xor %eax,%eax;or %rsi,%rdi;sete %al;ret
+op_30911|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 48 89 7d e8 48 89 4d d8 48 89 45 d0 48 8b 45 e8 66 48 0f 6e c0 48 c1 f8 3f 66 48 0f 6e c8 66 0f 6c c1 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %rdi,-0x18(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x18(%rbp),%rax;movq %rax,%xmm0;sar $0x3f,%rax;movq %rax,%xmm1;punpcklqdq %xmm1,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30911|ANCHOR|DWARF|a=2 byte block: 91 68 (DW_OP_fbreg: -24);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_30912|SHIP|OK|48 31 fe 48 c1 ff 3f 48 31 d7 31 c0 48 09 f7 0f 94 c0 c3|xor %rdi,%rsi;sar $0x3f,%rdi;xor %rdx,%rdi;xor %eax,%eax;or %rsi,%rdi;sete %al;ret
+op_30912|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 48 89 7d e8 48 89 4d d8 48 89 45 d0 48 8b 45 e8 66 48 0f 6e c0 48 c1 f8 3f 66 48 0f 6e c8 66 0f 6c c1 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %rdi,-0x18(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x18(%rbp),%rax;movq %rax,%xmm0;sar $0x3f,%rax;movq %rax,%xmm1;punpcklqdq %xmm1,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30912|ANCHOR|DWARF|a=2 byte block: 91 68 (DW_OP_fbreg: -24);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_30913|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30913|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 24 01 88 45 f7 48 8b 45 f8 8a 4d f7 80 e1 01 0f b6 c9 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);and $0x1,%al;mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;mov -0x9(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30913|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30914|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30914|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 48 0f be 4d f7 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movsbq -0x9(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30914|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30915|REFUSED|/work/regen_c_c0077/u/n30915/unit.c:5:33: error: use of undeclared identifier 'char16_t'
+op_30916|REFUSED|/work/regen_c_c0077/u/n30916/unit.c:5:33: error: use of undeclared identifier 'char32_t'
+op_30917|REFUSED|/work/regen_c_c0077/u/n30917/unit.c:5:33: error: use of undeclared identifier 'char8_t'
+op_30918|SHIP|OK|f2 48 0f 2a cf f2 0f c2 c8 00 66 48 0f 7e c8 83 e0 01 c3|cvtsi2sd %rdi,%xmm1;cmpeqsd %xmm0,%xmm1;movq %xmm1,%rax;and $0x1,%eax;ret
+op_30918|ANCHOR|OK|55 48 89 e5 48 89 7d f8 f2 0f 11 45 f0 f2 48 0f 2a 45 f8 66 0f 2e 45 f0 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);movsd %xmm0,-0x10(%rbp);cvtsi2sdq -0x8(%rbp),%xmm0;ucomisd -0x10(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30918|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30919|SHIP|OK|f3 48 0f 2a cf f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 c3|cvtsi2ss %rdi,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;ret
+op_30919|ANCHOR|OK|55 48 89 e5 48 89 7d f8 f3 0f 11 45 f4 f3 48 0f 2a 45 f8 0f 2e 45 f4 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);movss %xmm0,-0xc(%rbp);cvtsi2ssq -0x8(%rbp),%xmm0;ucomiss -0xc(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30919|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_30920|REFUSED|/work/regen_c_c0077/u/n30920/unit.c:5:33: error: use of undeclared identifier 'half'
+op_30921|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30921|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 48 63 4d f4 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;movslq -0xc(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30921|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_30922|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30922|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30922|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30923|REFUSED|/work/regen_c_c0077/u/n30923/unit.c:5:38: error: expected ')'
+op_30924|REFUSED|/work/regen_c_c0077/u/n30924/unit.c:5:38: error: expected ')'
+op_30925|SHIP|OK|db 6c 24 08 48 89 7c 24 f8 df 6c 24 f8 df e9 dd d8 0f 9b c0 0f 94 c1 20 c1 0f b6 c1 c3|fldt 0x8(%rsp);mov %rdi,-0x8(%rsp);fildll -0x8(%rsp);fucomip %st(1),%st;fstp %st(0);setnp %al;sete %cl;and %al,%cl;movzbl %cl,%eax;ret
+op_30925|ANCHOR|OK|55 48 89 e5 db 6d 10 48 89 7d f8 db 7d e0 48 8b 45 f8 48 89 45 d8 df 6d d8 db 6d e0 d9 c9 df e9 dd d8 0f 9b c1 0f 94 c0 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;fldt 0x10(%rbp);mov %rdi,-0x8(%rbp);fstpt -0x20(%rbp);mov -0x8(%rbp),%rax;mov %rax,-0x28(%rbp);fildll -0x28(%rbp);fldt -0x20(%rbp);fxch %st(1);fucomip %st(1),%st;fstp %st(0);setnp %cl;sete %al;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30925|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_30926|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30926|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30926|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30927|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30927|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 48 0f bf 4d f6 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movswq -0xa(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30927|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_30928|REFUSED|/work/regen_c_c0077/u/n30928/unit.c:5:39: error: expected ')'
+op_30929|REFUSED|/work/regen_c_c0077/u/n30929/unit.c:5:39: error: expected ')'
+op_30930|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30930|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 48 0f be 4d f7 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movsbq -0x9(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30930|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30931|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30931|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 48 63 4d f4 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;movslq -0xc(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30931|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_30932|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30932|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30932|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30933|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30933|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30933|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30934|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30934|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 48 0f bf 4d f6 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movswq -0xa(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30934|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_30935|REFUSED|/work/regen_c_c0077/u/n30935/unit.c:5:42: error: expected ')'
+op_30936|REFUSED|/work/regen_c_c0077/u/n30936/unit.c:5:42: error: expected ')'
+op_30937|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30937|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 0f b6 4d f7 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movzbl -0x9(%rbp),%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30937|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30938|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30938|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 8b 4d f4 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;mov -0xc(%rbp),%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30938|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_30939|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30939|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30939|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30940|REFUSED|/work/regen_c_c0077/u/n30940/unit.c:5:47: error: expected ')'
+op_30941|REFUSED|/work/regen_c_c0077/u/n30941/unit.c:5:47: error: expected ')'
+op_30942|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30942|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30942|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30943|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30943|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 0f b7 4d f6 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movzwl -0xa(%rbp),%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30943|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_30944|REFUSED|/work/regen_c_c0077/u/n30944/unit.c:5:48: error: expected ')'
+op_30945|REFUSED|/work/regen_c_c0077/u/n30945/unit.c:5:48: error: expected ')'
+op_30946|REFUSED|/work/regen_c_c0077/u/n30946/unit.c:5:33: error: use of undeclared identifier 'wchar_t'
+op_30947|REFUSED|/work/regen_c_c0077/u/n30947/unit.c:5:38: error: use of undeclared identifier '_Accum'
+op_30948|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30948|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 24 01 88 45 f7 48 8b 45 f8 8a 4d f7 80 e1 01 0f b6 c9 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);and $0x1,%al;mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;mov -0x9(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30948|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30949|SHIP|OK|50 f3 0f 11 44 24 04 0f 57 c0 f3 48 0f 2a c7 e8 00 00 00 00 e8 00 00 00 00 f3 0f 11 04 24 f3 0f 10 44 24 04 e8 00 00 00 00 f3 0f c2 04 24 00 66 0f 7e c0 83 e0 01 59 c3|push %rax;movss %xmm0,0x4(%rsp);xorps %xmm0,%xmm0;cvtsi2ss %rdi,%xmm0;call 14 <op_30949+0x14> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;call 19 <op_30949+0x19> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss %xmm0,(%rsp);movss 0x4(%rsp),%xmm0;call 29 <op_30949+0x29> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;cmpeqss (%rsp),%xmm0;movd %xmm0,%eax;and $0x1,%eax;pop %rcx;ret
+op_30949|ANCHOR|OK|55 48 89 e5 48 83 ec 20 48 89 7d f8 66 0f c5 c0 00 66 89 45 f6 f3 48 0f 2a 45 f8 e8 00 00 00 00 f3 0f 11 45 ec 66 0f c4 45 f6 00 e8 00 00 00 00 0f 28 c8 f3 0f 10 45 ec f3 0f 11 4d f0 e8 00 00 00 00 f3 0f 10 4d f0 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 20 5d c3|push %rbp;mov %rsp,%rbp;sub $0x20,%rsp;mov %rdi,-0x8(%rbp);pextrw $0x0,%xmm0,%eax;mov %ax,-0xa(%rbp);cvtsi2ssq -0x8(%rbp),%xmm0;call 20 <op_30949+0x20> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;movss %xmm0,-0x14(%rbp);pinsrw $0x0,-0xa(%rbp),%xmm0;call 30 <op_30949+0x30> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movaps %xmm0,%xmm1;movss -0x14(%rbp),%xmm0;movss %xmm1,-0x10(%rbp);call 42 <op_30949+0x42> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss -0x10(%rbp),%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x20,%rsp;pop %rbp;ret
+op_30949|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_30950|REFUSED|/work/regen_c_c0077/u/n30950/unit.c:5:38: error: use of undeclared identifier '_Fract'
+op_30951|REFUSED|/work/regen_c_c0077/u/n30951/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30952|REFUSED|/work/regen_c_c0077/u/n30952/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30953|REFUSED|/work/regen_c_c0077/u/n30953/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30954|REFUSED|/work/regen_c_c0077/u/n30954/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30955|REFUSED|/work/regen_c_c0077/u/n30955/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30956|REFUSED|/work/regen_c_c0077/u/n30956/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30957|REFUSED|/work/regen_c_c0077/u/n30957/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30958|REFUSED|/work/regen_c_c0077/u/n30958/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30959|REFUSED|/work/regen_c_c0077/u/n30959/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30960|REFUSED|/work/regen_c_c0077/u/n30960/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30961|REFUSED|/work/regen_c_c0077/u/n30961/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30962|REFUSED|/work/regen_c_c0077/u/n30962/unit.c:5:38: error: use of undeclared identifier '_Sat'
+op_30963|SHIP|OK|53 66 0f c5 d8 00 0f 57 c0 f3 48 0f 2a c7 e8 00 00 00 00 66 0f c5 c0 00 c1 e3 10 66 0f 6e c3 c1 e0 10 66 0f 6e c8 f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 5b c3|push %rbx;pextrw $0x0,%xmm0,%ebx;xorps %xmm0,%xmm0;cvtsi2ss %rdi,%xmm0;call 13 <op_30963+0x13> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;shl $0x10,%ebx;movd %ebx,%xmm0;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;pop %rbx;ret
+op_30963|ANCHOR|OK|55 48 89 e5 48 83 ec 10 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 48 89 7d f8 e8 00 00 00 00 66 0f c5 c0 00 66 89 45 f6 f3 48 0f 2a 45 f8 e8 00 00 00 00 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 0f b7 45 f6 c1 e0 10 66 0f 6e c8 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;mov %rdi,-0x8(%rbp);call 23 <op_30963+0x23> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,-0xa(%rbp);cvtsi2ssq -0x8(%rbp),%xmm0;call 37 <op_30963+0x37> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;movzwl -0xa(%rbp),%eax;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x10,%rsp;pop %rbp;ret
+op_30963|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_30964|SHIP|OK|48 83 ec 18 0f 29 04 24 e8 00 00 00 00 0f 28 c8 0f 28 04 24 e8 00 00 00 00 31 c9 85 c0 0f 94 c1 89 c8 48 83 c4 18 c3|sub $0x18,%rsp;movaps %xmm0,(%rsp);call d <op_30964+0xd> !!reloc=R_X86_64_PLT32:__floatditf-0x4;movaps %xmm0,%xmm1;movaps (%rsp),%xmm0;call 19 <op_30964+0x19> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;xor %ecx,%ecx;test %eax,%eax;sete %cl;mov %ecx,%eax;add $0x18,%rsp;ret
+op_30964|ANCHOR|OK|55 48 89 e5 48 83 ec 20 48 89 7d f8 0f 29 45 e0 48 8b 7d f8 e8 00 00 00 00 0f 28 4d e0 e8 00 00 00 00 85 c0 0f 94 c0 24 01 0f b6 c0 48 83 c4 20 5d c3|push %rbp;mov %rsp,%rbp;sub $0x20,%rsp;mov %rdi,-0x8(%rbp);movaps %xmm0,-0x20(%rbp);mov -0x8(%rbp),%rdi;call 19 <op_30964+0x19> !!reloc=R_X86_64_PLT32:__floatditf-0x4;movaps -0x20(%rbp),%xmm1;call 22 <op_30964+0x22> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;test %eax,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;add $0x20,%rsp;pop %rbp;ret
+op_30964|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_30965|REFUSED|/work/regen_c_c0077/u/n30965/unit.c:6:37: error: parameters cannot have __fp16 type\s did you forget * ?
+op_30966|REFUSED|/work/regen_c_c0077/u/n30966/unit.c:5:38: error: __ibm128 is not supported on this target
+op_30967|SHIP|OK|48 31 fe 48 c1 ff 3f 48 31 d7 31 c0 48 09 f7 0f 94 c0 c3|xor %rdi,%rsi;sar $0x3f,%rdi;xor %rdx,%rdi;xor %eax,%eax;or %rsi,%rdi;sete %al;ret
+op_30967|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 48 89 7d e8 48 89 4d d8 48 89 45 d0 48 8b 45 e8 66 48 0f 6e c0 48 c1 f8 3f 66 48 0f 6e c8 66 0f 6c c1 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %rdi,-0x18(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x18(%rbp),%rax;movq %rax,%xmm0;sar $0x3f,%rax;movq %rax,%xmm1;punpcklqdq %xmm1,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30967|ANCHOR|DWARF|a=2 byte block: 91 68 (DW_OP_fbreg: -24);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_30968|SHIP|OK|48 31 fe 48 c1 ff 3f 48 31 d7 31 c0 48 09 f7 0f 94 c0 c3|xor %rdi,%rsi;sar $0x3f,%rdi;xor %rdx,%rdi;xor %eax,%eax;or %rsi,%rdi;sete %al;ret
+op_30968|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 48 89 7d e8 48 89 4d d8 48 89 45 d0 48 8b 45 e8 66 48 0f 6e c0 48 c1 f8 3f 66 48 0f 6e c8 66 0f 6c c1 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %rdi,-0x18(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x18(%rbp),%rax;movq %rax,%xmm0;sar $0x3f,%rax;movq %rax,%xmm1;punpcklqdq %xmm1,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30968|ANCHOR|DWARF|a=2 byte block: 91 68 (DW_OP_fbreg: -24);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_30969|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30969|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 24 01 88 45 f7 48 8b 45 f8 8a 4d f7 80 e1 01 0f b6 c9 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);and $0x1,%al;mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;mov -0x9(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30969|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30970|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30970|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 48 0f be 4d f7 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movsbq -0x9(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30970|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30971|REFUSED|/work/regen_c_c0077/u/n30971/unit.c:5:38: error: use of undeclared identifier 'char16_t'
+op_30972|REFUSED|/work/regen_c_c0077/u/n30972/unit.c:5:38: error: use of undeclared identifier 'char32_t'
+op_30973|REFUSED|/work/regen_c_c0077/u/n30973/unit.c:5:38: error: use of undeclared identifier 'char8_t'
+op_30974|SHIP|OK|f2 48 0f 2a cf f2 0f c2 c8 00 66 48 0f 7e c8 83 e0 01 c3|cvtsi2sd %rdi,%xmm1;cmpeqsd %xmm0,%xmm1;movq %xmm1,%rax;and $0x1,%eax;ret
+op_30974|ANCHOR|OK|55 48 89 e5 48 89 7d f8 f2 0f 11 45 f0 f2 48 0f 2a 45 f8 66 0f 2e 45 f0 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);movsd %xmm0,-0x10(%rbp);cvtsi2sdq -0x8(%rbp),%xmm0;ucomisd -0x10(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30974|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30975|SHIP|OK|f3 48 0f 2a cf f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 c3|cvtsi2ss %rdi,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;ret
+op_30975|ANCHOR|OK|55 48 89 e5 48 89 7d f8 f3 0f 11 45 f4 f3 48 0f 2a 45 f8 0f 2e 45 f4 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);movss %xmm0,-0xc(%rbp);cvtsi2ssq -0x8(%rbp),%xmm0;ucomiss -0xc(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30975|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_30976|REFUSED|/work/regen_c_c0077/u/n30976/unit.c:5:38: error: use of undeclared identifier 'half'
+op_30977|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30977|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 48 63 4d f4 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;movslq -0xc(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30977|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_30978|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30978|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30978|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30979|REFUSED|/work/regen_c_c0077/u/n30979/unit.c:5:43: error: expected ')'
+op_30980|REFUSED|/work/regen_c_c0077/u/n30980/unit.c:5:43: error: expected ')'
+op_30981|SHIP|OK|db 6c 24 08 48 89 7c 24 f8 df 6c 24 f8 df e9 dd d8 0f 9b c0 0f 94 c1 20 c1 0f b6 c1 c3|fldt 0x8(%rsp);mov %rdi,-0x8(%rsp);fildll -0x8(%rsp);fucomip %st(1),%st;fstp %st(0);setnp %al;sete %cl;and %al,%cl;movzbl %cl,%eax;ret
+op_30981|ANCHOR|OK|55 48 89 e5 db 6d 10 48 89 7d f8 db 7d e0 48 8b 45 f8 48 89 45 d8 df 6d d8 db 6d e0 d9 c9 df e9 dd d8 0f 9b c1 0f 94 c0 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;fldt 0x10(%rbp);mov %rdi,-0x8(%rbp);fstpt -0x20(%rbp);mov -0x8(%rbp),%rax;mov %rax,-0x28(%rbp);fildll -0x28(%rbp);fldt -0x20(%rbp);fxch %st(1);fucomip %st(1),%st;fstp %st(0);setnp %cl;sete %al;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30981|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_30982|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30982|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30982|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30983|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30983|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 48 0f bf 4d f6 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movswq -0xa(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30983|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_30984|REFUSED|/work/regen_c_c0077/u/n30984/unit.c:5:44: error: expected ')'
+op_30985|REFUSED|/work/regen_c_c0077/u/n30985/unit.c:5:44: error: expected ')'
+op_30986|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30986|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 48 0f be 4d f7 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movsbq -0x9(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30986|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30987|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30987|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 48 63 4d f4 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;movslq -0xc(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30987|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_30988|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30988|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30988|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30989|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30989|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30989|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30990|SHIP|OK|48 63 ce 31 c0 48 39 cf 0f 94 c0 c3|movslq %esi,%rcx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30990|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 48 0f bf 4d f6 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movswq -0xa(%rbp),%rcx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30990|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_30991|REFUSED|/work/regen_c_c0077/u/n30991/unit.c:5:47: error: expected ')'
+op_30992|REFUSED|/work/regen_c_c0077/u/n30992/unit.c:5:47: error: expected ')'
+op_30993|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30993|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 0f b6 4d f7 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movzbl -0x9(%rbp),%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30993|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_30994|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30994|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 8b 4d f4 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;mov -0xc(%rbp),%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30994|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_30995|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30995|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30995|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30996|REFUSED|/work/regen_c_c0077/u/n30996/unit.c:5:52: error: expected ')'
+op_30997|REFUSED|/work/regen_c_c0077/u/n30997/unit.c:5:52: error: expected ')'
+op_30998|SHIP|OK|31 c0 48 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %rsi,%rdi;sete %al;ret
+op_30998|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30998|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_30999|SHIP|OK|89 f1 31 c0 48 39 cf 0f 94 c0 c3|mov %esi,%ecx;xor %eax,%eax;cmp %rcx,%rdi;sete %al;ret
+op_30999|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 0f b7 4d f6 48 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movzwl -0xa(%rbp),%ecx;cmp %rcx,%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_30999|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_31000|REFUSED|/work/regen_c_c0077/u/n31000/unit.c:5:53: error: expected ')'
+op_31001|REFUSED|/work/regen_c_c0077/u/n31001/unit.c:5:53: error: expected ')'
+op_31002|REFUSED|/work/regen_c_c0077/u/n31002/unit.c:5:38: error: use of undeclared identifier 'wchar_t'
+op_31003|REFUSED|/work/regen_c_c0077/u/n31003/unit.c:5:34: error: use of undeclared identifier '_Accum'
+op_31004|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_31004|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 24 01 88 45 fd 0f bf 45 fe 8a 4d fd 80 e1 01 0f b6 c9 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);and $0x1,%al;mov %al,-0x3(%rbp);movswl -0x2(%rbp),%eax;mov -0x3(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31004|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_31005|SHIP|OK|50 f3 0f 11 44 24 04 0f 57 c0 f3 0f 2a c7 e8 00 00 00 00 e8 00 00 00 00 f3 0f 11 04 24 f3 0f 10 44 24 04 e8 00 00 00 00 f3 0f c2 04 24 00 66 0f 7e c0 83 e0 01 59 c3|push %rax;movss %xmm0,0x4(%rsp);xorps %xmm0,%xmm0;cvtsi2ss %edi,%xmm0;call 13 <op_31005+0x13> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;call 18 <op_31005+0x18> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss %xmm0,(%rsp);movss 0x4(%rsp),%xmm0;call 28 <op_31005+0x28> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;cmpeqss (%rsp),%xmm0;movd %xmm0,%eax;and $0x1,%eax;pop %rcx;ret
+op_31005|ANCHOR|OK|55 48 89 e5 48 83 ec 10 66 89 f8 66 89 45 fe 66 0f c5 c0 00 66 89 45 fc 0f bf 45 fe f3 0f 2a c0 e8 00 00 00 00 f3 0f 11 45 f4 66 0f c4 45 fc 00 e8 00 00 00 00 0f 28 c8 f3 0f 10 45 f4 f3 0f 11 4d f8 e8 00 00 00 00 f3 0f 10 4d f8 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;mov %di,%ax;mov %ax,-0x2(%rbp);pextrw $0x0,%xmm0,%eax;mov %ax,-0x4(%rbp);movswl -0x2(%rbp),%eax;cvtsi2ss %eax,%xmm0;call 25 <op_31005+0x25> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;movss %xmm0,-0xc(%rbp);pinsrw $0x0,-0x4(%rbp),%xmm0;call 35 <op_31005+0x35> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movaps %xmm0,%xmm1;movss -0xc(%rbp),%xmm0;movss %xmm1,-0x8(%rbp);call 47 <op_31005+0x47> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss -0x8(%rbp),%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x10,%rsp;pop %rbp;ret
+op_31005|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_31006|REFUSED|/work/regen_c_c0077/u/n31006/unit.c:5:34: error: use of undeclared identifier '_Fract'
+op_31007|REFUSED|/work/regen_c_c0077/u/n31007/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31008|REFUSED|/work/regen_c_c0077/u/n31008/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31009|REFUSED|/work/regen_c_c0077/u/n31009/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31010|REFUSED|/work/regen_c_c0077/u/n31010/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31011|REFUSED|/work/regen_c_c0077/u/n31011/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31012|REFUSED|/work/regen_c_c0077/u/n31012/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31013|REFUSED|/work/regen_c_c0077/u/n31013/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31014|REFUSED|/work/regen_c_c0077/u/n31014/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31015|REFUSED|/work/regen_c_c0077/u/n31015/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31016|REFUSED|/work/regen_c_c0077/u/n31016/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31017|REFUSED|/work/regen_c_c0077/u/n31017/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31018|REFUSED|/work/regen_c_c0077/u/n31018/unit.c:5:34: error: use of undeclared identifier '_Sat'
+op_31019|SHIP|OK|53 66 0f c5 d8 00 0f 57 c0 f3 0f 2a c7 e8 00 00 00 00 66 0f c5 c0 00 c1 e3 10 66 0f 6e c3 c1 e0 10 66 0f 6e c8 f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 5b c3|push %rbx;pextrw $0x0,%xmm0,%ebx;xorps %xmm0,%xmm0;cvtsi2ss %edi,%xmm0;call 12 <op_31019+0x12> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;shl $0x10,%ebx;movd %ebx,%xmm0;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;pop %rbx;ret
+op_31019|ANCHOR|OK|55 48 89 e5 48 83 ec 10 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 66 89 f8 66 89 45 fe e8 00 00 00 00 66 0f c5 c0 00 66 89 45 fc 0f bf 45 fe f3 0f 2a c0 e8 00 00 00 00 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 0f b7 45 fc c1 e0 10 66 0f 6e c8 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;mov %di,%ax;mov %ax,-0x2(%rbp);call 26 <op_31019+0x26> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,-0x4(%rbp);movswl -0x2(%rbp),%eax;cvtsi2ss %eax,%xmm0;call 3c <op_31019+0x3c> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;movzwl -0x4(%rbp),%eax;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x10,%rsp;pop %rbp;ret
+op_31019|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_31020|SHIP|OK|48 83 ec 18 0f 29 04 24 e8 00 00 00 00 0f 28 c8 0f 28 04 24 e8 00 00 00 00 31 c9 85 c0 0f 94 c1 89 c8 48 83 c4 18 c3|sub $0x18,%rsp;movaps %xmm0,(%rsp);call d <op_31020+0xd> !!reloc=R_X86_64_PLT32:__floatsitf-0x4;movaps %xmm0,%xmm1;movaps (%rsp),%xmm0;call 19 <op_31020+0x19> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;xor %ecx,%ecx;test %eax,%eax;sete %cl;mov %ecx,%eax;add $0x18,%rsp;ret
+op_31020|ANCHOR|OK|55 48 89 e5 48 83 ec 20 66 89 f8 66 89 45 fe 0f 29 45 e0 0f bf 7d fe e8 00 00 00 00 0f 28 4d e0 e8 00 00 00 00 85 c0 0f 94 c0 24 01 0f b6 c0 48 83 c4 20 5d c3|push %rbp;mov %rsp,%rbp;sub $0x20,%rsp;mov %di,%ax;mov %ax,-0x2(%rbp);movaps %xmm0,-0x20(%rbp);movswl -0x2(%rbp),%edi;call 1c <op_31020+0x1c> !!reloc=R_X86_64_PLT32:__floatsitf-0x4;movaps -0x20(%rbp),%xmm1;call 25 <op_31020+0x25> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;test %eax,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;add $0x20,%rsp;pop %rbp;ret
+op_31020|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_31021|REFUSED|/work/regen_c_c0077/u/n31021/unit.c:6:33: error: parameters cannot have __fp16 type\s did you forget * ?
+op_31022|REFUSED|/work/regen_c_c0077/u/n31022/unit.c:5:34: error: __ibm128 is not supported on this target
+op_31023|SHIP|OK|48 63 cf 48 31 ce 48 c1 f9 3f 48 31 d1 31 c0 48 09 f1 0f 94 c0 c3|movslq %edi,%rcx;xor %rcx,%rsi;sar $0x3f,%rcx;xor %rdx,%rcx;xor %eax,%eax;or %rsi,%rcx;sete %al;ret
+op_31023|ANCHOR|OK|55 48 89 e5 48 89 d0 66 89 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 66 89 55 ee 48 89 4d d8 48 89 45 d0 48 0f bf 45 ee 66 48 0f 6e c0 48 c1 f8 3f 66 48 0f 6e c8 66 0f 6c c1 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %di,%dx;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dx,-0x12(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movswq -0x12(%rbp),%rax;movq %rax,%xmm0;sar $0x3f,%rax;movq %rax,%xmm1;punpcklqdq %xmm1,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31023|ANCHOR|DWARF|a=2 byte block: 91 6e (DW_OP_fbreg: -18);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_31024|SHIP|OK|48 63 cf 48 31 ce 48 c1 f9 3f 48 31 d1 31 c0 48 09 f1 0f 94 c0 c3|movslq %edi,%rcx;xor %rcx,%rsi;sar $0x3f,%rcx;xor %rdx,%rcx;xor %eax,%eax;or %rsi,%rcx;sete %al;ret
+op_31024|ANCHOR|OK|55 48 89 e5 48 89 d0 66 89 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 66 89 55 ee 48 89 4d d8 48 89 45 d0 48 0f bf 45 ee 66 48 0f 6e c0 48 c1 f8 3f 66 48 0f 6e c8 66 0f 6c c1 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %di,%dx;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dx,-0x12(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movswq -0x12(%rbp),%rax;movq %rax,%xmm0;sar $0x3f,%rax;movq %rax,%xmm1;punpcklqdq %xmm1,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31024|ANCHOR|DWARF|a=2 byte block: 91 6e (DW_OP_fbreg: -18);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_31025|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_31025|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 24 01 88 45 fd 0f bf 45 fe 8a 4d fd 80 e1 01 0f b6 c9 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);and $0x1,%al;mov %al,-0x3(%rbp);movswl -0x2(%rbp),%eax;mov -0x3(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31025|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_31026|SHIP|OK|31 c0 66 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %si,%di;sete %al;ret
+op_31026|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f bf 45 fe 0f be 4d fd 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movswl -0x2(%rbp),%eax;movsbl -0x3(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31026|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_31027|REFUSED|/work/regen_c_c0077/u/n31027/unit.c:5:34: error: use of undeclared identifier 'char16_t'
+op_31028|REFUSED|/work/regen_c_c0077/u/n31028/unit.c:5:34: error: use of undeclared identifier 'char32_t'
+op_31029|REFUSED|/work/regen_c_c0077/u/n31029/unit.c:5:34: error: use of undeclared identifier 'char8_t'
+op_31030|SHIP|OK|f2 0f 2a cf f2 0f c2 c8 00 66 48 0f 7e c8 83 e0 01 c3|cvtsi2sd %edi,%xmm1;cmpeqsd %xmm0,%xmm1;movq %xmm1,%rax;and $0x1,%eax;ret
+op_31030|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe f2 0f 11 45 f0 0f bf 45 fe f2 0f 2a c0 66 0f 2e 45 f0 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);movsd %xmm0,-0x10(%rbp);movswl -0x2(%rbp),%eax;cvtsi2sd %eax,%xmm0;ucomisd -0x10(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31030|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_31031|SHIP|OK|f3 0f 2a cf f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 c3|cvtsi2ss %edi,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;ret
+op_31031|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe f3 0f 11 45 f8 0f bf 45 fe f3 0f 2a c0 0f 2e 45 f8 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);movss %xmm0,-0x8(%rbp);movswl -0x2(%rbp),%eax;cvtsi2ss %eax,%xmm0;ucomiss -0x8(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31031|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_31032|REFUSED|/work/regen_c_c0077/u/n31032/unit.c:5:34: error: use of undeclared identifier 'half'
+op_31033|SHIP|OK|31 c0 39 fe 0f 94 c0 c3|xor %eax,%eax;cmp %edi,%esi;sete %al;ret
+op_31033|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f bf 45 fe 3b 45 f8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movswl -0x2(%rbp),%eax;cmp -0x8(%rbp),%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31033|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_31034|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_31034|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 48 0f bf 45 fe 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movswq -0x2(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31034|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_31035|REFUSED|/work/regen_c_c0077/u/n31035/unit.c:5:39: error: expected ')'
+op_31036|REFUSED|/work/regen_c_c0077/u/n31036/unit.c:5:39: error: expected ')'
+op_31037|SHIP|OK|db 6c 24 08 66 89 7c 24 fe df 44 24 fe df e9 dd d8 0f 9b c0 0f 94 c1 20 c1 0f b6 c1 c3|fldt 0x8(%rsp);mov %di,-0x2(%rsp);filds -0x2(%rsp);fucomip %st(1),%st;fstp %st(0);setnp %al;sete %cl;and %al,%cl;movzbl %cl,%eax;ret
+op_31037|ANCHOR|OK|55 48 89 e5 66 89 f8 db 6d 10 66 89 45 fe db 7d e0 0f bf 45 fe 89 45 dc db 45 dc db 6d e0 d9 c9 df e9 dd d8 0f 9b c1 0f 94 c0 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;fldt 0x10(%rbp);mov %ax,-0x2(%rbp);fstpt -0x20(%rbp);movswl -0x2(%rbp),%eax;mov %eax,-0x24(%rbp);fildl -0x24(%rbp);fldt -0x20(%rbp);fxch %st(1);fucomip %st(1),%st;fstp %st(0);setnp %cl;sete %al;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31037|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_31038|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_31038|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 48 0f bf 45 fe 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movswq -0x2(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31038|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_31039|SHIP|OK|31 c0 66 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %si,%di;sete %al;ret
+op_31039|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f bf 45 fe 0f bf 4d fc 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movswl -0x2(%rbp),%eax;movswl -0x4(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31039|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_31040|REFUSED|/work/regen_c_c0077/u/n31040/unit.c:5:40: error: expected ')'
+op_31041|REFUSED|/work/regen_c_c0077/u/n31041/unit.c:5:40: error: expected ')'
+op_31042|SHIP|OK|31 c0 66 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %si,%di;sete %al;ret
+op_31042|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f bf 45 fe 0f be 4d fd 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movswl -0x2(%rbp),%eax;movsbl -0x3(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31042|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_31043|SHIP|OK|31 c0 39 fe 0f 94 c0 c3|xor %eax,%eax;cmp %edi,%esi;sete %al;ret
+op_31043|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f bf 45 fe 3b 45 f8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movswl -0x2(%rbp),%eax;cmp -0x8(%rbp),%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31043|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_31044|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_31044|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 48 0f bf 45 fe 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movswq -0x2(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31044|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_31045|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_31045|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 48 0f bf 45 fe 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movswq -0x2(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31045|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_31046|SHIP|OK|31 c0 66 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %si,%di;sete %al;ret
+op_31046|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f bf 45 fe 0f bf 4d fc 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movswl -0x2(%rbp),%eax;movswl -0x4(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31046|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_31047|REFUSED|/work/regen_c_c0077/u/n31047/unit.c:5:43: error: expected ')'
+op_31048|REFUSED|/work/regen_c_c0077/u/n31048/unit.c:5:43: error: expected ')'
+op_31049|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_31049|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f bf 45 fe 0f b6 4d fd 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movswl -0x2(%rbp),%eax;movzbl -0x3(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31049|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_31050|SHIP|OK|31 c0 39 fe 0f 94 c0 c3|xor %eax,%eax;cmp %edi,%esi;sete %al;ret
+op_31050|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f bf 45 fe 3b 45 f8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movswl -0x2(%rbp),%eax;cmp -0x8(%rbp),%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31050|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_31051|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_31051|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 48 0f bf 45 fe 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movswq -0x2(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31051|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_31052|REFUSED|/work/regen_c_c0077/u/n31052/unit.c:5:48: error: expected ')'
+op_31053|REFUSED|/work/regen_c_c0077/u/n31053/unit.c:5:48: error: expected ')'
+op_31054|SHIP|OK|48 63 cf 31 c0 48 39 ce 0f 94 c0 c3|movslq %edi,%rcx;xor %eax,%eax;cmp %rcx,%rsi;sete %al;ret
+op_31054|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 48 0f bf 45 fe 48 3b 45 f0 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movswq -0x2(%rbp),%rax;cmp -0x10(%rbp),%rax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31054|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_31055|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_31055|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f bf 45 fe 0f b7 4d fc 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movswl -0x2(%rbp),%eax;movzwl -0x4(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31055|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_31056|REFUSED|/work/regen_c_c0077/u/n31056/unit.c:5:49: error: expected ')'
+op_31057|REFUSED|/work/regen_c_c0077/u/n31057/unit.c:5:49: error: expected ')'
+op_31058|REFUSED|/work/regen_c_c0077/u/n31058/unit.c:5:34: error: use of undeclared identifier 'wchar_t'
+op_31059|REFUSED|/work/regen_c_c0077/u/n31059/unit.c:5:22: error: expected ')'
+op_31060|REFUSED|/work/regen_c_c0077/u/n31060/unit.c:5:22: error: expected ')'
+op_31061|REFUSED|/work/regen_c_c0077/u/n31061/unit.c:5:22: error: expected ')'
+op_31062|REFUSED|/work/regen_c_c0077/u/n31062/unit.c:5:22: error: expected ')'
+op_31063|REFUSED|/work/regen_c_c0077/u/n31063/unit.c:5:22: error: expected ')'
+op_31064|REFUSED|/work/regen_c_c0077/u/n31064/unit.c:5:22: error: expected ')'
+op_31065|REFUSED|/work/regen_c_c0077/u/n31065/unit.c:5:22: error: expected ')'
+op_31066|REFUSED|/work/regen_c_c0077/u/n31066/unit.c:5:22: error: expected ')'
+op_31067|REFUSED|/work/regen_c_c0077/u/n31067/unit.c:5:22: error: expected ')'
+op_31068|REFUSED|/work/regen_c_c0077/u/n31068/unit.c:5:22: error: expected ')'
+op_31069|REFUSED|/work/regen_c_c0077/u/n31069/unit.c:5:22: error: expected ')'
+op_31070|REFUSED|/work/regen_c_c0077/u/n31070/unit.c:5:22: error: expected ')'
+op_31071|REFUSED|/work/regen_c_c0077/u/n31071/unit.c:5:22: error: expected ')'
+op_31072|REFUSED|/work/regen_c_c0077/u/n31072/unit.c:5:22: error: expected ')'
+op_31073|REFUSED|/work/regen_c_c0077/u/n31073/unit.c:5:22: error: expected ')'
+op_31074|REFUSED|/work/regen_c_c0077/u/n31074/unit.c:5:22: error: expected ')'
+op_31075|REFUSED|/work/regen_c_c0077/u/n31075/unit.c:5:22: error: expected ')'
+op_31076|REFUSED|/work/regen_c_c0077/u/n31076/unit.c:5:22: error: expected ')'
+op_31077|REFUSED|/work/regen_c_c0077/u/n31077/unit.c:5:22: error: expected ')'
+op_31078|REFUSED|/work/regen_c_c0077/u/n31078/unit.c:5:22: error: expected ')'
+op_31079|REFUSED|/work/regen_c_c0077/u/n31079/unit.c:5:22: error: expected ')'
+op_31080|REFUSED|/work/regen_c_c0077/u/n31080/unit.c:5:22: error: expected ')'
+op_31081|REFUSED|/work/regen_c_c0077/u/n31081/unit.c:5:22: error: expected ')'
+op_31082|REFUSED|/work/regen_c_c0077/u/n31082/unit.c:5:22: error: expected ')'
+op_31083|REFUSED|/work/regen_c_c0077/u/n31083/unit.c:5:22: error: expected ')'
+op_31084|REFUSED|/work/regen_c_c0077/u/n31084/unit.c:5:22: error: expected ')'
+op_31085|REFUSED|/work/regen_c_c0077/u/n31085/unit.c:5:22: error: expected ')'
+op_31086|REFUSED|/work/regen_c_c0077/u/n31086/unit.c:5:22: error: expected ')'
+op_31087|REFUSED|/work/regen_c_c0077/u/n31087/unit.c:5:22: error: expected ')'
+op_31088|REFUSED|/work/regen_c_c0077/u/n31088/unit.c:5:22: error: expected ')'
+op_31089|REFUSED|/work/regen_c_c0077/u/n31089/unit.c:5:22: error: expected ')'
+op_31090|REFUSED|/work/regen_c_c0077/u/n31090/unit.c:5:22: error: expected ')'
+op_31091|REFUSED|/work/regen_c_c0077/u/n31091/unit.c:5:22: error: expected ')'
+op_31092|REFUSED|/work/regen_c_c0077/u/n31092/unit.c:5:22: error: expected ')'
+op_31093|REFUSED|/work/regen_c_c0077/u/n31093/unit.c:5:22: error: expected ')'
+op_31094|REFUSED|/work/regen_c_c0077/u/n31094/unit.c:5:22: error: expected ')'
+op_31095|REFUSED|/work/regen_c_c0077/u/n31095/unit.c:5:22: error: expected ')'
+op_31096|REFUSED|/work/regen_c_c0077/u/n31096/unit.c:5:22: error: expected ')'
+op_31097|REFUSED|/work/regen_c_c0077/u/n31097/unit.c:5:22: error: expected ')'
+op_31098|REFUSED|/work/regen_c_c0077/u/n31098/unit.c:5:22: error: expected ')'
+op_31099|REFUSED|/work/regen_c_c0077/u/n31099/unit.c:5:22: error: expected ')'
+op_31100|REFUSED|/work/regen_c_c0077/u/n31100/unit.c:5:22: error: expected ')'
+op_31101|REFUSED|/work/regen_c_c0077/u/n31101/unit.c:5:22: error: expected ')'
+op_31102|REFUSED|/work/regen_c_c0077/u/n31102/unit.c:5:22: error: expected ')'
+op_31103|REFUSED|/work/regen_c_c0077/u/n31103/unit.c:5:22: error: expected ')'
+op_31104|REFUSED|/work/regen_c_c0077/u/n31104/unit.c:5:22: error: expected ')'
+op_31105|REFUSED|/work/regen_c_c0077/u/n31105/unit.c:5:22: error: expected ')'
+op_31106|REFUSED|/work/regen_c_c0077/u/n31106/unit.c:5:22: error: expected ')'
+op_31107|REFUSED|/work/regen_c_c0077/u/n31107/unit.c:5:22: error: expected ')'
+op_31108|REFUSED|/work/regen_c_c0077/u/n31108/unit.c:5:22: error: expected ')'
+op_31109|REFUSED|/work/regen_c_c0077/u/n31109/unit.c:5:22: error: expected ')'
+op_31110|REFUSED|/work/regen_c_c0077/u/n31110/unit.c:5:22: error: expected ')'
+op_31111|REFUSED|/work/regen_c_c0077/u/n31111/unit.c:5:22: error: expected ')'
+op_31112|REFUSED|/work/regen_c_c0077/u/n31112/unit.c:5:22: error: expected ')'
+op_31113|REFUSED|/work/regen_c_c0077/u/n31113/unit.c:5:22: error: expected ')'
+op_31114|REFUSED|/work/regen_c_c0077/u/n31114/unit.c:5:22: error: expected ')'
+op_31115|REFUSED|/work/regen_c_c0077/u/n31115/unit.c:5:22: error: expected ')'
+op_31116|REFUSED|/work/regen_c_c0077/u/n31116/unit.c:5:22: error: expected ')'
+op_31117|REFUSED|/work/regen_c_c0077/u/n31117/unit.c:5:22: error: expected ')'
+op_31118|REFUSED|/work/regen_c_c0077/u/n31118/unit.c:5:22: error: expected ')'
+op_31119|REFUSED|/work/regen_c_c0077/u/n31119/unit.c:5:22: error: expected ')'
+op_31120|REFUSED|/work/regen_c_c0077/u/n31120/unit.c:5:22: error: expected ')'
+op_31121|REFUSED|/work/regen_c_c0077/u/n31121/unit.c:5:22: error: expected ')'
+op_31122|REFUSED|/work/regen_c_c0077/u/n31122/unit.c:5:22: error: expected ')'
+op_31123|REFUSED|/work/regen_c_c0077/u/n31123/unit.c:5:22: error: expected ')'
+op_31124|REFUSED|/work/regen_c_c0077/u/n31124/unit.c:5:22: error: expected ')'
+op_31125|REFUSED|/work/regen_c_c0077/u/n31125/unit.c:5:22: error: expected ')'
+op_31126|REFUSED|/work/regen_c_c0077/u/n31126/unit.c:5:22: error: expected ')'
+op_31127|REFUSED|/work/regen_c_c0077/u/n31127/unit.c:5:22: error: expected ')'
+op_31128|REFUSED|/work/regen_c_c0077/u/n31128/unit.c:5:22: error: expected ')'
+op_31129|REFUSED|/work/regen_c_c0077/u/n31129/unit.c:5:22: error: expected ')'
+op_31130|REFUSED|/work/regen_c_c0077/u/n31130/unit.c:5:22: error: expected ')'
+op_31131|REFUSED|/work/regen_c_c0077/u/n31131/unit.c:5:22: error: expected ')'
+op_31132|REFUSED|/work/regen_c_c0077/u/n31132/unit.c:5:22: error: expected ')'
+op_31133|REFUSED|/work/regen_c_c0077/u/n31133/unit.c:5:22: error: expected ')'
+op_31134|REFUSED|/work/regen_c_c0077/u/n31134/unit.c:5:22: error: expected ')'
+op_31135|REFUSED|/work/regen_c_c0077/u/n31135/unit.c:5:22: error: expected ')'
+op_31136|REFUSED|/work/regen_c_c0077/u/n31136/unit.c:5:22: error: expected ')'
+op_31137|REFUSED|/work/regen_c_c0077/u/n31137/unit.c:5:22: error: expected ')'
+op_31138|REFUSED|/work/regen_c_c0077/u/n31138/unit.c:5:22: error: expected ')'
+op_31139|REFUSED|/work/regen_c_c0077/u/n31139/unit.c:5:22: error: expected ')'
+op_31140|REFUSED|/work/regen_c_c0077/u/n31140/unit.c:5:22: error: expected ')'
+op_31141|REFUSED|/work/regen_c_c0077/u/n31141/unit.c:5:22: error: expected ')'
+op_31142|REFUSED|/work/regen_c_c0077/u/n31142/unit.c:5:22: error: expected ')'
+op_31143|REFUSED|/work/regen_c_c0077/u/n31143/unit.c:5:22: error: expected ')'
+op_31144|REFUSED|/work/regen_c_c0077/u/n31144/unit.c:5:22: error: expected ')'
+op_31145|REFUSED|/work/regen_c_c0077/u/n31145/unit.c:5:22: error: expected ')'
+op_31146|REFUSED|/work/regen_c_c0077/u/n31146/unit.c:5:22: error: expected ')'
+op_31147|REFUSED|/work/regen_c_c0077/u/n31147/unit.c:5:22: error: expected ')'
+op_31148|REFUSED|/work/regen_c_c0077/u/n31148/unit.c:5:22: error: expected ')'
+op_31149|REFUSED|/work/regen_c_c0077/u/n31149/unit.c:5:22: error: expected ')'
+op_31150|REFUSED|/work/regen_c_c0077/u/n31150/unit.c:5:22: error: expected ')'
+op_31151|REFUSED|/work/regen_c_c0077/u/n31151/unit.c:5:22: error: expected ')'
+op_31152|REFUSED|/work/regen_c_c0077/u/n31152/unit.c:5:22: error: expected ')'
+op_31153|REFUSED|/work/regen_c_c0077/u/n31153/unit.c:5:22: error: expected ')'
+op_31154|REFUSED|/work/regen_c_c0077/u/n31154/unit.c:5:22: error: expected ')'
+op_31155|REFUSED|/work/regen_c_c0077/u/n31155/unit.c:5:22: error: expected ')'
+op_31156|REFUSED|/work/regen_c_c0077/u/n31156/unit.c:5:22: error: expected ')'
+op_31157|REFUSED|/work/regen_c_c0077/u/n31157/unit.c:5:22: error: expected ')'
+op_31158|REFUSED|/work/regen_c_c0077/u/n31158/unit.c:5:22: error: expected ')'
+op_31159|REFUSED|/work/regen_c_c0077/u/n31159/unit.c:5:22: error: expected ')'
+op_31160|REFUSED|/work/regen_c_c0077/u/n31160/unit.c:5:22: error: expected ')'
+op_31161|REFUSED|/work/regen_c_c0077/u/n31161/unit.c:5:22: error: expected ')'
+op_31162|REFUSED|/work/regen_c_c0077/u/n31162/unit.c:5:22: error: expected ')'
+op_31163|REFUSED|/work/regen_c_c0077/u/n31163/unit.c:5:22: error: expected ')'
+op_31164|REFUSED|/work/regen_c_c0077/u/n31164/unit.c:5:22: error: expected ')'
+op_31165|REFUSED|/work/regen_c_c0077/u/n31165/unit.c:5:22: error: expected ')'
+op_31166|REFUSED|/work/regen_c_c0077/u/n31166/unit.c:5:22: error: expected ')'
+op_31167|REFUSED|/work/regen_c_c0077/u/n31167/unit.c:5:22: error: expected ')'
+op_31168|REFUSED|/work/regen_c_c0077/u/n31168/unit.c:5:22: error: expected ')'
+op_31169|REFUSED|/work/regen_c_c0077/u/n31169/unit.c:5:22: error: expected ')'
+op_31170|REFUSED|/work/regen_c_c0077/u/n31170/unit.c:5:22: error: expected ')'
+op_31171|REFUSED|/work/regen_c_c0077/u/n31171/unit.c:5:35: error: use of undeclared identifier '_Accum'
+op_31172|SHIP|OK|31 c0 40 38 f7 0f 94 c0 c3|xor %eax,%eax;cmp %sil,%dil;sete %al;ret
+op_31172|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 24 01 88 45 fe 0f b6 45 ff 8a 4d fe 80 e1 01 0f b6 c9 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);and $0x1,%al;mov %al,-0x2(%rbp);movzbl -0x1(%rbp),%eax;mov -0x2(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31172|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_31173|SHIP|OK|50 f3 0f 11 44 24 04 0f 57 c0 f3 0f 2a c7 e8 00 00 00 00 e8 00 00 00 00 f3 0f 11 04 24 f3 0f 10 44 24 04 e8 00 00 00 00 f3 0f c2 04 24 00 66 0f 7e c0 83 e0 01 59 c3|push %rax;movss %xmm0,0x4(%rsp);xorps %xmm0,%xmm0;cvtsi2ss %edi,%xmm0;call 13 <op_31173+0x13> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;call 18 <op_31173+0x18> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss %xmm0,(%rsp);movss 0x4(%rsp),%xmm0;call 28 <op_31173+0x28> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;cmpeqss (%rsp),%xmm0;movd %xmm0,%eax;and $0x1,%eax;pop %rcx;ret
+op_31173|ANCHOR|OK|55 48 89 e5 48 83 ec 10 40 88 f8 88 45 ff 66 0f c5 c0 00 66 89 45 fc 0f b6 45 ff f3 0f 2a c0 e8 00 00 00 00 f3 0f 11 45 f4 66 0f c4 45 fc 00 e8 00 00 00 00 0f 28 c8 f3 0f 10 45 f4 f3 0f 11 4d f8 e8 00 00 00 00 f3 0f 10 4d f8 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;mov %dil,%al;mov %al,-0x1(%rbp);pextrw $0x0,%xmm0,%eax;mov %ax,-0x4(%rbp);movzbl -0x1(%rbp),%eax;cvtsi2ss %eax,%xmm0;call 24 <op_31173+0x24> !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4;movss %xmm0,-0xc(%rbp);pinsrw $0x0,-0x4(%rbp),%xmm0;call 34 <op_31173+0x34> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movaps %xmm0,%xmm1;movss -0xc(%rbp),%xmm0;movss %xmm1,-0x8(%rbp);call 46 <op_31173+0x46> !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4;movss -0x8(%rbp),%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x10,%rsp;pop %rbp;ret
+op_31173|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_31174|REFUSED|/work/regen_c_c0077/u/n31174/unit.c:5:35: error: use of undeclared identifier '_Fract'
+op_31175|REFUSED|/work/regen_c_c0077/u/n31175/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31176|REFUSED|/work/regen_c_c0077/u/n31176/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31177|REFUSED|/work/regen_c_c0077/u/n31177/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31178|REFUSED|/work/regen_c_c0077/u/n31178/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31179|REFUSED|/work/regen_c_c0077/u/n31179/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31180|REFUSED|/work/regen_c_c0077/u/n31180/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31181|REFUSED|/work/regen_c_c0077/u/n31181/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31182|REFUSED|/work/regen_c_c0077/u/n31182/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31183|REFUSED|/work/regen_c_c0077/u/n31183/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31184|REFUSED|/work/regen_c_c0077/u/n31184/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31185|REFUSED|/work/regen_c_c0077/u/n31185/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31186|REFUSED|/work/regen_c_c0077/u/n31186/unit.c:5:35: error: use of undeclared identifier '_Sat'
+op_31187|SHIP|OK|53 66 0f c5 d8 00 0f 57 c0 f3 0f 2a c7 e8 00 00 00 00 66 0f c5 c0 00 c1 e3 10 66 0f 6e c3 c1 e0 10 66 0f 6e c8 f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 5b c3|push %rbx;pextrw $0x0,%xmm0,%ebx;xorps %xmm0,%xmm0;cvtsi2ss %edi,%xmm0;call 12 <op_31187+0x12> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;shl $0x10,%ebx;movd %ebx,%xmm0;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;pop %rbx;ret
+op_31187|ANCHOR|OK|55 48 89 e5 48 83 ec 10 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 40 88 f8 88 45 ff e8 00 00 00 00 66 0f c5 c0 00 66 89 45 fc 0f b6 45 ff f3 0f 2a c0 e8 00 00 00 00 66 0f c5 c0 00 66 89 c1 66 89 c8 c1 e0 10 66 0f 6e c0 0f b7 45 fc c1 e0 10 66 0f 6e c8 f3 0f c2 c1 00 66 0f 7e c0 83 e0 01 24 01 0f b6 c0 48 83 c4 10 5d c3|push %rbp;mov %rsp,%rbp;sub $0x10,%rsp;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;mov %dil,%al;mov %al,-0x1(%rbp);call 25 <op_31187+0x25> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,-0x4(%rbp);movzbl -0x1(%rbp),%eax;cvtsi2ss %eax,%xmm0;call 3b <op_31187+0x3b> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4;pextrw $0x0,%xmm0,%eax;mov %ax,%cx;mov %cx,%ax;shl $0x10,%eax;movd %eax,%xmm0;movzwl -0x4(%rbp),%eax;shl $0x10,%eax;movd %eax,%xmm1;cmpeqss %xmm1,%xmm0;movd %xmm0,%eax;and $0x1,%eax;and $0x1,%al;movzbl %al,%eax;add $0x10,%rsp;pop %rbp;ret
+op_31187|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_31188|SHIP|OK|48 83 ec 18 0f 29 04 24 e8 00 00 00 00 0f 28 c8 0f 28 04 24 e8 00 00 00 00 31 c9 85 c0 0f 94 c1 89 c8 48 83 c4 18 c3|sub $0x18,%rsp;movaps %xmm0,(%rsp);call d <op_31188+0xd> !!reloc=R_X86_64_PLT32:__floatsitf-0x4;movaps %xmm0,%xmm1;movaps (%rsp),%xmm0;call 19 <op_31188+0x19> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;xor %ecx,%ecx;test %eax,%eax;sete %cl;mov %ecx,%eax;add $0x18,%rsp;ret
+op_31188|ANCHOR|OK|55 48 89 e5 48 83 ec 20 40 88 f8 88 45 ff 0f 29 45 e0 0f b6 7d ff e8 00 00 00 00 0f 28 4d e0 e8 00 00 00 00 85 c0 0f 94 c0 24 01 0f b6 c0 48 83 c4 20 5d c3|push %rbp;mov %rsp,%rbp;sub $0x20,%rsp;mov %dil,%al;mov %al,-0x1(%rbp);movaps %xmm0,-0x20(%rbp);movzbl -0x1(%rbp),%edi;call 1b <op_31188+0x1b> !!reloc=R_X86_64_PLT32:__floatsitf-0x4;movaps -0x20(%rbp),%xmm1;call 24 <op_31188+0x24> !!reloc=R_X86_64_PLT32:__eqtf2-0x4;test %eax,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;add $0x20,%rsp;pop %rbp;ret
+op_31188|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 60 (DW_OP_fbreg: -32)
+op_31189|REFUSED|/work/regen_c_c0077/u/n31189/unit.c:6:34: error: parameters cannot have __fp16 type\s did you forget * ?
+op_31190|REFUSED|/work/regen_c_c0077/u/n31190/unit.c:5:35: error: __ibm128 is not supported on this target
+op_31191|SHIP|OK|89 f9 48 31 f1 31 c0 48 09 d1 0f 94 c0 c3|mov %edi,%ecx;xor %rsi,%rcx;xor %eax,%eax;or %rdx,%rcx;sete %al;ret
+op_31191|ANCHOR|OK|55 48 89 e5 48 89 d0 40 88 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 88 55 ef 48 89 4d d8 48 89 45 d0 0f b6 45 ef 66 0f 6e c0 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %dil,%dl;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dl,-0x11(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movzbl -0x11(%rbp),%eax;movd %eax,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31191|ANCHOR|DWARF|a=2 byte block: 91 6f (DW_OP_fbreg: -17);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_31192|SHIP|OK|89 f9 48 31 f1 31 c0 48 09 d1 0f 94 c0 c3|mov %edi,%ecx;xor %rsi,%rcx;xor %eax,%eax;or %rdx,%rcx;sete %al;ret
+op_31192|ANCHOR|OK|55 48 89 e5 48 89 d0 40 88 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 88 55 ef 48 89 4d d8 48 89 45 d0 0f b6 45 ef 66 0f 6e c0 0f 28 4d d0 66 0f 74 c1 66 0f d7 c0 2d ff ff 00 00 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %dil,%dl;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dl,-0x11(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movzbl -0x11(%rbp),%eax;movd %eax,%xmm0;movaps -0x30(%rbp),%xmm1;pcmpeqb %xmm1,%xmm0;pmovmskb %xmm0,%eax;sub $0xffff,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31192|ANCHOR|DWARF|a=2 byte block: 91 6f (DW_OP_fbreg: -17);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_31193|SHIP|OK|31 c0 40 38 f7 0f 94 c0 c3|xor %eax,%eax;cmp %sil,%dil;sete %al;ret
+op_31193|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 24 01 88 45 fe 0f b6 45 ff 8a 4d fe 80 e1 01 0f b6 c9 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);and $0x1,%al;mov %al,-0x2(%rbp);movzbl -0x1(%rbp),%eax;mov -0x2(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31193|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_31194|SHIP|OK|31 c0 39 f7 0f 94 c0 c3|xor %eax,%eax;cmp %esi,%edi;sete %al;ret
+op_31194|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f b6 45 ff 0f be 4d fe 39 c8 0f 94 c0 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movzbl -0x1(%rbp),%eax;movsbl -0x2(%rbp),%ecx;cmp %ecx,%eax;sete %al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31194|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_31195|REFUSED|/work/regen_c_c0077/u/n31195/unit.c:5:35: error: use of undeclared identifier 'char16_t'
+op_31196|REFUSED|/work/regen_c_c0077/u/n31196/unit.c:5:35: error: use of undeclared identifier 'char32_t'
+op_31197|REFUSED|/work/regen_c_c0077/u/n31197/unit.c:5:35: error: use of undeclared identifier 'char8_t'
+op_31198|SHIP|OK|f2 0f 2a cf f2 0f c2 c8 00 66 48 0f 7e c8 83 e0 01 c3|cvtsi2sd %edi,%xmm1;cmpeqsd %xmm0,%xmm1;movq %xmm1,%rax;and $0x1,%eax;ret
+op_31198|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff f2 0f 11 45 f0 0f b6 45 ff f2 0f 2a c0 66 0f 2e 45 f0 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);movsd %xmm0,-0x10(%rbp);movzbl -0x1(%rbp),%eax;cvtsi2sd %eax,%xmm0;ucomisd -0x10(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31198|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_31199|SHIP|OK|f3 0f 2a cf f3 0f c2 c8 00 66 0f 7e c8 83 e0 01 c3|cvtsi2ss %edi,%xmm1;cmpeqss %xmm0,%xmm1;movd %xmm1,%eax;and $0x1,%eax;ret
+op_31199|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff f3 0f 11 45 f8 0f b6 45 ff f3 0f 2a c0 0f 2e 45 f8 0f 94 c0 0f 9b c1 20 c8 24 01 0f b6 c0 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);movss %xmm0,-0x8(%rbp);movzbl -0x1(%rbp),%eax;cvtsi2ss %eax,%xmm0;ucomiss -0x8(%rbp),%xmm0;sete %al;setnp %cl;and %cl,%al;and $0x1,%al;movzbl %al,%eax;pop %rbp;ret
+op_31199|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)

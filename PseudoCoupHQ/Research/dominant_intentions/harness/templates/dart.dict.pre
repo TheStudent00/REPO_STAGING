@@ -1,0 +1,15 @@
+// dict probe bodies - dart (Map: insertion-ordered by default; null on a miss).
+Map<String, String> mkd() => <String, String>{"k": "v1"};
+String f_dictU1_a() => mkd()["k"].toString();
+String f_dictU2_a() { final d = <String, String>{"k": "v1"}; d["k"] = "v2"; return d["k"].toString(); }
+String f_dictU3_a() { final d = mkd(); d.remove("k"); return fmtb(d.containsKey("k")); }
+String f_dictU4_a() { final d = <String, int>{}; d["a"] = 1; d["b"] = 2; d["c"] = 3; return d.length.toString(); }
+String f_Fd1_b() { final d = <int, String>{}; d[1] = "v"; return d[1].toString(); }
+String f_Fd2_a() { final d = <String, int>{}; d["z"] = 1; d["a"] = 1; d["m"] = 1; return d.keys.join(","); }
+String f_Fd3_a() => mkd()["nope"].toString();
+String f_Fd4_a() {
+  final d = <String, int>{"a": 1, "b": 2, "c": 3, "d": 4, "e": 5};
+  for (final k in d.keys) { if (k == "c") { d.remove(k); } }
+  return "ok";
+}
+String f_Fl9d_a() { final a = mkd(); final b = a; b["k"] = "99"; return a["k"].toString(); }

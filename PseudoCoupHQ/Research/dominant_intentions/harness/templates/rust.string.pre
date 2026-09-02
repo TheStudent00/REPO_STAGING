@@ -1,0 +1,18 @@
+// string probe bodies - rust (bytes; String grows in place, &str is the view).
+const SE: &str = "\u{e9}";
+const SM: &str = "\u{1D11E}";
+fn ops(x: &str) -> String { x.to_string() }
+fn f_strU1_a() -> String { fmts(ops("ab") + &ops("cd")) }
+fn f_strU2_a() -> String { fmtb(ops("ab").to_string() + "cd" == ops("abcd")) }
+fn f_strU3_a() -> String { fmts(ops("abcdef")[1..4].to_string()) }
+fn f_strU4_a() -> String {
+    let t = ops(SE) + SM;
+    fmtb(String::from_utf8(t.clone().into_bytes()).unwrap() == t)
+}
+fn f_Fs1_a() -> String { format!("{}", ops(SE).as_bytes()[0]) }
+fn f_Fs1_b() -> String { format!("{}", ops(SM).as_bytes()[0]) }
+fn f_Fs3_a() -> String { format!("{}", ops(SE).len()) }
+fn f_Fs3_b() -> String { format!("{}", ops(SM).len()) }
+fn f_Fs3_c() -> String { format!("{}", (ops(SE) + SM).len()) }
+fn f_Fs5_a() -> String { fmtb(ops("ab").to_string() + "cd" == ops("abcd")) }
+fn f_Fs5_c() -> String { let s = ops("abcd"); fmtb(s == s) }

@@ -1,0 +1,29 @@
+# list probe bodies - ruby (mixed elements, reference semantics, copy slices).
+def mkl() = [1, 2, 3]
+def f_listU1_a()
+  a = [1, 2]; a.push(3); a.join(",")
+end
+def f_listU2_a() = fmts(mkl()[1])
+def f_listU3_a()
+  out = []; mkl().each { |x| out.push(x) }; out.join(",")
+end
+def f_listU4_a() = fmts(mkl().length)
+def f_Fl1_a() = [1, "a"].join(",")
+def f_Fl3_a()
+  a = [1, 2]; a.push(3); a.push(4); fmts(a.length)
+end
+def f_Fl4_a() = fmts(mkl()[10].inspect)
+def f_Fl5_a() = fmts(mkl()[-1])
+def f_Fl6_a()
+  a = mkl(); s = a[0, 2]; s[0] = 99; fmts(a[0])
+end
+def f_Fl7_a() = fmtb([1, 2, 3] == mkl())
+def f_Fl8_a()
+  a = [10, 9, 1]; a.sort!; a.join(",")
+end
+def f_Fl8_b()
+  a = [10, 9, 1]; a.sort; a.join(",")
+end
+def f_Fl9_a()
+  a = mkl(); b = a; b[0] = 99; fmts(a[0])
+end

@@ -1,0 +1,173 @@
+stage5_float_conditions_diagnosis.txt -- STAGE 5(a)/(b): a valid,
+evidence-based result reporting NO units converged this lap, with the
+diagnosis that makes the remaining work well-defined for whoever picks
+it up next. Per AgentMemory's evidence doctrine and the task's own
+explicit allowance ("a stage that cannot be completed is a valid
+result reported with its diagnosis -- do not fabricate"), this is
+reported honestly rather than rushed.
+====================================================================================================
+
+SCOPE MEASURED (evidence class: forced by construction -- direct scan
+of canon13_units_<lang>.json's not_yet_converged bucket against each
+unit's own canon4_units_<lang>.json `mnem`):
+
+    real-ship ucomisd units, not yet converged:  146
+    real-ship ucomiss units, not yet converged:  114
+    TOTAL:                                        260
+    (task's own figure: 102+70=172 -- this lap's measured population
+    is larger; same honest-discrepancy pattern already seen for Stage
+    1's 60-vs-72 and the 1,641-vs-1,779 total-unit counts, reported
+    without being forced to reconcile)
+
+THE GAP, confirmed (reason field, verbatim, c/op_285):
+    "no return path: expression contains 3 distinct uninterpreted
+    atoms (CmpF64, amd64g_calculate_condition) -- this renderer only
+    traces a SINGLE scalar-divmod atom back to instructions, via that
+    unit's own canon2 record"
+
+condition_table.py's own header ALREADY documents this exact
+limitation, in its own words: the ucomisd/ucomiss flag-setter family
+"resolves the condition-helper opacity down to a bit read of the
+unit's OWN already-lifted CmpF64/CmpF32 atom... but does not attempt
+to give CmpF64/CmpF32 real float semantics or render these units to
+instructions; that is the pre-existing, separately-documented 'CmpF64
+not modeled' limitation (REFUSAL_CATEGORY in expr_to_canon.py), out of
+scope for [Cause 1]." Stage 5(a)'s own charter is precisely to close
+that documented, pre-existing gap.
+
+----------------------------------------------------------------------------------------------------
+WHAT WAS ACTUALLY INVESTIGATED THIS LAP (real progress, not a rubber
+stamp -- reported per the evidence doctrine):
+
+1. THE SHAPE IS EXTREMELY REGULAR. Sampled 8+ units across c/cpp/go,
+   every one matches ONE of two forms:
+       CmpF64(F32toF64(ex32@0(inN:256)), F32toF64(0:32))   -- float
+       CmpF64(ex64@0(inN:256), 0:64)                        -- double
+   i.e. "compare input N against the literal constant 0.0" -- real
+   ship code loads the zero via the standard `xorps %xmmK,%xmmK` /
+   `xorpd %xmmK,%xmmK` self-XOR idiom, then `ucomiss`/`ucomisd
+   %xmmK,%xmm0`. NO sampled unit compares two DIFFERENT inputs against
+   each other, and none mixes in real float ARITHMETIC ahead of the
+   compare -- Stage 5(a)'s scope (bare condition codes) and Stage 5(b)'s
+   (arithmetic) are cleanly separable in this corpus, confirming the
+   task's own staging order was the right call.
+
+2. THE FULL VOCABULARY OF CONDITIONS WAS ENUMERATED (evidence class:
+   forced by construction -- regex over every not_yet_converged unit's
+   own normal_path_raw, grouped by the numeric cond arguments to every
+   amd64g_calculate_condition call present):
+       cond=10 (P)  + cond=5 (NE)                    -- 24 units (+ a
+                                                          mixed integer
+                                                          test, cond=5,
+                                                          cc_op=19/20)
+       cond=10 (P)  + cond=5 (NE)  [pure float]       -- 38 units
+       cond=7  (A)  [pure float]                      -- 68 units
+       cond=3  (AE) [pure float]                      -- 68 units
+       cond=11 (NP) + cond=4 (E)   [pure float, go]   --  2 units
+   These are P/NP (parity, i.e. "unordered"/"ordered"), E/NE, and A/AE
+   -- the standard, complete x86 post-ucomisd vocabulary (S/O-family
+   conditions never appear, correctly, since ucomisd/ucomiss clear
+   SF/OF by hardware definition -- a compiler would never emit one).
+
+3. THE CORRECT MODEL WAS DERIVED (evidence class: architecture fact,
+   not tool testimony -- x86-64 SDM's own UCOMISD/UCOMISS definition,
+   independent of this corpus): ucomisd/ucomiss sets ZF/PF/CF exactly
+   as CMP/TEST do NOT -- unordered (either operand NaN) forces
+   ZF=PF=CF=1; ordered sets them from a REAL IEEE compare (EQ: ZF=1,
+   PF=CF=0; LT: CF=1, PF=ZF=0; GT: all clear). VEX's own CmpF64 helper
+   already returns exactly this packed byte (0x45 unordered / 0x40 eq
+   / 0x01 lt / 0x00 gt -- CF=bit0, PF=bit2, ZF=bit6, the SAME bit
+   positions used everywhere else in this corpus), confirmed structurally
+   by the `And64(69:64, ...)` mask already present in every sampled
+   unit's own raw text (69 decimal = 0b01000101 = bits 0,2,6 exactly).
+   Every subsequent setXX reads a FIXED, well-known combination of
+   those bits: E=ZF, NE=!ZF, P=PF, NP=!PF, B=CF, AE=!CF, A=!(CF|ZF),
+   BE=CF|ZF -- the SAME formulas x86 SETcc always uses, so a genuine z3
+   FPA model (z3.fpIsNaN/fpEQ/fpLT on properly bit-reinterpreted
+   operands, F32toF64 modeled as a real value-widening conversion via
+   z3.fpToFP, not a bit-pattern reinterpretation) can compute this
+   packed byte exactly, and the existing bit-extraction formulas apply
+   unchanged on top of it.
+
+4. A REAL BUG WAS FOUND AND WOULD HAVE BEEN A DANGEROUS SHORTCUT
+   (evidence class: forced by construction -- concrete counterexample
+   reproduced twice). condition_table2.resolve_conditions -- the
+   EXISTING, PROVEN machinery Stage 1-4 reuse unchanged for the
+   integer condition families -- was tried on this shape (c/op_285)
+   and produces a WRONG substitution: it labels the FIRST
+   amd64g_calculate_condition call (cond=10, genuinely Parity) as
+   "CondNE", because its own program-order/tree-order matching
+   assumption (sound for the integer families it was validated against)
+   does not hold when an Or8 tree's LEFT-TO-RIGHT VALUE order differs
+   from the canon4 mnem's setcc emission order -- which happens here.
+   Feeding that mislabeled name through condition_table.py's own
+   (separately proven, unchanged) integer cond_to_z3 machinery would
+   silently compute "packed_flags != 0" (true for unordered/lt/eq,
+   false only for gt) where "Parity" (true ONLY for unordered) was
+   actually meant -- a genuinely WRONG boolean that would have reached
+   the ground-truth gate. The gate (proving directly against real ship
+   code, unconditionally) would still have caught and refused it before
+   shipping -- so no wrong candidate was ever at risk of being marked
+   converged -- but this is exactly the kind of shortcut the evidence
+   doctrine and "correctness-sensitive, refuse honestly where NaN
+   behavior can't be decided" instruction warn against taking on faith.
+   THE FIX (identified, not yet built): bypass resolve_conditions
+   entirely for any unit containing CmpF64/CmpF32, and read cond/cc_op
+   directly off amd64g_calculate_condition's own NUMERIC arguments
+   (unambiguous, VEX's fixed AMD64CondCode enum) instead of text-
+   position matching.
+
+----------------------------------------------------------------------------------------------------
+WHY THIS LAP STOPS HERE (the honest blocker, not a vague "too hard"):
+
+Closing this gap correctly requires new, correctness-sensitive work in
+THREE separate places that all have to agree, not one:
+
+  (i)   THE NORMALIZER -- build the CmpF64 packed-flags value via real
+        z3 FPA (fpIsNaN/fpEQ/fpLT on properly-converted operands), and
+        a numeric-argument-based (not text-matching-based) reader for
+        amd64g_calculate_condition's cc_op=0 "pre-packed flags" family,
+        bypassing the now-known-unreliable-for-this-shape
+        resolve_conditions path -- while STILL reusing it, unchanged,
+        for the ordinary integer conditions mixed into the same unit
+        (the 24+48=72-unit mixed buckets).
+  (ii)  THE RENDERER -- gen7/gen11/gen12/gen13's entire register model
+        is GP-integer only (confirmed again this lap, same finding as
+        Stage 3's own report: no xmm entries in REGMAP, no float leaf
+        tracking anywhere in this lineage). Emitting the real
+        `ucomisd`/`ucomiss`/`xorps`/`xorpd` instructions this stage
+        needs requires the SAME missing XMM plumbing Stage 3's 10
+        genuine vector-constant units are also waiting on -- confirmed
+        overlap, not a new blocker.
+  (iii) THE SELF-CONSISTENCY RE-DERIVATION -- render_unit7's own
+        internal check (which the ground-truth gate depends on running
+        cleanly) re-parses the CANDIDATE text back into a z3 tree; for
+        that re-derivation to agree with the normalizer's FPA-based
+        tree, the mnemonic-to-z3 re-reader ALSO needs to understand
+        ucomisd/ucomiss/xorps/xorpd, independently of the GATE's own
+        Sim10-lineage simulator (a FOURTH place, easy to miss).
+
+Building all four correctly, for a domain (IEEE-754 NaN/unordered
+semantics) the task itself explicitly flags as correctness-sensitive,
+is a genuine multi-session undertaking, not a same-lap add-on -- and a
+rushed version risks exactly the silent-wrong-shortcut kind of mistake
+already caught once in finding #4 above. Per the task's own stated
+allowance, this is reported as a valid, non-fabricated result: ZERO
+Stage 5(a)/(b) units converged this lap; the diagnosis above (shape,
+vocabulary, correct model, the resolve_conditions bug, and the exact
+three/four-place plumbing scope) is handed off complete and actionable
+rather than guessed at.
+
+Stage 5(b) (packed/scalar float ARITHMETIC, ~180 units) was not
+separately investigated this lap -- it sits strictly behind Stage
+5(a)'s own prerequisite (the same XMM plumbing, plus z3's FPA theory
+for +,-,*,/ instead of just compare), and Stage 5(a) itself did not
+reach a state where 5(b) could be meaningfully started.
+
+Stage 3's own 10 genuine vector-constant negate units (XorV128/OrV128/
+AndV128, sign-mask idiom) remain deferred for the identical reason
+(stage3_vector_constants_report.txt) -- the SAME missing XMM plumbing
+this file's finding (ii) names again. Once that plumbing is built for
+Stage 5(a), Stage 3's 10 units become a small, mechanical follow-on
+(substitute the already-resolved 0x80000000/0x8000000000000000
+constant for the `ld128/g0(...)` atom), not independent work.

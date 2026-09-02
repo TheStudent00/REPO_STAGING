@@ -1,0 +1,23 @@
+// integer probe bodies - dart. ONE source, two modes: native (64-bit int) and
+// web (dart compile js, where int rides on the JS number).
+int op(int x) => x;
+double opd(double x) => x;
+String f_intU1_a() => fmts((123456 + 654321).toString());
+String f_intU1_b() => fmts((1000 * 1000).toString());
+String f_intU1_c() => fmts((5 - 9).toString());
+String f_intU2_a() => fmtb(op(3) < op(5));
+String f_intU2_b() => fmtb(op(-7) <= op(-7));
+String f_intU2_c() => fmtb(op(10) == op(10));
+String f_intU2_d() => fmtb(op(2) > op(100));
+String f_intU3_a() => op(42).toString();
+String f_intU3_b() => op(-12345).toString();
+String f_Fi3_a() => (op(7) / op(2)).toString();
+String f_Fi3_b() => (op(-7) / op(2)).toString();
+String f_Fi3_c() => (op(-7) ~/ op(2)).toString();
+String f_Fi4_a() => (op(-7) % op(2)).toString();
+String f_Fi4_b() => (op(7) % op(-2)).toString();
+String f_Fi4_c() => (op(7) % op(2)).toString();
+String f_Fi5_a() => (op(7) ~/ op(0)).toString();
+String f_Fi5_b() => (op(7) % op(0)).toString();
+String f_Fi6_a() => (op(1) << 31).toString();
+String f_Fi6_b() => (op(1) << 32).toString();

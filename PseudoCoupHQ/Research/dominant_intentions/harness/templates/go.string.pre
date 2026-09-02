@@ -1,0 +1,18 @@
+// string probe bodies - go (bytes, utf-8 by convention; immutable).
+const SE = "é"
+const SM = "\U0001D11E"
+
+func ops(x string) string  { return x }
+func f_strU1_a() string    { return fmts(ops("ab") + ops("cd")) }
+func f_strU2_a() string    { return fmtb(ops("ab"+"cd") == ops("abcd")) }
+func f_strU3_a() string    { return fmts(ops("abcdef")[1:4]) }
+func f_strU4_a() string    { t := ops(SE + SM); return fmtb(string([]byte(t)) == t) }
+func f_Fs1_a() string      { return fmt.Sprint(ops(SE)[0]) }
+func f_Fs1_b() string      { return fmt.Sprint(ops(SM)[0]) }
+func f_Fs2_a() string      { a := ops("abc"); b := a; a += "d"; _ = a; return fmts(b) }
+func f_Fs3_a() string      { return fmt.Sprint(len(ops(SE))) }
+func f_Fs3_b() string      { return fmt.Sprint(len(ops(SM))) }
+func f_Fs3_c() string      { return fmt.Sprint(len(ops(SE + SM))) }
+func f_Fs4_a() string      { return fmt.Sprint(ops("abc")[0]) }
+func f_Fs5_a() string      { return fmtb(ops("ab"+"cd") == ops("abcd")) }
+func f_Fs5_c() string      { s := ops("abcd"); return fmtb(s == s) }

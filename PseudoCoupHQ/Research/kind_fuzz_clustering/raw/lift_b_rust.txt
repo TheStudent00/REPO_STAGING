@@ -1,0 +1,576 @@
+=== ROUTE B LIFT, rust -- 2026-08-18T12:18:08Z ===
+rust.source=/opt/rustup/toolchains/1.96.1-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library
+--- BEGIN rust.macro (literal impl header, per macro) ---
+rust.macro|add_assign_impl|AddAssign||for $t
+rust.macro|add_impl|Add||for $t
+rust.macro|bitand_assign_impl|BitAndAssign||for $t
+rust.macro|bitand_impl|BitAnd||for $t
+rust.macro|bitor_assign_impl|BitOrAssign||for $t
+rust.macro|bitor_impl|BitOr||for $t
+rust.macro|bitxor_assign_impl|BitXorAssign||for $t
+rust.macro|bitxor_impl|BitXor||for $t
+rust.macro|div_assign_impl|DivAssign||for $t
+rust.macro|div_impl_float|Div||for $t
+rust.macro|div_impl_integer|Div||for $t
+rust.macro|mul_assign_impl|MulAssign||for $t
+rust.macro|mul_impl|Mul||for $t
+rust.macro|neg_impl|Neg||for $t
+rust.macro|not_impl|Not||for $t
+rust.macro|rem_assign_impl|RemAssign||for $t
+rust.macro|rem_impl_float|Rem||for $t
+rust.macro|rem_impl_integer|Rem||for $t
+rust.macro|shl_assign_impl|ShlAssign|<$f>|for $t
+rust.macro|shl_impl|Shl|<$f>|for $t
+rust.macro|shr_assign_impl|ShrAssign|<$f>|for $t
+rust.macro|shr_impl|Shr|<$f>|for $t
+rust.macro|sub_assign_impl|SubAssign||for $t
+rust.macro|sub_impl|Sub||for $t
+--- END ---
+--- BEGIN rust.invocation (literal argument list) ---
+rust.invocation|add_impl|usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+rust.invocation|sub_impl|usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+rust.invocation|mul_impl|usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+rust.invocation|div_impl_integer|(usize u8 u16 u32 u64 u128) => "This operation will panic if `other == 0`.", (isize i8 i16 i32 i64 i128) => "This operation will panic if `other == 0` or the division results in overflow."
+rust.invocation|div_impl_float|f16 f32 f64 f128
+rust.invocation|rem_impl_integer|(usize u8 u16 u32 u64 u128) => "This operation will panic if `other == 0`.", (isize i8 i16 i32 i64 i128) => "This operation will panic if `other == 0` or if `self / other` results in overflow."
+rust.invocation|rem_impl_float|f16 f32 f64 f128
+rust.invocation|neg_impl|isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+rust.invocation|add_assign_impl|usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+rust.invocation|sub_assign_impl|usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+rust.invocation|mul_assign_impl|usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+rust.invocation|div_assign_impl|usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+rust.invocation|rem_assign_impl|usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+rust.invocation|not_impl|bool usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128
+rust.invocation|bitand_impl|bool usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128
+rust.invocation|bitor_impl|bool usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128
+rust.invocation|bitxor_impl|bool usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128
+rust.invocation|shl_impl_all|u8 u16 u32 u64 u128 usize i8 i16 i32 i64 i128 isize
+rust.invocation|shr_impl_all|u8 u16 u32 u64 u128 usize i8 i16 i32 i64 i128 isize
+rust.invocation|bitand_assign_impl|bool usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128
+rust.invocation|bitor_assign_impl|bool usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128
+rust.invocation|bitxor_assign_impl|bool usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128
+rust.invocation|shl_assign_impl_all|u8 u16 u32 u64 u128 usize i8 i16 i32 i64 i128 isize
+rust.invocation|shr_assign_impl_all|u8 u16 u32 u64 u128 usize i8 i16 i32 i64 i128 isize
+--- END ---
+--- BEGIN rust.rows (trait, lhs holder, rhs holder) ---
+rust.row|Add|usize|usize
+rust.row|Add|u8|u8
+rust.row|Add|u16|u16
+rust.row|Add|u32|u32
+rust.row|Add|u64|u64
+rust.row|Add|u128|u128
+rust.row|Add|isize|isize
+rust.row|Add|i8|i8
+rust.row|Add|i16|i16
+rust.row|Add|i32|i32
+rust.row|Add|i64|i64
+rust.row|Add|i128|i128
+rust.row|Add|f16|f16
+rust.row|Add|f32|f32
+rust.row|Add|f64|f64
+rust.row|Add|f128|f128
+rust.row|Sub|usize|usize
+rust.row|Sub|u8|u8
+rust.row|Sub|u16|u16
+rust.row|Sub|u32|u32
+rust.row|Sub|u64|u64
+rust.row|Sub|u128|u128
+rust.row|Sub|isize|isize
+rust.row|Sub|i8|i8
+rust.row|Sub|i16|i16
+rust.row|Sub|i32|i32
+rust.row|Sub|i64|i64
+rust.row|Sub|i128|i128
+rust.row|Sub|f16|f16
+rust.row|Sub|f32|f32
+rust.row|Sub|f64|f64
+rust.row|Sub|f128|f128
+rust.row|Mul|usize|usize
+rust.row|Mul|u8|u8
+rust.row|Mul|u16|u16
+rust.row|Mul|u32|u32
+rust.row|Mul|u64|u64
+rust.row|Mul|u128|u128
+rust.row|Mul|isize|isize
+rust.row|Mul|i8|i8
+rust.row|Mul|i16|i16
+rust.row|Mul|i32|i32
+rust.row|Mul|i64|i64
+rust.row|Mul|i128|i128
+rust.row|Mul|f16|f16
+rust.row|Mul|f32|f32
+rust.row|Mul|f64|f64
+rust.row|Mul|f128|f128
+rust.row|Div|usize|usize
+rust.row|Div|u8|u8
+rust.row|Div|u16|u16
+rust.row|Div|u32|u32
+rust.row|Div|u64|u64
+rust.row|Div|u128|u128
+rust.row|Div|isize|isize
+rust.row|Div|i8|i8
+rust.row|Div|i16|i16
+rust.row|Div|i32|i32
+rust.row|Div|i64|i64
+rust.row|Div|i128|i128
+rust.row|Div|f16|f16
+rust.row|Div|f32|f32
+rust.row|Div|f64|f64
+rust.row|Div|f128|f128
+rust.row|Rem|usize|usize
+rust.row|Rem|u8|u8
+rust.row|Rem|u16|u16
+rust.row|Rem|u32|u32
+rust.row|Rem|u64|u64
+rust.row|Rem|u128|u128
+rust.row|Rem|isize|isize
+rust.row|Rem|i8|i8
+rust.row|Rem|i16|i16
+rust.row|Rem|i32|i32
+rust.row|Rem|i64|i64
+rust.row|Rem|i128|i128
+rust.row|Rem|f16|f16
+rust.row|Rem|f32|f32
+rust.row|Rem|f64|f64
+rust.row|Rem|f128|f128
+rust.row|BitAnd|bool|bool
+rust.row|BitAnd|usize|usize
+rust.row|BitAnd|u8|u8
+rust.row|BitAnd|u16|u16
+rust.row|BitAnd|u32|u32
+rust.row|BitAnd|u64|u64
+rust.row|BitAnd|u128|u128
+rust.row|BitAnd|isize|isize
+rust.row|BitAnd|i8|i8
+rust.row|BitAnd|i16|i16
+rust.row|BitAnd|i32|i32
+rust.row|BitAnd|i64|i64
+rust.row|BitAnd|i128|i128
+rust.row|BitOr|bool|bool
+rust.row|BitOr|usize|usize
+rust.row|BitOr|u8|u8
+rust.row|BitOr|u16|u16
+rust.row|BitOr|u32|u32
+rust.row|BitOr|u64|u64
+rust.row|BitOr|u128|u128
+rust.row|BitOr|isize|isize
+rust.row|BitOr|i8|i8
+rust.row|BitOr|i16|i16
+rust.row|BitOr|i32|i32
+rust.row|BitOr|i64|i64
+rust.row|BitOr|i128|i128
+rust.row|BitXor|bool|bool
+rust.row|BitXor|usize|usize
+rust.row|BitXor|u8|u8
+rust.row|BitXor|u16|u16
+rust.row|BitXor|u32|u32
+rust.row|BitXor|u64|u64
+rust.row|BitXor|u128|u128
+rust.row|BitXor|isize|isize
+rust.row|BitXor|i8|i8
+rust.row|BitXor|i16|i16
+rust.row|BitXor|i32|i32
+rust.row|BitXor|i64|i64
+rust.row|BitXor|i128|i128
+rust.row|Shl|u8|u8
+rust.row|Shl|u8|u16
+rust.row|Shl|u8|u32
+rust.row|Shl|u8|u64
+rust.row|Shl|u8|u128
+rust.row|Shl|u8|usize
+rust.row|Shl|u8|i8
+rust.row|Shl|u8|i16
+rust.row|Shl|u8|i32
+rust.row|Shl|u8|i64
+rust.row|Shl|u8|i128
+rust.row|Shl|u8|isize
+rust.row|Shl|u16|u8
+rust.row|Shl|u16|u16
+rust.row|Shl|u16|u32
+rust.row|Shl|u16|u64
+rust.row|Shl|u16|u128
+rust.row|Shl|u16|usize
+rust.row|Shl|u16|i8
+rust.row|Shl|u16|i16
+rust.row|Shl|u16|i32
+rust.row|Shl|u16|i64
+rust.row|Shl|u16|i128
+rust.row|Shl|u16|isize
+rust.row|Shl|u32|u8
+rust.row|Shl|u32|u16
+rust.row|Shl|u32|u32
+rust.row|Shl|u32|u64
+rust.row|Shl|u32|u128
+rust.row|Shl|u32|usize
+rust.row|Shl|u32|i8
+rust.row|Shl|u32|i16
+rust.row|Shl|u32|i32
+rust.row|Shl|u32|i64
+rust.row|Shl|u32|i128
+rust.row|Shl|u32|isize
+rust.row|Shl|u64|u8
+rust.row|Shl|u64|u16
+rust.row|Shl|u64|u32
+rust.row|Shl|u64|u64
+rust.row|Shl|u64|u128
+rust.row|Shl|u64|usize
+rust.row|Shl|u64|i8
+rust.row|Shl|u64|i16
+rust.row|Shl|u64|i32
+rust.row|Shl|u64|i64
+rust.row|Shl|u64|i128
+rust.row|Shl|u64|isize
+rust.row|Shl|u128|u8
+rust.row|Shl|u128|u16
+rust.row|Shl|u128|u32
+rust.row|Shl|u128|u64
+rust.row|Shl|u128|u128
+rust.row|Shl|u128|usize
+rust.row|Shl|u128|i8
+rust.row|Shl|u128|i16
+rust.row|Shl|u128|i32
+rust.row|Shl|u128|i64
+rust.row|Shl|u128|i128
+rust.row|Shl|u128|isize
+rust.row|Shl|usize|u8
+rust.row|Shl|usize|u16
+rust.row|Shl|usize|u32
+rust.row|Shl|usize|u64
+rust.row|Shl|usize|u128
+rust.row|Shl|usize|usize
+rust.row|Shl|usize|i8
+rust.row|Shl|usize|i16
+rust.row|Shl|usize|i32
+rust.row|Shl|usize|i64
+rust.row|Shl|usize|i128
+rust.row|Shl|usize|isize
+rust.row|Shl|i8|u8
+rust.row|Shl|i8|u16
+rust.row|Shl|i8|u32
+rust.row|Shl|i8|u64
+rust.row|Shl|i8|u128
+rust.row|Shl|i8|usize
+rust.row|Shl|i8|i8
+rust.row|Shl|i8|i16
+rust.row|Shl|i8|i32
+rust.row|Shl|i8|i64
+rust.row|Shl|i8|i128
+rust.row|Shl|i8|isize
+rust.row|Shl|i16|u8
+rust.row|Shl|i16|u16
+rust.row|Shl|i16|u32
+rust.row|Shl|i16|u64
+rust.row|Shl|i16|u128
+rust.row|Shl|i16|usize
+rust.row|Shl|i16|i8
+rust.row|Shl|i16|i16
+rust.row|Shl|i16|i32
+rust.row|Shl|i16|i64
+rust.row|Shl|i16|i128
+rust.row|Shl|i16|isize
+rust.row|Shl|i32|u8
+rust.row|Shl|i32|u16
+rust.row|Shl|i32|u32
+rust.row|Shl|i32|u64
+rust.row|Shl|i32|u128
+rust.row|Shl|i32|usize
+rust.row|Shl|i32|i8
+rust.row|Shl|i32|i16
+rust.row|Shl|i32|i32
+rust.row|Shl|i32|i64
+rust.row|Shl|i32|i128
+rust.row|Shl|i32|isize
+rust.row|Shl|i64|u8
+rust.row|Shl|i64|u16
+rust.row|Shl|i64|u32
+rust.row|Shl|i64|u64
+rust.row|Shl|i64|u128
+rust.row|Shl|i64|usize
+rust.row|Shl|i64|i8
+rust.row|Shl|i64|i16
+rust.row|Shl|i64|i32
+rust.row|Shl|i64|i64
+rust.row|Shl|i64|i128
+rust.row|Shl|i64|isize
+rust.row|Shl|i128|u8
+rust.row|Shl|i128|u16
+rust.row|Shl|i128|u32
+rust.row|Shl|i128|u64
+rust.row|Shl|i128|u128
+rust.row|Shl|i128|usize
+rust.row|Shl|i128|i8
+rust.row|Shl|i128|i16
+rust.row|Shl|i128|i32
+rust.row|Shl|i128|i64
+rust.row|Shl|i128|i128
+rust.row|Shl|i128|isize
+rust.row|Shl|isize|u8
+rust.row|Shl|isize|u16
+rust.row|Shl|isize|u32
+rust.row|Shl|isize|u64
+rust.row|Shl|isize|u128
+rust.row|Shl|isize|usize
+rust.row|Shl|isize|i8
+rust.row|Shl|isize|i16
+rust.row|Shl|isize|i32
+rust.row|Shl|isize|i64
+rust.row|Shl|isize|i128
+rust.row|Shl|isize|isize
+rust.row|Shr|u8|u8
+rust.row|Shr|u8|u16
+rust.row|Shr|u8|u32
+rust.row|Shr|u8|u64
+rust.row|Shr|u8|u128
+rust.row|Shr|u8|usize
+rust.row|Shr|u8|i8
+rust.row|Shr|u8|i16
+rust.row|Shr|u8|i32
+rust.row|Shr|u8|i64
+rust.row|Shr|u8|i128
+rust.row|Shr|u8|isize
+rust.row|Shr|u16|u8
+rust.row|Shr|u16|u16
+rust.row|Shr|u16|u32
+rust.row|Shr|u16|u64
+rust.row|Shr|u16|u128
+rust.row|Shr|u16|usize
+rust.row|Shr|u16|i8
+rust.row|Shr|u16|i16
+rust.row|Shr|u16|i32
+rust.row|Shr|u16|i64
+rust.row|Shr|u16|i128
+rust.row|Shr|u16|isize
+rust.row|Shr|u32|u8
+rust.row|Shr|u32|u16
+rust.row|Shr|u32|u32
+rust.row|Shr|u32|u64
+rust.row|Shr|u32|u128
+rust.row|Shr|u32|usize
+rust.row|Shr|u32|i8
+rust.row|Shr|u32|i16
+rust.row|Shr|u32|i32
+rust.row|Shr|u32|i64
+rust.row|Shr|u32|i128
+rust.row|Shr|u32|isize
+rust.row|Shr|u64|u8
+rust.row|Shr|u64|u16
+rust.row|Shr|u64|u32
+rust.row|Shr|u64|u64
+rust.row|Shr|u64|u128
+rust.row|Shr|u64|usize
+rust.row|Shr|u64|i8
+rust.row|Shr|u64|i16
+rust.row|Shr|u64|i32
+rust.row|Shr|u64|i64
+rust.row|Shr|u64|i128
+rust.row|Shr|u64|isize
+rust.row|Shr|u128|u8
+rust.row|Shr|u128|u16
+rust.row|Shr|u128|u32
+rust.row|Shr|u128|u64
+rust.row|Shr|u128|u128
+rust.row|Shr|u128|usize
+rust.row|Shr|u128|i8
+rust.row|Shr|u128|i16
+rust.row|Shr|u128|i32
+rust.row|Shr|u128|i64
+rust.row|Shr|u128|i128
+rust.row|Shr|u128|isize
+rust.row|Shr|usize|u8
+rust.row|Shr|usize|u16
+rust.row|Shr|usize|u32
+rust.row|Shr|usize|u64
+rust.row|Shr|usize|u128
+rust.row|Shr|usize|usize
+rust.row|Shr|usize|i8
+rust.row|Shr|usize|i16
+rust.row|Shr|usize|i32
+rust.row|Shr|usize|i64
+rust.row|Shr|usize|i128
+rust.row|Shr|usize|isize
+rust.row|Shr|i8|u8
+rust.row|Shr|i8|u16
+rust.row|Shr|i8|u32
+rust.row|Shr|i8|u64
+rust.row|Shr|i8|u128
+rust.row|Shr|i8|usize
+rust.row|Shr|i8|i8
+rust.row|Shr|i8|i16
+rust.row|Shr|i8|i32
+rust.row|Shr|i8|i64
+rust.row|Shr|i8|i128
+rust.row|Shr|i8|isize
+rust.row|Shr|i16|u8
+rust.row|Shr|i16|u16
+rust.row|Shr|i16|u32
+rust.row|Shr|i16|u64
+rust.row|Shr|i16|u128
+rust.row|Shr|i16|usize
+rust.row|Shr|i16|i8
+rust.row|Shr|i16|i16
+rust.row|Shr|i16|i32
+rust.row|Shr|i16|i64
+rust.row|Shr|i16|i128
+rust.row|Shr|i16|isize
+rust.row|Shr|i32|u8
+rust.row|Shr|i32|u16
+rust.row|Shr|i32|u32
+rust.row|Shr|i32|u64
+rust.row|Shr|i32|u128
+rust.row|Shr|i32|usize
+rust.row|Shr|i32|i8
+rust.row|Shr|i32|i16
+rust.row|Shr|i32|i32
+rust.row|Shr|i32|i64
+rust.row|Shr|i32|i128
+rust.row|Shr|i32|isize
+rust.row|Shr|i64|u8
+rust.row|Shr|i64|u16
+rust.row|Shr|i64|u32
+rust.row|Shr|i64|u64
+rust.row|Shr|i64|u128
+rust.row|Shr|i64|usize
+rust.row|Shr|i64|i8
+rust.row|Shr|i64|i16
+rust.row|Shr|i64|i32
+rust.row|Shr|i64|i64
+rust.row|Shr|i64|i128
+rust.row|Shr|i64|isize
+rust.row|Shr|i128|u8
+rust.row|Shr|i128|u16
+rust.row|Shr|i128|u32
+rust.row|Shr|i128|u64
+rust.row|Shr|i128|u128
+rust.row|Shr|i128|usize
+rust.row|Shr|i128|i8
+rust.row|Shr|i128|i16
+rust.row|Shr|i128|i32
+rust.row|Shr|i128|i64
+rust.row|Shr|i128|i128
+rust.row|Shr|i128|isize
+rust.row|Shr|isize|u8
+rust.row|Shr|isize|u16
+rust.row|Shr|isize|u32
+rust.row|Shr|isize|u64
+rust.row|Shr|isize|u128
+rust.row|Shr|isize|usize
+rust.row|Shr|isize|i8
+rust.row|Shr|isize|i16
+rust.row|Shr|isize|i32
+rust.row|Shr|isize|i64
+rust.row|Shr|isize|i128
+rust.row|Shr|isize|isize
+rust.row_count=407
+--- END ---
+--- BEGIN rust.shift forwarding bodies (literal) ---
+### macro_rules! shl_impl_all
+
+    ($($t:ty)*) => ($(
+        shl_impl! { $t, u8 }
+        shl_impl! { $t, u16 }
+        shl_impl! { $t, u32 }
+        shl_impl! { $t, u64 }
+        shl_impl! { $t, u128 }
+        shl_impl! { $t, usize }
+
+        shl_impl! { $t, i8 }
+        shl_impl! { $t, i16 }
+        shl_impl! { $t, i32 }
+        shl_impl! { $t, i64 }
+        shl_impl! { $t, i128 }
+        shl_impl! { $t, isize }
+    )*)
+### macro_rules! shr_impl_all
+
+    ($($t:ty)*) => ($(
+        shr_impl! { $t, u8 }
+        shr_impl! { $t, u16 }
+        shr_impl! { $t, u32 }
+        shr_impl! { $t, u64 }
+        shr_impl! { $t, u128 }
+        shr_impl! { $t, usize }
+
+        shr_impl! { $t, i8 }
+        shr_impl! { $t, i16 }
+        shr_impl! { $t, i32 }
+        shr_impl! { $t, i64 }
+        shr_impl! { $t, i128 }
+        shr_impl! { $t, isize }
+    )*)
+### macro_rules! shl_impl
+
+    ($t:ty, $f:ty) => {
+        #[stable(feature = "rust1", since = "1.0.0")]
+        #[rustc_const_unstable(feature = "const_ops", issue = "143802")]
+        impl const Shl<$f> for $t {
+            type Output = $t;
+
+            #[inline]
+            #[track_caller]
+            #[rustc_inherit_overflow_checks]
+            fn shl(self, other: $f) -> $t {
+                self << other
+            }
+        }
+
+        forward_ref_binop! { impl Shl, shl for $t, $f,
+        #[stable(feature = "rust1", since = "1.0.0")]
+        #[rustc_const_unstable(feature = "const_ops", issue = "143802")] }
+    };
+### macro_rules! shr_impl
+
+    ($t:ty, $f:ty) => {
+        #[stable(feature = "rust1", since = "1.0.0")]
+        #[rustc_const_unstable(feature = "const_ops", issue = "143802")]
+        impl const Shr<$f> for $t {
+            type Output = $t;
+
+            #[inline]
+            #[track_caller]
+            #[rustc_inherit_overflow_checks]
+            fn shr(self, other: $f) -> $t {
+                self >> other
+            }
+        }
+
+        forward_ref_binop! { impl Shr, shr for $t, $f,
+        #[stable(feature = "rust1", since = "1.0.0")]
+        #[rustc_const_unstable(feature = "const_ops", issue = "143802")] }
+    };
+--- END ---
+--- BEGIN rust.cmp (literal, cmp.rs) ---
+### macro_rules! partial_eq_impl
+
+        ($($t:ty)*) => ($(
+            #[stable(feature = "rust1", since = "1.0.0")]
+            #[rustc_const_unstable(feature = "const_cmp", issue = "143800")]
+            impl const PartialEq for $t {
+                #[inline]
+                fn eq(&self, other: &Self) -> bool { *self == *other }
+                #[inline]
+                fn ne(&self, other: &Self) -> bool { *self != *other }
+            }
+        )*)
+    }
+
+    #[stable(feature = "rust1", since = "1.0.0")]
+    #[rustc_const_unstable(feature = "const_cmp", issue = "143800")]
+    impl const PartialEq for () {
+        #[inline]
+        fn eq(&self, _other: &()) -> bool {
+            true
+        }
+        #[inline]
+        fn ne(&self, _other: &()) -> bool {
+            false
+        }
+    }
+
+    partial_eq_impl! {
+        bool char usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 f16 f32 f64 f128
+    }
+
+    macro_ru
+--- END ---
+
+=== DONE -- every row above is a DRAFT until diffed against route A.

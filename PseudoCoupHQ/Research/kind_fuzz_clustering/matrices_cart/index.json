@@ -1,0 +1,2733 @@
+{
+ "status": "CARTESIAN MATRICES -- the settled probe design of 2026-08-21.  LEVEL 1 y = op(x0,x1) over ALL ordered pairs of a shared set X; LEVEL 2 z = op(op(x0,x1), op(x2,x3)) over a subset X'.  The level-2 intermediates are never enumerated, deduped, capped or unioned -- they exist inside the expression.",
+ "built": "2026-08-21 19:59:31",
+ "scope": "rust (static) + ruby (route C) only; the other ten wait",
+ "columns": [
+  "probe_id",
+  "level",
+  "form_pair",
+  "lhs_holder",
+  "rhs_holder",
+  "x_set_a",
+  "x_set_b",
+  "n_probes",
+  "output_canon_vector",
+  "n_values",
+  "n_declines"
+ ],
+ "vector_separator": ";",
+ "probe_index_rule": {
+  "level1": "p = i0 * |Xb| + i1",
+  "level2": "p = ((i0*|Xb| + i1)*|Xa| + i2)*|Xb| + i3"
+ },
+ "comparability": "two rows compare position by position if and only if their (x_set_a, x_set_b) pair matches; both languages evaluate identical expressions on identical inputs, so there is no alignment step",
+ "absence_rule": "a value a holder cannot represent is ABSENT from that holder's set -- the row is shorter and carries a different x_set id.  Nothing is coerced, wrapped or rounded.",
+ "ruby_operator_menu_extension": [
+  "and",
+  "or"
+ ],
+ "ruby_stall_budget_s": 2.0,
+ "ruby_stall_budget_note": "RECORDED CHANGE 2026-08-21: 2 s, was 10 s. The previous run spent 550 s of 557 s waiting on `**` with BigDecimal.  A stall is recorded as ABORT and an ABORT is excluded from scoring in the numerator and the denominator both, so the shorter budget loses no measurement -- only wall clock.",
+ "x_sets": {
+  "truth/L1/2:true,false": {
+   "form": "truth",
+   "level": 1,
+   "n": 2,
+   "spellings": [
+    "true",
+    "false"
+   ],
+   "canon": [
+    "true",
+    "false"
+   ],
+   "absent_spellings": [
+    "0",
+    "1",
+    "\"\"",
+    "nil"
+   ],
+   "n_absent": 4,
+   "used_by": [
+    "rust.bool.L1"
+   ]
+  },
+  "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1": {
+   "form": "whole",
+   "level": 1,
+   "n": 9,
+   "spellings": [
+    "-2^31",
+    "-42",
+    "-1",
+    "0",
+    "1",
+    "7",
+    "42",
+    "1000",
+    "2^31-1"
+   ],
+   "canon": [
+    "[-1, 1.0, 31]",
+    "[-1, 1.3125, 5]",
+    "[-1, 1.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "[1, 1.75, 2]",
+    "[1, 1.3125, 5]",
+    "[1, 1.953125, 9]",
+    "[1, 1.999999999068677425384521484375, 30]"
+   ],
+   "absent_spellings": [
+    "-2^63",
+    "-2^63+1",
+    "-2^53-1",
+    "2^31",
+    "2^53-1",
+    "2^53+1",
+    "2^63-1",
+    "2^64-1"
+   ],
+   "n_absent": 8,
+   "used_by": [
+    "rust.i32.L1"
+   ]
+  },
+  "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1": {
+   "form": "whole",
+   "level": 1,
+   "n": 16,
+   "spellings": [
+    "-2^63",
+    "-2^63+1",
+    "-2^53-1",
+    "-2^31",
+    "-42",
+    "-1",
+    "0",
+    "1",
+    "7",
+    "42",
+    "1000",
+    "2^31-1",
+    "2^31",
+    "2^53-1",
+    "2^53+1",
+    "2^63-1"
+   ],
+   "canon": [
+    "[-1, 1.0, 63]",
+    "[-1, 1.9999999999999999997831595655029, 62]",
+    "[-1, 1.0000000000000001110223024625157, 53]",
+    "[-1, 1.0, 31]",
+    "[-1, 1.3125, 5]",
+    "[-1, 1.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "[1, 1.75, 2]",
+    "[1, 1.3125, 5]",
+    "[1, 1.953125, 9]",
+    "[1, 1.999999999068677425384521484375, 30]",
+    "[1, 1.0, 31]",
+    "[1, 1.9999999999999997779553950749687, 52]",
+    "[1, 1.0000000000000001110223024625157, 53]",
+    "[1, 1.9999999999999999997831595655029, 62]"
+   ],
+   "absent_spellings": [
+    "2^64-1"
+   ],
+   "n_absent": 1,
+   "used_by": [
+    "rust.i64.L1"
+   ]
+  },
+  "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1": {
+   "form": "whole",
+   "level": 1,
+   "n": 11,
+   "spellings": [
+    "0",
+    "1",
+    "7",
+    "42",
+    "1000",
+    "2^31-1",
+    "2^31",
+    "2^53-1",
+    "2^53+1",
+    "2^63-1",
+    "2^64-1"
+   ],
+   "canon": [
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "[1, 1.75, 2]",
+    "[1, 1.3125, 5]",
+    "[1, 1.953125, 9]",
+    "[1, 1.999999999068677425384521484375, 30]",
+    "[1, 1.0, 31]",
+    "[1, 1.9999999999999997779553950749687, 52]",
+    "[1, 1.0000000000000001110223024625157, 53]",
+    "[1, 1.9999999999999999997831595655029, 62]",
+    "[1, 1.9999999999999999998915797827514, 63]"
+   ],
+   "absent_spellings": [
+    "-2^63",
+    "-2^63+1",
+    "-2^53-1",
+    "-2^31",
+    "-42",
+    "-1"
+   ],
+   "n_absent": 6,
+   "used_by": [
+    "rust.u64.L1"
+   ]
+  },
+  "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1": {
+   "form": "whole",
+   "level": 1,
+   "n": 17,
+   "spellings": [
+    "-2^63",
+    "-2^63+1",
+    "-2^53-1",
+    "-2^31",
+    "-42",
+    "-1",
+    "0",
+    "1",
+    "7",
+    "42",
+    "1000",
+    "2^31-1",
+    "2^31",
+    "2^53-1",
+    "2^53+1",
+    "2^63-1",
+    "2^64-1"
+   ],
+   "canon": [
+    "[-1, 1.0, 63]",
+    "[-1, 1.9999999999999999997831595655029, 62]",
+    "[-1, 1.0000000000000001110223024625157, 53]",
+    "[-1, 1.0, 31]",
+    "[-1, 1.3125, 5]",
+    "[-1, 1.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "[1, 1.75, 2]",
+    "[1, 1.3125, 5]",
+    "[1, 1.953125, 9]",
+    "[1, 1.999999999068677425384521484375, 30]",
+    "[1, 1.0, 31]",
+    "[1, 1.9999999999999997779553950749687, 52]",
+    "[1, 1.0000000000000001110223024625157, 53]",
+    "[1, 1.9999999999999999997831595655029, 62]",
+    "[1, 1.9999999999999999998915797827514, 63]"
+   ],
+   "absent_spellings": [],
+   "n_absent": 0,
+   "used_by": [
+    "rust.i128.L1",
+    "ruby.Integer.L1",
+    "ruby.Rational.L1",
+    "ruby.BigDecimal.L1"
+   ]
+  },
+  "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1": {
+   "form": "fractional",
+   "level": 1,
+   "n": 16,
+   "spellings": [
+    "-max_finite",
+    "-1.5",
+    "-1.0",
+    "-(1.0-1ulp)",
+    "-0.0",
+    "+0.0",
+    "+min_subnormal",
+    "+min_normal",
+    "1.0-1ulp",
+    "1.0",
+    "1.0+1ulp",
+    "1.5",
+    "pi",
+    "2^53",
+    "max_finite",
+    "0.1"
+   ],
+   "canon": [
+    "[-1, 1.9999999999999997779553950749687, 1023]",
+    "[-1, 1.5, 0]",
+    "[-1, 1.0, 0]",
+    "[-1, 1.9999999999999997779553950749687, -1]",
+    "[-1, 0.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, -1074]",
+    "[1, 1.0, -1022]",
+    "[1, 1.9999999999999997779553950749687, -1]",
+    "[1, 1.0, 0]",
+    "[1, 1.0000000000000002220446049250313, 0]",
+    "[1, 1.5, 0]",
+    "[1, 1.5707963267948965579989817342721, 1]",
+    "[1, 1.0, 53]",
+    "[1, 1.9999999999999997779553950749687, 1023]",
+    "[1, 1.6000000000000000888178419700125, -4]"
+   ],
+   "absent_spellings": [],
+   "n_absent": 0,
+   "used_by": [
+    "rust.f64.L1",
+    "ruby.Float.L1",
+    "ruby.BigDecimal.L1"
+   ]
+  },
+  "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53": {
+   "form": "fractional",
+   "level": 1,
+   "n": 7,
+   "spellings": [
+    "-1.5",
+    "-1.0",
+    "-0.0",
+    "+0.0",
+    "1.0",
+    "1.5",
+    "2^53"
+   ],
+   "canon": [
+    "[-1, 1.5, 0]",
+    "[-1, 1.0, 0]",
+    "[-1, 0.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "[1, 1.5, 0]",
+    "[1, 1.0, 53]"
+   ],
+   "absent_spellings": [
+    "-max_finite",
+    "-(1.0-1ulp)",
+    "+min_subnormal",
+    "+min_normal",
+    "1.0-1ulp",
+    "1.0+1ulp",
+    "pi",
+    "max_finite",
+    "0.1"
+   ],
+   "n_absent": 9,
+   "used_by": [
+    "rust.f32.L1"
+   ]
+  },
+  "truth/L2/2:true,false": {
+   "form": "truth",
+   "level": 2,
+   "n": 2,
+   "spellings": [
+    "true",
+    "false"
+   ],
+   "canon": [
+    "true",
+    "false"
+   ],
+   "absent_spellings": [
+    "0",
+    "1",
+    "\"\"",
+    "nil"
+   ],
+   "n_absent": 4,
+   "used_by": [
+    "rust.bool.L2"
+   ]
+  },
+  "whole/L2/5:-1,0,1,7,2^31-1": {
+   "form": "whole",
+   "level": 2,
+   "n": 5,
+   "spellings": [
+    "-1",
+    "0",
+    "1",
+    "7",
+    "2^31-1"
+   ],
+   "canon": [
+    "[-1, 1.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "[1, 1.75, 2]",
+    "[1, 1.999999999068677425384521484375, 30]"
+   ],
+   "absent_spellings": [
+    "-2^63",
+    "2^31",
+    "2^53-1",
+    "2^53+1",
+    "2^63-1"
+   ],
+   "n_absent": 5,
+   "used_by": [
+    "rust.i32.L2"
+   ]
+  },
+  "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1": {
+   "form": "whole",
+   "level": 2,
+   "n": 10,
+   "spellings": [
+    "-2^63",
+    "-1",
+    "0",
+    "1",
+    "7",
+    "2^31-1",
+    "2^31",
+    "2^53-1",
+    "2^53+1",
+    "2^63-1"
+   ],
+   "canon": [
+    "[-1, 1.0, 63]",
+    "[-1, 1.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "[1, 1.75, 2]",
+    "[1, 1.999999999068677425384521484375, 30]",
+    "[1, 1.0, 31]",
+    "[1, 1.9999999999999997779553950749687, 52]",
+    "[1, 1.0000000000000001110223024625157, 53]",
+    "[1, 1.9999999999999999997831595655029, 62]"
+   ],
+   "absent_spellings": [],
+   "n_absent": 0,
+   "used_by": [
+    "rust.i64.L2",
+    "rust.i128.L2",
+    "ruby.Integer.L2",
+    "ruby.Rational.L2",
+    "ruby.BigDecimal.L2"
+   ]
+  },
+  "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1": {
+   "form": "whole",
+   "level": 2,
+   "n": 8,
+   "spellings": [
+    "0",
+    "1",
+    "7",
+    "2^31-1",
+    "2^31",
+    "2^53-1",
+    "2^53+1",
+    "2^63-1"
+   ],
+   "canon": [
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "[1, 1.75, 2]",
+    "[1, 1.999999999068677425384521484375, 30]",
+    "[1, 1.0, 31]",
+    "[1, 1.9999999999999997779553950749687, 52]",
+    "[1, 1.0000000000000001110223024625157, 53]",
+    "[1, 1.9999999999999999997831595655029, 62]"
+   ],
+   "absent_spellings": [
+    "-2^63",
+    "-1"
+   ],
+   "n_absent": 2,
+   "used_by": [
+    "rust.u64.L2"
+   ]
+  },
+  "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1": {
+   "form": "fractional",
+   "level": 2,
+   "n": 10,
+   "spellings": [
+    "-max_finite",
+    "-1.0",
+    "-0.0",
+    "+0.0",
+    "+min_subnormal",
+    "1.0-1ulp",
+    "1.0",
+    "1.0+1ulp",
+    "max_finite",
+    "0.1"
+   ],
+   "canon": [
+    "[-1, 1.9999999999999997779553950749687, 1023]",
+    "[-1, 1.0, 0]",
+    "[-1, 0.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, -1074]",
+    "[1, 1.9999999999999997779553950749687, -1]",
+    "[1, 1.0, 0]",
+    "[1, 1.0000000000000002220446049250313, 0]",
+    "[1, 1.9999999999999997779553950749687, 1023]",
+    "[1, 1.6000000000000000888178419700125, -4]"
+   ],
+   "absent_spellings": [],
+   "n_absent": 0,
+   "used_by": [
+    "rust.f64.L2",
+    "ruby.Float.L2",
+    "ruby.BigDecimal.L2"
+   ]
+  },
+  "fractional/L2/4:-1.0,-0.0,+0.0,1.0": {
+   "form": "fractional",
+   "level": 2,
+   "n": 4,
+   "spellings": [
+    "-1.0",
+    "-0.0",
+    "+0.0",
+    "1.0"
+   ],
+   "canon": [
+    "[-1, 1.0, 0]",
+    "[-1, 0.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]"
+   ],
+   "absent_spellings": [
+    "-max_finite",
+    "+min_subnormal",
+    "1.0-1ulp",
+    "1.0+1ulp",
+    "max_finite",
+    "0.1"
+   ],
+   "n_absent": 6,
+   "used_by": [
+    "rust.f32.L2"
+   ]
+  },
+  "truth/L1/6:true,false,0,1,\"\",nil": {
+   "form": "truth",
+   "level": 1,
+   "n": 6,
+   "spellings": [
+    "true",
+    "false",
+    "0",
+    "1",
+    "\"\"",
+    "nil"
+   ],
+   "canon": [
+    "true",
+    "false",
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "t||0|0|0",
+    "null"
+   ],
+   "absent_spellings": [],
+   "n_absent": 0,
+   "used_by": [
+    "ruby.TrueFalse.L1"
+   ]
+  },
+  "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1": {
+   "form": "fractional",
+   "level": 1,
+   "n": 15,
+   "spellings": [
+    "-max_finite",
+    "-1.5",
+    "-1.0",
+    "-(1.0-1ulp)",
+    "+0.0",
+    "+min_subnormal",
+    "+min_normal",
+    "1.0-1ulp",
+    "1.0",
+    "1.0+1ulp",
+    "1.5",
+    "pi",
+    "2^53",
+    "max_finite",
+    "0.1"
+   ],
+   "canon": [
+    "[-1, 1.9999999999999997779553950749687, 1023]",
+    "[-1, 1.5, 0]",
+    "[-1, 1.0, 0]",
+    "[-1, 1.9999999999999997779553950749687, -1]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, -1074]",
+    "[1, 1.0, -1022]",
+    "[1, 1.9999999999999997779553950749687, -1]",
+    "[1, 1.0, 0]",
+    "[1, 1.0000000000000002220446049250313, 0]",
+    "[1, 1.5, 0]",
+    "[1, 1.5707963267948965579989817342721, 1]",
+    "[1, 1.0, 53]",
+    "[1, 1.9999999999999997779553950749687, 1023]",
+    "[1, 1.6000000000000000888178419700125, -4]"
+   ],
+   "absent_spellings": [
+    "-0.0"
+   ],
+   "n_absent": 1,
+   "used_by": [
+    "ruby.Rational.L1"
+   ]
+  },
+  "truth/L2/6:true,false,0,1,\"\",nil": {
+   "form": "truth",
+   "level": 2,
+   "n": 6,
+   "spellings": [
+    "true",
+    "false",
+    "0",
+    "1",
+    "\"\"",
+    "nil"
+   ],
+   "canon": [
+    "true",
+    "false",
+    "[1, 0.0, 0]",
+    "[1, 1.0, 0]",
+    "t||0|0|0",
+    "null"
+   ],
+   "absent_spellings": [],
+   "n_absent": 0,
+   "used_by": [
+    "ruby.TrueFalse.L2"
+   ]
+  },
+  "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1": {
+   "form": "fractional",
+   "level": 2,
+   "n": 9,
+   "spellings": [
+    "-max_finite",
+    "-1.0",
+    "+0.0",
+    "+min_subnormal",
+    "1.0-1ulp",
+    "1.0",
+    "1.0+1ulp",
+    "max_finite",
+    "0.1"
+   ],
+   "canon": [
+    "[-1, 1.9999999999999997779553950749687, 1023]",
+    "[-1, 1.0, 0]",
+    "[1, 0.0, 0]",
+    "[1, 1.0, -1074]",
+    "[1, 1.9999999999999997779553950749687, -1]",
+    "[1, 1.0, 0]",
+    "[1, 1.0000000000000002220446049250313, 0]",
+    "[1, 1.9999999999999997779553950749687, 1023]",
+    "[1, 1.6000000000000000888178419700125, -4]"
+   ],
+   "absent_spellings": [
+    "-0.0"
+   ],
+   "n_absent": 1,
+   "used_by": [
+    "ruby.Rational.L2"
+   ]
+  }
+ },
+ "lane_timing": {
+  "rust.L1": [
+   "__TIMING__|rust|level=1|chunk_files=14|probes=20531|chunk_cap=1500|compile_invocations=14|compile_s=4.359|execute_s=0.062|other_s=0.028|total_s=4.449|restarts=0|stall_s=0.000"
+  ],
+  "rust.L2": [
+   "__TIMING__|rust|level=2|chunk_files=418|probes=626128|chunk_cap=1500|compile_invocations=418|compile_s=154.770|execute_s=1.801|other_s=0.965|total_s=157.536|restarts=0|stall_s=0.000"
+  ],
+  "ruby.L1": [
+   "__TIMING__|ruby|level=1|workers=5|processes=5|probes=259584|compile_invocations=0|compile_s=0.000|stall_budget_s=2.0|stall_s=0.000|execute_s=11.669|total_s=11.669|restarts=0"
+  ],
+  "ruby.L2": [
+   "__TIMING__|ruby|level=2|workers=5|processes=1645|probes=9136536|compile_invocations=0|compile_s=0.000|stall_budget_s=2.0|stall_s=3280.000|execute_s=1679.712|total_s=2335.712|restarts=1640"
+  ]
+ },
+ "absent_values_per_row_family": {
+  "rust.L1": {
+   "rust.truth.L1": 96,
+   "rust.whole.L1": 690,
+   "rust.fractional.L1": 216
+  },
+  "rust.L2": {
+   "rust.truth.L2": 88,
+   "rust.whole.L2": 308,
+   "rust.fractional.L2": 132
+  },
+  "ruby.L1": {
+   "ruby.fractional.L1": 336
+  },
+  "ruby.L2": {
+   "ruby.fractional.L2": 336
+  }
+ },
+ "absent_row_sides_per_row_family": {
+  "rust.L1": {
+   "rust.truth.L1": 24,
+   "rust.whole.L1": 138,
+   "rust.fractional.L1": 24
+  },
+  "rust.L2": {
+   "rust.truth.L2": 22,
+   "rust.whole.L2": 88,
+   "rust.fractional.L2": 22
+  },
+  "ruby.L1": {
+   "ruby.fractional.L1": 336
+  },
+  "ruby.L2": {
+   "ruby.fractional.L2": 336
+  }
+ },
+ "oversized_ruby_cells_reconstructed_from_leading_bits": 534,
+ "verification": {
+  "files": 85,
+  "rows": 2601,
+  "probes": 10042779,
+  "non_rectangular": 0,
+  "wrong_vector_len": 0,
+  "empty_slots": 0,
+  "dirty_cells": 0,
+  "outcome_tokens": 4505960
+ },
+ "incomplete_families_skipped": [],
+ "probe_coverage": {
+  "rust.L1": {
+   "measured": 20531
+  },
+  "rust.L2": {
+   "measured": 626128
+  },
+  "ruby.L1": {
+   "measured": 259584
+  },
+  "ruby.L2": {
+   "measured": 9136536
+  }
+ },
+ "vocabulary": "super-node / sub-node / co-node / sub-tree; the OS-stopped outcome is ABORT",
+ "matrices": {
+  "rust.!=.L1": {
+   "file": "rust.bangeq.L1.csv",
+   "language": "rust",
+   "operator": "!=",
+   "level": 1,
+   "rows": 7,
+   "probes": 1056,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 1056,
+   "n_declines": 0
+  },
+  "rust.%.L1": {
+   "file": "rust.percent.L1.csv",
+   "language": "rust",
+   "operator": "%",
+   "level": 1,
+   "rows": 6,
+   "probes": 1052,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 997,
+   "n_declines": 55
+  },
+  "rust.&.L1": {
+   "file": "rust.amp.L1.csv",
+   "language": "rust",
+   "operator": "&",
+   "level": 1,
+   "rows": 5,
+   "probes": 751,
+   "holders": [
+    "bool",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 751,
+   "n_declines": 0
+  },
+  "rust.&&.L1": {
+   "file": "rust.ampamp.L1.csv",
+   "language": "rust",
+   "operator": "&&",
+   "level": 1,
+   "rows": 1,
+   "probes": 4,
+   "holders": [
+    "bool"
+   ],
+   "x_sets": [
+    "truth/L1/2:true,false"
+   ],
+   "n_values": 4,
+   "n_declines": 0
+  },
+  "rust.*.L1": {
+   "file": "rust.star.L1.csv",
+   "language": "rust",
+   "operator": "*",
+   "level": 1,
+   "rows": 6,
+   "probes": 1052,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 887,
+   "n_declines": 165
+  },
+  "rust.+.L1": {
+   "file": "rust.plus.L1.csv",
+   "language": "rust",
+   "operator": "+",
+   "level": 1,
+   "rows": 6,
+   "probes": 1052,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 984,
+   "n_declines": 68
+  },
+  "rust.-.L1": {
+   "file": "rust.minus.L1.csv",
+   "language": "rust",
+   "operator": "-",
+   "level": 1,
+   "rows": 6,
+   "probes": 1052,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 940,
+   "n_declines": 112
+  },
+  "rust....L1": {
+   "file": "rust.dotdot.L1.csv",
+   "language": "rust",
+   "operator": "..",
+   "level": 1,
+   "rows": 7,
+   "probes": 1056,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 1056,
+   "n_declines": 0
+  },
+  "rust./.L1": {
+   "file": "rust.slash.L1.csv",
+   "language": "rust",
+   "operator": "/",
+   "level": 1,
+   "rows": 6,
+   "probes": 1052,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 997,
+   "n_declines": 55
+  },
+  "rust.<.L1": {
+   "file": "rust.lt.L1.csv",
+   "language": "rust",
+   "operator": "<",
+   "level": 1,
+   "rows": 7,
+   "probes": 1056,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 1056,
+   "n_declines": 0
+  },
+  "rust.<<.L1": {
+   "file": "rust.ltlt.L1.csv",
+   "language": "rust",
+   "operator": "<<",
+   "level": 1,
+   "rows": 16,
+   "probes": 2809,
+   "holders": [
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 812,
+   "n_declines": 1997
+  },
+  "rust.<=.L1": {
+   "file": "rust.lteq.L1.csv",
+   "language": "rust",
+   "operator": "<=",
+   "level": 1,
+   "rows": 7,
+   "probes": 1056,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 1056,
+   "n_declines": 0
+  },
+  "rust.==.L1": {
+   "file": "rust.eqeq.L1.csv",
+   "language": "rust",
+   "operator": "==",
+   "level": 1,
+   "rows": 7,
+   "probes": 1056,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 1056,
+   "n_declines": 0
+  },
+  "rust.>.L1": {
+   "file": "rust.gt.L1.csv",
+   "language": "rust",
+   "operator": ">",
+   "level": 1,
+   "rows": 7,
+   "probes": 1056,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 1056,
+   "n_declines": 0
+  },
+  "rust.>=.L1": {
+   "file": "rust.gteq.L1.csv",
+   "language": "rust",
+   "operator": ">=",
+   "level": 1,
+   "rows": 7,
+   "probes": 1056,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/7:-1.5,-1.0,-0.0,+0.0,1.0,1.5,2^53",
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 1056,
+   "n_declines": 0
+  },
+  "rust.>>.L1": {
+   "file": "rust.gtgt.L1.csv",
+   "language": "rust",
+   "operator": ">>",
+   "level": 1,
+   "rows": 16,
+   "probes": 2809,
+   "holders": [
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 812,
+   "n_declines": 1997
+  },
+  "rust.^.L1": {
+   "file": "rust.caret.L1.csv",
+   "language": "rust",
+   "operator": "^",
+   "level": 1,
+   "rows": 5,
+   "probes": 751,
+   "holders": [
+    "bool",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 751,
+   "n_declines": 0
+  },
+  "rust.|.L1": {
+   "file": "rust.pipe.L1.csv",
+   "language": "rust",
+   "operator": "|",
+   "level": 1,
+   "rows": 5,
+   "probes": 751,
+   "holders": [
+    "bool",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "truth/L1/2:true,false",
+    "whole/L1/11:0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/16:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1",
+    "whole/L1/9:-2^31,-42,-1,0,1,7,42,1000,2^31-1"
+   ],
+   "n_values": 751,
+   "n_declines": 0
+  },
+  "rust.||.L1": {
+   "file": "rust.pipepipe.L1.csv",
+   "language": "rust",
+   "operator": "||",
+   "level": 1,
+   "rows": 1,
+   "probes": 4,
+   "holders": [
+    "bool"
+   ],
+   "x_sets": [
+    "truth/L1/2:true,false"
+   ],
+   "n_values": 4,
+   "n_declines": 0
+  },
+  "rust.!=.L2": {
+   "file": "rust.bangeq.L2.csv",
+   "language": "rust",
+   "operator": "!=",
+   "level": 2,
+   "rows": 7,
+   "probes": 34993,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "truth/L2/2:true,false",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 34993,
+   "n_declines": 0
+  },
+  "rust.%.L2": {
+   "file": "rust.percent.L2.csv",
+   "language": "rust",
+   "operator": "%",
+   "level": 2,
+   "rows": 6,
+   "probes": 34977,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 22002,
+   "n_declines": 12975
+  },
+  "rust.&.L2": {
+   "file": "rust.amp.L2.csv",
+   "language": "rust",
+   "operator": "&",
+   "level": 2,
+   "rows": 5,
+   "probes": 24737,
+   "holders": [
+    "bool",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "truth/L2/2:true,false",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 24737,
+   "n_declines": 0
+  },
+  "rust.&&.L2": {
+   "file": "rust.ampamp.L2.csv",
+   "language": "rust",
+   "operator": "&&",
+   "level": 2,
+   "rows": 1,
+   "probes": 16,
+   "holders": [
+    "bool"
+   ],
+   "x_sets": [
+    "truth/L2/2:true,false"
+   ],
+   "n_values": 16,
+   "n_declines": 0
+  },
+  "rust.*.L2": {
+   "file": "rust.star.L2.csv",
+   "language": "rust",
+   "operator": "*",
+   "level": 2,
+   "rows": 6,
+   "probes": 34977,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 21089,
+   "n_declines": 13888
+  },
+  "rust.+.L2": {
+   "file": "rust.plus.L2.csv",
+   "language": "rust",
+   "operator": "+",
+   "level": 2,
+   "rows": 6,
+   "probes": 34977,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 30723,
+   "n_declines": 4254
+  },
+  "rust.-.L2": {
+   "file": "rust.minus.L2.csv",
+   "language": "rust",
+   "operator": "-",
+   "level": 2,
+   "rows": 6,
+   "probes": 34977,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 27705,
+   "n_declines": 7272
+  },
+  "rust./.L2": {
+   "file": "rust.slash.L2.csv",
+   "language": "rust",
+   "operator": "/",
+   "level": 2,
+   "rows": 6,
+   "probes": 34977,
+   "holders": [
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 20186,
+   "n_declines": 14791
+  },
+  "rust.<.L2": {
+   "file": "rust.lt.L2.csv",
+   "language": "rust",
+   "operator": "<",
+   "level": 2,
+   "rows": 7,
+   "probes": 34993,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "truth/L2/2:true,false",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 34993,
+   "n_declines": 0
+  },
+  "rust.<<.L2": {
+   "file": "rust.ltlt.L2.csv",
+   "language": "rust",
+   "operator": "<<",
+   "level": 2,
+   "rows": 16,
+   "probes": 83521,
+   "holders": [
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 3012,
+   "n_declines": 80509
+  },
+  "rust.<=.L2": {
+   "file": "rust.lteq.L2.csv",
+   "language": "rust",
+   "operator": "<=",
+   "level": 2,
+   "rows": 7,
+   "probes": 34993,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "truth/L2/2:true,false",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 34993,
+   "n_declines": 0
+  },
+  "rust.==.L2": {
+   "file": "rust.eqeq.L2.csv",
+   "language": "rust",
+   "operator": "==",
+   "level": 2,
+   "rows": 7,
+   "probes": 34993,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "truth/L2/2:true,false",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 34993,
+   "n_declines": 0
+  },
+  "rust.>.L2": {
+   "file": "rust.gt.L2.csv",
+   "language": "rust",
+   "operator": ">",
+   "level": 2,
+   "rows": 7,
+   "probes": 34993,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "truth/L2/2:true,false",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 34993,
+   "n_declines": 0
+  },
+  "rust.>=.L2": {
+   "file": "rust.gteq.L2.csv",
+   "language": "rust",
+   "operator": ">=",
+   "level": 2,
+   "rows": 7,
+   "probes": 34993,
+   "holders": [
+    "bool",
+    "f32",
+    "f64",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/4:-1.0,-0.0,+0.0,1.0",
+    "truth/L2/2:true,false",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 34993,
+   "n_declines": 0
+  },
+  "rust.>>.L2": {
+   "file": "rust.gtgt.L2.csv",
+   "language": "rust",
+   "operator": ">>",
+   "level": 2,
+   "rows": 16,
+   "probes": 83521,
+   "holders": [
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 3564,
+   "n_declines": 79957
+  },
+  "rust.^.L2": {
+   "file": "rust.caret.L2.csv",
+   "language": "rust",
+   "operator": "^",
+   "level": 2,
+   "rows": 5,
+   "probes": 24737,
+   "holders": [
+    "bool",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "truth/L2/2:true,false",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 24737,
+   "n_declines": 0
+  },
+  "rust.|.L2": {
+   "file": "rust.pipe.L2.csv",
+   "language": "rust",
+   "operator": "|",
+   "level": 2,
+   "rows": 5,
+   "probes": 24737,
+   "holders": [
+    "bool",
+    "i128",
+    "i32",
+    "i64",
+    "u64"
+   ],
+   "x_sets": [
+    "truth/L2/2:true,false",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1",
+    "whole/L2/5:-1,0,1,7,2^31-1",
+    "whole/L2/8:0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 24737,
+   "n_declines": 0
+  },
+  "rust.||.L2": {
+   "file": "rust.pipepipe.L2.csv",
+   "language": "rust",
+   "operator": "||",
+   "level": 2,
+   "rows": 1,
+   "probes": 16,
+   "holders": [
+    "bool"
+   ],
+   "x_sets": [
+    "truth/L2/2:true,false"
+   ],
+   "n_values": 16,
+   "n_declines": 0
+  },
+  "ruby.+.L1": {
+   "file": "ruby.plus.L1.csv",
+   "language": "ruby",
+   "operator": "+",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10001,
+   "n_declines": 815
+  },
+  "ruby.-.L1": {
+   "file": "ruby.minus.L1.csv",
+   "language": "ruby",
+   "operator": "-",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10000,
+   "n_declines": 816
+  },
+  "ruby.*.L1": {
+   "file": "ruby.star.L1.csv",
+   "language": "ruby",
+   "operator": "*",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10067,
+   "n_declines": 749
+  },
+  "ruby./.L1": {
+   "file": "ruby.slash.L1.csv",
+   "language": "ruby",
+   "operator": "/",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 9796,
+   "n_declines": 1020
+  },
+  "ruby.%.L1": {
+   "file": "ruby.percent.L1.csv",
+   "language": "ruby",
+   "operator": "%",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 9153,
+   "n_declines": 1663
+  },
+  "ruby.<.L1": {
+   "file": "ruby.lt.L1.csv",
+   "language": "ruby",
+   "operator": "<",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10001,
+   "n_declines": 815
+  },
+  "ruby.<=.L1": {
+   "file": "ruby.lteq.L1.csv",
+   "language": "ruby",
+   "operator": "<=",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10001,
+   "n_declines": 815
+  },
+  "ruby.>.L1": {
+   "file": "ruby.gt.L1.csv",
+   "language": "ruby",
+   "operator": ">",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10001,
+   "n_declines": 815
+  },
+  "ruby.>=.L1": {
+   "file": "ruby.gteq.L1.csv",
+   "language": "ruby",
+   "operator": ">=",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10001,
+   "n_declines": 815
+  },
+  "ruby.==.L1": {
+   "file": "ruby.eqeq.L1.csv",
+   "language": "ruby",
+   "operator": "==",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10816,
+   "n_declines": 0
+  },
+  "ruby.!=.L1": {
+   "file": "ruby.bangeq.L1.csv",
+   "language": "ruby",
+   "operator": "!=",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10816,
+   "n_declines": 0
+  },
+  "ruby.&.L1": {
+   "file": "ruby.amp.L1.csv",
+   "language": "ruby",
+   "operator": "&",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 673,
+   "n_declines": 10143
+  },
+  "ruby.|.L1": {
+   "file": "ruby.pipe.L1.csv",
+   "language": "ruby",
+   "operator": "|",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 673,
+   "n_declines": 10143
+  },
+  "ruby.^.L1": {
+   "file": "ruby.caret.L1.csv",
+   "language": "ruby",
+   "operator": "^",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 673,
+   "n_declines": 10143
+  },
+  "ruby.<<.L1": {
+   "file": "ruby.ltlt.L1.csv",
+   "language": "ruby",
+   "operator": "<<",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 1602,
+   "n_declines": 9214
+  },
+  "ruby.>>.L1": {
+   "file": "ruby.gtgt.L1.csv",
+   "language": "ruby",
+   "operator": ">>",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 1696,
+   "n_declines": 9120
+  },
+  "ruby.&&.L1": {
+   "file": "ruby.ampamp.L1.csv",
+   "language": "ruby",
+   "operator": "&&",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10816,
+   "n_declines": 0
+  },
+  "ruby.||.L1": {
+   "file": "ruby.pipepipe.L1.csv",
+   "language": "ruby",
+   "operator": "||",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10816,
+   "n_declines": 0
+  },
+  "ruby.**.L1": {
+   "file": "ruby.starstar.L1.csv",
+   "language": "ruby",
+   "operator": "**",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 8423,
+   "n_declines": 2393
+  },
+  "ruby.<=>.L1": {
+   "file": "ruby.lteqgt.L1.csv",
+   "language": "ruby",
+   "operator": "<=>",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10816,
+   "n_declines": 0
+  },
+  "ruby.=~.L1": {
+   "file": "ruby.eqtilde.L1.csv",
+   "language": "ruby",
+   "operator": "=~",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 105,
+   "n_declines": 10711
+  },
+  "ruby.===.L1": {
+   "file": "ruby.eqeqeq.L1.csv",
+   "language": "ruby",
+   "operator": "===",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10816,
+   "n_declines": 0
+  },
+  "ruby.and.L1": {
+   "file": "ruby.and.L1.csv",
+   "language": "ruby",
+   "operator": "and",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10816,
+   "n_declines": 0
+  },
+  "ruby.or.L1": {
+   "file": "ruby.or.L1.csv",
+   "language": "ruby",
+   "operator": "or",
+   "level": 1,
+   "rows": 49,
+   "probes": 10816,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L1/15:-max_finite,-1.5,-1.0,-(1.0-1ulp),+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "fractional/L1/16:-max_finite,-1.5,-1.0,-(1.0-1ulp),-0.0,+0.0,+min_subnormal,+min_normal,1.0-1ulp,1.0,1.0+1ulp,1.5,pi,2^53,max_finite,0.1",
+    "truth/L1/6:true,false,0,1,\"\",nil",
+    "whole/L1/17:-2^63,-2^63+1,-2^53-1,-2^31,-42,-1,0,1,7,42,1000,2^31-1,2^31,2^53-1,2^53+1,2^63-1,2^64-1"
+   ],
+   "n_values": 10816,
+   "n_declines": 0
+  },
+  "ruby.+.L2": {
+   "file": "ruby.plus.L2.csv",
+   "language": "ruby",
+   "operator": "+",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 342226,
+   "n_declines": 38463
+  },
+  "ruby.-.L2": {
+   "file": "ruby.minus.L2.csv",
+   "language": "ruby",
+   "operator": "-",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 342225,
+   "n_declines": 38464
+  },
+  "ruby.*.L2": {
+   "file": "ruby.star.L2.csv",
+   "language": "ruby",
+   "operator": "*",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 342993,
+   "n_declines": 37696
+  },
+  "ruby./.L2": {
+   "file": "ruby.slash.L2.csv",
+   "language": "ruby",
+   "operator": "/",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 316570,
+   "n_declines": 64119
+  },
+  "ruby.%.L2": {
+   "file": "ruby.percent.L2.csv",
+   "language": "ruby",
+   "operator": "%",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 149352,
+   "n_declines": 231337
+  },
+  "ruby.<.L2": {
+   "file": "ruby.lt.L2.csv",
+   "language": "ruby",
+   "operator": "<",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 0,
+   "n_declines": 380689
+  },
+  "ruby.<=.L2": {
+   "file": "ruby.lteq.L2.csv",
+   "language": "ruby",
+   "operator": "<=",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 0,
+   "n_declines": 380689
+  },
+  "ruby.>.L2": {
+   "file": "ruby.gt.L2.csv",
+   "language": "ruby",
+   "operator": ">",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 0,
+   "n_declines": 380689
+  },
+  "ruby.>=.L2": {
+   "file": "ruby.gteq.L2.csv",
+   "language": "ruby",
+   "operator": ">=",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 0,
+   "n_declines": 380689
+  },
+  "ruby.==.L2": {
+   "file": "ruby.eqeq.L2.csv",
+   "language": "ruby",
+   "operator": "==",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 380689,
+   "n_declines": 0
+  },
+  "ruby.!=.L2": {
+   "file": "ruby.bangeq.L2.csv",
+   "language": "ruby",
+   "operator": "!=",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 380689,
+   "n_declines": 0
+  },
+  "ruby.&.L2": {
+   "file": "ruby.amp.L2.csv",
+   "language": "ruby",
+   "operator": "&",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 17041,
+   "n_declines": 363648
+  },
+  "ruby.|.L2": {
+   "file": "ruby.pipe.L2.csv",
+   "language": "ruby",
+   "operator": "|",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 17041,
+   "n_declines": 363648
+  },
+  "ruby.^.L2": {
+   "file": "ruby.caret.L2.csv",
+   "language": "ruby",
+   "operator": "^",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 17041,
+   "n_declines": 363648
+  },
+  "ruby.<<.L2": {
+   "file": "ruby.ltlt.L2.csv",
+   "language": "ruby",
+   "operator": "<<",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 31849,
+   "n_declines": 348840
+  },
+  "ruby.>>.L2": {
+   "file": "ruby.gtgt.L2.csv",
+   "language": "ruby",
+   "operator": ">>",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 48333,
+   "n_declines": 332356
+  },
+  "ruby.&&.L2": {
+   "file": "ruby.ampamp.L2.csv",
+   "language": "ruby",
+   "operator": "&&",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 380689,
+   "n_declines": 0
+  },
+  "ruby.||.L2": {
+   "file": "ruby.pipepipe.L2.csv",
+   "language": "ruby",
+   "operator": "||",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 380689,
+   "n_declines": 0
+  },
+  "ruby.**.L2": {
+   "file": "ruby.starstar.L2.csv",
+   "language": "ruby",
+   "operator": "**",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 248048,
+   "n_declines": 132641
+  },
+  "ruby.<=>.L2": {
+   "file": "ruby.lteqgt.L2.csv",
+   "language": "ruby",
+   "operator": "<=>",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 380689,
+   "n_declines": 0
+  },
+  "ruby.=~.L2": {
+   "file": "ruby.eqtilde.L2.csv",
+   "language": "ruby",
+   "operator": "=~",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 630,
+   "n_declines": 380059
+  },
+  "ruby.===.L2": {
+   "file": "ruby.eqeqeq.L2.csv",
+   "language": "ruby",
+   "operator": "===",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 380689,
+   "n_declines": 0
+  },
+  "ruby.and.L2": {
+   "file": "ruby.and.L2.csv",
+   "language": "ruby",
+   "operator": "and",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 380689,
+   "n_declines": 0
+  },
+  "ruby.or.L2": {
+   "file": "ruby.or.L2.csv",
+   "language": "ruby",
+   "operator": "or",
+   "level": 2,
+   "rows": 49,
+   "probes": 380689,
+   "holders": [
+    "BigDecimal",
+    "Float",
+    "Integer",
+    "Rational",
+    "TrueFalse"
+   ],
+   "x_sets": [
+    "fractional/L2/10:-max_finite,-1.0,-0.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "fractional/L2/9:-max_finite,-1.0,+0.0,+min_subnormal,1.0-1ulp,1.0,1.0+1ulp,max_finite,0.1",
+    "truth/L2/6:true,false,0,1,\"\",nil",
+    "whole/L2/10:-2^63,-1,0,1,7,2^31-1,2^31,2^53-1,2^53+1,2^63-1"
+   ],
+   "n_values": 380689,
+   "n_declines": 0
+  }
+ }
+}

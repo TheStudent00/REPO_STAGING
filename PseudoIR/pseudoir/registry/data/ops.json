@@ -1,0 +1,914 @@
+{
+  "_doc": "PseudoIR v2 Tier-1 operator registry. DATA, not code. Each op row: id, signature, semantic test vectors, and per-language columns. A column records how one source/target language realizes the op. Strategy rank and confirmation status are filled by the probers (parse prober -> source_binding + parse status; runtime prober -> runtime-confirmed/rejected). This file is the single source consulted by the demo pipeline.",
+  "_schema_version": "tier1-v1",
+  "_strategy_ranks": {
+    "native": "the language has a dedicated operator/syntax whose runtime semantics already match the op's vectors. example: kotlin '?:' for op.null_coalesce.",
+    "sugar": "a thin built-in shorthand that lowers to an already-present op with matching semantics, no helper needed. example: coalesce_assign 'x ??= y' as sugar for 'x = x ?? y' where both exist.",
+    "synthetic": "no dedicated operator; the op is emitted as a small inline expression built from other ops that DOES pass the vectors. example: python null_coalesce lowered to a conditional expression '(a if a is not None else b)' -- NOT 'a or b', which fails the falsy vector.",
+    "polyfill": "requires a named helper function/import emitted alongside the call site. example: a language with no inline conditional would get a helper 'def _coalesce(a,b): ...'.",
+    "fail": "the op cannot be realized in this language with matching semantics; no lowering known.",
+    "native_limited": "the language has native destructuring syntax but only for a restricted source shape, not the general op. example: go 'x, y := f()' works ONLY for multi-return functions and multi-assignment expression lists -- there is no destructuring of a single composite/tuple value, because go has no tuple type.",
+    "native_operator": "for op.overloaded_binary: the language PERMITS user-defined operator overloading, so the operator symbol is DEFINED on the user type (python __add__, kotlin `operator fun plus`, swift `static func +`, csharp `operator +`, cpp `operator+`, rust `impl Add`, dart `operator +`, ruby `def +`) and the call site `a + b` stays `a + b`, dispatching to that definition. Distinct from `native` (which is about a built-in operator on built-in types); here the NATIVE mechanism is the user's OWN operator definition on their type.",
+    "method_call": "for op.overloaded_binary: the target FORBIDS user-defined operator overloading (java, go, typescript, php), so the operator symbol lowers to a named method call on the left operand -- `a + b` becomes `a.add(b)`, `a == b` becomes `a.eq(b)`, etc., per the op's operators sub-table. Load-bearing for eq: in these targets the raw `==`/`===` on a user object is reference (identity) equality, so eq MUST be the method call and never the raw operator.",
+    "native_macro_interp": "for op.string_interp (P2): the target provides expression-embedding template syntax whose runtime semantics match the interpolation vectors (eval-once, left-to-right, coercion, escaping), but it is realized via a MACRO/format expansion rather than being intrinsic to the string-literal grammar node. example: rust format!(\"x={}\", e). Distinguished from `native` (where the string literal itself carries the interpolation, e.g. python f-string) because a source-binding prober must look for the format! macro family, not a string_literal/interpolation node.",
+    "native_spread": "for op.spread_call (P2): the target has a first-class CALL-SITE spread token that unpacks an existing sequence into a callee's fixed-arity positional parameters, INDEPENDENT of whether the callee is variadic. example: python f(*lst), node/php f(...arr), ruby f(*arr).",
+    "coupled_variadic_spread": "for op.spread_call (P2): the target's spread token is syntactically legal ONLY when the callee's own trailing parameter is itself declared variadic; there is no independent spread-into-fixed-arity form (spreading into a fixed-arity callee is a COMPILE ERROR). example: go total(nums...) and kotlin total(*nums) are legal only because total is variadic.",
+    "collection_literal_spread_only": "for op.spread_call (P2): the target's spread token exists EXCLUSIVELY inside collection literals ([...a], [..a]) and is never legal at a function call site -- a false friend WITHIN the spread family, realizing neither op.spread_call nor a call-site unpack. example: dart [...nums] builds a List literal; dart has no call-arg spread at all.",
+    "manual_unpack": "for op.spread_call (P2): the target has NO call-site spread operator at all; the only realization for a KNOWN fixed arity is indexing the source container by hand at each parameter position (f(x[0], x[1], x[2])). No general runtime spread. example: cpp, java, csharp, rust, swift for the spread-into-fixed-arity vector."
+  },
+  "_confirmation_status": {
+    "runtime-confirmed": "the lowering template was executed on a real runtime in-sandbox and passed every semantic vector.",
+    "parse-confirmed": "the source binding (grammar node/token) was confirmed present by parsing a real snippet with the real tree-sitter grammar; runtime not exercised.",
+    "pending": "neither runtime nor parse confirmation performed in-sandbox (e.g. no wheel/runtime available); a ready-to-run snippet is provided for host execution.",
+    "rejected": "a candidate binding or lowering was tried and FAILED (wrong node type, or lowering failed a vector). kept as evidence, not hidden."
+  },
+  "languages": [
+    "python",
+    "typescript",
+    "java",
+    "csharp",
+    "go",
+    "rust",
+    "ruby",
+    "php",
+    "kotlin",
+    "cpp",
+    "dart",
+    "swift"
+  ],
+  "ops": [
+    {
+      "id": "op.null_coalesce",
+      "family": "null-safety",
+      "signature": "null_coalesce(lhs: T?, rhs: T) -> T",
+      "meaning": "evaluate lhs; if lhs is null/None yield rhs, else yield lhs. MUST NOT treat falsy-but-non-null values (0, '', false, empty list) as absent -- that is the vector that splits true null-coalesce from boolean 'or'.",
+      "test_vectors": [
+        {
+          "name": "null_yields_rhs",
+          "inputs": {
+            "lhs": null,
+            "rhs": "B"
+          },
+          "expect": "B"
+        },
+        {
+          "name": "present_yields_lhs",
+          "inputs": {
+            "lhs": "A",
+            "rhs": "B"
+          },
+          "expect": "A"
+        },
+        {
+          "name": "falsy_trap_zero",
+          "inputs": {
+            "lhs": 0,
+            "rhs": 99
+          },
+          "expect": 0
+        },
+        {
+          "name": "falsy_trap_emptystr",
+          "inputs": {
+            "lhs": "",
+            "rhs": "X"
+          },
+          "expect": ""
+        }
+      ],
+      "columns": {
+        "python": {
+          "source_binding": "hub-notation: node:call function:U.coalesce (recognized at ingest; see prober/u_namespace)",
+          "strategy": "synthetic",
+          "lowering": "(a if a is not None else b)",
+          "status": "runtime-confirmed",
+          "evidence": "runtime_results.json op.null_coalesce.python.correct_conditional; R4 hub/U.py + prober/u_namespace/test_U_results.out 2026-07-14 (U.coalesce vectors)"
+        },
+        "typescript": {
+          "source_binding": "node:binary_expression token:??",
+          "strategy": "native",
+          "lowering": null,
+          "status": "parse-confirmed",
+          "evidence": null
+        },
+        "java": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "T result = (a != null) ? a : b;  // ternary null check (no compiler/jshell available)",
+          "status": "runtime-confirmed",
+          "evidence": "r1_results/r0_java_retry.out 2026-07-14 host run (patched snippet)"
+        },
+        "csharp": {
+          "source_binding": "node:binary_expression token:??",
+          "strategy": "native",
+          "lowering": "var result = a ?? b;  // native null-coalescing operator",
+          "status": "parse-confirmed, runtime-pending",
+          "evidence": "runtime_results.json op.null_coalesce.csharp.pending (runtime absent in sandbox)"
+        },
+        "go": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "func coalesce[T any](a *T, b T) T { if a == nil { return b }; return *a }",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/go.out 2026-07-13 host run"
+        },
+        "rust": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "let result = a.unwrap_or(b);  // Option<T>::unwrap_or",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/rust.out 2026-07-13 host run"
+        },
+        "ruby": {
+          "source_binding": null,
+          "strategy": "native",
+          "lowering": "a || b",
+          "status": "runtime-confirmed",
+          "evidence": "runtime_results.json op.null_coalesce.ruby.naive_or"
+        },
+        "php": {
+          "source_binding": "node:binary_expression token:??",
+          "strategy": "native",
+          "lowering": "$result = $a ?? $b;  // native null coalescing operator",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/php.out 2026-07-13 host run"
+        },
+        "kotlin": {
+          "source_binding": "node:binary_expression token:?:",
+          "strategy": "native",
+          "lowering": "val result = a ?: b  // native Elvis operator",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/kotlin.out 2026-07-13 host run"
+        },
+        "cpp": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "std::optional<T> a = ...; T result = a.value_or(b);",
+          "status": "runtime-confirmed",
+          "evidence": "runtime_results.json op.null_coalesce.cpp.optional_value_or"
+        },
+        "dart": {
+          "source_binding": null,
+          "strategy": "native",
+          "lowering": "var result = a ?? b;  // native null-coalescing operator",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/dart.out 2026-07-13 host run"
+        },
+        "swift": {
+          "source_binding": "node:nil_coalescing_expression token:??",
+          "strategy": "native",
+          "lowering": "let result = a ?? b  // native nil-coalescing operator",
+          "status": "parse-confirmed, runtime-pending",
+          "evidence": "runtime_results.json op.null_coalesce.swift.pending (runtime absent in sandbox)"
+        }
+      }
+    },
+    {
+      "id": "op.safe_call",
+      "family": "null-safety",
+      "signature": "safe_call(recv: T?, member) -> U?",
+      "meaning": "if recv is null/None yield null (short-circuit, do NOT access member); else access member. Chains propagate the first null.",
+      "escalations": {
+        "method_calls_through_chain": "DECIDED (the owner, 2026-07-14): method CALLS through U.safe -- i.e. U.safe(x).method() -- are UNSUPPORTED BY DESIGN. Only ATTRIBUTE chains are supported (U.safe(x).a.b.unwrap(d)). The _SafeProxy in hub/U.py raises TypeError immediately and loudly on a call attempt ('_SafeProxy' object is not callable), which is the intended blessed behavior, not a gap to close. Rationale: a call-through hides a branch (the null short-circuit) inside an expression; it makes None provenance ambiguous (was the None the chain breaking, or a method that legitimately returned None?); and the result is undebuggable. The blessed form for a null-guarded method call is the explicit if-statement, written out. The community MAY propose call-through later, but only WITH semantic vectors attached that pin down the None-provenance and short-circuit semantics -- until then it stays a loud TypeError. This supersedes the earlier 'probed and recorded, deliberately not over-built' framing (decision queue item 7b) with a firm design ruling."
+      },
+      "test_vectors": [
+        {
+          "name": "null_recv_short_circuits",
+          "inputs": {
+            "recv": null
+          },
+          "expect": null
+        },
+        {
+          "name": "present_recv_accesses",
+          "inputs": {
+            "recv": {
+              "member": "V"
+            }
+          },
+          "expect": "V"
+        },
+        {
+          "name": "chain_null_propagates",
+          "inputs": {
+            "recv": {
+              "member": null
+            },
+            "chain": true
+          },
+          "expect": null
+        }
+      ],
+      "columns": {
+        "python": {
+          "source_binding": "hub-notation: node:call function:U.safe root + attribute chain + .unwrap(default) (recognized at ingest; see prober/u_namespace)",
+          "strategy": "synthetic",
+          "lowering": "(recv.member if recv is not None else None)  # chains nest this per hop",
+          "status": "runtime-confirmed",
+          "evidence": "runtime_results.json op.safe_call.python.correct_conditional; R4 hub/U.py U.safe proxy + prober/u_namespace/test_U_results.out 2026-07-14"
+        },
+        "typescript": {
+          "source_binding": "node:member_expression node:optional_chain token:?.",
+          "strategy": "native",
+          "lowering": null,
+          "status": "parse-confirmed",
+          "evidence": null
+        },
+        "java": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "T result = (recv != null) ? recv.getMember() : null;  // manual null check (no compiler/jshell available)",
+          "status": "runtime-confirmed",
+          "evidence": "r1_results/r0_java_retry.out 2026-07-14 host run (patched snippet)"
+        },
+        "csharp": {
+          "source_binding": "node:conditional_access_expression token:? node:member_binding_expression",
+          "strategy": "native",
+          "lowering": "var result = recv?.Member;  // native null-conditional operator",
+          "status": "parse-confirmed, runtime-pending",
+          "evidence": "runtime_results.json op.safe_call.csharp.pending (runtime absent in sandbox)"
+        },
+        "go": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "if recv != nil { result = recv.Member } else { result = nil }  // no native safe-call",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/go.out 2026-07-13 host run"
+        },
+        "rust": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "let result = recv.map(|r| r.member);  // Option::map",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/rust.out 2026-07-13 host run"
+        },
+        "ruby": {
+          "source_binding": "node:call token:&.",
+          "strategy": "native",
+          "lowering": "recv&.member  (chains: a&.b&.c)",
+          "status": "runtime-confirmed",
+          "evidence": "runtime_results.json op.safe_call.ruby.native_safe_navigation"
+        },
+        "php": {
+          "source_binding": "node:nullsafe_member_access_expression token:?->",
+          "strategy": "native",
+          "lowering": "$result = $recv?->member;  // native nullsafe operator (PHP 8+)",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/php.out 2026-07-13 host run"
+        },
+        "kotlin": {
+          "source_binding": "node:navigation_expression token:?.",
+          "strategy": "native",
+          "lowering": "val result = recv?.member  // native safe-call operator",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/kotlin.out 2026-07-13 host run"
+        },
+        "cpp": {
+          "source_binding": null,
+          "strategy": "fail",
+          "lowering": "N/A -- no native optional chaining in C++17; a std::optional-based helper would require per-call-site lambda wrapping or a member-pointer template, which is convoluted and not representative of a clean lowering.",
+          "status": "pending",
+          "evidence": "runtime_results.json op.safe_call.cpp.na (na: C++ has no built-in safe-navigation operator. A generic ?.-s)"
+        },
+        "dart": {
+          "source_binding": null,
+          "strategy": "native",
+          "lowering": "var result = recv?.member;  // native null-aware access",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/dart.out 2026-07-13 host run"
+        },
+        "swift": {
+          "source_binding": "node:navigation_expression token:?",
+          "strategy": "native",
+          "lowering": "let result = recv?.member  // native optional chaining",
+          "status": "parse-confirmed, runtime-pending",
+          "evidence": "runtime_results.json op.safe_call.swift.pending (runtime absent in sandbox)"
+        }
+      }
+    },
+    {
+      "id": "op.coalesce_assign",
+      "family": "null-safety",
+      "signature": "coalesce_assign(lhs_ref: T?, rhs: T) -> void (lhs := lhs ?? rhs)",
+      "meaning": "assign rhs to lhs only if lhs is currently null/None; otherwise leave lhs unchanged. Falsy-but-non-null lhs must be left unchanged.",
+      "test_vectors": [
+        {
+          "name": "null_gets_assigned",
+          "inputs": {
+            "lhs": null,
+            "rhs": "B"
+          },
+          "expect": "B"
+        },
+        {
+          "name": "present_unchanged",
+          "inputs": {
+            "lhs": "A",
+            "rhs": "B"
+          },
+          "expect": "A"
+        },
+        {
+          "name": "falsy_trap_zero_unchanged",
+          "inputs": {
+            "lhs": 0,
+            "rhs": 99
+          },
+          "expect": 0
+        }
+      ],
+      "columns": {
+        "python": {
+          "source_binding": "hub-notation: node:assignment where rhs = node:call function:U.coalesce with lhs-name == assign target (the Hub idiom `x = U.coalesce(x, y)`; recognized at ingest -- there is deliberately no U.coalesce_assign function, Python cannot assign through a call; see hub/U.py note + prober/u_namespace)",
+          "strategy": "synthetic",
+          "lowering": "x = x if x is not None else y",
+          "status": "runtime-confirmed",
+          "evidence": "runtime_results.json op.coalesce_assign.python.correct_conditional_assign; R4 `x = U.coalesce(x, y)` idiom + prober/u_namespace/test_U_results.out 2026-07-14"
+        },
+        "typescript": {
+          "source_binding": "node:augmented_assignment_expression token:??=",
+          "strategy": "native",
+          "lowering": null,
+          "status": "parse-confirmed",
+          "evidence": null
+        },
+        "java": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "if (x == null) { x = y; }  // manual null check (no compiler/jshell available)",
+          "status": "runtime-confirmed",
+          "evidence": "r1_results/r0_java_retry.out 2026-07-14 host run (patched snippet)"
+        },
+        "csharp": {
+          "source_binding": "node:assignment_expression token:??=",
+          "strategy": "native",
+          "lowering": "x ??= y;  // native null-coalescing assignment",
+          "status": "parse-confirmed, runtime-pending",
+          "evidence": "runtime_results.json op.coalesce_assign.csharp.pending (runtime absent in sandbox)"
+        },
+        "go": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "if x == nil { x = y }  // no native operator, manual pattern",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/go.out 2026-07-13 host run"
+        },
+        "rust": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "let x = x.get_or_insert(y);  // Option::get_or_insert (mutates in place)",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/rust.out 2026-07-13 host run"
+        },
+        "ruby": {
+          "source_binding": null,
+          "strategy": "native",
+          "lowering": "x ||= y",
+          "status": "runtime-confirmed",
+          "evidence": "runtime_results.json op.coalesce_assign.ruby.native_or_assign"
+        },
+        "php": {
+          "source_binding": "node:augmented_assignment_expression token:??=",
+          "strategy": "native",
+          "lowering": "$x ??= $y;  // native null coalescing assignment",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/php.out 2026-07-13 host run"
+        },
+        "kotlin": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "x = x ?: y  // Elvis operator used as assign",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/kotlin.out 2026-07-13 host run"
+        },
+        "cpp": {
+          "source_binding": null,
+          "strategy": "fail",
+          "lowering": "N/A -- no built-in nullable-assign operator; would require std::optional<T>& reference plumbing at every mutation site (a.has_value() ? void() : a = b), which is boilerplate rather than a clean single-operator lowering.",
+          "status": "pending",
+          "evidence": "runtime_results.json op.coalesce_assign.cpp.na (na: Skipped forced convoluted polyfill per instructions; a real )"
+        },
+        "dart": {
+          "source_binding": null,
+          "strategy": "native",
+          "lowering": "x ??= y;  // native null-aware assignment",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/dart.out 2026-07-13 host run"
+        },
+        "swift": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "x = x ?? y  // no native ??= prior to custom operator; commonly x = x ?? y",
+          "status": "pending",
+          "evidence": "runtime_results.json op.coalesce_assign.swift.pending (runtime absent in sandbox)"
+        }
+      }
+    },
+    {
+      "id": "op.not_null_assert",
+      "family": "null-safety",
+      "signature": "not_null_assert(x: T?) -> T",
+      "meaning": "assert x is non-null and yield it as non-nullable; if x is null raise/throw at runtime. This is an assertion, NOT a default -- distinct from null_coalesce.",
+      "test_vectors": [
+        {
+          "name": "present_passes_through",
+          "inputs": {
+            "x": "A"
+          },
+          "expect": "A"
+        },
+        {
+          "name": "null_raises",
+          "inputs": {
+            "x": null
+          },
+          "expect": "<raise>"
+        }
+      ],
+      "columns": {
+        "python": {
+          "source_binding": "hub-notation: node:call function:U.not_null (recognized at ingest; see prober/u_namespace)",
+          "strategy": "polyfill",
+          "lowering": "def not_null_assert(x):\\n    if x is None: raise ValueError(...)\\n    return x",
+          "status": "runtime-confirmed",
+          "evidence": "runtime_results.json op.not_null_assert.python.helper_raise; R4 hub/U.py U.not_null + prober/u_namespace/test_U_results.out 2026-07-14"
+        },
+        "typescript": {
+          "source_binding": "node:non_null_expression token:!",
+          "strategy": "native",
+          "lowering": null,
+          "status": "parse-confirmed",
+          "evidence": null
+        },
+        "java": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "T result = Objects.requireNonNull(x, \\\"null\\\");  // (no compiler/jshell available)",
+          "status": "runtime-confirmed",
+          "evidence": "r1_results/r0_java_retry.out 2026-07-14 host run (patched snippet)"
+        },
+        "csharp": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "var result = x!;  // C# nullable annotation, compile-time hint only (like TS !) with no runtime check",
+          "status": "pending",
+          "evidence": "runtime_results.json op.not_null_assert.csharp.pending (runtime absent in sandbox)"
+        },
+        "go": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "if x == nil { panic(\\\"null\\\") }; result := *x",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/go.out 2026-07-13 host run"
+        },
+        "rust": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "let result = x.expect(\\\"null\\\");  // Option::expect panics on None",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/rust.out 2026-07-13 host run"
+        },
+        "ruby": {
+          "source_binding": null,
+          "strategy": "polyfill",
+          "lowering": "def not_null_assert(x)\\n  raise RuntimeError, ... if x.nil?\\n  x\\nend",
+          "status": "runtime-confirmed",
+          "evidence": "runtime_results.json op.not_null_assert.ruby.helper_raise"
+        },
+        "php": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "$result = $x ?? throw new RuntimeException('null');  // PHP 8 throw expression",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/php.out 2026-07-13 host run"
+        },
+        "kotlin": {
+          "source_binding": "node:unary_expression token:!!",
+          "strategy": "native",
+          "lowering": "val result = x!!  // native non-null assertion operator, throws NPE",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/kotlin.out 2026-07-13 host run"
+        },
+        "cpp": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "template<typename T> T not_null_assert(std::optional<T> x) { if (!x) throw std::runtime_error(...); return *x; }",
+          "status": "pending",
+          "evidence": "runtime_results.json op.not_null_assert.cpp.pending (runtime absent in sandbox)"
+        },
+        "dart": {
+          "source_binding": null,
+          "strategy": "native",
+          "lowering": "var result = x!;  // native non-null assertion, throws at runtime",
+          "status": "runtime-confirmed",
+          "evidence": "r0_results/dart.out 2026-07-13 host run"
+        },
+        "swift": {
+          "source_binding": "node:postfix_expression token:!",
+          "strategy": "native",
+          "lowering": "let result = x!  // force-unwrap, traps at runtime on nil",
+          "status": "parse-confirmed, runtime-pending",
+          "evidence": "runtime_results.json op.not_null_assert.swift.pending (runtime absent in sandbox)"
+        }
+      }
+    },
+    {
+      "id": "op.destructure",
+      "family": "destructuring",
+      "signature": "destructure(names: [n1, n2, ... nK], source: TupleLike[K]) -> declare-and-bind each ni := source[i]  (statement position)",
+      "meaning": "STATEMENT-POSITION op: declare K names and bind each from the i-th component of ONE source value, with the source value evaluated EXACTLY ONCE and fully before any name is bound. Fixed-arity tuple/pair unpack only (the Oracle Discipline case: `x, y = get_coordinates()`). The single-evaluation requirement is what the swap vector (`a, b = b, a`) catches: a naive sequential-assignment lowering (a = b; b = a) evaluates/binds left-to-right and corrupts the swap; a temp-tuple (or native tuple) lowering evaluates the whole RHS first and passes.",
+      "non_goals": [
+        "nested patterns (e.g. `(a, (b, c)) = ...`) -- OUT OF SCOPE",
+        "rest/spread patterns (e.g. `a, *rest = ...` / `[a, ...rest]`) -- OUT OF SCOPE",
+        "dict/object/record-field destructuring (e.g. `{a, b} = obj`) -- OUT OF SCOPE",
+        "any arity that is not fixed and known at ingest -- OUT OF SCOPE (see escalation in REPORT_r2.md: how the Hub notation marks arity when the source type is opaque is a the owner decision, not settled here). RESOLUTION (2026-07-14): DECIDED: destructure sources must carry a statically-known component count via mandatory return-type annotation (Tuple[...]); opaque sources rejected at ingest."
+      ],
+      "requires_statement_hoisting": "TRUE for synthetic columns (java): the single source-level declare-and-bind becomes MULTIPLE target statements -- one temp declaration holding the once-evaluated source, then K accessor binds. A target with native tuple destructuring emits a single statement and needs no hoisting.",
+      "test_vectors": [
+        {
+          "name": "unpack_from_return",
+          "inputs": {
+            "source": "get_coordinates() -> (3, 4)",
+            "names": [
+              "x",
+              "y"
+            ]
+          },
+          "expect": {
+            "x": 3,
+            "y": 4
+          }
+        },
+        {
+          "name": "swap",
+          "inputs": {
+            "pre": {
+              "a": 1,
+              "b": 2
+            },
+            "source": "(b, a)",
+            "names": [
+              "a",
+              "b"
+            ]
+          },
+          "expect": {
+            "a": 2,
+            "b": 1
+          },
+          "note": "false-friend catcher: single-evaluation swap. A sequential-assignment lowering (a=b; b=a) FAILS this (yields a=2,b=2); temp-tuple / native-tuple lowering PASSES."
+        },
+        {
+          "name": "eval_order_once",
+          "inputs": {
+            "source": "pair_with_side_effect() increments a counter and returns (10,20)",
+            "names": [
+              "x",
+              "y"
+            ]
+          },
+          "expect": {
+            "counter": 1,
+            "x": 10,
+            "y": 20
+          },
+          "note": "the source expression is evaluated EXACTLY ONCE; a lowering that re-evaluates the source per bound name (source[0], source[1] on the raw call) would call it K times and fail counter==1."
+        }
+      ],
+      "columns": {
+        "python": {
+          "source_binding": "node:assignment node:pattern_list",
+          "strategy": "native",
+          "lowering": "x, y = <source>   # native tuple unpack, RHS evaluated once then bound",
+          "status": "runtime-confirmed",
+          "evidence": "prober/destructure/r2_results.out python passthrough, 3/3 vectors + swap-trap contrast"
+        },
+        "typescript": {
+          "source_binding": "node:variable_declarator node:array_pattern",
+          "strategy": "native",
+          "lowering": "const [x, y] = <source>;  // native array destructuring",
+          "status": "runtime-confirmed",
+          "evidence": "prober/destructure/r2_results.out node array-destructure, 3/3 vectors"
+        },
+        "java": {
+          "source_binding": null,
+          "strategy": "synthetic",
+          "lowering": "var _d0 = <source>;  // temp holds once-evaluated source; then: T x = _d0.first(); U y = _d0.second();  (accessor per name; requires statement_hoisting)",
+          "status": "runtime-confirmed",
+          "evidence": "r2_results/r2_java.out 2026-07-14 host run"
+        },
+        "csharp": {
+          "source_binding": "node:declaration_expression node:parenthesized_variable_designation",
+          "strategy": "native",
+          "lowering": "var (x, y) = <source>;  // native deconstruction (value tuples + Deconstruct)",
+          "status": "pending",
+          "evidence": "prober/pending_snippets/DestructureOp.cs (no dotnet/mono in sandbox)"
+        },
+        "go": {
+          "source_binding": "node:assignment_statement / node:var_declaration (multi-assign)",
+          "strategy": "native_limited",
+          "lowering": "x, y := getCoordinates()  // ONLY via multi-RETURN or multi-assignment; Go has NO tuple value and NO destructuring of a single composite (`x, y := somePair` does not exist). Source must be a multi-return call or a matching expression list.",
+          "status": "runtime-confirmed",
+          "evidence": "r2_results/r2_go.out 2026-07-14 host run"
+        },
+        "rust": {
+          "source_binding": "node:let_declaration node:tuple_pattern",
+          "strategy": "native",
+          "lowering": "let (x, y) = <source>;  // native let-pattern / tuple pattern",
+          "status": "runtime-confirmed",
+          "evidence": "r2_results/r2_rust.out 2026-07-14 host run"
+        },
+        "ruby": {
+          "source_binding": "node:assignment node:left_assignment_list",
+          "strategy": "native",
+          "lowering": "x, y = <source>  # native multiple assignment / array decomposition",
+          "status": "runtime-confirmed",
+          "evidence": "prober/destructure/r2_results_ruby.out (ruby present in sandbox), 3/3 vectors"
+        },
+        "php": {
+          "source_binding": "node:list_assignment / node:array token:[]",
+          "strategy": "native",
+          "lowering": "[$x, $y] = <source>;  // native list()/[] destructuring",
+          "status": "runtime-confirmed",
+          "evidence": "r2_results/r2_php.out 2026-07-14 host run"
+        },
+        "kotlin": {
+          "source_binding": "node:multi_variable_declaration",
+          "strategy": "native",
+          "lowering": "val (x, y) = <source>  // destructuring declaration via component1()/component2(); source must be a data class / Pair / any type with componentN operators",
+          "status": "runtime-confirmed",
+          "evidence": "r2_results/r2_kotlin.out 2026-07-14 host run"
+        },
+        "cpp": {
+          "source_binding": "node:structured_binding_declaration token:[]",
+          "strategy": "native",
+          "lowering": "auto [x, y] = <source>;  // C++17 structured bindings (over tuple/pair/struct). Swap uses std::tie(a,b)=std::make_tuple(b,a). NATIVE since C++17 -- no synthetic temp needed.",
+          "status": "runtime-confirmed",
+          "evidence": "prober/destructure/r2_results_cpp.out (g++ -std=c++17 present in sandbox), 3/3 vectors"
+        },
+        "dart": {
+          "source_binding": "node:pattern_assignment / node:pattern_variable_declaration",
+          "strategy": "native",
+          "lowering": "var (x, y) = <source>;  // Dart 3+ native record patterns. (Prior art WFL_PseudoCoup egress/dart.py used a pre-Dart-3 lowering: temp + .first/.second for 2 names, _d0[i] subscripts for N -- superseded by native record patterns here.)",
+          "status": "runtime-confirmed",
+          "evidence": "r2_results/r2_dart.out 2026-07-14 host run"
+        },
+        "swift": {
+          "source_binding": "node:value_binding_pattern node:tuple_pattern",
+          "strategy": "native",
+          "lowering": "let (x, y) = <source>  // native tuple pattern; swap is the textbook `(a, b) = (b, a)`",
+          "status": "pending",
+          "evidence": "prober/pending_snippets/destructure_op.swift (no swift toolchain in sandbox)"
+        }
+      }
+    },
+    {
+      "id": "op.overloaded_binary",
+      "family": "operator-overloading",
+      "signature": "overloaded_binary(sym, lhs: UserType, rhs: UserType) -> UserType|bool   AND   overloaded_unary('-', operand: UserType) -> UserType",
+      "meaning": "an operator symbol applied to USER-DEFINED operand types resolves to a named method on the left operand's type. Structurally ONE op keyed by symbol via the operators sub-table below (add/sub/mul/div/mod/neg/eq/lt/le/gt/ge -- the the owner-approved 11-method table), not 11 separate ops. APPLIES ONLY to user-defined operand types: primitive arithmetic (int+int) is UNTOUCHED and never routed through this op -- the op exists so the Hub can define e.g. Vector2 + Vector2. Operand types are read from the MANDATORY annotations (the Oracle Discipline's full-annotation rule); there is NO type-inference pass. Where the target language permits user operator definition, the native operator is DEFINED on the type and `a + b` stays `a + b`; where the target forbids it (java/go/typescript/php), `a + b` lowers to the method call `a.add(b)`. The eq trap: `eq` is VALUE equality. In targets where the raw `==`/`===` on a user object is REFERENCE equality by default (java Object.equals-vs-== , javascript ===), the op MUST lower to the method call (`a.eq(b)`), NEVER the raw operator -- emitting `a == b` there would silently compare identities and pass/fail on object reference, not value. That is the false-friend this op's eq vector catches.",
+      "operators": {
+        "_doc": "symbol -> method-name binding table. the owner-approved 2026-07-14. The method name is what the method_call columns emit (a.<method>(b)) and what the native_operator columns bind the language's operator-definition hook to (python __add__, kotlin `operator fun plus`, rust `impl Add::add`, etc.). neg is the sole UNARY entry (unary minus); the rest are binary.",
+        "_ordering_synthesis": "the owner decision 2026-07-14: the ORDERING methods (le/gt/ge) are NOT author-implemented. The Hub author implements ONLY lt and eq; le/gt/ge are SYNTHESIZED from those two -- le = lt || eq, gt = !le, ge = !lt. This is why `synthesized: true` is set on le/gt/ge below and `author_implemented: true` on lt (and on eq, add, sub, mul, div, mod, neg). Rationale: a single lt+eq pair defines a strict-weak/total order; deriving the other three mechanically prevents an author from shipping mutually-inconsistent operators (the ordering-coherence risk that was previously escalated). Targets with a native three-way comparator (kotlin compareTo, rust PartialOrd, ruby <=>) MAY collapse all four onto that comparator instead of the literal lt||eq form, but the SEMANTICS are pinned to the synthesis rule above.",
+        "+":  {"method": "add", "arity": "binary", "author_implemented": true},
+        "-":  {"method": "sub", "arity": "binary", "author_implemented": true},
+        "*":  {"method": "mul", "arity": "binary", "author_implemented": true},
+        "/":  {"method": "div", "arity": "binary", "author_implemented": true},
+        "%":  {"method": "mod", "arity": "binary", "author_implemented": true},
+        "-u": {"method": "neg", "arity": "unary", "author_implemented": true, "note": "unary minus (-a); spelled -u in this table to distinguish from binary subtraction which is '-'."},
+        "==": {"method": "eq",  "arity": "binary", "author_implemented": true, "note": "VALUE equality. method_call columns whose raw == is reference equality (java, typescript) MUST use a.eq(b), never ==."},
+        "<":  {"method": "lt",  "arity": "binary", "author_implemented": true, "note": "the ONE author-implemented ordering method; le/gt/ge are derived from lt+eq (see _ordering_synthesis)."},
+        "<=": {"method": "le",  "arity": "binary", "synthesized": true, "synthesis": "lt || eq"},
+        ">":  {"method": "gt",  "arity": "binary", "synthesized": true, "synthesis": "!le  (i.e. !(lt || eq))"},
+        ">=": {"method": "ge",  "arity": "binary", "synthesized": true, "synthesis": "!lt"}
+      },
+      "non_goals": [
+        "operator overloading on PRIMITIVE operand types -- OUT OF SCOPE (primitive arithmetic is never routed through this op).",
+        "type INFERENCE of operand types -- OUT OF SCOPE (operand types come from mandatory annotations only).",
+        "compound-assignment operators (+=, -=, ...) on user types -- STILL BANNED (the owner decision 2026-07-14): the Hub does not accept `a += b` on a user type. Recorded blessed semantics IF this ban is ever relaxed: REBIND, i.e. `a += b` lowers to `a = a.add(b)` (build a fresh value and rebind the name), NEVER an in-place mutation of `a`. This keeps user types value-like and avoids aliasing surprises. The ban stands; the rebind rule is the pre-decided answer for the day it is lifted, so no future re-litigation.",
+        "any operator/method beyond the approved 11 -- extension policy set by the owner 2026-07-14: (a) BITWISE operators (&, |, ^, <<, >>, ~) APPROVED IN PRINCIPLE, to be added on demand (not implemented yet, no new snippets this pass); (b) INDEXING is the NEXT queued extension -- getitem/setitem only (`a[i]` read and `a[i] = v` write), with NO slice support on user types (`a[i:j]` is out); (c) matmul (@) and callable (making a user instance callable, `a(...)`) are DEPRIORITIZED -- recorded, not queued.",
+        "ordering-coherence guarantees across lt/le/gt/ge -- RESOLVED (the owner decision 2026-07-14): coherence is now GUARANTEED BY CONSTRUCTION, not left to the author. The author implements only lt and eq; le/gt/ge are synthesized (le = lt||eq, gt = !le, ge = !lt -- see operators._ordering_synthesis). Because all four derive from the single lt+eq pair, they cannot be mutually inconsistent. No longer an open escalation."
+      ],
+      "test_vectors": [
+        {"name": "add",        "inputs": {"a": "Vector2(1,2)", "b": "Vector2(3,4)"}, "op": "+",  "expect": "Vector2(4,6)"},
+        {"name": "sub",        "inputs": {"a": "Vector2(3,4)", "b": "Vector2(1,2)"}, "op": "-",  "expect": "Vector2(2,2)"},
+        {"name": "neg",        "inputs": {"a": "Vector2(1,-2)"},                     "op": "-u", "expect": "Vector2(-1,2)"},
+        {"name": "eq_value_true",  "inputs": {"a": "Vector2(1,2)", "b": "Vector2(1,2)"}, "op": "==", "expect": true,  "note": "VALUE equality: two DISTINCT Vector2 objects with equal components are equal. A reference-equality lowering (raw java ==, js ===) would return FALSE here -- that is the trap."},
+        {"name": "eq_value_false", "inputs": {"a": "Vector2(1,2)", "b": "Vector2(9,9)"}, "op": "==", "expect": false},
+        {"name": "lt",         "inputs": {"a": "Vector2(1,2)", "b": "Vector2(1,3)"}, "op": "<",  "expect": true, "note": "lt on a comparable user type; here Vector2 orders by (x then y) lexicographically for the demo."}
+      ],
+      "columns": {
+        "python": {
+          "source_binding": "node:binary_operator / node:unary_operator (dunder-dispatched at runtime)",
+          "strategy": "native_operator",
+          "lowering": "define dunder methods on the class (def __add__(self,o), __sub__, __neg__, __eq__, __lt__, ...); `a + b` stays `a + b` -- Python dispatches to __add__. __eq__ is VALUE equality by definition.",
+          "status": "runtime-confirmed",
+          "evidence": "prober/overloaded_ops/r3_results.out python native-operator form, 6/6 vectors + eq-trap contrast"
+        },
+        "typescript": {
+          "source_binding": null,
+          "strategy": "method_call",
+          "lowering": "a.add(b) / a.sub(b) / a.neg() / a.eq(b) / a.lt(b) ...  // TS has NO operator overloading; `a + b` on objects would call valueOf/toString (string/number coercion), and `a === b` is REFERENCE equality -- so eq MUST be a.eq(b), never ===.",
+          "status": "runtime-confirmed",
+          "evidence": "prober/overloaded_ops/r3_results.out node method-call form, 6/6 vectors incl. eq value-vs-reference contrast"
+        },
+        "java": {
+          "source_binding": null,
+          "strategy": "method_call",
+          "lowering": "a.add(b) / a.sub(b) / a.neg() / a.eq(b) / a.lt(b) ...  // Java has NO operator overloading (except built-in String +). `a == b` on objects is REFERENCE equality -- eq MUST lower to a.eq(b) (value), never ==. THE spec-named java-shaped case.",
+          "status": "runtime-confirmed",
+          "evidence": "r3_results/r3_java.out 2026-07-14 host run"
+        },
+        "csharp": {
+          "source_binding": "node:operator_declaration token:operator",
+          "strategy": "native_operator",
+          "lowering": "define `public static Vector2 operator +(Vector2 a, Vector2 b)`, `operator -`, unary `operator -`, `operator ==`/`operator !=` (must override Equals/GetHashCode for value semantics), `operator <` ...; `a + b` stays native.",
+          "status": "pending",
+          "evidence": "prober/pending_snippets/OverloadedOps.cs (no dotnet/mono in sandbox)"
+        },
+        "go": {
+          "source_binding": null,
+          "strategy": "method_call",
+          "lowering": "a.Add(b) / a.Sub(b) / a.Neg() / a.Eq(b) / a.Lt(b) ...  // Go has NO operator overloading at all. Every user-type operator is a method call. Value equality via a struct-comparing Eq method.",
+          "status": "runtime-confirmed",
+          "evidence": "r3_results/r3_go.out 2026-07-14 host run"
+        },
+        "rust": {
+          "source_binding": "node:impl_item (trait impl: Add, Sub, Neg, PartialEq, PartialOrd)",
+          "strategy": "native_operator",
+          "lowering": "`impl Add for Vector2 { fn add(self,o)->Vector2 {...} }`, Sub, Neg, `#[derive(PartialEq)]` or manual impl for ==, PartialOrd for < ; `a + b` stays native and calls the trait method.",
+          "status": "runtime-confirmed",
+          "evidence": "r3_results/r3_rust.out 2026-07-14 host run"
+        },
+        "ruby": {
+          "source_binding": "node:method (def +, def -, def ==, def <=> )",
+          "strategy": "native_operator",
+          "lowering": "define instance methods named as the operators (`def +(o)`, `def -(o)`, `def -@` for unary minus, `def ==(o)` value equality, `def <(o)` or `include Comparable` + `<=>`); `a + b` stays native, dispatches to `#+`.",
+          "status": "runtime-confirmed",
+          "evidence": "prober/overloaded_ops/r3_results_ruby.out (ruby present in sandbox), 6/6 vectors"
+        },
+        "php": {
+          "source_binding": null,
+          "strategy": "method_call",
+          "lowering": "$a->add($b) / $a->sub($b) / $a->neg() / $a->eq($b) / $a->lt($b) ...  // PHP has NO user-defined operator overloading in core (only internal classes via the C-level do_operation handler; userland cannot define it). HONESTY CHECK RESULT: php joins the method_call column, NOT native_operator.",
+          "status": "runtime-confirmed",
+          "evidence": "r3_results/r3_php.out 2026-07-14 host run"
+        },
+        "kotlin": {
+          "source_binding": "node:function_declaration modifier:operator (operator fun plus/minus/...)",
+          "strategy": "native_operator",
+          "lowering": "define `operator fun plus(o: Vector2): Vector2`, minus, `operator fun unaryMinus()`, `operator fun compareTo(o)` (gives < <= > >=), and `equals`/`hashCode` (data class or override) for value ==; `a + b` stays native, resolves to `plus`.",
+          "status": "runtime-confirmed",
+          "evidence": "r3_results/r3_kotlin.out 2026-07-14 host run"
+        },
+        "cpp": {
+          "source_binding": "node:operator_name / node:function_declarator (operator+, operator-, operator==, operator<)",
+          "strategy": "native_operator",
+          "lowering": "define `Vector2 operator+(const Vector2&) const`, operator-, unary `operator-()`, `bool operator==(const Vector2&) const` (value equality on members), `operator<`; `a + b` stays native.",
+          "status": "runtime-confirmed",
+          "evidence": "prober/overloaded_ops/r3_results_cpp.out (g++ -std=c++17 present in sandbox), 6/6 vectors"
+        },
+        "dart": {
+          "source_binding": "node:operator_signature token:operator (Vector2 operator +(...))",
+          "strategy": "native_operator",
+          "lowering": "define `Vector2 operator +(Vector2 o)`, operator -, unary `Vector2 operator -()`, `bool operator ==(Object o)` (+ hashCode) for value equality, `operator <`; `a + b` stays native. (Dart's unary minus operator is declared `operator -()` with no parameter.)",
+          "status": "runtime-confirmed",
+          "evidence": "r3_results/r3_dart.out 2026-07-14 host run"
+        },
+        "swift": {
+          "source_binding": "node:function_declaration (static func + / prefix func -)",
+          "strategy": "native_operator",
+          "lowering": "define `static func + (a: Vector2, b: Vector2) -> Vector2`, static func -, `static prefix func - (a: Vector2) -> Vector2`, conform to Equatable (`static func == `) for value equality and Comparable (`static func < `) for ordering; `a + b` stays native.",
+          "status": "pending",
+          "evidence": "prober/pending_snippets/OverloadedOps.swift (no swift toolchain in sandbox)"
+        }
+      }
+    },
+    {
+      "id": "op.range",
+      "family": "ranges",
+      "signature": "range(a: int, b: int, inclusive_end: bool = false, step: int = 1) -> Sequence[int]",
+      "meaning": "produce the integer sequence starting at a, stepping by step, stopping at or before b. inclusive_end controls whether b itself is a member: false (default, python-shaped) excludes b; true includes b when it falls on a step boundary in the step's direction. step defaults to 1 (ascending); a negative step walks descending. inclusive_end AND step are PARAMETERS of this ONE op, not separate ops -- the structural decision that makes the `..` false friend (kotlin/ruby/swift closed vs rust/python half-open) a single boolean flip rather than hidden per-language op identity. The `inclusive_1_to_5` vs `exclusive_1_to_5` pair is the trap catcher: a lowering that spells kotlin `a..b` as python `range(a,b)` without adjusting the end bound gets length 4 not 5.",
+      "parameters": {
+        "inclusive_end": "boolean, default false. true = b is a candidate member (kotlin `..`, ruby `..`, rust `..=`, swift `...`); false = b never a member (python range(), kotlin `until`, ruby `...`, rust `..`, swift `..<`).",
+        "step": "integer, default 1. Sign+magnitude determine direction and stride. PROBED (see non_goals + REPORT_p2.md): python and rust require step sign to agree with a/b direction (mismatched sign -> EMPTY sequence, not error); ruby's plain Range has no inherent direction (reversed-bounds `a..b` iterated plainly is empty) but Range#step(-1) on the SAME object silently walks descending -- the negative-step escalation."
+      },
+      "non_goals": [
+        "float/char/generic-comparable ranges -- OUT OF SCOPE, integer-only.",
+        "lazy/infinite ranges (rust unbounded `a..`) -- OUT OF SCOPE.",
+        "whether 'descending' is direction-baked-in-at-construction (python-shaped: step sign is part of the range's identity, mismatched-sign is empty by design) or a post-hoc reversal of an ascending range (ruby step()-shaped) -- ESCALATED to the owner (REPORT_p2.md), not decided. Current vectors use the python-shaped model; both in-sandbox runtimes produce the same length/first/last under it."
+      ],
+      "test_vectors": [
+        {"name": "inclusive_1_to_5", "inputs": {"a": 1, "b": 5, "inclusive_end": true, "step": 1}, "expect": {"length": 5, "first": 1, "last": 5}, "note": "the `..` false-friend catcher: a python-shaped exclusive lowering gets length 4 (drops endpoint 5). Contrast confirmed 5 vs 4 in prober/range/r_p2_results.out STAGE 4b."},
+        {"name": "exclusive_1_to_5", "inputs": {"a": 1, "b": 5, "inclusive_end": false, "step": 1}, "expect": {"length": 4, "first": 1, "last": 4}},
+        {"name": "descending_5_downto_1", "inputs": {"a": 5, "b": 1, "inclusive_end": true, "step": -1}, "expect": {"length": 5, "first": 5, "last": 1}},
+        {"name": "step_1_to_10_step_2", "inputs": {"a": 1, "b": 10, "inclusive_end": true, "step": 2}, "expect": {"length": 5, "first": 1, "last": 9}, "note": "b=10 unreachable on the step-2 grid from a=1, so inclusive_end has no visible effect -- isolates step behavior."}
+      ],
+      "columns": {
+        "python": {"source_binding": "node:call function:range", "strategy": "native", "lowering": "range(a, b, step)  # native builtin, ALWAYS exclusive of b; inclusive_end=true adjusts the end bound +1 (ascending) / -1 (descending) at emit time", "status": "runtime-confirmed", "evidence": "prober/range/r_p2_results.out python column, 5/5 vectors incl. false-friend contrast + negative-step probe"},
+        "typescript": {"source_binding": null, "strategy": "synthetic", "lowering": "no native range; for-loop collected into an array: for(let i=a; step>0?i<end:i>end; i+=step) vals.push(i), end = b adjusted +/-1 when inclusive_end", "status": "runtime-confirmed", "evidence": "prober/range/r_p2_results.out node column (node as the JS runtime for the synthetic loop), 5/5 vectors"},
+        "java": {"source_binding": null, "strategy": "synthetic", "lowering": "IntStream.rangeClosed(a,b) (inclusive,step1) / IntStream.range(a,b) (exclusive,step1); NEITHER has step or descending, so step!=1/descending falls back to a manual for-loop", "status": "runtime-confirmed", "evidence": "p2_results/range_java.out 2026-07-14 host run"},
+        "csharp": {"source_binding": null, "strategy": "synthetic", "lowering": "Enumerable.Range(start,count) takes a COUNT not an end bound, no step/descending -- both built manually. NOTE: C# 8 `a..b` is an index/slice syntax, NOT an iterable numeric range -- a false friend by TOKEN, not semantics.", "status": "pending", "evidence": "prober/pending_snippets/RangeOp.cs (no dotnet/mono in sandbox)"},
+        "go": {"source_binding": null, "strategy": "synthetic", "lowering": "Go's `range` keyword only iterates existing collections/channels; it does not construct a numeric range. op.range lowers to a for-loop over (start, end-adjusted, step) collected into a slice.", "status": "runtime-confirmed", "evidence": "p2_results/range_go.out 2026-07-14 host run"},
+        "rust": {"source_binding": "node:range_expression token:.. / token:..=", "strategy": "native", "lowering": "a..b (exclusive Range) / a..=b (inclusive RangeInclusive) native. .step_by(n) takes ONLY positive usize -- no native negative step. Ranges always constructed ascending; descending via (a..=b).rev().", "status": "runtime-confirmed", "evidence": "p2_results/range_rust.out 2026-07-14 host run"},
+        "ruby": {"source_binding": "node:range token:.. / token:...", "strategy": "native", "lowering": "a..b (closed) / a...b (exclusive) native. .step(n) MAY be negative -- Range#step(-1) on an ascending-shaped object silently walks descending. Plain a..b with a>b iterated directly is EMPTY (matches python's mismatched-sign case).", "status": "runtime-confirmed", "evidence": "prober/range/r_p2_results.out ruby column, 5/5 vectors incl. descending via .step(-1) and the (5..1) empty-vs-step(-1) contrast"},
+        "php": {"source_binding": null, "strategy": "synthetic", "lowering": "PHP range($start,$end,$step) is a BUILTIN FUNCTION (not operator), ALWAYS inclusive of $end, $step always a positive magnitude (ascending/descending inferred from bounds). Opposite-direction false friend. inclusive_end=false synthesized by dropping the trailing element.", "status": "runtime-confirmed", "evidence": "p2_results/range_php.out 2026-07-14 host run"},
+        "kotlin": {"source_binding": "node:range_expression token:.. / node:infix_expression token:until / token:downTo", "strategy": "native", "lowering": "a..b (closed IntRange) / a until b (exclusive) native. Descending via a downTo b. .step(n) must be POSITIVE (combine with downTo for descending-with-step).", "status": "runtime-confirmed", "evidence": "p2_results/range_kotlin.out 2026-07-14 host run"},
+        "cpp": {"source_binding": null, "strategy": "synthetic", "lowering": "C++ has no numeric-range-from-bounds facility in the targeted standard. op.range lowers to a plain for-loop over (start, end-adjusted, step).", "status": "runtime-confirmed", "evidence": "prober/range/confirm_cpp.out (g++ -std=c++17 present in sandbox), 4/4 vectors"},
+        "dart": {"source_binding": null, "strategy": "synthetic", "lowering": "Dart has no range construct. op.range lowers to a plain for-loop over (start, end-adjusted, step), same shape as go/cpp.", "status": "runtime-confirmed", "evidence": "p2_results/range_dart.out 2026-07-14 host run"},
+        "swift": {"source_binding": "node:range_expression token:... / token:..<", "strategy": "native", "lowering": "a...b (ClosedRange) / a..<b (Range) native. Like rust, bounds must satisfy lower<=upper at construction (5...1 TRAPS at runtime), descending via .reversed(). stride(from:through:by:)/(from:to:by:) DOES accept a negative by: directly -- swift's own nuance vs rust's unsigned-only step_by.", "status": "pending", "evidence": "prober/pending_snippets/range_op.swift (no swift toolchain in sandbox)"}
+      }
+    },
+    {
+      "id": "op.spread_call",
+      "family": "spread",
+      "signature": "f(*expr) / f(...expr) -- unpack expr (a sequence) into f's declared positional parameters, one element per parameter, in order",
+      "meaning": "unpack an EXISTING list/array/sequence into POSITIONAL call arguments at a CALL SITE. Given a fixed-arity callee f(a,b,c) and lst=[1,2,3], spreading yields f(1,2,3): the callee's OWN declared parameters each receive one unpacked element. DISTINCT from decl.variadic (xforms.json), which is a callee-side COLLECTION of loose call-site arguments into one parameter. The two compose (spread INTO a variadic parameter) without collapsing -- proven by prober/spread_variadic/demo_spread_variadic.py vector C. This is the `...`/`*` three-way false friend from REPORT.md finding 4: the SAME token is call-arg-spread here, variadic-decl in decl.variadic, and collection-literal spread in dart/csharp -- disambiguated at grammar level by node type (python list_splat at call site vs list_splat_pattern in a param list).",
+      "test_vectors": [
+        {"name": "spread_into_fixed_arity", "inputs": {"callee": "add3(a,b,c)", "call": "add3(*nums)", "nums": [1, 2, 3]}, "expect": 6},
+        {"name": "variadic_collect", "inputs": {"callee": "total(*args)", "call": "total(1, 2, 3)"}, "expect": 6, "note": "control vector for decl.variadic, not op.spread_call itself -- proves the two ops are distinct."},
+        {"name": "spread_into_variadic", "inputs": {"callee": "total(*args)", "call": "total(*nums)", "nums": [1, 2, 3]}, "expect": {"collected": [1, 2, 3], "sum": 6}, "note": "sharpest contrast: touches BOTH op.spread_call and decl.variadic in one call, proving they compose."}
+      ],
+      "columns": {
+        "python": {"source_binding": "node:list_splat (call site, e.g. add3(*nums))", "strategy": "native_spread", "lowering": "f(*expr) -- native call-site unpack into positional params", "status": "runtime-confirmed", "evidence": "prober/spread_variadic/sv_p2_results.out STAGE 5 vector A/C python rows PASS; demo list_splat tree-sitter proof"},
+        "typescript": {"source_binding": "node:spread_element (call-site ... token, same char as decl.variadic rest param, disambiguated by argument-list position)", "strategy": "native_spread", "lowering": "f(...expr) -- native call-site unpack into positional params", "status": "runtime-confirmed", "evidence": "prober/spread_variadic/sv_p2_results.out STAGE 5 vector A/C node rows PASS"},
+        "java": {"source_binding": null, "strategy": "manual_unpack", "lowering": "vector A: NO general realization -- manual index-unpack add3(nums[0],nums[1],nums[2]). vector C: array-to-varargs passthrough total(nums) works ONLY because a varargs param is array-typed under the hood, does not generalize to fixed arity.", "status": "runtime-confirmed", "evidence": "p2_results/spread_java.out 2026-07-14 host run"},
+        "csharp": {"source_binding": null, "strategy": "manual_unpack", "lowering": "vector A: NO realization -- C#12 `..` spread is collection-expression-only, not a call site; manual index-unpack. vector C: array passed directly to a params int[] param (native params acceptance, not via a spread token).", "status": "pending", "evidence": "prober/pending_snippets/SpreadVariadic.cs (no dotnet/mono in sandbox)"},
+        "go": {"source_binding": "token:... (coupled to a variadic callee only)", "strategy": "coupled_variadic_spread", "lowering": "vector A: NO realization -- add3(nums...) is a COMPILE ERROR (add3 is fixed-arity). vector C (native): total(nums...) is Go's ONLY legal `...` spread, slice into a variadic parameter.", "status": "runtime-confirmed", "evidence": "p2_results/spread_go.out 2026-07-14 host run"},
+        "rust": {"source_binding": null, "strategy": "manual_unpack", "lowering": "vector A: NO realization -- no spread operator, manual index-unpack. vector C: NO realization either -- passing a slice to total(&[i32]) is ordinary arg passing, degenerate with vector B, since Rust has neither spread nor true variadics.", "status": "runtime-confirmed", "evidence": "p2_results/spread_rust.out 2026-07-14 host run"},
+        "ruby": {"source_binding": "node splat argument at call site (*expr), disambiguated by call-site vs def-parameter position", "strategy": "native_spread", "lowering": "f(*expr) -- native call-site unpack into positional params", "status": "runtime-confirmed", "evidence": "prober/spread_variadic/sv_p2_results.out STAGE 5 vector A/C ruby rows PASS"},
+        "php": {"source_binding": "node spread argument at call site (...$expr), same ... token as decl.variadic, disambiguated by position", "strategy": "native_spread", "lowering": "f(...$expr) -- native call-site unpack into positional params", "status": "runtime-confirmed", "evidence": "p2_results/spread_php.out 2026-07-14 host run"},
+        "kotlin": {"source_binding": "token:* (coupled to a vararg callee only)", "strategy": "coupled_variadic_spread", "lowering": "vector A: NO realization -- add3(*nums) is a COMPILE ERROR (add3 is fixed-arity). vector C (native): total(*nums) is Kotlin's ONLY legal `*` spread, into a vararg parameter.", "status": "runtime-confirmed", "evidence": "p2_results/spread_kotlin.out 2026-07-14 host run"},
+        "cpp": {"source_binding": null, "strategy": "manual_unpack", "lowering": "f(expr[0],expr[1],expr[2]) for KNOWN fixed arity only; no general runtime spread (parameter-pack arity is fixed at compile time, not discoverable from a runtime-sized container).", "status": "runtime-confirmed", "evidence": "prober/spread_variadic/spread_variadic_confirm.out (g++ -std=c++17), 3/3 vectors; vector C noted as manual unpack, not a real runtime spread"},
+        "dart": {"source_binding": "token:... exists ONLY in collection literals ([...a]), NOT at a call site -- false friend WITHIN the family", "strategy": "collection_literal_spread_only", "lowering": "vector A: NO realization -- add3(...nums) is a parse error outside [ ]. vector C: Dart's real `...` is collection-literal spread [...nums] producing a List LITERAL passed as ONE ordinary argument to total(List<int>) -- neither call-arg spread nor variadic collection.", "status": "runtime-confirmed", "evidence": "p2_results/spread_dart.out 2026-07-14 host run"},
+        "swift": {"source_binding": null, "strategy": "manual_unpack", "lowering": "NO call-site spread syntax of any kind exists (well-known Swift gap). vector A: manual index-unpack. vector C: no realization -- total(nums...)/total(*nums) do not exist.", "status": "pending", "evidence": "prober/pending_snippets/SpreadVariadic.swift (no swift toolchain in sandbox)"}
+      }
+    },
+    {
+      "id": "op.string_interp",
+      "family": "interpolation",
+      "signature": "string_interp(chunks: [Chunk]) -> string  where Chunk = literal(text) | embed(expr: Any)",
+      "meaning": "concatenate an ordered sequence of literal-text chunks and embedded-expression chunks into one string. Each embedded expression is evaluated EXACTLY ONCE, in left-to-right chunk order, before any subsequent chunk's expression (a lowering that re-evaluates an embed, or evaluates out of order, fails the eval_once / left_to_right vectors). A non-string embedded operand (e.g. an int) is coerced to its language-native string form (Display/toString/valueOf/description) and MUST match the literal decimal representation. Literal occurrences of the language's own trigger character(s) ($, {, }, \\() inside a chunk must be escapable to their literal form without triggering interpolation; the escape mechanism is language-specific and recorded per column.",
+      "test_vectors": [
+        {"name": "eval_once", "inputs": {"template": "first={bump()}", "note": "bump() increments a shared counter and returns it"}, "expect": {"result": "first=1", "counter": 1}},
+        {"name": "left_to_right", "inputs": {"template": "{bump()}-{bump()}"}, "expect": {"result": "1-2"}},
+        {"name": "int_coercion", "inputs": {"template": "n={42}"}, "expect": {"result": "n=42"}},
+        {"name": "escape_dollar_brace", "inputs": {"template": "{{}}", "note": "Hub doubled-brace escape for a literal '{}'"}, "expect": {"result": "{}"}}
+      ],
+      "columns": {
+        "python": {"source_binding": "node:string / node:interpolation (f-string; { expr } children)", "strategy": "native", "lowering": "f\"...{expr}...\"  // native f-string; literal braces escaped by doubling {{ }}", "status": "runtime-confirmed", "evidence": "prober/string_interp/si_p2_results.out python 4/4 (eval_once, left_to_right, int_coercion, escape_dollar_brace)"},
+        "typescript": {"source_binding": "node:template_string / node:template_substitution token:${", "strategy": "native", "lowering": "`...${expr}...`  // native template literal; literal ${ escaped via \\${", "status": "runtime-confirmed", "evidence": "prober/string_interp/si_p2_results.out node 4/4 (node as the JS runtime for TS template-literal semantics)"},
+        "java": {"source_binding": null, "strategy": "synthetic", "lowering": "\"lit\" + String.valueOf(expr) + ...  // no native interpolation; synthetic concatenation, String.valueOf coerces non-String operands", "status": "runtime-confirmed", "evidence": "p2_results/interp_java.out 2026-07-14 host run"},
+        "csharp": {"source_binding": "node:interpolated_string_expression token:$\" node:interpolation", "strategy": "native", "lowering": "$\"...{expr}...\"  // native interpolated string; literal { and } escaped by doubling {{ }}", "status": "pending", "evidence": "prober/pending_snippets/StringInterp.cs (no dotnet/mono in sandbox)"},
+        "go": {"source_binding": null, "strategy": "synthetic", "lowering": "fmt.Sprintf(\"lit%vlit\", expr, ...)  // no native interpolation; synthetic format-string call, %v/%d verbs coerce", "status": "runtime-confirmed", "evidence": "p2_results/interp_go.out 2026-07-14 host run"},
+        "rust": {"source_binding": "node:macro_invocation macro:format!", "strategy": "native_macro_interp", "lowering": "format!(\"lit{}lit\", expr, ...)  // format! is a MACRO, not string-literal interpolation; literal { } escaped by doubling {{ }}", "status": "runtime-confirmed", "evidence": "p2_results/interp_rust.out 2026-07-14 host run"},
+        "ruby": {"source_binding": "node:interpolation token:#{ (inside node:string)", "strategy": "native", "lowering": "\"...#{expr}...\"  // native interpolation; literal #{ escaped via \\#{", "status": "runtime-confirmed", "evidence": "prober/string_interp/si_p2_results.out ruby 4/4"},
+        "php": {"source_binding": "node:string (double-quoted) / node:complex_interpolation token:{$", "strategy": "native", "lowering": "\"...{$expr}...\"  // native curly interpolation (bare \"$var\" covers simple variables only, not general expressions); literal $ escaped via \\$", "status": "runtime-confirmed", "evidence": "p2_results/interp_php.out 2026-07-14 host run"},
+        "kotlin": {"source_binding": "node:string_literal / node:interpolated_expression token:${", "strategy": "native", "lowering": "\"...${expr}...\"  // native curly interpolation; literal $ escaped via \\$", "status": "runtime-confirmed", "evidence": "p2_results/interp_kotlin.out 2026-07-14 host run"},
+        "cpp": {"source_binding": null, "strategy": "synthetic", "lowering": "std::string(\"lit\") + std::to_string(expr) + ...  // no native interpolation; synthetic concatenation, std::to_string coerces numerics. Left-to-right requires SEQUENCED statements: C++ does not order operator+ operands, so a naive inline two-bump() concat is not portably left-to-right -- the honest lowering emits each embed into its own temporary first.", "status": "runtime-confirmed", "evidence": "prober/string_interp/string_interp_confirm.out (g++ -std=c++17), 4/4 vectors"},
+        "dart": {"source_binding": "node:string_literal / node:template_substitution token:${", "strategy": "native", "lowering": "\"...${expr}...\"  // native curly interpolation; literal $ escaped via \\$", "status": "runtime-confirmed", "evidence": "p2_results/interp_dart.out 2026-07-14 host run"},
+        "swift": {"source_binding": "node:string_literal / node:interpolated_expression token:\\(", "strategy": "native", "lowering": "\"...\\(expr)...\"  // native interpolation, backslash-paren is the ONLY form (no bare $var); literal \\( escaped by escaping the backslash itself", "status": "pending", "evidence": "prober/pending_snippets/StringInterp.swift (no swift toolchain in sandbox)"}
+      }
+    },
+    {
+      "id": "op.match_expr",
+      "family": "multiway-branch",
+      "signature": "match_expr(subject: T, arms: [{pattern, guard?: bool, result: U}], exhaustive: bool) -> U",
+      "meaning": "evaluate subject EXACTLY ONCE; test arms top-to-bottom; the FIRST arm whose pattern matches AND whose guard (if present) holds yields its result. `exhaustive` is a REQUIREMENT FLAG: the Hub PROPOSES (see exhaustiveness + REPORT_p2.md escalation) that every match carry a catch-all else/wildcard arm, so behavior on an uncovered subject is always well-defined regardless of the target's native stance. The exhaustiveness fork is the flagship P2 finding: the SAME non-exhaustive-match shape produces FOUR distinct outcomes across targets (compile error / silent pass-through / none-yield / runtime throw) -- see the exhaustiveness sub-object, probed and recorded, not assumed.",
+      "exhaustiveness": {
+        "_doc": "per-language: what actually happens when a NON-exhaustive match (no catch-all arm) hits an uncovered subject value. python/ruby/typescript/cpp were EXECUTED in-sandbox (prober/match_expr/exhaustiveness_probe.out); the rest are from language semantics + the pending host snippets.",
+        "python": "none-yield (statement form falls through silently, no exception, result unchanged; no dedicated match-EXPRESSION form exists)",
+        "ruby": "none-yield as expression (case-as-expression yields nil) / pass-through as statement",
+        "typescript": "pass-through (switch without default: silent no-op)",
+        "cpp": "pass-through (switch without default: silent no-op, compiles clean on a plain int)",
+        "rust": "exhaustive-required (compile error 'non-exhaustive patterns', ALWAYS, statement or expression position)",
+        "kotlin": "exhaustive-required as when-EXPRESSION (compile error) / pass-through as when-STATEMENT (silent no-op)",
+        "go": "pass-through (switch: NO exhaustiveness check ever, missing case is a silent no-op)",
+        "java": "exhaustive-required as switch-EXPRESSION (compile error) / pass-through as switch-STATEMENT (silent no-op)",
+        "csharp": "exhaustive-required-soft as switch-EXPRESSION (CS8509 compile WARNING, not error) + throws SwitchExpressionException at runtime if the gap is hit / pass-through as switch-STATEMENT",
+        "php": "throws \\UnhandledMatchError at runtime, ALWAYS (php match is always an expression, strict-compares, no silent fallback)",
+        "dart": "exhaustive-required as switch-EXPRESSION (compile error unless wildcard `_`) / pass-through as switch-STATEMENT",
+        "swift": "exhaustive-required (compile error, ALWAYS -- no silent-pass-through form exists at all; the strictest of the 12)"
+      },
+      "test_vectors": [
+        {"name": "subject_eval_once", "inputs": {"subject": "side-effecting call bumping a counter"}, "expect": {"counter": 1}, "note": "catches a naive if/else-if lowering that re-calls the subject per arm."},
+        {"name": "first_match_wins", "inputs": {"subject": 2, "arms": ["1->one", "2->TWO_FIRST", "2->TWO_SECOND_UNREACHABLE", "_->other"]}, "expect": "TWO_FIRST"},
+        {"name": "guard", "inputs": {"subject": 4, "arms": ["x if x%2==0 and x>10 -> big_even", "x if x%2==0 -> even", "_ -> odd_or_other"]}, "expect": "even"}
+      ],
+      "columns": {
+        "python": {"source_binding": "node:match_statement node:case_clause", "strategy": "native", "lowering": "match subj: case p1: ...; case p2 if g: ...; case _: ...", "status": "runtime-confirmed", "evidence": "prober/match_expr/me_p2_results.out python STAGE 5, 3/3 vectors"},
+        "typescript": {"source_binding": null, "strategy": "synthetic", "lowering": "if/else-if chain, subject bound to a temp ONCE before the chain (switch alone cannot express guards)", "status": "runtime-confirmed", "evidence": "prober/match_expr/me_p2_results.out node STAGE 5, 3/3 vectors"},
+        "java": {"source_binding": null, "strategy": "sugar", "lowering": "switch expression (arrow form, Java 14+): case p1 -> r1; default -> r_other; (guards via if/else-if since switch-expression case labels are values, not booleans)", "status": "runtime-confirmed", "evidence": "p2_results/match_java.out 2026-07-14 host run"},
+        "csharp": {"source_binding": null, "strategy": "sugar", "lowering": "switch expression: n switch { 1 => r1, int x when g => rg, _ => r_other }; native `when` guards", "status": "pending", "evidence": "prober/pending_snippets/MatchExpr.cs (no dotnet/mono in sandbox)"},
+        "go": {"source_binding": "node:expression_switch_statement", "strategy": "native_limited", "lowering": "tagless switch { case cond1: ...; default: ... } for guards; value switch for literal arms; no fallthrough by default, NO exhaustiveness check ever", "status": "runtime-confirmed", "evidence": "p2_results/match_go.out 2026-07-14 host run"},
+        "rust": {"source_binding": "node:match_expression", "strategy": "native", "lowering": "match subj { 1 => r1, x if g => rg, _ => r_other } -- ALWAYS exhaustive-checked by the compiler", "status": "runtime-confirmed", "evidence": "p2_results/match_rust.out 2026-07-14 host run"},
+        "ruby": {"source_binding": "node:case node:when", "strategy": "native", "lowering": "case subj; when p1; r1; when p2; r2; else; r_other; end -- guards via when ->(x){cond}", "status": "runtime-confirmed", "evidence": "prober/match_expr/me_p2_results.out ruby STAGE 5, 3/3 vectors"},
+        "php": {"source_binding": "node:match_expression", "strategy": "native", "lowering": "match ($n) { 1 => r1, default => r_other }; guards via match(true){ (cond1) => r1 }. THROWS \\UnhandledMatchError if no arm matches and no default.", "status": "runtime-confirmed", "evidence": "p2_results/match_php.out 2026-07-14 host run"},
+        "kotlin": {"source_binding": null, "strategy": "native", "lowering": "when (subj) { 1 -> r1, else -> r_other }; guards via when { cond1 -> r1 }. Exhaustive-required ONLY when used as an expression.", "status": "runtime-confirmed", "evidence": "p2_results/match_kotlin.out 2026-07-14 host run"},
+        "cpp": {"source_binding": "node:switch_statement", "strategy": "native_limited", "lowering": "switch(n){case 1: return r1; default: return r_other;} for literal non-overlapping arms (duplicate case labels are a COMPILE ERROR); guards synthesize to if/else-if (switch has no guard syntax)", "status": "runtime-confirmed", "evidence": "prober/match_expr/match_expr_cpp_confirm.out, 3/3 vectors"},
+        "dart": {"source_binding": null, "strategy": "sugar", "lowering": "switch expression (Dart 3+): switch(n){ 1 => r1, _ => r_other }; native `when` guards. Exhaustive-required for switch-expression (or wildcard `_`).", "status": "runtime-confirmed", "evidence": "p2_results/match_dart.out 2026-07-14 host run"},
+        "swift": {"source_binding": null, "strategy": "native", "lowering": "switch n { case 1: return r1; default: return r_other } -- native `where` guards; ALWAYS exhaustive-required (single form).", "status": "pending", "evidence": "prober/pending_snippets/MatchExpr.swift (no swift toolchain in sandbox)"}
+      }
+    }
+  ]
+}

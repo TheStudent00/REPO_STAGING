@@ -1,0 +1,21 @@
+// string probe bodies - typescript (utf16 code units, immutable).
+const SE: string = "é";
+const SM: string = "\u{1D11E}";
+function op(x: string): string { return x; }
+function f_strU1_a(): string { return fmts(op("ab") + op("cd")); }
+function f_strU2_a(): string { return fmtb(op("ab" + "cd") === op("abcd")); }
+function f_strU3_a(): string { return fmts(op("abcdef").substring(1, 4)); }
+function f_strU4_a(): string {
+  const t = op(SE + SM);
+  const back = new TextDecoder("utf-8").decode(new TextEncoder().encode(t));
+  return fmtb(back === t);
+}
+function f_Fs1_a(): string { return fmts(op(SE).charCodeAt(0)); }
+function f_Fs1_b(): string { return fmts(op(SM).charCodeAt(0)); }
+function f_Fs2_a(): string { let a = op("abc"); const b = a; a += "d"; return fmts(b); }
+function f_Fs3_a(): string { return fmts(op(SE).length); }
+function f_Fs3_b(): string { return fmts(op(SM).length); }
+function f_Fs3_c(): string { return fmts(op(SE + SM).length); }
+function f_Fs4_a(): string { return fmts(op("abc")[0]); }
+function f_Fs5_a(): string { return fmtb(op("ab" + "cd") == op("abcd")); }
+function f_Fs5_c(): string { const s = op("abcd"); return fmtb(s == s); }

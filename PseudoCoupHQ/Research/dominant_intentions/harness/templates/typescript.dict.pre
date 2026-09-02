@@ -1,0 +1,21 @@
+// dict probe bodies - typescript. The SPLIT PERSONALITY the census flags is
+// recorded as separate probes, not separate columns: the plain object (string
+// keys only, silently coerced) and Map (any key, matched by identity).
+function mkd(): any { const d: any = {}; d["k"] = "v1"; return d; }
+function f_dictU1_a(): string { return fmts(mkd()["k"]); }
+function f_dictU2_a(): string { const d: any = {}; d["k"] = "v1"; d["k"] = "v2"; return fmts(d["k"]); }
+function f_dictU3_a(): string { const d = mkd(); delete d["k"]; return fmtb("k" in d); }
+function f_dictU4_a(): string { const d: any = {}; d["a"] = 1; d["b"] = 2; d["c"] = 3; return fmts(Object.keys(d).length); }
+function f_Fd1_a(): string { const d: any = {}; d[1] = "int"; d["1"] = "str"; return fmts(d[1]); }
+function f_Fd1_d(): string { const m = new Map<any, string>(); m.set(1, "int"); m.set("1", "str"); return fmts(m.get(1)); }
+function f_Fd2_a(): string { const m = new Map<string, number>(); m.set("z", 1); m.set("a", 1); m.set("m", 1); return Array.from(m.keys()).join(","); }
+function f_Fd2_c(): string { const d: any = {}; d["b"] = 1; d["2"] = 1; d["a"] = 1; d["1"] = 1; return Object.keys(d).join(","); }
+function f_Fd3_a(): string { return fmts(mkd()["nope"]); }
+function f_Fd4_a(): string {
+  const m = new Map<string, number>([["a", 1], ["b", 2], ["c", 3], ["d", 4], ["e", 5]]);
+  for (const k of m.keys()) { if (k === "c") { m.delete(k); } }
+  return "ok";
+}
+function f_Fd5_a(): string { const m = new Map<any, string>(); m.set({ x: 1 }, "p"); m.set({ x: 1 }, "q"); return fmts(m.size); }
+function f_Fd5_b(): string { const m = new Map<any, string>(); m.set(NaN, "x"); return m.get(NaN) === "x" ? "yes" : "no"; }
+function f_Fl9d_a(): string { const a = mkd(); const b = a; b["k"] = "99"; return fmts(a["k"]); }

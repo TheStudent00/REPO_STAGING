@@ -1,0 +1,40 @@
+# acceptance query, graph_go.json built 2026-08-24T21:38:05Z
+# leg 1: parameter-list iteration in abi.ABIAnalyzeFuncType -> register allocation site
+
+START:
+  src/cmd/compile/internal/abi/abiutils.go:362 local_var          param
+GOAL: name~'allocateRegs' kind='method' file~None
+visited 88 nodes
+
+PATH (8 hops):
+  [0] src/cmd/compile/internal/abi/abiutils.go:362 local_var          param
+       --resolves_to (reversed)-->
+  [1] src/cmd/compile/internal/abi/abiutils.go:367 ref                param
+       --flows_into/selector_base-->
+  [2] src/cmd/compile/internal/abi/abiutils.go:367 ref                param.Type
+       --flows_into/argument-->
+  [3] src/cmd/compile/internal/abi/abiutils.go:367 call               s.assignParam
+       --calls/indirect-->
+  [4] src/cmd/compile/internal/abi/abiutils.go:603 method             assignParam
+       --contains-->
+  [5] src/cmd/compile/internal/abi/abiutils.go:604 call               state.tryAllocRegs
+       --calls/indirect-->
+  [6] src/cmd/compile/internal/abi/abiutils.go:623 method             tryAllocRegs
+       --contains-->
+  [7] src/cmd/compile/internal/abi/abiutils.go:634 call               state.allocateRegs
+       --calls/indirect-->
+  [8] src/cmd/compile/internal/abi/abiutils.go:514 method             allocateRegs
+
+(json written to acceptance_query.json)
+
+# leg 2: same start, goal = any method in internal/amd64
+START:
+  src/cmd/compile/internal/abi/abiutils.go:362 local_var          param
+GOAL: name~None kind='method' file~'internal/amd64/'
+visited 323 nodes
+
+NO PATH. Every branch died. Terminal nodes reached: 5
+  call                        4   e.g. src/cmd/compile/internal/abi/abiutils.go:617 int32 | src/cmd/compile/internal/abi/abiutils.go:629 int | src/cmd/compile/internal/abi/abiutils.go:629 int
+  local_var                   1   e.g. src/cmd/compile/internal/abi/abiutils.go:546 _
+
+(json written to acceptance_query_amd64.json)

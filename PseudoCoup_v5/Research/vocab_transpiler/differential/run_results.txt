@@ -1,0 +1,48 @@
+== step 1/4: gen_rust_harness.py ==
+=== gen_rust_harness.py report ===
+total instructions in assembler.rs : 1071
+handled (Rust constructor emitted) : 973  (90.8%)
+skipped                            : 98  (9.2%)
+operand-key lines emitted          : 1946  (973 instrs x 2 keys)
+wrote: <WORKSPACE_DIR>/PseudoCoup_v5/Research/vocab_transpiler/differential/harness/src/main.rs
+wrote: <WORKSPACE_DIR>/PseudoCoup_v5/Research/vocab_transpiler/differential/harness/Cargo.toml
+wrote: <WORKSPACE_DIR>/PseudoCoup_v5/Research/vocab_transpiler/differential/SKIPPED_RUST.txt
+== step 2/4: cargo run --release (harness) ==
+== step 3/4: run_python_side.py ==
+== step 4/4: compare.py ==
+=== Differential test report: Rust (cranelift-assembler-x64) vs Python (pc_vocab) ===
+
+Rust output lines read     : 1946
+Python output lines read   : 1946
+
+Total (instr,key) pairs present on BOTH sides with concrete bytes: 1328
+  exact byte matches       : 1318
+  MISMATCHES               : 10
+
+Python-side CUT (NotImplementedError)  : 618
+Python-side ERROR (unexpected exception): 0
+Rust-only lines (no Python counterpart) : 0
+Python-only lines (no Rust counterpart, excluding CUT/ERROR accounted above): 0
+Instructions the Rust harness could not construct at all (SKIPPED_RUST.txt): 98
+
+--- MISMATCHES (instr, key): rust_bytes vs python_bytes ---
+  nop_5b [low]: rust=0f1f440000  python=0f1f44
+  nop_5b [r14]: rust=0f1f440000  python=0f1f44
+  nop_6b [low]: rust=660f1f440000  python=660f1f44
+  nop_6b [r14]: rust=660f1f440000  python=660f1f44
+  nop_7b [low]: rust=0f1f8000000000  python=0f1f80
+  nop_7b [r14]: rust=0f1f8000000000  python=0f1f80
+  nop_8b [low]: rust=0f1f840000000000  python=0f1f8400
+  nop_8b [r14]: rust=0f1f840000000000  python=0f1f8400
+  nop_9b [low]: rust=660f1f840000000000  python=660f1f8400
+  nop_9b [r14]: rust=660f1f840000000000  python=660f1f8400
+
+--- Rust-side SKIPs (SKIPPED_RUST.txt), by reason ---
+    31  unsupported field type(s): m64: Amode<R::ReadGpr>
+    30  unsupported field type(s): m32: Amode<R::ReadGpr>
+    18  unsupported field type(s): m16: Amode<R::ReadGpr>
+    17  unsupported field type(s): m8: Amode<R::ReadGpr>
+     2  unsupported field type(s): m128: Amode<R::ReadGpr>
+
+VERDICT: FAIL (10 byte mismatches)
+

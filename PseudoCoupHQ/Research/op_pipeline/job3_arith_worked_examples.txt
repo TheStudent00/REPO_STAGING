@@ -1,0 +1,39 @@
+job3_arith_worked_examples.txt -- JOB 3 (condition_table6.py's packed float arithmetic grammar, canon20_arith.py's rendering, canon20_behaviour_check.py's z3-FPA gate): instruction text | reading line, space-aligned.
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+1. c/op_105 (a + b, a:i32 b:f32 -- int-to-float conversion)
+    unit: c/op_105   source: canon20_text
+    cvtsi2ss %edi,%xmm2   %xmm2 = int_to_f32(%edi)
+    addss %xmm2,%xmm0     %xmm0 = %xmm0 + %xmm2
+    ret                   return xmm0
+
+----------------------------------------------------------------------------------------------------
+2. c/op_178 (a * b, a:i32 b:f64 -- int-to-float conversion, multiply)
+    unit: c/op_178   source: canon20_text
+    cvtsi2sd %edi,%xmm2   %xmm2 = int_to_f64(%edi)
+    mulsd %xmm2,%xmm0     %xmm0 = %xmm0 * %xmm2
+    ret                   return xmm0
+
+----------------------------------------------------------------------------------------------------
+3. c/op_234 (a / b, a:i32 b:f64 -- int-to-float conversion, divide)
+    unit: c/op_234   source: canon20_text
+    cvtsi2sd %edi,%xmm2   %xmm2 = int_to_f64(%edi)
+    divsd %xmm2,%xmm0     %xmm0 = %xmm0 / %xmm2
+    ret                   return xmm0
+
+----------------------------------------------------------------------------------------------------
+4. c/op_40 (a++, a:f64 -- resolved +1.0 constant)
+    unit: c/op_40   source: canon20_text
+    movabs $4607182418800017408,%rax   %rax = $4607182418800017408
+    movq %rax,%xmm2                    %xmm2 = %rax
+    addsd %xmm2,%xmm0                  %xmm0 = %xmm0 + %xmm2
+    ret                                return xmm0
+
+----------------------------------------------------------------------------------------------------
+5. c/op_46 (a--, a:f64 -- resolved -1.0 constant)
+    unit: c/op_46   source: canon20_text
+    movabs $-4616189618054758400,%rax   %rax = $-4616189618054758400
+    movq %rax,%xmm2                     %xmm2 = %rax
+    addsd %xmm2,%xmm0                   %xmm0 = %xmm0 + %xmm2
+    ret                                 return xmm0

@@ -1,0 +1,86 @@
+{
+  "__spec__": {
+    "what": "The shared layer-1 synthetic data source. One file, every language. Content only — no dynamics, no language.",
+    "ruled": "layer 1 ruled by the owner 2026-08-15 (node_0_3_4 CORE): seven content forms + nesting + identity marks; complete-for-content by the serialization argument; behavior excluded to layer 3.",
+    "conventions": {
+      "specials": "JSON cannot hold NaN/Infinity/-0.0 distinctly, so a special is spelled as an object {\"#special\": \"<name>\"}. The harness generator replaces it with the language's spelling. Names: nan, inf, -inf, -0.0.",
+      "identity": "An anchor is spelled {\"#anchor\": \"<id>\", \"value\": <element>}. A reference to it is {\"#ref\": \"<id>\"}. Two positions holding the same id name ONE node. A #ref may point at an enclosing #anchor (a cycle).",
+      "big_integers": "Whole numbers past IEEE-double exactness are spelled as strings under {\"#int\": \"<decimal>\"} so no JSON parser silently rounds them. The generator emits them as native integer literals (or the language's arithmetic construction where literals refuse, per the dart-web finding, log_020 postscript)."
+    },
+    "edge_provenance": "Edge values are the census fracture lists (census_*.md, verified log_019/log_020). Nothing invented; every edge exists because it made languages disagree."
+  },
+
+  "nothing": [null],
+
+  "truth": [true, false],
+
+  "whole": {
+    "base": [0, 1, -1, 7, 42],
+    "edges": [
+      {"#int": "9223372036854775807"},
+      {"#int": "9223372036854775808"},
+      {"#int": "-9223372036854775808"},
+      {"#int": "9007199254740993"},
+      {"#int": "18446744073709551615"}
+    ],
+    "edge_notes": "i64 max; i64 max+1 (overflow edge); i64 min; 2^53+1 (float-exactness edge: typescript/dart-web erosion); u64 max (unsigned-camp edge)."
+  },
+
+  "fractional": {
+    "base": [0.0, 1.5, -2.25, 3.141592653589793],
+    "edges": [
+      {"#special": "-0.0"},
+      {"#special": "nan"},
+      {"#special": "inf"},
+      {"#special": "-inf"},
+      1e308,
+      5e-324,
+      0.1
+    ],
+    "edge_notes": "negative zero (probed via sign of 1/x, log_019 lesson); NaN (self-inequality); infinities; near-overflow; smallest subnormal; the classic non-representable decimal."
+  },
+
+  "text": {
+    "base": ["", "a", "hello", "line one\nline two"],
+    "edges": ["é", "𝄞", "quote \" backslash \\", "tab\there", "zü 3-form: é + 𝄞"],
+    "edge_notes": "empty; the e-acute (1 codepoint / 1 utf16 unit / 2 utf8 bytes) and the musical clef U+1D11E (1 / 2 / 4) — the three-lengths fracture, F-s1/F-s3; embedded quote, backslash, tab, newline."
+  },
+
+  "sequence": {
+    "base": [[], [1], [1, 2, 3], ["a", "b"], [[1, 2], [3, 4]]],
+    "edges": [
+      [1, "two", 3.0, true, null],
+      [3, 1, 2],
+      [1, 1, 1]
+    ],
+    "edge_notes": "empty; singleton; homogeneous; nested; MIXED types (splits the declared-element-type camp, F-l1); unsorted (sort probes); duplicates."
+  },
+
+  "keyed": {
+    "base": [{}, {"a": 1}, {"a": 1, "b": 2, "c": 3}, {"outer": {"inner": [1, 2]}}],
+    "edges": [
+      {"1": "string-one-key", "b": 2},
+      {"z": 1, "a": 2, "m": 3},
+      {"": "empty-string key"}
+    ],
+    "edge_notes": "empty; flat; nested; the integer-LIKE string key (js coercion edge, F-d1); insertion order differing from sorted order (F-d2 order probes); empty-string key. A MISSING key is a probe act, not data: probes ask for key \"absent\"."
+  },
+
+  "identity": {
+    "shared_node": {
+      "left": {"#anchor": "s1", "value": [1, 2, 3]},
+      "right": {"#ref": "s1"},
+      "note": "left and right are ONE sequence. Edit through left, read through right — the share/copy/move fracture (F-l9) made observable by the data itself."
+    },
+    "diamond": {
+      "top": {"#anchor": "d1", "value": {"payload": 7}},
+      "via_a": {"#ref": "d1"},
+      "via_b": {"#ref": "d1"}
+    },
+    "cycle": {
+      "#anchor": "c1",
+      "value": {"name": "loop", "self": {"#ref": "c1"}},
+      "note": "a node containing itself. Representations that refuse cycles refuse HERE, loudly — that refusal is a layer-2 audit finding, not an error."
+    }
+  }
+}

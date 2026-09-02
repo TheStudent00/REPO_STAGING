@@ -1,0 +1,504 @@
+{
+ "what_this_is": "The JVM pilot of the JIT track: for a Java addition on ints, the bytecode middle form, the machine code the JIT produced for the warmed method, the guards visible in that dump, and the warm-up recipe that was required to get there.",
+ "pin": {
+  "runtime": "OpenJDK",
+  "version": "25.0.3",
+  "release_date": "2026-04-21",
+  "runtime_banner": "OpenJDK Runtime Environment (build 25.0.3+9-2-26.04.2-Ubuntu)",
+  "vm_banner": "OpenJDK 64-Bit Server VM (build 25.0.3+9-2-26.04.2-Ubuntu, mixed mode, sharing)",
+  "javac": "javac 25.0.3",
+  "vendor": "Ubuntu",
+  "java_home": "/usr/lib/jvm/java-25-openjdk-amd64",
+  "arch": "amd64",
+  "evidence_class": "artifact fact (the tool's own banners)"
+ },
+ "dump_plan": {
+  "plan_a_hsdis_shipped": {
+   "outcome": "REFUSED",
+   "note": "a find over the whole JDK for hsdis* returned nothing; every PrintAssembly run logged [warning][os] Loading hsdis library failed."
+  },
+  "plan_b_build_hsdis": {
+   "outcome": "NOT ATTEMPTED -- ingredients absent",
+   "note": "the container has gcc, make, git, objdump 2.46, but no dis-asm.h anywhere on the filesystem and no autoconf.  hsdis's binutils backend needs both.  Recorded as a refusal, not a failure: it was not tried because the preconditions were measured absent."
+  },
+  "plan_c_print_opto_assembly": {
+   "outcome": "NOT NEEDED",
+   "note": "-XX:+PrintOptoAssembly was accepted by this product build without error, but was not used for the recorded unit because the route below yields real architecture opcodes."
+  },
+  "route_actually_used": {
+   "outcome": "WORKED",
+   "name": "printed-bytes plus a separate disassembler",
+   "note": "-XX:CompileCommand=print,Class::method prints the nmethod's machine code as HEX BYTES together with the JVM's own annotations ({poll_return}, {runtime_call ...}, the scope lines) even when hsdis is missing.  Only the mnemonics are absent.  Those bytes were carved out, written to a flat file, and disassembled with objdump -b binary -m i386:x86-64.  TWO EVIDENCE CLASSES, kept apart: the bytes and the annotations are the JVM's testimony; the mnemonics are objdump's reading of those bytes.",
+   "disassembler": "GNU objdump (GNU Binutils for Ubuntu) 2.46"
+  }
+ },
+ "configuration_choice": {
+  "chosen": "-XX:-TieredCompilation",
+  "why": "one configuration for the recorded unit, as the brief required.  Tiering off means C2 is the only compiler, so the dumped nmethod is the final tier with no C1 profiling version in the way.",
+  "dump_command_flags": [
+   "-Xbatch",
+   "-XX:-TieredCompilation",
+   "-XX:+UnlockDiagnosticVMOptions",
+   "-XX:CompileCommand=print,Probe::af",
+   "-XX:CompileCommand=print,Probe::af2",
+   "-XX:CompileCommand=dontinline,Probe::af",
+   "-XX:CompileCommand=dontinline,Probe::af2"
+  ],
+  "dontinline_note": "dontinline was set deliberately: without it C2 folds the method into its caller and there is no standalone unit to record.  This is a choice that shapes the recorded unit and is stated, not hidden.",
+  "thresholds_the_vm_reports_about_itself": [
+   "intx CompileThreshold = 10000 {pd product} {default}",
+   "intx Tier3InvocationThreshold = 200 {product} {default}",
+   "intx Tier3CompileThreshold = 2000 {product} {default}",
+   "intx Tier4InvocationThreshold = 5000 {product} {default}",
+   "intx Tier4CompileThreshold = 15000 {product} {default}",
+   "bool TieredCompilation = true {pd product} {default}"
+  ]
+ },
+ "probe_source": "public class Probe {\n    static int af(int a, int b) {\n        return a + b;\n    }\n    static int af2(int a, int b) {\n        return a / b;\n    }\n    static int sink;\n    public static void main(String[] args) {\n        int n = Integer.parseInt(args[0]);\n        long t0 = System.nanoTime();\n        int acc = 0;\n        int i = 0;\n        while (i < n) {\n            acc = af(acc, 1);\n            i = i + 1;\n        }\n        int acc2 = 0;\n        int j = 1;\n        while (j < n) {\n            acc2 = af2(j, 3);\n            j = j + 1;\n        }\n        long t1 = System.nanoTime();\n        sink = acc + acc2;\n        long ms = (t1 - t0) / 1000000L;\n        System.out.println(\"WARMED n=\" + n + \" acc=\" + acc\n                           + \" acc2=\" + acc2 + \" ms=\" + ms);\n    }\n}\n",
+ "units": [
+  {
+   "id": "u1",
+   "lang": "java",
+   "method": "af",
+   "label": "+",
+   "arity": 2,
+   "operand_types": [
+    "int32",
+    "int32"
+   ],
+   "result_type": "int32",
+   "why": "the addition",
+   "bytecode_listing": [
+    "  static int af(int, int);",
+    "    Code:",
+    "         0: iload_0",
+    "         1: iload_1",
+    "         2: iadd",
+    "         3: ireturn"
+   ],
+   "bytecode_evidence_class": "the tool's own testimony (javap -c)",
+   "nmethod_header": "12    4             Probe::af (4 bytes)",
+   "compiler_tier": "c2",
+   "parameter_comments": [
+    "# {method} {0x00007f9908400428} 'af' '(II)I' in 'Probe'",
+    "# parm0:    rsi       = int",
+    "# parm1:    rdx       = int",
+    "#           [sp+0x20]  (sp of caller)"
+   ],
+   "jvm_annotations": [
+    [
+     "0x00007f99346aa420",
+     "{poll_return}"
+    ],
+    [
+     "0x00007f99346aa42c",
+     "{internal_word}"
+    ],
+    [
+     "0x00007f99346aa43c",
+     "{runtime_call SafepointBlob}"
+    ],
+    [
+     "0x00007f99346aa440",
+     "{runtime_call Stub::method_entry_barrier}"
+    ],
+    [
+     "0x00007f99346aa450",
+     "{runtime_call ExceptionBlob}"
+    ],
+    [
+     "0x00007f99346aa45c",
+     "{runtime_call DeoptimizationBlob}"
+    ]
+   ],
+   "bytes_recovered": 104,
+   "contiguous_runs": 1,
+   "arch_unit": [
+    {
+     "base": "0x7f99346aa400",
+     "length": 104,
+     "hex": "4881ec1800000048896c241041817f20000000000f85290000008d04164883c4105d493b67280f8701000000c349ba22a46a34997f00004d899738050000e91d77faffe878e1f8ffe9cdfffffff4f4f4e98b37ffffe80000000048832c2405e97c5efafff4f4f4f4",
+     "objdump": [
+      "    7f99346aa400:\t48 81 ec 18 00 00 00 \tsub    $0x18,%rsp",
+      "    7f99346aa407:\t48 89 6c 24 10       \tmov    %rbp,0x10(%rsp)",
+      "    7f99346aa40c:\t41 81 7f 20 00 00 00 \tcmpl   $0x0,0x20(%r15)",
+      "    7f99346aa413:\t00",
+      "    7f99346aa414:\t0f 85 29 00 00 00    \tjne    0x7f99346aa443",
+      "    7f99346aa41a:\t8d 04 16             \tlea    (%rsi,%rdx,1),%eax",
+      "    7f99346aa41d:\t48 83 c4 10          \tadd    $0x10,%rsp",
+      "    7f99346aa421:\t5d                   \tpop    %rbp",
+      "    7f99346aa422:\t49 3b 67 28          \tcmp    0x28(%r15),%rsp",
+      "    7f99346aa426:\t0f 87 01 00 00 00    \tja     0x7f99346aa42d",
+      "    7f99346aa42c:\tc3                   \tret",
+      "    7f99346aa42d:\t49 ba 22 a4 6a 34 99 \tmovabs $0x7f99346aa422,%r10",
+      "    7f99346aa434:\t7f 00 00",
+      "    7f99346aa437:\t4d 89 97 38 05 00 00 \tmov    %r10,0x538(%r15)",
+      "    7f99346aa43e:\te9 1d 77 fa ff       \tjmp    0x7f9934651b60",
+      "    7f99346aa443:\te8 78 e1 f8 ff       \tcall   0x7f99346385c0",
+      "    7f99346aa448:\te9 cd ff ff ff       \tjmp    0x7f99346aa41a",
+      "    7f99346aa44d:\tf4                   \thlt",
+      "    7f99346aa44e:\tf4                   \thlt",
+      "    7f99346aa44f:\tf4                   \thlt",
+      "    7f99346aa450:\te9 8b 37 ff ff       \tjmp    0x7f993469dbe0",
+      "    7f99346aa455:\te8 00 00 00 00       \tcall   0x7f99346aa45a",
+      "    7f99346aa45a:\t48 83 2c 24 05       \tsubq   $0x5,(%rsp)",
+      "    7f99346aa45f:\te9 7c 5e fa ff       \tjmp    0x7f99346502e0",
+      "    7f99346aa464:\tf4                   \thlt",
+      "    7f99346aa465:\tf4                   \thlt",
+      "    7f99346aa466:\tf4                   \thlt",
+      "    7f99346aa467:\tf4                   \thlt"
+     ]
+    }
+   ],
+   "arch_unit_evidence_class": "bytes: artifact fact, the JVM printed them.  mnemonics: objdump's reading of those bytes, a second tool's testimony, never merged with the first.",
+   "modes": [
+    {
+     "id": "u1.m1",
+     "name": "nmethod-entry barrier",
+     "response_kind": "call-out-and-return",
+     "evidence_class": "the tool's own testimony, plus objdump",
+     "note": "the JVM annotated the target as {runtime_call Stub::method_entry_barrier}; objdump reads the test as a compare of a word at 0x20(%r15) against zero, with a not-equal branch to that call, which then jumps back into the body.",
+     "detail_lines": [
+      "cmpl   $0x0,0x20(%r15)",
+      "jne    <barrier call>"
+     ]
+    },
+    {
+     "id": "u1.m2",
+     "name": "return safepoint poll",
+     "response_kind": "call-out-and-return",
+     "evidence_class": "the tool's own testimony, plus objdump",
+     "note": "annotated {poll_return}; objdump reads a compare of the stack pointer against 0x28(%r15) with an above branch to a stub that stores a resume address into 0x538(%r15) and jumps to the SafepointBlob.",
+     "detail_lines": [
+      "cmp    0x28(%r15),%rsp",
+      "ja     <poll stub>"
+     ]
+    },
+    {
+     "id": "u1.m9",
+     "name": "exception handler / deoptimization stubs",
+     "response_kind": "deopt-continue-elsewhere",
+     "evidence_class": "the tool's own testimony",
+     "note": "every nmethod here ends with a stub section the JVM annotates {runtime_call ExceptionBlob} and {runtime_call DeoptimizationBlob}.  These are the standing exits, present in both units, not specific to either computation.",
+     "detail_lines": []
+    }
+   ]
+  },
+  {
+   "id": "u2",
+   "lang": "java",
+   "method": "af2",
+   "label": "/",
+   "arity": 2,
+   "operand_types": [
+    "int32",
+    "int32"
+   ],
+   "result_type": "int32",
+   "why": "the division, for contrast",
+   "bytecode_listing": [
+    "  static int af2(int, int);",
+    "    Code:",
+    "         0: iload_0",
+    "         1: iload_1",
+    "         2: idiv",
+    "         3: ireturn"
+   ],
+   "bytecode_evidence_class": "the tool's own testimony (javap -c)",
+   "nmethod_header": "14    7             Probe::af2 (4 bytes)",
+   "compiler_tier": "c2",
+   "parameter_comments": [
+    "# {method} {0x00007f99084004c0} 'af2' '(II)I' in 'Probe'",
+    "# parm0:    rsi       = int",
+    "# parm1:    rdx       = int",
+    "#           [sp+0x20]  (sp of caller)"
+   ],
+   "jvm_annotations": [
+    [
+     "0x00007f99346a9b38",
+     "{poll_return}"
+    ],
+    [
+     "0x00007f99346a9b4c",
+     "{runtime_call UncommonTrapBlob}"
+    ],
+    [
+     "0x00007f99346a9b50",
+     "ImmutableOopMap {}"
+    ],
+    [
+     "0x00007f99346a9b54",
+     "{post_call_nop}"
+    ],
+    [
+     "0x00007f99346a9b5c",
+     "{internal_word}"
+    ],
+    [
+     "0x00007f99346a9b6c",
+     "{runtime_call SafepointBlob}"
+    ],
+    [
+     "0x00007f99346a9b70",
+     "{runtime_call Stub::method_entry_barrier}"
+    ],
+    [
+     "0x00007f99346a9b80",
+     "{runtime_call ExceptionBlob}"
+    ],
+    [
+     "0x00007f99346a9b8c",
+     "{runtime_call DeoptimizationBlob}"
+    ]
+   ],
+   "bytes_recovered": 152,
+   "contiguous_runs": 1,
+   "arch_unit": [
+    {
+     "base": "0x7f99346a9b00",
+     "length": 152,
+     "hex": "89842400c0feff554883ec1041817f20000000000f8558000000448bda85d274258bc63d00000080750833d24183fbff74049941f7fb4883c4105d493b67280f8717000000c38beebe7effffff6690e88c3dffff0f1f84004c01000049ba3b9b6a34997f00004d899738050000e9ee7ffaffe849eaf8ffe99efffffff4f4f4f4e95b40ffffe80000000048832c2405e94c67fafff4f4f4f4",
+     "objdump": [
+      "    7f99346a9b00:\t89 84 24 00 c0 fe ff \tmov    %eax,-0x14000(%rsp)",
+      "    7f99346a9b07:\t55                   \tpush   %rbp",
+      "    7f99346a9b08:\t48 83 ec 10          \tsub    $0x10,%rsp",
+      "    7f99346a9b0c:\t41 81 7f 20 00 00 00 \tcmpl   $0x0,0x20(%r15)",
+      "    7f99346a9b13:\t00",
+      "    7f99346a9b14:\t0f 85 58 00 00 00    \tjne    0x7f99346a9b72",
+      "    7f99346a9b1a:\t44 8b da             \tmov    %edx,%r11d",
+      "    7f99346a9b1d:\t85 d2                \ttest   %edx,%edx",
+      "    7f99346a9b1f:\t74 25                \tje     0x7f99346a9b46",
+      "    7f99346a9b21:\t8b c6                \tmov    %esi,%eax",
+      "    7f99346a9b23:\t3d 00 00 00 80       \tcmp    $0x80000000,%eax",
+      "    7f99346a9b28:\t75 08                \tjne    0x7f99346a9b32",
+      "    7f99346a9b2a:\t33 d2                \txor    %edx,%edx",
+      "    7f99346a9b2c:\t41 83 fb ff          \tcmp    $0xffffffff,%r11d",
+      "    7f99346a9b30:\t74 04                \tje     0x7f99346a9b36",
+      "    7f99346a9b32:\t99                   \tcltd",
+      "    7f99346a9b33:\t41 f7 fb             \tidiv   %r11d",
+      "    7f99346a9b36:\t48 83 c4 10          \tadd    $0x10,%rsp",
+      "    7f99346a9b3a:\t5d                   \tpop    %rbp",
+      "    7f99346a9b3b:\t49 3b 67 28          \tcmp    0x28(%r15),%rsp",
+      "    7f99346a9b3f:\t0f 87 17 00 00 00    \tja     0x7f99346a9b5c",
+      "    7f99346a9b45:\tc3                   \tret",
+      "    7f99346a9b46:\t8b ee                \tmov    %esi,%ebp",
+      "    7f99346a9b48:\tbe 7e ff ff ff       \tmov    $0xffffff7e,%esi",
+      "    7f99346a9b4d:\t66 90                \txchg   %ax,%ax",
+      "    7f99346a9b4f:\te8 8c 3d ff ff       \tcall   0x7f993469d8e0",
+      "    7f99346a9b54:\t0f 1f 84 00 4c 01 00 \tnopl   0x14c(%rax,%rax,1)",
+      "    7f99346a9b5b:\t00",
+      "    7f99346a9b5c:\t49 ba 3b 9b 6a 34 99 \tmovabs $0x7f99346a9b3b,%r10",
+      "    7f99346a9b63:\t7f 00 00",
+      "    7f99346a9b66:\t4d 89 97 38 05 00 00 \tmov    %r10,0x538(%r15)",
+      "    7f99346a9b6d:\te9 ee 7f fa ff       \tjmp    0x7f9934651b60",
+      "    7f99346a9b72:\te8 49 ea f8 ff       \tcall   0x7f99346385c0",
+      "    7f99346a9b77:\te9 9e ff ff ff       \tjmp    0x7f99346a9b1a",
+      "    7f99346a9b7c:\tf4                   \thlt",
+      "    7f99346a9b7d:\tf4                   \thlt",
+      "    7f99346a9b7e:\tf4                   \thlt",
+      "    7f99346a9b7f:\tf4                   \thlt",
+      "    7f99346a9b80:\te9 5b 40 ff ff       \tjmp    0x7f993469dbe0",
+      "    7f99346a9b85:\te8 00 00 00 00       \tcall   0x7f99346a9b8a",
+      "    7f99346a9b8a:\t48 83 2c 24 05       \tsubq   $0x5,(%rsp)",
+      "    7f99346a9b8f:\te9 4c 67 fa ff       \tjmp    0x7f99346502e0",
+      "    7f99346a9b94:\tf4                   \thlt",
+      "    7f99346a9b95:\tf4                   \thlt",
+      "    7f99346a9b96:\tf4                   \thlt",
+      "    7f99346a9b97:\tf4                   \thlt"
+     ]
+    }
+   ],
+   "arch_unit_evidence_class": "bytes: artifact fact, the JVM printed them.  mnemonics: objdump's reading of those bytes, a second tool's testimony, never merged with the first.",
+   "modes": [
+    {
+     "id": "u2.m1",
+     "name": "nmethod-entry barrier",
+     "response_kind": "call-out-and-return",
+     "evidence_class": "the tool's own testimony, plus objdump",
+     "note": "the JVM annotated the target as {runtime_call Stub::method_entry_barrier}; objdump reads the test as a compare of a word at 0x20(%r15) against zero, with a not-equal branch to that call, which then jumps back into the body.",
+     "detail_lines": [
+      "cmpl   $0x0,0x20(%r15)",
+      "jne    <barrier call>"
+     ]
+    },
+    {
+     "id": "u2.m2",
+     "name": "return safepoint poll",
+     "response_kind": "call-out-and-return",
+     "evidence_class": "the tool's own testimony, plus objdump",
+     "note": "annotated {poll_return}; objdump reads a compare of the stack pointer against 0x28(%r15) with an above branch to a stub that stores a resume address into 0x538(%r15) and jumps to the SafepointBlob.",
+     "detail_lines": [
+      "cmp    0x28(%r15),%rsp",
+      "ja     <poll stub>"
+     ]
+    },
+    {
+     "id": "u2.m3",
+     "name": "zero-divisor check",
+     "response_kind": "deopt-continue-elsewhere",
+     "evidence_class": "forced by construction (the branch target is the annotated trap blob) plus the tool's own testimony",
+     "note": "an EXPLICIT test of the second parameter against itself, equal-branch to a block that loads a trap request constant and calls the blob the JVM annotated {runtime_call UncommonTrapBlob}.  NOT an implicit hardware trap: the check is in the instruction stream before the divide.  The JVM's own scope annotation names the bytecode index it re-enters at.",
+     "detail_lines": [
+      "test   %edx,%edx",
+      "je     <trap block>",
+      "mov    $0xffffff7e,%esi",
+      "call   <UncommonTrapBlob>"
+     ],
+     "scope_annotation": [
+      "ImmutableOopMap {}",
+      "*idiv {reexecute=0 rethrow=0 return_oop=0}",
+      "- Probe::af2@2 (line 6)"
+     ]
+    },
+    {
+     "id": "u2.m4",
+     "name": "most-negative-over-minus-one check",
+     "response_kind": "branch-around-in-place",
+     "evidence_class": "objdump reading of the printed bytes",
+     "note": "the dividend is compared against 0x80000000 and the divisor against 0xffffffff; when both match, the quotient register is cleared and the divide is skipped.  This is the overflow case the hardware divide would fault on.  It does not leave the compiled code -- no deopt.",
+     "detail_lines": [
+      "cmp    $0x80000000,%eax",
+      "jne    <do the divide>",
+      "xor    %edx,%edx",
+      "cmp    $0xffffffff,%r11d",
+      "je     <skip the divide>"
+     ]
+    },
+    {
+     "id": "u2.m9",
+     "name": "exception handler / deoptimization stubs",
+     "response_kind": "deopt-continue-elsewhere",
+     "evidence_class": "the tool's own testimony",
+     "note": "every nmethod here ends with a stub section the JVM annotates {runtime_call ExceptionBlob} and {runtime_call DeoptimizationBlob}.  These are the standing exits, present in both units, not specific to either computation.",
+     "detail_lines": []
+    }
+   ]
+  }
+ ],
+ "core_reading": {
+  "u1": "the whole computation is one instruction that objdump reads as a load-effective-address over the two parameter registers, landing in %eax.  parm0 is %rsi and parm1 is %rdx per the JVM's own comment lines; the result register is %eax.  Everything else in the nmethod is frame setup, the entry barrier, the return poll, and the standing stubs.",
+  "u1_core_line": "lea    (%rsi,%rdx,1),%eax",
+  "u2_core_lines": [
+   "cltd",
+   "idiv   %r11d"
+  ],
+  "note": "the JVM's calling registers are NOT the C ones: parm0=%rsi, parm1=%rdx, and %r15 holds the thread. Normalisation to the pipeline's canonical runnable form (a->%rdi, b->%rsi, result->%rax) was NOT done in this pilot."
+ },
+ "warmup_recipe": {
+  "configuration": "-XX:-TieredCompilation (C2 only)",
+  "call_shape": "static calls with two int arguments",
+  "boundary_observed": {
+   "never_compiled_at_or_below": 6000,
+   "always_compiled_at_or_above": 7000,
+   "reps_per_point": 3,
+   "note": "the addition method was compiled by C2 in 0 of 3 runs at 5000 and at 6000 calls, and in 3 of 3 runs at 7000 and every higher point tested.  The division method lagged by one run at 7000 (2 of 3) and was 3 of 3 from 8000 up."
+  },
+  "flag_vs_observation": "the VM reports CompileThreshold = 10000, but the observed boundary is between 6000 and 7000 calls.  The two do not agree.  The mechanism for the gap is UNVERIFIED here -- no experiment in this pilot explains it, and it is recorded as a discrepancy rather than explained away.",
+  "default_tier_contrast": {
+   "note": "with tiering left on, the addition method reaches tier 3 (C1, profiled) by 500 calls and tier 4 (C2) by 5000 calls, not by 2000.  This matches the reported Tier3InvocationThreshold=200 and Tier4InvocationThreshold=5000.",
+   "rows": [
+    "n=200  af_at_tier3=0  af_at_tier4=0",
+    "n=500  af_at_tier3=1  af_at_tier4=0",
+    "15    8       3       Probe::af (4 bytes)",
+    "n=1000  af_at_tier3=1  af_at_tier4=0",
+    "11    8       3       Probe::af (4 bytes)",
+    "n=2000  af_at_tier3=1  af_at_tier4=0",
+    "13    8       3       Probe::af (4 bytes)",
+    "n=5000  af_at_tier3=2  af_at_tier4=1",
+    "10    8       3       Probe::af (4 bytes)",
+    "10    9       4       Probe::af (4 bytes)",
+    "10    8       3       Probe::af (4 bytes)   made not entrant: not used",
+    "n=10000  af_at_tier3=2  af_at_tier4=1",
+    "11    8       3       Probe::af (4 bytes)",
+    "11    9       4       Probe::af (4 bytes)",
+    "11    8       3       Probe::af (4 bytes)   made not entrant: not used"
+   ]
+  },
+  "wall_time_of_one_warmed_run": {
+   "n_calls_each_method": 200000,
+   "reps": [
+    "0.028s",
+    "0.026s",
+    "0.025s",
+    "0.025s",
+    "0.026s"
+   ],
+   "note": "whole JVM process, start to exit, including class loading, warm-up and both C2 compilations."
+  }
+ },
+ "tier_transition_log": {
+  "c2_only": [
+   "12    5 %           Probe::main @ 17 (111 bytes)",
+   "13    4             Probe::af (4 bytes)",
+   "13    5 %           Probe::main @ 17 (111 bytes)   made not entrant: uncommon trap",
+   "13    6             Probe::main (111 bytes)",
+   "14    7             Probe::af2 (4 bytes)",
+   "15    8 %           Probe::main @ 46 (111 bytes)",
+   "15    8 %           Probe::main @ 46 (111 bytes)   made not entrant: uncommon trap"
+  ],
+  "default_tiers": [
+   "11    8       3       Probe::af (4 bytes)",
+   "11    9       4       Probe::af (4 bytes)",
+   "11    8       3       Probe::af (4 bytes)   made not entrant: not used",
+   "13   10 %     3       Probe::main @ 17 (111 bytes)",
+   "13   11       3       Probe::main (111 bytes)",
+   "13   12 %     4       Probe::main @ 46 (111 bytes)"
+  ],
+  "evidence_class": "the tool's own testimony (-XX:+PrintCompilation)",
+  "note": "in the C2-only log the OSR compilation of the driver loop is twice retired with the reason 'made not entrant: uncommon trap' -- a deopt observed in the log itself, on the driver, not on either probed method."
+ },
+ "method_data_counters_at_exit": {
+  "af": {
+   "interpreter_invocation_count": 6784,
+   "invocation_counter": 6784,
+   "backedge_counter": 0,
+   "decompile_count": 0,
+   "mdo_size_bytes": 248
+  },
+  "af2": {
+   "interpreter_invocation_count": 6784,
+   "invocation_counter": 6784,
+   "backedge_counter": 0,
+   "decompile_count": 0,
+   "mdo_size_bytes": 256
+  },
+  "note": "printed by the -Xbatch dump run at exit, for a driver of 200000 calls.  The counters stop at 6784 because calls made from compiled code do not increment the interpreter counter.  That the number sits near the observed 6000-7000 boundary is consistent; it is NOT proof of the threshold and is not offered as such."
+ },
+ "lanes": [
+  {
+   "lane": "jvm_smoke.sh",
+   "wall_s": 2.5,
+   "did": "preflight: java/javac versions, the hsdis search, the binutils inventory, the probe compiling, and a first look at what PrintAssembly prints without hsdis"
+  },
+  {
+   "lane": "jvm_a_dump.sh",
+   "wall_s": 1.1,
+   "did": "thresholds, the coarse warm-up sweep, the tier logs, the dump; its carver matched no byte lines and produced an empty disassembly"
+  },
+  {
+   "lane": "jvm_b_carve.sh",
+   "wall_s": 0.4,
+   "did": "the carver repaired -- the printed hex groups carry a space inside each group, which the first pattern rejected -- and the full dump plus disassembly"
+  },
+  {
+   "lane": "jvm_c_recipe.sh",
+   "wall_s": 1.6,
+   "did": "the fine warm-up sweep with three repetitions per point, the default-tier contrast, and five timed warmed runs"
+  }
+ ],
+ "cost_answer": {
+  "question": "the owner's instinct, recorded in SUPPORT_scaling_design as unconfirmed: that the JVM would be the heavier lift than the interpreter track.",
+  "verdict": "REFUTED for this pilot, on these numbers",
+  "jvm_total_lane_seconds": 5.6,
+  "cpython_total_lane_seconds": 106,
+  "note": "the JVM pilot needed no build of anything: the JDK was installed, the probe compiled in well under a second, and a warmed run costs about 26 milliseconds.  The CPython pilot had to build the interpreter three times.  The one thing that did refuse -- hsdis -- was routed around by disassembling the bytes the JVM prints anyway, at no cost.  What the instinct got right: the ceremony IS real (warm-up, tier choice, dontinline, a missing disassembler); it is just cheap in seconds."
+ },
+ "what_was_not_done": [
+  "no hsdis, so no JVM-native mnemonics to cross-check objdump against",
+  "no normalisation to the canonical runnable form; the JVM's parameter registers differ from the C convention and were left as found",
+  "no matching against the compiled-language units, no bridge, no dominance claim",
+  "no second type pair; the recorded unit is int32 by int32 only, which is exactly the point of the warm-up recipe",
+  "no measurement of what the deopt actually does at run time -- the divisor was never zero in any run here, so the trap path was recorded from the instruction stream, never executed",
+  "one architecture (amd64), one JDK, one vendor build"
+ ]
+}

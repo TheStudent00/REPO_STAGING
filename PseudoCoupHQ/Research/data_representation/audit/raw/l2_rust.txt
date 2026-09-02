@@ -1,0 +1,113 @@
+nothing.unit.null|()
+nothing.Option::None.null|None
+truth.bool.true|true
+truth.bool.false|false
+whole.i32.base_zero|0
+whole.i32.base_42|42
+whole.i32.i64max|<compile-error>
+whole.i32.i64max_plus1|<compile-error>
+whole.i32.p53_plus1|<compile-error>
+whole.i32.u64max|<compile-error>
+whole.i64.base_zero|0
+whole.i64.base_42|42
+whole.i64.i64max|9223372036854775807
+whole.i64.i64max_plus1|<compile-error>
+whole.i64.p53_plus1|9007199254740993
+whole.i64.u64max|<compile-error>
+whole.u64.base_zero|0
+whole.u64.base_42|42
+whole.u64.i64max|9223372036854775807
+whole.u64.i64max_plus1|9223372036854775808
+whole.u64.p53_plus1|9007199254740993
+whole.u64.u64max|18446744073709551615
+whole.i128.base_zero|0
+whole.i128.base_42|42
+whole.i128.i64max|9223372036854775807
+whole.i128.i64max_plus1|9223372036854775808
+whole.i128.p53_plus1|9007199254740993
+whole.i128.u64max|18446744073709551615
+fractional.f64.base_1_5|1.5
+fractional.f64.base_pi|3.141592653589793
+fractional.f64.negzero|-0.0
+fractional.f64.nan|NaN
+fractional.f64.inf|inf
+fractional.f64.point1|0.1
+fractional.f32.base_1_5|1.5
+fractional.f32.base_pi|3.1415927
+fractional.f32.negzero|-0.0
+fractional.f32.nan|NaN
+fractional.f32.inf|inf
+fractional.f32.point1|0.1
+text.String.base_empty|
+text.String.base_hello|hello
+text.String.base_lines|line one
+text.String.eacute|é
+text.String.clef|𝄞
+text.String.escapes|quote " backslash \ tab	here
+text.&str.base_empty|
+text.&str.base_hello|hello
+text.&str.base_lines|line one
+text.&str.eacute|é
+text.&str.clef|𝄞
+text.&str.escapes|quote " backslash \ tab	here
+text.Vec<u8>.base_empty|
+text.Vec<u8>.base_hello|hello
+text.Vec<u8>.base_lines|line one
+text.Vec<u8>.eacute|é
+text.Vec<u8>.clef|𝄞
+text.Vec<u8>.escapes|quote " backslash \ tab	here
+sequence.Vec<T>.empty|[]
+sequence.Vec<T>.base|[1, 2, 3]
+sequence.Vec<T>.strs|["a", "b"]
+sequence.Vec<T>.mixed|<compile-error>
+sequence.Vec<T>.bigint|<compile-error>
+sequence.[T; N].empty|[]
+sequence.[T; N].base|[1, 2, 3]
+sequence.[T; N].strs|["a", "b"]
+sequence.[T; N].mixed|<compile-error>
+sequence.[T; N].bigint|<compile-error>
+sequence.&[T].empty|[]
+sequence.&[T].base|[1, 2, 3]
+sequence.&[T].strs|["a", "b"]
+sequence.&[T].mixed|<compile-error>
+sequence.&[T].bigint|<compile-error>
+sequence.VecDeque<T>.empty|[]
+sequence.VecDeque<T>.base|[1, 2, 3]
+sequence.VecDeque<T>.strs|["a", "b"]
+sequence.VecDeque<T>.mixed|<compile-error>
+sequence.VecDeque<T>.bigint|<compile-error>
+sequence.tuple.empty|()
+sequence.tuple.base|(1, 2, 3)
+sequence.tuple.strs|("a", "b")
+sequence.tuple.mixed|(1, "two", 3.0, true, ())
+sequence.tuple.bigint|(9223372036854775808,)
+keyed.HashMap<String,V>.empty|[] 0
+keyed.HashMap<String,V>.flat|["a", "b", "c"] 3
+keyed.HashMap<String,V>.intlike|["1", "b"] 2
+keyed.HashMap<String,V>.emptykey|[""] 1
+keyed.HashMap<String,V>.nested|["outer"] 1
+keyed.BTreeMap<String,V>.empty|{}
+keyed.BTreeMap<String,V>.flat|{"a": 1, "b": 2, "c": 3}
+keyed.BTreeMap<String,V>.intlike|{"1": "string-one-key", "b": "2"}
+keyed.BTreeMap<String,V>.emptykey|{"": "empty-string key"}
+keyed.BTreeMap<String,V>.nested|{"outer": {"inner": [1, 2]}}
+keyed.struct.empty|R0
+keyed.struct.flat|R3 { a: 1, b: 2, c: 3 }
+keyed.struct.intlike|<compile-error>
+keyed.struct.emptykey|<compile-error>
+keyed.struct.nested|RN { outer: [1, 2] }
+nesting.Vec<Vec<T>>.seq_in_seq|[[1, 2], [3, 4]]
+nesting.Vec<Vec<T>>.seq_in_map|{"outer": [1, 2]}
+nesting.Vec<Vec<T>>.mixed_depth|[[1], [2, 3], []]
+nesting.enum Node.seq_in_seq|Seq([Seq([Whole(1), Whole(2)]), Seq([Whole(3), Whole(4)])])
+nesting.enum Node.seq_in_map|Map({"outer": Map({"inner": Seq([Whole(1), Whole(2)])})})
+nesting.enum Node.mixed_depth|Seq([Whole(1), Seq([Whole(2), Map({"k": Text("t")})]), Truth(true), Null])
+identity.Vec<T> (owned elements).shared|copied
+identity.Vec<T> (owned elements).diamond|distinct
+identity.Vec<T> (owned elements).cycle|<compile-error>
+identity.Rc<T>.shared|shared-read-only
+identity.Rc<T>.diamond|same
+identity.Rc<T>.cycle|<compile-error>
+identity.Rc<RefCell<T>>.shared|shared
+identity.Rc<RefCell<T>>.diamond|same
+identity.Rc<RefCell<T>>.cycle|cycle

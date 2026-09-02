@@ -1,0 +1,332 @@
+{
+ "language": "ruby",
+ "layer": 2,
+ "purpose": "The ways a running ruby program can HOLD layer-1 content. Not layer 1 (the data is fixed), not layer 3 (no operations beyond load-and-read-back), not the type system.",
+ "reference": "language knowledge, checked against ../type_vocabulary/raw/ruby.types.json as a candidate checklist only (superseded node; not a decision instrument).",
+ "probe_style": "cell",
+ "spell": {
+  "nothing": {
+   "null": "nil"
+  },
+  "truth": {
+   "true": "true",
+   "false": "false"
+  },
+  "whole": {
+   "base_zero": "0",
+   "base_42": "42",
+   "i64max": "9223372036854775807",
+   "i64max_plus1": "9223372036854775808",
+   "p53_plus1": "9007199254740993",
+   "u64max": "18446744073709551615"
+  },
+  "fractional": {
+   "base_1_5": "1.5",
+   "base_pi": "3.141592653589793",
+   "negzero": "-0.0",
+   "nan": "Float::NAN",
+   "inf": "Float::INFINITY",
+   "point1": "0.1"
+  },
+  "text": {
+   "base_empty": "\"\"",
+   "base_hello": "\"hello\"",
+   "base_lines": "\"line one\\nline two\"",
+   "eacute": "\"\\u00e9\"",
+   "clef": "\"\\u{1D11E}\"",
+   "escapes": "\"quote \\\" backslash \\\\ tab\\there\""
+  }
+ },
+ "forms": {
+  "nothing": [
+   {
+    "rep": "NilClass",
+    "spelling": "nil",
+    "kind": "literal",
+    "note": "the one absent value; a singleton object, so every hole holds the same object.",
+    "decl": "v = {V}",
+    "read": "v.inspect"
+   }
+  ],
+  "truth": [
+   {
+    "rep": "TrueClass / FalseClass",
+    "spelling": "true / false",
+    "kind": "literal",
+    "note": "two singleton objects, one per truth value.",
+    "decl": "v = {V}",
+    "read": "v.inspect"
+   }
+  ],
+  "whole": [
+   {
+    "rep": "Integer",
+    "spelling": "42",
+    "kind": "literal",
+    "note": "arbitrary-precision whole number; no width to overflow.",
+    "decl": "v = {V}",
+    "read": "v.inspect"
+   },
+   {
+    "rep": "Rational",
+    "spelling": "Rational(42, 1)",
+    "kind": "constructor",
+    "note": "exact ratio holder; whole numbers are ratios over one.",
+    "decl": "v = Rational({V}, 1)",
+    "read": "v.to_s"
+   },
+   {
+    "rep": "BigDecimal",
+    "spelling": "BigDecimal(\"42\")",
+    "kind": "constructor",
+    "pre": "require 'bigdecimal'",
+    "note": "exact decimal holder, built from the literal's digit string.",
+    "decl": "v = BigDecimal(({V}).to_s)",
+    "read": "v.to_s('F')"
+   }
+  ],
+  "fractional": [
+   {
+    "rep": "Float",
+    "spelling": "1.5",
+    "kind": "literal",
+    "note": "IEEE double; the default fractional holder.",
+    "decl": "v = {V}",
+    "read": "v.inspect"
+   },
+   {
+    "rep": "Rational",
+    "spelling": "Rational(1.5)",
+    "kind": "constructor",
+    "note": "exact ratio holder; converts a finite float exactly but has no room for the non-finite values.",
+    "decl": "v = Rational({V})",
+    "read": "v.to_s"
+   },
+   {
+    "rep": "BigDecimal",
+    "spelling": "BigDecimal(\"1.5\")",
+    "kind": "constructor",
+    "pre": "require 'bigdecimal'",
+    "note": "decimal holder built from the float's digit string; the non-finite specials are not decimal digits at all.",
+    "decl": "v = BigDecimal(({V}).to_s)",
+    "read": "v.to_s('F')"
+   }
+  ],
+  "text": [
+   {
+    "rep": "String",
+    "spelling": "\"hello\"",
+    "kind": "literal",
+    "note": "a mutable run of bytes tagged with an encoding; the default text holder.",
+    "decl": "v = {V}",
+    "read": "v"
+   },
+   {
+    "rep": "Symbol",
+    "spelling": ":hello",
+    "kind": "constructor",
+    "note": "an interned name built from a string; meant for identifiers but the odd escapes still convert.",
+    "decl": "v = ({V}).to_sym",
+    "read": "v.to_s"
+   },
+   {
+    "rep": "String (byte string via force_encoding)",
+    "spelling": "\"hello\".dup.force_encoding(\"ASCII-8BIT\")",
+    "kind": "constructor",
+    "note": "the same bytes with the text encoding tag stripped off; codepoints readable only after re-tagging.",
+    "decl": "v = ({V}).dup.force_encoding('ASCII-8BIT')",
+    "read": "v.dup.force_encoding('UTF-8')"
+   },
+   {
+    "rep": "Array (codepoints)",
+    "spelling": "\"hello\".codepoints",
+    "kind": "constructor",
+    "note": "text pulled apart into one integer per codepoint; the run itself is gone until packed back.",
+    "decl": "v = ({V}).codepoints",
+    "read": "v.pack('U*')"
+   }
+  ],
+  "sequence": [
+   {
+    "rep": "Array",
+    "spelling": "[1, 2, 3]",
+    "kind": "literal",
+    "note": "ordered, growable, any element.",
+    "read": "v.inspect",
+    "probes": {
+     "empty": "v = []",
+     "base": "v = [1, 2, 3]",
+     "strs": "v = [\"a\", \"b\"]",
+     "mixed": "v = [1, \"two\", 3.0, true, nil]",
+     "bigint": "v = [9223372036854775808]"
+    }
+   },
+   {
+    "rep": "Array (frozen)",
+    "spelling": "[1, 2, 3].freeze",
+    "kind": "literal",
+    "note": "the same ordered run with further changes refused at run time.",
+    "read": "v.inspect",
+    "probes": {
+     "empty": "v = [].freeze",
+     "base": "v = [1, 2, 3].freeze",
+     "strs": "v = [\"a\", \"b\"].freeze",
+     "mixed": "v = [1, \"two\", 3.0, true, nil].freeze",
+     "bigint": "v = [9223372036854775808].freeze"
+    }
+   },
+   {
+    "rep": "Set",
+    "spelling": "Set[1, 2, 3]",
+    "kind": "constructor",
+    "pre": "require 'set'",
+    "note": "holds the elements but not their order and not repeats; kept because that loss is the finding.",
+    "read": "v.to_a.map(&:inspect).sort.inspect",
+    "probes": {
+     "empty": "v = Set[]",
+     "base": "v = Set[1, 2, 3]",
+     "strs": "v = Set[\"a\", \"b\"]",
+     "mixed": "v = Set[1, \"two\", 3.0, true, nil]",
+     "bigint": "v = Set[9223372036854775808]"
+    }
+   },
+   {
+    "rep": "Struct (fixed run)",
+    "spelling": "Struct.new(:a, :b, :c).new(1, 2, 3)",
+    "kind": "constructor",
+    "note": "fixed length and fixed position names decided when the shape is made; a positional run wearing named slots.",
+    "read": "v.to_a.inspect",
+    "probes": {
+     "empty": "shape_r0 = Struct.new\nv = shape_r0.new",
+     "base": "shape_r3 = Struct.new(:a, :b, :c)\nv = shape_r3.new(1, 2, 3)",
+     "strs": "shape_r2 = Struct.new(:a, :b)\nv = shape_r2.new(\"a\", \"b\")",
+     "mixed": "shape_r5 = Struct.new(:a, :b, :c, :d, :e)\nv = shape_r5.new(1, \"two\", 3.0, true, nil)",
+     "bigint": "shape_r1 = Struct.new(:a)\nv = shape_r1.new(9223372036854775808)"
+    }
+   }
+  ],
+  "keyed": [
+   {
+    "rep": "Hash",
+    "spelling": "{\"a\" => 1}",
+    "kind": "literal",
+    "note": "name to element, insertion order kept.",
+    "read": "v.inspect",
+    "probes": {
+     "empty": "v = {}",
+     "flat": "v = {\"a\" => 1, \"b\" => 2, \"c\" => 3}",
+     "intlike": "v = {\"1\" => \"string-one-key\", \"b\" => 2}",
+     "emptykey": "v = {\"\" => \"empty-string key\"}",
+     "nested": "v = {\"outer\" => {\"inner\" => [1, 2]}}"
+    }
+   },
+   {
+    "rep": "Struct",
+    "spelling": "Struct.new(:a).new(1)",
+    "kind": "constructor",
+    "note": "fixed set of names decided when the shape is made, not when the data arrives; the empty-string key is not a legal member name.",
+    "read": "v.to_h.inspect",
+    "probes": {
+     "empty": "shape_r0 = Struct.new\nv = shape_r0.new",
+     "flat": "shape_r3 = Struct.new(:a, :b, :c)\nv = shape_r3.new(1, 2, 3)",
+     "intlike": "shape_ri = Struct.new(:\"1\", :b)\nv = shape_ri.new(\"string-one-key\", 2)",
+     "emptykey": "shape_re = Struct.new(:\"\")\nv = shape_re.new(\"empty-string key\")",
+     "nested": "shape_rn = Struct.new(:outer)\nv = shape_rn.new({\"inner\" => [1, 2]})"
+    }
+   },
+   {
+    "rep": "OpenStruct",
+    "spelling": "OpenStruct.new(a: 1)",
+    "kind": "constructor",
+    "pre": "require 'ostruct'",
+    "note": "names become attributes assigned at run time; any string can become an accessor.",
+    "read": "v.to_h.inspect",
+    "probes": {
+     "empty": "v = OpenStruct.new",
+     "flat": "v = OpenStruct.new(a: 1, b: 2, c: 3)",
+     "intlike": "v = OpenStruct.new(\"1\" => \"string-one-key\", \"b\" => 2)",
+     "emptykey": "v = OpenStruct.new(\"\" => \"empty-string key\")",
+     "nested": "v = OpenStruct.new(outer: {\"inner\" => [1, 2]})"
+    }
+   },
+   {
+    "rep": "Data",
+    "spelling": "Data.define(:a).new(a: 1)",
+    "kind": "constructor",
+    "note": "an immutable named-field value type (ruby 3.2+); names are fixed when the shape is defined, same identifier limits as Struct.",
+    "read": "v.to_h.inspect",
+    "probes": {
+     "empty": "shape_r0 = Data.define\nv = shape_r0.new",
+     "flat": "shape_r3 = Data.define(:a, :b, :c)\nv = shape_r3.new(a: 1, b: 2, c: 3)",
+     "intlike": "shape_ri = Data.define(:\"1\", :b)\nv = shape_ri.new(:\"1\" => \"string-one-key\", :b => 2)",
+     "emptykey": "shape_re = Data.define(:\"\")\nv = shape_re.new(:\"\" => \"empty-string key\")",
+     "nested": "shape_rn = Data.define(:outer)\nv = shape_rn.new(outer: {\"inner\" => [1, 2]})"
+    }
+   }
+  ],
+  "nesting": [
+   {
+    "rep": "Array",
+    "spelling": "[[1, 2], [3, 4]]",
+    "kind": "literal",
+    "note": "elements may be any of the forms, to any depth.",
+    "read": "v.inspect",
+    "probes": {
+     "seq_in_seq": "v = [[1, 2], [3, 4]]",
+     "seq_in_map": "v = {\"outer\" => {\"inner\" => [1, 2]}}",
+     "mixed_depth": "v = [1, [2, {\"k\" => [3, nil, \"t\"]}], true]"
+    }
+   },
+   {
+    "rep": "Hash",
+    "spelling": "{\"outer\" => {\"inner\" => [1, 2]}}",
+    "kind": "literal",
+    "note": "values may be any of the forms, to any depth.",
+    "read": "v.inspect",
+    "probes": {
+     "seq_in_seq": "v = {\"a\" => [[1, 2], [3, 4]]}",
+     "seq_in_map": "v = {\"outer\" => {\"inner\" => [1, 2]}}",
+     "mixed_depth": "v = {\"a\" => [1, {\"b\" => [2, nil]}], \"c\" => true}"
+    }
+   }
+  ],
+  "identity": [
+   {
+    "rep": "Array (object references)",
+    "spelling": "s = [1, 2, 3]; v = [s, s]",
+    "kind": "literal",
+    "note": "elements are references, so two positions can name one object.",
+    "read": "r",
+    "probes": {
+     "shared": "s = [1, 2, 3]\nv = [s, s]\nv[0] << 99\nr = (v[1].last == 99 && v[0].equal?(v[1])) ? \"shared\" : \"copied\"",
+     "diamond": "t = {\"payload\" => 7}\nv = [t, t]\nr = v[0].equal?(v[1]) ? \"same\" : \"distinct\"",
+     "cycle": "v = {\"name\" => \"loop\"}\nv[\"self\"] = v\nr = v[\"self\"].equal?(v) ? \"cycle\" : \"no-cycle\""
+    }
+   },
+   {
+    "rep": "dup / Marshal round trip (copying holder)",
+    "spelling": "Marshal.load(Marshal.dump(s))",
+    "kind": "constructor",
+    "note": "an explicit copy step, the contrast to the reference holders; a new object, so nothing shared survives.",
+    "read": "r",
+    "probes": {
+     "shared": "s = [1, 2, 3]\ncopy = Marshal.load(Marshal.dump(s))\nv = [s, copy]\nv[0] << 99\nr = (v[1].last == 99 && v[0].equal?(v[1])) ? \"shared\" : \"copied\"",
+     "diamond": "t = {\"payload\" => 7}\ncopy = Marshal.load(Marshal.dump(t))\nv = [t, copy]\nr = v[0].equal?(v[1]) ? \"same\" : \"distinct\"",
+     "cycle": "v = {\"name\" => \"loop\"}\nv[\"self\"] = v\ncopy = Marshal.load(Marshal.dump(v))\nr = copy[\"self\"].equal?(copy) ? \"cycle\" : \"no-cycle\""
+    }
+   },
+   {
+    "rep": "Hash (object held under two names)",
+    "spelling": "s = [1, 2, 3]; v = {\"l\" => s, \"r\" => s}",
+    "kind": "literal",
+    "note": "values are references; the same object under two names.",
+    "read": "r",
+    "probes": {
+     "shared": "s = [1, 2, 3]\nv = {\"left\" => s, \"right\" => s}\nv[\"left\"] << 99\nr = (v[\"right\"].last == 99 && v[\"left\"].equal?(v[\"right\"])) ? \"shared\" : \"copied\"",
+     "diamond": "t = {\"payload\" => 7}\nv = {\"via_a\" => t, \"via_b\" => t}\nr = v[\"via_a\"].equal?(v[\"via_b\"]) ? \"same\" : \"distinct\"",
+     "cycle": "v = {\"name\" => \"loop\"}\nv[\"self\"] = v\nr = v[\"self\"].equal?(v) ? \"cycle\" : \"no-cycle\""
+    }
+   }
+  ]
+ }
+}

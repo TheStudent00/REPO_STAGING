@@ -1,0 +1,20 @@
+// list probe bodies - typescript. Two faces, both recorded: the CHECKER's
+// declared-element-type discipline (F-l1.b, its own program) and the RUNTIME's
+// complete indifference to it (F-l1.c).
+function mkl(): number[] { return [1, 2, 3]; }
+function f_listU1_a(): string { const a = [1, 2]; a.push(3); return a.join(","); }
+function f_listU2_a(): string { return fmts(mkl()[1]); }
+function f_listU3_a(): string { const o: number[] = []; for (const x of mkl()) { o.push(x); } return o.join(","); }
+function f_listU4_a(): string { return fmts(mkl().length); }
+function f_Fl1_c(): string {
+  const a: number[] = [1, 2]; (a as any).push("x");
+  return fmts(a.length + "/" + typeof a[2]);
+}
+function f_Fl2_a(): string { const a = [1, , 3]; return fmts(a.length + "/" + (1 in a)); }
+function f_Fl3_a(): string { const a = [1, 2]; a.push(3); a.push(4); return fmts(a.length); }
+function f_Fl4_a(): string { return fmts(mkl()[10]); }
+function f_Fl5_a(): string { return fmts((mkl() as any)[-1]); }
+function f_Fl6_a(): string { const a = mkl(); const s = a.slice(0, 2); s[0] = 99; return fmts(a[0]); }
+function f_Fl7_a(): string { return fmtb((mkl() as any) == (mkl() as any)); }
+function f_Fl8_a(): string { const a = [10, 9, 1]; a.sort(); return a.join(","); }
+function f_Fl9_a(): string { const a = mkl(); const b = a; b[0] = 99; return fmts(a[0]); }

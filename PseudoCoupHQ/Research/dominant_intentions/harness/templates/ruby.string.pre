@@ -1,0 +1,24 @@
+# string probe bodies - ruby (character-counting length; MUTABLE strings).
+E = "é"
+M = "\u{1D11E}"
+def op(x) = x
+def f_strU1_a() = fmts(op("ab") + op("cd"))
+def f_strU2_a() = fmtb(op("ab" + "cd") == op("abcd"))
+def f_strU3_a() = fmts(op("abcdef")[1, 3])
+def f_strU4_a() = fmtb(op(E + M).unpack("C*").pack("C*").force_encoding("UTF-8") == op(E + M))
+def f_Fs1_a() = fmts(op(E)[0].ord)
+def f_Fs1_b() = fmts(op(M)[0].ord)
+def f_Fs2_a()
+  a = +"abc"; b = a; a << "d"; fmts(b)
+end
+def f_Fs2_b()
+  s = +"abc"; s[0] = "z"; fmts(s)
+end
+def f_Fs3_a() = fmts(op(E).length)
+def f_Fs3_b() = fmts(op(M).length)
+def f_Fs3_c() = fmts(op(E + M).length)
+def f_Fs4_a() = fmts(op("abc")[0])
+def f_Fs5_a() = fmtb(op("ab" + "cd") == op("abcd"))
+def f_Fs5_c()
+  s = op("abcd"); fmtb(s == s)
+end

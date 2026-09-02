@@ -1,0 +1,385 @@
+{
+  "language": "c++",
+  "layer": 2,
+  "purpose": "The ways a running c++ program can HOLD layer-1 content. Not layer 1 (the data is fixed), not layer 3 (no operations beyond load-and-read-back), not the type system.",
+  "reference": "language knowledge, checked against ../type_vocabulary/raw/cpp.types.json as a candidate checklist only (superseded node; not a decision instrument).",
+  "probe_style": "probe",
+  "spell": {
+    "nothing": {
+      "null": "nullptr"
+    },
+    "truth": {
+      "true": "true",
+      "false": "false"
+    },
+    "whole": {
+      "base_zero": "0",
+      "base_42": "42",
+      "i64max": "9223372036854775807",
+      "i64max_plus1": "9223372036854775808",
+      "p53_plus1": "9007199254740993",
+      "u64max": "18446744073709551615"
+    },
+    "fractional": {
+      "base_1_5": "1.5",
+      "base_pi": "3.141592653589793",
+      "negzero": "-0.0",
+      "nan": "std::nan(\"\")",
+      "inf": "std::numeric_limits<double>::infinity()",
+      "point1": "0.1"
+    },
+    "text": {
+      "base_empty": "\"\"",
+      "base_hello": "\"hello\"",
+      "base_lines": "\"line one\\nline two\"",
+      "eacute": "\"\\u00e9\"",
+      "clef": "\"\\U0001D11E\"",
+      "escapes": "\"quote \\\" backslash \\\\ tab\\there\""
+    }
+  },
+  "forms": {
+    "nothing": [
+      {
+        "rep": "std::monostate",
+        "spelling": "std::monostate{}",
+        "kind": "literal",
+        "note": "a type with exactly one value, the variant-library way to spell a case that carries nothing.",
+        "pre": "#include <variant>\n#include <string>",
+        "spell_override": {
+          "null": "std::monostate{}"
+        },
+        "decl": "std::monostate v = {V};",
+        "read": "std::string(\"monostate\")"
+      },
+      {
+        "rep": "std::nullptr_t",
+        "spelling": "nullptr",
+        "kind": "literal",
+        "note": "the null pointer value itself; it holds no pointee and no other content.",
+        "decl": "std::nullptr_t v = {V};",
+        "read": "std::string(v == nullptr ? \"null\" : \"not-null\")"
+      },
+      {
+        "rep": "std::optional<int64_t>",
+        "spelling": "std::nullopt",
+        "kind": "literal",
+        "note": "absence as a case of a two-case optional holder, so the hole still carries a declared element kind.",
+        "pre": "#include <optional>",
+        "spell_override": {
+          "null": "std::nullopt"
+        },
+        "decl": "std::optional<int64_t> v = {V};",
+        "read": "std::string(v.has_value() ? \"has-value\" : \"nullopt\")"
+      }
+    ],
+    "truth": [
+      {
+        "rep": "bool",
+        "spelling": "true / false",
+        "kind": "literal",
+        "note": "two values, no numeric side in the source spelling.",
+        "decl": "bool v = {V};",
+        "read": "std::string(v ? \"true\" : \"false\")"
+      }
+    ],
+    "whole": [
+      {
+        "rep": "int32_t",
+        "spelling": "42",
+        "kind": "literal",
+        "pre": "#include <cstdint>\n#include <string>",
+        "note": "signed 32-bit; the narrow end, silently wraps values that do not fit.",
+        "decl": "int32_t v = {V};",
+        "read": "std::to_string(v)"
+      },
+      {
+        "rep": "int64_t",
+        "spelling": "42",
+        "kind": "literal",
+        "pre": "#include <cstdint>\n#include <string>",
+        "note": "signed 64-bit; the usual whole-number holder.",
+        "decl": "int64_t v = {V};",
+        "read": "std::to_string(v)"
+      },
+      {
+        "rep": "uint64_t",
+        "spelling": "42",
+        "kind": "literal",
+        "pre": "#include <cstdint>\n#include <string>",
+        "note": "unsigned 64-bit; reaches u64 max, refuses anything below zero.",
+        "decl": "uint64_t v = {V};",
+        "read": "std::to_string(v)"
+      },
+      {
+        "rep": "__int128",
+        "spelling": "42",
+        "kind": "literal",
+        "pre": "#include <string>\n#include <algorithm>",
+        "note": "signed 128-bit GNU extension; wide enough for every edge in the data file, but has no std::to_string so read-back is hand-rolled.",
+        "decl": "__int128 v = {V};",
+        "read": "[&]{ __int128 t = v; bool neg = t < 0; unsigned __int128 u = neg ? (unsigned __int128)(-(t+1)) + 1 : (unsigned __int128)t; std::string s; if (u==0) s = \"0\"; while (u > 0) { s += char('0' + (int)(u % 10)); u /= 10; } if (neg) s += '-'; std::reverse(s.begin(), s.end()); return s; }()"
+      }
+    ],
+    "fractional": [
+      {
+        "rep": "double",
+        "spelling": "1.5",
+        "kind": "literal",
+        "pre": "#include <sstream>\n#include <iomanip>\n#include <cmath>\n#include <limits>\n#include <string>",
+        "note": "IEEE double, the ordinary fractional holder.",
+        "decl": "double v = {V};",
+        "read": "[&]{ std::ostringstream oss; oss << std::setprecision(17) << v; return oss.str(); }()"
+      },
+      {
+        "rep": "float",
+        "spelling": "1.5f",
+        "kind": "literal",
+        "pre": "#include <sstream>\n#include <iomanip>\n#include <cmath>\n#include <limits>\n#include <string>",
+        "note": "IEEE single; holds every base value at lower precision.",
+        "spell_override": {
+          "nan": "std::numeric_limits<float>::quiet_NaN()",
+          "inf": "std::numeric_limits<float>::infinity()"
+        },
+        "decl": "float v = {V};",
+        "read": "[&]{ std::ostringstream oss; oss << std::setprecision(9) << v; return oss.str(); }()"
+      }
+    ],
+    "text": [
+      {
+        "rep": "std::string",
+        "spelling": "\"hello\"",
+        "kind": "literal",
+        "pre": "#include <string>",
+        "note": "owned utf-8-ish byte string, growable, the ordinary text holder.",
+        "decl": "std::string v = {V};",
+        "read": "v"
+      },
+      {
+        "rep": "const char*",
+        "spelling": "\"hello\"",
+        "kind": "literal",
+        "pre": "#include <string>",
+        "note": "a view of a string literal baked into the binary; the pointer form.",
+        "decl": "const char* v = {V};",
+        "read": "std::string(v)"
+      },
+      {
+        "rep": "std::u32string",
+        "spelling": "U\"hello\"",
+        "kind": "literal",
+        "pre": "#include <string>",
+        "note": "text held as one array element per codepoint rather than per byte; read back as a codepoint list since it has no native utf-8 decoder.",
+        "decl": "std::u32string v = U{V};",
+        "read": "[&]{ std::string s; for (char32_t c : v) { s += \"[\" + std::to_string((unsigned long)c) + \"]\"; } return s; }()"
+      }
+    ],
+    "sequence": [
+      {
+        "rep": "std::vector<T>",
+        "spelling": "std::vector<int64_t>{1,2,3}",
+        "kind": "constructor",
+        "pre": "#include <vector>\n#include <string>\n#include <sstream>",
+        "note": "growable ordered run, one declared element kind.",
+        "read": "[&]{ std::ostringstream oss; oss<<\"[\"; bool first=true; for (auto& e : v) { if(!first) oss<<\",\"; oss<<e; first=false; } oss<<\"]\"; return oss.str(); }()",
+        "probes": {
+          "empty": "std::vector<int64_t> v = {};",
+          "base": "std::vector<int64_t> v = {1, 2, 3};",
+          "strs": "std::vector<std::string> v = {\"a\", \"b\"};",
+          "mixed": "std::vector<int64_t> v = {1, \"two\", 3.0, true, nullptr};",
+          "bigint": "std::vector<int64_t> v = {9223372036854775808};"
+        }
+      },
+      {
+        "rep": "T[N] (C array)",
+        "spelling": "int64_t v[] = {1,2,3};",
+        "kind": "literal",
+        "pre": "#include <string>\n#include <sstream>\n#include <cstddef>",
+        "note": "fixed length baked into the type; a zero-length array is not legal standard c++, so the empty probe is expected to refuse.",
+        "read": "[&]{ std::ostringstream oss; oss<<\"[\"; for (size_t i=0;i<vn;++i){ if(i) oss<<\",\"; oss<<v[i]; } oss<<\"]\"; return oss.str(); }()",
+        "probes": {
+          "empty": "int64_t v[0] = {}; size_t vn = 0;",
+          "base": "int64_t v[3] = {1, 2, 3}; size_t vn = 3;",
+          "strs": "const char* v[2] = {\"a\", \"b\"}; size_t vn = 2;",
+          "mixed": "int64_t v[5] = {1, \"two\", 3.0, true, nullptr}; size_t vn = 5;",
+          "bigint": "int64_t v[1] = {9223372036854775808}; size_t vn = 1;"
+        }
+      },
+      {
+        "rep": "std::array<T,N>",
+        "spelling": "std::array<int64_t,3>{1,2,3}",
+        "kind": "constructor",
+        "pre": "#include <array>\n#include <string>\n#include <sstream>",
+        "note": "a fixed-length run that, unlike a raw c array, is allowed to be zero length.",
+        "read": "[&]{ std::ostringstream oss; oss<<\"[\"; bool first=true; for (auto& e : v) { if(!first) oss<<\",\"; oss<<e; first=false; } oss<<\"]\"; return oss.str(); }()",
+        "probes": {
+          "empty": "std::array<int64_t,0> v = {};",
+          "base": "std::array<int64_t,3> v = {1, 2, 3};",
+          "strs": "std::array<const char*,2> v = {\"a\", \"b\"};",
+          "mixed": "std::array<int64_t,5> v = {1, \"two\", 3.0, true, nullptr};",
+          "bigint": "std::array<int64_t,1> v = {9223372036854775808};"
+        }
+      },
+      {
+        "rep": "std::deque<T>",
+        "spelling": "std::deque<int64_t>{1,2,3}",
+        "kind": "constructor",
+        "pre": "#include <deque>\n#include <string>\n#include <sstream>",
+        "note": "ordered run open at both ends.",
+        "read": "[&]{ std::ostringstream oss; oss<<\"[\"; bool first=true; for (auto& e : v) { if(!first) oss<<\",\"; oss<<e; first=false; } oss<<\"]\"; return oss.str(); }()",
+        "probes": {
+          "empty": "std::deque<int64_t> v = {};",
+          "base": "std::deque<int64_t> v = {1, 2, 3};",
+          "strs": "std::deque<std::string> v = {\"a\", \"b\"};",
+          "mixed": "std::deque<int64_t> v = {1, \"two\", 3.0, true, nullptr};",
+          "bigint": "std::deque<int64_t> v = {9223372036854775808};"
+        }
+      },
+      {
+        "rep": "std::list<T>",
+        "spelling": "std::list<int64_t>{1,2,3}",
+        "kind": "constructor",
+        "pre": "#include <list>\n#include <string>\n#include <sstream>",
+        "note": "ordered run with cheap insertion anywhere, no random access.",
+        "read": "[&]{ std::ostringstream oss; oss<<\"[\"; bool first=true; for (auto& e : v) { if(!first) oss<<\",\"; oss<<e; first=false; } oss<<\"]\"; return oss.str(); }()",
+        "probes": {
+          "empty": "std::list<int64_t> v = {};",
+          "base": "std::list<int64_t> v = {1, 2, 3};",
+          "strs": "std::list<std::string> v = {\"a\", \"b\"};",
+          "mixed": "std::list<int64_t> v = {1, \"two\", 3.0, true, nullptr};",
+          "bigint": "std::list<int64_t> v = {9223372036854775808};"
+        }
+      },
+      {
+        "rep": "std::tuple",
+        "spelling": "std::make_tuple(1,\"two\",3.0)",
+        "kind": "constructor",
+        "pre": "#include <tuple>\n#include <sstream>\n#include <type_traits>\n#include <string>",
+        "note": "fixed length, and each position may be a different kind; the one c++ sequence holder that takes the mixed row without complaint.",
+        "read": "std::apply([](auto&&... args){ std::ostringstream oss; oss<<\"(\"; bool first=true; auto pr=[&](auto&& a){ if(!first) oss<<\",\"; using AT=std::decay_t<decltype(a)>; if constexpr (std::is_null_pointer_v<AT>) oss<<\"null\"; else oss<<a; first=false; }; (pr(args), ...); oss<<\")\"; return oss.str(); }, v)",
+        "probes": {
+          "empty": "std::tuple<> v = {};",
+          "base": "auto v = std::make_tuple((int64_t)1, (int64_t)2, (int64_t)3);",
+          "strs": "auto v = std::make_tuple(std::string(\"a\"), std::string(\"b\"));",
+          "mixed": "auto v = std::make_tuple((int64_t)1, std::string(\"two\"), 3.0, true, nullptr);",
+          "bigint": "auto v = std::make_tuple((int64_t)9223372036854775808);"
+        }
+      }
+    ],
+    "keyed": [
+      {
+        "rep": "std::map<std::string,T>",
+        "spelling": "std::map<std::string,int64_t>{{\"a\",1}}",
+        "kind": "constructor",
+        "pre": "#include <map>\n#include <string>\n#include <string>\n#include <sstream>\n#include <vector>\n#include <map>\n#include <type_traits>\ntemplate <typename T> std::string dbg(const T& x);\ntemplate <typename T> std::string dbg(const std::vector<T>& x) {\n    std::ostringstream oss; oss << \"[\"; bool first=true;\n    for (auto& e : x) { if(!first) oss << \",\"; oss << dbg(e); first=false; }\n    oss << \"]\"; return oss.str();\n}\ntemplate <typename T> std::string dbg(const std::map<std::string,T>& x) {\n    std::ostringstream oss; bool first=true;\n    for (auto& [k,val] : x) { if(!first) oss << \",\"; oss << k << \"=\" << dbg(val); first=false; }\n    return oss.str();\n}\ntemplate <typename T> std::string dbg(const T& x) {\n    std::ostringstream oss; oss << x; return oss.str();\n}\n",
+        "note": "name to element, kept in sorted key order.",
+        "read": "dbg(v)",
+        "probes": {
+          "empty": "std::map<std::string,int64_t> v = {};",
+          "flat": "std::map<std::string,int64_t> v = {{\"a\",1},{\"b\",2},{\"c\",3}};",
+          "intlike": "std::map<std::string,std::string> v = {{\"1\",\"string-one-key\"},{\"b\",\"2\"}};",
+          "emptykey": "std::map<std::string,std::string> v = {{\"\",\"empty-string key\"}};",
+          "nested": "std::map<std::string,std::map<std::string,std::vector<int64_t>>> v = {{\"outer\", {{\"inner\", {1,2}}}}};"
+        }
+      },
+      {
+        "rep": "std::unordered_map<std::string,T>",
+        "spelling": "std::unordered_map<std::string,int64_t>{{\"a\",1}}",
+        "kind": "constructor",
+        "pre": "#include <unordered_map>\n#include <vector>\n#include <algorithm>\n#include <string>\n#include <string>\n#include <sstream>\n#include <vector>\n#include <map>\n#include <type_traits>\ntemplate <typename T> std::string dbg(const T& x);\ntemplate <typename T> std::string dbg(const std::vector<T>& x) {\n    std::ostringstream oss; oss << \"[\"; bool first=true;\n    for (auto& e : x) { if(!first) oss << \",\"; oss << dbg(e); first=false; }\n    oss << \"]\"; return oss.str();\n}\ntemplate <typename T> std::string dbg(const std::map<std::string,T>& x) {\n    std::ostringstream oss; bool first=true;\n    for (auto& [k,val] : x) { if(!first) oss << \",\"; oss << k << \"=\" << dbg(val); first=false; }\n    return oss.str();\n}\ntemplate <typename T> std::string dbg(const T& x) {\n    std::ostringstream oss; oss << x; return oss.str();\n}\n",
+        "note": "the same grouping held with no guaranteed iteration order; read back sorts keys to make the probe reproducible.",
+        "read": "[&]{ std::vector<std::string> ks; for (auto& kv : v) ks.push_back(kv.first); std::sort(ks.begin(), ks.end()); std::ostringstream oss; bool first=true; for (auto& k : ks) { if(!first) oss<<\",\"; oss<<k<<\"=\"<<dbg(v.at(k)); first=false; } return oss.str(); }()",
+        "probes": {
+          "empty": "std::unordered_map<std::string,int64_t> v = {};",
+          "flat": "std::unordered_map<std::string,int64_t> v = {{\"a\",1},{\"b\",2},{\"c\",3}};",
+          "intlike": "std::unordered_map<std::string,std::string> v = {{\"1\",\"string-one-key\"},{\"b\",\"2\"}};",
+          "emptykey": "std::unordered_map<std::string,std::string> v = {{\"\",\"empty-string key\"}};",
+          "nested": "std::unordered_map<std::string,std::map<std::string,std::vector<int64_t>>> v = {{\"outer\", {{\"inner\", {1,2}}}}};"
+        }
+      },
+      {
+        "rep": "struct",
+        "spelling": "struct R { int64_t a; }; R{1}",
+        "kind": "constructor",
+        "pre": "#include <string>\n#include <sstream>\n#include <vector>",
+        "note": "field names are fixed when the shape is written, not when the data arrives; the odd keys are not spellable as field names at all.",
+        "read": "v.dbgstr()",
+        "probes": {
+          "empty": "struct R0 { std::string dbgstr() const { return \"\"; } }; R0 v = {};",
+          "flat": "struct R3 { int64_t a,b,c; std::string dbgstr() const { return \"a=\"+std::to_string(a)+\",b=\"+std::to_string(b)+\",c=\"+std::to_string(c); } }; R3 v = {1,2,3};",
+          "intlike": "struct RI { int64_t 1; int64_t b; std::string dbgstr() const { return \"\"; } }; RI v = {1,2};",
+          "emptykey": "struct RE { std::string ; std::string dbgstr() const { return \"\"; } }; RE v = {\"empty-string key\"};",
+          "nested": "struct RN { std::vector<int64_t> outer; std::string dbgstr() const { std::string s=\"outer=[\"; for (size_t i=0;i<outer.size();++i){ if(i) s+=\",\"; s+=std::to_string(outer[i]); } return s+\"]\"; } }; RN v = { {1,2} };"
+        }
+      }
+    ],
+    "nesting": [
+      {
+        "rep": "std::vector<std::vector<T>> / std::map<std::string,std::vector<T>>",
+        "spelling": "std::vector<std::vector<int64_t>>{{1,2},{3,4}}",
+        "kind": "constructor",
+        "pre": "#include <vector>\n#include <map>\n#include <string>\n#include <string>\n#include <sstream>\n#include <vector>\n#include <map>\n#include <type_traits>\ntemplate <typename T> std::string dbg(const T& x);\ntemplate <typename T> std::string dbg(const std::vector<T>& x) {\n    std::ostringstream oss; oss << \"[\"; bool first=true;\n    for (auto& e : x) { if(!first) oss << \",\"; oss << dbg(e); first=false; }\n    oss << \"]\"; return oss.str();\n}\ntemplate <typename T> std::string dbg(const std::map<std::string,T>& x) {\n    std::ostringstream oss; bool first=true;\n    for (auto& [k,val] : x) { if(!first) oss << \",\"; oss << k << \"=\" << dbg(val); first=false; }\n    return oss.str();\n}\ntemplate <typename T> std::string dbg(const T& x) {\n    std::ostringstream oss; oss << x; return oss.str();\n}\n",
+        "note": "nesting by repeating the same holder; every level must carry the same declared element kind.",
+        "read": "dbg(v)",
+        "probes": {
+          "seq_in_seq": "std::vector<std::vector<int64_t>> v = {{1, 2}, {3, 4}};",
+          "seq_in_map": "std::map<std::string, std::vector<int64_t>> v = {{\"outer\", {1, 2}}};",
+          "mixed_depth": "std::vector<std::vector<int64_t>> v = {{1}, {2, 3}, {}};"
+        }
+      },
+      {
+        "rep": "Node (variant-based)",
+        "spelling": "struct Node { std::variant<...> val; }",
+        "kind": "constructor",
+        "pre": "#include <variant>\n#include <vector>\n#include <map>\n#include <string>\n#include <sstream>\n#include <type_traits>\nstruct Node { std::variant<std::monostate, bool, int64_t, std::string, std::vector<Node>, std::map<std::string,Node>> val; };\nstd::string dbg_node(const Node& n) {\n    return std::visit([](auto&& x) -> std::string {\n        using T = std::decay_t<decltype(x)>;\n        if constexpr (std::is_same_v<T, std::monostate>) return \"null\";\n        else if constexpr (std::is_same_v<T, bool>) return x ? \"true\" : \"false\";\n        else if constexpr (std::is_same_v<T, int64_t>) return std::to_string(x);\n        else if constexpr (std::is_same_v<T, std::string>) return x;\n        else if constexpr (std::is_same_v<T, std::vector<Node>>) {\n            std::ostringstream oss; oss << \"[\"; bool first=true;\n            for (auto& e : x) { if(!first) oss << \",\"; oss << dbg_node(e); first=false; }\n            oss << \"]\"; return oss.str();\n        } else {\n            std::ostringstream oss; bool first=true;\n            for (auto& kv : x) { if(!first) oss << \",\"; oss << kv.first << \"=\" << dbg_node(kv.second); first=false; }\n            return oss.str();\n        }\n    }, n.val);\n}\n",
+        "note": "a hand-written sum shape; the only c++ holder here that takes every layer-1 form in one element position, which is what mixed-depth nesting needs.",
+        "read": "dbg_node(v)",
+        "probes": {
+          "seq_in_seq": "Node v{ std::vector<Node>{ Node{std::vector<Node>{Node{(int64_t)1}, Node{(int64_t)2}}}, Node{std::vector<Node>{Node{(int64_t)3}, Node{(int64_t)4}}} } };",
+          "seq_in_map": "Node v{ std::map<std::string,Node>{ {\"outer\", Node{std::map<std::string,Node>{ {\"inner\", Node{std::vector<Node>{Node{(int64_t)1}, Node{(int64_t)2}}} } }} } } };",
+          "mixed_depth": "Node v{ std::vector<Node>{ Node{(int64_t)1}, Node{std::vector<Node>{Node{(int64_t)2}, Node{std::map<std::string,Node>{{\"k\", Node{std::string(\"t\")}}}}}}, Node{true}, Node{std::monostate{}} } };"
+        }
+      }
+    ],
+    "identity": [
+      {
+        "rep": "std::vector<T> (owned elements)",
+        "spelling": "std::vector<std::vector<int64_t>>{s,s}",
+        "kind": "constructor",
+        "pre": "#include <vector>\n#include <string>\n#include <cstdint>",
+        "note": "the ordinary owned holder; a value sits in only one position, so a second position needs a copy. Self-containment is impossible by construction, so the honest cycle attempt just copies the (empty) current state into itself rather than refusing to compile.",
+        "read": "r",
+        "probes": {
+          "shared": "std::vector<int64_t> s = {1, 2, 3};\nstd::vector<std::vector<int64_t>> v = { s, s };\nv[0].push_back(99);\nstd::string r = (v[1].size() > 3 && v[1].back() == 99) ? \"shared\" : \"copied\";",
+          "diamond": "std::vector<int64_t> t = {7};\nstd::vector<std::vector<int64_t>> v = { t, t };\nstd::string r = (v[0].data() == v[1].data()) ? \"same\" : \"distinct\";",
+          "cycle": "std::vector<std::vector<int64_t>> v;\nv.push_back(v);\nstd::string r = \"no-cycle\";"
+        }
+      },
+      {
+        "rep": "std::shared_ptr<T>",
+        "spelling": "std::make_shared<std::vector<int64_t>>(...)",
+        "kind": "constructor",
+        "pre": "#include <memory>\n#include <vector>\n#include <string>\n#include <cstdint>",
+        "note": "reference-counted sharing with mutation visible through every holder; the c++ shape a shared node and a cycle both need, at the cost of a leak if the cycle is never broken.",
+        "read": "r",
+        "probes": {
+          "shared": "auto s = std::make_shared<std::vector<int64_t>>(std::vector<int64_t>{1, 2, 3});\nstd::vector<std::shared_ptr<std::vector<int64_t>>> v = { s, s };\nv[0]->push_back(99);\nstd::string r = (v[1]->back() == 99 && v[0] == v[1]) ? \"shared\" : \"copied\";",
+          "diamond": "auto t = std::make_shared<std::vector<int64_t>>(std::vector<int64_t>{7});\nstd::vector<std::shared_ptr<std::vector<int64_t>>> v = { t, t };\nstd::string r = (v[0] == v[1]) ? \"same\" : \"distinct\";",
+          "cycle": "struct N { std::string name; std::shared_ptr<N> selfref; };\nauto n = std::make_shared<N>(N{\"loop\", nullptr});\nn->selfref = n;\nstd::string r = (n->selfref == n) ? \"cycle\" : \"no-cycle\";"
+        }
+      },
+      {
+        "rep": "T* (raw pointer)",
+        "spelling": "new std::vector<int64_t>{1,2,3}",
+        "kind": "constructor",
+        "pre": "#include <vector>\n#include <string>\n#include <cstdint>",
+        "note": "sharing and cycles like a shared pointer, but with no automatic lifetime management at all; the low-level holder underneath the others.",
+        "read": "r",
+        "probes": {
+          "shared": "auto* s = new std::vector<int64_t>{1, 2, 3};\nstd::vector<std::vector<int64_t>*> v = { s, s };\nv[0]->push_back(99);\nstd::string r = (v[1]->back() == 99 && v[0] == v[1]) ? \"shared\" : \"copied\";",
+          "diamond": "auto* t = new std::vector<int64_t>{7};\nstd::vector<std::vector<int64_t>*> v = { t, t };\nstd::string r = (v[0] == v[1]) ? \"same\" : \"distinct\";",
+          "cycle": "struct N { std::string name; N* selfref; };\nauto* n = new N{\"loop\", nullptr};\nn->selfref = n;\nstd::string r = (n->selfref == n) ? \"cycle\" : \"no-cycle\";"
+        }
+      }
+    ]
+  }
+}

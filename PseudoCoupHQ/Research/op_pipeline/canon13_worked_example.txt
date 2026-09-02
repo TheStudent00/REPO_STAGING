@@ -1,0 +1,165 @@
+canon13_worked_example.txt -- STAGE 4 (compound boolean branch shapes),
+one worked example in reading_sample.txt's own instruction | reading
+form, plus the honest partial-converge finding for swift.
+====================================================================================================
+
+THE GAP (measured, canon12_units_c.json's own stored refusal text for
+c/op_551, evidence class: stored text, verbatim):
+
+    "no return path: codegen raised Unsupported(\"no rendering rule
+    for boolean condition shape 'and'\") rendering 'Concat(Extract(63,
+    8, atom_0), 0, If(And(Extract(63, 32, atom_1) == 0,
+    ULE(Extract(31, 0, atom_1), Extract(31, 0, atom_2))), 0, 1))'"
+
+c/op_551 is `a > b` for a:uint64_t, b:bool (bool promoted to uint64_t
+for the compare). condition_table2.py's own CondXX substitution, for
+this unit's specific flag-computation shape, resolves to a COMPOUND
+z3 boolean -- an `If` node whose CONDITION is `And(hi32-equals-zero,
+lo32-unsigned-compare)`, not the single bare comparison
+`decode_bool_condition` (expr_to_canon.py, unchanged) has ever
+handled. Every renderer in this lineage (gen7/gen11/gen12) inherited
+that same one-comparison assumption and refused honestly rather than
+guess.
+
+----------------------------------------------------------------------------------------------------
+BEFORE (canon12_units_c.json, status: not_yet_converged -- no candidate
+text at all, refused before ever reaching the gate):
+    unit: c/op_551   source: op_units
+    (no rendering -- codegen itself raised Unsupported on the compound
+    'and' condition; nothing to gate)
+
+    real ship code (canon4_units_c.json's own `mnem`, the ground
+    truth this stage's gate proves against):
+    mov %esi,%ecx    %ecx = %esi
+    xor %eax,%eax    %eax = 0
+    cmp %rcx,%rdi    flags = compare(%rdi, %rcx)
+    seta %al         %al = flags.above ? 1 : 0
+    ret              return %eax
+
+----------------------------------------------------------------------------------------------------
+AFTER (canon13_units_c.json, status: converged, canon13_text, PROVED_EQUAL
+against the real ship code above -- evidence class: forced by
+construction, z3 unsat on the disequality):
+
+    unit: c/op_551   source: op_units
+    mov $0,%rax               %rax = 0
+    shr $8,%rax                (dead -- %rax already 0; padding fold
+                                 left over from the surrounding
+                                 Concat(Extract(63,8,atom_0), 0, ...)
+                                 wrapper this unit's flag byte sits in)
+    movabs $72057594037927935,%r10   %r10 = 0x00ffffffffffffff
+    and %r10,%rax              %rax = %rax & %r10
+    shl $7,%rax                 %rax = %rax << 7
+    mov $0,%r10b                %r10b = 0
+    movzx %r10b,%r10            %r10 = zero_extend(%r10b)
+    or %r10,%rax                %rax = %rax | %r10
+    shl $1,%rax                 %rax = %rax << 1
+    mov %rdi,%r11                %r11 = %rdi
+    shr $32,%r11                 %r11 = %r11 >> 32
+    and $-1,%r11d                 %r11d = %r11d & 0xffffffff
+    cmp $0,%r11d                  flags = compare(%r11d, 0)
+    sete %r10b                    %r10b = flags.equal ? 1 : 0
+    mov %rdi,%r9                  %r9 = %rdi
+    and $-1,%r9d                  %r9d = %r9d & 0xffffffff
+    mov %rsi,%r8                  %r8 = %rsi
+    and $-1,%r8d                  %r8d = %r8d & 0xffffffff
+    cmp %r8d,%r9d                 flags = compare(%r9d, %r8d)
+    setbe %r11b                   %r11b = flags.below_or_equal ? 1 : 0
+    and %r11b,%r10b               %r10b = %r10b & %r11b   -- the And()
+    xor $1,%r10b                  %r10b = %r10b ^ 1        -- If(...,0,1)
+                                                              negate
+    movzx %r10b,%r10              %r10 = zero_extend(%r10b)
+    or %r10,%rax                  %rax = %rax | %r10
+    ret                           return %rax
+
+    (verbose because the unit's own stored flag byte sits inside a
+    wider Concat padding wrapper unrelated to Stage 4's own fix --
+    the LOAD-BEARING five lines are the `and %r10b,%r10b`-style And()
+    fold this lap added: `cmp $0,%r11d; sete %r10b; ...; cmp %r8d,%r9d;
+    setbe %r11b; and %r11b,%r10b; xor $1,%r10b` -- render each
+    comparison operand of the And() into its own byte via the SAME
+    decode_bool_condition+cmp+setcc the single-comparison path always
+    used, fold with a real `and` on the two 0/1 bytes, negate once for
+    the If's own (0,1) then/else order. z3 PROVED this whole sequence,
+    Concat padding and all, equal to the unit's own real ship `seta`.)
+
+----------------------------------------------------------------------------------------------------
+THE FIX, in one line: canon13_render.py's `gen_bool()` recognizes an
+`and`/`or`/`not` z3 Bool node and folds its operands with real `and`/
+`or`/`xor $1` on canonical 0/1 bytes (sound because bitwise and/or of
+two 0/1-valued bytes IS logical and/or); the `if` node's dispatch now
+checks its own condition's decl name BEFORE calling
+decode_bool_condition and routes to gen_bool on `and`/`or` instead of
+raising.
+
+A SECOND, necessary fix surfaced getting this far, undone in the
+process (the owner's evidence doctrine -- report wrong turns caught, not
+just the final answer): gen11/gen12's own internal recursion (concat
+fold, shift, extract, the general ALU fold) called the literal name
+`gen11`/`gen12`, not the module's own late-bound `gen7` -- so a
+compound-and/or `If` node BURIED inside an outer Concat (exactly
+c/op_551's own shape) never reached gen13's new rule at all; codegen
+raised Unsupported one recursion level short of gen13's own dispatch,
+even after gen13 existed. Diagnosed by direct trace (c/op_551 kept
+refusing after gen13 was written and imported correctly). THE FIX:
+every recursive call site inside canon11_render.gen11 (15 call sites)
+and canon12_render._gen_wide_divmod (2 call sites) now reads
+`R7.gen7(child, ...)` instead of the literal function name -- the
+SAME late-binding trick canon7_render._gen_alu already used, applied
+one level deeper, so a node nested inside ANY earlier stage's own
+traversal still reaches whichever stage is currently topmost.
+
+----------------------------------------------------------------------------------------------------
+MEASURED COUNTS (canon13_units_<lang>.json's own stage4_tally,
+evidence class: forced by construction / gate-proved):
+
+    c:     10 attempted, 6 accepted, 4 refused (DISPROVED)
+    cpp:   18 attempted, 6 accepted, 12 refused (DISPROVED)
+    go:     0 attempted (no compound-boolean shapes in this lang's
+            not_yet_converged bucket)
+    rust:   0 attempted (same)
+    swift: 16 attempted, 0 accepted, 16 refused (DISPROVED)
+    TOTAL: 44 attempted, 12 accepted, 32 refused
+
+    Of these, exactly the 12 units originally diagnosed for c and cpp
+    (op_551, 587, 602, 623, 638, 674 in each language -- 6 + 6 = 12)
+    converged, all PROVED_EQUAL against real ship code. The remaining
+    32 attempts (c/319,320,324,330; cpp/319,320,324,330,750,751,756,
+    757,823,824,828,834; all 16 of swift's attempts) are units the
+    DEEP-DISPATCH fix newly made REACHABLE (they used to abort with a
+    DIFFERENT Unsupported error before ever reaching the compound-
+    condition code at all) -- the gate correctly DISPROVED every one
+    of them and none were shipped. Zero regressions (measured
+    programmatically: every unit whose status was already "converged"
+    in canon12_units_<lang>.json keeps byte-identical stored text in
+    canon13_units_<lang>.json, all 5 languages, 0 exceptions).
+
+----------------------------------------------------------------------------------------------------
+HONEST REMAINDER -- swift's own diagnosed 4 units (Int32-vs-UInt64
+mixed-signedness comparisons, e.g. swift/op_296, `a < b`, a:Int32,
+b:UInt64): all 4 (and all 12 other newly-reachable swift attempts)
+are DISPROVED, not a Stage-4-shaped problem. Traced concretely
+(swift/op_296, seed_rdi=4294967294 i.e. -2 as Int32, seed_rsi=
+13835058055282163712): the rendered candidate is NOT the short 7-line
+sequence Stage 4's own gen_bool() rule alone would produce for this
+unit's compound condition -- it is a ~50-instruction sequence that
+bit-serially reconstructs 32 individual bits of the raw %rdi input
+(32 repeated `mov %rdi,%r10; shr $N,%r10; and $1,%r10b; or %r10b,%al`
+groups) BEFORE ever reaching the compound-condition fold, plus a
+`neg`/`add`/`cmp`/`setg` tail for the second (non-compound) `If`'s own
+"multiply by -1" idiom. That bit-serial reconstruction is the SAME
+pre-existing general-concat-fold fallback this lap's own Stage 1
+report already diagnosed once (c/op_427's "60+ instruction bit-serial
+mess", THE SAME symptom, different unit) -- it is not new to Stage 4
+and not fixed by gen_bool(); Stage 4's deep-dispatch change only made
+it REACHABLE for swift's units (they used to abort on the compound-
+condition Unsupported before ever reaching this fold at all). z3
+correctly disproves the resulting candidate -- refused, not shipped,
+exactly as the evidence doctrine requires. Diagnosing and fixing the
+general-concat-fold's own remaining gap (recognizing "reconstruct N
+individual sign-replicated/zero-extended bits one at a time" patterns
+as a single movzx/movsx/and, the same class of fix Stage 1's FIX (b)
+already made for ONE such shape) is future work, out of Stage 4's own
+stated charter ("Add the codegen rule [for the compound branch shape];
+gate as usual") -- reported here rather than silently left unexplained
+or forced to a false converge.

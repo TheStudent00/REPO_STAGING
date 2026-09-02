@@ -1,0 +1,23 @@
+  // string probe bodies - java (utf16 code units, immutable, == is IDENTITY).
+  static final String SE = "é";
+  static final String SM = "𝄞";
+  static String ops(String x) { return x; }
+  static String f_strU1_a() { return fmts(ops("ab") + ops("cd")); }
+  static String f_strU2_a() { return fmtb(build("ab", "cd").equals(ops("abcd"))); }
+  static String f_strU3_a() { return fmts(ops("abcdef").substring(1, 4)); }
+  static String build(String a, String b) { return new StringBuilder(a).append(b).toString(); }
+  static String f_strU4_a() {
+    String t = ops(SE + SM);
+    String back = new String(t.getBytes(java.nio.charset.StandardCharsets.UTF_8),
+                             java.nio.charset.StandardCharsets.UTF_8);
+    return fmtb(back.equals(t));
+  }
+  static String f_Fs1_a() { return Integer.toString((int) ops(SE).charAt(0)); }
+  static String f_Fs1_b() { return Integer.toString((int) ops(SM).charAt(0)); }
+  static String f_Fs2_a() { String a = ops("abc"); String b = a; a = a + "d"; return fmts(b); }
+  static String f_Fs3_a() { return Integer.toString(ops(SE).length()); }
+  static String f_Fs3_b() { return Integer.toString(ops(SM).length()); }
+  static String f_Fs3_c() { return Integer.toString(ops(SE + SM).length()); }
+  static String f_Fs4_a() { return Character.toString(ops("abc").charAt(0)); }
+  static String f_Fs5_a() { return fmtb(build("ab", "cd") == ops("abcd")); }
+  static String f_Fs5_c() { String s = ops("abcd"); return fmtb(s == s); }

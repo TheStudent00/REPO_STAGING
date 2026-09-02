@@ -1,0 +1,243 @@
+canon14_worked_examples.txt -- JOB 1 (the bit-serial reconstruction
+defect), two worked examples in reading_sample.txt's own instruction |
+reading form, plus the measured counts and an honest per-sighting
+closure account. Evidence class on every claim: forced by construction
+(z3 unsat on the disequality against the unit's own real ship code, via
+canon12_behaviour_check.wide_anchored_check -- the canon8-anchored
+gate, extended) unless marked otherwise.
+====================================================================================================
+
+THE GAP, restated (see canon14_render.py's own header for the full
+account): the general `concat` fold (unchanged since canon7_render.py)
+recognizes exactly ONE syntactic shape as "this is really an extend" --
+every sign-bit-replicate part's operand must be l.eq() to the concat's
+own LAST part. Two independent things defeat that literal check and
+were closed this lap:
+
+  (i)  a leaf atom whose provenance resolves to a bare numeric
+       IMMEDIATE (never in0/in1) is OPAQUE to z3's own simplify() --
+       z3 has no numeric fact about an uninterpreted atom, so
+       "Extract(63,8,atom_0)"-shaped dead padding around a flag byte
+       gets rendered as real instructions instead of folding away.
+  (ii) z3's own rewriting (NOT-distribution and, more generally, ANY
+       rewrite that leaves a sign-bit-replicate part's source
+       DIFFERENT from the concat's own trailing part, even though the
+       two are PROVABLY bit-identical at the bit that matters) defeats
+       a purely syntactic recognizer.
+
+A THIRD defect was found tracing sighting (c) to ground and fixed in
+the same lap, "fix a cause at first observation" (AgentMemory): a z3
+`bvnot` node whose operand is a TRUE 1-bit-wide node (a boolean 0/1
+value, not a general bitvector) was rendered with a literal `not`
+instruction -- bitwise-flips all 8 bits of the byte register the value
+actually lives in (0x00 -> 0xFF = 255, not the logical negation 1).
+
+----------------------------------------------------------------------------------------------------
+WORKED EXAMPLE 1 -- c/op_319 (`a && b`, a:int32_t, b:int64_t)
+sighting (c): one of Stage 1's own 28 still-refused units
+(canon11_units_c.json's own stored reason: "rendered a candidate ...
+DISPROVED", seed_rdi=4294967295, seed_rsi=18446744073709551615).
+
+BEFORE (canon13_units_c.json, status: not_yet_converged -- Stage 1's
+own candidate, kept-old because DISPROVED; canon10_text, the fallback,
+shown here since that is what stayed on record):
+    unit: c/op_319   source: canon10_text (kept, disproved candidate
+    discarded by Stage 1's own gate)
+    real ship code (canon4_units_c.json's own `mnem`, the ground truth
+    this stage's gate proves against):
+    test %edi,%edi     flags = bit_compare(%edi, %edi)
+    setne %r10b          %r10b = flags.not_equal ? 1 : 0
+    test %rsi,%rsi         flags = bit_compare(%rsi, %rsi)
+    setne %r11b              %r11b = flags.not_equal ? 1 : 0
+    and %r10b,%r11b            %r11b = %r11b & %r10b
+    movzbl %r11b,%eax            %eax = zero_extend(%r11b)
+    ret                             return %eax
+
+AFTER (canon14_units_c.json, status: converged, canon14_text,
+PROVED_EQUAL against the real ship code above):
+    unit: c/op_319   source: op_units
+    mov %rsi,%r10        %r10 = %rsi
+    cmp $0,%r10            flags = compare(%r10, 0)
+    sete %al                 %al = flags.equal ? 1 : 0
+    mov %rdi,%r11              %r11 = %rdi
+    and $-1,%r11d                 %r11d = %r11d & 0xffffffff
+    cmp $0,%r11d                    flags = compare(%r11d, 0)
+    sete %r10b                        %r10b = flags.equal ? 1 : 0
+    or %r10b,%al                        %al = %al | %r10b
+    xor $1,%al                            %al = %al ^ 1
+    movzx %al,%eax                          %eax = zero_extend(%al)
+    ret                                       return %eax
+
+THE FIX THAT CLOSED THIS ONE (FIX (iii), see canon14_render.py's own
+`gen14`): the z3 tree here is `Concat(0, ~(If(a==0,1,0) |
+If(b==0,1,0)))` -- De Morgan's own reading of `(a!=0) & (b!=0)`. The
+`bvnot` node's operand measures z3-node-width 1 (an OR of two
+If-booleans) -- the OLD `bvnot` branch (unchanged, still reached by
+delegation for every OTHER shape) rendered it with a literal `not`
+instruction, bitwise-flipping the WHOLE byte register the value
+occupies (0x00 -> 0xFF = 255) instead of the single bit that is
+actually meaningful. Measured counterexample this defect produced,
+BEFORE this fix, on the collapsed-but-still-wrong candidate:
+seed_rdi=4294967295, seed_rsi=18446744073709551615 -- real answer is 1
+(both nonzero), the `not`-based candidate answered 255. THE FIX: a z3
+node of TRUE WIDTH 1 can only ever be 0 or 1 by construction, so
+"bitwise NOT of this node's one meaningful bit" and "logical NOT of a
+canonical 0/1 byte" are the SAME operation; `xor $1,<8-bit dest>`
+implements it correctly (flips only the bit that matters, leaves the
+already-clean upper 7 bits alone). Reuses the identical instruction
+canon13_render.gen_bool's own `not` case already uses, for the same
+reason, one level up in the dispatch.
+
+----------------------------------------------------------------------------------------------------
+WORKED EXAMPLE 2 -- swift/op_296 (`a < b`, a:Int32, b:UInt64)
+sighting (b): one of swift's 4 diagnosed compound-boolean units,
+canon13_worked_example.txt's own "HONEST REMAINDER".
+
+BEFORE (canon13_units_swift.json, status: not_yet_converged --
+Stage 4's own candidate, DISPROVED; the ~50-instruction bit-serial
+reconstruction canon13_worked_example.txt already named):
+    unit: swift/op_296   source: canon13 stage4_candidate_text
+    (abridged -- the full candidate is 32 repeated `mov %rdi,%r10;
+    shr $N,%r10; and $1,%r10b; or %r10b,%al`-style groups, one per bit
+    of %rdi's low 32 bits, BEFORE ever reaching the compound-
+    condition fold, plus a neg/add/cmp/setg tail)
+    real ship code (canon4_units_swift.json's own `mnem`):
+    test %edi,%edi      flags = bit_compare(%edi, %edi)
+    sets %cl               %cl = flags.sign ? 1 : 0
+    movslq %edi,%rax          %rax = sign_extend(%edi)
+    cmp %rsi,%rax                flags = compare(%rax, %rsi)
+    setb %al                       %al = flags.below ? 1 : 0
+    or %cl,%al                       %al = %al | %cl
+    ret                                 return %al
+
+AFTER (canon14_units_swift.json, status: STILL not_yet_converged --
+gen14 now RENDERS this unit cleanly, collapsing the 32-copy sign-bit
+run into one `movsxd`, but the ground-truth gate still says DISPROVED,
+for a DIFFERENT, upstream reason -- reported honestly, not forced):
+    unit: swift/op_296   source: op_units, job1_candidate_text
+    mov %rdi,%rax          %rax = %rdi
+    shr $8,%rax               %rax = shift_right_zeros(%rax, 8)
+    and $16777215,%eax          %eax = %eax & 0xffffff
+    shl $7,%eax                   %eax = shift_left(%eax, 7)
+    mov $0,%r10b                    %r10b = 0
+    movzx %r10b,%r10d                 %r10d = zero_extend(%r10b)
+    or %r10d,%eax                       %eax = %eax | %r10d
+    shl $1,%eax                           %eax = shift_left(%eax, 1)
+    mov $0,%r11                             %r11 = 0
+    mov %rsi,%r9                              %r9 = %rsi
+    neg %r9                                     %r9 = -%r9
+    mov %rdi,%r8                                  %r8 = %rdi
+    and $-1,%r8d                                    %r8d = %r8d & 0xffffffff
+    movsxd %r8d,%r8                                   %r8 = sign_extend(%r8d)
+    add %r8,%r9                                         %r9 = %r9 + %r8
+    cmp %r9,%r11                                          flags = compare(%r11, %r9)
+    setg %r10b                                              %r10b = flags.signed_greater ? 1 : 0
+    movzx %r10b,%r10d                                         %r10d = zero_extend(%r10b)
+    or %r10d,%eax                                               %eax = %eax | %r10d
+    movsxd %eax,%rax                                              %rax = sign_extend(%eax)
+    ret                                                             return %rax
+
+INSTRUCTION COUNT: ~50 (BEFORE, bit-serial) -> 20 (AFTER) -- the
+32-copy sign-bit-replicate run collapsed to the single `movsxd
+%r8d,%r8` at line 14, exactly the mechanism `_maximal_extend_fold`
+(canon14_render.py) exists to do: z3 PROVED
+`Concat(Extract(31,31,atom_0) x32, Extract(31,8,atom_0), 0,
+If(...)|If(...)) == SignExt(32, rest)` for the maximal head run before
+this candidate was ever assembled, so the collapse is not a heuristic
+guess -- it is checked, per candidate, before being used.
+
+WHY IT IS STILL DISPROVED (evidence class: forced by construction --
+direct z3 evaluation of the unit's own STORED normal-form tree at the
+gate's own counterexample witness, seed_rdi=1771566711,
+seed_rsi=9799832789463304524): evaluating `simplified` (the exact z3
+tree this renderer is required to reproduce byte-for-byte, per
+render_unit7's own self-consistency check) at that witness gives
+1771566592 -- the SAME wrong value canon14's candidate computes. Real
+ship code gives 1 (correct: a=1771566711 is positive, so a<0 is false;
+sign-extended a compared unsigned against b's huge magnitude is true;
+1771566711 <u 9799832789463304524 as u64 -> true). THE CANDIDATE IS A
+FAITHFUL RENDERING OF THE UNIT'S OWN STORED NORMAL FORM -- the defect
+is UPSTREAM of gen14, in the (cause1) condition substitution and/or
+wide-arithmetic normalization that built this unit's Int32-vs-UInt64
+mixed-signedness comparison tree, not in codegen. This is a
+NORMALIZER-shaped gap, out of a renderer fix's charter; diagnosed here
+rather than forced to a false converge or silently left unexplained.
+
+----------------------------------------------------------------------------------------------------
+MEASURED COUNTS (canon14_units_<lang>.json's own `job1_tally`, and a
+direct programmatic diff of every already-converged unit's newest
+stored text between canon13_units_<lang>.json and
+canon14_units_<lang>.json, all 5 languages):
+
+    converged before (canon13, = task's own "997 of 1,641"): 997
+    converged after  (canon14):                              1009
+    net new converged this lap:                                12
+
+    per language, candidates attempted / accepted / still refused:
+      c:      4 attempted, 4 accepted, 0 still refused
+      cpp:   12 attempted, 8 accepted, 4 still refused
+      go:     0 attempted (none of go's not_yet_converged units are
+              reachable past their own call-atom refusal -- see below)
+      rust:   0 attempted (same)
+      swift: 16 attempted, 0 accepted, 16 still refused
+      TOTAL: 32 attempted, 12 accepted, 20 still refused
+
+    zero-regression check: every unit already `converged` in
+    canon13_units_<lang>.json keeps BYTE-IDENTICAL newest-generation
+    text in canon14_units_<lang>.json -- 0 differences, all 5
+    languages, checked programmatically (not sampled).
+
+    526 units (out of the 558 not_yet_converged baseline) never reach
+    gen14 at all -- render_unit7's own EARLIER call-atom check refuses
+    them before any node is handed to gen14 (VEX SIMD/float helpers --
+    XorV128, CmpEQ32F0x4/64F0x2, Add/Sub/Mul/Div32F0x4/64F0x2,
+    amd64g_calculate_condition/_rflags, DivMod{S,U}128to64 -- Stage
+    3/5's own named scope, JOB 3 below). This is why go and rust show
+    0 attempted: every one of their remaining not_yet_converged units
+    is call-atom-blocked, none of them concat/bvnot-shaped.
+
+----------------------------------------------------------------------------------------------------
+HONEST CLOSURE ACCOUNT -- the three sightings the task named:
+
+  (a) canon11's FIX (b), c/op_427 and its 11 siblings -- ALREADY
+      CLOSED, in canon11 (2026-08-29, prior lap). Unchanged by this
+      lap; still converged, still byte-identical (verified above).
+      The "fuse extract+movsxd into one movslq" terseness follow-on
+      canon11_worked_examples.txt flagged is COSMETIC (the unit is
+      already PROVED_EQUAL, 5 lines instead of a maximally-terse 3) --
+      left honestly unfinished, out of this lap's scope (a defect
+      that blocks convergence, not a style pass).
+
+  (b) swift's 4 refused compound-boolean units -- NOT closed by a
+      renderer fix, and cannot be: WORKED EXAMPLE 2 above shows, by
+      direct z3 evaluation of the unit's own stored tree, that the
+      wrongness is in the unit's own NORMALIZED EXPRESSION, not in how
+      gen14 renders it. gen14 now renders all 16 of swift's reachable
+      units (the originally-diagnosed 4 plus the 12 other units the
+      Stage 4 deep-dispatch fix made reachable) into SHORT, clean
+      candidates -- the bit-serial reconstruction symptom is gone from
+      every one of them -- but the ground-truth gate still correctly
+      DISPROVES all 16, because the tree they faithfully render is
+      itself wrong. Diagnosis handed off, not fixed: swift's own
+      Int32-vs-UInt64 (and similarly-shaped) mixed-signedness compares
+      need a condition_table2/canon12_normalize fix, a NORMALIZER
+      task, not a codegen one.
+
+  (c) part of the 28 units Stage 1 could not accept -- PARTIALLY
+      CLOSED. Of the 16 c/cpp units this lap could reach (c/319,320,
+      324,330; cpp/319,320,324,330,750,751,756,757,823,824,828,834),
+      12 are now CONVERGED (all 4 c units; 8 of cpp's 12 -- the `&&`/
+      `||`-shaped ones). The remaining 4 (cpp/750,751,756,757, all
+      `a <=> b`) are DISPROVED for the SAME reason as sighting (b):
+      direct z3 evaluation of cpp/757's own stored tree at the gate's
+      counterexample (seed_rdi=9223372036854775807 i.e. INT64_MAX,
+      seed_rsi=9223372036854775808 i.e. INT64_MIN as u64) gives -1;
+      real ship code (`cmp %rsi,%rdi; setl %cl; setg %al; sub %cl,%al`)
+      gives +1 (correct: MAX > MIN). The tree itself has the
+      spaceship's two `<=` comparisons on the wrong sides -- a
+      condition_table2 substitution defect, not a rendering one.
+      Stage 1's OWN remaining 12 refused units (the ones with NO
+      candidate text at all -- 60-unit diagnosed population minus the
+      32 accepted minus these 28) were not separately re-surveyed this
+      lap beyond what JOB 2 below covers; see that section for the
+      full still-refused breakdown by stored reason.

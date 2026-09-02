@@ -1,0 +1,14 @@
+# A hub module. Qualified operators, executed by Rust's own logic.
+# Loaded via pc_import; stock CPython, no fork.
+
+a = r.i64(-7)
+b = r.i64(2)
+
+quotient = a r./ b            # Rust truncating division
+remainder = a r.% b           # Rust remainder (sign follows dividend)
+
+# chains stay Rust-side: no PyLong between the borders
+chained = (a r.* b) r./ b
+
+# python's own division, for contrast (unqualified, on plain ints)
+python_floor = -7 // 2

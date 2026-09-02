@@ -1,0 +1,271 @@
+# script: /drop/jvm_a_dump.sh
+# started: 2026-08-26T13:51:11+00:00
+# timeout: 3600s
+# work free before: 3824 MB
+------------------------------------------------------------
+=== jvm_a_dump ===
+2026-08-26T13:51:11Z
+--- pin ---
+openjdk version "25.0.3" 2026-04-21
+OpenJDK Runtime Environment (build 25.0.3+9-2-26.04.2-Ubuntu)
+OpenJDK 64-Bit Server VM (build 25.0.3+9-2-26.04.2-Ubuntu, mixed mode, sharing)
+    java.vendor = Ubuntu
+    java.version = 25.0.3
+    java.vm.name = OpenJDK 64-Bit Server VM
+    java.vm.version = 25.0.3+9-2-26.04.2-Ubuntu
+    os.arch = amd64
+
+--- the thresholds this JVM reports about itself ---
+ intx CompileThreshold = 10000 {pd product} {default}
+ double CompileThresholdScaling = 1.000000 {product} {default}
+ uintx IncreaseFirstTierCompileThresholdAt = 50 {product} {default}
+ intx Tier2BackEdgeThreshold = 0 {product} {default}
+ intx Tier2CompileThreshold = 0 {product} {default}
+ intx Tier3BackEdgeThreshold = 60000 {product} {default}
+ intx Tier3CompileThreshold = 2000 {product} {default}
+ intx Tier3InvocationThreshold = 200 {product} {default}
+ intx Tier4BackEdgeThreshold = 40000 {product} {default}
+ intx Tier4CompileThreshold = 15000 {product} {default}
+ intx Tier4InvocationThreshold = 5000 {product} {default}
+ bool TieredCompilation = true {pd product} {default}
+
+--- is PrintOptoAssembly (Plan C) available in this product build? ---
+openjdk version "25.0.3" 2026-04-21
+OpenJDK Runtime Environment (build 25.0.3+9-2-26.04.2-Ubuntu)
+OpenJDK 64-Bit Server VM (build 25.0.3+9-2-26.04.2-Ubuntu, mixed mode, sharing)
+(exit above tells whether the flag exists)
+javac exit=0
+
+--- javap -c -p Probe (bytecode middle form) ---
+Compiled from "Probe.java"
+public class Probe {
+  static int sink;
+
+  public Probe();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  static int af(int, int);
+    Code:
+         0: iload_0
+         1: iload_1
+         2: iadd
+         3: ireturn
+
+  static int af2(int, int);
+    Code:
+         0: iload_0
+         1: iload_1
+         2: idiv
+         3: ireturn
+
+  public static void main(java.lang.String[]);
+    Code:
+         0: aload_0
+         1: iconst_0
+         2: aaload
+         3: invokestatic  #7                  // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+         6: istore_1
+         7: invokestatic  #13                 // Method java/lang/System.nanoTime:()J
+        10: lstore_2
+        11: iconst_0
+        12: istore        4
+        14: iconst_0
+        15: istore        5
+        17: iload         5
+        19: iload_1
+        20: if_icmpge     40
+        23: iload         4
+        25: iconst_1
+        26: invokestatic  #19                 // Method af:(II)I
+        29: istore        4
+        31: iload         5
+        33: iconst_1
+        34: iadd
+        35: istore        5
+        37: goto          17
+        40: iconst_0
+        41: istore        6
+        43: iconst_1
+        44: istore        7
+        46: iload         7
+        48: iload_1
+        49: if_icmpge     69
+        52: iload         7
+        54: iconst_3
+        55: invokestatic  #25                 // Method af2:(II)I
+        58: istore        6
+        60: iload         7
+        62: iconst_1
+        63: iadd
+        64: istore        7
+        66: goto          46
+        69: invokestatic  #13                 // Method java/lang/System.nanoTime:()J
+        72: lstore        8
+        74: iload         4
+        76: iload         6
+        78: iadd
+        79: putstatic     #28                 // Field sink:I
+        82: lload         8
+        84: lload_2
+        85: lsub
+        86: ldc2_w        #32                 // long 1000000l
+        89: ldiv
+        90: lstore        10
+        92: getstatic     #34                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        95: iload_1
+        96: iload         4
+        98: iload         6
+       100: lload         10
+       102: invokedynamic #38,  0             // InvokeDynamic #0:makeConcatWithConstants:(IIIJ)Ljava/lang/String;
+       107: invokevirtual #42                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       110: return
+}
+
+######## warm-up sweep : how many calls until C2 takes af? ########
+# configuration: -XX:-TieredCompilation (C2 only)
+n=1 wall=0.02s  af_compiled=0  af2_compiled=0  main_osr=0
+n=10 wall=0.02s  af_compiled=0  af2_compiled=0  main_osr=0
+n=100 wall=0.02s  af_compiled=0  af2_compiled=0  main_osr=0
+n=500 wall=0.03s  af_compiled=0  af2_compiled=0  main_osr=0
+n=1000 wall=0.02s  af_compiled=0  af2_compiled=0  main_osr=0
+n=2000 wall=0.02s  af_compiled=0  af2_compiled=0  main_osr=0
+n=5000 wall=0.02s  af_compiled=0  af2_compiled=0  main_osr=0
+n=10000 wall=0.02s  af_compiled=1  af2_compiled=1  main_osr=0
+n=20000 wall=0.03s  af_compiled=1  af2_compiled=1  main_osr=1
+n=50000 wall=0.03s  af_compiled=1  af2_compiled=1  main_osr=2
+n=200000 wall=0.03s  af_compiled=1  af2_compiled=1  main_osr=4
+
+--- the Probe:: tier-transition lines, default tiers, n=200000 ---
+11    8       3       Probe::af (4 bytes)
+11    9       4       Probe::af (4 bytes)
+11    8       3       Probe::af (4 bytes)   made not entrant: not used
+13   10 %     3       Probe::main @ 17 (111 bytes)
+13   11       3       Probe::main (111 bytes)
+13   12 %     4       Probe::main @ 46 (111 bytes)
+
+--- the Probe:: tier-transition lines, -XX:-TieredCompilation, n=200000 ---
+12    5 %           Probe::main @ 17 (111 bytes)
+13    4             Probe::af (4 bytes)
+13    5 %           Probe::main @ 17 (111 bytes)   made not entrant: uncommon trap
+13    6             Probe::main (111 bytes)
+14    7             Probe::af2 (4 bytes)
+15    8 %           Probe::main @ 46 (111 bytes)
+15    8 %           Probe::main @ 46 (111 bytes)   made not entrant: uncommon trap
+
+######## the dump: C2-only, -Xbatch, print af and af2 ########
+dump exit=0  wall=0.03s
+dump_raw.txt lines: 133
+--- head of dump_raw.txt ---
+CompileCommand: print Probe.af bool print = true
+CompileCommand: print Probe.af2 bool print = true
+CompileCommand: dontinline Probe.af bool dontinline = true
+CompileCommand: dontinline Probe.af2 bool dontinline = true
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+[0.012s][warning][os] Loading hsdis library failed
+
+Compiled method (c2) 11    4             Probe::af (4 bytes)
+ total in heap  [0x00007e6f08eab788,0x00007e6f08eab8f0] = 360
+ main code      [0x00007e6f08eab880,0x00007e6f08eab8d0] = 80
+ stub code      [0x00007e6f08eab8d0,0x00007e6f08eab8e8] = 24
+ oops           [0x00007e6f08eab8e8,0x00007e6f08eab8f0] = 8
+ mutable data [0x00007e6ec0038110,0x00007e6ec0038128] = 24
+ relocation     [0x00007e6ec0038110,0x00007e6ec0038120] = 16
+ metadata       [0x00007e6ec0038120,0x00007e6ec0038128] = 8
+ immutable data [0x00007e6ec00380d0,0x00007e6ec0038100] = 48
+ dependencies   [0x00007e6ec00380d0,0x00007e6ec00380d8] = 8
+ scopes pcs     [0x00007e6ec00380d8,0x00007e6ec00380f8] = 32
+ scopes data    [0x00007e6ec00380f8,0x00007e6ec0038100] = 8
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Verified Entry Point]
+  # {method} {0x00007e6ed4400428} 'af' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  0x00007e6f08eab880: 4881 ec18 | 0000 0048 | 896c 2410 | 4181 7f20 | 0000 0000 | 0f85 2900 | 0000 8d04 | 1648 83c4 
+  0x00007e6f08eab8a0: ;   {poll_return}
+  0x00007e6f08eab8a0: 105d 493b | 6728 0f87 | 0100 0000 
+
+  0x00007e6f08eab8ac: ;   {internal_word}
+  0x00007e6f08eab8ac: c349 baa2 | b8ea 086f | 7e00 004d | 8997 3805 
+
+  0x00007e6f08eab8bc: ;   {runtime_call SafepointBlob}
+  0x00007e6f08eab8bc: 0000 e99d 
+
+  0x00007e6f08eab8c0: ;   {runtime_call Stub::method_entry_barrier}
+  0x00007e6f08eab8c0: 62fa ffe8 | f8cc f8ff | e9cd ffff | fff4 f4f4 
+[Exception Handler]
+  0x00007e6f08eab8d0: ;   {runtime_call ExceptionBlob}
+  0x00007e6f08eab8d0: e98b 3eff | ffe8 0000 | 0000 4883 
+
+  0x00007e6f08eab8dc: ;   {runtime_call DeoptimizationBlob}
+  0x00007e6f08eab8dc: 2c24 05e9 | fc49 faff | f4f4 f4f4 
+[/MachCode]
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+
+Compiled method (c2) 15    7             Probe::af2 (4 bytes)
+ total in heap  [0x00007e6f08ea8208,0x00007e6f08ea83a0] = 408
+ main code      [0x00007e6f08ea8300,0x00007e6f08ea8380] = 128
+ stub code      [0x00007e6f08ea8380,0x00007e6f08ea8398] = 24
+ oops           [0x00007e6f08ea8398,0x00007e6f08ea83a0] = 8
+ mutable data [0x00007e6ec00599a0,0x00007e6ec00599c0] = 32
+ relocation     [0x00007e6ec00599a0,0x00007e6ec00599b8] = 24
+
+######## carving the printed bytes and disassembling ########
+carve exit=0
+
+################ 11    4             Probe::af (4 bytes) ################
+compiler=c2 sections=['Constant Pool (empty)', 'MachCode', 'Verified Entry Point', 'Exception Handler', '/MachCode']
+  # {method} {0x00007e6ed4400428} 'af' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  --- the JVM's own annotations ---
+    0x00007e6f08eab8a0  {poll_return}
+    0x00007e6f08eab8ac  {internal_word}
+    0x00007e6f08eab8bc  {runtime_call SafepointBlob}
+    0x00007e6f08eab8c0  {runtime_call Stub::method_entry_barrier}
+    0x00007e6f08eab8d0  {runtime_call ExceptionBlob}
+    0x00007e6f08eab8dc  {runtime_call DeoptimizationBlob}
+  --- objdump's reading of the printed bytes ---
+
+################ 15    7             Probe::af2 (4 bytes) ################
+compiler=c2 sections=['Constant Pool (empty)', 'MachCode', 'Verified Entry Point', 'Exception Handler', '/MachCode']
+  # {method} {0x00007e6ed44004c0} 'af2' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  --- the JVM's own annotations ---
+    0x00007e6f08ea8338  {poll_return}
+    0x00007e6f08ea834c  {runtime_call UncommonTrapBlob}
+    0x00007e6f08ea8350  ImmutableOopMap {}
+    0x00007e6f08ea8354  {post_call_nop}
+    0x00007e6f08ea835c  {internal_word}
+    0x00007e6f08ea836c  {runtime_call SafepointBlob}
+    0x00007e6f08ea8370  {runtime_call Stub::method_entry_barrier}
+    0x00007e6f08ea8380  {runtime_call ExceptionBlob}
+    0x00007e6f08ea838c  {runtime_call DeoptimizationBlob}
+  --- objdump's reading of the printed bytes ---
+
+--- deopt / uncommon-trap mentions anywhere in the dump ---
+43:[Exception Handler]
+44:  0x00007e6f08eab8d0: ;   {runtime_call ExceptionBlob}
+47:  0x00007e6f08eab8dc: ;   {runtime_call DeoptimizationBlob}
+81:  0x00007e6f08ea834c: ;   {runtime_call UncommonTrapBlob}
+100:[Exception Handler]
+101:  0x00007e6f08ea8380: ;   {runtime_call ExceptionBlob}
+104:  0x00007e6f08ea838c: ;   {runtime_call DeoptimizationBlob}
+=== jvm_a_dump done ===
+2026-08-26T13:51:12Z
+------------------------------------------------------------
+# exit 0 in 1.1s
+# work free after: 3824 MB (consumed 0 MB)

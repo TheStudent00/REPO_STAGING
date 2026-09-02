@@ -1,0 +1,22 @@
+# list probe bodies - python (mixed elements, reference semantics, copy slices).
+def J(v): return ",".join(str(x) for x in v)
+def mk(): return [1, 2, 3]
+def f_listU1_a():
+    a = [1, 2]; a.append(3); return J(a)
+def f_listU2_a(): return fmts(mk()[1])
+def f_listU3_a(): return J([x for x in mk()])
+def f_listU4_a(): return fmts(len(mk()))
+def f_Fl1_a(): return J([1, "a"])
+def f_Fl3_a():
+    a = [1, 2]; a.append(3); a.append(4); return fmts(len(a))
+def f_Fl4_a(): return fmts(mk()[10])
+def f_Fl5_a(): return fmts(mk()[-1])
+def f_Fl6_a():
+    a = mk(); s = a[0:2]; s[0] = 99; return fmts(a[0])
+def f_Fl7_a(): return fmtb([1, 2, 3] == mk())
+def f_Fl8_a():
+    a = [10, 9, 1]; a.sort(); return J(a)
+def f_Fl8_b():
+    a = [10, 9, 1]; sorted(a); return J(a)
+def f_Fl9_a():
+    a = mk(); b = a; b[0] = 99; return fmts(a[0])

@@ -1,0 +1,80 @@
+canon13_stage3_report.txt -- STAGE 3 (vector constants), reported
+honestly as PARTIALLY diagnosed, ZERO units converged this lap, with
+the specific blocker named -- per the evidence doctrine, a stage that
+cannot be finished is a valid result reported with its diagnosis, not
+fabricated.
+
+WHAT WAS ASKED: 80 units tagged XorV128/OrV128/AndV128 (canon12_
+units_<lang>.json's own not_yet_converged reasons), surveyed case
+c/op_15 (`-a`, float negate via sign-bit xor against a rip-relative
+constant the lift cannot follow into the object file's data section).
+
+WHAT WAS FOUND, first (the 80 units are NOT one bucket, they are TWO):
+  - 10 units are genuine "-a" unary float/double negate (c/15,16,
+    cpp/15,16, go/9,10, rust/3,4, swift/15,16) -- THIS lap's actual
+    "vector constant" case.
+  - 70 units are float COMPARISON-DRIVEN (`!=`/`not_eq`/`||`/`&&`/
+    `or`/`and` on float operands, measured raw text e.g. c/op_501:
+    `...XorV128(4294967295:128, CmpEQ32F0x4(...))...`) -- these carry
+    NO unresolved memory constant at all (`4294967295:128` is already
+    a LITERAL immediate right in the lifted text); their real blocker
+    is `CmpEQ32F0x4` (a packed-float compare producing an all-ones/
+    all-zeros lane mask), which is explicitly STAGE 5(b)'s scope
+    (packed/scalar float arithmetic), not a data-section lookup.
+    Reported here because the task's own bucket count (80, "XorV128/
+    OrV128/AndV128") does not survive a second look -- most of it is
+    mis-filed under this stage by VEX-op-name proximity, not by
+    actual root cause.
+
+THE CONSTANT ITSELF -- RESOLVED, two independent evidence classes:
+  1. Forced by construction, THIS corpus's own recorded probes: the
+    ANCHOR (unoptimized) compilation of c/15, c/16, cpp/15, cpp/16,
+    rust/3, rust/4 uses the SAME operation via an IMMEDIATE, not a
+    memory load -- `xor $0x80000000,%eax` (float) / `movabs
+    $0x8000000000000000,%rcx; xor %rcx,%rax` (double) -- read
+    directly off op_units_<lang>.json's own `anchor.mnem` field, no
+    inference needed.
+  2. Forced by construction, INDEPENDENTLY rebuilt: `float negf(float
+    a){return -a;} double negd(double a){return -a;}`, compiled with
+    this sandbox's own `gcc -O2` (this session has no clang/rustc/go/
+    swiftc -- the Airlock container that built the original probes is
+    not reachable from here; this is the honest substitute, and IEEE
+    754's sign-bit position is architecture/compiler-independent, so
+    a different C compiler at the same optimization tier is not a
+    weaker source for THIS specific fact). `objdump -s -j
+    .rodata.cst16` on the resulting object: bytes `00 00 00 80 ...`
+    (float, offset 0) and `00 00 00 00 00 00 00 80 ...` (double,
+    offset 0x10) -- little-endian 0x80000000 / 0x8000000000000000,
+    matching (1) exactly.
+  Go's own anchor (go/9,10) still uses a memory load at a DIFFERENT
+  rip offset (not an immediate) and swift's anchor is a bare `call`
+  -- neither directly confirms the constant on its own, but IEEE 754
+  admits no other correct value for this operation, and (1)+(2)
+  already give two independent forced-by-construction confirmations
+  from three different compilers (gcc, clang -- via this corpus's own
+  c/cpp anchors -- and rustc's anchor) agreeing exactly.
+
+THE ACTUAL BLOCKER, found while trying to RENDER, not just resolve,
+the constant: gen7/gen11/gen12's entire register model is GP-INTEGER
+ONLY. `REGMAP` (canon7_render.py) has no xmm0/xmm1/... entries at
+all; `Context.operand_widths` tracks "a"/"b" as GP leaf widths;
+nothing in the renderer knows how to emit `movss`/`movsd`/`movd`/
+`movq`/`xorps`/`xorpd`, or to treat %xmm0/%xmm1 as the designated
+argument registers a float-typed unit's real ship code actually uses.
+Even with the constant known, THERE IS NO RENDERING PATH THAT CAN USE
+IT -- rendering `-a` (float) requires the SAME float/XMM register
+plumbing STAGE 5 must build for `ucomisd`/`ucomiss` condition codes
+and packed/scalar float arithmetic. Building a second, narrower,
+throwaway version of that plumbing just for this stage would
+duplicate STAGE 5's own work rather than feed it.
+
+DECISION, stated honestly: STAGE 3 converges ZERO units this lap.
+The constant-resolution half of the job is DONE and recorded here
+(0x80000000 / 0x8000000000000000, two independent evidence classes);
+the rendering half is a strict subset of STAGE 5's own required work
+and is left to that stage rather than duplicated. Once STAGE 5's
+float/XMM register plumbing exists, the 10 genuine vector-constant
+units become a small, well-scoped follow-on (substitute this file's
+resolved constant for the `ld128/g0(...)` atom in the normalizer,
+same shape as this lap's Mul64/64HLto128/DivModX128to64 additions to
+canon12_normalize.py) rather than a new investigation.

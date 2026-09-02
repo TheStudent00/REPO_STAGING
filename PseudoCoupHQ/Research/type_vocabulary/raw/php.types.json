@@ -1,0 +1,89 @@
+{
+  "language": "php",
+  "runtime": "PHP 8.5.4 (cli, NTS)",
+  "source": "gettype() and get_debug_type() applied to one value of each zval shape the language can construct; plus the zval type tags of Zend/zend_types.h, which the runtime does not expose; plus the core interfaces from get_declared_interfaces().",
+  "confidence": "runtime-enumerated (gettype value set, core interfaces) + doc-sourced (zval IS_* tags)",
+  "level": "type-kind level (gettype) mixed with core-type level (interfaces)",
+  "note": "get_declared_classes() was collected but is NOT used for presence: it reports which extensions this build loaded (DateTime, PDO, Phar, Socket...), a property of the build, not of the language.",
+  "enumerations": [
+    {
+      "enumeration": "gettype / get_debug_type probed value set",
+      "names": [
+        "bool / boolean / bool",
+        "int / integer / int",
+        "float / double / float",
+        "string / string / string",
+        "array / array / array",
+        "object / object / stdClass",
+        "null / NULL / null",
+        "resource / resource / resource (stream)",
+        "closure / object / Closure",
+        "enum-ish / object / ArrayObject",
+        "resource (closed) / resource (closed)"
+      ]
+    },
+    {
+      "enumeration": "zval type tags (Zend/zend_types.h, doc-sourced)",
+      "names": [
+        "IS_UNDEF",
+        "IS_NULL",
+        "IS_FALSE",
+        "IS_TRUE",
+        "IS_LONG",
+        "IS_DOUBLE",
+        "IS_STRING",
+        "IS_ARRAY",
+        "IS_OBJECT",
+        "IS_RESOURCE",
+        "IS_REFERENCE"
+      ]
+    },
+    {
+      "enumeration": "declaration-position built-in type names (doc-sourced, PHP 8.5)",
+      "names": [
+        "int",
+        "float",
+        "string",
+        "bool",
+        "array",
+        "object",
+        "callable",
+        "iterable",
+        "mixed",
+        "void",
+        "never",
+        "null",
+        "false",
+        "true"
+      ]
+    },
+    {
+      "enumeration": "core interfaces (runtime-enumerated)",
+      "names": [
+        "Traversable",
+        "IteratorAggregate",
+        "Iterator",
+        "Serializable",
+        "ArrayAccess",
+        "Countable",
+        "Stringable",
+        "Throwable",
+        "UnitEnum",
+        "BackedEnum",
+        "DateTimeInterface",
+        "JsonSerializable",
+        "Random\\Engine",
+        "Random\\CryptoSafeEngine",
+        "Reflector",
+        "RecursiveIterator",
+        "OuterIterator",
+        "SeekableIterator",
+        "SplObserver",
+        "SplSubject",
+        "SessionHandlerInterface",
+        "SessionIdInterface",
+        "SessionUpdateTimestampHandlerInterface"
+      ]
+    }
+  ]
+}

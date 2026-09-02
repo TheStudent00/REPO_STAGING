@@ -1,0 +1,72 @@
+{
+ "language": "java",
+ "shape": "one entry per unit: the normal-path core and the modes -- same shape as core_modes_java.json, EXTENDED with the division unit that file never carried",
+ "spelling": "the operator token appears once per unit, as the display label `operator`",
+ "provenance_is_weaker": true,
+ "provenance_note": "FINDING 4 (log_082 PART 2): core_modes_java.json holds ONLY unit 1 (the addition, zero modes); the JIT track's own measured deopt guard on unit 2 (the division) never reached this file, so guards2.json carries zero java guard rows and the 34 exception families were built without the only non-C-family deopt evidence in the corpus. This file adds unit 2, sourced from interp_jvm.json's own recorded modes (u2.m3), not re-measured here.",
+ "core_note": "the core is NOT a lifted form here (unchanged from core_modes_java.json's own note). The lifter was not run on the JVM unit; the canonical text stands in its place and says so.",
+ "solver_run": false,
+ "lifter": null,
+ "z3": null,
+ "units": {
+  "2": {
+   "lang": "java",
+   "n": "2",
+   "operator": "/",
+   "type_pair": "i32,i32",
+   "meta": {
+    "n": 2,
+    "lang": "java",
+    "operator": "/",
+    "arity": "binary",
+    "position": null,
+    "bucket": "binary",
+    "lhs_rep": "i32",
+    "lhs_type": "int",
+    "rhs_rep": "i32",
+    "rhs_type": "int",
+    "expression": "a / b",
+    "result_type": "int",
+    "result_rule": "the JVM's own method descriptor '(II)I'",
+    "symbol": "op_2",
+    "symbol_exact": true,
+    "source": "static int af2(int a, int b) { return a / b; }"
+   },
+   "core": ["cltd", "idiv   %r11d"],
+   "core_is_the_canonical_text": true,
+   "core_evidence": "interp_jvm.json core_reading.u2_core_lines -- not re-derived here",
+   "modes": [
+    {
+     "id": "java/op_2.m3",
+     "condition": "in1 == 0 (the divisor)",
+     "response": "deopt-continue-elsewhere",
+     "detection": "forced by construction (the branch target is the JVM's own annotated trap blob) plus the tool's own testimony (javap/objdump reading of the printed nmethod)",
+     "evidence_class": "forced by construction (the branch target is the annotated trap blob) plus the tool's own testimony",
+     "provenance_is_weaker": true,
+     "source_unit": "interp_jvm.json units[1] (id u2), modes[2] (id u2.m3)",
+     "note": "an EXPLICIT test of the second parameter against itself, equal-branch to a block that loads a trap request constant and calls the blob the JVM annotated {runtime_call UncommonTrapBlob}. NOT an implicit hardware trap: the check is in the instruction stream before the divide. The JVM's own scope annotation names the bytecode index it re-enters at.",
+     "detail_lines": [
+      "test   %edx,%edx",
+      "je     <trap block>",
+      "mov    $0xffffff7e,%esi",
+      "call   <UncommonTrapBlob>"
+     ]
+    }
+   ],
+   "modes_not_carried": [
+    {
+     "id": "u2.m4",
+     "name": "most-negative-over-minus-one check",
+     "response_kind": "branch-around-in-place",
+     "why_not_carried": "a different response kind (branch-around-in-place, not deopt-continue-elsewhere) -- the brief named the ONE measured deopt-continue-elsewhere row; this one is left for a separate task rather than folded in silently."
+    },
+    {
+     "id": "u2.m9",
+     "name": "exception handler / deoptimization stubs",
+     "response_kind": "deopt-continue-elsewhere",
+     "why_not_carried": "interp_jvm.json's own note: 'the standing exits, present in both units, not specific to either computation' -- boilerplate stub presence, not a guard the division operator itself raises."
+    }
+   ]
+  }
+ }
+}

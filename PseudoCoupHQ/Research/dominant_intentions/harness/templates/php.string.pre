@@ -1,0 +1,18 @@
+// string probe bodies - php (bytes; the census files php under IMMUTABLE).
+define("SE", "\u{e9}");
+define("SM", "\u{1D11E}");
+function op($x) { return $x; }
+function f_strU1_a() { return fmts(op("ab") . op("cd")); }
+function f_strU2_a() { return fmtb(op("ab" . "cd") === op("abcd")); }
+function f_strU3_a() { return fmts(substr(op("abcdef"), 1, 3)); }
+function f_strU4_a() { $t = op(SE . SM); return fmtb(hex2bin(bin2hex($t)) === $t); }
+function f_Fs1_a() { return fmts(ord(op(SE)[0])); }
+function f_Fs1_b() { return fmts(ord(op(SM)[0])); }
+function f_Fs2_a() { $a = op("abc"); $b = $a; $a .= "d"; return fmts($b); }
+function f_Fs2_b() { $s = op("abc"); $s[0] = "z"; return fmts($s); }
+function f_Fs3_a() { return fmts(strlen(op(SE))); }
+function f_Fs3_b() { return fmts(strlen(op(SM))); }
+function f_Fs3_c() { return fmts(strlen(op(SE . SM))); }
+function f_Fs4_a() { return fmts(op("abc")[0]); }
+function f_Fs5_a() { return fmtb(op("ab" . "cd") == op("abcd")); }
+function f_Fs5_c() { $s = op("abcd"); return fmtb($s == $s); }

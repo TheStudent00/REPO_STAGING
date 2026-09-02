@@ -1,0 +1,46 @@
+// runner template - go. d() exists so every float literal becomes a TYPED
+// float64 before any arithmetic; go's untyped constants are arbitrary
+// precision and would answer the IEEE questions at the wrong precision.
+package main
+
+import (
+	"fmt"
+	"math"
+	"strconv"
+)
+
+func identb(x bool) bool  { return x }
+func notb(x bool) bool    { return (!x) }
+func d(x float64) float64 { return x }
+func z() float64          { return 0.0 }
+func one() float64        { return 1.0 }
+func negone() float64     { return -1.0 }
+func nan() float64        { return math.NaN() }
+func inf() float64        { return math.Inf(1) }
+func ninf() float64       { return math.Inf(-1) }
+func fmtb(v bool) string {
+	if v {
+		return "true"
+	}
+	return "false"
+}
+func fmtf(v float64) string {
+	if math.IsNaN(v) {
+		return "nan"
+	}
+	if math.IsInf(v, 1) {
+		return "inf"
+	}
+	if math.IsInf(v, -1) {
+		return "-inf"
+	}
+	return strconv.FormatFloat(v, 'g', -1, 64)
+}
+
+func fmts(v string) string { return v }
+
+{{PREAMBLE}}
+
+func main() {
+{{PROBES}}
+}

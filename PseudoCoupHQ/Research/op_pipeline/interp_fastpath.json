@@ -1,0 +1,517 @@
+{
+ "meta": {
+  "what": "one focused measurement: is CPython's long_add fast path (the compact/small-integer branch) the SAME operator as c's plain i64 addition with only the ARRIVAL of the operands differing, per the owner's framing this session -- or is it a different computation.",
+  "home": "Planning/node_0_3_research/node_0_3_5_compiler_graph (the ratified-pipeline section) + AgentMemory's canonical-form and evidence-doctrine rulings.",
+  "reads_first": [
+   "AgentMemory.md",
+   "interp_cpython.json",
+   "interp_cpython.md",
+   "interp_relations.json",
+   "cross_unit_prover.py",
+   "canon22_behaviour_check.py",
+   "canon24_behaviour_check.py",
+   "canon16_xmm.py",
+   "canon7_render.py",
+   "sem_anchored_spill.py"
+  ],
+  "dee_framing_tested": "his words, this session: the pointer changes how operands ARRIVE, not what the operator computes; within the domain where both are defined, CPython's integer addition and c's should behave identically; the two CPython paths are one operator with a domain split, not two operators.",
+  "table_membership_changes": "NONE -- this is a measurement, not an integration.  Nothing here is written into core_modes_*.json, dominant_operators, representatives, or any ratified table.",
+  "spelling": "the operator token '+' appears exactly once, as the display label on the unit object below.  No key, grouping, pairing or row structure in this file uses it; this file carves and reports on ONE unit, it does not group or pair units.",
+  "generator": "interp_fastpath.py (ad hoc, written for this measurement; not a standing pipeline stage)"
+ },
+ "unit": {
+  "lang": "cpython",
+  "n": "long_add_fastpath",
+  "operator": "+",
+  "symbol": "long_add",
+  "build": "ship (-O3), same uninstrumented binary interp_cpython.json measured (see its handler_arch_units.ship.long_add)",
+  "pin": "cpython v3.14.7, commit 823f0323ee6ec1402088b73bce1a38473cac36dc (same pin as interp_cpython.json; not re-verified here)",
+  "function_load_address": "0x0000000000137370",
+  "function_instruction_count": 94,
+  "entry_offset_into_function": "0x68",
+  "entry_address": "0x1373d8",
+  "entry_instruction_index_in_function": 26,
+  "entry_reached_by": "the jbe at long_add+0x1f (function index 10: 'cmp $0xf,%rax; jbe 1373d8 <long_add+0x68>') taking its branch -- this is CPython's own _PyLong_BothAreCompact(a,b) test, inlined"
+ },
+ "carve": {
+  "method": "reachability from function-instruction-index 26, following every branch/jump/call/ret exactly as canon2.cut_blocks classifies them (canon.JUMP, ret/ud2/call detection reused unchanged), computed at INSTRUCTION granularity rather than canon2.cut_blocks' block granularity -- see 'defects_found_reusing_cut_blocks' below for why the block-granularity call was not used as-is.",
+  "instruction_count": 48,
+  "instructions": [
+   {
+    "addr": "1373d8",
+    "bytes": "ba 01 00 00 00",
+    "mnem": "mov    $0x1,%edx"
+   },
+   {
+    "addr": "1373dd",
+    "bytes": "8b 49 18",
+    "mnem": "mov    0x18(%rcx),%ecx"
+   },
+   {
+    "addr": "1373e0",
+    "bytes": "48 89 d0",
+    "mnem": "mov    %rdx,%rax"
+   },
+   {
+    "addr": "1373e3",
+    "bytes": "4c 29 c2",
+    "mnem": "sub    %r8,%rdx"
+   },
+   {
+    "addr": "1373e6",
+    "bytes": "48 29 f0",
+    "mnem": "sub    %rsi,%rax"
+   },
+   {
+    "addr": "1373e9",
+    "bytes": "48 0f af c1",
+    "mnem": "imul   %rcx,%rax"
+   },
+   {
+    "addr": "1373ed",
+    "bytes": "8b 4f 18",
+    "mnem": "mov    0x18(%rdi),%ecx"
+   },
+   {
+    "addr": "1373f0",
+    "bytes": "48 0f af d1",
+    "mnem": "imul   %rcx,%rdx"
+   },
+   {
+    "addr": "1373f4",
+    "bytes": "48 8d 3c 10",
+    "mnem": "lea    (%rax,%rdx,1),%rdi"
+   },
+   {
+    "addr": "1373f8",
+    "bytes": "48 8d 47 05",
+    "mnem": "lea    0x5(%rdi),%rax"
+   },
+   {
+    "addr": "1373fc",
+    "bytes": "48 3d 05 01 00 00",
+    "mnem": "cmp    $0x105,%rax"
+   },
+   {
+    "addr": "137402",
+    "bytes": "0f 86 b8 00 00 00",
+    "mnem": "jbe    1374c0 <long_add+0x150>"
+   },
+   {
+    "addr": "137408",
+    "bytes": "48 8d 87 ff ff ff 3f",
+    "mnem": "lea    0x3fffffff(%rdi),%rax"
+   },
+   {
+    "addr": "13740f",
+    "bytes": "48 3d fe ff ff 7f",
+    "mnem": "cmp    $0x7ffffffe,%rax"
+   },
+   {
+    "addr": "137415",
+    "bytes": "0f 86 c5 00 00 00",
+    "mnem": "jbe    1374e0 <long_add+0x170>"
+   },
+   {
+    "addr": "13741b",
+    "bytes": "48 89 fa",
+    "mnem": "mov    %rdi,%rdx"
+   },
+   {
+    "addr": "13741e",
+    "bytes": "b9 10 00 00 00",
+    "mnem": "mov    $0x10,%ecx"
+   },
+   {
+    "addr": "137423",
+    "bytes": "b8 12 00 00 00",
+    "mnem": "mov    $0x12,%eax"
+   },
+   {
+    "addr": "137428",
+    "bytes": "48 f7 da",
+    "mnem": "neg    %rdx"
+   },
+   {
+    "addr": "13742b",
+    "bytes": "48 85 ff",
+    "mnem": "test   %rdi,%rdi"
+   },
+   {
+    "addr": "13742e",
+    "bytes": "48 0f 49 d7",
+    "mnem": "cmovns %rdi,%rdx"
+   },
+   {
+    "addr": "137432",
+    "bytes": "48 0f 48 c8",
+    "mnem": "cmovs  %rax,%rcx"
+   },
+   {
+    "addr": "137436",
+    "bytes": "bf 02 00 00 00",
+    "mnem": "mov    $0x2,%edi"
+   },
+   {
+    "addr": "13743b",
+    "bytes": "48 89 54 24 10",
+    "mnem": "mov    %rdx,0x10(%rsp)"
+   },
+   {
+    "addr": "137440",
+    "bytes": "48 89 4c 24 08",
+    "mnem": "mov    %rcx,0x8(%rsp)"
+   },
+   {
+    "addr": "137445",
+    "bytes": "48 89 4c 24 18",
+    "mnem": "mov    %rcx,0x18(%rsp)"
+   },
+   {
+    "addr": "13744a",
+    "bytes": "e8 21 a9 ff ff",
+    "mnem": "call   131d70 <long_alloc>"
+   },
+   {
+    "addr": "13744f",
+    "bytes": "48 85 c0",
+    "mnem": "test   %rax,%rax"
+   },
+   {
+    "addr": "137452",
+    "bytes": "74 20",
+    "mnem": "je     137474 <long_add+0x104>"
+   },
+   {
+    "addr": "137454",
+    "bytes": "48 8b 4c 24 08",
+    "mnem": "mov    0x8(%rsp),%rcx"
+   },
+   {
+    "addr": "137459",
+    "bytes": "48 8b 54 24 10",
+    "mnem": "mov    0x10(%rsp),%rdx"
+   },
+   {
+    "addr": "13745e",
+    "bytes": "48 89 48 10",
+    "mnem": "mov    %rcx,0x10(%rax)"
+   },
+   {
+    "addr": "137462",
+    "bytes": "89 d1",
+    "mnem": "mov    %edx,%ecx"
+   },
+   {
+    "addr": "137464",
+    "bytes": "48 c1 ea 1e",
+    "mnem": "shr    $0x1e,%rdx"
+   },
+   {
+    "addr": "137468",
+    "bytes": "81 e1 ff ff ff 3f",
+    "mnem": "and    $0x3fffffff,%ecx"
+   },
+   {
+    "addr": "13746e",
+    "bytes": "89 50 1c",
+    "mnem": "mov    %edx,0x1c(%rax)"
+   },
+   {
+    "addr": "137471",
+    "bytes": "89 48 18",
+    "mnem": "mov    %ecx,0x18(%rax)"
+   },
+   {
+    "addr": "137474",
+    "bytes": "48 83 c4 28",
+    "mnem": "add    $0x28,%rsp"
+   },
+   {
+    "addr": "137478",
+    "bytes": "c3",
+    "mnem": "ret"
+   },
+   {
+    "addr": "1374c0",
+    "bytes": "83 c7 05",
+    "mnem": "add    $0x5,%edi"
+   },
+   {
+    "addr": "1374c3",
+    "bytes": "48 8d 05 36 fb 49 00",
+    "mnem": "lea    0x49fb36(%rip),%rax        # 5d7000 <_PyRuntime>"
+   },
+   {
+    "addr": "1374ca",
+    "bytes": "48 63 ff",
+    "mnem": "movslq %edi,%rdi"
+   },
+   {
+    "addr": "1374cd",
+    "bytes": "48 c1 e7 05",
+    "mnem": "shl    $0x5,%rdi"
+   },
+   {
+    "addr": "1374d1",
+    "bytes": "48 8d 84 38 f0 36 00",
+    "mnem": "lea    0x36f0(%rax,%rdi,1),%rax"
+   },
+   {
+    "addr": "1374d8",
+    "bytes": "00",
+    "mnem": ""
+   },
+   {
+    "addr": "1374d9",
+    "bytes": "eb 99",
+    "mnem": "jmp    137474 <long_add+0x104>"
+   },
+   {
+    "addr": "1374e0",
+    "bytes": "48 83 c4 28",
+    "mnem": "add    $0x28,%rsp"
+   },
+   {
+    "addr": "1374e4",
+    "bytes": "e9 f7 aa ff ff",
+    "mnem": "jmp    131fe0 <_PyLong_FromMedium>"
+   }
+  ],
+  "address_ranges": [
+   [
+    "0x1373d8",
+    "0x137479"
+   ],
+   [
+    "0x1374c0",
+    "0x1374db"
+   ],
+   [
+    "0x1374e0",
+    "0x1374e9"
+   ]
+  ],
+  "exits": [
+   {
+    "kind": "ret",
+    "at_index_in_unit": 38,
+    "instruction": "ret",
+    "note": "function-instruction-index 64 (0x137478); the small-int-table route (index 89) and the long_alloc route (index 54's fallthrough) both join here before returning."
+   },
+   {
+    "kind": "tail_call_external",
+    "at_index_in_unit": 47,
+    "instruction": "jmp    131fe0 <_PyLong_FromMedium>",
+    "note": "function-instruction-index 92 (0x1374e4); reached when the sum needs exactly one digit but does not fit the preallocated small-int table -- delegates to a sibling constructor, still within the compact/fast domain, never reaching x_add."
+   }
+  ],
+  "not_reached_from_this_entry": "x_add (the arbitrary-precision digit loop) and x_sub are NOT reachable from long_add+0x68 -- confirmed by construction (the reachability walk above never visits function-instruction-indices 0-25 or 65-82, which are the only places those two calls are made).",
+  "extraction_artifact_found": {
+   "where": "interp_cpython.json handler_arch_units.ship.long_add.instructions[88] (0x1374d8)",
+   "what": "an empty-mnem row carrying a single stray byte ('00'), sitting between a 7-byte-recorded lea at index 87 (0x1374d1, '48 8d 84 38 f0 36 00') and the jmp at index 89 (0x1374d9).  A real x86-64 lea with SIB+disp32 encoding here is 8 bytes; the disp32's last byte was almost certainly split into its own spurious row by fold_interp_cpython.py's extraction, not a real, separately-executed instruction.",
+   "handling_here": "kept VERBATIM in the instruction list above (index 88 of REACH, 45th entry) for honesty; excluded from control-flow classification (treated as inert data, not as a branch/call/ret) since an empty mnem cannot be parsed as one.  NOT fixed in fold_interp_cpython.py -- out of scope for this measurement (new files only); reported as a finding.",
+   "evidence_class": "artifact fact (the row is exactly what interp_cpython.json stores); the DIAGNOSIS of it as an extraction split (rather than a real instruction) is interpretation, stated as such."
+  },
+  "defects_found_reusing_cut_blocks": [
+   {
+    "defect": "trailing alignment padding after a mid-slice ret/jmp is silently treated as fallthrough into the next PHYSICAL block",
+    "detail": "canon2.cut_blocks() derives a block's successors from edges.get(LAST_INSTRUCTION_INDEX) only.  Every unit that machinery was built for is a tightly captured probe slice where a ret is always the unit's own last instruction.  This ship-build function instead has compiler alignment nopl/nopw padding AFTER a ret/jmp that lands mid-function, so the true control-transfer instruction sits inside the nominal block rather than at its end, and the naive fallthrough rule invents an edge into whatever block happens to sit next in memory.  Measured effect: applying cut_blocks() unmodified made the ret at function-index 64 appear to fall through into the UNRELATED 'not both compact, one operand is int, subtract' block that starts at 0x137480 -- which would have pulled x_sub's whole call site into a 'fast path', wrongly.",
+    "fix_applied_here": "reachability is computed at instruction granularity (this file's own classify()), so a ret/unconditional-jmp's true successor set (the empty set, or its real resolved target) is read directly off ITS OWN index, never off a block's nominal last index.  canon2.py itself is unmodified."
+   },
+   {
+    "defect": "a bare '<symbol>' jump target (no '+0xNN' suffix) is resolved as offset 0 into THIS unit, which is correct for a self-contained probe unit but wrong for a real binary slice that tail-jumps to OTHER, external, named functions",
+    "detail": "canon2.find_jump_target_offset() returns 0 for any bare '<sym>' match, on the assumption (true for the pipeline's own generated units) that the only symbol a captured unit's own disassembly can name is the unit itself, at its own start.  This slice's 'jmp 131e70 <x_add>' names a DIFFERENT function; naive reuse resolved it as a jump back to long_add's OWN instruction 0, which is false.",
+    "fix_applied_here": "this file's own target resolver compares the bracketed symbol name against the carved unit's own symbol (SYM = 'long_add' here) and only resolves an offset when they match; a different name is recorded as an external exit with no successor inside the unit.  canon2.py itself is unmodified."
+   }
+  ],
+  "evidence_class": "forced by construction -- the reachable set is derived from the unit's own recorded bytes/mnemonics by a deterministic control-flow walk, the same real-tool instruction-classification rules (canon.parse, canon.JUMP) the rest of this pipeline already holds itself to; the two defects above and their fixes are also forced by construction (each is a concrete, reproduced mismatch, not a guess)."
+ },
+ "arrival_unpacking": {
+  "what": "everything that turns the two incoming pointers into two plain integer values",
+  "instruction_indices_in_unit": [
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33
+  ],
+  "instructions": [
+   {
+    "addr": "1373d8",
+    "bytes": "ba 01 00 00 00",
+    "mnem": "mov    $0x1,%edx"
+   },
+   {
+    "addr": "1373dd",
+    "bytes": "8b 49 18",
+    "mnem": "mov    0x18(%rcx),%ecx"
+   },
+   {
+    "addr": "1373e0",
+    "bytes": "48 89 d0",
+    "mnem": "mov    %rdx,%rax"
+   },
+   {
+    "addr": "1373e3",
+    "bytes": "4c 29 c2",
+    "mnem": "sub    %r8,%rdx"
+   },
+   {
+    "addr": "1373e6",
+    "bytes": "48 29 f0",
+    "mnem": "sub    %rsi,%rax"
+   },
+   {
+    "addr": "1373e9",
+    "bytes": "48 0f af c1",
+    "mnem": "imul   %rcx,%rax"
+   },
+   {
+    "addr": "1373ed",
+    "bytes": "8b 4f 18",
+    "mnem": "mov    0x18(%rdi),%ecx"
+   },
+   {
+    "addr": "1373f0",
+    "bytes": "48 0f af d1",
+    "mnem": "imul   %rcx,%rdx"
+   }
+  ],
+  "reading_form": [
+   "mov    $0x1,%edx              %edx = $0x1",
+   "mov    0x18(%rcx),%ecx        %ecx = 0x18(%rcx)   # b's ob_digit[0] (%rcx = b's pointer, carried from the prologue outside this unit)",
+   "mov    %rdx,%rax              %rax = %rdx",
+   "sub    %r8,%rdx               %rdx = %rdx - %r8   # %r8 = a's sign code (0/1/2), read+masked before this unit",
+   "sub    %rsi,%rax              %rax = %rax - %rsi  # %esi = b's sign code, read+masked before this unit",
+   "imul   %rcx,%rax              %rax = %rax * %rcx  # %rax = medium_value(b): signed(+-1 or 0) * b's digit0",
+   "mov    0x18(%rdi),%ecx        %ecx = 0x18(%rdi)   # a's ob_digit[0] (%rdi = a's pointer -- untouched since entry, its FIRST use in this whole function is right here)",
+   "imul   %rcx,%rdx              %rdx = %rdx * %rcx  # %rdx = medium_value(a): signed(+-1 or 0) * a's digit0"
+  ],
+  "reasoning": "at unit-entry (function index 26) the two ORIGINAL pointers are already partly reduced by the pre-branch prologue that decides whether to take this path at all (function indices 0-9, NOT part of this carved unit): %rdi still holds a's own pointer untouched, %rcx holds b's pointer, %r8 holds a's sign code, %esi holds b's sign code.  Inside the carved unit, indices 26-33 read each object's digit0 FIELD (the actual magnitude bits, read here for the first time) and apply the sign code to it, landing two PLAIN signed 64-bit integers -- medium_value(b) in %rax (by index 31) and medium_value(a) in %rdx (by index 33).  This is CPython's medium_value() macro, inlined.  No arithmetic combining a AND b happens yet.",
+  "evidence_class": "forced by construction -- read directly off the instruction operands and their register-flow (which field offset each mov reads, which register each value lands in by the boundary instruction)."
+ },
+ "boundary": {
+  "instruction_index_in_unit": 34,
+  "instruction": "lea    (%rax,%rdx,1),%rdi",
+  "address": "1373f4",
+  "why_this_is_the_boundary": "index 34 ('lea (%rax,%rdx,1),%rdi') is the FIRST instruction that reads BOTH unpacked values -- medium_value(b) in %rax and medium_value(a) in %rdx -- and combines them.  Every instruction before it (indices 26-33) touches only ONE operand's fields, or a constant; this is the earliest point either value COULD be summed, and it is exactly where CPython's source sums them ('stwodigits z = medium_value(a) + medium_value(b);', Objects/longobject.c:3741 per interp_cpython.md)."
+ },
+ "computation": {
+  "what": "everything after the arrival/unpacking prefix, up to the answer -- the raw sum z = medium_value(a) + medium_value(b)",
+  "instruction_indices_in_unit": [
+   34
+  ],
+  "instructions": [
+   {
+    "addr": "1373f4",
+    "bytes": "48 8d 3c 10",
+    "mnem": "lea    (%rax,%rdx,1),%rdi"
+   }
+  ],
+  "reading_form": [
+   "lea    (%rax,%rdx,1),%rdi     %rdi = %rax + %rdx"
+  ],
+  "answer_register": "%rdi (holds z, the plain signed sum, right after this one instruction)",
+  "note_on_scope": "the COMPUTATION of the addition is this ONE instruction.  Everything from unit-index 35 onward (function indices 35-92, 39 instructions) is NOT part of the addition's computation -- it decides HOW TO BOX the already-computed answer z back into a PyLongObject (small-int table lookup / allocate a new object / tail-call a sibling constructor for a one-digit result).  That boxing has no counterpart in c's unit at all (c returns a raw i64, never a boxed pointer), so folding it into 'computation' would make the step-3 comparison a category error (pointer vs integer).  It is recorded separately below, honestly, rather than silently dropped."
+ },
+ "packing_not_arrival_not_computation": {
+  "what": "the remaining 39 instructions of the carved unit (indices 35-92 of the fast-path unit) -- boxing the already-computed sum z back into a PyLongObject.  This is neither arrival (it does not touch a's or b's fields again) nor computation of the addition (z is already final by index 34) -- it is closer to arrival's mirror on the way OUT: it changes how the ANSWER LEAVES, not what was computed, same as the owner's framing says about how operands arrive.",
+  "instruction_indices_in_unit": [
+   35,
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   61,
+   62,
+   63,
+   64,
+   83,
+   84,
+   85,
+   86,
+   87,
+   88,
+   89,
+   91,
+   92
+  ],
+  "sub_routes": [
+   "indices 35-37: bound-test z against the small-int cache range [-5, 256] (constants 0x5/0x105, matching CPython's _PY_NSMALLNEGINTS=5 / _PY_NSMALLPOSINTS=257)",
+   "indices 38-40: bound-test z against the single-digit range +-0x3fffffff (2**30-1)",
+   "indices 41-64: allocate a fresh 2-field PyLongObject via long_alloc and pack z's sign+digit0/digit1 into it (taken when z needs 2 digits)",
+   "indices 83-89 (function 83-89): read the preallocated _PyLong_SMALL_INTS table at z's index and return that pointer (taken for the measured probe values 3+4=7)",
+   "indices 91-92 (function 91-92): tail-call _PyLong_FromMedium (taken when z needs exactly one digit but is outside the small-int cache)"
+  ]
+ },
+ "proof": {
+  "claim_tested": "over the domain where CPython takes this fast path, is CPython's fast-path COMPUTATION (unit index 34 alone, with medium_value(a)/medium_value(b) as the symbolic inputs) the SAME function of its two inputs as c's i64 addition unit?",
+  "c_unit": {
+   "source": "op_units_c.json",
+   "canonical_text": "lea (%rdi,%rsi,1),%rax; ret",
+   "reading_form": [
+    "lea (%rdi,%rsi,1),%rax   %rax = %rdi + %rsi",
+    "ret                      return %rax"
+   ]
+  },
+  "cpython_computation_symbolic": {
+   "instruction": "lea (%rax,%rdx,1),%rdi",
+   "with_unpacked_inputs_named": "z = medium_value_a + medium_value_b, where medium_value_a is the value landed in %rdx by unit-index 33 and medium_value_b is the value landed in %rax by unit-index 31"
+  },
+  "domain_constraint": {
+   "stated_as_z3": "And(a >= -0x3fffffff, a <= 0x3fffffff, b >= -0x3fffffff, b <= 0x3fffffff)  -- both bitvectors 64-bit",
+   "why_this_bound": "0x3fffffff (2**30 - 1) is the constant this SAME unit tests the SUM z against at unit-index 38 ('lea 0x3fffffff(%rdi),%rax; cmp $0x7ffffffe,%rax') to decide whether z still fits one 30-bit digit -- forced by construction, read off this unit's own bytes.  That the two INPUTS individually share this same bound is the standard reading of _PyLong_BothAreCompact's single-digit-or-zero gate (the cmp $0xf test at long_add+0x1f, OUTSIDE this carved unit) against CPython's public PyLong_SHIFT=30 digit width -- that connecting step is interpretation of stated design, not read directly off these bytes, and is marked as such.",
+   "evidence_class": "forced by construction (the numeric constant) + human interpretation of stated design (that it also bounds each input individually)"
+  },
+  "z3_result": {
+   "bounded_domain_check": "unsat  (z3 could not find a,b within the stated domain where the two computations differ)",
+   "unbounded_check_also_run": "unsat  (z3 could not find ANY 64-bit a,b, in or out of the domain, where the two computations differ -- the equality is not merely true within the fast-path domain, it is true everywhere a plain add and a 'lea' add ever differ, i.e. never; both instructions are literally the same 2's-complement addition)",
+   "z3_version": "5.1.0",
+   "verdict": "PROVED"
+  },
+  "reading_of_the_result": "the owner's framing HOLDS for the computation itself: CPython's fast-path add and c's add compute the identical function of their two integer inputs.  The domain constraint the task asked to state turns out NOT to be load-bearing for this particular proof -- it is load-bearing for the ARRIVAL step (digit0 extraction is only valid because the objects are known-compact) and for the PACKING step (which representation to box the answer into), never for the add itself.  Stated honestly rather than only reporting what was asked for."
+ },
+ "mode_reading_proposal": {
+  "status": "PROPOSAL FOR DEE -- NOT RATIFIED, NOT WRITTEN INTO ANY ratified table (core_modes_*.json, dominant_operators, representatives).  No table membership is changed by this measurement.",
+  "premise": "since the computation is PROVED identical to c's add within (and beyond) the fast-path domain, CPython's + reads as ONE operator whose general (not-both-compact) path is a MODE, in core_modes.py's {condition, response, detection} shape -- not a second operator.",
+  "proposed_row": {
+   "condition": "not _PyLong_BothAreCompact(a, b) -- at least one operand fails the cmp $0xf test at long_add+0x1f (this carved unit is never entered)",
+   "response": "grows",
+   "detection": "PROPOSED, does not fit either existing route: not branch-to-response (x_add's answer is a normal return, not a trap/panic call) and not solver-localized (x_add is not a clamped/corrected REGION of the same core -- it is a genuinely different computation, an arbitrary-precision digit loop that allocates a longer result).  A third detection route -- 'branch-to-alternate-computation', named here only as a proposal -- would be needed before this row could be produced mechanically."
+  },
+  "vocabulary_match": "AgentMemory / core_modes.py's own vocabulary note names `wrapping`, `growing`, `approximating` as the interval-probe names and records `growing` as NOT occurring in the compiled corpus (core_modes.py's tally: 0).  This is exactly the case that fits it: interp_cpython.md's own x_add measurement (log_067, already on record BEFORE this session) shows 67 digit steps per call and an allocation -- the answer WIDENS, it does not wrap.  interp_cpython.md's own words: 'This is the growing mode the SUPPORT file predicted; here it is measured.'  This measurement's addition: the mode row's CONDITION (the compact-domain gate) and RESPONSE ('grows') in core_modes.py's own row shape, plus the DETECTION gap named honestly.",
+  "why_this_is_a_measurement_not_an_integration": "interp_cpython.md already recorded growing as observed in the interpreter track; this row proposal is new, but it is NOT written into core_modes_cpython.json (no such file is produced by this measurement) or into any language's core_modes_<lang>.json, and the interpreter track carries no ship-unit population core_modes.py's pass runs over -- integrating it would mean building that population and wiring x_add's own arch-unit through the same {core, modes} split, which is future work, not this measurement."
+ },
+ "what_refused_and_why": [
+  "canon2.cut_blocks() reused unmodified would have produced a WRONG (over-broad) reachable set -- see carve.defects_found_reusing_cut_blocks above.  This measurement refused that output and computed reachability at instruction granularity instead, using the same control-flow classification rules canon2.py itself uses (canon.parse, canon.JUMP).",
+  "the packing phase (unit indices 35-92) was refused a place in either the arrival/unpacking prefix or the computation -- see doc.packing_not_arrival_not_computation and doc.computation.note_on_scope for why, stated rather than silently folded in.",
+  "the mode-row detection field was refused a name from either of core_modes.py's existing two routes -- see mode_reading_proposal.proposed_row.detection.",
+  "index 88's extraction artifact was refused treatment as a real instruction (see carve.extraction_artifact_found) and kept verbatim rather than silently dropped or silently treated as code."
+ ],
+ "reading_form_file": "interp_fastpath_worked_example.txt"
+}

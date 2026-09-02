@@ -1,0 +1,721 @@
+#verbatim-escape v1
+op_50400|SHIP|OK|89 d1 48 89 f8 48 0f ad f0 48 d3 ee 31 d2 f6 c1 40 48 0f 45 c6 48 0f 44 d6 c3|mov %edx,%ecx;mov %rdi,%rax;shrd %cl,%rsi,%rax;shr %cl,%rsi;xor %edx,%edx;test $0x40,%cl;cmovne %rsi,%rax;cmove %rsi,%rdx;ret
+op_50400|ANCHOR|OK|55 48 89 e5 88 d0 48 89 7d e0 48 89 75 e8 48 8b 4d e0 48 8b 55 e8 48 89 55 d8 48 89 4d d0 88 45 cf 48 8b 45 d0 48 8b 55 d8 40 8a 75 cf 40 88 f1 48 89 d7 48 d3 ef 48 89 7d c0 40 88 f1 48 0f ad d0 48 8b 4d c0 31 d2 40 f6 c6 40 48 0f 45 c1 48 0f 45 ca 48 89 4d f8 48 89 45 f0 48 8b 45 f0 48 8b 55 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dl,%al;mov %rdi,-0x20(%rbp);mov %rsi,-0x18(%rbp);mov -0x20(%rbp),%rcx;mov -0x18(%rbp),%rdx;mov %rdx,-0x28(%rbp);mov %rcx,-0x30(%rbp);mov %al,-0x31(%rbp);mov -0x30(%rbp),%rax;mov -0x28(%rbp),%rdx;mov -0x31(%rbp),%sil;mov %sil,%cl;mov %rdx,%rdi;shr %cl,%rdi;mov %rdi,-0x40(%rbp);mov %sil,%cl;shrd %cl,%rdx,%rax;mov -0x40(%rbp),%rcx;xor %edx,%edx;test $0x40,%sil;cmovne %rcx,%rax;cmovne %rdx,%rcx;mov %rcx,-0x8(%rbp);mov %rax,-0x10(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rdx;pop %rbp;ret
+op_50400|ANCHOR|DWARF|a=2 byte block: 91 50 (DW_OP_fbreg: -48);b=2 byte block: 91 4f (DW_OP_fbreg: -49)
+op_50401|SHIP|OK|89 d1 48 89 f8 48 0f ad f0 48 d3 ee 31 d2 f6 c1 40 48 0f 45 c6 48 0f 44 d6 c3|mov %edx,%ecx;mov %rdi,%rax;shrd %cl,%rsi,%rax;shr %cl,%rsi;xor %edx,%edx;test $0x40,%cl;cmovne %rsi,%rax;cmove %rsi,%rdx;ret
+op_50401|ANCHOR|OK|55 48 89 e5 48 89 7d e0 48 89 75 e8 48 8b 45 e0 48 8b 4d e8 48 89 4d d8 48 89 45 d0 89 55 cc 48 8b 45 d0 48 8b 55 d8 40 8a 75 cc 40 88 f1 48 89 d7 48 d3 ef 48 89 7d c0 40 88 f1 48 0f ad d0 48 8b 4d c0 31 d2 40 f6 c6 40 48 0f 45 c1 48 0f 45 ca 48 89 4d f8 48 89 45 f0 48 8b 45 f0 48 8b 55 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x20(%rbp);mov %rsi,-0x18(%rbp);mov -0x20(%rbp),%rax;mov -0x18(%rbp),%rcx;mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov %edx,-0x34(%rbp);mov -0x30(%rbp),%rax;mov -0x28(%rbp),%rdx;mov -0x34(%rbp),%sil;mov %sil,%cl;mov %rdx,%rdi;shr %cl,%rdi;mov %rdi,-0x40(%rbp);mov %sil,%cl;shrd %cl,%rdx,%rax;mov -0x40(%rbp),%rcx;xor %edx,%edx;test $0x40,%sil;cmovne %rcx,%rax;cmovne %rdx,%rcx;mov %rcx,-0x8(%rbp);mov %rax,-0x10(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rdx;pop %rbp;ret
+op_50401|ANCHOR|DWARF|a=2 byte block: 91 50 (DW_OP_fbreg: -48);b=2 byte block: 91 4c (DW_OP_fbreg: -52)
+op_50402|SHIP|OK|48 89 d1 48 89 f8 48 0f ad f0 48 d3 ee 31 d2 f6 c1 40 48 0f 45 c6 48 0f 44 d6 c3|mov %rdx,%rcx;mov %rdi,%rax;shrd %cl,%rsi,%rax;shr %cl,%rsi;xor %edx,%edx;test $0x40,%cl;cmovne %rsi,%rax;cmove %rsi,%rdx;ret
+op_50402|ANCHOR|OK|55 48 89 e5 48 89 7d e0 48 89 75 e8 48 8b 45 e0 48 8b 4d e8 48 89 4d d8 48 89 45 d0 48 89 55 c8 48 8b 45 d0 48 8b 55 d8 40 8a 75 c8 40 88 f1 48 89 d7 48 d3 ef 48 89 7d c0 40 88 f1 48 0f ad d0 48 8b 4d c0 31 d2 40 f6 c6 40 48 0f 45 c1 48 0f 45 ca 48 89 4d f8 48 89 45 f0 48 8b 45 f0 48 8b 55 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x20(%rbp);mov %rsi,-0x18(%rbp);mov -0x20(%rbp),%rax;mov -0x18(%rbp),%rcx;mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov %rdx,-0x38(%rbp);mov -0x30(%rbp),%rax;mov -0x28(%rbp),%rdx;mov -0x38(%rbp),%sil;mov %sil,%cl;mov %rdx,%rdi;shr %cl,%rdi;mov %rdi,-0x40(%rbp);mov %sil,%cl;shrd %cl,%rdx,%rax;mov -0x40(%rbp),%rcx;xor %edx,%edx;test $0x40,%sil;cmovne %rcx,%rax;cmovne %rdx,%rcx;mov %rcx,-0x8(%rbp);mov %rax,-0x10(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rdx;pop %rbp;ret
+op_50402|ANCHOR|DWARF|a=2 byte block: 91 50 (DW_OP_fbreg: -48);b=2 byte block: 91 48 (DW_OP_fbreg: -56)
+op_50403|REFUSED|/work/regen_cpp_c0126/u/n50403/unit.cpp:7:46: error: expected ')'
+op_50404|REFUSED|/work/regen_cpp_c0126/u/n50404/unit.cpp:7:46: error: expected ')'
+op_50405|SHIP|OK|48 89 d1 48 89 f8 48 0f ad f0 48 d3 ee 31 d2 f6 c1 40 48 0f 45 c6 48 0f 44 d6 c3|mov %rdx,%rcx;mov %rdi,%rax;shrd %cl,%rsi,%rax;shr %cl,%rsi;xor %edx,%edx;test $0x40,%cl;cmovne %rsi,%rax;cmove %rsi,%rdx;ret
+op_50405|ANCHOR|OK|55 48 89 e5 48 89 7d e0 48 89 75 e8 48 8b 45 e0 48 8b 4d e8 48 89 4d d8 48 89 45 d0 48 89 55 c8 48 8b 45 d0 48 8b 55 d8 40 8a 75 c8 40 88 f1 48 89 d7 48 d3 ef 48 89 7d c0 40 88 f1 48 0f ad d0 48 8b 4d c0 31 d2 40 f6 c6 40 48 0f 45 c1 48 0f 45 ca 48 89 4d f8 48 89 45 f0 48 8b 45 f0 48 8b 55 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x20(%rbp);mov %rsi,-0x18(%rbp);mov -0x20(%rbp),%rax;mov -0x18(%rbp),%rcx;mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov %rdx,-0x38(%rbp);mov -0x30(%rbp),%rax;mov -0x28(%rbp),%rdx;mov -0x38(%rbp),%sil;mov %sil,%cl;mov %rdx,%rdi;shr %cl,%rdi;mov %rdi,-0x40(%rbp);mov %sil,%cl;shrd %cl,%rdx,%rax;mov -0x40(%rbp),%rcx;xor %edx,%edx;test $0x40,%sil;cmovne %rcx,%rax;cmovne %rdx,%rcx;mov %rcx,-0x8(%rbp);mov %rax,-0x10(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rdx;pop %rbp;ret
+op_50405|ANCHOR|DWARF|a=2 byte block: 91 50 (DW_OP_fbreg: -48);b=2 byte block: 91 48 (DW_OP_fbreg: -56)
+op_50406|SHIP|OK|89 d1 48 89 f8 48 0f ad f0 48 d3 ee 31 d2 f6 c1 40 48 0f 45 c6 48 0f 44 d6 c3|mov %edx,%ecx;mov %rdi,%rax;shrd %cl,%rsi,%rax;shr %cl,%rsi;xor %edx,%edx;test $0x40,%cl;cmovne %rsi,%rax;cmove %rsi,%rdx;ret
+op_50406|ANCHOR|OK|55 48 89 e5 66 89 d0 48 89 7d e0 48 89 75 e8 48 8b 4d e0 48 8b 55 e8 48 89 55 d8 48 89 4d d0 66 89 45 ce 48 8b 45 d0 48 8b 55 d8 40 8a 75 ce 40 88 f1 48 89 d7 48 d3 ef 48 89 7d c0 40 88 f1 48 0f ad d0 48 8b 4d c0 31 d2 40 f6 c6 40 48 0f 45 c1 48 0f 45 ca 48 89 4d f8 48 89 45 f0 48 8b 45 f0 48 8b 55 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dx,%ax;mov %rdi,-0x20(%rbp);mov %rsi,-0x18(%rbp);mov -0x20(%rbp),%rcx;mov -0x18(%rbp),%rdx;mov %rdx,-0x28(%rbp);mov %rcx,-0x30(%rbp);mov %ax,-0x32(%rbp);mov -0x30(%rbp),%rax;mov -0x28(%rbp),%rdx;mov -0x32(%rbp),%sil;mov %sil,%cl;mov %rdx,%rdi;shr %cl,%rdi;mov %rdi,-0x40(%rbp);mov %sil,%cl;shrd %cl,%rdx,%rax;mov -0x40(%rbp),%rcx;xor %edx,%edx;test $0x40,%sil;cmovne %rcx,%rax;cmovne %rdx,%rcx;mov %rcx,-0x8(%rbp);mov %rax,-0x10(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rdx;pop %rbp;ret
+op_50406|ANCHOR|DWARF|a=2 byte block: 91 50 (DW_OP_fbreg: -48);b=2 byte block: 91 4e (DW_OP_fbreg: -50)
+op_50407|REFUSED|/work/regen_cpp_c0126/u/n50407/unit.cpp:7:47: error: expected ')'
+op_50408|REFUSED|/work/regen_cpp_c0126/u/n50408/unit.cpp:7:47: error: expected ')'
+op_50409|SHIP|OK|89 d1 48 89 f8 48 0f ad f0 48 d3 ee 31 d2 f6 c1 40 48 0f 45 c6 48 0f 44 d6 c3|mov %edx,%ecx;mov %rdi,%rax;shrd %cl,%rsi,%rax;shr %cl,%rsi;xor %edx,%edx;test $0x40,%cl;cmovne %rsi,%rax;cmove %rsi,%rdx;ret
+op_50409|ANCHOR|OK|55 48 89 e5 48 89 7d e0 48 89 75 e8 48 8b 45 e0 48 8b 4d e8 48 89 4d d8 48 89 45 d0 89 55 cc 48 8b 45 d0 48 8b 55 d8 40 8a 75 cc 40 88 f1 48 89 d7 48 d3 ef 48 89 7d c0 40 88 f1 48 0f ad d0 48 8b 4d c0 31 d2 40 f6 c6 40 48 0f 45 c1 48 0f 45 ca 48 89 4d f8 48 89 45 f0 48 8b 45 f0 48 8b 55 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x20(%rbp);mov %rsi,-0x18(%rbp);mov -0x20(%rbp),%rax;mov -0x18(%rbp),%rcx;mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov %edx,-0x34(%rbp);mov -0x30(%rbp),%rax;mov -0x28(%rbp),%rdx;mov -0x34(%rbp),%sil;mov %sil,%cl;mov %rdx,%rdi;shr %cl,%rdi;mov %rdi,-0x40(%rbp);mov %sil,%cl;shrd %cl,%rdx,%rax;mov -0x40(%rbp),%rcx;xor %edx,%edx;test $0x40,%sil;cmovne %rcx,%rax;cmovne %rdx,%rcx;mov %rcx,-0x8(%rbp);mov %rax,-0x10(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rdx;pop %rbp;ret
+op_50409|ANCHOR|DWARF|a=2 byte block: 91 50 (DW_OP_fbreg: -48);b=2 byte block: 91 4c (DW_OP_fbreg: -52)
+op_50410|REFUSED|/work/regen_cpp_c0126/u/n50410/unit.cpp:7:18: error: unknown type name '_Accum'
+op_50411|REFUSED|/work/regen_cpp_c0126/u/n50411/unit.cpp:7:18: error: unknown type name '_Bool'
+op_50412|REFUSED|/work/regen_cpp_c0126/u/n50412/unit.cpp:7:18: error: unknown type name '_Fract'
+op_50413|REFUSED|/work/regen_cpp_c0126/u/n50413/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50414|REFUSED|/work/regen_cpp_c0126/u/n50414/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50415|REFUSED|/work/regen_cpp_c0126/u/n50415/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50416|REFUSED|/work/regen_cpp_c0126/u/n50416/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50417|REFUSED|/work/regen_cpp_c0126/u/n50417/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50418|REFUSED|/work/regen_cpp_c0126/u/n50418/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50419|REFUSED|/work/regen_cpp_c0126/u/n50419/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50420|REFUSED|/work/regen_cpp_c0126/u/n50420/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50421|REFUSED|/work/regen_cpp_c0126/u/n50421/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50422|REFUSED|/work/regen_cpp_c0126/u/n50422/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50423|REFUSED|/work/regen_cpp_c0126/u/n50423/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50424|REFUSED|/work/regen_cpp_c0126/u/n50424/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50425|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50425|ANCHOR|OK|55 48 89 e5 48 89 d0 40 88 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 80 e2 01 88 55 ef 48 89 4d d8 48 89 45 d0 0f b6 45 ef 83 e0 01 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %dil,%dl;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;and $0x1,%dl;mov %dl,-0x11(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movzbl -0x11(%rbp),%eax;and $0x1,%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50425|ANCHOR|DWARF|a=2 byte block: 91 6f (DW_OP_fbreg: -17);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50426|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50426|ANCHOR|OK|55 48 89 e5 48 89 d0 40 88 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 80 e2 01 88 55 ef 48 89 4d d8 48 89 45 d0 0f b6 45 ef 83 e0 01 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %dil,%dl;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;and $0x1,%dl;mov %dl,-0x11(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movzbl -0x11(%rbp),%eax;and $0x1,%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50426|ANCHOR|DWARF|a=2 byte block: 91 6f (DW_OP_fbreg: -17);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50427|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50427|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 80 e1 01 88 4d ff 24 01 88 45 fe 8a 45 ff 24 01 0f b6 c0 8a 4d fe 80 e1 01 0f b6 c9 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;and $0x1,%cl;mov %cl,-0x1(%rbp);and $0x1,%al;mov %al,-0x2(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x2(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;sar %cl,%eax;pop %rbp;ret
+op_50427|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50428|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50428|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 80 e1 01 88 4d ff 88 45 fe 8a 45 ff 24 01 0f b6 c0 0f be 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;and $0x1,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;movsbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50428|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50429|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50429|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 80 e1 01 88 4d ff 66 89 45 fc 8a 45 ff 24 01 0f b6 c0 0f b7 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;and $0x1,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;movzwl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50429|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50430|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50430|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 89 75 f8 8a 45 ff 24 01 0f b6 c0 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50430|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50431|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50431|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 80 e1 01 88 4d ff 88 45 fe 8a 45 ff 24 01 0f b6 c0 0f b6 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;and $0x1,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;movzbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50431|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50432|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50432|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 89 75 f8 8a 45 ff 24 01 0f b6 c0 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50432|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50433|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50433|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 48 89 75 f0 8a 45 ff 24 01 0f b6 c0 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50433|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50434|REFUSED|/work/regen_cpp_c0126/u/n50434/unit.cpp:7:30: error: expected ')'
+op_50435|REFUSED|/work/regen_cpp_c0126/u/n50435/unit.cpp:7:30: error: expected ')'
+op_50436|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50436|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 48 89 75 f0 8a 45 ff 24 01 0f b6 c0 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50436|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50437|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50437|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 80 e1 01 88 4d ff 66 89 45 fc 8a 45 ff 24 01 0f b6 c0 0f bf 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;and $0x1,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;movswl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50437|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50438|REFUSED|/work/regen_cpp_c0126/u/n50438/unit.cpp:7:31: error: expected ')'
+op_50439|REFUSED|/work/regen_cpp_c0126/u/n50439/unit.cpp:7:31: error: expected ')'
+op_50440|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50440|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 80 e1 01 88 4d ff 88 45 fe 8a 45 ff 24 01 0f b6 c0 0f be 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;and $0x1,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;movsbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50440|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50441|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50441|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 89 75 f8 8a 45 ff 24 01 0f b6 c0 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50441|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50442|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50442|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 48 89 75 f0 8a 45 ff 24 01 0f b6 c0 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50442|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50443|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50443|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 48 89 75 f0 8a 45 ff 24 01 0f b6 c0 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50443|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50444|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50444|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 80 e1 01 88 4d ff 66 89 45 fc 8a 45 ff 24 01 0f b6 c0 0f bf 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;and $0x1,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;movswl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50444|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50445|REFUSED|/work/regen_cpp_c0126/u/n50445/unit.cpp:7:34: error: expected ')'
+op_50446|REFUSED|/work/regen_cpp_c0126/u/n50446/unit.cpp:7:34: error: expected ')'
+op_50447|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50447|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 80 e1 01 88 4d ff 88 45 fe 8a 45 ff 24 01 0f b6 c0 0f b6 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;and $0x1,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;movzbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50447|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50448|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50448|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 89 75 f8 8a 45 ff 24 01 0f b6 c0 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50448|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50449|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50449|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 48 89 75 f0 8a 45 ff 24 01 0f b6 c0 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50449|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50450|REFUSED|/work/regen_cpp_c0126/u/n50450/unit.cpp:7:39: error: expected ')'
+op_50451|REFUSED|/work/regen_cpp_c0126/u/n50451/unit.cpp:7:39: error: expected ')'
+op_50452|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50452|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 48 89 75 f0 8a 45 ff 24 01 0f b6 c0 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50452|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50453|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50453|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 80 e1 01 88 4d ff 66 89 45 fc 8a 45 ff 24 01 0f b6 c0 0f b7 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;and $0x1,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;movzwl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50453|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50454|REFUSED|/work/regen_cpp_c0126/u/n50454/unit.cpp:7:40: error: expected ')'
+op_50455|REFUSED|/work/regen_cpp_c0126/u/n50455/unit.cpp:7:40: error: expected ')'
+op_50456|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50456|ANCHOR|OK|55 48 89 e5 40 88 f8 24 01 88 45 ff 89 75 f8 8a 45 ff 24 01 0f b6 c0 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;and $0x1,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);mov -0x1(%rbp),%al;and $0x1,%al;movzbl %al,%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50456|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50457|REFUSED|/work/regen_cpp_c0126/u/n50457/unit.cpp:7:18: error: unknown type name '_Accum'
+op_50458|REFUSED|/work/regen_cpp_c0126/u/n50458/unit.cpp:7:18: error: unknown type name '_Bool'
+op_50459|REFUSED|/work/regen_cpp_c0126/u/n50459/unit.cpp:7:18: error: unknown type name '_Fract'
+op_50460|REFUSED|/work/regen_cpp_c0126/u/n50460/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50461|REFUSED|/work/regen_cpp_c0126/u/n50461/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50462|REFUSED|/work/regen_cpp_c0126/u/n50462/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50463|REFUSED|/work/regen_cpp_c0126/u/n50463/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50464|REFUSED|/work/regen_cpp_c0126/u/n50464/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50465|REFUSED|/work/regen_cpp_c0126/u/n50465/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50466|REFUSED|/work/regen_cpp_c0126/u/n50466/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50467|REFUSED|/work/regen_cpp_c0126/u/n50467/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50468|REFUSED|/work/regen_cpp_c0126/u/n50468/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50469|REFUSED|/work/regen_cpp_c0126/u/n50469/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50470|REFUSED|/work/regen_cpp_c0126/u/n50470/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50471|REFUSED|/work/regen_cpp_c0126/u/n50471/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50472|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50472|ANCHOR|OK|55 48 89 e5 48 89 d0 40 88 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 88 55 ef 48 89 4d d8 48 89 45 d0 0f be 45 ef 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %dil,%dl;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dl,-0x11(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movsbl -0x11(%rbp),%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50472|ANCHOR|DWARF|a=2 byte block: 91 6f (DW_OP_fbreg: -17);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50473|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50473|ANCHOR|OK|55 48 89 e5 48 89 d0 40 88 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 88 55 ef 48 89 4d d8 48 89 45 d0 0f be 45 ef 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %dil,%dl;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dl,-0x11(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movsbl -0x11(%rbp),%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50473|ANCHOR|DWARF|a=2 byte block: 91 6f (DW_OP_fbreg: -17);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50474|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50474|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 24 01 88 45 fe 0f be 45 ff 8a 4d fe 80 e1 01 0f b6 c9 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);and $0x1,%al;mov %al,-0x2(%rbp);movsbl -0x1(%rbp),%eax;mov -0x2(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;sar %cl,%eax;pop %rbp;ret
+op_50474|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50475|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50475|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f be 45 ff 0f be 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movsbl -0x1(%rbp),%eax;movsbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50475|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50476|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50476|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f be 45 ff 0f b7 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movsbl -0x1(%rbp),%eax;movzwl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50476|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50477|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50477|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f be 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movsbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50477|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50478|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50478|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f be 45 ff 0f b6 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movsbl -0x1(%rbp),%eax;movzbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50478|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50479|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50479|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f be 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movsbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50479|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50480|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50480|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f be 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50480|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50481|REFUSED|/work/regen_cpp_c0126/u/n50481/unit.cpp:7:30: error: expected ')'
+op_50482|REFUSED|/work/regen_cpp_c0126/u/n50482/unit.cpp:7:30: error: expected ')'
+op_50483|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50483|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f be 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50483|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50484|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50484|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f be 45 ff 0f bf 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movsbl -0x1(%rbp),%eax;movswl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50484|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50485|REFUSED|/work/regen_cpp_c0126/u/n50485/unit.cpp:7:31: error: expected ')'
+op_50486|REFUSED|/work/regen_cpp_c0126/u/n50486/unit.cpp:7:31: error: expected ')'
+op_50487|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50487|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f be 45 ff 0f be 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movsbl -0x1(%rbp),%eax;movsbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50487|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50488|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50488|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f be 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movsbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50488|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50489|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50489|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f be 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50489|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50490|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50490|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f be 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50490|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50491|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50491|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f be 45 ff 0f bf 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movsbl -0x1(%rbp),%eax;movswl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50491|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50492|REFUSED|/work/regen_cpp_c0126/u/n50492/unit.cpp:7:34: error: expected ')'
+op_50493|REFUSED|/work/regen_cpp_c0126/u/n50493/unit.cpp:7:34: error: expected ')'
+op_50494|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50494|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f be 45 ff 0f b6 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movsbl -0x1(%rbp),%eax;movzbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50494|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50495|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50495|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f be 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movsbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50495|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50496|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50496|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f be 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50496|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50497|REFUSED|/work/regen_cpp_c0126/u/n50497/unit.cpp:7:39: error: expected ')'
+op_50498|REFUSED|/work/regen_cpp_c0126/u/n50498/unit.cpp:7:39: error: expected ')'
+op_50499|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50499|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f be 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movsbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50499|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50500|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50500|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f be 45 ff 0f b7 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movsbl -0x1(%rbp),%eax;movzwl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50500|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50501|REFUSED|/work/regen_cpp_c0126/u/n50501/unit.cpp:7:40: error: expected ')'
+op_50502|REFUSED|/work/regen_cpp_c0126/u/n50502/unit.cpp:7:40: error: expected ')'
+op_50503|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50503|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f be 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movsbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50503|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50504|REFUSED|/work/regen_cpp_c0126/u/n50504/unit.cpp:7:22: error: unknown type name '_Accum'
+op_50505|REFUSED|/work/regen_cpp_c0126/u/n50505/unit.cpp:7:22: error: unknown type name '_Bool'
+op_50506|REFUSED|/work/regen_cpp_c0126/u/n50506/unit.cpp:7:22: error: unknown type name '_Fract'
+op_50507|REFUSED|/work/regen_cpp_c0126/u/n50507/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50508|REFUSED|/work/regen_cpp_c0126/u/n50508/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50509|REFUSED|/work/regen_cpp_c0126/u/n50509/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50510|REFUSED|/work/regen_cpp_c0126/u/n50510/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50511|REFUSED|/work/regen_cpp_c0126/u/n50511/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50512|REFUSED|/work/regen_cpp_c0126/u/n50512/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50513|REFUSED|/work/regen_cpp_c0126/u/n50513/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50514|REFUSED|/work/regen_cpp_c0126/u/n50514/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50515|REFUSED|/work/regen_cpp_c0126/u/n50515/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50516|REFUSED|/work/regen_cpp_c0126/u/n50516/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50517|REFUSED|/work/regen_cpp_c0126/u/n50517/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50518|REFUSED|/work/regen_cpp_c0126/u/n50518/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50519|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50519|ANCHOR|OK|55 48 89 e5 48 89 d0 66 89 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 66 89 55 ee 48 89 4d d8 48 89 45 d0 0f b7 45 ee 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %di,%dx;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dx,-0x12(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movzwl -0x12(%rbp),%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50519|ANCHOR|DWARF|a=2 byte block: 91 6e (DW_OP_fbreg: -18);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50520|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50520|ANCHOR|OK|55 48 89 e5 48 89 d0 66 89 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 66 89 55 ee 48 89 4d d8 48 89 45 d0 0f b7 45 ee 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %di,%dx;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dx,-0x12(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movzwl -0x12(%rbp),%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50520|ANCHOR|DWARF|a=2 byte block: 91 6e (DW_OP_fbreg: -18);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50521|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50521|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 24 01 88 45 fd 0f b7 45 fe 8a 4d fd 80 e1 01 0f b6 c9 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);and $0x1,%al;mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;mov -0x3(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;sar %cl,%eax;pop %rbp;ret
+op_50521|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_50522|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50522|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f b7 45 fe 0f be 4d fd d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;movsbl -0x3(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50522|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_50523|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50523|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f b7 45 fe 0f b7 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movzwl -0x2(%rbp),%eax;movzwl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50523|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50524|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50524|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50524|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50525|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50525|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f b7 45 fe 0f b6 4d fd d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;movzbl -0x3(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50525|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_50526|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50526|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50526|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50527|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50527|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50527|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50528|REFUSED|/work/regen_cpp_c0126/u/n50528/unit.cpp:7:34: error: expected ')'
+op_50529|REFUSED|/work/regen_cpp_c0126/u/n50529/unit.cpp:7:34: error: expected ')'
+op_50530|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50530|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50530|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50531|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50531|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f b7 45 fe 0f bf 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movzwl -0x2(%rbp),%eax;movswl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50531|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50532|REFUSED|/work/regen_cpp_c0126/u/n50532/unit.cpp:7:35: error: expected ')'
+op_50533|REFUSED|/work/regen_cpp_c0126/u/n50533/unit.cpp:7:35: error: expected ')'
+op_50534|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50534|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f b7 45 fe 0f be 4d fd d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;movsbl -0x3(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50534|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_50535|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50535|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50535|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50536|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50536|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50536|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50537|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50537|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50537|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50538|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50538|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f b7 45 fe 0f bf 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movzwl -0x2(%rbp),%eax;movswl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50538|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50539|REFUSED|/work/regen_cpp_c0126/u/n50539/unit.cpp:7:38: error: expected ')'
+op_50540|REFUSED|/work/regen_cpp_c0126/u/n50540/unit.cpp:7:38: error: expected ')'
+op_50541|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50541|ANCHOR|OK|55 48 89 e5 40 88 f0 66 89 f9 66 89 4d fe 88 45 fd 0f b7 45 fe 0f b6 4d fd d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %di,%cx;mov %cx,-0x2(%rbp);mov %al,-0x3(%rbp);movzwl -0x2(%rbp),%eax;movzbl -0x3(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50541|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7d (DW_OP_fbreg: -3)
+op_50542|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50542|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50542|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50543|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50543|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50543|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50544|REFUSED|/work/regen_cpp_c0126/u/n50544/unit.cpp:7:43: error: expected ')'
+op_50545|REFUSED|/work/regen_cpp_c0126/u/n50545/unit.cpp:7:43: error: expected ')'
+op_50546|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50546|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 48 89 75 f0 0f b7 45 fe 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %rsi,-0x10(%rbp);movzwl -0x2(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50546|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50547|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50547|ANCHOR|OK|55 48 89 e5 66 89 f0 66 89 f9 66 89 4d fe 66 89 45 fc 0f b7 45 fe 0f b7 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %di,%cx;mov %cx,-0x2(%rbp);mov %ax,-0x4(%rbp);movzwl -0x2(%rbp),%eax;movzwl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50547|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50548|REFUSED|/work/regen_cpp_c0126/u/n50548/unit.cpp:7:44: error: expected ')'
+op_50549|REFUSED|/work/regen_cpp_c0126/u/n50549/unit.cpp:7:44: error: expected ')'
+op_50550|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50550|ANCHOR|OK|55 48 89 e5 66 89 f8 66 89 45 fe 89 75 f8 0f b7 45 fe 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %di,%ax;mov %ax,-0x2(%rbp);mov %esi,-0x8(%rbp);movzwl -0x2(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50550|ANCHOR|DWARF|a=2 byte block: 91 7e (DW_OP_fbreg: -2);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50551|REFUSED|/work/regen_cpp_c0126/u/n50551/unit.cpp:7:22: error: unknown type name '_Accum'
+op_50552|REFUSED|/work/regen_cpp_c0126/u/n50552/unit.cpp:7:22: error: unknown type name '_Bool'
+op_50553|REFUSED|/work/regen_cpp_c0126/u/n50553/unit.cpp:7:22: error: unknown type name '_Fract'
+op_50554|REFUSED|/work/regen_cpp_c0126/u/n50554/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50555|REFUSED|/work/regen_cpp_c0126/u/n50555/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50556|REFUSED|/work/regen_cpp_c0126/u/n50556/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50557|REFUSED|/work/regen_cpp_c0126/u/n50557/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50558|REFUSED|/work/regen_cpp_c0126/u/n50558/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50559|REFUSED|/work/regen_cpp_c0126/u/n50559/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50560|REFUSED|/work/regen_cpp_c0126/u/n50560/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50561|REFUSED|/work/regen_cpp_c0126/u/n50561/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50562|REFUSED|/work/regen_cpp_c0126/u/n50562/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50563|REFUSED|/work/regen_cpp_c0126/u/n50563/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50564|REFUSED|/work/regen_cpp_c0126/u/n50564/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50565|REFUSED|/work/regen_cpp_c0126/u/n50565/unit.cpp:7:22: error: unknown type name '_Sat'
+op_50566|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50566|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 89 7d ec 48 89 4d d8 48 89 45 d0 8b 45 ec 8b 4d d0 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %edi,-0x14(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x14(%rbp),%eax;mov -0x30(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50566|ANCHOR|DWARF|a=2 byte block: 91 6c (DW_OP_fbreg: -20);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50567|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50567|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 89 7d ec 48 89 4d d8 48 89 45 d0 8b 45 ec 8b 4d d0 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %edi,-0x14(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x14(%rbp),%eax;mov -0x30(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50567|ANCHOR|DWARF|a=2 byte block: 91 6c (DW_OP_fbreg: -20);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50568|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50568|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 24 01 88 45 fb 8b 45 fc 8a 4d fb 80 e1 01 0f b6 c9 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);and $0x1,%al;mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;mov -0x5(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;shr %cl,%eax;pop %rbp;ret
+op_50568|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50569|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50569|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f be 4d fb d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movsbl -0x5(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50569|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50570|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50570|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f b7 4d fa d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movzwl -0x6(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50570|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_50571|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50571|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50571|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50572|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50572|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f b6 4d fb d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movzbl -0x5(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50572|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50573|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50573|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50573|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50574|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50574|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;shr %cl,%eax;pop %rbp;ret
+op_50574|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50575|REFUSED|/work/regen_cpp_c0126/u/n50575/unit.cpp:7:34: error: expected ')'
+op_50576|REFUSED|/work/regen_cpp_c0126/u/n50576/unit.cpp:7:34: error: expected ')'
+op_50577|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50577|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;shr %cl,%eax;pop %rbp;ret
+op_50577|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50578|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50578|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f bf 4d fa d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movswl -0x6(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50578|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_50579|REFUSED|/work/regen_cpp_c0126/u/n50579/unit.cpp:7:35: error: expected ')'
+op_50580|REFUSED|/work/regen_cpp_c0126/u/n50580/unit.cpp:7:35: error: expected ')'
+op_50581|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50581|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f be 4d fb d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movsbl -0x5(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50581|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50582|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50582|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50582|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50583|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50583|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;shr %cl,%eax;pop %rbp;ret
+op_50583|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50584|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50584|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;shr %cl,%eax;pop %rbp;ret
+op_50584|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50585|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50585|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f bf 4d fa d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movswl -0x6(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50585|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_50586|REFUSED|/work/regen_cpp_c0126/u/n50586/unit.cpp:7:38: error: expected ')'
+op_50587|REFUSED|/work/regen_cpp_c0126/u/n50587/unit.cpp:7:38: error: expected ')'
+op_50588|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50588|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f b6 4d fb d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movzbl -0x5(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50588|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50589|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50589|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50589|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50590|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50590|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;shr %cl,%eax;pop %rbp;ret
+op_50590|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50591|REFUSED|/work/regen_cpp_c0126/u/n50591/unit.cpp:7:43: error: expected ')'
+op_50592|REFUSED|/work/regen_cpp_c0126/u/n50592/unit.cpp:7:43: error: expected ')'
+op_50593|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50593|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;shr %cl,%eax;pop %rbp;ret
+op_50593|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50594|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50594|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f b7 4d fa d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movzwl -0x6(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50594|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_50595|REFUSED|/work/regen_cpp_c0126/u/n50595/unit.cpp:7:44: error: expected ')'
+op_50596|REFUSED|/work/regen_cpp_c0126/u/n50596/unit.cpp:7:44: error: expected ')'
+op_50597|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50597|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 e8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;shr %cl,%eax;pop %rbp;ret
+op_50597|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50598|REFUSED|/work/regen_cpp_c0126/u/n50598/unit.cpp:7:21: error: unknown type name '_Accum'
+op_50599|REFUSED|/work/regen_cpp_c0126/u/n50599/unit.cpp:7:21: error: unknown type name '_Bool'
+op_50600|REFUSED|/work/regen_cpp_c0126/u/n50600/unit.cpp:7:21: error: unknown type name '_Fract'
+op_50601|REFUSED|/work/regen_cpp_c0126/u/n50601/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50602|REFUSED|/work/regen_cpp_c0126/u/n50602/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50603|REFUSED|/work/regen_cpp_c0126/u/n50603/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50604|REFUSED|/work/regen_cpp_c0126/u/n50604/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50605|REFUSED|/work/regen_cpp_c0126/u/n50605/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50606|REFUSED|/work/regen_cpp_c0126/u/n50606/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50607|REFUSED|/work/regen_cpp_c0126/u/n50607/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50608|REFUSED|/work/regen_cpp_c0126/u/n50608/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50609|REFUSED|/work/regen_cpp_c0126/u/n50609/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50610|REFUSED|/work/regen_cpp_c0126/u/n50610/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50611|REFUSED|/work/regen_cpp_c0126/u/n50611/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50612|REFUSED|/work/regen_cpp_c0126/u/n50612/unit.cpp:7:21: error: unknown type name '_Sat'
+op_50613|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50613|ANCHOR|OK|55 48 89 e5 48 89 d0 40 88 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 88 55 ef 48 89 4d d8 48 89 45 d0 0f b6 45 ef 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %dil,%dl;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dl,-0x11(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movzbl -0x11(%rbp),%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50613|ANCHOR|DWARF|a=2 byte block: 91 6f (DW_OP_fbreg: -17);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50614|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50614|ANCHOR|OK|55 48 89 e5 48 89 d0 40 88 fa 48 89 75 f0 48 89 45 f8 48 8b 45 f0 48 8b 4d f8 88 55 ef 48 89 4d d8 48 89 45 d0 0f b6 45 ef 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdx,%rax;mov %dil,%dl;mov %rsi,-0x10(%rbp);mov %rax,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %dl,-0x11(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);movzbl -0x11(%rbp),%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50614|ANCHOR|DWARF|a=2 byte block: 91 6f (DW_OP_fbreg: -17);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50615|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50615|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 24 01 88 45 fe 0f b6 45 ff 8a 4d fe 80 e1 01 0f b6 c9 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);and $0x1,%al;mov %al,-0x2(%rbp);movzbl -0x1(%rbp),%eax;mov -0x2(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;sar %cl,%eax;pop %rbp;ret
+op_50615|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50616|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50616|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f b6 45 ff 0f be 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movzbl -0x1(%rbp),%eax;movsbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50616|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50617|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50617|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f b6 45 ff 0f b7 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movzbl -0x1(%rbp),%eax;movzwl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50617|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50618|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50618|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f b6 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movzbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50618|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50619|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50619|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f b6 45 ff 0f b6 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movzbl -0x1(%rbp),%eax;movzbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50619|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50620|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50620|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f b6 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movzbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50620|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50621|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50621|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f b6 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movzbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50621|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50622|REFUSED|/work/regen_cpp_c0126/u/n50622/unit.cpp:7:33: error: expected ')'
+op_50623|REFUSED|/work/regen_cpp_c0126/u/n50623/unit.cpp:7:33: error: expected ')'
+op_50624|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50624|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f b6 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movzbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50624|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50625|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50625|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f b6 45 ff 0f bf 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movzbl -0x1(%rbp),%eax;movswl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50625|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50626|REFUSED|/work/regen_cpp_c0126/u/n50626/unit.cpp:7:34: error: expected ')'
+op_50627|REFUSED|/work/regen_cpp_c0126/u/n50627/unit.cpp:7:34: error: expected ')'
+op_50628|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50628|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f b6 45 ff 0f be 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movzbl -0x1(%rbp),%eax;movsbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50628|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50629|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50629|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f b6 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movzbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50629|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50630|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50630|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f b6 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movzbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50630|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50631|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50631|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f b6 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movzbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50631|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50632|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50632|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f b6 45 ff 0f bf 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movzbl -0x1(%rbp),%eax;movswl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50632|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50633|REFUSED|/work/regen_cpp_c0126/u/n50633/unit.cpp:7:37: error: expected ')'
+op_50634|REFUSED|/work/regen_cpp_c0126/u/n50634/unit.cpp:7:37: error: expected ')'
+op_50635|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50635|ANCHOR|OK|55 48 89 e5 40 88 f0 40 88 f9 88 4d ff 88 45 fe 0f b6 45 ff 0f b6 4d fe d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %al,-0x2(%rbp);movzbl -0x1(%rbp),%eax;movzbl -0x2(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50635|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7e (DW_OP_fbreg: -2)
+op_50636|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50636|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f b6 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movzbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50636|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50637|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50637|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f b6 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movzbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50637|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50638|REFUSED|/work/regen_cpp_c0126/u/n50638/unit.cpp:7:42: error: expected ')'
+op_50639|REFUSED|/work/regen_cpp_c0126/u/n50639/unit.cpp:7:42: error: expected ')'
+op_50640|SHIP|OK|48 89 f1 89 f8 d3 e8 c3|mov %rsi,%rcx;mov %edi,%eax;shr %cl,%eax;ret
+op_50640|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 48 89 75 f0 0f b6 45 ff 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %rsi,-0x10(%rbp);movzbl -0x1(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50640|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50641|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50641|ANCHOR|OK|55 48 89 e5 66 89 f0 40 88 f9 88 4d ff 66 89 45 fc 0f b6 45 ff 0f b7 4d fc d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %dil,%cl;mov %cl,-0x1(%rbp);mov %ax,-0x4(%rbp);movzbl -0x1(%rbp),%eax;movzwl -0x4(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50641|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 7c (DW_OP_fbreg: -4)
+op_50642|REFUSED|/work/regen_cpp_c0126/u/n50642/unit.cpp:7:43: error: expected ')'
+op_50643|REFUSED|/work/regen_cpp_c0126/u/n50643/unit.cpp:7:43: error: expected ')'
+op_50644|SHIP|OK|89 f1 89 f8 d3 e8 c3|mov %esi,%ecx;mov %edi,%eax;shr %cl,%eax;ret
+op_50644|ANCHOR|OK|55 48 89 e5 40 88 f8 88 45 ff 89 75 f8 0f b6 45 ff 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %dil,%al;mov %al,-0x1(%rbp);mov %esi,-0x8(%rbp);movzbl -0x1(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50644|ANCHOR|DWARF|a=2 byte block: 91 7f (DW_OP_fbreg: -1);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50645|REFUSED|/work/regen_cpp_c0126/u/n50645/unit.cpp:7:17: error: unknown type name '_Accum'
+op_50646|REFUSED|/work/regen_cpp_c0126/u/n50646/unit.cpp:7:17: error: unknown type name '_Bool'
+op_50647|REFUSED|/work/regen_cpp_c0126/u/n50647/unit.cpp:7:17: error: unknown type name '_Fract'
+op_50648|REFUSED|/work/regen_cpp_c0126/u/n50648/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50649|REFUSED|/work/regen_cpp_c0126/u/n50649/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50650|REFUSED|/work/regen_cpp_c0126/u/n50650/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50651|REFUSED|/work/regen_cpp_c0126/u/n50651/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50652|REFUSED|/work/regen_cpp_c0126/u/n50652/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50653|REFUSED|/work/regen_cpp_c0126/u/n50653/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50654|REFUSED|/work/regen_cpp_c0126/u/n50654/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50655|REFUSED|/work/regen_cpp_c0126/u/n50655/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50656|REFUSED|/work/regen_cpp_c0126/u/n50656/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50657|REFUSED|/work/regen_cpp_c0126/u/n50657/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50658|REFUSED|/work/regen_cpp_c0126/u/n50658/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50659|REFUSED|/work/regen_cpp_c0126/u/n50659/unit.cpp:7:17: error: unknown type name '_Sat'
+op_50660|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50660|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 89 7d ec 48 89 4d d8 48 89 45 d0 8b 45 ec 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %edi,-0x14(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x14(%rbp),%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50660|ANCHOR|DWARF|a=2 byte block: 91 6c (DW_OP_fbreg: -20);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50661|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50661|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 89 7d ec 48 89 4d d8 48 89 45 d0 8b 45 ec 8b 4d d0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %edi,-0x14(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x14(%rbp),%eax;mov -0x30(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50661|ANCHOR|DWARF|a=2 byte block: 91 6c (DW_OP_fbreg: -20);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50662|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50662|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 24 01 88 45 fb 8b 45 fc 8a 4d fb 80 e1 01 0f b6 c9 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);and $0x1,%al;mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;mov -0x5(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;sar %cl,%eax;pop %rbp;ret
+op_50662|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50663|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50663|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f be 4d fb d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movsbl -0x5(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50663|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50664|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50664|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f b7 4d fa d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movzwl -0x6(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50664|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_50665|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50665|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50665|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50666|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50666|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f b6 4d fb d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movzbl -0x5(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50666|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50667|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50667|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50667|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50668|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50668|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50668|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50669|REFUSED|/work/regen_cpp_c0126/u/n50669/unit.cpp:7:29: error: expected ')'
+op_50670|REFUSED|/work/regen_cpp_c0126/u/n50670/unit.cpp:7:29: error: expected ')'
+op_50671|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50671|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50671|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50672|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50672|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f bf 4d fa d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movswl -0x6(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50672|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_50673|REFUSED|/work/regen_cpp_c0126/u/n50673/unit.cpp:7:30: error: expected ')'
+op_50674|REFUSED|/work/regen_cpp_c0126/u/n50674/unit.cpp:7:30: error: expected ')'
+op_50675|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50675|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f be 4d fb d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movsbl -0x5(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50675|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50676|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50676|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50676|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50677|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50677|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50677|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50678|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50678|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50678|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50679|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50679|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f bf 4d fa d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movswl -0x6(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50679|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_50680|REFUSED|/work/regen_cpp_c0126/u/n50680/unit.cpp:7:33: error: expected ')'
+op_50681|REFUSED|/work/regen_cpp_c0126/u/n50681/unit.cpp:7:33: error: expected ')'
+op_50682|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50682|ANCHOR|OK|55 48 89 e5 40 88 f0 89 7d fc 88 45 fb 8b 45 fc 0f b6 4d fb d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %edi,-0x4(%rbp);mov %al,-0x5(%rbp);mov -0x4(%rbp),%eax;movzbl -0x5(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50682|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7b (DW_OP_fbreg: -5)
+op_50683|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50683|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50683|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50684|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50684|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50684|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50685|REFUSED|/work/regen_cpp_c0126/u/n50685/unit.cpp:7:38: error: expected ')'
+op_50686|REFUSED|/work/regen_cpp_c0126/u/n50686/unit.cpp:7:38: error: expected ')'
+op_50687|SHIP|OK|48 89 f1 89 f8 d3 f8 c3|mov %rsi,%rcx;mov %edi,%eax;sar %cl,%eax;ret
+op_50687|ANCHOR|OK|55 48 89 e5 89 7d fc 48 89 75 f0 8b 45 fc 48 8b 4d f0 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %rsi,-0x10(%rbp);mov -0x4(%rbp),%eax;mov -0x10(%rbp),%rcx;sar %cl,%eax;pop %rbp;ret
+op_50687|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50688|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50688|ANCHOR|OK|55 48 89 e5 66 89 f0 89 7d fc 66 89 45 fa 8b 45 fc 0f b7 4d fa d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %edi,-0x4(%rbp);mov %ax,-0x6(%rbp);mov -0x4(%rbp),%eax;movzwl -0x6(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50688|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 7a (DW_OP_fbreg: -6)
+op_50689|REFUSED|/work/regen_cpp_c0126/u/n50689/unit.cpp:7:39: error: expected ')'
+op_50690|REFUSED|/work/regen_cpp_c0126/u/n50690/unit.cpp:7:39: error: expected ')'
+op_50691|SHIP|OK|89 f1 89 f8 d3 f8 c3|mov %esi,%ecx;mov %edi,%eax;sar %cl,%eax;ret
+op_50691|ANCHOR|OK|55 48 89 e5 89 7d fc 89 75 f8 8b 45 fc 8b 4d f8 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %edi,-0x4(%rbp);mov %esi,-0x8(%rbp);mov -0x4(%rbp),%eax;mov -0x8(%rbp),%ecx;sar %cl,%eax;pop %rbp;ret
+op_50691|ANCHOR|DWARF|a=2 byte block: 91 7c (DW_OP_fbreg: -4);b=2 byte block: 91 78 (DW_OP_fbreg: -8)
+op_50692|REFUSED|/work/regen_cpp_c0126/u/n50692/unit.cpp:7:18: error: unknown type name '_Accum'
+op_50693|REFUSED|/work/regen_cpp_c0126/u/n50693/unit.cpp:7:18: error: unknown type name '_Bool'
+op_50694|REFUSED|/work/regen_cpp_c0126/u/n50694/unit.cpp:7:18: error: unknown type name '_Fract'
+op_50695|REFUSED|/work/regen_cpp_c0126/u/n50695/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50696|REFUSED|/work/regen_cpp_c0126/u/n50696/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50697|REFUSED|/work/regen_cpp_c0126/u/n50697/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50698|REFUSED|/work/regen_cpp_c0126/u/n50698/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50699|REFUSED|/work/regen_cpp_c0126/u/n50699/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50700|REFUSED|/work/regen_cpp_c0126/u/n50700/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50701|REFUSED|/work/regen_cpp_c0126/u/n50701/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50702|REFUSED|/work/regen_cpp_c0126/u/n50702/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50703|REFUSED|/work/regen_cpp_c0126/u/n50703/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50704|REFUSED|/work/regen_cpp_c0126/u/n50704/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50705|REFUSED|/work/regen_cpp_c0126/u/n50705/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50706|REFUSED|/work/regen_cpp_c0126/u/n50706/unit.cpp:7:18: error: unknown type name '_Sat'
+op_50707|SHIP|OK|48 89 f1 48 89 f8 48 d3 f8 c3|mov %rsi,%rcx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50707|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 48 89 7d e8 48 89 4d d8 48 89 45 d0 48 8b 45 e8 48 8b 4d d0 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %rdi,-0x18(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x18(%rbp),%rax;mov -0x30(%rbp),%rcx;sar %cl,%rax;pop %rbp;ret
+op_50707|ANCHOR|DWARF|a=2 byte block: 91 68 (DW_OP_fbreg: -24);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50708|SHIP|OK|48 89 f1 48 89 f8 48 d3 f8 c3|mov %rsi,%rcx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50708|ANCHOR|OK|55 48 89 e5 48 89 75 f0 48 89 55 f8 48 8b 45 f0 48 8b 4d f8 48 89 7d e8 48 89 4d d8 48 89 45 d0 48 8b 45 e8 48 8b 4d d0 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rsi,-0x10(%rbp);mov %rdx,-0x8(%rbp);mov -0x10(%rbp),%rax;mov -0x8(%rbp),%rcx;mov %rdi,-0x18(%rbp);mov %rcx,-0x28(%rbp);mov %rax,-0x30(%rbp);mov -0x18(%rbp),%rax;mov -0x30(%rbp),%rcx;sar %cl,%rax;pop %rbp;ret
+op_50708|ANCHOR|DWARF|a=2 byte block: 91 68 (DW_OP_fbreg: -24);b=2 byte block: 91 50 (DW_OP_fbreg: -48)
+op_50709|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50709|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 24 01 88 45 f7 48 8b 45 f8 8a 4d f7 80 e1 01 0f b6 c9 89 c9 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);and $0x1,%al;mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;mov -0x9(%rbp),%cl;and $0x1,%cl;movzbl %cl,%ecx;mov %ecx,%ecx;sar %cl,%rax;pop %rbp;ret
+op_50709|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_50710|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50710|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 0f be 4d f7 89 c9 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movsbl -0x9(%rbp),%ecx;mov %ecx,%ecx;sar %cl,%rax;pop %rbp;ret
+op_50710|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_50711|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50711|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 0f b7 4d f6 89 c9 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movzwl -0xa(%rbp),%ecx;mov %ecx,%ecx;sar %cl,%rax;pop %rbp;ret
+op_50711|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_50712|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50712|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 8b 4d f4 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;mov -0xc(%rbp),%ecx;sar %cl,%rax;pop %rbp;ret
+op_50712|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_50713|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50713|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 0f b6 4d f7 89 c9 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movzbl -0x9(%rbp),%ecx;mov %ecx,%ecx;sar %cl,%rax;pop %rbp;ret
+op_50713|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_50714|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50714|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 8b 4d f4 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;mov -0xc(%rbp),%ecx;sar %cl,%rax;pop %rbp;ret
+op_50714|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_50715|SHIP|OK|48 89 f1 48 89 f8 48 d3 f8 c3|mov %rsi,%rcx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50715|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 8b 4d f0 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;mov -0x10(%rbp),%rcx;sar %cl,%rax;pop %rbp;ret
+op_50715|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50716|REFUSED|/work/regen_cpp_c0126/u/n50716/unit.cpp:7:30: error: expected ')'
+op_50717|REFUSED|/work/regen_cpp_c0126/u/n50717/unit.cpp:7:30: error: expected ')'
+op_50718|SHIP|OK|48 89 f1 48 89 f8 48 d3 f8 c3|mov %rsi,%rcx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50718|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 8b 4d f0 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;mov -0x10(%rbp),%rcx;sar %cl,%rax;pop %rbp;ret
+op_50718|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50719|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50719|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 0f bf 4d f6 89 c9 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movswl -0xa(%rbp),%ecx;mov %ecx,%ecx;sar %cl,%rax;pop %rbp;ret
+op_50719|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_50720|REFUSED|/work/regen_cpp_c0126/u/n50720/unit.cpp:7:31: error: expected ')'
+op_50721|REFUSED|/work/regen_cpp_c0126/u/n50721/unit.cpp:7:31: error: expected ')'
+op_50722|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50722|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 0f be 4d f7 89 c9 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movsbl -0x9(%rbp),%ecx;mov %ecx,%ecx;sar %cl,%rax;pop %rbp;ret
+op_50722|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_50723|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50723|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 8b 4d f4 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;mov -0xc(%rbp),%ecx;sar %cl,%rax;pop %rbp;ret
+op_50723|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_50724|SHIP|OK|48 89 f1 48 89 f8 48 d3 f8 c3|mov %rsi,%rcx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50724|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 8b 4d f0 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;mov -0x10(%rbp),%rcx;sar %cl,%rax;pop %rbp;ret
+op_50724|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50725|SHIP|OK|48 89 f1 48 89 f8 48 d3 f8 c3|mov %rsi,%rcx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50725|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 8b 4d f0 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;mov -0x10(%rbp),%rcx;sar %cl,%rax;pop %rbp;ret
+op_50725|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50726|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50726|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 0f bf 4d f6 89 c9 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movswl -0xa(%rbp),%ecx;mov %ecx,%ecx;sar %cl,%rax;pop %rbp;ret
+op_50726|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_50727|REFUSED|/work/regen_cpp_c0126/u/n50727/unit.cpp:7:34: error: expected ')'
+op_50728|REFUSED|/work/regen_cpp_c0126/u/n50728/unit.cpp:7:34: error: expected ')'
+op_50729|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50729|ANCHOR|OK|55 48 89 e5 40 88 f0 48 89 7d f8 88 45 f7 48 8b 45 f8 0f b6 4d f7 89 c9 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %sil,%al;mov %rdi,-0x8(%rbp);mov %al,-0x9(%rbp);mov -0x8(%rbp),%rax;movzbl -0x9(%rbp),%ecx;mov %ecx,%ecx;sar %cl,%rax;pop %rbp;ret
+op_50729|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 77 (DW_OP_fbreg: -9)
+op_50730|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50730|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 8b 4d f4 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;mov -0xc(%rbp),%ecx;sar %cl,%rax;pop %rbp;ret
+op_50730|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_50731|SHIP|OK|48 89 f1 48 89 f8 48 d3 f8 c3|mov %rsi,%rcx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50731|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 8b 4d f0 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;mov -0x10(%rbp),%rcx;sar %cl,%rax;pop %rbp;ret
+op_50731|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50732|REFUSED|/work/regen_cpp_c0126/u/n50732/unit.cpp:7:39: error: expected ')'
+op_50733|REFUSED|/work/regen_cpp_c0126/u/n50733/unit.cpp:7:39: error: expected ')'
+op_50734|SHIP|OK|48 89 f1 48 89 f8 48 d3 f8 c3|mov %rsi,%rcx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50734|ANCHOR|OK|55 48 89 e5 48 89 7d f8 48 89 75 f0 48 8b 45 f8 48 8b 4d f0 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %rsi,-0x10(%rbp);mov -0x8(%rbp),%rax;mov -0x10(%rbp),%rcx;sar %cl,%rax;pop %rbp;ret
+op_50734|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 70 (DW_OP_fbreg: -16)
+op_50735|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50735|ANCHOR|OK|55 48 89 e5 66 89 f0 48 89 7d f8 66 89 45 f6 48 8b 45 f8 0f b7 4d f6 89 c9 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %si,%ax;mov %rdi,-0x8(%rbp);mov %ax,-0xa(%rbp);mov -0x8(%rbp),%rax;movzwl -0xa(%rbp),%ecx;mov %ecx,%ecx;sar %cl,%rax;pop %rbp;ret
+op_50735|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 76 (DW_OP_fbreg: -10)
+op_50736|REFUSED|/work/regen_cpp_c0126/u/n50736/unit.cpp:7:40: error: expected ')'
+op_50737|REFUSED|/work/regen_cpp_c0126/u/n50737/unit.cpp:7:40: error: expected ')'
+op_50738|SHIP|OK|89 f1 48 89 f8 48 d3 f8 c3|mov %esi,%ecx;mov %rdi,%rax;sar %cl,%rax;ret
+op_50738|ANCHOR|OK|55 48 89 e5 48 89 7d f8 89 75 f4 48 8b 45 f8 8b 4d f4 48 d3 f8 5d c3|push %rbp;mov %rsp,%rbp;mov %rdi,-0x8(%rbp);mov %esi,-0xc(%rbp);mov -0x8(%rbp),%rax;mov -0xc(%rbp),%ecx;sar %cl,%rax;pop %rbp;ret
+op_50738|ANCHOR|DWARF|a=2 byte block: 91 78 (DW_OP_fbreg: -8);b=2 byte block: 91 74 (DW_OP_fbreg: -12)
+op_50739|REFUSED|/work/regen_cpp_c0126/u/n50739/unit.cpp:7:22: error: expected ')'
+op_50740|REFUSED|/work/regen_cpp_c0126/u/n50740/unit.cpp:7:22: error: expected ')'
+op_50741|REFUSED|/work/regen_cpp_c0126/u/n50741/unit.cpp:7:22: error: expected ')'
+op_50742|REFUSED|/work/regen_cpp_c0126/u/n50742/unit.cpp:7:22: error: expected ')'
+op_50743|REFUSED|/work/regen_cpp_c0126/u/n50743/unit.cpp:7:22: error: expected ')'
+op_50744|REFUSED|/work/regen_cpp_c0126/u/n50744/unit.cpp:7:22: error: expected ')'
+op_50745|REFUSED|/work/regen_cpp_c0126/u/n50745/unit.cpp:7:22: error: expected ')'
+op_50746|REFUSED|/work/regen_cpp_c0126/u/n50746/unit.cpp:7:22: error: expected ')'
+op_50747|REFUSED|/work/regen_cpp_c0126/u/n50747/unit.cpp:7:22: error: expected ')'
+op_50748|REFUSED|/work/regen_cpp_c0126/u/n50748/unit.cpp:7:22: error: expected ')'
+op_50749|REFUSED|/work/regen_cpp_c0126/u/n50749/unit.cpp:7:22: error: expected ')'
+op_50750|REFUSED|/work/regen_cpp_c0126/u/n50750/unit.cpp:7:22: error: expected ')'
+op_50751|REFUSED|/work/regen_cpp_c0126/u/n50751/unit.cpp:7:22: error: expected ')'
+op_50752|REFUSED|/work/regen_cpp_c0126/u/n50752/unit.cpp:7:22: error: expected ')'
+op_50753|REFUSED|/work/regen_cpp_c0126/u/n50753/unit.cpp:7:22: error: expected ')'
+op_50754|REFUSED|/work/regen_cpp_c0126/u/n50754/unit.cpp:7:22: error: expected ')'
+op_50755|REFUSED|/work/regen_cpp_c0126/u/n50755/unit.cpp:7:22: error: expected ')'
+op_50756|REFUSED|/work/regen_cpp_c0126/u/n50756/unit.cpp:7:22: error: expected ')'
+op_50757|REFUSED|/work/regen_cpp_c0126/u/n50757/unit.cpp:7:22: error: expected ')'
+op_50758|REFUSED|/work/regen_cpp_c0126/u/n50758/unit.cpp:7:22: error: expected ')'
+op_50759|REFUSED|/work/regen_cpp_c0126/u/n50759/unit.cpp:7:22: error: expected ')'
+op_50760|REFUSED|/work/regen_cpp_c0126/u/n50760/unit.cpp:7:22: error: expected ')'
+op_50761|REFUSED|/work/regen_cpp_c0126/u/n50761/unit.cpp:7:22: error: expected ')'
+op_50762|REFUSED|/work/regen_cpp_c0126/u/n50762/unit.cpp:7:22: error: expected ')'
+op_50763|REFUSED|/work/regen_cpp_c0126/u/n50763/unit.cpp:7:22: error: expected ')'
+op_50764|REFUSED|/work/regen_cpp_c0126/u/n50764/unit.cpp:7:22: error: expected ')'
+op_50765|REFUSED|/work/regen_cpp_c0126/u/n50765/unit.cpp:7:22: error: expected ')'
+op_50766|REFUSED|/work/regen_cpp_c0126/u/n50766/unit.cpp:7:22: error: expected ')'
+op_50767|REFUSED|/work/regen_cpp_c0126/u/n50767/unit.cpp:7:22: error: expected ')'
+op_50768|REFUSED|/work/regen_cpp_c0126/u/n50768/unit.cpp:7:22: error: expected ')'
+op_50769|REFUSED|/work/regen_cpp_c0126/u/n50769/unit.cpp:7:22: error: expected ')'
+op_50770|REFUSED|/work/regen_cpp_c0126/u/n50770/unit.cpp:7:22: error: expected ')'
+op_50771|REFUSED|/work/regen_cpp_c0126/u/n50771/unit.cpp:7:22: error: expected ')'
+op_50772|REFUSED|/work/regen_cpp_c0126/u/n50772/unit.cpp:7:22: error: expected ')'
+op_50773|REFUSED|/work/regen_cpp_c0126/u/n50773/unit.cpp:7:22: error: expected ')'
+op_50774|REFUSED|/work/regen_cpp_c0126/u/n50774/unit.cpp:7:22: error: expected ')'
+op_50775|REFUSED|/work/regen_cpp_c0126/u/n50775/unit.cpp:7:22: error: expected ')'
+op_50776|REFUSED|/work/regen_cpp_c0126/u/n50776/unit.cpp:7:22: error: expected ')'
+op_50777|REFUSED|/work/regen_cpp_c0126/u/n50777/unit.cpp:7:22: error: expected ')'
+op_50778|REFUSED|/work/regen_cpp_c0126/u/n50778/unit.cpp:7:22: error: expected ')'
+op_50779|REFUSED|/work/regen_cpp_c0126/u/n50779/unit.cpp:7:22: error: expected ')'
+op_50780|REFUSED|/work/regen_cpp_c0126/u/n50780/unit.cpp:7:22: error: expected ')'
+op_50781|REFUSED|/work/regen_cpp_c0126/u/n50781/unit.cpp:7:22: error: expected ')'
+op_50782|REFUSED|/work/regen_cpp_c0126/u/n50782/unit.cpp:7:22: error: expected ')'
+op_50783|REFUSED|/work/regen_cpp_c0126/u/n50783/unit.cpp:7:22: error: expected ')'
+op_50784|REFUSED|/work/regen_cpp_c0126/u/n50784/unit.cpp:7:22: error: expected ')'
+op_50785|REFUSED|/work/regen_cpp_c0126/u/n50785/unit.cpp:7:22: error: expected ')'
+op_50786|REFUSED|/work/regen_cpp_c0126/u/n50786/unit.cpp:7:22: error: expected ')'
+op_50787|REFUSED|/work/regen_cpp_c0126/u/n50787/unit.cpp:7:22: error: expected ')'
+op_50788|REFUSED|/work/regen_cpp_c0126/u/n50788/unit.cpp:7:22: error: expected ')'
+op_50789|REFUSED|/work/regen_cpp_c0126/u/n50789/unit.cpp:7:22: error: expected ')'
+op_50790|REFUSED|/work/regen_cpp_c0126/u/n50790/unit.cpp:7:22: error: expected ')'
+op_50791|REFUSED|/work/regen_cpp_c0126/u/n50791/unit.cpp:7:22: error: expected ')'
+op_50792|REFUSED|/work/regen_cpp_c0126/u/n50792/unit.cpp:7:22: error: expected ')'
+op_50793|REFUSED|/work/regen_cpp_c0126/u/n50793/unit.cpp:7:22: error: expected ')'
+op_50794|REFUSED|/work/regen_cpp_c0126/u/n50794/unit.cpp:7:22: error: expected ')'
+op_50795|REFUSED|/work/regen_cpp_c0126/u/n50795/unit.cpp:7:22: error: expected ')'
+op_50796|REFUSED|/work/regen_cpp_c0126/u/n50796/unit.cpp:7:22: error: expected ')'
+op_50797|REFUSED|/work/regen_cpp_c0126/u/n50797/unit.cpp:7:22: error: expected ')'
+op_50798|REFUSED|/work/regen_cpp_c0126/u/n50798/unit.cpp:7:22: error: expected ')'
+op_50799|REFUSED|/work/regen_cpp_c0126/u/n50799/unit.cpp:7:22: error: expected ')'

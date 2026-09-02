@@ -1,0 +1,774 @@
+{
+ "language": "ruby",
+ "layer": 2,
+ "what": "the load-audit: can each layer-2 representation hold layer-1 content",
+ "evidence": "audit/raw/l2_ruby.txt, produced by audit/lanes/l2_ruby.sh",
+ "cell_count": 25,
+ "probe_count": 118,
+ "verdict_counts": {
+  "LOADS": 22,
+  "PARTIAL": 2,
+  "REFUSES-behavioral": 1,
+  "NOT-RUN": 0
+ },
+ "form_verdicts": {
+  "nothing": "held",
+  "truth": "held",
+  "whole": "held",
+  "fractional": "held",
+  "text": "held",
+  "sequence": "held",
+  "keyed": "held",
+  "nesting": "held",
+  "identity": "held"
+ },
+ "cells": [
+  {
+   "cell": "nothing.NilClass",
+   "form": "nothing",
+   "rep": "NilClass",
+   "kind": "literal",
+   "note": "the one absent value; a singleton object, so every hole holds the same object.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "null": {
+     "result": "nil",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "truth.TrueClass / FalseClass",
+   "form": "truth",
+   "rep": "TrueClass / FalseClass",
+   "kind": "literal",
+   "note": "two singleton objects, one per truth value.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "true": {
+     "result": "true",
+     "judgement": "loaded"
+    },
+    "false": {
+     "result": "false",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "whole.Integer",
+   "form": "whole",
+   "rep": "Integer",
+   "kind": "literal",
+   "note": "arbitrary-precision whole number; no width to overflow.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_zero": {
+     "result": "0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "9223372036854775808",
+     "judgement": "loaded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "18446744073709551615",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "whole.Rational",
+   "form": "whole",
+   "rep": "Rational",
+   "kind": "constructor",
+   "note": "exact ratio holder; whole numbers are ratios over one.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_zero": {
+     "result": "0/1",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42/1",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807/1",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "9223372036854775808/1",
+     "judgement": "loaded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993/1",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "18446744073709551615/1",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "whole.BigDecimal",
+   "form": "whole",
+   "rep": "BigDecimal",
+   "kind": "constructor",
+   "note": "exact decimal holder, built from the literal's digit string.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_zero": {
+     "result": "0.0",
+     "judgement": "loaded"
+    },
+    "base_42": {
+     "result": "42.0",
+     "judgement": "loaded"
+    },
+    "i64max": {
+     "result": "9223372036854775807.0",
+     "judgement": "loaded"
+    },
+    "i64max_plus1": {
+     "result": "9223372036854775808.0",
+     "judgement": "loaded"
+    },
+    "p53_plus1": {
+     "result": "9007199254740993.0",
+     "judgement": "loaded"
+    },
+    "u64max": {
+     "result": "18446744073709551615.0",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "fractional.Float",
+   "form": "fractional",
+   "rep": "Float",
+   "kind": "literal",
+   "note": "IEEE double; the default fractional holder.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_1_5": {
+     "result": "1.5",
+     "judgement": "loaded"
+    },
+    "base_pi": {
+     "result": "3.141592653589793",
+     "judgement": "loaded"
+    },
+    "negzero": {
+     "result": "-0.0",
+     "judgement": "loaded"
+    },
+    "nan": {
+     "result": "NaN",
+     "judgement": "loaded"
+    },
+    "inf": {
+     "result": "Infinity",
+     "judgement": "loaded"
+    },
+    "point1": {
+     "result": "0.1",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "fractional.Rational",
+   "form": "fractional",
+   "rep": "Rational",
+   "kind": "constructor",
+   "note": "exact ratio holder; converts a finite float exactly but has no room for the non-finite values.",
+   "verdict": "PARTIAL",
+   "why": "nan refused (<error:FloatDomainError>); inf refused (<error:FloatDomainError>)",
+   "probes": {
+    "base_1_5": {
+     "result": "3/2",
+     "judgement": "loaded"
+    },
+    "base_pi": {
+     "result": "884279719003555/281474976710656",
+     "judgement": "loaded"
+    },
+    "negzero": {
+     "result": "0/1",
+     "judgement": "loaded"
+    },
+    "nan": {
+     "result": "<error:FloatDomainError>",
+     "judgement": "refused"
+    },
+    "inf": {
+     "result": "<error:FloatDomainError>",
+     "judgement": "refused"
+    },
+    "point1": {
+     "result": "3602879701896397/36028797018963968",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "fractional.BigDecimal",
+   "form": "fractional",
+   "rep": "BigDecimal",
+   "kind": "constructor",
+   "note": "decimal holder built from the float's digit string; the non-finite specials are not decimal digits at all.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_1_5": {
+     "result": "1.5",
+     "judgement": "loaded"
+    },
+    "base_pi": {
+     "result": "3.141592653589793",
+     "judgement": "loaded"
+    },
+    "negzero": {
+     "result": "-0.0",
+     "judgement": "loaded"
+    },
+    "nan": {
+     "result": "NaN",
+     "judgement": "loaded"
+    },
+    "inf": {
+     "result": "Infinity",
+     "judgement": "loaded"
+    },
+    "point1": {
+     "result": "0.1",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.String",
+   "form": "text",
+   "rep": "String",
+   "kind": "literal",
+   "note": "a mutable run of bytes tagged with an encoding; the default text holder.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.Symbol",
+   "form": "text",
+   "rep": "Symbol",
+   "kind": "constructor",
+   "note": "an interned name built from a string; meant for identifiers but the odd escapes still convert.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.String (byte string via force_encoding)",
+   "form": "text",
+   "rep": "String (byte string via force_encoding)",
+   "kind": "constructor",
+   "note": "the same bytes with the text encoding tag stripped off; codepoints readable only after re-tagging.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "text.Array (codepoints)",
+   "form": "text",
+   "rep": "Array (codepoints)",
+   "kind": "constructor",
+   "note": "text pulled apart into one integer per codepoint; the run itself is gone until packed back.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "base_empty": {
+     "result": "",
+     "judgement": "loaded"
+    },
+    "base_hello": {
+     "result": "hello",
+     "judgement": "loaded"
+    },
+    "base_lines": {
+     "result": "line one",
+     "judgement": "loaded"
+    },
+    "eacute": {
+     "result": "\u00e9",
+     "judgement": "loaded"
+    },
+    "clef": {
+     "result": "\ud834\udd1e",
+     "judgement": "loaded"
+    },
+    "escapes": {
+     "result": "quote \" backslash \\ tab\there",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.Array",
+   "form": "sequence",
+   "rep": "Array",
+   "kind": "literal",
+   "note": "ordered, growable, any element.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "[1, 2, 3]",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "[\"a\", \"b\"]",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "[1, \"two\", 3.0, true, nil]",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "[9223372036854775808]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.Array (frozen)",
+   "form": "sequence",
+   "rep": "Array (frozen)",
+   "kind": "literal",
+   "note": "the same ordered run with further changes refused at run time.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "[1, 2, 3]",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "[\"a\", \"b\"]",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "[1, \"two\", 3.0, true, nil]",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "[9223372036854775808]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.Set",
+   "form": "sequence",
+   "rep": "Set",
+   "kind": "constructor",
+   "note": "holds the elements but not their order and not repeats; kept because that loss is the finding.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "[\"1\", \"2\", \"3\"]",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "[\"\\\"a\\\"\", \"\\\"b\\\"\"]",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "[\"\\\"two\\\"\", \"1\", \"3.0\", \"nil\", \"true\"]",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "[\"9223372036854775808\"]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "sequence.Struct (fixed run)",
+   "form": "sequence",
+   "rep": "Struct (fixed run)",
+   "kind": "constructor",
+   "note": "fixed length and fixed position names decided when the shape is made; a positional run wearing named slots.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "[]",
+     "judgement": "loaded"
+    },
+    "base": {
+     "result": "[1, 2, 3]",
+     "judgement": "loaded"
+    },
+    "strs": {
+     "result": "[\"a\", \"b\"]",
+     "judgement": "loaded"
+    },
+    "mixed": {
+     "result": "[1, \"two\", 3.0, true, nil]",
+     "judgement": "loaded"
+    },
+    "bigint": {
+     "result": "[9223372036854775808]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.Hash",
+   "form": "keyed",
+   "rep": "Hash",
+   "kind": "literal",
+   "note": "name to element, insertion order kept.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "{}",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "{\"a\"=>1, \"b\"=>2, \"c\"=>3}",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "{\"1\"=>\"string-one-key\", \"b\"=>2}",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "{\"\"=>\"empty-string key\"}",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "{\"outer\"=>{\"inner\"=>[1, 2]}}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.Struct",
+   "form": "keyed",
+   "rep": "Struct",
+   "kind": "constructor",
+   "note": "fixed set of names decided when the shape is made, not when the data arrives; the empty-string key is not a legal member name.",
+   "verdict": "PARTIAL",
+   "why": "emptykey refused (<error:NameError>)",
+   "probes": {
+    "empty": {
+     "result": "{}",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "{:a=>1, :b=>2, :c=>3}",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "{:\"1\"=>\"string-one-key\", :b=>2}",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "<error:NameError>",
+     "judgement": "refused"
+    },
+    "nested": {
+     "result": "{:outer=>{\"inner\"=>[1, 2]}}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.OpenStruct",
+   "form": "keyed",
+   "rep": "OpenStruct",
+   "kind": "constructor",
+   "note": "names become attributes assigned at run time; any string can become an accessor.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "{}",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "{:a=>1, :b=>2, :c=>3}",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "{:\"1\"=>\"string-one-key\", :b=>2}",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "{:\"\"=>\"empty-string key\"}",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "{:outer=>{\"inner\"=>[1, 2]}}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "keyed.Data",
+   "form": "keyed",
+   "rep": "Data",
+   "kind": "constructor",
+   "note": "an immutable named-field value type (ruby 3.2+); names are fixed when the shape is defined, same identifier limits as Struct.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "empty": {
+     "result": "{}",
+     "judgement": "loaded"
+    },
+    "flat": {
+     "result": "{:a=>1, :b=>2, :c=>3}",
+     "judgement": "loaded"
+    },
+    "intlike": {
+     "result": "{:\"1\"=>\"string-one-key\", :b=>2}",
+     "judgement": "loaded"
+    },
+    "emptykey": {
+     "result": "{:\"\"=>\"empty-string key\"}",
+     "judgement": "loaded"
+    },
+    "nested": {
+     "result": "{:outer=>{\"inner\"=>[1, 2]}}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.Array",
+   "form": "nesting",
+   "rep": "Array",
+   "kind": "literal",
+   "note": "elements may be any of the forms, to any depth.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "[[1, 2], [3, 4]]",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "{\"outer\"=>{\"inner\"=>[1, 2]}}",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "[1, [2, {\"k\"=>[3, nil, \"t\"]}], true]",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "nesting.Hash",
+   "form": "nesting",
+   "rep": "Hash",
+   "kind": "literal",
+   "note": "values may be any of the forms, to any depth.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "seq_in_seq": {
+     "result": "{\"a\"=>[[1, 2], [3, 4]]}",
+     "judgement": "loaded"
+    },
+    "seq_in_map": {
+     "result": "{\"outer\"=>{\"inner\"=>[1, 2]}}",
+     "judgement": "loaded"
+    },
+    "mixed_depth": {
+     "result": "{\"a\"=>[1, {\"b\"=>[2, nil]}], \"c\"=>true}",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.Array (object references)",
+   "form": "identity",
+   "rep": "Array (object references)",
+   "kind": "literal",
+   "note": "elements are references, so two positions can name one object.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "shared": {
+     "result": "shared",
+     "judgement": "loaded"
+    },
+    "diamond": {
+     "result": "same",
+     "judgement": "loaded"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.dup / Marshal round trip (copying holder)",
+   "form": "identity",
+   "rep": "dup / Marshal round trip (copying holder)",
+   "kind": "constructor",
+   "note": "an explicit copy step, the contrast to the reference holders; a new object, so nothing shared survives.",
+   "verdict": "REFUSES-behavioral",
+   "why": "shared not-held (copied); diamond not-held (distinct)",
+   "probes": {
+    "shared": {
+     "result": "copied",
+     "judgement": "not-held"
+    },
+    "diamond": {
+     "result": "distinct",
+     "judgement": "not-held"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  },
+  {
+   "cell": "identity.Hash (object held under two names)",
+   "form": "identity",
+   "rep": "Hash (object held under two names)",
+   "kind": "literal",
+   "note": "values are references; the same object under two names.",
+   "verdict": "LOADS",
+   "why": "every probe built, ran and gave the content back",
+   "probes": {
+    "shared": {
+     "result": "shared",
+     "judgement": "loaded"
+    },
+    "diamond": {
+     "result": "same",
+     "judgement": "loaded"
+    },
+    "cycle": {
+     "result": "cycle",
+     "judgement": "loaded"
+    }
+   }
+  }
+ ]
+}

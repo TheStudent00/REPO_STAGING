@@ -1,0 +1,32 @@
+// runner template - c++.
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <limits>
+#include <sstream>
+#include <string>
+static bool identb(bool x) { return x; }
+static bool notb(bool x) { return (!x); }
+static double d(double x) { return x; }
+static double z() { return 0.0; }
+static double one() { return 1.0; }
+static double negone() { return -1.0; }
+static double nan_() { return std::numeric_limits<double>::quiet_NaN(); }
+static double inf() { return std::numeric_limits<double>::infinity(); }
+static double ninf() { return -std::numeric_limits<double>::infinity(); }
+static std::string fmtb(bool v) { return v ? "true" : "false"; }
+static std::string fmtf(double v) {
+  if (std::isnan(v)) return "nan";
+  if (std::isinf(v)) return v > 0 ? "inf" : "-inf";
+  std::ostringstream o;
+  o << std::setprecision(17) << v;
+  return o.str();
+}
+static std::string fmts(std::string v) { return v; }
+
+{{PREAMBLE}}
+
+int main() {
+{{PROBES}}
+  return 0;
+}

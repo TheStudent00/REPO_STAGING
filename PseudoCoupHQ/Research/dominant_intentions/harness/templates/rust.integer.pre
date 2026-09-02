@@ -1,0 +1,31 @@
+// integer probe bodies - rust. Run TWICE, debug and release (record-both).
+// Debug builds check arithmetic overflow and PANIC; release builds wrap. The
+// explicitly-spelled wrapping_add is the GUARANTEE and holds in both modes.
+fn op64(x: i64) -> i64 { x }
+fn op32(x: i32) -> i32 { x }
+fn opu64(x: u64) -> u64 { x }
+fn f_intU1_a() -> String { format!("{}", 123456 + 654321) }
+fn f_intU1_b() -> String { format!("{}", 1000 * 1000) }
+fn f_intU1_c() -> String { format!("{}", 5 - 9) }
+fn f_intU2_a() -> String { fmtb(op64(3) < op64(5)) }
+fn f_intU2_b() -> String { fmtb(op64(-7) <= op64(-7)) }
+fn f_intU2_c() -> String { fmtb(op64(10) == op64(10)) }
+fn f_intU2_d() -> String { fmtb(op64(2) > op64(100)) }
+fn f_intU3_a() -> String { format!("{}", op64(42)) }
+fn f_intU3_b() -> String { format!("{}", op64(-12345)) }
+fn f_Fi1_a() -> String { format!("{}", 9007199254740993i64) }
+fn f_Fi1_b() -> String { format!("{}", 9223372036854775807i64) }
+fn f_Fi1_d() -> String { format!("{}", i8::MAX) }
+fn f_Fi1_e() -> String { format!("{}", u8::MAX) }
+fn f_Fi2_a() -> String { format!("{}", op64(i64::MAX) + 1) }
+fn f_Fi2_b() -> String { format!("{}", opu64(u64::MAX).wrapping_add(1)) }
+fn f_Fi2_c() -> String { format!("{}", op64(i64::MAX).wrapping_add(1)) }
+fn f_Fi3_a() -> String { format!("{}", op64(7) / op64(2)) }
+fn f_Fi3_b() -> String { format!("{}", op64(-7) / op64(2)) }
+fn f_Fi4_a() -> String { format!("{}", op64(-7) % op64(2)) }
+fn f_Fi4_b() -> String { format!("{}", op64(7) % op64(-2)) }
+fn f_Fi4_c() -> String { format!("{}", op64(7) % op64(2)) }
+fn f_Fi5_a() -> String { format!("{}", op64(7) / op64(0)) }
+fn f_Fi5_b() -> String { format!("{}", op64(7) % op64(0)) }
+fn f_Fi6_a() -> String { format!("{}", op32(1) << 31) }
+fn f_Fi6_b() -> String { format!("{}", op64(1) << 32) }

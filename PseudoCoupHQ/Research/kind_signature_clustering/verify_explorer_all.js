@@ -1,0 +1,20 @@
+const fs = require("fs");
+const { JSDOM } = require("jsdom");
+const path = "/sessions/funny-quirky-sagan/mnt/Programming/PseudoCoupHQ/Research/kind_signature_clustering/dendrogram_explorer_all.html";
+const html = fs.readFileSync(path, "utf8");
+// split off the page script; build DOM without any scripts
+const m = html.match(/<script src=[^>]*><\/script>\s*<script>([\s\S]*)<\/script>\s*$/);
+const pageScript = m[1];
+const shell = html.slice(0, m.index);
+const warns = [];
+const dom = new JSDOM(shell, { pretendToBeVisual: true, runScripts: "outside-only" });
+const w = dom.window;
+w.console = { warn: x => warns.push(x), log: () => {}, error: e => { throw e; } };
+w.eval(fs.readFileSync("node_modules/d3/dist/d3.min.js", "utf8"));
+w.eval("var innerWidth = 1200;\n" + pageScript);
+const counts = {};
+for (const t of [0.3, 0.5, 0.7]) counts[t] = w.eval(`(setThr(${t}), clustersAt(${t}))`);
+console.log("cluster counts:", JSON.stringify(counts));
+console.log("rects drawn:", w.document.querySelectorAll("rect").length);
+console.log("legend entries:", w.document.querySelectorAll("#legend .sw").length);
+console.log("warns:", warns.length ? warns.slice(0,3) : "none");

@@ -1,0 +1,38 @@
+// dict probe bodies - go. Iteration order is deliberately RANDOMISED, so the
+// probe iterates three times inside ONE process and asserts that the orders
+// DIFFER: an anti-guarantee can only be checked by showing instability.
+func mkd() map[string]string { return map[string]string{"k": "v1"} }
+func f_dictU1_a() string { return mkd()["k"] }
+func f_dictU2_a() string { d := map[string]string{"k": "v1"}; d["k"] = "v2"; return d["k"] }
+func f_dictU3_a() string { d := mkd(); delete(d, "k"); _, ok := d["k"]; return fmtb(ok) }
+func f_dictU4_a() string { d := map[string]int{}; d["a"] = 1; d["b"] = 2; d["c"] = 3; return strconv.Itoa(len(d)) }
+func f_Fd1_b() string    { d := map[int]string{}; d[1] = "v"; return d[1] }
+func f_Fd2_b() string {
+	d := map[string]int{}
+	for i := 0; i < 10; i++ {
+		d["k"+strconv.Itoa(i)] = i
+	}
+	seen := []string{}
+	for pass := 0; pass < 3; pass++ {
+		order := ""
+		for k := range d {
+			order += k + ","
+		}
+		seen = append(seen, order)
+	}
+	if seen[0] == seen[1] && seen[1] == seen[2] {
+		return "stable"
+	}
+	return "unstable"
+}
+func f_Fd3_a() string { d := mkd(); v, ok := d["nope"]; return "\"" + v + "\"/" + fmtb(ok) }
+func f_Fd4_a() string {
+	d := map[string]int{"a": 1, "b": 2, "c": 3, "d": 4, "e": 5}
+	for k := range d {
+		if k == "c" {
+			delete(d, k)
+		}
+	}
+	return "ok"
+}
+func f_Fl9d_a() string { a := mkd(); b := a; b["k"] = "99"; return a["k"] }

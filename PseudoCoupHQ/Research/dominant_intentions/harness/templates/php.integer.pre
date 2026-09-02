@@ -1,0 +1,23 @@
+// integer probe bodies - php (64-bit int that becomes a float on overflow).
+function op($x) { return $x; }
+function f_intU1_a() { return fmts(123456 + 654321); }
+function f_intU1_b() { return fmts(1000 * 1000); }
+function f_intU1_c() { return fmts(5 - 9); }
+function f_intU2_a() { return fmtb(op(3) < op(5)); }
+function f_intU2_b() { return fmtb(op(-7) <= op(-7)); }
+function f_intU2_c() { return fmtb(op(10) == op(10)); }
+function f_intU2_d() { return fmtb(op(2) > op(100)); }
+function f_intU3_a() { return fmts(op(42)); }
+function f_intU3_b() { return fmts(op(-12345)); }
+function f_Fi1_a() { return fmts(9007199254740993); }
+function f_Fi1_b() { return fmts(9223372036854775807); }
+function f_Fi2_a() { return gettype(op(PHP_INT_MAX) + 1); }
+function f_Fi3_a() { return fmts(op(7) / op(2)); }
+function f_Fi3_b() { return fmts(op(-7) / op(2)); }
+function f_Fi4_a() { return fmts(op(-7) % op(2)); }
+function f_Fi4_b() { return fmts(op(7) % op(-2)); }
+function f_Fi4_c() { return fmts(op(7) % op(2)); }
+function f_Fi5_a() { return fmts(intdiv(op(7), op(0))); }
+function f_Fi5_b() { return fmts(op(7) % op(0)); }
+function f_Fi6_a() { return fmts(op(1) << 31); }
+function f_Fi6_b() { return fmts(op(1) << 32); }

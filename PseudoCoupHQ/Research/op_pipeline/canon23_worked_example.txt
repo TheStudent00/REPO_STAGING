@@ -1,0 +1,94 @@
+canon23_worked_example.txt -- log_081 item 2, the fan-out condition
+tracer. One worked example, instruction text | reading line,
+space-aligned, in reading_sample.txt's own format.
+====================================================================
+
+----------------------------------------------------------------------------------------------------
+c/op_285 (a || b, a:int32_t, b:float -- real ship code, three tests
+joined by or: a != 0; b is NaN; b != 0.0)
+    unit: c/op_285   source: op_units
+    test %edi,%edi        flags = bit_compare(%edi, %edi)
+    setne %al              %al = flags.not_equal
+    xorps %xmm1,%xmm1      zero %xmm1
+    ucomiss %xmm1,%xmm0    flags = unordered_compare(%xmm0, %xmm1)
+    setp %cl               %cl = flags.unordered (b is NaN)
+    setne %dl               %dl = flags.not_equal (b != 0.0)
+    or %cl,%dl              %dl = %cl | %dl
+    or %al,%dl              %dl = %al | %dl
+    movzbl %dl,%eax         %eax = zero_extend(%dl)
+    ret                     return %eax
+
+----------------------------------------------------------------------------------------------------
+canon23's own candidate text (proved equal to the above by real z3
+FPA, canon22_behaviour_check.anchored_check, PROVED_EQUAL):
+    unit: c/op_285   source: canon23_text
+    xorps %xmm2,%xmm2      zero %xmm2
+    ucomiss %xmm2,%xmm0    flags = unordered_compare(%xmm0, %xmm2)
+    mov $0,%eax             %eax = 0
+    setp %al                %al = flags.unordered (b is NaN)
+    mov $0,%r10d            %r10d = 0
+    setne %r10b              %r10b = flags.not_equal (b != 0.0)
+    or %r10b,%al             %al = %r10b | %al
+    mov %rdi,%r11            %r11 = %rdi
+    and $-1,%r11d            %r11d = %r11d & 0xffffffff
+    cmp $0,%r11d              flags = compare(%r11d, 0)
+    setne %r10b               %r10b = flags.not_equal (a != 0)
+    or %r10b,%al               %al = %r10b | %al
+    movzx %al,%eax             %eax = zero_extend(%al)
+    ret                        return %eax
+
+----------------------------------------------------------------------------------------------------
+HOW canon23 GOT HERE (log_081 item 2 -- the missing piece was ONLY
+per-atom resolution + composition, never new semantics):
+
+  tree_units3.json's own normal_path_raw for this unit (tree_match3.py
+  -- ret-block-first selection, the ADOPTED baseline) carries THREE
+  amd64g_calculate_condition calls in one Or8(Or8(...),...)  tree:
+
+    amd64g_calculate_condition(10:64, 0:64, And64(69:64,zx64(CmpF64(
+      F32toF64(ex32@0(in1:256)), F32toF64(0:32)))), 0:64, u0:64)
+        -- cc=10 (Parity), cc_op=0 (float packed-flags shape)
+
+    amd64g_calculate_condition(5:64, 0:64, And64(69:64,zx64(CmpF64(
+      F32toF64(ex32@0(in1:256)), F32toF64(0:32)))), 0:64, u0:64)
+        -- cc=5 (NotZero), cc_op=0 (float packed-flags shape,
+           the SAME CmpF64 pair as above)
+
+    amd64g_calculate_condition(5:64, 19:64, zx64(ex32@0(in0:64)),
+      0:64, u0:64)
+        -- cc=5 (NotZero), cc_op=19 (LOGICL -- plain integer "test")
+
+  condition_table9.py's own substitute_all() resolves EACH atom
+  through its OWN applicable table, in one pass over the same raw
+  text: condition_table4.substitute_float_packed() (unchanged) turns
+  the first two calls into FCPAR(CmpF64(...)) and FCNE(CmpF64(...));
+  condition_table9.substitute_direct_integer() (new) turns the third
+  into CondNE(zx64(ex32@0(in0:64)),0:64) -- cc_op=19 is VEX's own
+  LOGICL family (verdicts.py's independently-transcribed CC_OP table),
+  whose dep2 argument is uniformly the literal 0 (condition_table.py's
+  own documented "test" convention, confirmed for all 72 LOGIC-family
+  calls in this lap's own 78-unit target population), so the call is
+  resolved DIRECTLY off its own numeric cc/cc_op arguments -- no
+  canonical-text pairing, no position assumption, the exact extension
+  of condition_table4.py's own JOB 3 fix from the float family to the
+  plain integer family.
+
+  The Or8(Or8(A,B),C) boolean STRUCTURE around the three resolved
+  atoms was ALREADY in the normalized expression before this lap --
+  nothing here reinterprets it. canon22_float.py's existing z3 model
+  (to_z3_with_prov_v2e, unmodified) already knew how to fold BOTH an
+  `fcond` atom and a `CondXX` node (its own inherited fallback table);
+  canon22_render.py's existing renderer (unmodified) already knew how
+  to emit ucomiss/setp/setne for an `fcond` atom and cmp/setne for a
+  CondXX-derived `If`, then OR the three canonical 0/1 bytes together
+  via the pre-existing ALU fold. condition_table9.py's substitution
+  was the ONLY new code this shape needed.
+
+EVIDENCE CLASS: "forced by construction" for cc/cc_op family
+membership (VEX's own fixed numeric enum, cross-checked between
+condition_table3.py's transcription and verdicts.py's independent
+transcription of the SAME guest_amd64_defs.h source -- two independent
+sources agreeing, the evidence doctrine's standing pattern); "solver
+analysis over a lifted form proves" for the equality claim itself
+(canon22_behaviour_check.anchored_check, real z3 FPA, PROVED_EQUAL,
+timeout 15000ms, unsat on "real != candidate").

@@ -1,0 +1,56 @@
+job2_signfix_worked_examples.txt -- JOB 2 (canon12_normalize.py's _signed_operand fix, canon18.py's driver): instruction text | reading line, space-aligned. (presentation-only note: 'movzx' is re-spelled to reading_form.py's own known 'movz<w><d>' width-suffixed form before rendering -- the same instruction, GNU-as's other accepted spelling.)
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+1. swift/op_296 (a < b, a:Int32 b:UInt64 -- the sign-test bug fix)
+    unit: swift/op_296   source: canon18_text
+    mov %rdi,%rax        %rax = %rdi
+    shr $8,%rax          %rax = shift_right_zeros(%rax, $8)
+    and $16777215,%eax   %eax = %eax & $16777215
+    shl $7,%eax          %eax = shift_left(%eax, $7)
+    mov $0,%r10b         %r10b = $0
+    movzbl %r10b,%r10d   %r10d = zero_extend(%r10b)
+    or %r10d,%eax        %eax = %eax | %r10d
+    shl $1,%eax          %eax = shift_left(%eax, $1)
+    mov $0,%r11          %r11 = $0
+    mov %rdi,%r9         %r9 = %rdi
+    and $-1,%r9d         %r9d = %r9d & $-1
+    movsxd %r9d,%r9      %r9 = sign_extend(%r9d)
+    cmp %r9,%r11         flags = compare(%r11, %r9)
+    setg %r10b           %r10b = flags.signed_greater
+    mov %rsi,%r9         %r9 = %rsi
+    mov %rdi,%r8         %r8 = %rdi
+    and $-1,%r8d         %r8d = %r8d & $-1
+    movsxd %r8d,%r8      %r8 = sign_extend(%r8d)
+    cmp %r8,%r9          flags = compare(%r9, %r8)
+    seta %r11b           %r11b = flags.above
+    or %r11b,%r10b       %r10b = %r10b | %r11b
+    movzbl %r10b,%r10d   %r10d = zero_extend(%r10b)
+    or %r10d,%eax        %eax = %eax | %r10d
+    movsxd %eax,%rax     %rax = sign_extend(%eax)
+    ret                  return eax
+
+----------------------------------------------------------------------------------------------------
+2. swift/op_440 (a != b, a:Int32 b:UInt64 -- the same sign-test bug fix)
+    unit: swift/op_440   source: canon18_text
+    mov %rdi,%rax        %rax = %rdi
+    shr $8,%rax          %rax = shift_right_zeros(%rax, $8)
+    and $16777215,%eax   %eax = %eax & $16777215
+    shl $8,%eax          %eax = shift_left(%eax, $8)
+    mov %rdi,%r11        %r11 = %rdi
+    and $-1,%r11d        %r11d = %r11d & $-1
+    movsxd %r11d,%r11    %r11 = sign_extend(%r11d)
+    mov %rsi,%r9         %r9 = %rsi
+    cmp %r9,%r11         flags = compare(%r11, %r9)
+    setne %r10b          %r10b = flags.not_equal
+    mov $0,%r9           %r9 = $0
+    mov %rdi,%r8         %r8 = %rdi
+    and $-1,%r8d         %r8d = %r8d & $-1
+    movsxd %r8d,%r8      %r8 = sign_extend(%r8d)
+    cmp %r8,%r9          flags = compare(%r9, %r8)
+    setg %r11b           %r11b = flags.signed_greater
+    or %r11b,%r10b       %r10b = %r10b | %r11b
+    movzbl %r10b,%r10d   %r10d = zero_extend(%r10b)
+    or %r10d,%eax        %eax = %eax | %r10d
+    movsxd %eax,%rax     %rax = sign_extend(%eax)
+    ret                  return eax

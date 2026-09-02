@@ -1,0 +1,263 @@
+# script: /drop/jvm_b_carve.sh
+# started: 2026-08-26T13:52:55+00:00
+# timeout: 3600s
+# work free before: 3824 MB
+------------------------------------------------------------
+=== jvm_b_carve ===
+2026-08-26T13:52:55Z
+javac exit=0
+
+######## the dump: C2 only, -Xbatch, dontinline, print af + af2 ########
+dump exit=0  lines=133
+
+######## THE RAW DUMP, IN FULL ########
+CompileCommand: print Probe.af bool print = true
+CompileCommand: print Probe.af2 bool print = true
+CompileCommand: dontinline Probe.af bool dontinline = true
+CompileCommand: dontinline Probe.af2 bool dontinline = true
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+[0.012s][warning][os] Loading hsdis library failed
+
+Compiled method (c2) 12    4             Probe::af (4 bytes)
+ total in heap  [0x00007f99346aa308,0x00007f99346aa470] = 360
+ main code      [0x00007f99346aa400,0x00007f99346aa450] = 80
+ stub code      [0x00007f99346aa450,0x00007f99346aa468] = 24
+ oops           [0x00007f99346aa468,0x00007f99346aa470] = 8
+ mutable data [0x00007f98f004fd10,0x00007f98f004fd28] = 24
+ relocation     [0x00007f98f004fd10,0x00007f98f004fd20] = 16
+ metadata       [0x00007f98f004fd20,0x00007f98f004fd28] = 8
+ immutable data [0x00007f98f004fcd0,0x00007f98f004fd00] = 48
+ dependencies   [0x00007f98f004fcd0,0x00007f98f004fcd8] = 8
+ scopes pcs     [0x00007f98f004fcd8,0x00007f98f004fcf8] = 32
+ scopes data    [0x00007f98f004fcf8,0x00007f98f004fd00] = 8
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Verified Entry Point]
+  # {method} {0x00007f9908400428} 'af' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  0x00007f99346aa400: 4881 ec18 | 0000 0048 | 896c 2410 | 4181 7f20 | 0000 0000 | 0f85 2900 | 0000 8d04 | 1648 83c4 
+  0x00007f99346aa420: ;   {poll_return}
+  0x00007f99346aa420: 105d 493b | 6728 0f87 | 0100 0000 
+
+  0x00007f99346aa42c: ;   {internal_word}
+  0x00007f99346aa42c: c349 ba22 | a46a 3499 | 7f00 004d | 8997 3805 
+
+  0x00007f99346aa43c: ;   {runtime_call SafepointBlob}
+  0x00007f99346aa43c: 0000 e91d 
+
+  0x00007f99346aa440: ;   {runtime_call Stub::method_entry_barrier}
+  0x00007f99346aa440: 77fa ffe8 | 78e1 f8ff | e9cd ffff | fff4 f4f4 
+[Exception Handler]
+  0x00007f99346aa450: ;   {runtime_call ExceptionBlob}
+  0x00007f99346aa450: e98b 37ff | ffe8 0000 | 0000 4883 
+
+  0x00007f99346aa45c: ;   {runtime_call DeoptimizationBlob}
+  0x00007f99346aa45c: 2c24 05e9 | 7c5e faff | f4f4 f4f4 
+[/MachCode]
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+
+Compiled method (c2) 14    7             Probe::af2 (4 bytes)
+ total in heap  [0x00007f99346a9a08,0x00007f99346a9ba0] = 408
+ main code      [0x00007f99346a9b00,0x00007f99346a9b80] = 128
+ stub code      [0x00007f99346a9b80,0x00007f99346a9b98] = 24
+ oops           [0x00007f99346a9b98,0x00007f99346a9ba0] = 8
+ mutable data [0x00007f98f00695a0,0x00007f98f00695c0] = 32
+ relocation     [0x00007f98f00695a0,0x00007f98f00695b8] = 24
+ metadata       [0x00007f98f00695b8,0x00007f98f00695c0] = 8
+ immutable data [0x00007f98f0069540,0x00007f98f0069590] = 80
+ dependencies   [0x00007f98f0069540,0x00007f98f0069548] = 8
+ scopes pcs     [0x00007f98f0069548,0x00007f98f0069578] = 48
+ scopes data    [0x00007f98f0069578,0x00007f98f0069590] = 24
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Verified Entry Point]
+  # {method} {0x00007f99084004c0} 'af2' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  0x00007f99346a9b00: 8984 2400 | c0fe ff55 | 4883 ec10 | 4181 7f20 | 0000 0000 | 0f85 5800 | 0000 448b | da85 d274 
+  0x00007f99346a9b20: 258b c63d | 0000 0080 | 7508 33d2 | 4183 fbff | 7404 9941 | f7fb 4883 
+
+  0x00007f99346a9b38: ;   {poll_return}
+  0x00007f99346a9b38: c410 5d49 | 3b67 280f | 8717 0000 | 00c3 8bee | be7e ffff 
+
+  0x00007f99346a9b4c: ;   {runtime_call UncommonTrapBlob}
+  0x00007f99346a9b4c: ff66 90e8 
+
+  0x00007f99346a9b50: ; ImmutableOopMap {}
+                      ;*idiv {reexecute=0 rethrow=0 return_oop=0}
+                      ; - Probe::af2@2 (line 6)
+  0x00007f99346a9b50: 8c3d ffff 
+
+  0x00007f99346a9b54: ;   {post_call_nop}
+  0x00007f99346a9b54: 0f1f 8400 | 4c01 0000 
+
+  0x00007f99346a9b5c: ;   {internal_word}
+  0x00007f99346a9b5c: 49ba 3b9b | 6a34 997f | 0000 4d89 | 9738 0500 
+
+  0x00007f99346a9b6c: ;   {runtime_call SafepointBlob}
+  0x00007f99346a9b6c: 00e9 ee7f 
+
+  0x00007f99346a9b70: ;   {runtime_call Stub::method_entry_barrier}
+  0x00007f99346a9b70: faff e849 | eaf8 ffe9 | 9eff ffff | f4f4 f4f4 
+[Exception Handler]
+  0x00007f99346a9b80: ;   {runtime_call ExceptionBlob}
+  0x00007f99346a9b80: e95b 40ff | ffe8 0000 | 0000 4883 
+
+  0x00007f99346a9b8c: ;   {runtime_call DeoptimizationBlob}
+  0x00007f99346a9b8c: 2c24 05e9 | 4c67 faff | f4f4 f4f4 
+[/MachCode]
+WARMED n=200000 acc=200000 acc2=66666 ms=4
+------------------------------------------------------------------------
+static Probe::af(II)I
+  interpreter_invocation_count:        6784
+  invocation_counter:                  6784
+  backedge_counter:                       0
+  decompile_count:                        0
+  mdo size: 248 bytes
+
+   0 iload_0
+   1 iload_1
+   2 iadd
+   3 ireturn
+------------------------------------------------------------------------
+static Probe::af2(II)I
+  interpreter_invocation_count:        6784
+  invocation_counter:                  6784
+  backedge_counter:                       0
+  decompile_count:                        0
+  mdo size: 256 bytes
+
+   0 iload_0
+   1 iload_1
+   2 idiv
+   3 ireturn
+------------------------------------------------------------------------
+Total MDO size: 504 bytes
+
+######## carve ########
+carve exit=0
+
+################ 12    4             Probe::af (4 bytes) ################
+compiler=c2  bytes_recovered=104  runs=1
+sections: Constant Pool (empty), MachCode, Verified Entry Point, Exception Handler, /MachCode
+  # {method} {0x00007f9908400428} 'af' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  --- the JVM's own annotations (its testimony) ---
+    0x00007f99346aa420  {poll_return}
+    0x00007f99346aa42c  {internal_word}
+    0x00007f99346aa43c  {runtime_call SafepointBlob}
+    0x00007f99346aa440  {runtime_call Stub::method_entry_barrier}
+    0x00007f99346aa450  {runtime_call ExceptionBlob}
+    0x00007f99346aa45c  {runtime_call DeoptimizationBlob}
+  --- objdump reading of run at 0x7f99346aa400 (104 bytes) ---
+        7f99346aa400:	48 81 ec 18 00 00 00 	sub    $0x18,%rsp
+        7f99346aa407:	48 89 6c 24 10       	mov    %rbp,0x10(%rsp)
+        7f99346aa40c:	41 81 7f 20 00 00 00 	cmpl   $0x0,0x20(%r15)
+        7f99346aa413:	00
+        7f99346aa414:	0f 85 29 00 00 00    	jne    0x7f99346aa443
+        7f99346aa41a:	8d 04 16             	lea    (%rsi,%rdx,1),%eax
+        7f99346aa41d:	48 83 c4 10          	add    $0x10,%rsp
+        7f99346aa421:	5d                   	pop    %rbp
+        7f99346aa422:	49 3b 67 28          	cmp    0x28(%r15),%rsp
+        7f99346aa426:	0f 87 01 00 00 00    	ja     0x7f99346aa42d
+        7f99346aa42c:	c3                   	ret
+        7f99346aa42d:	49 ba 22 a4 6a 34 99 	movabs $0x7f99346aa422,%r10
+        7f99346aa434:	7f 00 00
+        7f99346aa437:	4d 89 97 38 05 00 00 	mov    %r10,0x538(%r15)
+        7f99346aa43e:	e9 1d 77 fa ff       	jmp    0x7f9934651b60
+        7f99346aa443:	e8 78 e1 f8 ff       	call   0x7f99346385c0
+        7f99346aa448:	e9 cd ff ff ff       	jmp    0x7f99346aa41a
+        7f99346aa44d:	f4                   	hlt
+        7f99346aa44e:	f4                   	hlt
+        7f99346aa44f:	f4                   	hlt
+        7f99346aa450:	e9 8b 37 ff ff       	jmp    0x7f993469dbe0
+        7f99346aa455:	e8 00 00 00 00       	call   0x7f99346aa45a
+        7f99346aa45a:	48 83 2c 24 05       	subq   $0x5,(%rsp)
+        7f99346aa45f:	e9 7c 5e fa ff       	jmp    0x7f99346502e0
+        7f99346aa464:	f4                   	hlt
+        7f99346aa465:	f4                   	hlt
+        7f99346aa466:	f4                   	hlt
+        7f99346aa467:	f4                   	hlt
+
+################ 14    7             Probe::af2 (4 bytes) ################
+compiler=c2  bytes_recovered=152  runs=1
+sections: Constant Pool (empty), MachCode, Verified Entry Point, Exception Handler, /MachCode
+  # {method} {0x00007f99084004c0} 'af2' '(II)I' in 'Probe'
+  # parm0:    rsi       = int
+  # parm1:    rdx       = int
+  #           [sp+0x20]  (sp of caller)
+  --- the JVM's own annotations (its testimony) ---
+    0x00007f99346a9b38  {poll_return}
+    0x00007f99346a9b4c  {runtime_call UncommonTrapBlob}
+    0x00007f99346a9b50  ImmutableOopMap {}
+    0x00007f99346a9b54  {post_call_nop}
+    0x00007f99346a9b5c  {internal_word}
+    0x00007f99346a9b6c  {runtime_call SafepointBlob}
+    0x00007f99346a9b70  {runtime_call Stub::method_entry_barrier}
+    0x00007f99346a9b80  {runtime_call ExceptionBlob}
+    0x00007f99346a9b8c  {runtime_call DeoptimizationBlob}
+  --- objdump reading of run at 0x7f99346a9b00 (152 bytes) ---
+        7f99346a9b00:	89 84 24 00 c0 fe ff 	mov    %eax,-0x14000(%rsp)
+        7f99346a9b07:	55                   	push   %rbp
+        7f99346a9b08:	48 83 ec 10          	sub    $0x10,%rsp
+        7f99346a9b0c:	41 81 7f 20 00 00 00 	cmpl   $0x0,0x20(%r15)
+        7f99346a9b13:	00
+        7f99346a9b14:	0f 85 58 00 00 00    	jne    0x7f99346a9b72
+        7f99346a9b1a:	44 8b da             	mov    %edx,%r11d
+        7f99346a9b1d:	85 d2                	test   %edx,%edx
+        7f99346a9b1f:	74 25                	je     0x7f99346a9b46
+        7f99346a9b21:	8b c6                	mov    %esi,%eax
+        7f99346a9b23:	3d 00 00 00 80       	cmp    $0x80000000,%eax
+        7f99346a9b28:	75 08                	jne    0x7f99346a9b32
+        7f99346a9b2a:	33 d2                	xor    %edx,%edx
+        7f99346a9b2c:	41 83 fb ff          	cmp    $0xffffffff,%r11d
+        7f99346a9b30:	74 04                	je     0x7f99346a9b36
+        7f99346a9b32:	99                   	cltd
+        7f99346a9b33:	41 f7 fb             	idiv   %r11d
+        7f99346a9b36:	48 83 c4 10          	add    $0x10,%rsp
+        7f99346a9b3a:	5d                   	pop    %rbp
+        7f99346a9b3b:	49 3b 67 28          	cmp    0x28(%r15),%rsp
+        7f99346a9b3f:	0f 87 17 00 00 00    	ja     0x7f99346a9b5c
+        7f99346a9b45:	c3                   	ret
+        7f99346a9b46:	8b ee                	mov    %esi,%ebp
+        7f99346a9b48:	be 7e ff ff ff       	mov    $0xffffff7e,%esi
+        7f99346a9b4d:	66 90                	xchg   %ax,%ax
+        7f99346a9b4f:	e8 8c 3d ff ff       	call   0x7f993469d8e0
+        7f99346a9b54:	0f 1f 84 00 4c 01 00 	nopl   0x14c(%rax,%rax,1)
+        7f99346a9b5b:	00
+        7f99346a9b5c:	49 ba 3b 9b 6a 34 99 	movabs $0x7f99346a9b3b,%r10
+        7f99346a9b63:	7f 00 00
+        7f99346a9b66:	4d 89 97 38 05 00 00 	mov    %r10,0x538(%r15)
+        7f99346a9b6d:	e9 ee 7f fa ff       	jmp    0x7f9934651b60
+        7f99346a9b72:	e8 49 ea f8 ff       	call   0x7f99346385c0
+        7f99346a9b77:	e9 9e ff ff ff       	jmp    0x7f99346a9b1a
+        7f99346a9b7c:	f4                   	hlt
+        7f99346a9b7d:	f4                   	hlt
+        7f99346a9b7e:	f4                   	hlt
+        7f99346a9b7f:	f4                   	hlt
+        7f99346a9b80:	e9 5b 40 ff ff       	jmp    0x7f993469dbe0
+        7f99346a9b85:	e8 00 00 00 00       	call   0x7f99346a9b8a
+        7f99346a9b8a:	48 83 2c 24 05       	subq   $0x5,(%rsp)
+        7f99346a9b8f:	e9 4c 67 fa ff       	jmp    0x7f99346502e0
+        7f99346a9b94:	f4                   	hlt
+        7f99346a9b95:	f4                   	hlt
+        7f99346a9b96:	f4                   	hlt
+        7f99346a9b97:	f4                   	hlt
+=== jvm_b_carve done ===
+2026-08-26T13:52:55Z
+------------------------------------------------------------
+# exit 0 in 0.4s
+# work free after: 3824 MB (consumed 0 MB)

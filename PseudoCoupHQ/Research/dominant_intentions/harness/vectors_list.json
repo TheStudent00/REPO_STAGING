@@ -1,0 +1,538 @@
+{
+  "schema": "dominant_intentions/harness/vectors v2",
+  "generated": "2026-08-14",
+  "object_key": "list",
+  "run_prefix": "lst",
+  "title": "list census verification run",
+  "source_page": "Research/dominant_intentions/census_list.md",
+  "note": "Every structure and operation fact on list's census page as executable vectors; the border facts filed away there (join/split, the php impostor's dict half, destructuring) are OUT of scope. 'list' is the growable ordered container: java contributes ArrayList, go its slice, rust Vec, cpp vector. Where the census names no camp for a language, that cell RECORDS its answer rather than checking it, and the answer is carried into the log as a proposed census addition.",
+  "conventions": {
+    "output_line": "FACT_ID.PROBE|RESULT",
+    "expectation_alphabet": {
+      "<any>": "any result acceptable -- either the language guarantees nothing (cpp) or the census claims nothing",
+      "<raise:*>": "must refuse at runtime, by any name",
+      "<compile-error>": "the build refused the program -- for F-l1.b, F-l5, F-l7/go and F-l9/rust this is the guarantee itself",
+      "<aborted>": "the program built, then died"
+    }
+  },
+  "languages": [
+    "python",
+    "typescript",
+    "java",
+    "csharp",
+    "go",
+    "rust",
+    "rust-release",
+    "ruby",
+    "php",
+    "kotlin",
+    "cpp",
+    "dart",
+    "dart-web",
+    "swift"
+  ],
+  "run_order": [
+    "python",
+    "ruby",
+    "php",
+    "typescript",
+    "go",
+    "cpp",
+    "java",
+    "rust",
+    "rust-release",
+    "kotlin",
+    "dart",
+    "dart-web"
+  ],
+  "template_of": {
+    "rust-release": "rust",
+    "dart-web": "dart"
+  },
+  "language_status": {
+    "python": "active",
+    "typescript": "active (tsc -> node)",
+    "java": "active",
+    "csharp": "blocked-deliberate (no toolchain in the container; not pursued)",
+    "go": "active",
+    "rust": "active (debug build)",
+    "rust-release": "active (-O build; record-both-modes)",
+    "ruby": "active",
+    "php": "active",
+    "kotlin": "active",
+    "cpp": "active",
+    "dart": "active (native)",
+    "dart-web": "active (dart compile js -> node)",
+    "swift": "not run (bonus language, outside the census's 11 targets)"
+  },
+  "facts": [
+    {
+      "fact_id": "list-U1",
+      "object": "list",
+      "owner": "operation",
+      "kind": "universal",
+      "description": "Append/push at the end exists and preserves order.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_listU1_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "1,2,3"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "list-U2",
+      "object": "list",
+      "owner": "operation",
+      "kind": "universal",
+      "description": "Indexed read of an existing position answers the element.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_listU2_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "2"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "list-U3",
+      "object": "list",
+      "owner": "operation",
+      "kind": "universal",
+      "description": "Iteration visits elements in index order.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_listU3_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "1,2,3"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "list-U4",
+      "object": "list",
+      "owner": "operation",
+      "kind": "universal",
+      "description": "Length answers the element count -- no unit ambiguity, the one mercy lists have over strings.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_listU4_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "3"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "F-l1",
+      "object": "list",
+      "owner": "structure",
+      "kind": "fracture",
+      "description": "What the elements may be. One declared type: rust go java csharp kotlin dart cpp typescript. Anything, mixed freely: python ruby php -- and typescript AT RUNTIME, whose discipline is compile-time only, so both faces are recorded (probe b the checker's, probe c the runtime's).",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl1_a()"
+          },
+          "only": [
+            "python",
+            "ruby",
+            "php"
+          ]
+        },
+        {
+          "probe_id": "b",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl1_b()"
+          },
+          "only": [
+            "typescript",
+            "go",
+            "cpp",
+            "java",
+            "kotlin",
+            "rust",
+            "rust-release",
+            "dart",
+            "dart-web"
+          ],
+          "program": "l1typed"
+        },
+        {
+          "probe_id": "c",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl1_c()"
+          },
+          "only": [
+            "typescript"
+          ]
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "1,a",
+          "b": "<compile-error>",
+          "c": "3/string"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "F-l2",
+      "object": "list",
+      "owner": "structure",
+      "kind": "fracture",
+      "description": "What the container fundamentally IS. A growable buffer: python ruby java csharp go rust kotlin cpp dart. An ordered HASH wearing list syntax: php -- probe b deletes a middle element and asks for the keys, and an ordered hash answers 0,2 where a buffer would have renumbered. An object with integer-named properties: typescript/js -- probe a builds the literal [1, ,3], which no other language's list can express, and asks whether position 1 is present at all.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl2_a()"
+          },
+          "only": [
+            "typescript"
+          ]
+        },
+        {
+          "probe_id": "b",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl2_b()"
+          },
+          "only": [
+            "php"
+          ]
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "3/false",
+          "b": "0,2"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "F-l3",
+      "object": "list",
+      "owner": "structure",
+      "kind": "universal",
+      "description": "All in-scope lists are growable: appending past the initial size works and length follows.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl3_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "4"
+        },
+        "by_language": {}
+      }
+    },
+    {
+      "fact_id": "F-l4",
+      "object": "list",
+      "owner": "operation",
+      "kind": "fracture",
+      "description": "Reading past the end. Throw/panic: python java csharp kotlin dart rust go. Answer a nothing-value: ruby (nil), typescript (undefined), php (null plus a notice). Undefined behaviour: cpp's operator[] -- probed and recorded per the owner's ruling, expectation <any> -- while cpp's .at() throws (probe b), the two spellings being two separate guarantees. rust likewise ships both: index panics, .get answers None (probe c).",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl4_a()"
+          },
+          "program": "oob"
+        },
+        {
+          "probe_id": "b",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl4_b()"
+          },
+          "only": [
+            "cpp"
+          ]
+        },
+        {
+          "probe_id": "c",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl4_c()"
+          },
+          "only": [
+            "rust",
+            "rust-release"
+          ]
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "<raise:*>",
+          "b": "<raise:*>",
+          "c": "None"
+        },
+        "by_language": {
+          "ruby": {
+            "a": "nil"
+          },
+          "typescript": {
+            "a": "undefined"
+          },
+          "php": {
+            "a": "null"
+          },
+          "cpp": {
+            "a": "<any>"
+          }
+        }
+      }
+    },
+    {
+      "fact_id": "F-l5",
+      "object": "list",
+      "owner": "operation",
+      "kind": "fracture",
+      "description": "Negative indexing. python and ruby count from the end; everyone else refuses or misbehaves -- and this run separates the refusals: go and rust refuse at BUILD time (go rejects a constant negative index; rust indexes by an unsigned type, so a negative index is not expressible), java kotlin dart refuse at run time, typescript and php answer their nothing-value, and cpp is undefined.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl5_a()"
+          },
+          "program": "neg"
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "<raise:*>"
+        },
+        "by_language": {
+          "python": {
+            "a": "3"
+          },
+          "ruby": {
+            "a": "3"
+          },
+          "typescript": {
+            "a": "undefined"
+          },
+          "php": {
+            "a": "null"
+          },
+          "go": {
+            "a": "<compile-error>"
+          },
+          "rust": {
+            "a": "<compile-error>"
+          },
+          "rust-release": {
+            "a": "<compile-error>"
+          },
+          "cpp": {
+            "a": "<any>"
+          }
+        }
+      }
+    },
+    {
+      "fact_id": "F-l6",
+      "object": "list",
+      "owner": "operation",
+      "kind": "fracture",
+      "description": "What slicing answers. A COPY: python ruby js/ts kotlin dart csharp. A WINDOW sharing storage: go (a slice of a slice edits the same cells) and rust (a borrow, compiler-supervised). The probe edits position 0 THROUGH the slice and then reads position 0 of the original. The census places neither java, php nor cpp here, so their cells RECORD rather than check (expectation <any>) and their answers are carried into the log as proposed additions.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl6_a()"
+          }
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "1"
+        },
+        "by_language": {
+          "go": {
+            "a": "99"
+          },
+          "rust": {
+            "a": "99"
+          },
+          "rust-release": {
+            "a": "99"
+          },
+          "java": {
+            "a": "<any>"
+          },
+          "php": {
+            "a": "<any>"
+          },
+          "cpp": {
+            "a": "<any>"
+          }
+        }
+      }
+    },
+    {
+      "fact_id": "F-l7",
+      "object": "list",
+      "owner": "operation",
+      "kind": "fracture",
+      "description": "What `==` does between two lists. Content: python ruby kotlin rust php. Identity: java, js/ts, dart, csharp. Not comparable at all: go, which refuses at build time. The census does not place cpp, so its cell records rather than checks.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl7_a()"
+          },
+          "program": "eq"
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "true"
+        },
+        "by_language": {
+          "java": {
+            "a": "false"
+          },
+          "typescript": {
+            "a": "false"
+          },
+          "dart": {
+            "a": "false"
+          },
+          "dart-web": {
+            "a": "false"
+          },
+          "go": {
+            "a": "<compile-error>"
+          },
+          "cpp": {
+            "a": "<any>"
+          }
+        }
+      }
+    },
+    {
+      "fact_id": "F-l8",
+      "object": "list",
+      "owner": "operation",
+      "kind": "fracture",
+      "description": "Sort: the default order, and in-place versus copy. The census's single most surprising guarantee is js/ts sorting NUMBERS lexicographically, so [10,9,1] becomes 1,10,9. Probe b is the record-both half: where a language ships a COPYING spelling beside the in-place one (python's sorted() beside .sort, ruby's .sort beside .sort!), the copying spelling must leave the original alone.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl8_a()"
+          }
+        },
+        {
+          "probe_id": "b",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl8_b()"
+          },
+          "only": [
+            "python",
+            "ruby"
+          ]
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "1,9,10",
+          "b": "10,9,1"
+        },
+        "by_language": {
+          "typescript": {
+            "a": "1,10,9"
+          }
+        }
+      }
+    },
+    {
+      "fact_id": "F-l9",
+      "object": "list",
+      "owner": "operation",
+      "kind": "fracture",
+      "description": "What `b = a` MEANS for a list. Share the object: python ruby java kotlin csharp dart js/ts go. Copy the value: php. MOVE: rust, where `let b = a` ends a's usability and the compiler says so -- the compile refusal IS the guarantee, and it is the only one of the three that can be checked without running anything. The census does not place cpp; its cell records rather than checks.",
+      "probes": [
+        {
+          "probe_id": "a",
+          "type": "str",
+          "expr": {
+            "default": "f_Fl9_a()"
+          },
+          "program": "assign"
+        }
+      ],
+      "expected": {
+        "default": {
+          "a": "99"
+        },
+        "by_language": {
+          "php": {
+            "a": "1"
+          },
+          "rust": {
+            "a": "<compile-error>"
+          },
+          "rust-release": {
+            "a": "<compile-error>"
+          },
+          "cpp": {
+            "a": "<any>"
+          }
+        }
+      }
+    }
+  ]
+}

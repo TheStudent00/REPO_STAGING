@@ -1,0 +1,376 @@
+# acceptance query, lap three -- FORWARD DATAFLOW.  Map graph_go3.json, built by
+# flow_forward.py on top of graph_go2.json; graph_go.json and graph_go2.json are
+# untouched.  Every query below is run with --edge-types flows_into and NO
+# --reverse-types: not one edge in any path here is walked backwards.
+#
+# ------------------------------- CAVEAT (read before any result) -------------
+# The new edges OVER-APPROXIMATE, in three named ways.
+#
+#  1. OBJECT-INSENSITIVE.  Field-sensitive (which field f is matters),
+#     object-insensitive (which x holds f does not).  A store into a.f reaches
+#     every read of .f anywhere in the parsed region, b.f included.  Wherever a
+#     path below crosses a field node, that hop carries this looseness.
+#  2. FLOW-INSENSITIVE.  Statement order inside a function is not modelled.  A
+#     declaration reaches every read of it whether or not that read runs after
+#     the store.
+#  3. DISPATCH.  Call binding re-uses the map's own call edges, candidate sets
+#     included, so an argument binds to the matching parameter of EVERY
+#     candidate callee.
+#
+# Therefore every path here is a BOUND OVER ALL RUNS: it says these hops exist
+# in the compiler's source and are joined forwards.  It does NOT say any single
+# compilation took them.  The diary (per-run fact, subject column) and the arch
+# campaign's forced probe stay the judges; the diary cross-check is at the end.
+#
+# ------------------------------- what was added ------------------------------
+#   rule 1  store_to_field         v -> field decl, for `x.f = v`      1139
+#   rule 1  literal_to_field       v -> field decl, for `T{f: v}`       383
+#   rule 2  field_to_read          field decl -> every resolved `y.f`  8164
+#   rule 2  decl_to_read           value-holding decl -> its readers  43694
+#   rule 3  argument_to_param      argument -> callee param, by pos   18035
+#   rule 3  return_to_call         callee return expr -> call node    18655
+#   rule 3  result_param_to_call   named result decl -> call node       388
+#   rule 4  flows_into/call_result VERIFIED PRESENT ALREADY, re-used,
+#                                  none added                          4803
+#   total new edges 90458;  map: edges 242592 -> 333050,
+#   nodes 175259 (unchanged), frontier records 26572 (unchanged --
+#   this lap resolves no new names, it only adds movement).
+#   call sites with a callee in the map 9103; without one 10289.
+#
+# Rules 1 and 2 as briefed could not cross Go's OTHER way of writing a field:
+# the keyed composite literal.  abiutils.go:616 `Registers: registers,` is
+# exactly that, and it is the hop the acceptance path turns on, so
+# literal_to_field was added.  Rule 2 as briefed covered field declarations
+# only; without decl_to_read the walk dies at the first local variable, since
+# the map's resolves_to points reference -> declaration (the direction a NAME
+# is looked up) and lap two had to reverse it for that reason.  decl_to_read is
+# that relation written down forwards, once, so no query reverses anything.
+
+# ============================ CONTROL: the lap-two map ======================
+# Same start, same goal, same forward-only settings, graph_go2.json.
+START:
+  src/cmd/compile/internal/abi/abiutils.go:514 param              regs
+GOAL: name~None kind=None file~'internal/amd64/'
+visited 1 nodes
+
+NO PATH. Every branch died. Terminal nodes reached: 1
+  param                       1   e.g. src/cmd/compile/internal/abi/abiutils.go:514 regs
+
+(this leg is entry "control_lap_two_map" of acceptance_query3.json)
+
+# ============================ LEG 1: the acceptance path ====================
+# START: the value allocateRegs computes -- 'regs', the []RegIndex list that
+#        the appended RegIndex values live in (abiutils.go:514).
+# GOAL:  anything in internal/amd64.  Forward edges only.
+START:
+  src/cmd/compile/internal/abi/abiutils.go:514 param              regs
+GOAL: name~None kind=None file~'internal/amd64/'
+visited 5505 nodes
+
+PATH (23 hops):
+  [0] src/cmd/compile/internal/abi/abiutils.go:514 param              regs
+       --flows_into/decl_to_read-->
+  [1] src/cmd/compile/internal/abi/abiutils.go:516 ref                regs
+       --flows_into/return_to_call-->
+  [2] src/cmd/compile/internal/abi/abiutils.go:634 call               state.allocateRegs
+       --flows_into/return_to_call-->
+  [3] src/cmd/compile/internal/abi/abiutils.go:604 call               state.tryAllocRegs
+       --flows_into/call_result-->
+  [4] src/cmd/compile/internal/abi/abiutils.go:604 local_var          registers
+       --flows_into/decl_to_read-->
+  [5] src/cmd/compile/internal/abi/abiutils.go:616 ref                registers
+       --flows_into/literal_to_field-->
+  [6] src/cmd/compile/internal/abi/abiutils.go:102 field              Registers
+       --flows_into/field_to_read-->
+  [7] src/cmd/compile/internal/abi/abiutils.go:138 ref                pa.Registers
+       --flows_into/argument-->
+  [8] src/cmd/compile/internal/abi/abiutils.go:138 call               len
+       --flows_into/call_result-->
+  [9] src/cmd/compile/internal/abi/abiutils.go:138 local_var          l
+       --flows_into/decl_to_read-->
+  [10] src/cmd/compile/internal/abi/abiutils.go:142 ref                l
+       --flows_into/argument-->
+  [11] src/cmd/compile/internal/abi/abiutils.go:142 call               make
+       --flows_into/call_result-->
+  [12] src/cmd/compile/internal/abi/abiutils.go:142 local_var          typs
+       --flows_into/decl_to_read-->
+  [13] src/cmd/compile/internal/abi/abiutils.go:145 ref                typs
+       --flows_into/argument_to_param-->
+  [14] src/cmd/compile/internal/abi/abiutils.go:148 param              rts
+       --flows_into/decl_to_read-->
+  [15] src/cmd/compile/internal/abi/abiutils.go:151 ref                rts
+       --flows_into/return_to_call-->
+  [16] src/cmd/compile/internal/abi/abiutils.go:132 call               appendParamTypes
+       --flows_into/call_result-->
+  [17] src/cmd/compile/internal/abi/abiutils.go:127 local_var          rts
+       --flows_into/decl_to_read-->
+  [18] src/cmd/compile/internal/abi/abiutils.go:134 ref                rts
+       --flows_into/return_to_call-->
+  [19] src/cmd/compile/internal/ssa/expand_calls.go:266 call               abi.RegisterTypes
+       --flows_into/argument-->
+  [20] src/cmd/compile/internal/ssa/expand_calls.go:266 call               append
+       --flows_into/argument-->
+  [21] src/cmd/compile/internal/ssa/expand_calls.go:266 call               types.NewResults
+       --flows_into/store_to_field-->
+  [22] src/cmd/compile/internal/ssa/value.go:31 field              Type
+       --flows_into/field_to_read-->
+  [23] src/cmd/compile/internal/amd64/ssa.go:453 ref                v.Type
+
+(this leg is entry "leg1_forward_to_amd64" of acceptance_query3.json)
+
+# ============================ LEG 2: goal narrowed to a register read =======
+START:
+  src/cmd/compile/internal/abi/abiutils.go:514 param              regs
+GOAL: name~'Reg' kind=None file~'internal/amd64/'
+visited 10831 nodes
+
+PATH (29 hops):
+  [0] src/cmd/compile/internal/abi/abiutils.go:514 param              regs
+       --flows_into/decl_to_read-->
+  [1] src/cmd/compile/internal/abi/abiutils.go:516 ref                regs
+       --flows_into/return_to_call-->
+  [2] src/cmd/compile/internal/abi/abiutils.go:634 call               state.allocateRegs
+       --flows_into/return_to_call-->
+  [3] src/cmd/compile/internal/abi/abiutils.go:604 call               state.tryAllocRegs
+       --flows_into/call_result-->
+  [4] src/cmd/compile/internal/abi/abiutils.go:604 local_var          registers
+       --flows_into/decl_to_read-->
+  [5] src/cmd/compile/internal/abi/abiutils.go:616 ref                registers
+       --flows_into/literal_to_field-->
+  [6] src/cmd/compile/internal/abi/abiutils.go:102 field              Registers
+       --flows_into/field_to_read-->
+  [7] src/cmd/compile/internal/ssagen/ssa.go:628 ref                paramAssignment.Registers
+       --flows_into/value-->
+  [8] src/cmd/compile/internal/ssagen/ssa.go:628 local_var          r
+       --flows_into/decl_to_read-->
+  [9] src/cmd/compile/internal/ssagen/ssa.go:630 ref                r
+       --flows_into/argument-->
+  [10] src/cmd/compile/internal/ssagen/ssa.go:630 call               ssa.ArgOpAndRegisterFor
+       --flows_into/call_result-->
+  [11] src/cmd/compile/internal/ssagen/ssa.go:630 local_var          op
+       --flows_into/decl_to_read-->
+  [12] src/cmd/compile/internal/ssagen/ssa.go:632 ref                op
+       --flows_into/argument_to_param-->
+  [13] src/cmd/compile/internal/ssagen/ssa.go:1257 param              op
+       --flows_into/decl_to_read-->
+  [14] src/cmd/compile/internal/ssagen/ssa.go:1258 ref                op
+       --flows_into/argument-->
+  [15] src/cmd/compile/internal/ssagen/ssa.go:1258 call               s.curBlock.NewValue0I
+       --flows_into/return_to_call-->
+  [16] src/cmd/compile/internal/ssagen/ssa.go:2817 call               s.newValue0I
+       --flows_into/return_to_call-->
+  [17] src/cmd/compile/internal/ssagen/intrinsics.go:2082 call               s.uintptrConstant
+       --flows_into/argument_to_param-->
+  [18] src/cmd/compile/internal/ssagen/ssa.go:1287 param              arg1
+       --flows_into/decl_to_read-->
+  [19] src/cmd/compile/internal/ssagen/ssa.go:1288 ref                arg1
+       --flows_into/argument-->
+  [20] src/cmd/compile/internal/ssagen/ssa.go:1288 call               s.curBlock.NewValue2
+       --flows_into/return_to_call-->
+  [21] src/cmd/compile/internal/ssagen/ssa.go:1456 call               s.newValue2
+       --flows_into/return_to_call-->
+  [22] src/cmd/compile/internal/ssagen/ssa.go:6210 call               s.newValueOrSfCall2
+       --flows_into/call_result-->
+  [23] src/cmd/compile/internal/ssagen/ssa.go:6210 local_var          cmpz
+       --flows_into/decl_to_read-->
+  [24] src/cmd/compile/internal/ssagen/ssa.go:6212 ref                cmpz
+       --flows_into/argument_to_param-->
+  [25] src/cmd/compile/internal/ssa/block.go:184 param              v
+       --flows_into/decl_to_read-->
+  [26] src/cmd/compile/internal/ssa/block.go:186 ref                v
+       --flows_into/store_to_field-->
+  [27] src/cmd/compile/internal/ssa/block.go:58 field              Controls
+       --flows_into/field_to_read-->
+  [28] src/cmd/compile/internal/amd64/ssa.go:2498 ref                b.Controls
+       --flows_into/selector_base-->
+  [29] src/cmd/compile/internal/amd64/ssa.go:2498 ref                b.Controls[1].Reg
+
+(this leg is entry "leg2_forward_to_a_register_read" of acceptance_query3.json)
+
+# ============================ HOW MUCH LEG 1 ACTUALLY PROVES ================
+# Legs 1 and 2 are real forward paths -- every hop is an edge followed in the
+# direction the value travels, and the lap-two control above finds nothing at
+# all from the same start.  Read their MIDDLE with care all the same.
+#
+# Leg 1 hops [7]-[12].  The source, abiutils.go:137-145:
+#
+#     func (pa *ABIParamAssignment) RegisterTypesAndOffsets() ([]*types.Type, []int64) {
+#             l := len(pa.Registers)
+#             ...
+#             typs := make([]*types.Type, 0, l)
+#
+# What crosses hop [7]->[8] is `len(pa.Registers)`, i.e. HOW MANY registers,
+# not WHICH register.  The map has no notion of which part of a value a
+# derived value carries, so it follows the count onward as if it were the
+# index.  Leg 1 is honest as "the register assignment reaches internal/amd64
+# by a forward chain"; it is NOT honest as "the register INDEX becomes that
+# operand".  Same reading for leg 2's hops [15]-[24], which wander through
+# s.uintptrConstant and a cmpz that have nothing to do with af.
+#
+# Leg 3 below is the chain that does carry the index itself, and it is
+# reported with its frontier rather than dressed up.
+
+# ============================ LEG 3: the index's own chain ==================
+# Waypointed rather than BFS'd: each hop was looked up in graph_go3.json by
+# (file, line, kind, name) and the edge between consecutive hops asserted to
+# exist.  Any missing edge would have aborted the check.  Forward only.
+#
+# 3a -- the register list leaves abi and is read in ssagen:
+# LEG 3a
+#   [0] src/cmd/compile/internal/abi/abiutils.go:514   param        regs
+#        --flows_into/decl_to_read-->
+#   [1] src/cmd/compile/internal/abi/abiutils.go:516   ref          regs
+#        --flows_into/return_to_call-->
+#   [2] src/cmd/compile/internal/abi/abiutils.go:634   call         state.allocateRegs
+#        --flows_into/return_to_call-->
+#   [3] src/cmd/compile/internal/abi/abiutils.go:604   call         state.tryAllocRegs
+#        --flows_into/call_result-->
+#   [4] src/cmd/compile/internal/abi/abiutils.go:604   local_var    registers
+#        --flows_into/decl_to_read-->
+#   [5] src/cmd/compile/internal/abi/abiutils.go:616   ref          registers
+#        --flows_into/literal_to_field-->
+#   [6] src/cmd/compile/internal/abi/abiutils.go:102   field        Registers
+#        --flows_into/field_to_read-->
+#   [7] src/cmd/compile/internal/ssagen/ssa.go:628     ref          paramAssignment.Registers
+#        --flows_into/value-->
+#   [8] src/cmd/compile/internal/ssagen/ssa.go:628     local_var    r
+#        --flows_into/decl_to_read-->
+#   [9] src/cmd/compile/internal/ssagen/ssa.go:630     ref          r
+#
+# 3a stops there for a reason that is a DEFECT IN THE LAP-ONE MAP, not a
+# frontier.  ssagen/ssa.go:630 reads
+#
+#     op, reg := ssa.ArgOpAndRegisterFor(r, abi)
+#
+# and internal/ssa holds two things called ArgOpAndRegisterFor: the
+# package-level func at expand_calls.go:883 (which takes r) and the
+# zero-argument method at expand_calls.go:876.  build_graph.py's
+# cross-package table keys on the bare name, so the call binds to the METHOD:
+#
+#     src/cmd/compile/internal/ssagen/ssa.go:630 call ssa.ArgOpAndRegisterFor
+#         --calls/cross_package_in_region--> ssa/expand_calls.go:876 method ArgOpAndRegisterFor
+#
+# The method has no parameters, so positional binding has nothing to bind, and
+# the return of the FUNC never reaches this call node.  Nothing in lap three
+# fixes it; build_graph.py is the artifact of record for lap one and stays
+# untouched.  Recorded as a defect, open for lap four.
+#
+# 3b -- picking the chain up on the other side of that defect, at the value
+# ArgOpAndRegisterFor hands back (ssagen/ssa.go:630 `reg`):
+#   [0] src/cmd/compile/internal/ssagen/ssa.go:630     local_var    reg
+#        --flows_into/decl_to_read-->
+#   [1] src/cmd/compile/internal/ssagen/ssa.go:632     ref          reg
+#        --flows_into/argument_to_param-->
+#   [2] src/cmd/compile/internal/ssagen/ssa.go:1257    param        auxint
+#        --flows_into/decl_to_read-->
+#   [3] src/cmd/compile/internal/ssagen/ssa.go:1258    ref          auxint
+#        --flows_into/argument-->
+#   [4] src/cmd/compile/internal/ssagen/ssa.go:1258    call         s.curBlock.NewValue0I
+#
+# 3b DIES THERE, and this one IS a frontier, carried unchanged from lap one and
+# refused by lap two's declared-type rule.  The record, verbatim from
+# graph_go3.json's frontier list:
+#
+#  {"id": "frontier:src/cmd/compile/internal/ssagen/ssa.go:46894-46915:unresolved_import",
+#   "kind": "unresolved_import",
+#   "file": "src/cmd/compile/internal/ssagen/ssa.go",
+#   "span": [46894, 46915, 1258, 1258],
+#   "detail": "s.curBlock.NewValue0I", "selector": "s.curBlock.NewValue0I",
+#   "reason": "field or method selector; no type information in lap one",
+#   "field": "NewValue0I"}
+#
+# Why it stands: `s.curBlock` DID resolve, to the field ssagen/ssa.go:1037
+# `curBlock *ssa.Block`.  Its declared type is QUALIFIED (ssa.Block), and
+# resolve_dots.py refuses qualified field types by design -- it does not carry
+# the declaring file's imports, and lists that refusal in its own not_done.
+# That is lap two's open item (2), and it is what stops the register index one
+# call short of ssa/func.go:467.
+#
+# One hop further on, had it crossed, sits a SECOND frontier of the same kind,
+# ssa/func.go:469 -- `v := b.Func.newValue(...)` gives v no declared type, so
+# the store `v.AuxInt = auxint` is not crossed either:
+#
+#  {"id": "frontier:src/cmd/compile/internal/ssa/func.go:14935-14943:unresolved_import",
+#   "kind": "unresolved_import",
+#   "file": "src/cmd/compile/internal/ssa/func.go",
+#   "span": [14935, 14943, 469, 469],
+#   "detail": "v.AuxInt", "selector": "v.AuxInt",
+#   "reason": "field or method selector; no type information in lap one",
+#   "field": "AuxInt"}
+#
+# So the honest state of the identity proof after lap three: forward movement
+# of the parameter's register assignment out of abi, through the
+# ABIParamAssignment.Registers field, into ssagen and on to internal/amd64
+# EXISTS (legs 1 and 2, with the looseness stated above).  Forward movement of
+# the register INDEX ITSELF gets as far as ssagen/ssa.go:1258 and stops at two
+# named frontiers and one named map defect, all three pasted above.
+
+# ============================ DIARY CROSS-CHECK =============================
+# Per-run fact, one probe compile, from diary_go2.txt (337 events, 45
+# instrumented spots).  Only functions that were instrumented can appear;
+# absence here is silence, never evidence that a function did not run.
+#
+# Path hops that sit inside an instrumented function, and the diary lines
+# showing that function running with subject `af`:
+#
+#   leg 1 [0][1] / leg 3a [0][1]   abiutils.go:514 allocateRegs      6 af events
+#   leg 1 [2]   / leg 3a [2]       abiutils.go:634 is inside tryAllocRegs:623   6 af events
+#   leg 1 [3][4]/ leg 3a [3][4][5] abiutils.go:604,616 inside assignParam:603   6 af events
+#   leg 1 [7]-[12]                 abiutils.go:138-145 inside
+#                                  RegisterTypesAndOffsets:137       6 af events
+#   leg 1 [13][14][15]             abiutils.go:145-151 inside
+#                                  appendParamTypes:148              7 af events
+#   leg 1 [16][17][18]             abiutils.go:127-134 inside
+#                                  RegisterTypes:118                 1 af event
+#   leg 1 [23]                     amd64/ssa.go:453 inside
+#                                  ssaGenValue:227                   3 af events
+#
+# Not instrumented, so no per-run word either way: the field nodes
+# (abiutils.go:102 Registers, ssa/value.go:31 Type), ssagen's
+# storeParameterRegsToStack:622, newValue0I:1257, ssa's ArgOpAndRegisterFor,
+# NewValue0I, expand_calls.go:266.
+#
+# The lines themselves (event number, subject, static node id, name, spot):
+#   25	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#   27	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#   28	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#   34	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#   35	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#   37	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#   43	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#   44	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#   46	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#   110	af	src/cmd/compile/internal/abi/abiutils.go:3926-4369:func	RegisterTypes	src/cmd/compile/internal/abi/abiutils.go:118
+#   111	af	src/cmd/compile/internal/abi/abiutils.go:4705-5956:func	appendParamTypes	src/cmd/compile/internal/abi/abiutils.go:148
+#   121	af	src/cmd/compile/internal/abi/abiutils.go:4371-4703:method	RegisterTypesAndOffsets	src/cmd/compile/internal/abi/abiutils.go:137
+#   124	af	src/cmd/compile/internal/abi/abiutils.go:4705-5956:func	appendParamTypes	src/cmd/compile/internal/abi/abiutils.go:148
+#   129	af	src/cmd/compile/internal/abi/abiutils.go:4371-4703:method	RegisterTypesAndOffsets	src/cmd/compile/internal/abi/abiutils.go:137
+#   131	af	src/cmd/compile/internal/abi/abiutils.go:4705-5956:func	appendParamTypes	src/cmd/compile/internal/abi/abiutils.go:148
+#   150	af	src/cmd/compile/internal/abi/abiutils.go:4371-4703:method	RegisterTypesAndOffsets	src/cmd/compile/internal/abi/abiutils.go:137
+#   153	af	src/cmd/compile/internal/abi/abiutils.go:4705-5956:func	appendParamTypes	src/cmd/compile/internal/abi/abiutils.go:148
+#   154	af	src/cmd/compile/internal/abi/abiutils.go:4371-4703:method	RegisterTypesAndOffsets	src/cmd/compile/internal/abi/abiutils.go:137
+#   156	af	src/cmd/compile/internal/abi/abiutils.go:4705-5956:func	appendParamTypes	src/cmd/compile/internal/abi/abiutils.go:148
+#   159	af	src/cmd/compile/internal/amd64/ssa.go:5467-60141:func	ssaGenValue	src/cmd/compile/internal/amd64/ssa.go:227
+#   160	af	src/cmd/compile/internal/amd64/ssa.go:5467-60141:func	ssaGenValue	src/cmd/compile/internal/amd64/ssa.go:227
+#   161	af	src/cmd/compile/internal/amd64/ssa.go:5467-60141:func	ssaGenValue	src/cmd/compile/internal/amd64/ssa.go:227
+#   168	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#   169	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#   171	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#   177	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#   178	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#   179	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#   185	af	src/cmd/compile/internal/abi/abiutils.go:20680-21192:method	assignParam	src/cmd/compile/internal/abi/abiutils.go:603
+#   186	af	src/cmd/compile/internal/abi/abiutils.go:21321-21801:method	tryAllocRegs	src/cmd/compile/internal/abi/abiutils.go:623
+#   187	af	src/cmd/compile/internal/abi/abiutils.go:17900-19209:method	allocateRegs	src/cmd/compile/internal/abi/abiutils.go:514
+#   192	af	src/cmd/compile/internal/abi/abiutils.go:4371-4703:method	RegisterTypesAndOffsets	src/cmd/compile/internal/abi/abiutils.go:137
+#   194	af	src/cmd/compile/internal/abi/abiutils.go:4705-5956:func	appendParamTypes	src/cmd/compile/internal/abi/abiutils.go:148
+#   195	af	src/cmd/compile/internal/abi/abiutils.go:4371-4703:method	RegisterTypesAndOffsets	src/cmd/compile/internal/abi/abiutils.go:137
+#   198	af	src/cmd/compile/internal/abi/abiutils.go:4705-5956:func	appendParamTypes	src/cmd/compile/internal/abi/abiutils.go:148
+#
+# Reading: the abi leg of the path is corroborated as af's own work, in order,
+# repeatedly (assignParam -> tryAllocRegs -> allocateRegs, six times, events
+# 25/27/28, 34/35/37, 43/44/46, 168/169/171, 177/178/179, 185/186/187).  The
+# ssagen/amd64 tail is corroborated only at its endpoint: amd64's ssaGenValue
+# ran with subject af (events 159, 160, 161), which places af's compilation
+# inside the goal file, but the diary says nothing about WHICH value it was
+# emitting there.  That gap is exactly what the frontiers above still hold.

@@ -1,0 +1,180 @@
+---------------------------------------------------
+Begin compiling method op_200 using TurboFan
+--- Raw source ---
+(a, b) {
+    return a == b;
+}
+
+
+--- Optimized code ---
+optimization_id = 0
+source_position = 41
+kind = TURBOFAN_JS
+name = op_200
+compiler = turbofan
+address = 0x3894010002a5
+
+Instructions (size = 424)
+0x7394a3a00040     0  488d1df9ffffff       REX.W leaq rbx,[rip+0xfffffff9]
+0x7394a3a00047     7  483bd9               REX.W cmpq rbx,rcx
+0x7394a3a0004a     a  740d                 jz 0x7394a3a00059  <+0x19>
+0x7394a3a0004c     c  ba92000000           movl rdx,0x92
+0x7394a3a00051    11  41ff9510640000       call [r13+0x6410]
+0x7394a3a00058    18  cc                   int3l
+0x7394a3a00059    19  4d8b95d0020000       REX.W movq r10,[r13+0x2d0] (external value (IsolateData::js_dispatch_table_))
+0x7394a3a00060    20  498bdf               REX.W movq rbx,r15
+0x7394a3a00063    23  c1eb08               shrl rbx,8
+0x7394a3a00066    26  c1e304               shll rbx,4
+0x7394a3a00069    29  410fb75c1a08         movzxwl rbx,[r10+rbx*1+0x8]
+0x7394a3a0006f    2f  83fb03               cmpl rbx,0x3
+0x7394a3a00072    32  740d                 jz 0x7394a3a00081  <+0x41>
+0x7394a3a00074    34  ba96000000           movl rdx,0x96
+0x7394a3a00079    39  41ff9510640000       call [r13+0x6410]
+0x7394a3a00080    40  cc                   int3l
+0x7394a3a00081    41  8b59f0               movl rbx,[rcx-0x10]
+0x7394a3a00084    44  490b9d98020000       REX.W orq rbx,[r13+0x298] (external value (IsolateData::trusted_cage_base_))
+0x7394a3a0008b    4b  f6432380             testb [rbx+0x23],0x80
+0x7394a3a0008f    4f  740d                 jz 0x7394a3a0009e  <+0x5e>
+0x7394a3a00091    51  ba26000000           movl rdx,0x26
+0x7394a3a00096    56  41ff9510640000       call [r13+0x6410]
+0x7394a3a0009d    5d  cc                   int3l
+0x7394a3a0009e    5e  55                   push rbp
+0x7394a3a0009f    5f  488bec               REX.W movq rbp,rsp
+0x7394a3a000a2    62  56                   push rsi
+0x7394a3a000a3    63  57                   push rdi
+0x7394a3a000a4    64  50                   push rax
+0x7394a3a000a5    65  4883ec08             REX.W subq rsp,0x8
+0x7394a3a000a9    69  49c7457800000000     REX.W movq [r13+0x78] (external value (last_young_allocation_address)),0x0
+0x7394a3a000b1    71  488975e0             REX.W movq [rbp-0x20],rsi
+0x7394a3a000b5    75  493b65a0             REX.W cmpq rsp,[r13-0x60] (external value (StackGuard::address_of_jslimit()))
+0x7394a3a000b9    79  0f86f1000000         jna 0x7394a3a001b0  <+0x170>
+0x7394a3a000bf    7f  488b5518             REX.W movq rdx,[rbp+0x18]
+0x7394a3a000c3    83  f6c201               testb rdx,0x1
+0x7394a3a000c6    86  0f850e000000         jnz 0x7394a3a000da  <+0x9a>
+0x7394a3a000cc    8c  488bca               REX.W movq rcx,rdx
+0x7394a3a000cf    8f  d1f9                 sarl rcx,1
+0x7394a3a000d1    91  c5832ac1             vcvtlsi2sd xmm0,xmm15,rcx
+0x7394a3a000d5    95  e947000000           jmp 0x7394a3a00121  <+0xe1>
+0x7394a3a000da    9a  8b4aff               movl rcx,[rdx-0x1]
+0x7394a3a000dd    9d  41baffffffff         movl r10,0xffffffff
+0x7394a3a000e3    a3  493bca               REX.W cmpq rcx,r10
+0x7394a3a000e6    a6  760d                 jna 0x7394a3a000f5  <+0xb5>
+0x7394a3a000e8    a8  ba02000000           movl rdx,0x2
+0x7394a3a000ed    ad  41ff9510640000       call [r13+0x6410]
+0x7394a3a000f4    b4  cc                   int3l
+0x7394a3a000f5    b5  81e9ed040000         subl rcx,0x4ed
+0x7394a3a000fb    bb  41baffffffff         movl r10,0xffffffff
+0x7394a3a00101    c1  493bca               REX.W cmpq rcx,r10
+0x7394a3a00104    c4  760d                 jna 0x7394a3a00113  <+0xd3>
+0x7394a3a00106    c6  ba02000000           movl rdx,0x2
+0x7394a3a0010b    cb  41ff9510640000       call [r13+0x6410]
+0x7394a3a00112    d2  cc                   int3l
+0x7394a3a00113    d3  83f928               cmpl rcx,0x28
+0x7394a3a00116    d6  0f87be000000         ja 0x7394a3a001da  <+0x19a>
+0x7394a3a0011c    dc  c5fb104203           vmovsd xmm0,[rdx+0x3]
+0x7394a3a00121    e1  488b4d20             REX.W movq rcx,[rbp+0x20]
+0x7394a3a00125    e5  f6c101               testb rcx,0x1
+0x7394a3a00128    e8  0f850b000000         jnz 0x7394a3a00139  <+0xf9>
+0x7394a3a0012e    ee  d1f9                 sarl rcx,1
+0x7394a3a00130    f0  c5832ac9             vcvtlsi2sd xmm1,xmm15,rcx
+0x7394a3a00134    f4  e947000000           jmp 0x7394a3a00180  <+0x140>
+0x7394a3a00139    f9  8b79ff               movl rdi,[rcx-0x1]
+0x7394a3a0013c    fc  41baffffffff         movl r10,0xffffffff
+0x7394a3a00142   102  493bfa               REX.W cmpq rdi,r10
+0x7394a3a00145   105  760d                 jna 0x7394a3a00154  <+0x114>
+0x7394a3a00147   107  ba02000000           movl rdx,0x2
+0x7394a3a0014c   10c  41ff9510640000       call [r13+0x6410]
+0x7394a3a00153   113  cc                   int3l
+0x7394a3a00154   114  81efed040000         subl rdi,0x4ed
+0x7394a3a0015a   11a  41baffffffff         movl r10,0xffffffff
+0x7394a3a00160   120  493bfa               REX.W cmpq rdi,r10
+0x7394a3a00163   123  760d                 jna 0x7394a3a00172  <+0x132>
+0x7394a3a00165   125  ba02000000           movl rdx,0x2
+0x7394a3a0016a   12a  41ff9510640000       call [r13+0x6410]
+0x7394a3a00171   131  cc                   int3l
+0x7394a3a00172   132  83ff28               cmpl rdi,0x28
+0x7394a3a00175   135  0f8763000000         ja 0x7394a3a001de  <+0x19e>
+0x7394a3a0017b   13b  c5fb104903           vmovsd xmm1,[rcx+0x3]
+0x7394a3a00180   140  c5f92ec8             vucomisd xmm1,xmm0
+0x7394a3a00184   144  7a06                 jpe 0x7394a3a0018c  <+0x14c>
+0x7394a3a00186   146  0f841e000000         jz 0x7394a3a001aa  <+0x16a>
+0x7394a3a0018c   14c  498d4655             REX.W leaq rax,[r14+0x55]
+0x7394a3a00190   150  488b4de8             REX.W movq rcx,[rbp-0x18]
+0x7394a3a00194   154  488be5               REX.W movq rsp,rbp
+0x7394a3a00197   157  5d                   pop rbp
+0x7394a3a00198   158  4883f903             REX.W cmpq rcx,0x3
+0x7394a3a0019c   15c  7f03                 jg 0x7394a3a001a1  <+0x161>
+0x7394a3a0019e   15e  c21800               ret 0x18
+0x7394a3a001a1   161  415a                 pop r10
+0x7394a3a001a3   163  488d24cc             REX.W leaq rsp,[rsp+rcx*8]
+0x7394a3a001a7   167  4152                 push r10
+0x7394a3a001a9   169  c3                   retl
+0x7394a3a001aa   16a  498d4671             REX.W leaq rax,[r14+0x71]
+0x7394a3a001ae   16e  ebe0                 jmp 0x7394a3a00190  <+0x150>
+0x7394a3a001b0   170  ba30000000           movl rdx,0x30
+0x7394a3a001b5   175  52                   push rdx
+0x7394a3a001b6   176  48bba0647be194730000 REX.W movq rbx,0x7394e17b64a0    ;; external reference (Runtime::StackGuardWithGap)
+0x7394a3a001c0   180  b801000000           movl rax,0x1
+0x7394a3a001c5   185  48befd530001f72f0000 REX.W movq rsi,0x2ff7010053fd    ;; object: 0x2ff7010053fd <NativeContext[308]>
+0x7394a3a001cf   18f  e82c03843b           call 0x7394df240500  (CEntry_Return1_ArgvOnStack_NoBuiltinExit)    ;; near builtin entry
+0x7394a3a001d4   194  e9e6feffff           jmp 0x7394a3a000bf  <+0x7f>
+0x7394a3a001d9   199  90                   nop
+0x7394a3a001da   19a  41ff55d8             call [r13-0x28] (external value (IsolateData::builtin_tier0_entry_table_))    ;; debug: deopt position, script offset '3f'
+                                                             ;; debug: deopt position, inlining id 'ffffffff'
+                                                             ;; debug: deopt reason 'not a Number or Boolean'
+                                                             ;; debug: deopt index 0
+                                                             ;; debug: deopt node id 30
+0x7394a3a001de   19e  41ff55d8             call [r13-0x28] (external value (IsolateData::builtin_tier0_entry_table_))    ;; debug: deopt position, script offset '3f'
+                                                             ;; debug: deopt position, inlining id 'ffffffff'
+                                                             ;; debug: deopt reason 'not a Number or Boolean'
+                                                             ;; debug: deopt index 1
+                                                             ;; debug: deopt node id 43
+0x7394a3a001e2   1a2  41ff55e0             call [r13-0x20]    ;; debug: deopt position, script offset '29'
+                                                             ;; debug: deopt position, inlining id 'ffffffff'
+                                                             ;; debug: deopt reason '(unknown)'
+                                                             ;; debug: deopt index 2
+                                                             ;; debug: deopt node id 17
+0x7394a3a001e6   1a6  6690                 nop
+
+Source positions:
+ pc offset  position
+        69        41
+        7f        63
+       140        68
+       170        41
+
+Inlined functions (count = 0)
+
+Deoptimization Input Data (deopt points = 3)
+ index  bytecode-offset  node-id    pc
+     0                2       48    NA 
+     1                2       67    NA 
+     2               -1       23   194 
+
+Safepoints (stack slots = 6, byte size = 14)
+0x7394a3a001d4    194  slots (sp->fp): 100000  deopt      2 trampoline:    1a2
+
+RelocInfo (size = 58)
+0x7394a3a001b8  external reference (Runtime::StackGuardWithGap)  (0x7394e17b64a0)
+0x7394a3a001c7  full embedded object  (0x2ff7010053fd <NativeContext[134]>)
+0x7394a3a001d0  near builtin entry
+0x7394a3a001de  deopt script offset  (3f)
+0x7394a3a001de  deopt inlining id  (ffffffffffffffff)
+0x7394a3a001de  deopt reason  (not a Number or Boolean)
+0x7394a3a001de  deopt index
+0x7394a3a001de  deopt node id
+0x7394a3a001e2  deopt script offset  (3f)
+0x7394a3a001e2  deopt inlining id  (ffffffffffffffff)
+0x7394a3a001e2  deopt reason  (not a Number or Boolean)
+0x7394a3a001e2  deopt index
+0x7394a3a001e2  deopt node id
+0x7394a3a001e6  deopt script offset  (29)
+0x7394a3a001e6  deopt inlining id  (ffffffffffffffff)
+0x7394a3a001e6  deopt reason  ((unknown))
+0x7394a3a001e6  deopt index
+0x7394a3a001e6  deopt node id
+
+--- End code ---
+---------------------------------------------------
+Finished compiling method op_200 using TurboFan
+V8 is running with developer-only features enabled. Stability and security will suffer.

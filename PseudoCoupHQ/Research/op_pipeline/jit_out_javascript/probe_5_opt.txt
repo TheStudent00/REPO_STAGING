@@ -1,0 +1,267 @@
+---------------------------------------------------
+Begin compiling method op_5 using TurboFan
+--- Raw source ---
+(a) {
+    return ~a;
+}
+
+
+--- Optimized code ---
+optimization_id = 0
+source_position = 35
+kind = TURBOFAN_JS
+name = op_5
+compiler = turbofan
+address = 0x318601000279
+
+Instructions (size = 868)
+0x728ce0000040     0  488d1df9ffffff       REX.W leaq rbx,[rip+0xfffffff9]
+0x728ce0000047     7  483bd9               REX.W cmpq rbx,rcx
+0x728ce000004a     a  740d                 jz 0x728ce0000059  <+0x19>
+0x728ce000004c     c  ba92000000           movl rdx,0x92
+0x728ce0000051    11  41ff9510640000       call [r13+0x6410]
+0x728ce0000058    18  cc                   int3l
+0x728ce0000059    19  4d8b95d0020000       REX.W movq r10,[r13+0x2d0] (external value (IsolateData::js_dispatch_table_))
+0x728ce0000060    20  498bdf               REX.W movq rbx,r15
+0x728ce0000063    23  c1eb08               shrl rbx,8
+0x728ce0000066    26  c1e304               shll rbx,4
+0x728ce0000069    29  410fb75c1a08         movzxwl rbx,[r10+rbx*1+0x8]
+0x728ce000006f    2f  83fb02               cmpl rbx,0x2
+0x728ce0000072    32  740d                 jz 0x728ce0000081  <+0x41>
+0x728ce0000074    34  ba96000000           movl rdx,0x96
+0x728ce0000079    39  41ff9510640000       call [r13+0x6410]
+0x728ce0000080    40  cc                   int3l
+0x728ce0000081    41  8b59f0               movl rbx,[rcx-0x10]
+0x728ce0000084    44  490b9d98020000       REX.W orq rbx,[r13+0x298] (external value (IsolateData::trusted_cage_base_))
+0x728ce000008b    4b  f6432380             testb [rbx+0x23],0x80
+0x728ce000008f    4f  740d                 jz 0x728ce000009e  <+0x5e>
+0x728ce0000091    51  ba26000000           movl rdx,0x26
+0x728ce0000096    56  41ff9510640000       call [r13+0x6410]
+0x728ce000009d    5d  cc                   int3l
+0x728ce000009e    5e  55                   push rbp
+0x728ce000009f    5f  488bec               REX.W movq rbp,rsp
+0x728ce00000a2    62  56                   push rsi
+0x728ce00000a3    63  57                   push rdi
+0x728ce00000a4    64  50                   push rax
+0x728ce00000a5    65  4883ec08             REX.W subq rsp,0x8
+0x728ce00000a9    69  49c7457800000000     REX.W movq [r13+0x78] (external value (last_young_allocation_address)),0x0
+0x728ce00000b1    71  493b65a0             REX.W cmpq rsp,[r13-0x60] (external value (StackGuard::address_of_jslimit()))
+0x728ce00000b5    75  0f863f000000         jna 0x728ce00000fa  <+0xba>
+0x728ce00000bb    7b  488b4d18             REX.W movq rcx,[rbp+0x18]
+0x728ce00000bf    7f  d1f9                 sarl rcx,1
+0x728ce00000c1    81  488b7d18             REX.W movq rdi,[rbp+0x18]
+0x728ce00000c5    85  40f6c701             testb rdi,0x1
+0x728ce00000c9    89  0f855c000000         jnz 0x728ce000012b  <+0xeb>
+0x728ce00000cf    8f  83f1ff               xorl rcx,0xff
+0x728ce00000d2    92  488bf9               REX.W movq rdi,rcx
+0x728ce00000d5    95  03f9                 addl rdi,rcx
+0x728ce00000d7    97  0f80af000000         jo 0x728ce000018c  <+0x14c>
+0x728ce00000dd    9d  488bc7               REX.W movq rax,rdi
+0x728ce00000e0    a0  488b4de8             REX.W movq rcx,[rbp-0x18]
+0x728ce00000e4    a4  488be5               REX.W movq rsp,rbp
+0x728ce00000e7    a7  5d                   pop rbp
+0x728ce00000e8    a8  4883f902             REX.W cmpq rcx,0x2
+0x728ce00000ec    ac  7f03                 jg 0x728ce00000f1  <+0xb1>
+0x728ce00000ee    ae  c21000               ret 0x10
+0x728ce00000f1    b1  415a                 pop r10
+0x728ce00000f3    b3  488d24cc             REX.W leaq rsp,[rsp+rcx*8]
+0x728ce00000f7    b7  4152                 push r10
+0x728ce00000f9    b9  c3                   retl
+0x728ce00000fa    ba  b930000000           movl rcx,0x30
+0x728ce00000ff    bf  51                   push rcx
+0x728ce0000100    c0  488975e0             REX.W movq [rbp-0x20],rsi
+0x728ce0000104    c4  48bba0641bbf8c720000 REX.W movq rbx,0x728cbf1b64a0    ;; external reference (Runtime::StackGuardWithGap)
+0x728ce000010e    ce  b801000000           movl rax,0x1
+0x728ce0000113    d3  48b9fd530001c33c0000 REX.W movq rcx,0x3cc3010053fd    ;; object: 0x3cc3010053fd <NativeContext[308]>
+0x728ce000011d    dd  488bf1               REX.W movq rsi,rcx
+0x728ce0000120    e0  e8db03c4dc           call 0x728cbcc40500  (CEntry_Return1_ArgvOnStack_NoBuiltinExit)    ;; near builtin entry
+0x728ce0000125    e5  488b75e0             REX.W movq rsi,[rbp-0x20]
+0x728ce0000129    e9  eb90                 jmp 0x728ce00000bb  <+0x7b>
+0x728ce000012b    eb  8b4fff               movl rcx,[rdi-0x1]
+0x728ce000012e    ee  41baffffffff         movl r10,0xffffffff
+0x728ce0000134    f4  493bca               REX.W cmpq rcx,r10
+0x728ce0000137    f7  760d                 jna 0x728ce0000146  <+0x106>
+0x728ce0000139    f9  ba02000000           movl rdx,0x2
+0x728ce000013e    fe  41ff9510640000       call [r13+0x6410]
+0x728ce0000145   105  cc                   int3l
+0x728ce0000146   106  81e99d040000         subl rcx,0x49d
+0x728ce000014c   10c  41baffffffff         movl r10,0xffffffff
+0x728ce0000152   112  493bca               REX.W cmpq rcx,r10
+0x728ce0000155   115  760d                 jna 0x728ce0000164  <+0x124>
+0x728ce0000157   117  ba02000000           movl rdx,0x2
+0x728ce000015c   11c  41ff9510640000       call [r13+0x6410]
+0x728ce0000163   123  cc                   int3l
+0x728ce0000164   124  488975e0             REX.W movq [rbp-0x20],rsi
+0x728ce0000168   128  83f978               cmpl rcx,0x78
+0x728ce000016b   12b  0f8728020000         ja 0x728ce0000399  <+0x359>
+0x728ce0000171   131  c5fb104703           vmovsd xmm0,[rdi+0x3]
+0x728ce0000176   136  c4e1fb2cc8           vcvttsd2siq rcx,xmm0
+0x728ce000017b   13b  4883f901             REX.W cmpq rcx,0x1
+0x728ce000017f   13f  0f80f9010000         jo 0x728ce000037e  <+0x33e>
+0x728ce0000185   145  8bc9                 movl rcx,rcx
+0x728ce0000187   147  e943ffffff           jmp 0x728ce00000cf  <+0x8f>
+0x728ce000018c   14c  c5832ac1             vcvtlsi2sd xmm0,xmm15,rcx
+0x728ce0000190   150  498b4d50             REX.W movq rcx,[r13+0x50] (external value (IsolateData::new_allocation_info_top_address()))
+0x728ce0000194   154  c5fb1145e0           vmovsd [rbp-0x20],xmm0
+0x728ce0000199   159  488d790c             REX.W leaq rdi,[rcx+0xc]
+0x728ce000019d   15d  49397d58             REX.W cmpq [r13+0x58] (external value (IsolateData::new_allocation_info_limit_address())),rdi
+0x728ce00001a1   161  0f8713000000         ja 0x728ce00001ba  <+0x17a>
+0x728ce00001a7   167  ba0c000000           movl rdx,0xc
+0x728ce00001ac   16c  e80f8d2ddc           call 0x728cbc2d8ec0  (AllocateInYoungGeneration)    ;; near builtin entry
+0x728ce00001b1   171  488d48ff             REX.W leaq rcx,[rax-0x1]
+0x728ce00001b5   175  c5fb1045e0           vmovsd xmm0,[rbp-0x20]
+0x728ce00001ba   17a  49894d78             REX.W movq [r13+0x78] (external value (last_young_allocation_address)),rcx
+0x728ce00001be   17e  488d790c             REX.W leaq rdi,[rcx+0xc]
+0x728ce00001c2   182  49897d50             REX.W movq [r13+0x50] (external value (IsolateData::new_allocation_info_top_address())),rdi
+0x728ce00001c6   186  4883c101             REX.W addq rcx,0x1
+0x728ce00001ca   18a  bf15050000           movl rdi,0x515
+0x728ce00001cf   18f  81ff00000001         cmpl rdi,0x1000000
+0x728ce00001d5   195  0f820a000000         jc 0x728ce00001e5  <+0x1a5>
+0x728ce00001db   19b  40f6c701             testb rdi,0x1
+0x728ce00001df   19f  0f8510000000         jnz 0x728ce00001f5  <+0x1b5>
+0x728ce00001e5   1a5  8979ff               movl [rcx-0x1],rdi
+0x728ce00001e8   1a8  c5fb114103           vmovsd [rcx+0x3],xmm0
+0x728ce00001ed   1ad  488bc1               REX.W movq rax,rcx
+0x728ce00001f0   1b0  e9ebfeffff           jmp 0x728ce00000e0  <+0xa0>
+0x728ce00001f5   1b5  8bff                 movl rdi,rdi
+0x728ce00001f7   1b7  490bfe               REX.W orq rdi,r14
+0x728ce00001fa   1ba  4c8d41ff             REX.W leaq r8,[rcx-0x1]
+0x728ce00001fe   1be  4d3b4578             REX.W cmpq r8,[r13+0x78] (external value (last_young_allocation_address))
+0x728ce0000202   1c2  74e1                 jz 0x728ce00001e5  <+0x1a5>
+0x728ce0000204   1c4  81ff00000001         cmpl rdi,0x1000000
+0x728ce000020a   1ca  72d9                 jc 0x728ce00001e5  <+0x1a5>
+0x728ce000020c   1cc  4d8b4578             REX.W movq r8,[r13+0x78] (external value (last_young_allocation_address))
+0x728ce0000210   1d0  4d3b4548             REX.W cmpq r8,[r13+0x48] (external value (IsolateData::new_allocation_info_))
+0x728ce0000214   1d4  0f820f000000         jc 0x728ce0000229  <+0x1e9>
+0x728ce000021a   1da  4c3bc1               REX.W cmpq r8,rcx
+0x728ce000021d   1dd  0f8306000000         jnc 0x728ce0000229  <+0x1e9>
+0x728ce0000223   1e3  493b4d50             REX.W cmpq rcx,[r13+0x50] (external value (IsolateData::new_allocation_info_top_address()))
+0x728ce0000227   1e7  72bc                 jc 0x728ce00001e5  <+0x1a5>
+0x728ce0000229   1e9  50                   push rax
+0x728ce000022a   1ea  51                   push rcx
+0x728ce000022b   1eb  52                   push rdx
+0x728ce000022c   1ec  56                   push rsi
+0x728ce000022d   1ed  57                   push rdi
+0x728ce000022e   1ee  4150                 push r8
+0x728ce0000230   1f0  4151                 push r9
+0x728ce0000232   1f2  4152                 push r10
+0x728ce0000234   1f4  4153                 push r11
+0x728ce0000236   1f6  4881ecf0000000       REX.W subq rsp,0xf0
+0x728ce000023d   1fd  c5fa7f0424           vmovdqu [rsp],xmm0
+0x728ce0000242   202  c5fa7f4c2410         vmovdqu [rsp+0x10],xmm1
+0x728ce0000248   208  c5fa7f542420         vmovdqu [rsp+0x20],xmm2
+0x728ce000024e   20e  c5fa7f5c2430         vmovdqu [rsp+0x30],xmm3
+0x728ce0000254   214  c5fa7f642440         vmovdqu [rsp+0x40],xmm4
+0x728ce000025a   21a  c5fa7f6c2450         vmovdqu [rsp+0x50],xmm5
+0x728ce0000260   220  c5fa7f742460         vmovdqu [rsp+0x60],xmm6
+0x728ce0000266   226  c5fa7f7c2470         vmovdqu [rsp+0x70],xmm7
+0x728ce000026c   22c  c57a7f842480000000   vmovdqu [rsp+0x80],xmm8
+0x728ce0000275   235  c57a7f8c2490000000   vmovdqu [rsp+0x90],xmm9
+0x728ce000027e   23e  c57a7f9424a0000000   vmovdqu [rsp+0xa0],xmm10
+0x728ce0000287   247  c57a7f9c24b0000000   vmovdqu [rsp+0xb0],xmm11
+0x728ce0000290   250  c57a7fa424c0000000   vmovdqu [rsp+0xc0],xmm12
+0x728ce0000299   259  c57a7fac24d0000000   vmovdqu [rsp+0xd0],xmm13
+0x728ce00002a2   262  c57a7fb424e0000000   vmovdqu [rsp+0xe0],xmm14
+0x728ce00002ab   26b  488bf7               REX.W movq rsi,rdi
+0x728ce00002ae   26e  488bf9               REX.W movq rdi,rcx
+0x728ce00002b1   271  4c8bd4               REX.W movq r10,rsp
+0x728ce00002b4   274  4883ec08             REX.W subq rsp,0x8
+0x728ce00002b8   278  4883e4f0             REX.W andq rsp,0xf0
+0x728ce00002bc   27c  4c891424             REX.W movq [rsp],r10
+0x728ce00002c0   280  48b8c0275fbe8c720000 REX.W movq rax,0x728cbe5f27c0    ;; external reference (Heap::VerifySkippedWriteBarrier)
+0x728ce00002ca   28a  40f6c40f             testb rsp,0xf
+0x728ce00002ce   28e  7401                 jz 0x728ce00002d1  <+0x291>
+0x728ce00002d0   290  cc                   int3l
+0x728ce00002d1   291  4c8d1510000000       REX.W leaq r10,[rip+0x10]
+0x728ce00002d8   298  4d8995a8000000       REX.W movq [r13+0xa8] (external value (IsolateData::fast_c_call_caller_pc_)),r10
+0x728ce00002df   29f  4989adb0000000       REX.W movq [r13+0xb0] (external value (IsolateData::fast_c_call_caller_fp_)),rbp
+0x728ce00002e6   2a6  ffd0                 call rax
+0x728ce00002e8   2a8  488b2424             REX.W movq rsp,[rsp]
+0x728ce00002ec   2ac  49c785b000000000000000 REX.W movq [r13+0xb0] (external value (IsolateData::fast_c_call_caller_fp_)),0x0
+0x728ce00002f7   2b7  c5fa6f0424           vmovdqu xmm0,[rsp]
+0x728ce00002fc   2bc  c5fa6f4c2410         vmovdqu xmm1,[rsp+0x10]
+0x728ce0000302   2c2  c5fa6f542420         vmovdqu xmm2,[rsp+0x20]
+0x728ce0000308   2c8  c5fa6f5c2430         vmovdqu xmm3,[rsp+0x30]
+0x728ce000030e   2ce  c5fa6f642440         vmovdqu xmm4,[rsp+0x40]
+0x728ce0000314   2d4  c5fa6f6c2450         vmovdqu xmm5,[rsp+0x50]
+0x728ce000031a   2da  c5fa6f742460         vmovdqu xmm6,[rsp+0x60]
+0x728ce0000320   2e0  c5fa6f7c2470         vmovdqu xmm7,[rsp+0x70]
+0x728ce0000326   2e6  c57a6f842480000000   vmovdqu xmm8,[rsp+0x80]
+0x728ce000032f   2ef  c57a6f8c2490000000   vmovdqu xmm9,[rsp+0x90]
+0x728ce0000338   2f8  c57a6f9424a0000000   vmovdqu xmm10,[rsp+0xa0]
+0x728ce0000341   301  c57a6f9c24b0000000   vmovdqu xmm11,[rsp+0xb0]
+0x728ce000034a   30a  c57a6fa424c0000000   vmovdqu xmm12,[rsp+0xc0]
+0x728ce0000353   313  c57a6fac24d0000000   vmovdqu xmm13,[rsp+0xd0]
+0x728ce000035c   31c  c57a6fb424e0000000   vmovdqu xmm14,[rsp+0xe0]
+0x728ce0000365   325  4881c4f0000000       REX.W addq rsp,0xf0
+0x728ce000036c   32c  415b                 pop r11
+0x728ce000036e   32e  415a                 pop r10
+0x728ce0000370   330  4159                 pop r9
+0x728ce0000372   332  4158                 pop r8
+0x728ce0000374   334  5f                   pop rdi
+0x728ce0000375   335  5e                   pop rsi
+0x728ce0000376   336  5a                   pop rdx
+0x728ce0000377   337  59                   pop rcx
+0x728ce0000378   338  58                   pop rax
+0x728ce0000379   339  e967feffff           jmp 0x728ce00001e5  <+0x1a5>
+0x728ce000037e   33e  4883ec08             REX.W subq rsp,0x8
+0x728ce0000382   342  c5fb110424           vmovsd [rsp],xmm0
+0x728ce0000387   347  e8f4bbc4dc           call 0x728cbcc4bf80  (DoubleToI)    ;; near builtin entry
+0x728ce000038c   34c  8b0c24               movl rcx,[rsp]
+0x728ce000038f   34f  4883c408             REX.W addq rsp,0x8
+0x728ce0000393   353  e9edfdffff           jmp 0x728ce0000185  <+0x145>
+0x728ce0000398   358  90                   nop
+0x728ce0000399   359  41ff55d8             call [r13-0x28] (external value (IsolateData::builtin_tier0_entry_table_))    ;; debug: deopt position, script offset '34'
+                                                             ;; debug: deopt position, inlining id 'ffffffff'
+                                                             ;; debug: deopt reason 'not a Number or Oddball'
+                                                             ;; debug: deopt index 0
+                                                             ;; debug: deopt node id 2d
+0x728ce000039d   35d  41ff55e0             call [r13-0x20]    ;; debug: deopt position, script offset '23'
+                                                             ;; debug: deopt position, inlining id 'ffffffff'
+                                                             ;; debug: deopt reason '(unknown)'
+                                                             ;; debug: deopt index 1
+                                                             ;; debug: deopt node id 15
+0x728ce00003a1   361  0f1f00               nop
+
+Source positions:
+ pc offset  position
+        69        35
+        7b        52
+        92        55
+        ba        35
+        eb        52
+       14c        55
+
+Inlined functions (count = 0)
+
+Deoptimization Input Data (deopt points = 2)
+ index  bytecode-offset  node-id    pc
+     0                2       45    NA 
+     1               -1       21    e5 
+
+Safepoints (stack slots = 6, byte size = 18)
+0x728ce0000125     e5  slots (sp->fp): 100000  deopt      1 trampoline:    35d
+0x728ce00001b1    171  slots (sp->fp): 000000
+
+RelocInfo (size = 73)
+0x728ce0000106  external reference (Runtime::StackGuardWithGap)  (0x728cbf1b64a0)
+0x728ce0000115  full embedded object  (0x3cc3010053fd <NativeContext[308]>)
+0x728ce0000121  near builtin entry
+0x728ce00001ad  near builtin entry
+0x728ce00002c2  external reference (Heap::VerifySkippedWriteBarrier)  (0x728cbe5f27c0)
+0x728ce0000388  near builtin entry
+0x728ce000039d  deopt script offset  (52)
+0x728ce000039d  deopt inlining id  (-1)
+0x728ce000039d  deopt reason  (not a Number or Oddball)
+0x728ce000039d  deopt index
+0x728ce000039d  deopt node id
+0x728ce00003a1  deopt script offset  (35)
+0x728ce00003a1  deopt inlining id  (-1)
+0x728ce00003a1  deopt reason  ((unknown))
+0x728ce00003a1  deopt index
+0x728ce00003a1  deopt node id
+
+--- End code ---
+---------------------------------------------------
+Finished compiling method op_5 using TurboFan
+V8 is running with developer-only features enabled. Stability and security will suffer.

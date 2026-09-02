@@ -1,0 +1,38 @@
+  // dict probe bodies - java (HashMap: order NOT promised; null on a miss).
+  static java.util.Map<String, String> mkd() {
+    java.util.Map<String, String> d = new java.util.HashMap<String, String>();
+    d.put("k", "v1"); return d;
+  }
+  static String f_dictU1_a() { return mkd().get("k"); }
+  static String f_dictU2_a() {
+    java.util.Map<String, String> d = new java.util.HashMap<String, String>();
+    d.put("k", "v1"); d.put("k", "v2"); return d.get("k");
+  }
+  static String f_dictU3_a() { java.util.Map<String, String> d = mkd(); d.remove("k"); return fmtb(d.containsKey("k")); }
+  static String f_dictU4_a() {
+    java.util.Map<String, Integer> d = new java.util.HashMap<String, Integer>();
+    d.put("a", 1); d.put("b", 2); d.put("c", 3); return Integer.toString(d.size());
+  }
+  static String f_Fd1_b() {
+    java.util.Map<Integer, String> d = new java.util.HashMap<Integer, String>();
+    d.put(1, "v"); return d.get(1);
+  }
+  static String f_Fd2_a() {
+    java.util.Map<String, Integer> d = new java.util.HashMap<String, Integer>();
+    d.put("z", 1); d.put("a", 1); d.put("m", 1); return String.join(",", d.keySet());
+  }
+  static String f_Fd3_a() { return fmts(String.valueOf(mkd().get("nope"))); }
+  static String f_Fd4_a() {
+    java.util.Map<String, Integer> d = new java.util.HashMap<String, Integer>();
+    d.put("a",1); d.put("b",2); d.put("c",3); d.put("d",4); d.put("e",5);
+    for (String k : d.keySet()) { if (k.equals("c")) { d.remove(k); } }
+    return "ok";
+  }
+  static String f_Fd5_a() {
+    java.util.Map<String, String> d = new java.util.HashMap<String, String>();
+    d.put(new String("k"), "p"); d.put(new String("k"), "q"); return Integer.toString(d.size());
+  }
+  static String f_Fl9d_a() {
+    java.util.Map<String, String> a = mkd(); java.util.Map<String, String> b = a;
+    b.put("k", "99"); return a.get("k");
+  }

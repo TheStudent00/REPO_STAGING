@@ -1,0 +1,108 @@
+{
+  "language": "swift",
+  "layer": 2,
+  "purpose": "The ways a running swift program can HOLD layer-1 content. Not layer 1 (the data is fixed), not layer 3 (no operations beyond load-and-read-back), not the type system.",
+  "reference": "language knowledge, checked against ../type_vocabulary/raw/swift.types.json as a candidate checklist only (superseded node; not a decision instrument).",
+  "probe_style": "probe",
+  "spell": {
+    "nothing": {"null": "nil"},
+    "truth": {"true": "true", "false": "false"},
+    "whole": {
+      "base_zero": "0",
+      "base_42": "42",
+      "i64max": "9223372036854775807",
+      "i64max_plus1": "9223372036854775808",
+      "p53_plus1": "9007199254740993",
+      "u64max": "18446744073709551615"
+    },
+    "fractional": {
+      "base_1_5": "1.5",
+      "base_pi": "3.141592653589793",
+      "negzero": "-0.0",
+      "nan": "Double.nan",
+      "inf": "Double.infinity",
+      "point1": "0.1"
+    },
+    "text": {
+      "base_empty": "\"\"",
+      "base_hello": "\"hello\"",
+      "base_lines": "\"line one\\nline two\"",
+      "eacute": "\"\\u{00E9}\"",
+      "clef": "\"\\u{1D11E}\"",
+      "escapes": "\"quote \\\" backslash \\\\ tab\\there\""
+    }
+  },
+  "forms": {
+    "nothing": [
+      {"rep": "Optional (nil)", "spelling": "nil", "kind": "literal", "note": "absence spelled as a case of a two-case shape, so the hole has a declared wrapped kind.", "decl": "let v: Int64? = {V}", "read": "v == nil ? \"nil\" : String(v!)"},
+      {"rep": "Void", "spelling": "()", "kind": "literal", "note": "the empty tuple; a value carrying nothing, distinct from an absent value.", "spell_override": {"null": "()"}, "decl": "let v: Void = {V}", "read": "String(describing: v)"}
+    ],
+    "truth": [
+      {"rep": "Bool", "spelling": "true / false", "kind": "literal", "note": "two values, no numeric side; Swift refuses to treat Bool as an Int.", "decl": "let v: Bool = {V}", "read": "String(v)"}
+    ],
+    "whole": [
+      {"rep": "Int", "spelling": "42", "kind": "literal", "note": "platform word-width signed integer (64-bit here); the default whole-number holder.", "decl": "let v: Int = {V}", "read": "String(v)"},
+      {"rep": "Int32", "spelling": "42", "kind": "literal", "note": "signed 32-bit; the narrow end of the fixed-width camp.", "decl": "let v: Int32 = {V}", "read": "String(v)"},
+      {"rep": "UInt64", "spelling": "42", "kind": "literal", "note": "unsigned 64-bit; reaches u64 max, refuses anything below zero.", "decl": "let v: UInt64 = {V}", "read": "String(v)"},
+      {"rep": "Int64", "spelling": "42", "kind": "literal", "note": "signed 64-bit fixed width, explicit rather than platform-dependent like Int.", "decl": "let v: Int64 = {V}", "read": "String(v)"}
+    ],
+    "fractional": [
+      {"rep": "Double", "spelling": "1.5", "kind": "literal", "note": "IEEE double; the default fractional holder.", "decl": "let v: Double = {V}", "read": "String(v)"},
+      {"rep": "Float", "spelling": "1.5", "kind": "literal", "note": "IEEE single; holds every base value at lower precision.", "spell_override": {"nan": "Float.nan", "inf": "Float.infinity"}, "decl": "let v: Float = {V}", "read": "String(v)"}
+    ],
+    "text": [
+      {"rep": "String", "spelling": "\"hello\"", "kind": "literal", "note": "a run of unicode extended grapheme clusters; the default text holder.", "decl": "let v: String = {V}", "read": "v"},
+      {"rep": "[Character]", "spelling": "Array(\"hello\")", "kind": "constructor", "note": "text taken apart into grapheme clusters; a clef or an e-acute-plus-combining-mark can still be one element.", "decl": "let v: [Character] = Array({V})", "read": "String(v)"},
+      {"rep": "[UInt8]", "spelling": "Array(\"hello\".utf8)", "kind": "constructor", "note": "holds text only as utf-8 bytes; the grapheme clusters are gone until decoded.", "decl": "let v: [UInt8] = Array(({V}).utf8)", "read": "String(decoding: v, as: UTF8.self)"},
+      {"rep": "Substring", "spelling": "Substring(\"hello\")", "kind": "constructor", "note": "a view into a String's storage rather than an owned buffer; the literal form still needs a String to view.", "decl": "let v: Substring = Substring({V})", "read": "String(v)"}
+    ],
+    "sequence": [
+      {"rep": "Array", "spelling": "[1, 2, 3]", "kind": "literal", "note": "growable ordered run, one declared element kind.", "read": "String(describing: v)",
+       "probes": {"empty": "let v: [Int] = []", "base": "let v: [Int] = [1, 2, 3]", "strs": "let v: [String] = [\"a\", \"b\"]", "mixed": "let v: [Int] = [1, \"two\", 3.0, true, nil]", "bigint": "let v: [Int] = [9223372036854775808]"}},
+      {"rep": "ArraySlice", "spelling": "base[...]", "kind": "constructor", "note": "a window onto an existing array's storage, not a new buffer; length known at run time.", "read": "String(describing: v)",
+       "probes": {"empty": "let base0: [Int] = []\nlet v: ArraySlice<Int> = base0[...]", "base": "let base1: [Int] = [1, 2, 3]\nlet v: ArraySlice<Int> = base1[...]", "strs": "let base2: [String] = [\"a\", \"b\"]\nlet v: ArraySlice<String> = base2[...]", "mixed": "let base3: [Int] = [1, \"two\", 3.0, true, nil]\nlet v: ArraySlice<Int> = base3[...]", "bigint": "let base4: [Int] = [9223372036854775808]\nlet v: ArraySlice<Int> = base4[...]"}},
+      {"rep": "ContiguousArray", "spelling": "ContiguousArray([1, 2, 3])", "kind": "constructor", "note": "the same growable run with bridging to Objective-C ruled out; one declared element kind.", "read": "String(describing: v)",
+       "probes": {"empty": "let v: ContiguousArray<Int> = []", "base": "let v: ContiguousArray<Int> = [1, 2, 3]", "strs": "let v: ContiguousArray<String> = [\"a\", \"b\"]", "mixed": "let v: ContiguousArray<Int> = [1, \"two\", 3.0, true, nil]", "bigint": "let v: ContiguousArray<Int> = [9223372036854775808]"}},
+      {"rep": "tuple", "spelling": "(1, \"two\", 3.0)", "kind": "literal", "note": "fixed length, and each position may be a different kind; the swift sequence holder that takes the mixed row. A single-element tuple has no literal spelling at all — a trailing comma is a parse error, not a one-tuple.", "read": "String(describing: v)",
+       "probes": {"empty": "let v: () = ()", "base": "let v = (1, 2, 3)", "strs": "let v = (\"a\", \"b\")", "mixed": "let v = (1, \"two\", 3.0, true, Optional<Int>.none)", "bigint": "let v = (9223372036854775808,)"}},
+      {"rep": "Set", "spelling": "Set([1, 2, 3])", "kind": "constructor", "note": "holds the elements but not their order and not repeats; one declared, hashable element kind.", "read": "String(describing: v.sorted { String(describing: $0) < String(describing: $1) })",
+       "probes": {"empty": "let v: Set<Int> = []", "base": "let v: Set<Int> = [1, 2, 3]", "strs": "let v: Set<String> = [\"a\", \"b\"]", "mixed": "let v: Set<Int> = [1, \"two\", 3.0, true, nil]", "bigint": "let v: Set<Int> = [9223372036854775808]"}}
+    ],
+    "keyed": [
+      {"rep": "Dictionary", "spelling": "[\"a\": 1]", "kind": "literal", "note": "name to element, no order kept.", "read": "({ () -> String in let ks = v.keys.sorted(); return ks.joined(separator: \",\") + \"|\\(v.count)\" })()",
+       "probes": {"empty": "let v: [String: Int] = [:]", "flat": "let v: [String: Int] = [\"a\": 1, \"b\": 2, \"c\": 3]", "intlike": "let v: [String: String] = [\"1\": \"string-one-key\", \"b\": \"2\"]", "emptykey": "let v: [String: String] = [\"\": \"empty-string key\"]", "nested": "let v: [String: [String: [Int]]] = [\"outer\": [\"inner\": [1, 2]]]"}},
+      {"rep": "struct", "spelling": "struct R { var a: Int }; R(a: 1)", "kind": "constructor", "note": "names fixed when the shape is declared, not when the data arrives; swift allows the struct declaration right inside the probe, but the odd keys are still not spellable as property names.", "read": "String(describing: v)",
+       "probes": {"empty": "struct R0 {}\nlet v = R0()", "flat": "struct R3 { var a: Int; var b: Int; var c: Int }\nlet v = R3(a: 1, b: 2, c: 3)", "intlike": "struct RI { var 1: String; var b: Int }\nlet v = RI(1: \"string-one-key\", b: 2)", "emptykey": "struct RE { var : String }\nlet v = RE(: \"empty-string key\")", "nested": "struct RN { var outer: [String: [Int]] }\nlet v = RN(outer: [\"inner\": [1, 2]])"}},
+      {"rep": "class", "spelling": "class C { var a: Int }; C(a: 1)", "kind": "constructor", "note": "the reference-type field bag; same identifier refusal as the struct entry, but String(describing:) does surface the fields for a plain class where it only gave the type name for a C# class.", "read": "String(describing: v)",
+       "probes": {"empty": "class C0 {}\nlet v = C0()", "flat": "class C3 { var a: Int; var b: Int; var c: Int; init(a: Int, b: Int, c: Int) { self.a = a; self.b = b; self.c = c } }\nlet v = C3(a: 1, b: 2, c: 3)", "intlike": "class CI { var 1: String; var b: Int; init() { self.1 = \"string-one-key\"; self.b = 2 } }\nlet v = CI()", "emptykey": "class CE { var : String; init() { self. = \"empty-string key\" } }\nlet v = CE()", "nested": "class CN { var outer: [String: [Int]]; init(outer: [String: [Int]]) { self.outer = outer } }\nlet v = CN(outer: [\"inner\": [1, 2]])"}}
+    ],
+    "nesting": [
+      {"rep": "nested Array", "spelling": "[[1,2],[3,4]]", "kind": "literal", "note": "nesting by repeating the same holder; every level must carry the same declared kind.", "read": "String(describing: v)",
+       "probes": {"seq_in_seq": "let v: [[Int]] = [[1, 2], [3, 4]]", "seq_in_map": "let v: [String: [String: [Int]]] = [\"outer\": [\"inner\": [1, 2]]]", "mixed_depth": "let v: [[Int]] = [[1], [2, 3], []]"}},
+      {"rep": "[String: Any]", "spelling": "[\"outer\": [\"inner\": [1, 2]]]", "kind": "constructor", "note": "erases the value kind to Any; the one keyed holder that takes elements of mixed forms and mixed depths.", "read": "String(describing: v)",
+       "probes": {"seq_in_seq": "let v: [String: Any] = [\"a\": [[1, 2], [3, 4]]]", "seq_in_map": "let v: [String: Any] = [\"outer\": [\"inner\": [1, 2]]]", "mixed_depth": "let v: [String: Any] = [\"a\": [1, [2, [\"b\": [2, nil] as [Any?]]] as [Any]], \"c\": true]"}},
+      {"rep": "enum-based node", "spelling": "indirect enum Node { case whole(Int), seq([Node]), ... }", "kind": "constructor", "note": "a hand-written sum shape; the only swift holder that takes every layer-1 form in one element position, which is what mixed nesting needs. indirect lets a case hold the enum's own kind.", "read": "String(describing: v)",
+       "probes": {
+         "seq_in_seq": "indirect enum Node { case null, truth(Bool), whole(Int), text(String), seq([Node]), map([String: Node]) }\nlet v = Node.seq([Node.seq([Node.whole(1), Node.whole(2)]), Node.seq([Node.whole(3), Node.whole(4)])])",
+         "seq_in_map": "indirect enum Node { case null, truth(Bool), whole(Int), text(String), seq([Node]), map([String: Node]) }\nlet v = Node.map([\"outer\": Node.map([\"inner\": Node.seq([Node.whole(1), Node.whole(2)])])])",
+         "mixed_depth": "indirect enum Node { case null, truth(Bool), whole(Int), text(String), seq([Node]), map([String: Node]) }\nlet v = Node.seq([Node.whole(1), Node.seq([Node.whole(2), Node.map([\"k\": Node.text(\"t\")])]), Node.truth(true), Node.null])"}}
+    ],
+    "identity": [
+      {"rep": "struct value holder", "spelling": "struct Triple{...}; var v = [s, s]", "kind": "constructor", "note": "copy-on-write value semantics: two array positions start by sharing storage, but writing through one triggers a copy before the mutation, so the other position never sees it. A struct also has no reference identity, so even a bare equality check can only ever answer distinct. A struct is not allowed to store an instance of itself, so the cycle probe is a refused attempt.", "read": "r",
+       "probes": {
+         "shared": "struct Triple { var a: Int; var b: Int; var c: Int }\nlet s = Triple(a: 1, b: 2, c: 3)\nvar v = [s, s]\nv[0].a = 99\nlet r = (v[1].a == 99) ? \"shared\" : \"copied\"",
+         "diamond": "struct Triple { var a: Int }\nlet t = Triple(a: 7)\nlet v = [t, t]\nlet r = \"distinct\"",
+         "cycle": "struct Loop { var name: String; var selfRef: Loop }\nlet r = \"cycle\""}},
+      {"rep": "class reference holder", "spelling": "class Box{...}; let v = [s, s]", "kind": "constructor", "note": "reference types default to shared storage; === compares object identity directly, and an optional self-reference field can point back at its own instance.", "read": "r",
+       "probes": {
+         "shared": "class Box { var items: [Int]; init(_ i: [Int]) { items = i } }\nlet s = Box([1, 2, 3])\nlet v = [s, s]\nv[0].items.append(99)\nlet r = (v[1].items.last == 99 && v[0] === v[1]) ? \"shared\" : \"copied\"",
+         "diamond": "class Box { var items: [Int]; init(_ i: [Int]) { items = i } }\nlet t = Box([7])\nlet v = [t, t]\nlet r = (v[0] === v[1]) ? \"same\" : \"distinct\"",
+         "cycle": "class Node { var name: String; var selfRef: Node?; init(name: String) { self.name = name } }\nlet n = Node(name: \"loop\")\nn.selfRef = n\nlet r = (n.selfRef === n) ? \"cycle\" : \"no-cycle\""}},
+      {"rep": "array of class references", "spelling": "[Box] holding the same instance twice", "kind": "constructor", "note": "an Array of a class kind stores references, so two positions can name one object, and a class can even hold an array containing itself.", "read": "r",
+       "probes": {
+         "shared": "class Box { var items: [Int]; init(_ i: [Int]) { items = i } }\nlet s = Box([1, 2, 3])\nlet v: [Box] = [s, s]\nv[0].items.append(99)\nlet r = (v[1].items.last == 99 && v[0] === v[1]) ? \"shared\" : \"copied\"",
+         "diamond": "class Box { var items: [Int]; init(_ i: [Int]) { items = i } }\nlet t = Box([7])\nlet v: [Box] = [t, t]\nlet r = (v[0] === v[1]) ? \"same\" : \"distinct\"",
+         "cycle": "class ArrBox { var items: [ArrBox] = [] }\nlet a = ArrBox()\na.items = [a]\nlet r = (a.items[0] === a) ? \"cycle\" : \"no-cycle\""}}
+    ]
+  }
+}

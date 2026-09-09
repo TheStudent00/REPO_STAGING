@@ -4,14 +4,14 @@ One file, 32 KB.
 
 | file | came from |
 |---|---|
-| `pc_verdicts.json` | `<WORKSPACE_DIR>/PseudoCoup_v5/Designing/pc_verdicts.json` (historical) |
+| `pc_verdicts.json` | `~/Programming/PseudoCoup_v5/Designing/pc_verdicts.json` (historical) |
 
 sha256 at vendoring, 2026-07-31: `1c5f434bc57663f0...`
 
 ## What it is
 
 The intentions verdict data as R1 verified it. R1's report
-(`<WORKSPACE_DIR>/PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`)
+(`~/Programming/PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`)
 found no context-corruption artifacts, byte-identical regeneration,
 and 108/108 basis cells agreeing with probe ground truth.
 
@@ -28,7 +28,7 @@ suite broke immediately** — the deletion had been checked against
 PseudoCoup_v6's references and not against PseudoIR's.
 
 That is the dependency-on-a-past-project failure recorded in
-`<WORKSPACE_DIR>/PseudoCoup_v6/AgentMemory/02_decisions.md`, caught by
+`~/Programming/PseudoCoup_v6/AgentMemory/02_decisions.md`, caught by
 its own test rather than by review. The fix is the same one applied to
 the vendored compiler sources: copy the artifact in, so this repo
 passes on its own.

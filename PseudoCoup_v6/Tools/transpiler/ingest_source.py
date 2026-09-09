@@ -1,7 +1,7 @@
 """Run the four-stage ingress pipeline: parse -> census gate -> UR-AST -> ledger population.
 
 The framework of the settled plan node
-<WORKSPACE_DIR>/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_ingress.md.
+~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_ingress.md.
 An ingestor supplies ONLY: a grammar name, a node table (tree-sitter
 kind -> build rule), a justified census baseline, and optionally a
 type resolver. It cannot construct parsers, invent keys, or write
@@ -9,10 +9,10 @@ the ledger outside this framework — the historical bare-name
 violation is structurally impossible here.
 
 Stages:
-  1. parse            — T1 (<WORKSPACE_DIR>/PseudoCoup_v6/Tools/ledgerer/tree_sitter/)
+  1. parse            — T1 (~/Programming/PseudoCoup_v6/Tools/ledgerer/tree_sitter/)
   2. census + GATE    — T1 recorder; leftover kinds REFUSE ingestion
   3. UR-AST build     — the ingestor's node table, ids threaded in
-  4. ledger populate  — T2 (<WORKSPACE_DIR>/PseudoCoup_v6/Tools/ledgerer/),
+  4. ledger populate  — T2 (~/Programming/PseudoCoup_v6/Tools/ledgerer/),
                         semantic.type resolved or left "unresolvable"
 """
 import os

@@ -1,6 +1,6 @@
 # R4 — Runtime Ledgering / Flow-Graph / Walker Survey
 
-Date: 2026-07-28. Deep search across all of `<WORKSPACE_DIR>`
+Date: 2026-07-28. Deep search across all of `~/Programming`
 including archives, prompted by the owner's recall of advanced ledgering
 with runtime modeling and flow-graph visualization. Agent survey,
 read-based, line-cited. This report is the condensed record; ranked
@@ -9,7 +9,7 @@ relevance at the end.
 ## The find: three generations of runtime state-graph tooling
 
 ### Gen 3 (most advanced) — the WALKER suite
-`<WORKSPACE_DIR>/StressBot/RelevantProjects/WFL_MixingCenter/render/`
+`~/Programming/StressBot/RelevantProjects/WFL_MixingCenter/render/`
 
 - **`walker.py` (1,403 lines)** — builds a runtime STATE GRAPH from
   a live, driven app. Nodes = app states (content-addressed:

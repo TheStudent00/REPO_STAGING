@@ -49,7 +49,7 @@ RULINGS ABSORBED (the owner, 2026-08-13, post-draft discussion):
     discipline assumption a developer does not rely on silent
     precision loss, so it is carried for ingress fidelity and
     rarely chosen — modelled, not preferred.
-  - measured evidence: `<WORKSPACE_DIR>/PseudoCoupHQ/DevComms/log_064_twelve_language_fold_and_lattice.md`;
+  - measured evidence: `~/Programming/PseudoCoupHQ/DevComms/log_064_twelve_language_fold_and_lattice.md`;
     the cell is in `matrices_full_v2/php.plus.L1.csv`.
 - **cpp undefined signed overflow, ruled** (the owner, 2026-08-13):
   cpp integer safety is developer discipline, so — if a cpp
@@ -263,7 +263,7 @@ Fractures (integer's own operations — these stay):
 Everything above was hand-drafted 2026-08-13 and marked UNVERIFIED:
 the page was the harness's work order. The layer-3 campaign has since
 run — logs 024 through 037 in
-`<WORKSPACE_DIR>/PseudoCoupHQ/DevComms/`. This section carries what
+`~/Programming/PseudoCoupHQ/DevComms/`. This section carries what
 those runs PROVED that the sections above do not already say. Nothing
 stated above is repeated here.
 

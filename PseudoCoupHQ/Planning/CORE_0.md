@@ -42,7 +42,7 @@ sub_nodes:
 - [projects](node_0_0_projects/CORE_0_0_projects.md) — what each repo in the line is, and what stage it is at.
 - [exchange](node_0_1_exchange/CORE_0_1_exchange.md) — what crosses between PseudoCoup and PseudoIR, and why the bootstrap cycle stops.
 - [conventions](node_0_2_conventions/CORE_0_2_conventions.md) — the rules the work is done under, and where each one lives.
-- [research](node_0_3_research/CORE_0_3_research.md) — Line-wide research: questions that go beyond any specific PC version but whose answers the versions apply.
+- [research](node_0_3_research/CORE_0_3_research.md) — The master plan of PCHQ's research: the one node that states the objective every research project serves, assigns each project its contribution to that objective, orders the work between them, and holds the rulings all of them share.
 
 ## definition
 
@@ -58,19 +58,19 @@ into any of them.
 
 three, and these are the whole of it.
 
-- `<WORKSPACE_DIR>/PseudoCoup_v5` — being gutted and rebuilt as the
+- `~/Programming/PseudoCoup_v5` — being gutted and rebuilt as the
   Frankenstein transpiler and ledgerer. live for new work.
-- `<WORKSPACE_DIR>/PseudoCoup_v6` — the tool to transpile from source
+- `~/Programming/PseudoCoup_v6` — the tool to transpile from source
   languages into the hub. live for new work.
-- `<WORKSPACE_DIR>/PseudoIR` — the system the hub is constructed with.
+- `~/Programming/PseudoIR` — the system the hub is constructed with.
   live for new work.
 
-HQ reads and copies from anything in `<WORKSPACE_DIR>` it needs. only
+HQ reads and copies from anything in `~/Programming` it needs. only
 the three above take new work from here.
 
 *meta-note, not a repo entry: this tree conforms to the planning
-framework in `<WORKSPACE_DIR>/PlanPlan`, and the work is done under
-the communication protocol in `<WORKSPACE_DIR>/DevComms`. neither is
+framework in `~/Programming/PlanPlan`, and the work is done under
+the communication protocol in `~/Programming/DevComms`. neither is
 part of the line and neither is HQ's to change. access to both is per
 request.*
 
@@ -92,6 +92,6 @@ super-document and never contradict it.
 
 that is the point of extracting them here. before HQ existed the
 cycle text lived twice, in
-`<WORKSPACE_DIR>/PseudoCoup_v6/Planning/CORE_0.md` and
-`<WORKSPACE_DIR>/PseudoIR/Planning/CORE_0.md`, differing by a word,
+`~/Programming/PseudoCoup_v6/Planning/CORE_0.md` and
+`~/Programming/PseudoIR/Planning/CORE_0.md`, differing by a word,
 with nothing to say which was right.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The stencil/variant census — the automation, saved as an artifact.
 
-    python3 <WORKSPACE_DIR>/PseudoCoup_v5/Research/census_stencils.py <src_dir>...
+    python3 ~/Programming/PseudoCoup_v5/Research/census_stencils.py <src_dir>...
 
 Ran ephemerally in chat 2026-08-07 (produced the 95/58, 91/14, and
 120/33 numbers); saved at the owner's push that the pipeline must be
@@ -73,8 +73,8 @@ def census(src_dirs):
 
 
 def main():
-    src = sys.argv[1:] or ["<WORKSPACE_DIR>/Sources/rust/compiler/rustc_codegen_ssa",
-                           "<WORKSPACE_DIR>/Sources/rust/compiler/rustc_codegen_llvm"]
+    src = sys.argv[1:] or ["~/Programming/Sources/rust/compiler/rustc_codegen_ssa",
+                           "~/Programming/Sources/rust/compiler/rustc_codegen_llvm"]
     src = [pathlib.Path(s).expanduser() for s in src]
     files, rows = census(src)
     tally = collections.Counter(cls for _, _, cls in rows)

@@ -127,7 +127,7 @@ class LanguagePack
   table), so stencils and variant-role lists derived from it are
   complete BY CONSTRUCTION. this supersedes the earlier
   "census-generated, human-reviewed" design: the corpus census
-  (`<WORKSPACE_DIR>/PseudoCoup_v5/Research/census_stencils.py`)
+  (`~/Programming/PseudoCoup_v5/Research/census_stencils.py`)
   remains as frequency measurement and oracle test material only —
   it proves nothing about completeness and is not asked to.
 - **judges, not authors:** the reconstruction oracle (faithful
@@ -154,15 +154,15 @@ class LanguagePack
 ## harvest
 
 which Frankenstein parts land here. part numbers are
-`<WORKSPACE_DIR>/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
+`~/Programming/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
 §2; "addendum" is
-`<WORKSPACE_DIR>/PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`.
+`~/Programming/PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`.
 placements are draft commentary, not settled.
 
 - **2.1 primary key — the generation half.** ids are minted during
   the tree-sitter walk, and this node owns that walk. source: v0
   `idgen.py`
-  (`<WORKSPACE_DIR>/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py`,
+  (`~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py`,
   294 lines) — the top-down walk over "tree-sitter's own
   `node.children`, named AND anonymous alike", with
   `check_uniqueness` asserted at build. the id FIELD the walk fills
@@ -175,12 +175,12 @@ placements are draft commentary, not settled.
   design (grammars commit-pinned with provenance manifest; census
   byte-compared for deterministic regeneration; coverage partition
   total) — projected at
-  `<WORKSPACE_DIR>/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`.
+  `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`.
   grammar pinning is upstream of id stability (addendum §1a) and
   this node is its natural owner.
 - **the ingress-writer precedent** — type-aware mapping means this
   node is where semantic facts are first in hand. source precedent:
-  `<WORKSPACE_DIR>/PseudoCoup/pseudocoup/ingress/kotlin.py` (the
+  `~/Programming/PseudoCoup/pseudocoup/ingress/kotlin.py` (the
   tree-sitter walk that wrote both URNodes and ledger registries in
   one pass). settled 2026-08-02, on the definition/instance distinction: this
   node does NOT write ledger entries — it produces UR. the UR →

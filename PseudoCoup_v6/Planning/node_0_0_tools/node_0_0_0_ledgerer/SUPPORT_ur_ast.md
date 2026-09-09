@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — ur_ast
 
 projected 2026-07-30 from the previous plan, now archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_0_tools/node_0_0_1_ledger/CORE_0_0_1_ledger.md  (183 words)
@@ -156,6 +156,6 @@ the list above names nodes of the previous plan. they are no longer
 nodes; this is where their content sits now.
 
 - schema, keying — carried in this file, above.
-- integrity — `<WORKSPACE_DIR>/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_validation.md`
-- growth — `<WORKSPACE_DIR>/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_todos.md`
-- R4 — `<WORKSPACE_DIR>/PseudoCoup_v6/Research/r4_runtime_ledger_survey/REPORT.md`
+- integrity — `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_validation.md`
+- growth — `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_todos.md`
+- R4 — `~/Programming/PseudoCoup_v6/Research/r4_runtime_ledger_survey/REPORT.md`

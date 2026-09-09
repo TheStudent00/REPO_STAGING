@@ -53,7 +53,7 @@ not schema. the kinds already named by settled material:
   the owner, log_002 §8.1).
 - **invocation→macro-definition** and **produced→producer** — the
   meta-programming connectors of
-  `<WORKSPACE_DIR>/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`:
+  `~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`:
   an invocation to the macro it names, and generated structure to the
   site that generated it.
 - **runtime** — the tracer's late connections, `<id>#<rank>` instance

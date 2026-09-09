@@ -7,7 +7,7 @@ tree-sitter graph of the same tree by `file:startLine.startCol,endLine.endCol`.
 ## Versions
 
 - container toolchain (bootstrap only): `go1.26.0 linux/amd64`, GOROOT `/usr/lib/go-1.26`
-- vendored tree `/sources/golang_src` (= `<WORKSPACE_DIR>/Sources/golang_src`):
+- vendored tree `/sources/golang_src` (= `~/Programming/Sources/golang_src`):
   **no `VERSION` file** (the brief assumed one). It is a grafted shallow
   git checkout of master, commit `9f1012d9a1aa0831ff44ac9c767e96f9943d13fe`,
   2026-07-15. `src/internal/goversion/goversion.go` says `Version = 28`,
@@ -100,7 +100,7 @@ cmd/compile/internal/abi/abiutils.go:48.2,49.1 1 24
 ## Caveats
 
 - Spans are relative to `/persist/gosrc`, a byte copy of
-  `<WORKSPACE_DIR>/Sources/golang_src` at commit 9f1012d9 (plus an added
+  `~/Programming/Sources/golang_src` at commit 9f1012d9 (plus an added
   `VERSION` file, which is not a Go source file). Line numbers are
   therefore valid against the vendored tree as-is.
 - Counts are for THIS run of THIS probe — the evidence class of log 072

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # The one bash entry point for the planning framework.
 #
-#   bash <WORKSPACE_DIR>/PlanPlan/plan.sh <command> [args...]
+#   bash ~/Programming/PlanPlan/plan.sh <command> [args...]
 #
-# Every command is a call into <WORKSPACE_DIR>/PlanPlan/framework/. This
+# Every command is a call into ~/Programming/PlanPlan/framework/. This
 # script holds two things and nothing else: which interpreter to use,
 # and which tool a word maps to.
 #

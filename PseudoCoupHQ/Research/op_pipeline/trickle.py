@@ -86,7 +86,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 LANGS = ["c", "cpp", "go", "rust", "swift"]
 
 TRICKLE_ROOT = os.environ.get(
-    "TRICKLE_ROOT", os.path.expanduser("<WORKSPACE_DIR>/AirlockTrickle"))
+    "TRICKLE_ROOT", os.path.expanduser("~/Programming/AirlockTrickle"))
 AGENT = os.path.join(TRICKLE_ROOT, "agent")
 CONTAINER = "trickle-runner"
 

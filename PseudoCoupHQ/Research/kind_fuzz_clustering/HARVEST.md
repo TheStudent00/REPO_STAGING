@@ -40,8 +40,8 @@ its own code are in log 035.
 ## if you need to rebuild from raw
 
 ```
-A=<WORKSPACE_DIR>/SandboxDesign/agent
-K=<WORKSPACE_DIR>/PseudoCoupHQ/Research/\
+A=~/Programming/SandboxDesign/agent
+K=~/Programming/PseudoCoupHQ/Research/\
 kind_fuzz_clustering
 cd $K
 python3 l3_swiftfull_read.py   # swift matrix
@@ -145,9 +145,9 @@ node's standing convention.
 ## the lane mechanics, unchanged
 
 - lane scripts live in `lanes/`; drop them into
-  `<WORKSPACE_DIR>/SandboxDesign/agent/drop/`
-- poll `<WORKSPACE_DIR>/SandboxDesign/agent/status/<name>.sh.status`
-- products land in `<WORKSPACE_DIR>/SandboxDesign/agent/out/<name>.txt`
+  `~/Programming/SandboxDesign/agent/drop/`
+- poll `~/Programming/SandboxDesign/agent/status/<name>.sh.status`
+- products land in `~/Programming/SandboxDesign/agent/out/<name>.txt`
 - the daemon is SERIAL and kills a script at 3600 s, which is why every
   matrix is sharded
 - `/work` is a 4 GB tmpfs and a tmpfs charges a whole block per file;

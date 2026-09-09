@@ -4,7 +4,7 @@ This version's tools. HIGH change threshold — no litter.
 
 Empty at founding (2026-07-31). The three tools this version is for —
 ledgerer, transpiler, polyfill — are planned at
-`<WORKSPACE_DIR>/PseudoCoup_v5/Planning/node_0_0_tools/` and not yet
+`~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/` and not yet
 composed.
 
 ## Rules, carried from PseudoCoup_v6
@@ -32,6 +32,6 @@ without anything breaking?** Yes means transplant. No means
 dependency, which is not allowed.
 
 Parts list:
-`<WORKSPACE_DIR>/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`,
+`~/Programming/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`,
 with line-cited evidence in the two 2026-07-27 surveys under
-`<WORKSPACE_DIR>/PseudoCoup_v5/DevComms/`.
+`~/Programming/PseudoCoup_v5/DevComms/`.

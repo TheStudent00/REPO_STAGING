@@ -6,7 +6,7 @@ status: living
 # PROGRESS — T1 tree_sitter_base
 
 - build — **done** 2026-07-28:
-  `<WORKSPACE_DIR>/PseudoCoup_v6/Tools/tree_sitter_base/` (parser
+  `~/Programming/PseudoCoup_v6/Tools/tree_sitter_base/` (parser
   factory, census recorder, pins, fixtures, frozen censuses).
 - acceptance — **done**: 12/12 in-session (frozen-census
   byte-equality, determinism, clean-parse, partition laws).

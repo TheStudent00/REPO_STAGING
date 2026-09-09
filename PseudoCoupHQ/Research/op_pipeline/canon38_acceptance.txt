@@ -1,0 +1,133 @@
+canon37 units: 31078      canon38 units: 31078
+
+======================================================================
+(a) c/op_210 -- THE IMPLICIT DESTINATION
+======================================================================
+canon37 (ledger47)
+  body   : mov %edi,%eax; cltd; idiv %esi; ret
+  stored : mov %edi,%eax; cltd; idiv %esi; ret
+  row      size type                   produced by                            operands
+  IN-0     8    8-byte general value   arrival                                
+  IN-1     8    8-byte general value   arrival                                
+  TEMP-0   8    8-byte general value   mov                                    IN-0
+  TEMP-1   8    8-byte general value   idiv                                   IN-1
+  OUT-0    4    4-byte general value   mov                                    TEMP-0
+
+canon38 (ledger48)
+  body   : mov %edi,%eax; cltd; idiv %esi; ret
+  stored : mov %edi,%eax; cltd; idiv %esi; ret
+  row      size type                   produced by                            operands
+  IN-0     8    8-byte general value   {"kind": "non_opcode_phrase", "phrase": "arrival"} 
+  IN-1     8    8-byte general value   {"kind": "non_opcode_phrase", "phrase": "arrival"} 
+  TEMP-0   8    8-byte general value   {"kind": "arch_opcode", "mnem": "mov"} IN-0
+  TEMP-1   8    8-byte general value   {"kind": "arch_opcode", "mnem": "cltd", "writes_which_half": "the sign of the accumulator"} TEMP-0
+  TEMP-2   8    8-byte general value   {"kind": "arch_opcode", "mnem": "idiv", "writes_which_half": "quotient"} TEMP-0,TEMP-1,IN-1
+  TEMP-3   8    8-byte general value   {"kind": "arch_opcode", "mnem": "idiv", "writes_which_half": "remainder"} TEMP-0,TEMP-1,IN-1
+  OUT-0    4    4-byte general value   {"kind": "arch_opcode", "mnem": "idiv", "writes_which_half": "quotient"} TEMP-2
+
+  canon37 outcome WRAPPED_TEXT_PROVED / verdict PROVED_ON_SHIP
+  canon38 outcome WRAPPED_TEXT_PROVED / verdict PROVED_ON_SHIP
+
+======================================================================
+(b) A PUSH/POP UNIT -- THE STACK ROWS
+======================================================================
+unit chosen by the mnemonics its body spells: c/regen_11491
+canon37 (ledger47) -- no STACK block
+  body   : push %rax; call 6 <op_11491+0x6> !!reloc=R_X86_64_PLT32:__divti3-0x4; pop %rcx; ret
+  stored : push %rax; call 6 <op_11491+0x6> !!reloc=R_X86_64_PLT32:__divti3-0x4; pop %rcx; ret
+  row      size type                   produced by                            operands
+  IN-0     8    8-byte general value   arrival                                
+  TEMP-0   8    8-byte general value   push                                   
+  TEMP-1   8    8-byte general value   pop                                    IN-0
+  OUT-0    8    8-byte general value   push                                   TEMP-0
+
+canon38 (ledger48)
+  body   : push %rax; call 6 <op_11491+0x6> !!reloc=R_X86_64_PLT32:__divti3-0x4; pop %rcx; ret
+  stored : push %rax; call L0 !!reloc=R_X86_64_PLT32:__divti3-0x4; L0:; pop %rcx; ret
+  row      size type                   produced by                            operands
+  IN-0     8    8-byte general value   {"kind": "non_opcode_phrase", "phrase": "arrival"} 
+  STACK-0  8    8-byte value on the machine stack {"kind": "arch_opcode", "mnem": "push"} 
+  OUT-0    8    8-byte general value   {"kind": "non_opcode_phrase", "phrase": "the body's last write to %rax"} 
+  STACK rows: STACK-0
+
+======================================================================
+(b2) go/op_110 -- A PUSH/POP UNIT WHOSE ANSWER THE DESTINATION TABLE RECOVERS
+======================================================================
+canon37 (ledger47)
+  body   : push %rbp; mov %rsp,%rbp; test %rbx,%rbx; je 47a670 <main.op_110+0x10>; xor %edx,%edx; div %rbx; pop %rbp; ret; call 43f360 <runtime.panicdivide>; nop
+  stored : push %rbp; mov %rsp,%rbp; test %rbx,%rbx; je 47a670 <main.op_110+0x10>; xor %edx,%edx; div %rbx; pop %rbp; ret; call 43f360 <runtime.panicdivide>; nop
+  row      size type                   produced by                            operands
+  IN-0     8    8-byte general value   arrival                                
+  TEMP-0   8    8-byte general value   test                                   IN-0,IN-0
+  GUARD-0  8    flag-derived value     ['test', 'je']                         
+  TEMP-1   8    8-byte general value   xor                                    
+  TEMP-2   8    8-byte general value   div                                    TEMP-0
+  OUT-0    4    4-byte general value   the body's last write to %rax          
+
+canon38 (ledger48)
+  body   : push %rbp; mov %rsp,%rbp; test %rbx,%rbx; je 47a670 <main.op_110+0x10>; xor %edx,%edx; div %rbx; pop %rbp; ret; call 43f360 <runtime.panicdivide>; nop
+  stored : push %rbp; mov %rsp,%rbp; test %rbx,%rbx; je L0; xor %edx,%edx; div %rbx; pop %rbp; ret; L0:; call x_runtime_panicdivide; nop
+  row      size type                   produced by                            operands
+  IN-0     8    8-byte general value   {"kind": "non_opcode_phrase", "phrase": "arrival"} 
+  STACK-0  8    8-byte value on the machine stack {"kind": "arch_opcode", "mnem": "push"} 
+  TEMP-0   8    flags only             {"kind": "arch_opcode", "mnem": "test"} IN-0,IN-0
+  GUARD-0  8    flag-derived value     {"kind": "flag_pair", "mnem": ["test", "je"]} TEMP-0
+  TEMP-1   8    8-byte general value   {"kind": "arch_opcode", "mnem": "xor"} 
+  TEMP-2   8    8-byte general value   {"kind": "arch_opcode", "mnem": "div", "writes_which_half": "quotient"} TEMP-1,IN-0
+  TEMP-3   8    8-byte general value   {"kind": "arch_opcode", "mnem": "div", "writes_which_half": "remainder"} TEMP-1,IN-0
+  OUT-0    4    4-byte general value   {"kind": "arch_opcode", "mnem": "div", "writes_which_half": "quotient"} TEMP-2
+  canon37 outcome WRAPPED_TEXT_PROVED / verdict PROVED_BY_CONSTRUCTION
+  canon38 outcome WRAPPED_TEXT_PROVED / verdict PROVED_BY_CONSTRUCTION
+
+======================================================================
+(c) A fucomip UNIT -- THE X87 ROWS
+======================================================================
+unit chosen by the mnemonics its body spells: cpp/regen_36796
+canon37 (ledger47) -- no X87 block
+  body   : fldt 0x18(%rsp); fldt 0x8(%rsp); fucomip %st(1),%st; fstp %st(0); seta %al; ret
+  stored : fldt 0x18(%rsp); fldt 0x8(%rsp); fucomip %st(1),%st; fstp %st(0); seta %al; ret
+  row      size type                   produced by                            operands
+  GUARD-0  8    flag-derived value     ['fucomip', 'seta']                    
+  OUT-0    1    1-byte general value   ['fucomip', 'seta']                    GUARD-0
+
+canon38 (ledger48)
+  body   : fldt 0x18(%rsp); fldt 0x8(%rsp); fucomip %st(1),%st; fstp %st(0); seta %al; ret
+  stored : fldt 0x18(%rsp); fldt 0x8(%rsp); fucomip %st(1),%st; fstp %st(0); seta %al; ret
+  row      size type                   produced by                            operands
+  X87-0    16   x87 stack value        {"kind": "arch_opcode", "mnem": "fldt"} 
+  X87-1    16   x87 stack value        {"kind": "arch_opcode", "mnem": "fldt"} 
+  TEMP-0   8    flags only             {"kind": "arch_opcode", "mnem": "fucomip"} X87-0,X87-1
+  GUARD-0  8    flag-derived value     {"kind": "flag_pair", "mnem": ["fucomip", "seta"]} TEMP-0
+  OUT-0    1    1-byte general value   {"kind": "flag_pair", "mnem": ["fucomip", "seta"]} GUARD-0
+  X87 rows: X87-0, X87-1
+
+======================================================================
+(d) go/op_174 AND go/op_180 -- THE LAYER-3 TEXTS
+======================================================================
+canon37 go/op_174
+   mov ledger+0x00(%rip),%rax; mov 0x0(%rax),%rax; mov ledger+0x00(%rip),%rbx; mov 0x8(%rbx),%rbx; push %rbp; mov %rsp,%rbp; test %ebx,%ebx; jl 47a678 <main.op_174+0x18>; mov %ebx,%ecx; shl %cl,%rax; cmp $0x40,%ecx; sbb %rdx,%rdx; and %rdx,%rax; pop %rbp; mov ledger+0x28(%rip),%r11; mov %rax,0x0(%r11); ret; call 43f300 <runtime.panicshift>; nop
+canon37 go/op_180
+   mov ledger+0x00(%rip),%rax; mov 0x0(%rax),%rax; mov ledger+0x00(%rip),%rbx; mov 0x8(%rbx),%rbx; push %rbp; mov %rsp,%rbp; test %ebx,%ebx; jl 47a678 <main.op_180+0x18>; mov %ebx,%ecx; shl %cl,%rax; cmp $0x40,%ecx; sbb %rdx,%rdx; and %rdx,%rax; pop %rbp; mov ledger+0x28(%rip),%r11; mov %rax,0x0(%r11); ret; call 43f300 <runtime.panicshift>; nop
+canon37 identical: False
+
+canon38 go/op_174
+   mov ledger+0x00(%rip),%rax; mov 0x0(%rax),%rax; mov ledger+0x00(%rip),%rbx; mov 0x8(%rbx),%rbx; push %rbp; mov %rsp,%rbp; test %ebx,%ebx; jl L0; mov %ebx,%ecx; shl %cl,%rax; cmp $0x40,%ecx; sbb %rdx,%rdx; and %rdx,%rax; pop %rbp; mov ledger+0x38(%rip),%r11; mov %rax,0x0(%r11); ret; L0:; call x_runtime_panicshift; nop
+canon38 go/op_180
+   mov ledger+0x00(%rip),%rax; mov 0x0(%rax),%rax; mov ledger+0x00(%rip),%rbx; mov 0x8(%rbx),%rbx; push %rbp; mov %rsp,%rbp; test %ebx,%ebx; jl L0; mov %ebx,%ecx; shl %cl,%rax; cmp $0x40,%ecx; sbb %rdx,%rdx; and %rdx,%rax; pop %rbp; mov ledger+0x38(%rip),%r11; mov %rax,0x0(%r11); ret; L0:; call x_runtime_panicshift; nop
+canon38 identical: True
+
+======================================================================
+(e) c/op_109 AND go/op_319 -- UNCHANGED IN VERDICT
+======================================================================
+c/op_109     canon37 WRAPPED_TEXT_PROVED    PROVED_ON_SHIP          
+             canon38 WRAPPED_TEXT_PROVED    PROVED_ON_SHIP          
+             body    lea (%rdi,%rsi,1),%rax; ret
+             text37  mov ledger+0x00(%rip),%rdi; mov 0x0(%rdi),%rdi; mov ledger+0x00(%rip),%rsi; mov 0x8(%rsi),%rsi; lea (%rdi,%rsi,1),%rax; mov ledger+0x28(%rip),%r11; mov %rax,0x0(%r11); ret
+             text38  mov ledger+0x00(%rip),%rdi; mov 0x0(%rdi),%rdi; mov ledger+0x00(%rip),%rsi; mov 0x8(%rsi),%rsi; lea (%rdi,%rsi,1),%rax; mov ledger+0x38(%rip),%r11; mov %rax,0x0(%r11); ret
+             same outcome: True   same verdict: True   same text: False
+go/op_319    canon37 WRAPPED_TEXT_PROVED    PROVED_ON_SHIP          
+             canon38 WRAPPED_TEXT_PROVED    PROVED_ON_SHIP          
+             body    add %rbx,%rax; ret
+             text37  mov ledger+0x00(%rip),%rax; mov 0x0(%rax),%rax; mov ledger+0x00(%rip),%rbx; mov 0x8(%rbx),%rbx; add %rbx,%rax; mov ledger+0x28(%rip),%r11; mov %rax,0x0(%r11); ret
+             text38  mov ledger+0x00(%rip),%rax; mov 0x0(%rax),%rax; mov ledger+0x00(%rip),%rbx; mov 0x8(%rbx),%rbx; add %rbx,%rax; mov ledger+0x38(%rip),%r11; mov %rax,0x0(%r11); ret
+             same outcome: True   same verdict: True   same text: False

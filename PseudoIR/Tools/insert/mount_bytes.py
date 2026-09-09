@@ -4,7 +4,7 @@ PROVENANCE (harvested, not invented):
   The four-step mount (mmap READ|WRITE PRIVATE|ANON -> memmove -> mprotect
   READ|EXEC -> ctypes.CFUNCTYPE) and the page-owning `MountedCode`
   (close() munmaps; __del__ defensively closes) are ported from
-  <WORKSPACE_DIR>/PseudoCoup_v5/Research/rust_routing/output_ring.py
+  ~/Programming/PseudoCoup_v5/Research/rust_routing/output_ring.py
   (67 lines, read-and-verified). That module is the proven mechanism.
 
 ADDED in PCv6 (what PCv5 left implicit, marked as inferred/new):

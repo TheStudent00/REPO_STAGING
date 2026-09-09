@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — hub
 
 projected 2026-07-30 from the previous plan, now archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_2_hub/CORE_0_2_hub.md  (258 words)
@@ -29,7 +29,7 @@ node plans the Hub itself as a deliverable.
 - **Intention objects** — the 11-object minimum intention set
   realized as PC objects (PC.bool, PC.int64, PC.list, PC.map, …),
   each carrying the canon semantics now recorded AS DATA in
-  `<WORKSPACE_DIR>/PseudoIR/Tools/intentions/pc_intentions.json`
+  `~/Programming/PseudoIR/Tools/intentions/pc_intentions.json`
   (the `canon` field per primitive/operator). Sub-node
   `node_0_2_0` (previous plan).
 - **Borders** — typed cells and crossing rules: how values enter
@@ -64,6 +64,6 @@ chain — the PCv5 demo reborn as a product surface.
 
 the three surfaces are now nodes under `assembly`, not bullets.
 
-- intention objects — `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_0_intention_objects/`
-- borders — `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_1_borders/`
-- surface — `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_2_surface/`
+- intention objects — `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_0_intention_objects/`
+- borders — `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_1_borders/`
+- surface — `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_2_surface/`

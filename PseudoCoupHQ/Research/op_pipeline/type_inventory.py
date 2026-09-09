@@ -93,7 +93,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 KFC = os.path.normpath(os.path.join(HERE, "..", "kind_fuzz_clustering"))
 CACHE = os.path.join(KFC, "grammar_cache")
 ARITY = os.path.join(KFC, "operator_arity.json")
-SOURCES = os.path.expanduser("<WORKSPACE_DIR>/Sources")
+SOURCES = os.path.expanduser("~/Programming/Sources")
 
 LANGS = ["c", "cpp", "go", "rust", "swift"]
 

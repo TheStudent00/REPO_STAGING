@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """What a Rust macro IS, written in Python.
 
-Run it:  python3 <WORKSPACE_DIR>/PseudoCoup_v5/Research/macro_demo.py
+Run it:  python3 ~/Programming/PseudoCoup_v5/Research/macro_demo.py
 
 A macro is a function. Its input is a list of tokens. Its output is a
 list of tokens. It runs BEFORE anything is parsed, and what it returns

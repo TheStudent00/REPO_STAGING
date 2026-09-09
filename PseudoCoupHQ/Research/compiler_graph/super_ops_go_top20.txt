@@ -1,0 +1,2121 @@
+# super-op candidates from the diaries -- the top 20
+
+PARAMETERS, stated on the artifact:
+{
+ "min_length": 3,
+ "min_support": 2,
+ "subject": "probe_own",
+ "collapse_repeats": true,
+ "max_length": 12,
+ "max_runs_per_level": 2000000,
+ "memory_ceiling_mb": 6144,
+ "support_is_counted_in": "distinct probes",
+ "closure": "closed contiguous runs only"
+}
+
+POPULATIONS:
+{
+ "probes": 590,
+ "distinct_coordinates_in_the_streams": 626,
+ "stream_length_min": 1945,
+ "stream_length_max": 5182,
+ "stream_length_total": 1998333,
+ "frequent_runs_by_length": {
+  "3": 2495,
+  "4": 3360,
+  "5": 4211,
+  "6": 4998,
+  "7": 5748,
+  "8": 6485,
+  "9": 7221,
+  "10": 7934,
+  "11": 8645,
+  "12": 9358
+ },
+ "candidates_after_closure": 9809
+}
+
+PIN of the compiler source every excerpt is taken from:
+  ~/Programming/Sources/golang_src  9f1012d9a1aa0831ff44ac9c767e96f9943d13fe
+  arch-unit bodies: canon39_wrapped_go.json (107 units) and canon39_regen_store/op_units2_go_c000*.json (483 units)
+
+========================================================================
+cand_00000   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/block.go:269-272   truncateValues
+    node id: src/cmd/compile/internal/ssa/block.go#269#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/block.go`, lines 269..:
+      func (b *Block) truncateValues(i int) {
+      	clear(b.Values[i:])
+      	b.Values = b.Values[:i]
+      }
+      
+  src/cmd/compile/internal/ssa/func.go:143-145   retSparseSet
+    node id: src/cmd/compile/internal/ssa/func.go#143#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 143..:
+      func (f *Func) retSparseSet(ss *sparseSet) {
+      	f.Cache.freeSparseSet(ss)
+      }
+      
+      // newSparseMap returns a sparse map that can store at least up to n integers.
+  src/cmd/compile/internal/ssa/sparseset.go:73-75   clear
+    node id: src/cmd/compile/internal/ssa/sparseset.go#73#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparseset.go`, lines 73..:
+      func (s *sparseSet) clear() {
+      	s.dense = s.dense[:0]
+      }
+      
+      func (s *sparseSet) contents() []ID {
+  src/cmd/compile/internal/ssa/sparseset.go:21-23   cap
+    node id: src/cmd/compile/internal/ssa/sparseset.go#21#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparseset.go`, lines 21..:
+      func (s *sparseSet) cap() int {
+      	return len(s.sparse)
+      }
+      
+      func (s *sparseSet) size() int {
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/nilcheck.go:15-187   nilcheckelim
+    node id: src/cmd/compile/internal/ssa/nilcheck.go#15#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/nilcheck.go`, lines 15..:
+      func nilcheckelim(f *Func) {
+      	// A nil check is redundant if the same nil check was successful in a
+      	// dominating block. The efficacy of this pass depends heavily on the
+      	// efficacy of the cse pass.
+      	sdom := f.Sdom()
+  src/cmd/compile/internal/ssa/func.go:790-795   Sdom
+    node id: src/cmd/compile/internal/ssa/func.go#790#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 790..:
+      func (f *Func) Sdom() SparseTree {
+      	if f.cachedSdom == nil {
+      		f.cachedSdom = newSparseTree(f, f.Idom())
+      	}
+      	return f.cachedSdom
+  src/cmd/compile/internal/ssa/func.go:117-119   NumValues
+    node id: src/cmd/compile/internal/ssa/func.go#117#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 117..:
+      func (f *Func) NumValues() int {
+      	return f.vid.num()
+      }
+      
+      // NameABI returns the function name followed by comma and the ABI number.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00001   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/regalloc.go:199-204   regMaskAt
+    node id: src/cmd/compile/internal/ssa/regalloc.go#199#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 199..:
+      func regMaskAt(i register) regMask {
+      	if i < 64 {
+      		return regMask{v1: 1 << i}
+      	}
+      	return regMask{v2: 1 << (i - 64)}
+  src/cmd/compile/internal/ssa/regalloc.go:3494-3516   clobber
+    node id: src/cmd/compile/internal/ssa/regalloc.go#3494#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 3494..:
+      func (d *desiredState) clobber(m regMask) {
+      	for i := 0; i < len(d.entries); {
+      		e := &d.entries[i]
+      		j := 0
+      		for _, r := range e.regs {
+  src/cmd/compile/internal/ssa/regalloc.go:180-182   minus
+    node id: src/cmd/compile/internal/ssa/regalloc.go#180#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 180..:
+      func (r regMask) minus(s regMask) regMask {
+      	return regMask{r.v1 &^ s.v1, r.v2 &^ s.v2}
+      }
+      
+      func (r regMask) empty() bool {
+  src/cmd/compile/internal/ssa/regalloc.go:1029-1055   regspec
+    node id: src/cmd/compile/internal/ssa/regalloc.go#1029#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 1029..:
+      func (s *regAllocState) regspec(v *Value) regInfo {
+      	op := v.Op
+      	if op == OpConvert {
+      		// OpConvert is a generic op, so it doesn't have a
+      		// register set in the static table. It can use any
+  src/cmd/compile/internal/ssa/value.go:81-86   AuxInt8
+    node id: src/cmd/compile/internal/ssa/value.go#81#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/value.go`, lines 81..:
+      func (v *Value) AuxInt8() int8 {
+      	if opcodeTable[v.Op].auxType != auxInt8 && opcodeTable[v.Op].auxType != auxNameOffsetInt8 {
+      		v.Fatalf("op %s doesn't have an int8 aux field", v.Op)
+      	}
+      	return int8(v.AuxInt)
+  src/cmd/compile/internal/ssa/regalloc.go:199-204   regMaskAt
+    node id: src/cmd/compile/internal/ssa/regalloc.go#199#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 199..:
+      func regMaskAt(i register) regMask {
+      	if i < 64 {
+      		return regMask{v1: 1 << i}
+      	}
+      	return regMask{v2: 1 << (i - 64)}
+  src/cmd/compile/internal/ssa/regalloc.go:938-954   advanceUses
+    node id: src/cmd/compile/internal/ssa/regalloc.go#938#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 938..:
+      func (s *regAllocState) advanceUses(v *Value) {
+      	for _, a := range v.Args {
+      		if !s.values[a.ID].needReg {
+      			continue
+      		}
+  src/cmd/compile/internal/ssa/regalloc.go:958-975   dropIfUnused
+    node id: src/cmd/compile/internal/ssa/regalloc.go#958#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 958..:
+      func (s *regAllocState) dropIfUnused(v *Value) {
+      	if !s.values[v.ID].needReg {
+      		return
+      	}
+      	vi := &s.values[v.ID]
+  src/cmd/compile/internal/ssa/regalloc.go:432-436   freeRegs
+    node id: src/cmd/compile/internal/ssa/regalloc.go#432#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 432..:
+      func (s *regAllocState) freeRegs(m regMask) {
+      	for !m.intersect(s.used).empty() {
+      		s.freeReg(s.pickReg(m.intersect(s.used)))
+      	}
+      }
+  src/cmd/compile/internal/ssa/regalloc.go:172-174   intersect
+    node id: src/cmd/compile/internal/ssa/regalloc.go#172#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 172..:
+      func (r regMask) intersect(s regMask) regMask {
+      	return regMask{r.v1 & s.v1, r.v2 & s.v2}
+      }
+      
+      func (r regMask) union(s regMask) regMask {
+  src/cmd/compile/internal/ssa/regalloc.go:184-186   empty
+    node id: src/cmd/compile/internal/ssa/regalloc.go#184#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 184..:
+      func (r regMask) empty() bool {
+      	return r.v1 == 0 && r.v2 == 0
+      }
+      
+      func (r regMask) pickReg() register {
+  src/cmd/compile/internal/ssa/regalloc.go:176-178   union
+    node id: src/cmd/compile/internal/ssa/regalloc.go#176#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 176..:
+      func (r regMask) union(s regMask) regMask {
+      	return regMask{r.v1 | s.v1, r.v2 | s.v2}
+      }
+      
+      func (r regMask) minus(s regMask) regMask {
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00002   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/func.go:154-156   retSparseMap
+    node id: src/cmd/compile/internal/ssa/func.go#154#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 154..:
+      func (f *Func) retSparseMap(ss *sparseMap) {
+      	f.Cache.freeSparseMap(ss)
+      }
+      
+      // newSparseMapPos returns a sparse map that can store at least up to n integers.
+  src/cmd/compile/internal/ssa/sparsemap.go:73-75   clear
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#73#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 73..:
+      func (s *genericSparseMap[K, V]) clear() {
+      	s.dense = s.dense[:0]
+      }
+      
+      func (s *genericSparseMap[K, V]) contents() []sparseEntry[K, V] {
+  src/cmd/compile/internal/ssa/sparsemap.go:29-31   cap
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#29#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 29..:
+      func (s *genericSparseMap[K, V]) cap() int {
+      	return len(s.sparse)
+      }
+      
+      func (s *genericSparseMap[K, V]) size() int {
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/flagalloc.go:10-241   flagalloc
+    node id: src/cmd/compile/internal/ssa/flagalloc.go#10#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/flagalloc.go`, lines 10..:
+      func flagalloc(f *Func) {
+      	// Compute the in-register flag value we want at the end of
+      	// each block. This is basically a best-effort live variable
+      	// analysis, so it can be much simpler than a full analysis.
+      	end := f.Cache.allocValueSlice(f.NumBlocks())
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:768-773   postorder
+    node id: src/cmd/compile/internal/ssa/func.go#768#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 768..:
+      func (f *Func) postorder() []*Block {
+      	if f.cachedPostorder == nil {
+      		f.cachedPostorder = postorder(f)
+      	}
+      	return f.cachedPostorder
+  src/cmd/compile/internal/ssa/block.go:171-179   ControlValues
+    node id: src/cmd/compile/internal/ssa/block.go#171#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/block.go`, lines 171..:
+      func (b *Block) ControlValues() []*Value {
+      	if b.Controls[0] == nil {
+      		return b.Controls[:0]
+      	}
+      	if b.Controls[1] == nil {
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00003   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:117-119   NumValues
+    node id: src/cmd/compile/internal/ssa/func.go#117#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 117..:
+      func (f *Func) NumValues() int {
+      	return f.vid.num()
+      }
+      
+      // NameABI returns the function name followed by comma and the ABI number.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:117-119   NumValues
+    node id: src/cmd/compile/internal/ssa/func.go#117#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 117..:
+      func (f *Func) NumValues() int {
+      	return f.vid.num()
+      }
+      
+      // NameABI returns the function name followed by comma and the ABI number.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:117-119   NumValues
+    node id: src/cmd/compile/internal/ssa/func.go#117#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 117..:
+      func (f *Func) NumValues() int {
+      	return f.vid.num()
+      }
+      
+      // NameABI returns the function name followed by comma and the ABI number.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/sparseset.go:17-19   newSparseSet
+    node id: src/cmd/compile/internal/ssa/sparseset.go#17#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparseset.go`, lines 17..:
+      func newSparseSet(n int) *sparseSet {
+      	return &sparseSet{dense: nil, sparse: make([]int32, n)}
+      }
+      
+      func (s *sparseSet) cap() int {
+  src/cmd/compile/internal/ssa/debug.go:1877-1887   IsVarWantedForDebug
+    node id: src/cmd/compile/internal/ssa/debug.go#1877#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/debug.go`, lines 1877..:
+      func IsVarWantedForDebug(n ir.Node) bool {
+      	name := n.Sym().Name
+      	if len(name) > 0 && name[0] == '&' {
+      		name = name[1:]
+      	}
+  src/cmd/compile/internal/ssa/debug.go:679-790   liveness
+    node id: src/cmd/compile/internal/ssa/debug.go#679#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/debug.go`, lines 679..:
+      func (state *debugState) liveness() []*BlockDebug {
+      	blockLocs := make([]*BlockDebug, state.f.NumBlocks())
+      	counterTime := int32(1)
+      
+      	// Reverse postorder: visit a block after as many as possible of its
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00004   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/regalloc.go:180-182   minus
+    node id: src/cmd/compile/internal/ssa/regalloc.go#180#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 180..:
+      func (r regMask) minus(s regMask) regMask {
+      	return regMask{r.v1 &^ s.v1, r.v2 &^ s.v2}
+      }
+      
+      func (r regMask) empty() bool {
+  src/cmd/compile/internal/ssa/regalloc.go:1029-1055   regspec
+    node id: src/cmd/compile/internal/ssa/regalloc.go#1029#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 1029..:
+      func (s *regAllocState) regspec(v *Value) regInfo {
+      	op := v.Op
+      	if op == OpConvert {
+      		// OpConvert is a generic op, so it doesn't have a
+      		// register set in the static table. It can use any
+  src/cmd/compile/internal/ssa/value.go:81-86   AuxInt8
+    node id: src/cmd/compile/internal/ssa/value.go#81#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/value.go`, lines 81..:
+      func (v *Value) AuxInt8() int8 {
+      	if opcodeTable[v.Op].auxType != auxInt8 && opcodeTable[v.Op].auxType != auxNameOffsetInt8 {
+      		v.Fatalf("op %s doesn't have an int8 aux field", v.Op)
+      	}
+      	return int8(v.AuxInt)
+  src/cmd/compile/internal/ssa/regalloc.go:199-204   regMaskAt
+    node id: src/cmd/compile/internal/ssa/regalloc.go#199#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 199..:
+      func regMaskAt(i register) regMask {
+      	if i < 64 {
+      		return regMask{v1: 1 << i}
+      	}
+      	return regMask{v2: 1 << (i - 64)}
+  src/cmd/compile/internal/ssa/regalloc.go:938-954   advanceUses
+    node id: src/cmd/compile/internal/ssa/regalloc.go#938#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 938..:
+      func (s *regAllocState) advanceUses(v *Value) {
+      	for _, a := range v.Args {
+      		if !s.values[a.ID].needReg {
+      			continue
+      		}
+  src/cmd/compile/internal/ssa/regalloc.go:958-975   dropIfUnused
+    node id: src/cmd/compile/internal/ssa/regalloc.go#958#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 958..:
+      func (s *regAllocState) dropIfUnused(v *Value) {
+      	if !s.values[v.ID].needReg {
+      		return
+      	}
+      	vi := &s.values[v.ID]
+  src/cmd/compile/internal/ssa/regalloc.go:432-436   freeRegs
+    node id: src/cmd/compile/internal/ssa/regalloc.go#432#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 432..:
+      func (s *regAllocState) freeRegs(m regMask) {
+      	for !m.intersect(s.used).empty() {
+      		s.freeReg(s.pickReg(m.intersect(s.used)))
+      	}
+      }
+  src/cmd/compile/internal/ssa/regalloc.go:172-174   intersect
+    node id: src/cmd/compile/internal/ssa/regalloc.go#172#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 172..:
+      func (r regMask) intersect(s regMask) regMask {
+      	return regMask{r.v1 & s.v1, r.v2 & s.v2}
+      }
+      
+      func (r regMask) union(s regMask) regMask {
+  src/cmd/compile/internal/ssa/regalloc.go:184-186   empty
+    node id: src/cmd/compile/internal/ssa/regalloc.go#184#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 184..:
+      func (r regMask) empty() bool {
+      	return r.v1 == 0 && r.v2 == 0
+      }
+      
+      func (r regMask) pickReg() register {
+  src/cmd/compile/internal/ssa/regalloc.go:176-178   union
+    node id: src/cmd/compile/internal/ssa/regalloc.go#176#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 176..:
+      func (r regMask) union(s regMask) regMask {
+      	return regMask{r.v1 | s.v1, r.v2 | s.v2}
+      }
+      
+      func (r regMask) minus(s regMask) regMask {
+  src/cmd/compile/internal/ssa/regalloc.go:184-186   empty
+    node id: src/cmd/compile/internal/ssa/regalloc.go#184#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 184..:
+      func (r regMask) empty() bool {
+      	return r.v1 == 0 && r.v2 == 0
+      }
+      
+      func (r regMask) pickReg() register {
+  src/cmd/compile/internal/ssa/regalloc.go:172-174   intersect
+    node id: src/cmd/compile/internal/ssa/regalloc.go#172#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 172..:
+      func (r regMask) intersect(s regMask) regMask {
+      	return regMask{r.v1 & s.v1, r.v2 & s.v2}
+      }
+      
+      func (r regMask) union(s regMask) regMask {
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00005   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/prove.go:1371-1387   cleanup
+    node id: src/cmd/compile/internal/ssa/prove.go#1371#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/prove.go`, lines 1371..:
+      func (ft *factsTable) cleanup(f *Func) {
+      	for _, po := range []*poset{ft.orderS, ft.orderU} {
+      		// Make sure it's empty as it should be. A non-empty poset
+      		// might cause errors and miscompilations if reused.
+      		if checkEnabled {
+  src/cmd/compile/internal/ssa/func.go:180-182   retPoset
+    node id: src/cmd/compile/internal/ssa/func.go#180#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 180..:
+      func (f *Func) retPoset(po *poset) {
+      	f.Cache.scrPoset = append(f.Cache.scrPoset, po)
+      }
+      
+      // localSlotAddr returns a stable canonical *LocalSlot for slot, created on
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/opt.go:12-14   divisible
+    node id: src/cmd/compile/internal/ssa/opt.go#12#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/opt.go`, lines 12..:
+      func divisible(f *Func) {
+      	applyRewrite(f, rewriteBlockdivisible, rewriteValuedivisible, removeDeadValues)
+      }
+      
+      func divmod(f *Func) {
+  src/cmd/compile/internal/ssa/rewrite.go:41-232   applyRewrite
+    node id: src/cmd/compile/internal/ssa/rewrite.go#41#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/rewrite.go`, lines 41..:
+      func applyRewrite(f *Func, rb blockRewriter, rv valueRewriter, deadcode deadValueChoice) {
+      	// repeat rewrites until we find no more rewrites
+      	pendingLines := f.cachedLineStarts // Holds statement boundaries that need to be moved to a new value/block
+      	pendingLines.clear()
+      	debug := f.pass.debug
+  src/cmd/compile/internal/ssa/xposmap.go:40-48   clear
+    node id: src/cmd/compile/internal/ssa/xposmap.go#40#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/xposmap.go`, lines 40..:
+      func (m *xposmap) clear() {
+      	for _, l := range m.maps {
+      		if l != nil {
+      			l.clear()
+      		}
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:103-107   clear
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#103#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 103..:
+      func (s *biasedSparseMap) clear() {
+      	if s.s != nil {
+      		s.s.clear()
+      	}
+      }
+  src/cmd/compile/internal/ssa/sparsemap.go:73-75   clear
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#73#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 73..:
+      func (s *genericSparseMap[K, V]) clear() {
+      	s.dense = s.dense[:0]
+      }
+      
+      func (s *genericSparseMap[K, V]) contents() []sparseEntry[K, V] {
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00006   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/id.go:15-23   get
+    node id: src/cmd/compile/internal/ssa/id.go#15#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 15..:
+      func (a *idAlloc) get() ID {
+      	x := a.last
+      	x++
+      	if x == 1<<31-1 {
+      		panic("too many ids for this function")
+  src/cmd/compile/internal/ssa/numberlines.go:63-69   notStmtBoundary
+    node id: src/cmd/compile/internal/ssa/numberlines.go#63#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/numberlines.go`, lines 63..:
+      func notStmtBoundary(op Op) bool {
+      	switch op {
+      	case OpCopy, OpPhi, OpVarDef, OpVarLive, OpUnknown, OpFwdRef, OpArg, OpArgIntReg, OpArgFloatReg:
+      		return true
+      	}
+  src/cmd/compile/internal/ssagen/ssa.go:1364-1366   entryNewValue0
+    node id: src/cmd/compile/internal/ssagen/ssa.go#1364#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 1364..:
+      func (s *state) entryNewValue0(op ssa.Op, t *types.Type) *ssa.Value {
+      	return s.entryBlock().NewValue0(src.NoXPos, op, t)
+      }
+      
+      // entryNewValue0A adds a new value with no arguments and an aux value to the entry block.
+  src/cmd/compile/internal/ssagen/ssa.go:1351-1361   entryBlock
+    node id: src/cmd/compile/internal/ssagen/ssa.go#1351#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 1351..:
+      func (s *state) entryBlock() *ssa.Block {
+      	b := s.f.Entry
+      	if base.Flag.N > 0 && s.curBlock != nil {
+      		// If optimizations are off, allocate in current block instead. Since with -N
+      		// we're not doing the CSE or tighten passes, putting lots of stuff in the
+  src/cmd/compile/internal/ssa/func.go:459-464   NewValue0
+    node id: src/cmd/compile/internal/ssa/func.go#459#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 459..:
+      func (b *Block) NewValue0(pos src.XPos, op Op, t *types.Type) *Value {
+      	v := b.Func.newValue(op, t, b, pos)
+      	v.AuxInt = 0
+      	v.Args = v.argstorage[:0]
+      	return v
+  src/cmd/compile/internal/ssa/func.go:282-306   newValue
+    node id: src/cmd/compile/internal/ssa/func.go#282#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 282..:
+      func (f *Func) newValue(op Op, t *types.Type, b *Block, pos src.XPos) *Value {
+      	var v *Value
+      	if f.freeValues != nil {
+      		v = f.freeValues
+      		f.freeValues = v.argstorage[0]
+  src/cmd/compile/internal/ssa/id.go:15-23   get
+    node id: src/cmd/compile/internal/ssa/id.go#15#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 15..:
+      func (a *idAlloc) get() ID {
+      	x := a.last
+      	x++
+      	if x == 1<<31-1 {
+      		panic("too many ids for this function")
+  src/cmd/compile/internal/ssa/numberlines.go:63-69   notStmtBoundary
+    node id: src/cmd/compile/internal/ssa/numberlines.go#63#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/numberlines.go`, lines 63..:
+      func notStmtBoundary(op Op) bool {
+      	switch op {
+      	case OpCopy, OpPhi, OpVarDef, OpVarLive, OpUnknown, OpFwdRef, OpArg, OpArgIntReg, OpArgFloatReg:
+      		return true
+      	}
+  src/cmd/compile/internal/ssagen/ssa.go:1364-1366   entryNewValue0
+    node id: src/cmd/compile/internal/ssagen/ssa.go#1364#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 1364..:
+      func (s *state) entryNewValue0(op ssa.Op, t *types.Type) *ssa.Value {
+      	return s.entryBlock().NewValue0(src.NoXPos, op, t)
+      }
+      
+      // entryNewValue0A adds a new value with no arguments and an aux value to the entry block.
+  src/cmd/compile/internal/ssagen/ssa.go:1351-1361   entryBlock
+    node id: src/cmd/compile/internal/ssagen/ssa.go#1351#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 1351..:
+      func (s *state) entryBlock() *ssa.Block {
+      	b := s.f.Entry
+      	if base.Flag.N > 0 && s.curBlock != nil {
+      		// If optimizations are off, allocate in current block instead. Since with -N
+      		// we're not doing the CSE or tighten passes, putting lots of stuff in the
+  src/cmd/compile/internal/ssa/func.go:459-464   NewValue0
+    node id: src/cmd/compile/internal/ssa/func.go#459#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 459..:
+      func (b *Block) NewValue0(pos src.XPos, op Op, t *types.Type) *Value {
+      	v := b.Func.newValue(op, t, b, pos)
+      	v.AuxInt = 0
+      	v.Args = v.argstorage[:0]
+      	return v
+  src/cmd/compile/internal/ssa/func.go:282-306   newValue
+    node id: src/cmd/compile/internal/ssa/func.go#282#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 282..:
+      func (f *Func) newValue(op Op, t *types.Type, b *Block, pos src.XPos) *Value {
+      	var v *Value
+      	if f.freeValues != nil {
+      		v = f.freeValues
+      		f.freeValues = v.argstorage[0]
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00007   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:775-777   Postorder
+    node id: src/cmd/compile/internal/ssa/func.go#775#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 775..:
+      func (f *Func) Postorder() []*Block {
+      	return f.postorder()
+      }
+      
+      // Idom returns a map from block ID to the immediate dominator of that block.
+  src/cmd/compile/internal/ssa/func.go:768-773   postorder
+    node id: src/cmd/compile/internal/ssa/func.go#768#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 768..:
+      func (f *Func) postorder() []*Block {
+      	if f.cachedPostorder == nil {
+      		f.cachedPostorder = postorder(f)
+      	}
+      	return f.cachedPostorder
+  src/cmd/compile/internal/ssa/debug.go:311-313   allocBlock
+    node id: src/cmd/compile/internal/ssa/debug.go#311#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/debug.go`, lines 311..:
+      func (state *debugState) allocBlock(b *Block) *BlockDebug {
+      	return &state.blockDebug[b.ID]
+      }
+      
+      func (s *debugState) blockEndStateString(b *BlockDebug) string {
+  src/cmd/compile/internal/ssa/debug.go:826-1034   mergePredecessors
+    node id: src/cmd/compile/internal/ssa/debug.go#826#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/debug.go`, lines 826..:
+      func (state *debugState) mergePredecessors(b *Block, blockLocs []*BlockDebug, previousBlock *Block, forLocationLists bool) (abt.T, bool) {
+      	// Filter out back branches.
+      	var predsBuf [10]*Block
+      
+      	preds := predsBuf[:0]
+  src/cmd/compile/internal/ssa/sparseset.go:73-75   clear
+    node id: src/cmd/compile/internal/ssa/sparseset.go#73#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparseset.go`, lines 73..:
+      func (s *sparseSet) clear() {
+      	s.dense = s.dense[:0]
+      }
+      
+      func (s *sparseSet) contents() []ID {
+  src/cmd/compile/internal/ssa/debug.go:110-136   reset
+    node id: src/cmd/compile/internal/ssa/debug.go#110#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/debug.go`, lines 110..:
+      func (state *stateAtPC) reset(live abt.T) {
+      	slots, registers := state.slots, state.registers
+      	clear(slots)
+      	for i := range registers {
+      		registers[i] = registers[i][:0]
+  src/cmd/compile/internal/ssa/sparseset.go:73-75   clear
+    node id: src/cmd/compile/internal/ssa/sparseset.go#73#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparseset.go`, lines 73..:
+      func (s *sparseSet) clear() {
+      	s.dense = s.dense[:0]
+      }
+      
+      func (s *sparseSet) contents() []ID {
+  src/cmd/compile/internal/ssa/stackalloc.go:410-415   getHome
+    node id: src/cmd/compile/internal/ssa/stackalloc.go#410#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/stackalloc.go`, lines 410..:
+      func (f *Func) getHome(vid ID) Location {
+      	if int(vid) >= len(f.RegAlloc) {
+      		return nil
+      	}
+      	return f.RegAlloc[vid]
+  src/cmd/compile/internal/ssa/debug.go:1040-1161   processValue
+    node id: src/cmd/compile/internal/ssa/debug.go#1040#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/debug.go`, lines 1040..:
+      func (state *debugState) processValue(v *Value, vSlots []SlotID, vReg *Register) bool {
+      	locs := state.currentState
+      	changed := false
+      	setSlot := func(slot SlotID, loc VarLoc) {
+      		changed = true
+  src/cmd/compile/internal/ssa/regalloc.go:184-186   empty
+    node id: src/cmd/compile/internal/ssa/regalloc.go#184#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 184..:
+      func (r regMask) empty() bool {
+      	return r.v1 == 0 && r.v2 == 0
+      }
+      
+      func (r regMask) pickReg() register {
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00008   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/likelyadjust.go:83-204   likelyadjust
+    node id: src/cmd/compile/internal/ssa/likelyadjust.go#83#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/likelyadjust.go`, lines 83..:
+      func likelyadjust(f *Func) {
+      	// The values assigned to certain and local only matter
+      	// in their rank order.  0 is default, more positive
+      	// is less likely. It's possible to assign a negative
+      	// unlikeliness (though not currently the case).
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:768-773   postorder
+    node id: src/cmd/compile/internal/ssa/func.go#768#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 768..:
+      func (f *Func) postorder() []*Block {
+      	if f.cachedPostorder == nil {
+      		f.cachedPostorder = postorder(f)
+      	}
+      	return f.cachedPostorder
+  src/cmd/compile/internal/ssa/func.go:798-803   loopnest
+    node id: src/cmd/compile/internal/ssa/func.go#798#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 798..:
+      func (f *Func) loopnest() *loopnest {
+      	if f.cachedLoopnest == nil {
+      		f.cachedLoopnest = loopnestfor(f)
+      	}
+      	return f.cachedLoopnest
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00009   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/abi/abiutils.go:137-146   RegisterTypesAndOffsets
+    node id: src/cmd/compile/internal/abi/abiutils.go#137#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/abi/abiutils.go`, lines 137..:
+      func (pa *ABIParamAssignment) RegisterTypesAndOffsets() ([]*types.Type, []int64) {
+      	l := len(pa.Registers)
+      	if l == 0 {
+      		return nil, nil
+      	}
+  src/cmd/compile/internal/abi/abiutils.go:197-240   appendParamOffsets
+    node id: src/cmd/compile/internal/abi/abiutils.go#197#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/abi/abiutils.go`, lines 197..:
+      func appendParamOffsets(offsets []int64, at int64, t *types.Type) ([]int64, int64) {
+      	w := t.Size()
+      	if w == 0 {
+      		return offsets, at
+      	}
+  src/cmd/compile/internal/abi/abiutils.go:148-192   appendParamTypes
+    node id: src/cmd/compile/internal/abi/abiutils.go#148#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/abi/abiutils.go`, lines 148..:
+      func appendParamTypes(rts []*types.Type, t *types.Type) []*types.Type {
+      	w := t.Size()
+      	if w == 0 {
+      		return rts
+      	}
+  src/cmd/compile/internal/abi/abiutils.go:249-258   FrameOffset
+    node id: src/cmd/compile/internal/abi/abiutils.go#249#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/abi/abiutils.go`, lines 249..:
+      func (a *ABIParamAssignment) FrameOffset(i *ABIParamResultInfo) int64 {
+      	if a.offset == -1 {
+      		base.Fatalf("function parameter has no ABI-defined frame-pointer offset")
+      	}
+      	if len(a.Registers) == 0 { // passed on stack
+  src/cmd/compile/internal/abi/abiutils.go:67-69   SpillAreaOffset
+    node id: src/cmd/compile/internal/abi/abiutils.go#67#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/abi/abiutils.go`, lines 67..:
+      func (a *ABIParamResultInfo) SpillAreaOffset() int64 {
+      	return a.offsetToSpillArea
+      }
+      
+      func (a *ABIParamResultInfo) SpillAreaSize() int64 {
+  src/cmd/compile/internal/abi/abiutils.go:289-291   LocalsOffset
+    node id: src/cmd/compile/internal/abi/abiutils.go#289#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/abi/abiutils.go`, lines 289..:
+      func (config *ABIConfig) LocalsOffset() int64 {
+      	return config.offsetForLocals
+      }
+      
+      // FloatIndexFor translates r into an index in the floating point parameter
+  src/cmd/compile/internal/ssa/op.go:205-208   ObjRegForAbiReg
+    node id: src/cmd/compile/internal/ssa/op.go#205#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/op.go`, lines 205..:
+      func ObjRegForAbiReg(r abi.RegIndex, c *Config) int16 {
+      	m := archRegForAbiReg(r, c)
+      	return c.registers[m].objNum
+      }
+      
+  src/cmd/compile/internal/ssa/op.go:193-201   archRegForAbiReg
+    node id: src/cmd/compile/internal/ssa/op.go#193#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/op.go`, lines 193..:
+      func archRegForAbiReg(r abi.RegIndex, c *Config) uint8 {
+      	var m int8
+      	if int(r) < len(c.intParamRegs) {
+      		m = c.intParamRegs[r]
+      	} else {
+  src/cmd/compile/internal/ssagen/ssa.go:1237-1239   popLine
+    node id: src/cmd/compile/internal/ssagen/ssa.go#1237#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 1237..:
+      func (s *state) popLine() {
+      	s.line = s.line[:len(s.line)-1]
+      }
+      
+      // peekPos peeks the top of the line number stack.
+  src/cmd/compile/internal/ssagen/ssa.go:6977-7531   genssa
+    node id: src/cmd/compile/internal/ssagen/ssa.go#6977#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 6977..:
+      func genssa(f *ssa.Func, pp *objw.Progs) {
+      	var s State
+      	s.ABI = f.OwnAux.Fn.ABI()
+      
+      	e := f.Frontend().(*ssafn)
+  src/cmd/compile/internal/ssa/func.go:749-749   Frontend
+    node id: src/cmd/compile/internal/ssa/func.go#749#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 749..:
+      func (f *Func) Frontend() Frontend                          { return f.fe }
+      func (f *Func) Warnl(pos src.XPos, msg string, args ...any) { f.fe.Warnl(pos, msg, args...) }
+      func (f *Func) Logf(msg string, args ...any)                { f.fe.Logf(msg, args...) }
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00010   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/xposmap.go:72-78   get
+    node id: src/cmd/compile/internal/ssa/xposmap.go#72#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/xposmap.go`, lines 72..:
+      func (m *xposmap) get(p src.XPos) (int32, bool) {
+      	s := m.mapFor(p.FileIndex())
+      	if s == nil {
+      		return 0, false
+      	}
+  src/cmd/compile/internal/ssa/xposmap.go:51-59   mapFor
+    node id: src/cmd/compile/internal/ssa/xposmap.go#51#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/xposmap.go`, lines 51..:
+      func (m *xposmap) mapFor(index int32) *biasedSparseMap {
+      	if index == m.lastIndex {
+      		return m.lastMap
+      	}
+      	mf := m.maps[index]
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:61-76   get
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#61#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 61..:
+      func (s *biasedSparseMap) get(x uint) (int32, bool) {
+      	if s == nil || s.s == nil {
+      		return 0, false
+      	}
+      	if int(x) < s.first {
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:30-35   cap
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#30#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 30..:
+      func (s *biasedSparseMap) cap() int {
+      	if s == nil || s.s == nil {
+      		return 0
+      	}
+      	return s.s.cap() + s.first
+  src/cmd/compile/internal/ssa/sparsemap.go:29-31   cap
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#29#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 29..:
+      func (s *genericSparseMap[K, V]) cap() int {
+      	return len(s.sparse)
+      }
+      
+      func (s *genericSparseMap[K, V]) size() int {
+  src/cmd/compile/internal/ssa/sparsemap.go:37-40   contains
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#37#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 37..:
+      func (s *genericSparseMap[K, V]) contains(k K) bool {
+      	i := s.sparse[k]
+      	return i < int32(len(s.dense)) && s.dense[i].key == k
+      }
+      
+  src/cmd/compile/internal/ssa/block.go:269-272   truncateValues
+    node id: src/cmd/compile/internal/ssa/block.go#269#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/block.go`, lines 269..:
+      func (b *Block) truncateValues(i int) {
+      	clear(b.Values[i:])
+      	b.Values = b.Values[:i]
+      }
+      
+  src/cmd/compile/internal/ssa/decompose.go:420-464   deleteNamedVals
+    node id: src/cmd/compile/internal/ssa/decompose.go#420#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/decompose.go`, lines 420..:
+      func deleteNamedVals(f *Func, toDelete []namedVal) {
+      	// Arrange to delete from larger indices to smaller, to ensure swap-with-end deletion does not invalidate pending indices.
+      	slices.SortFunc(toDelete, func(a, b namedVal) int {
+      		if a.locIndex != b.locIndex {
+      			return cmp.Compare(b.locIndex, a.locIndex)
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00011   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/xposmap.go:108-116   foreachEntry
+    node id: src/cmd/compile/internal/ssa/xposmap.go#108#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/xposmap.go`, lines 108..:
+      func (m *xposmap) foreachEntry(f func(j int32, l uint, v int32)) {
+      	for j, mm := range m.maps {
+      		s := mm.size()
+      		for i := 0; i < s; i++ {
+      			l, v := mm.getEntry(i)
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:38-43   size
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#38#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 38..:
+      func (s *biasedSparseMap) size() int {
+      	if s == nil || s.s == nil {
+      		return 0
+      	}
+      	return s.s.size()
+  src/cmd/compile/internal/ssa/sparsemap.go:33-35   size
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#33#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 33..:
+      func (s *genericSparseMap[K, V]) size() int {
+      	return len(s.dense)
+      }
+      
+      func (s *genericSparseMap[K, V]) contains(k K) bool {
+  src/cmd/compile/internal/ssa/block.go:269-272   truncateValues
+    node id: src/cmd/compile/internal/ssa/block.go#269#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/block.go`, lines 269..:
+      func (b *Block) truncateValues(i int) {
+      	clear(b.Values[i:])
+      	b.Values = b.Values[:i]
+      }
+      
+  src/cmd/compile/internal/ssa/func.go:143-145   retSparseSet
+    node id: src/cmd/compile/internal/ssa/func.go#143#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 143..:
+      func (f *Func) retSparseSet(ss *sparseSet) {
+      	f.Cache.freeSparseSet(ss)
+      }
+      
+      // newSparseMap returns a sparse map that can store at least up to n integers.
+  src/cmd/compile/internal/ssa/sparseset.go:73-75   clear
+    node id: src/cmd/compile/internal/ssa/sparseset.go#73#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparseset.go`, lines 73..:
+      func (s *sparseSet) clear() {
+      	s.dense = s.dense[:0]
+      }
+      
+      func (s *sparseSet) contents() []ID {
+  src/cmd/compile/internal/ssa/sparseset.go:21-23   cap
+    node id: src/cmd/compile/internal/ssa/sparseset.go#21#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparseset.go`, lines 21..:
+      func (s *sparseSet) cap() int {
+      	return len(s.sparse)
+      }
+      
+      func (s *sparseSet) size() int {
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/cse.go:18-322   cse
+    node id: src/cmd/compile/internal/ssa/cse.go#18#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/cse.go`, lines 18..:
+      func cse(f *Func) {
+      	// Two values are equivalent if they satisfy the following definition:
+      	// equivalent(v, w):
+      	//   v.op == w.op
+      	//   v.type == w.type
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00012   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/prove.go:568-584   newFactsTable
+    node id: src/cmd/compile/internal/ssa/prove.go#568#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/prove.go`, lines 568..:
+      func newFactsTable(f *Func) *factsTable {
+      	ft := &factsTable{}
+      	ft.orderS = f.newPoset()
+      	ft.orderU = f.newPoset()
+      	ft.orderS.SetUnsigned(false)
+  src/cmd/compile/internal/ssa/func.go:170-177   newPoset
+    node id: src/cmd/compile/internal/ssa/func.go#170#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 170..:
+      func (f *Func) newPoset() *poset {
+      	if len(f.Cache.scrPoset) > 0 {
+      		po := f.Cache.scrPoset[len(f.Cache.scrPoset)-1]
+      		f.Cache.scrPoset = f.Cache.scrPoset[:len(f.Cache.scrPoset)-1]
+      		return po
+  src/cmd/compile/internal/ssa/poset.go:161-169   newPoset
+    node id: src/cmd/compile/internal/ssa/poset.go#161#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/poset.go`, lines 161..:
+      func newPoset() *poset {
+      	return &poset{
+      		values: make(map[ID]uint32),
+      		nodes:  make([]posetNode, 1, 16),
+      		roots:  make([]uint32, 0, 4),
+  src/cmd/compile/internal/ssa/func.go:170-177   newPoset
+    node id: src/cmd/compile/internal/ssa/func.go#170#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 170..:
+      func (f *Func) newPoset() *poset {
+      	if len(f.Cache.scrPoset) > 0 {
+      		po := f.Cache.scrPoset[len(f.Cache.scrPoset)-1]
+      		f.Cache.scrPoset = f.Cache.scrPoset[:len(f.Cache.scrPoset)-1]
+      		return po
+  src/cmd/compile/internal/ssa/poset.go:161-169   newPoset
+    node id: src/cmd/compile/internal/ssa/poset.go#161#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/poset.go`, lines 161..:
+      func newPoset() *poset {
+      	return &poset{
+      		values: make(map[ID]uint32),
+      		nodes:  make([]posetNode, 1, 16),
+      		roots:  make([]uint32, 0, 4),
+  src/cmd/compile/internal/ssa/poset.go:171-177   SetUnsigned
+    node id: src/cmd/compile/internal/ssa/poset.go#171#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/poset.go`, lines 171..:
+      func (po *poset) SetUnsigned(uns bool) {
+      	if uns {
+      		po.flags |= posetFlagUnsigned
+      	} else {
+      		po.flags &^= posetFlagUnsigned
+  src/cmd/compile/internal/ssa/func.go:117-119   NumValues
+    node id: src/cmd/compile/internal/ssa/func.go#117#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 117..:
+      func (f *Func) NumValues() int {
+      	return f.vid.num()
+      }
+      
+      // NameABI returns the function name followed by comma and the ABI number.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/prove.go:1750-1842   initLimit
+    node id: src/cmd/compile/internal/ssa/prove.go#1750#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/prove.go`, lines 1750..:
+      func initLimit(v *Value) limit {
+      	if v.Type.IsBoolean() {
+      		switch v.Op {
+      		case OpConstBool:
+      			b := v.AuxInt
+  src/cmd/compile/internal/ssa/prove.go:253-255   noLimit
+    node id: src/cmd/compile/internal/ssa/prove.go#253#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/prove.go`, lines 253..:
+      func noLimit() limit {
+      	return noLimitForBitsize(64)
+      }
+      
+      func noLimitForBitsize(bitsize uint) limit {
+  src/cmd/compile/internal/ssa/prove.go:257-259   noLimitForBitsize
+    node id: src/cmd/compile/internal/ssa/prove.go#257#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/prove.go`, lines 257..:
+      func noLimitForBitsize(bitsize uint) limit {
+      	return limit{min: -(1 << (bitsize - 1)), max: 1<<(bitsize-1) - 1, umin: 0, umax: 1<<bitsize - 1}
+      }
+      
+      func convertIntWithBitsize[Target uint64 | int64, Source uint64 | int64](x Source, bitsize uint) Target {
+  src/cmd/compile/internal/ssa/prove.go:1750-1842   initLimit
+    node id: src/cmd/compile/internal/ssa/prove.go#1750#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/prove.go`, lines 1750..:
+      func initLimit(v *Value) limit {
+      	if v.Type.IsBoolean() {
+      		switch v.Op {
+      		case OpConstBool:
+      			b := v.AuxInt
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00013   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/likelyadjust.go:83-204   likelyadjust
+    node id: src/cmd/compile/internal/ssa/likelyadjust.go#83#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/likelyadjust.go`, lines 83..:
+      func likelyadjust(f *Func) {
+      	// The values assigned to certain and local only matter
+      	// in their rank order.  0 is default, more positive
+      	// is less likely. It's possible to assign a negative
+      	// unlikeliness (though not currently the case).
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:768-773   postorder
+    node id: src/cmd/compile/internal/ssa/func.go#768#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 768..:
+      func (f *Func) postorder() []*Block {
+      	if f.cachedPostorder == nil {
+      		f.cachedPostorder = postorder(f)
+      	}
+      	return f.cachedPostorder
+  src/cmd/compile/internal/ssa/func.go:798-803   loopnest
+    node id: src/cmd/compile/internal/ssa/func.go#798#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 798..:
+      func (f *Func) loopnest() *loopnest {
+      	if f.cachedLoopnest == nil {
+      		f.cachedLoopnest = loopnestfor(f)
+      	}
+      	return f.cachedLoopnest
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00014   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/opt.go:16-18   divmod
+    node id: src/cmd/compile/internal/ssa/opt.go#16#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/opt.go`, lines 16..:
+      func divmod(f *Func) {
+      	applyRewrite(f, rewriteBlockdivmod, rewriteValuedivmod, removeDeadValues)
+      }
+  src/cmd/compile/internal/ssa/rewrite.go:41-232   applyRewrite
+    node id: src/cmd/compile/internal/ssa/rewrite.go#41#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/rewrite.go`, lines 41..:
+      func applyRewrite(f *Func, rb blockRewriter, rv valueRewriter, deadcode deadValueChoice) {
+      	// repeat rewrites until we find no more rewrites
+      	pendingLines := f.cachedLineStarts // Holds statement boundaries that need to be moved to a new value/block
+      	pendingLines.clear()
+      	debug := f.pass.debug
+  src/cmd/compile/internal/ssa/xposmap.go:40-48   clear
+    node id: src/cmd/compile/internal/ssa/xposmap.go#40#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/xposmap.go`, lines 40..:
+      func (m *xposmap) clear() {
+      	for _, l := range m.maps {
+      		if l != nil {
+      			l.clear()
+      		}
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:103-107   clear
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#103#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 103..:
+      func (s *biasedSparseMap) clear() {
+      	if s.s != nil {
+      		s.s.clear()
+      	}
+      }
+  src/cmd/compile/internal/ssa/sparsemap.go:73-75   clear
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#73#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 73..:
+      func (s *genericSparseMap[K, V]) clear() {
+      	s.dense = s.dense[:0]
+      }
+      
+      func (s *genericSparseMap[K, V]) contents() []sparseEntry[K, V] {
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/block.go:171-179   ControlValues
+    node id: src/cmd/compile/internal/ssa/block.go#171#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/block.go`, lines 171..:
+      func (b *Block) ControlValues() []*Value {
+      	if b.Controls[0] == nil {
+      		return b.Controls[:0]
+      	}
+      	if b.Controls[1] == nil {
+  src/cmd/compile/internal/ssa/copyelim.go:123-157   phielimValue
+    node id: src/cmd/compile/internal/ssa/copyelim.go#123#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/copyelim.go`, lines 123..:
+      func phielimValue(v *Value) bool {
+      	if v.Op != OpPhi {
+      		return false
+      	}
+      
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00015   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/branchelim.go:307-390   elimIfElse
+    node id: src/cmd/compile/internal/ssa/branchelim.go#307#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/branchelim.go`, lines 307..:
+      func elimIfElse(f *Func, loadAddr *sparseSet, b *Block) bool {
+      	// See if 'b' ends in an if/else: it should
+      	// have two successors, both of which are BlockPlain
+      	// and succeeded by the same block.
+      	if b.Kind != BlockIf || b.Likely != BranchUnknown {
+  src/cmd/compile/internal/ssa/func.go:143-145   retSparseSet
+    node id: src/cmd/compile/internal/ssa/func.go#143#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 143..:
+      func (f *Func) retSparseSet(ss *sparseSet) {
+      	f.Cache.freeSparseSet(ss)
+      }
+      
+      // newSparseMap returns a sparse map that can store at least up to n integers.
+  src/cmd/compile/internal/ssa/sparseset.go:73-75   clear
+    node id: src/cmd/compile/internal/ssa/sparseset.go#73#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparseset.go`, lines 73..:
+      func (s *sparseSet) clear() {
+      	s.dense = s.dense[:0]
+      }
+      
+      func (s *sparseSet) contents() []ID {
+  src/cmd/compile/internal/ssa/sparseset.go:21-23   cap
+    node id: src/cmd/compile/internal/ssa/sparseset.go#21#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparseset.go`, lines 21..:
+      func (s *sparseSet) cap() int {
+      	return len(s.sparse)
+      }
+      
+      func (s *sparseSet) size() int {
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/opt.go:8-10   opt
+    node id: src/cmd/compile/internal/ssa/opt.go#8#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/opt.go`, lines 8..:
+      func opt(f *Func) {
+      	applyRewrite(f, rewriteBlockgeneric, rewriteValuegeneric, removeDeadValues)
+      }
+      
+      func divisible(f *Func) {
+  src/cmd/compile/internal/ssa/rewrite.go:41-232   applyRewrite
+    node id: src/cmd/compile/internal/ssa/rewrite.go#41#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/rewrite.go`, lines 41..:
+      func applyRewrite(f *Func, rb blockRewriter, rv valueRewriter, deadcode deadValueChoice) {
+      	// repeat rewrites until we find no more rewrites
+      	pendingLines := f.cachedLineStarts // Holds statement boundaries that need to be moved to a new value/block
+      	pendingLines.clear()
+      	debug := f.pass.debug
+  src/cmd/compile/internal/ssa/xposmap.go:40-48   clear
+    node id: src/cmd/compile/internal/ssa/xposmap.go#40#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/xposmap.go`, lines 40..:
+      func (m *xposmap) clear() {
+      	for _, l := range m.maps {
+      		if l != nil {
+      			l.clear()
+      		}
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:103-107   clear
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#103#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 103..:
+      func (s *biasedSparseMap) clear() {
+      	if s.s != nil {
+      		s.s.clear()
+      	}
+      }
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00016   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/tighten.go:14-176   tighten
+    node id: src/cmd/compile/internal/ssa/tighten.go#14#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/tighten.go`, lines 14..:
+      func tighten(f *Func) {
+      	if base.Flag.N != 0 && len(f.Blocks) < 10000 {
+      		// Skip the optimization in -N mode, except for huge functions.
+      		// Too many values live across blocks can cause pathological
+      		// behavior in the register allocator (see issue 52180).
+  src/cmd/compile/internal/ssa/func.go:117-119   NumValues
+    node id: src/cmd/compile/internal/ssa/func.go#117#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 117..:
+      func (f *Func) NumValues() int {
+      	return f.vid.num()
+      }
+      
+      // NameABI returns the function name followed by comma and the ABI number.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:117-119   NumValues
+    node id: src/cmd/compile/internal/ssa/func.go#117#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 117..:
+      func (f *Func) NumValues() int {
+      	return f.vid.num()
+      }
+      
+      // NameABI returns the function name followed by comma and the ABI number.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:137-139   newSparseSet
+    node id: src/cmd/compile/internal/ssa/func.go#137#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 137..:
+      func (f *Func) newSparseSet(n int) *sparseSet {
+      	return f.Cache.allocSparseSet(n)
+      }
+      
+      // retSparseSet returns a sparse set to the config's cache of sparse
+  src/cmd/compile/internal/ssa/tighten.go:225-277   memState
+    node id: src/cmd/compile/internal/ssa/tighten.go#225#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/tighten.go`, lines 225..:
+      func memState(f *Func, startMem, endMem []*Value) {
+      	// This slice contains the set of blocks that have had their startMem set but this
+      	// startMem value has not yet been propagated to the endMem of its predecessors
+      	changed := make([]*Block, 0)
+      	// First step, init the memory state of some blocks.
+  src/cmd/compile/internal/ssa/value.go:550-562   MemoryArg
+    node id: src/cmd/compile/internal/ssa/value.go#550#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/value.go`, lines 550..:
+      func (v *Value) MemoryArg() *Value {
+      	if v.Op == OpPhi {
+      		v.Fatalf("MemoryArg on Phi")
+      	}
+      	na := len(v.Args)
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00017   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/regalloc.go:184-186   empty
+    node id: src/cmd/compile/internal/ssa/regalloc.go#184#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 184..:
+      func (r regMask) empty() bool {
+      	return r.v1 == 0 && r.v2 == 0
+      }
+      
+      func (r regMask) pickReg() register {
+  src/cmd/compile/internal/ssa/regalloc.go:413-429   freeReg
+    node id: src/cmd/compile/internal/ssa/regalloc.go#413#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 413..:
+      func (s *regAllocState) freeReg(r register) {
+      	if !s.allocatable.hasReg(r) && !s.isGReg(r) {
+      		return
+      	}
+      	v := s.regs[r].v
+  src/cmd/compile/internal/ssa/regalloc.go:220-225   hasReg
+    node id: src/cmd/compile/internal/ssa/regalloc.go#220#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 220..:
+      func (r regMask) hasReg(i register) bool {
+      	if i < 64 {
+      		return (r.v1>>i)&1 != 0
+      	}
+      	return (r.v2>>(i-64))&1 != 0
+  src/cmd/compile/internal/ssa/regalloc.go:213-218   removeReg
+    node id: src/cmd/compile/internal/ssa/regalloc.go#213#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 213..:
+      func (r regMask) removeReg(i register) regMask {
+      	if i < 64 {
+      		return regMask{r.v1 &^ (1 << i), r.v2}
+      	}
+      	return regMask{r.v1, r.v2 &^ (1 << (i - 64))}
+  src/cmd/compile/internal/ssa/regalloc.go:172-174   intersect
+    node id: src/cmd/compile/internal/ssa/regalloc.go#172#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 172..:
+      func (r regMask) intersect(s regMask) regMask {
+      	return regMask{r.v1 & s.v1, r.v2 & s.v2}
+      }
+      
+      func (r regMask) union(s regMask) regMask {
+  src/cmd/compile/internal/ssa/regalloc.go:184-186   empty
+    node id: src/cmd/compile/internal/ssa/regalloc.go#184#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 184..:
+      func (r regMask) empty() bool {
+      	return r.v1 == 0 && r.v2 == 0
+      }
+      
+      func (r regMask) pickReg() register {
+  src/cmd/compile/internal/ssa/regalloc.go:958-975   dropIfUnused
+    node id: src/cmd/compile/internal/ssa/regalloc.go#958#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 958..:
+      func (s *regAllocState) dropIfUnused(v *Value) {
+      	if !s.values[v.ID].needReg {
+      		return
+      	}
+      	vi := &s.values[v.ID]
+  src/cmd/compile/internal/ssa/regalloc.go:432-436   freeRegs
+    node id: src/cmd/compile/internal/ssa/regalloc.go#432#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 432..:
+      func (s *regAllocState) freeRegs(m regMask) {
+      	for !m.intersect(s.used).empty() {
+      		s.freeReg(s.pickReg(m.intersect(s.used)))
+      	}
+      }
+  src/cmd/compile/internal/ssa/regalloc.go:172-174   intersect
+    node id: src/cmd/compile/internal/ssa/regalloc.go#172#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 172..:
+      func (r regMask) intersect(s regMask) regMask {
+      	return regMask{r.v1 & s.v1, r.v2 & s.v2}
+      }
+      
+      func (r regMask) union(s regMask) regMask {
+  src/cmd/compile/internal/ssa/regalloc.go:184-186   empty
+    node id: src/cmd/compile/internal/ssa/regalloc.go#184#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 184..:
+      func (r regMask) empty() bool {
+      	return r.v1 == 0 && r.v2 == 0
+      }
+      
+      func (r regMask) pickReg() register {
+  src/cmd/compile/internal/ssa/regalloc.go:176-178   union
+    node id: src/cmd/compile/internal/ssa/regalloc.go#176#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/regalloc.go`, lines 176..:
+      func (r regMask) union(s regMask) regMask {
+      	return regMask{r.v1 | s.v1, r.v2 | s.v2}
+      }
+      
+      func (r regMask) minus(s regMask) regMask {
+  src/cmd/compile/internal/ssa/stackalloc.go:417-422   setHome
+    node id: src/cmd/compile/internal/ssa/stackalloc.go#417#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/stackalloc.go`, lines 417..:
+      func (f *Func) setHome(v *Value, loc Location) {
+      	for v.ID >= ID(len(f.RegAlloc)) {
+      		f.RegAlloc = append(f.RegAlloc, nil)
+      	}
+      	f.RegAlloc[v.ID] = loc
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00018   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/xposmap.go:51-59   mapFor
+    node id: src/cmd/compile/internal/ssa/xposmap.go#51#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/xposmap.go`, lines 51..:
+      func (m *xposmap) mapFor(index int32) *biasedSparseMap {
+      	if index == m.lastIndex {
+      		return m.lastMap
+      	}
+      	mf := m.maps[index]
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:46-57   contains
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#46#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 46..:
+      func (s *biasedSparseMap) contains(x uint) bool {
+      	if s == nil || s.s == nil {
+      		return false
+      	}
+      	if int(x) < s.first {
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:30-35   cap
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#30#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 30..:
+      func (s *biasedSparseMap) cap() int {
+      	if s == nil || s.s == nil {
+      		return 0
+      	}
+      	return s.s.cap() + s.first
+  src/cmd/compile/internal/ssa/sparsemap.go:29-31   cap
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#29#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 29..:
+      func (s *genericSparseMap[K, V]) cap() int {
+      	return len(s.sparse)
+      }
+      
+      func (s *genericSparseMap[K, V]) size() int {
+  src/cmd/compile/internal/ssa/sparsemap.go:37-40   contains
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#37#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 37..:
+      func (s *genericSparseMap[K, V]) contains(k K) bool {
+      	i := s.sparse[k]
+      	return i < int32(len(s.dense)) && s.dense[i].key == k
+      }
+      
+  src/cmd/compile/internal/ssa/numberlines.go:13-24   isPoorStatementOp
+    node id: src/cmd/compile/internal/ssa/numberlines.go#13#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/numberlines.go`, lines 13..:
+      func isPoorStatementOp(op Op) bool {
+      	switch op {
+      	// Note that Nilcheck often vanishes, but when it doesn't, you'd love to start the statement there
+      	// so that a debugger-user sees the stop before the panic, and can examine the value.
+      	case OpAddr, OpLocalAddr, OpOffPtr, OpStructSelect, OpPhi, OpITab, OpIData,
+  src/cmd/compile/internal/ssa/xposmap.go:89-95   contains
+    node id: src/cmd/compile/internal/ssa/xposmap.go#89#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/xposmap.go`, lines 89..:
+      func (m *xposmap) contains(p src.XPos) bool {
+      	s := m.mapFor(p.FileIndex())
+      	if s == nil {
+      		return false
+      	}
+  src/cmd/compile/internal/ssa/xposmap.go:51-59   mapFor
+    node id: src/cmd/compile/internal/ssa/xposmap.go#51#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/xposmap.go`, lines 51..:
+      func (m *xposmap) mapFor(index int32) *biasedSparseMap {
+      	if index == m.lastIndex {
+      		return m.lastMap
+      	}
+      	mf := m.maps[index]
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:46-57   contains
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#46#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 46..:
+      func (s *biasedSparseMap) contains(x uint) bool {
+      	if s == nil || s.s == nil {
+      		return false
+      	}
+      	if int(x) < s.first {
+  src/cmd/compile/internal/ssa/biasedsparsemap.go:30-35   cap
+    node id: src/cmd/compile/internal/ssa/biasedsparsemap.go#30#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/biasedsparsemap.go`, lines 30..:
+      func (s *biasedSparseMap) cap() int {
+      	if s == nil || s.s == nil {
+      		return 0
+      	}
+      	return s.s.cap() + s.first
+  src/cmd/compile/internal/ssa/sparsemap.go:29-31   cap
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#29#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 29..:
+      func (s *genericSparseMap[K, V]) cap() int {
+      	return len(s.sparse)
+      }
+      
+      func (s *genericSparseMap[K, V]) size() int {
+  src/cmd/compile/internal/ssa/sparsemap.go:37-40   contains
+    node id: src/cmd/compile/internal/ssa/sparsemap.go#37#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/sparsemap.go`, lines 37..:
+      func (s *genericSparseMap[K, V]) contains(k K) bool {
+      	i := s.sparse[k]
+      	return i < int32(len(s.dense)) && s.dense[i].key == k
+      }
+      
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+
+========================================================================
+cand_00019   length 12 nodes   probe support 590 of 590
+------------------------------------------------------------------------
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:768-773   postorder
+    node id: src/cmd/compile/internal/ssa/func.go#768#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 768..:
+      func (f *Func) postorder() []*Block {
+      	if f.cachedPostorder == nil {
+      		f.cachedPostorder = postorder(f)
+      	}
+      	return f.cachedPostorder
+  src/cmd/compile/internal/ssa/func.go:798-803   loopnest
+    node id: src/cmd/compile/internal/ssa/func.go#798#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 798..:
+      func (f *Func) loopnest() *loopnest {
+      	if f.cachedLoopnest == nil {
+      		f.cachedLoopnest = loopnestfor(f)
+      	}
+      	return f.cachedLoopnest
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/func.go:752-752   Log
+    node id: src/cmd/compile/internal/ssa/func.go#752#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 752..:
+      func (f *Func) Log() bool                                   { return f.fe.Log() }
+      
+      func (f *Func) Fatalf(msg string, args ...any) {
+      	stats := "crashed"
+      	if f.Log() {
+  src/cmd/compile/internal/ssagen/ssa.go:8017-8019   Log
+    node id: src/cmd/compile/internal/ssagen/ssa.go#8017#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssagen/ssa.go`, lines 8017..:
+      func (e *ssafn) Log() bool {
+      	return e.log
+      }
+      
+      // Fatalf reports a compiler error and exits.
+  src/cmd/compile/internal/ssa/layout.go:10-12   layout
+    node id: src/cmd/compile/internal/ssa/layout.go#10#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/layout.go`, lines 10..:
+      func layout(f *Func) {
+      	f.Blocks = layoutOrder(f)
+      }
+      
+      // Register allocation may use a different order which has constraints
+  src/cmd/compile/internal/ssa/layout.go:21-185   layoutOrder
+    node id: src/cmd/compile/internal/ssa/layout.go#21#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/layout.go`, lines 21..:
+      func layoutOrder(f *Func) []*Block {
+      	order := make([]*Block, 0, f.NumBlocks())
+      	scheduled := f.Cache.allocBoolSlice(f.NumBlocks())
+      	defer f.Cache.freeBoolSlice(scheduled)
+      	idToBlock := f.Cache.allocBlockSlice(f.NumBlocks())
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+  src/cmd/compile/internal/ssa/id.go:26-28   num
+    node id: src/cmd/compile/internal/ssa/id.go#26#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/id.go`, lines 26..:
+      func (a *idAlloc) num() int {
+      	return int(a.last + 1)
+      }
+  src/cmd/compile/internal/ssa/func.go:112-114   NumBlocks
+    node id: src/cmd/compile/internal/ssa/func.go#112#def#0
+    LITERAL, `git show 9f1012d9a1aa:src/cmd/compile/internal/ssa/func.go`, lines 112..:
+      func (f *Func) NumBlocks() int {
+      	return f.bid.num()
+      }
+      
+      // NumValues returns an integer larger than the id of any Value in the Func.
+------------------------------------------------------------------------
+  arch-unit go/op_0 -- canon39 body_text, LITERAL:
+      ret
+  arch-unit go/op_1 -- canon39 body_text, LITERAL:
+      ret
+  probes (590): op_0, op_1, op_10, op_103, op_110, op_117, op_124, op_132, op_139, op_146, op_168, op_169 ...
+

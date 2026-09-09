@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — ingress
 
 projected 2026-07-30 from the previous plan, now archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_0_tools/node_0_0_2_transpiler/CORE_0_0_2_transpiler.md  (128 words)
@@ -81,6 +81,6 @@ only the marked stages.
 ## where those nodes went
 
 - ingress_framework — carried in this file, above.
-- emission — `<WORKSPACE_DIR>/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_egress.md`
+- emission — `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_egress.md`
 - rust_ingestor — moved to the other project with the work it
-  describes: `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_0_transpile/SUPPORT_rust_ingestor.md`
+  describes: `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_0_transpile/SUPPORT_rust_ingestor.md`

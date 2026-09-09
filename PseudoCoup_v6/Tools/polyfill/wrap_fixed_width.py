@@ -70,7 +70,7 @@ PROVENANCE (ported, not invented — see README.md for the full map):
 
   MIN / -1 and MIN % -1 signed div/rem overflow: TRAP -- raise
   OverflowError (RULED by the owner 2026-07-28, recorded in
-  <WORKSPACE_DIR>/PseudoCoup_v6/AgentMemory/02_decisions.md). Real Rust
+  ~/Programming/PseudoCoup_v6/AgentMemory/02_decisions.md). Real Rust
   panics unconditionally on both, even in release builds; the true
   quotient +2^(BITS-1) does not fit the type. An earlier build of
   this module silently wrapped (the uniform mask-the-result policy

@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by <WORKSPACE_DIR>/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — Planning
@@ -32,9 +32,9 @@ sub-node count: 17
 
 ## blocked
 
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 3 — status: blocked
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 9 — - 2026-07-31: status -> blocked. stage 2 (IRMapping) has no answer,
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 10 — so the chain cannot close; stages 1 and 3 are not blocked, and
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 3 — status: blocked
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 9 — - 2026-07-31: status -> blocked. stage 2 (IRMapping) has no answer,
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 10 — so the chain cannot close; stages 1 and 3 are not blocked, and
 
 ## PROGRESS bullet statuses
 
@@ -50,20 +50,20 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 ## SUPPORT files in this sub-tree
 
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_0_tools/SUPPORT_slicer.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_selection_and_extraction.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_0_tools/node_0_0_2_insert/SUPPORT_insertion.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_1_research/SUPPORT_research_queue.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/SUPPORT_hub.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/SUPPORT_framing.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_0_transpile/SUPPORT_rust_ingestor.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_choosing_machine_instructions.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_per_cpu_architecture.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_rust_source_to_llvm_ir.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_2_insert/SUPPORT_whole_chain_from_llvm.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_0_intention_objects/SUPPORT_intention_objects.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_1_borders/SUPPORT_borders.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_2_surface/SUPPORT_surface.md`
+- `~/Programming/PseudoIR/Planning/node_0_0_tools/SUPPORT_slicer.md`
+- `~/Programming/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`
+- `~/Programming/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_selection_and_extraction.md`
+- `~/Programming/PseudoIR/Planning/node_0_0_tools/node_0_0_2_insert/SUPPORT_insertion.md`
+- `~/Programming/PseudoIR/Planning/node_0_1_research/SUPPORT_research_queue.md`
+- `~/Programming/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md`
+- `~/Programming/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/SUPPORT_hub.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/SUPPORT_framing.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_0_transpile/SUPPORT_rust_ingestor.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_choosing_machine_instructions.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_per_cpu_architecture.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_rust_source_to_llvm_ir.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_2_insert/SUPPORT_whole_chain_from_llvm.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_0_intention_objects/SUPPORT_intention_objects.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_1_borders/SUPPORT_borders.md`
+- `~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_1_assembly/node_0_2_1_2_surface/SUPPORT_surface.md`

@@ -9,7 +9,7 @@ suspect rows.** kotlin 64,782 and kv_dart_04's 8,000 were the last of
 it; kotlin's re-dropped shard 05 folded once, verified by row count
 against its manifest. CHECK 5t is CLOSED. The completion postscript is
 at the end of
-`<WORKSPACE_DIR>/PseudoCoupHQ/DevComms/log_038_constructs_value_grain.md`.
+`~/Programming/PseudoCoupHQ/DevComms/log_038_constructs_value_grain.md`.
 
 **There is nothing pending in this file.** Everything below is kept as
 the record of how it was done and as the fault list, which is still the
@@ -25,7 +25,7 @@ sheet is kept below it, unchanged, because its fault list is still the
 fault list.
 
 Read `construct_design.md` for the design of record and
-`<WORKSPACE_DIR>/PseudoCoupHQ/DevComms/log_038_constructs_value_grain.md`
+`~/Programming/PseudoCoupHQ/DevComms/log_038_constructs_value_grain.md`
 for what the value grain is and why it was needed.
 
 ---

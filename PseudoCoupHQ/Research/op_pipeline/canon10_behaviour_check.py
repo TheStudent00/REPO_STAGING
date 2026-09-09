@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SUPERSEDED 2026-09-03 by reference.py (node 0_3_5_4 reference): one Reference, one MachineState, one opcode_table; this file is a record and is not edited further.
 """canon10_behaviour_check.py -- TASK 26 (log_109 round 5): the
 FLOAT-FAMILY gate.
 

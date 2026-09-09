@@ -7,13 +7,13 @@ node's frontmatter and definition line, and every place the folder
 grammar is broken.
 
 It knows nothing about any particular project. Anything conforming to
-`<WORKSPACE_DIR>/PlanPlan/framework/PROTOCOL.md` renders.
+`~/Programming/PlanPlan/framework/PROTOCOL.md` renders.
 
 Usage:
-    python3 <WORKSPACE_DIR>/PlanPlan/framework/render_plan.py <root> [-o out.html]
+    python3 ~/Programming/PlanPlan/framework/render_plan.py <root> [-o out.html]
 
-    python3 <WORKSPACE_DIR>/PlanPlan/framework/render_plan.py \
-        <WORKSPACE_DIR>/PseudoCoup_v6/Scratch -o /tmp/scratch.html
+    python3 ~/Programming/PlanPlan/framework/render_plan.py \
+        ~/Programming/PseudoCoup_v6/Scratch -o /tmp/scratch.html
 
 Builds its tree from `planning_model.PlanningTree` and gets the grammar
 problems it displays from `checks.GrammarCheck` — this file holds the
@@ -25,6 +25,7 @@ import argparse
 import html
 import os
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone
 
@@ -34,6 +35,102 @@ import planning_model
 LINK_RE = re.compile(r"\[([^\]]+)\]\([^)]+\)")
 BOLD_RE = re.compile(r"\*\*([^*]+)\*\*")
 CODE_RE = re.compile(r"`([^`]+)`")
+
+
+# ---------------------------------------------------------------- diff
+
+def compute_diff_map(root, git_ref):
+    """Compare current tree against `git_ref` and return a dict mapping
+    node folder paths to their diff depth (0 = source of change,
+    1 = parent, 2 = grandparent, etc.).
+
+    Uses semantic diff (Option B): rename detection is on, so a folder
+    rename lights up the renamed folder, not every child inside it.
+    Only content changes to CORE_*.md, PROGRESS.md, CHECK_*.md files
+    trigger a diff — generated files like DASHBOARD.md are ignored."""
+    if not git_ref:
+        return {}
+
+    root = os.path.abspath(root)
+
+    # Find the git repo root
+    try:
+        repo = subprocess.check_output(
+            ["git", "rev-parse", "--show-toplevel"],
+            cwd=root, text=True, stderr=subprocess.DEVNULL
+        ).strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return {}
+
+    # Verify the ref exists
+    try:
+        subprocess.check_output(
+            ["git", "rev-parse", "--verify", git_ref],
+            cwd=repo, text=True, stderr=subprocess.DEVNULL
+        )
+    except subprocess.CalledProcessError:
+        print(f"warning: git ref '{git_ref}' not found, skipping diff",
+              file=sys.stderr)
+        return {}
+
+    # Get changed files with rename detection, scoped to the planning root
+    rel_root = os.path.relpath(root, repo)
+    try:
+        output = subprocess.check_output(
+            ["git", "diff", "--name-only", "-M", git_ref, "--", rel_root],
+            cwd=repo, text=True, stderr=subprocess.DEVNULL
+        )
+    except subprocess.CalledProcessError:
+        return {}
+
+    # Map changed files to their containing node folders
+    changed_nodes = set()
+    root_files_re = re.compile(r"^(CORE_|PROGRESS|CHECK_)")
+
+    for line in output.strip().splitlines():
+        if not line:
+            continue
+        # Skip generated files
+        basename = os.path.basename(line)
+        if basename == "DASHBOARD.md":
+            continue
+        # Only care about planning files
+        if not (basename.startswith("CORE_") or basename == "PROGRESS.md"
+                or basename.startswith("CHECK_") or basename.startswith("SUPPORT_")):
+            continue
+
+        # The file path is relative to the repo root; resolve to absolute
+        abs_file = os.path.join(repo, line)
+        node_dir = os.path.abspath(os.path.dirname(abs_file))
+        if os.path.isdir(node_dir):
+            changed_nodes.add(node_dir)
+        elif node_dir.startswith(root):
+            # File may have been deleted; still mark its parent
+            changed_nodes.add(node_dir)
+
+    if not changed_nodes:
+        return {}
+
+    # Build the diff map: for each changed node, walk up and assign
+    # fading depths to ancestors
+    diff_map = {}  # node_path -> depth (lower = closer to change)
+    for node_path in changed_nodes:
+        # The changed node itself is depth 0
+        if node_path not in diff_map or diff_map[node_path] > 0:
+            diff_map[node_path] = 0
+
+        # Walk up the ancestor chain
+        depth = 1
+        current = os.path.dirname(node_path)
+        while current and current >= root and current != os.path.dirname(current):
+            if current not in diff_map or diff_map[current] > depth:
+                diff_map[current] = depth
+            if current == root:
+                break
+            current = os.path.dirname(current)
+            depth += 1
+
+    return diff_map
 
 
 class PlanRenderer:
@@ -95,6 +192,25 @@ details.cmpfold[open] > summary .cmp::before { content: "\\25BE "; }
 .leafcmp { padding-left: calc(1em + 4px); }
 .prose { font-size: 13px; color: GrayText; margin: 3px 0; max-width: 72ch;
          padding-left: 4px; }
+
+/* diff awareness: fading highlight from source of change up to root */
+.diff-0 > summary { background: color-mix(in srgb, #4caf50 22%, transparent); }
+.diff-1 > summary { background: color-mix(in srgb, #4caf50 14%, transparent); }
+.diff-2 > summary { background: color-mix(in srgb, #4caf50 9%, transparent); }
+.diff-3 > summary { background: color-mix(in srgb, #4caf50 5%, transparent); }
+.diff-4 > summary { background: color-mix(in srgb, #4caf50 3%, transparent); }
+.diff-0 > summary:hover { background: color-mix(in srgb, #4caf50 30%, transparent); }
+.diff-0.leaf { background: color-mix(in srgb, #4caf50 22%, transparent); }
+@media (prefers-color-scheme: dark) {
+  .diff-0 > summary { background: color-mix(in srgb, #81c784 18%, transparent); }
+  .diff-1 > summary { background: color-mix(in srgb, #81c784 11%, transparent); }
+  .diff-2 > summary { background: color-mix(in srgb, #81c784 7%, transparent); }
+  .diff-3 > summary { background: color-mix(in srgb, #81c784 4%, transparent); }
+  .diff-4 > summary { background: color-mix(in srgb, #81c784 2%, transparent); }
+  .diff-0 > summary:hover { background: color-mix(in srgb, #81c784 25%, transparent); }
+  .diff-0.leaf { background: color-mix(in srgb, #81c784 18%, transparent); }
+}
+.diff-ref { color: GrayText; font-size: 12px; font-family: ui-monospace, monospace; }
 """
 
     SCRIPT = """
@@ -271,27 +387,45 @@ function setDetail(open) {
             out.append("</div></details>")
         return out
 
-    def render_node(self, node, problems_by_address):
+    def render_node(self, node, problems_by_address, diff_map=None):
         """One node and everything under it — its sub-node folders, then its
         own sections. A node with neither is a plain div, so nothing
         pretends to be foldable when there is nothing inside it."""
         problems = problems_by_address.get(node.address, [])
         body = self.node_body(node, problems)
         secs = self.render_sections(node)
-        if not node.sub_nodes and not secs:
-            return ["<div class='leaf'>"] + body + ["</div>"]
 
-        out = ["<details open class='nodefold'><summary>"] + body + \
+        diff_cls = ""
+        if diff_map:
+            node_abs = os.path.abspath(node.path)
+            if node_abs in diff_map:
+                depth = min(diff_map[node_abs], 4)  # cap at 4
+                diff_cls = f" diff-{depth}"
+
+        if not node.sub_nodes and not secs:
+            return [f"<div class='leaf{diff_cls}'>"] + body + ["</div>"]
+
+        out = [f"<details open class='nodefold{diff_cls}'><summary>"] + body + \
               ["</summary><div class='kids'>"]
         for s in node.sub_nodes:
-            out.extend(self.render_node(s, problems_by_address))
+            out.extend(self.render_node(s, problems_by_address, diff_map))
         out.extend(secs)
         out.append("</div></details>")
         return out
 
-    def render(self, tree, all_problems, problems_by_address):
+    def render(self, tree, all_problems, problems_by_address,
+               diff_map=None, git_ref=None):
         rows = list(tree.walk())
         max_depth = max(d for d, _ in rows)
+
+        diff_count = sum(1 for v in (diff_map or {}).values() if v == 0)
+        diff_note = ""
+        if git_ref and diff_count:
+            diff_note = (f" · <span class='diff-ref'>diff vs {self.esc(git_ref)}: "
+                         f"{diff_count} changed</span>")
+        elif git_ref:
+            diff_note = (f" · <span class='diff-ref'>diff vs {self.esc(git_ref)}: "
+                         f"no changes</span>")
 
         parts = [
             "<!doctype html><html><head><meta charset='utf-8'>",
@@ -300,7 +434,8 @@ function setDetail(open) {
             f"<h1>{self.esc(os.path.basename(tree.root_path))}</h1>",
             f"<p class='sub'>{self.esc(tree.root_path)} · {len(rows)} nodes · "
             f"depth {max_depth} · "
-            f"generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}</p>",
+            f"generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}"
+            f"{diff_note}</p>",
             "<p><button class='btn' onclick='setAll(true)'>expand all</button>",
             "<button class='btn' onclick='setAll(false)'>collapse all</button>",
         ]
@@ -313,7 +448,7 @@ function setDetail(open) {
         parts.append("</p>")
 
         parts.append("<div class='box'>")
-        parts.extend(self.render_node(tree.root_node, problems_by_address))
+        parts.extend(self.render_node(tree.root_node, problems_by_address, diff_map))
         parts.append("</div>")
 
         parts.append("<div class='hdr'>grammar</div><div class='box'>")
@@ -396,6 +531,11 @@ def main():
     ap.add_argument("--with", dest="columns", default="",
                     help="extra columns for --tree, comma separated: "
                          "designation, status, id")
+    ap.add_argument("--diff-from", dest="diff_from", default=None,
+                    metavar="GIT_REF",
+                    help="highlight nodes changed since GIT_REF "
+                         "(a commit, tag, or branch). The color fades "
+                         "upward from each changed node toward the root.")
     args = ap.parse_args()
 
     root = os.path.abspath(os.path.expanduser(args.root))
@@ -413,10 +553,17 @@ def main():
     problems_by_address = {address: problems for address, _, problems in grammar_scan}
     all_problems = [(address, p) for address, _, problems in grammar_scan for p in problems]
 
+    diff_map = compute_diff_map(root, args.diff_from)
+    if diff_map:
+        changed = sum(1 for v in diff_map.values() if v == 0)
+        print(f"diff vs {args.diff_from}: {changed} node(s) changed, "
+              f"{len(diff_map) - changed} ancestor(s) highlighted")
+
     renderer = PlanRenderer(args.thin)
     out = os.path.abspath(os.path.expanduser(args.out))
     with open(out, "w", encoding="utf-8") as fh:
-        fh.write(renderer.render(tree, all_problems, problems_by_address))
+        fh.write(renderer.render(tree, all_problems, problems_by_address,
+                                 diff_map, args.diff_from))
 
     rows = list(tree.walk())
     problem_count = sum(len(p) for p in problems_by_address.values())

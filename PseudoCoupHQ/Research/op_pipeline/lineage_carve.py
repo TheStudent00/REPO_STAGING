@@ -2,6 +2,15 @@
 """lineage_carve.py -- TASK 27, part 2: the ARRIVAL / COMPUTATION carve
 by LINEAGE CONFLUENCE.
 
+RETIRED FOR BOUNDARY USE, 2026-09-05, by the owner's ruling "the unit's
+boundary" in
+`Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/CORE_0_3_5_1_arch_unit.md`
+-- a unit is a FUNCTION BODY whose bounds are READ from the symbol
+table and DWARF (`t94_read_bounds.py`), never computed by the taint
+propagation below.  ONLY THE BOUNDARY USE IS RETIRED: this program's
+propagation is still the evidence for arrival lineages, and this file
+and its outputs stay on disk as records and as that evidence.
+
 THE RULE THIS IMPLEMENTS (the owner, 2026-08-31, AgentMemory: "THE ARRIVAL /
 COMPUTATION BOUNDARY IS LINEAGE CONFLUENCE, NOT 'WHERE THE ARGUMENTS
 MEET'").  The retired rule was "the arch opcode where the arguments

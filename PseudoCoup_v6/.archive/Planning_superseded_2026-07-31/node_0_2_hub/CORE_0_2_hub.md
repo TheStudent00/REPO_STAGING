@@ -20,7 +20,7 @@ node plans the Hub itself as a deliverable.
 - **Intention objects** — the 11-object minimum intention set
   realized as PC objects (PC.bool, PC.int64, PC.list, PC.map, …),
   each carrying the canon semantics now recorded AS DATA in
-  `<WORKSPACE_DIR>/PseudoCoup_v6/Tools/intentions/pc_intentions.json`
+  `~/Programming/PseudoCoup_v6/Tools/intentions/pc_intentions.json`
   (the `canon` field per primitive/operator). Sub-node
   [node_0_2_0](node_0_2_0_intention_objects/CORE_0_2_0_intention_objects.md).
 - **Borders** — typed cells and crossing rules: how values enter

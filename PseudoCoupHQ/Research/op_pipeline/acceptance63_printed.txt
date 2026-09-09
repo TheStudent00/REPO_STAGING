@@ -1,0 +1,88 @@
+== PART 0 -- THE INVENTORY OF THE ATTACHED BODIES ==
+attached bodies: 76   body lines: 4002   distinct arch opcodes: 73
+in the table: 73   NOT in the table: 0
+
+the opcodes THIS TASK ADDED, with their sighting counts (computed off the attached bodies):
+  endbr64       64 lines   first seen: clang++/__clzti2 | endbr64
+  bsr           30 lines   first seen: clang++/__clzti2 | bsr %rcx,%rcx
+  inc           14 lines   first seen: clang++/__extendxftf2 | inc %rax
+  bt             8 lines   first seen: clang++/__floattidf | bt $0x37,%rcx
+  cmova          4 lines   first seen: clang++/__truncsfbf2 | cmova %esi,%edx
+  pinsrw         4 lines   first seen: clang++/__truncsfbf2 | pinsrw $0x0,%edx,%xmm0
+  cs             2 lines   first seen: clang++/__udivmodti4 | cs nopw 0x0(%rax,%rax,1)
+  fld            2 lines   first seen: clang++/__extendxftf2 | fld %st(0)
+  xchg           1 lines   first seen: swiftc/__udivmodti4 | xchg %ax,%ax
+
+STILL MISSING: none -- every arch opcode the attached bodies spell has an entry.
+
+== PART 1 -- EACH ADDED OPCODE, ON A REAL LINE, WITH VALUES IN MOTION ==
+  LITERAL  inc %eax  (from clang++/__truncsfbf2)
+  GLOSS    adds one to the place it names, and leaves the carry flag exactly as it found it
+  reads ('the operands the opcode names',)   writes ('the last named operand', 'the flags')
+  before   %eax = 0x28 = 40
+  after    %eax = 41
+  note     the flag triple left behind is 'inc', so a later carry read REFUSES rather than inventing one
+
+  LITERAL  bsr %edx,%ecx  (from clang++/__extendhfsf2)
+  GLOSS    writes the position of the highest set bit of its source, counting from zero at the low end
+  reads ('the operands the opcode names',)   writes ('the last named operand', 'the flags')
+  before   %edx = 0x140 = 0b1_0100_0000, %ecx = 0
+  after    %ecx = 8
+  note     0x140's highest set bit is bit 8, and 8 is what the machine writes
+
+  LITERAL  bt $0x37,%rcx  (from clang++/__floattidf; run here with $0x3 over 0xff)
+  GLOSS    copies one numbered bit of its second operand into the carry flag, and touches nothing else
+  reads ('the operands the opcode names',)   writes ('the flags',)
+  before   %rcx = 0xff, so bit 3 is 1
+  after    %al = 1
+  note     the carry, and only the carry: a zero or sign reading after `bt` is refused
+
+  LITERAL  cmova %esi,%edx  (from clang++/__truncsfbf2)
+  GLOSS    writes its source into its destination when the last comparison read above, and leaves it otherwise
+  reads ('the flags', 'the operands the opcode names')   writes ('the last named operand',)
+  before   %eax = 7 compared against 3 (above), %esi = 9, %edx = unconstrained
+  after    %edx = 9
+  note     7 is above 3, so the move is taken and %edx becomes 9
+
+  LITERAL  xchg %ax,%ax  (from swiftc/__udivmodti4; run here over two different places)
+  GLOSS    swaps the two places it names; with one place named twice it is the two-byte no-operation
+  reads ('the operands the opcode names',)   writes ('the operands the opcode names',)
+  before   %eax = 0x11, %ecx = 0x22
+  after    %eax = 34, %ecx = 17
+  note     both places are read before either is written, so the swap is a swap and not two copies
+
+  LITERAL  pinsrw $0x0,%edx,%xmm0  (from clang++/__truncsfbf2)
+  GLOSS    writes the low sixteen bits of its source into one numbered lane of a vector, keeping the other seven
+  reads ('the operands the opcode names',)   writes ('the last named operand',)
+  before   %xmm0 = 0 in all eight lanes, %edx = 0x1234
+  after    %xmm0 = 4660
+  note     lane 0 holds 0x1234 and the other seven lanes are untouched
+
+  LITERAL  endbr64  (from clang++/__extendhfsf2)
+  GLOSS    marks a place a jump is allowed to land; it changes no value the machine holds
+  reads ()   writes ()
+  before   %eax unconstrained
+  after    %eax = 5
+  note     the marker changed nothing; the `mov` after it is what set the value
+
+  LITERAL  cs nopw 0x0(%rax,%rax,1)  (from clang++/__udivmodti4)
+  GLOSS    a segment prefix in front of a no-operation the assembler emits for alignment; it changes no value
+  reads ()   writes ()
+  before   the same state
+  after    unchanged
+  note     an alignment no-operation
+
+  LITERAL  fld %st(0)  (from clang++/__extendxftf2)
+  GLOSS    pushes a copy of a value onto the x87 stack
+  reads ('the operands the opcode names',)   writes ('the x87 stack',)
+  before   the x87 stack holds one value, 0.0
+  after    the x87 stack top is +0.0, and it now holds a second copy
+  note     a push of a copy of the top
+
+== PART 2 -- HOW FAR THE REFERENCE NOW WALKS EACH ATTACHED BODY ==
+attached bodies: 76
+walked to the end: 2
+stopped at a transfer (TASK 64's branch following): 74
+stopped on an opcode the table lacks: 0
+stopped for another reason: 0
+

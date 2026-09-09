@@ -2,7 +2,7 @@
 one universal mapper.
 
 Plan node: pcv5.tools.ledgerer.ts_to_ur
-    <WORKSPACE_DIR>/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_2_ts_to_ur/CORE_0_0_0_2_ts_to_ur.md
+    ~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_2_ts_to_ur/CORE_0_0_0_2_ts_to_ur.md
 Shape pass 2026-08-11; logic pass 2026-08-12.
 
 The design's spine (all ruled, see the CORE's design section):

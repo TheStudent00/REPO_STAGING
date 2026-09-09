@@ -43,7 +43,7 @@ ordinary python script.
 
 the api depends on what PseudoIR put into the hub. both the hub and
 the construction that fills it are planned in the other project, at
-`<WORKSPACE_DIR>/PseudoIR/Planning`.
+`~/Programming/PseudoIR/Planning`.
 
 ## support
 

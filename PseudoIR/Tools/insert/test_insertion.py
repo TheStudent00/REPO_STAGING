@@ -4,7 +4,7 @@ Everything is tested against HAND-SUPPLIED byte sequences written here
 from the Intel SDM encoding rules (see BYTES below), and ground truth is
 computed in-test (truncating division), never harvested from PCv5.
 
-Acceptance (CORE at <WORKSPACE_DIR>/PseudoCoup_v6/Planning/node_0_0_tools/
+Acceptance (CORE at ~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/
 node_0_0_5_slicer/node_0_0_5_2_insertion/CORE_0_0_5_2_insertion.md):
 (a) mounting the signed idiv+cqto stub and calling it computes truncating
     division: -7 idiv 2 -> -3, where Python's -7//2 floors to -4 (the
@@ -18,7 +18,7 @@ node_0_0_5_slicer/node_0_0_5_2_insertion/CORE_0_0_5_2_insertion.md):
     invalidates (closes + re-mounts) the stale page.
 
 Run:
-    python3 -m pytest <WORKSPACE_DIR>/PseudoIR/Tools/insert/test_insertion.py -q
+    python3 -m pytest ~/Programming/PseudoIR/Tools/insert/test_insertion.py -q
 """
 
 import ctypes

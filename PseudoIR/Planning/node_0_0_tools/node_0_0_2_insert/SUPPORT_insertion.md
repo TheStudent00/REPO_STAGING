@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — insertion
 
 projected 2026-07-30 from the previous plan, now archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_0_tools/node_0_0_5_slicer/node_0_0_5_2_insertion/CORE_0_0_5_2_insertion.md  (407 words)
@@ -51,8 +51,8 @@ time, so a mismatch fails loudly instead of executing wrong code.
 
 1. Harvest mounting and the typed-cell border, with the platform
    assumptions asserted rather than assumed. **Done** — it landed in
-   what was then `<WORKSPACE_DIR>/PseudoCoup_v6/Tools/slicer/` (historical)
-   and now lives at `<WORKSPACE_DIR>/PseudoIR/Tools/insert/` (`mount_bytes.py`,
+   what was then `~/Programming/PseudoCoup_v6/Tools/slicer/` (historical)
+   and now lives at `~/Programming/PseudoIR/Tools/insert/` (`mount_bytes.py`,
    `cross_border.py`, `insertion_cache.py`, `test_insertion.py`).
 2. Cache keyed by (intention, language, type-tuple) with the
    plan's identity in the key, so a plan change invalidates

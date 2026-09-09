@@ -10,7 +10,7 @@ status: living
   human+LLM analysis is the SLICING REQUEST FORM.
 - **build — done** 2026-07-28 (delegated to a Sonnet subagent;
   all suites re-run and confirmed here):
-  `<WORKSPACE_DIR>/PseudoCoup_v6/Tools/intentions/` —
+  `~/Programming/PseudoCoup_v6/Tools/intentions/` —
   `pc_intentions.json` (PCv5 verdicts copied forward + the four
   R1 gap fields: 10 satisfier rows, 19 canon entries each citing
   its verdict string, 11-member minimum set, policy links
@@ -28,7 +28,7 @@ status: living
   `fn emit` at line 162. The form declares what the source
   contains; discrepancy recorded in the form and schema.
 - deviations flagged for the owner in the delegate's report (recorded
-  in `<WORKSPACE_DIR>/PseudoCoup_v6/Tools/intentions/README.md`):
+  in `~/Programming/PseudoCoup_v6/Tools/intentions/README.md`):
   meta.generated_by renamed truthfully; four canon entries carry
   marked inferences (P9/O3 → Rust, P11 JS→TypeScript column, O7
   C# scope note); forms live as separate JSON files rather than

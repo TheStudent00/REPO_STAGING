@@ -1,7 +1,7 @@
 """Union the twelve compilers' own type enumerations into one table.
 
 Step A of the node `type_vocabulary`
-(`<WORKSPACE_DIR>/PseudoCoupHQ/Planning/node_0_3_research/
+(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/
 node_0_3_3_type_vocabulary/CORE_0_3_3_type_vocabulary.md`).
 
 MEASUREMENT ONLY. Nothing here decides which entries become verified
@@ -20,7 +20,7 @@ language, so no normalization is hidden. The three markers:
     ~   present but qualified -- the `raw` note says how
     .   absent from that language's own enumeration
 
-Run:  python3 <WORKSPACE_DIR>/PseudoCoupHQ/Research/type_vocabulary/union.py
+Run:  python3 ~/Programming/PseudoCoupHQ/Research/type_vocabulary/union.py
 """
 
 import json
@@ -38,7 +38,7 @@ ABBR = {"python": "py", "typescript": "ts", "java": "jv", "csharp": "cs",
         "kotlin": "kt", "cpp": "cp", "dart": "dt", "swift": "sw"}
 
 # The six already verified by the harness at
-# <WORKSPACE_DIR>/PseudoCoupHQ/Research/dominant_intentions/.
+# ~/Programming/PseudoCoupHQ/Research/dominant_intentions/.
 VERIFIED_INSTRUMENTS = {"boolean", "integer", "float", "string", "list", "dict"}
 
 # category "data"      -- a shape a running program holds values of

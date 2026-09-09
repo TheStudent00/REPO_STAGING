@@ -53,6 +53,6 @@ whole
 ## the harvest
 
 what each tool is made of is the harvest, mapped in
-`<WORKSPACE_DIR>/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`
+`~/Programming/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`
 and in detail in the two 2026-07-27 surveys under
-`<WORKSPACE_DIR>/PseudoCoup_v5/DevComms/`.
+`~/Programming/PseudoCoup_v5/DevComms/`.

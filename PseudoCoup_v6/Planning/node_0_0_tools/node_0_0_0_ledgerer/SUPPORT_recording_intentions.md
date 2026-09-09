@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — recording intentions
 
 projected 2026-07-30 from the previous plan, now archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_4_application_ingress/node_0_4_1_intent_capture/CORE_0_4_1_intent_capture.md  (244 words)

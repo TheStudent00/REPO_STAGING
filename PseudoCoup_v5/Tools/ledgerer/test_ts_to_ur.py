@@ -1,7 +1,7 @@
 """Verification tests for ts_to_ur — the settling instrument (the owner,
 2026-08-11: skeptical until the design is verified).
 
-    python3 <WORKSPACE_DIR>/PseudoCoup_v5/Tools/ledgerer/test_ts_to_ur.py
+    python3 ~/Programming/PseudoCoup_v5/Tools/ledgerer/test_ts_to_ur.py
 
 Each test states what would falsify the design if it failed. The
 parser is constructed HERE, in one place, honouring the single-owner

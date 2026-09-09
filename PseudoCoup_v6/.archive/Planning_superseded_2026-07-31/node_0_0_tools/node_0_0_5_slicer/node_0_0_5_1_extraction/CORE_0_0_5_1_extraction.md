@@ -42,7 +42,7 @@ region computed.
 
 ## Reuse (already built and green)
 
-`<WORKSPACE_DIR>/PseudoCoup_v6/Tools/tree_sitter_base/`,
+`~/Programming/PseudoCoup_v6/Tools/tree_sitter_base/`,
 `.../Tools/ledger/`, `.../Tools/transpiler/` (three ingestors, each
 byte-identical to its PCv5 oracle), `.../Tools/polyfill/`.
 

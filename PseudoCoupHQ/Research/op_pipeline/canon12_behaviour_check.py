@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SUPERSEDED 2026-09-03 by reference.py (node 0_3_5_4 reference): one Reference, one MachineState, one opcode_table; this file is a record and is not edited further.
 """canon12_behaviour_check.py -- STAGE 2's own gate extension: the
 ground-truth simulator (canon5_behaviour_check.Sim through canon9.
 Sim9) has NEVER modeled `cltd`/`cqto`/`idiv`/`div`/the 1-operand

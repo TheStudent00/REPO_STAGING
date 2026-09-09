@@ -1,0 +1,41 @@
+UNIT            c/op_246   (from canon39_wrapped_c.json)
+language        c
+population      original
+arrival         ["rdi", "rsi", "rdx"]
+answer home     rax at 32 bits
+
+THE BODY, VERBATIM (the compiler's own text, untouched)
+    mov %edi,%eax
+    cltd
+    idiv %esi
+    mov %edx,%eax
+    ret
+
+THE WRAPPED TEXT (layer 3, the runnable record)
+    mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; mov %eax,OUT-0; ret
+
+THE LEDGER, ROW BY ROW, WITH THE LINE THE RELINK ATTACHED
+    row      produced_by (typed)                            line                     term
+    IN-0     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rdi
+    IN-1     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rsi
+    IN-2     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rdx
+    TEMP-0   {"kind": "arch_opcode", "mnem": "mov"}         mov %edi,%eax            ZeroExt(32, Extract(31, 0, seed_rdi))
+    TEMP-1   {"kind": "arch_opcode", "mnem": "cltd", "writes_which_half": "the sign of the accumulator"} cltd                     ZeroExt(32, Extract(31, 0, ZeroExt(32, Extract(31, 0, see...
+    TEMP-2   {"kind": "arch_opcode", "mnem": "idiv", "writes_which_half": "quotient"} idiv %esi                ZeroExt(32, Extract(31, 0, Concat(Extract(31, 0, ZeroExt(...
+    TEMP-3   {"kind": "arch_opcode", "mnem": "idiv", "writes_which_half": "remainder"} idiv %esi                ZeroExt(32, Extract(31, 0, SRem(Concat(Extract(31, 0, Zer...
+    TEMP-4   {"kind": "arch_opcode", "mnem": "mov"}         mov %edx,%eax            ZeroExt(32, Extract(31, 0, ZeroExt(32, Extract(31, 0, SRe...
+    OUT-0    {"kind": "arch_opcode", "mnem": "mov"}         -                        Extract(31, 0, ZeroExt(32, Extract(31, 0, ZeroExt(32, Ext...
+
+THE READ AT OUT-0 (layer 4, the term)
+    Extract(31, 0, ZeroExt(32, Extract(31, 0, ZeroExt(32, Extract(31, 0, SRem(Concat(Extract(31, 0, ZeroExt(32, Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rdi))) >> 31)), Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rdi)))), SignExt(32, Extract(31, 0, seed_rsi))))))))
+
+THE TWO GATE ROUTES
+    route one  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+    route two  UNDECIDED
+               the text-order walk: no z3 term is written for this arch opcode
+
+THE NORMALIZED TEXT (layer 5, the comparison key)
+    Extract(31, 0, bvsrem_i(Concat(Extract(31, 0, v0) >> 31, Extract(31, 0, v0)), Concat(Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 0, v1))))
+
+HOLES 0, CASCADES 0, SLOT DISAGREEMENTS 1

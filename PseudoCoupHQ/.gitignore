@@ -25,4 +25,82 @@ __pycache__/
 # acceptance_query files, the diary, the coverage tally, and the logs,
 # all of which stay tracked.
 Research/compiler_graph/graph_go*.json
+Research/compiler_graph/graph_cpp*.json
+Research/compiler_graph/graph_rust*.json
+Research/compiler_graph/graph_swift*.json
+
+# compiler_graph task-75 derived artifacts — regenerable output, not
+# findings, and each over GitHub's file-size limit (super_ops_go.json
+# 104 MB, coverage_go2.json 515 MB). Both are re-derived from the
+# tracked graph and the diaries in about half a minute:
+#   graph.py join --graph graph_go.json --diaries diaries/go \
+#       --instrumented t72/diary_targets_all.json --out coverage_go2.json
+#   graph.py super-ops --graph graph_go.json --diaries diaries/go \
+#       --min-length 3 --min-support 2 --max-length 12 \
+#       --out super_ops_go.json
+# THE FINDINGS STAY TRACKED: super_ops_go_top20.txt,
+# super_ops_go_discriminating10.txt, super_ops_comparison_go.json,
+# guard_task75.txt, and DevComms/log_177.
+Research/compiler_graph/super_ops_go.json
+Research/compiler_graph/coverage_go2.json
 Research/compiler_graph/__pycache__/
+
+# compiler_graph DIARIES — one ordered diary per probe of the corpus,
+# produced by Research/compiler_graph/lanes_t72/t72_l4_diaries.sh through
+# the instrumented go compiler (task 72, log_175). 590 files, about 1 GB,
+# re-derivable by re-running lanes t72_l1..l4 in order; regenerable
+# output, not a finding. The FINDINGS — coverage_go.json, the inject
+# report, the cost page and the log — stay tracked.
+Research/compiler_graph/diaries/
+Research/compiler_graph/coverage_go_paths.json
+
+# op_pipeline derived pool — re-derivable by running
+# Research/op_pipeline/build_the_pool1.py, whose inputs (canon36_interp,
+# interp_fastpath, interp_join3, proved_edges2/3) all stay tracked; it is an
+# intermediate consumed by build_the_families1.py, not a finding.
+Research/op_pipeline/the_pool1.json
+
+# compiler_graph FILE-LEVEL SUMMARIES (task 73, log_181) — TRACKED, by
+# negation of the graph_<lang>*.json rule above.  These are what the
+# dashboard's pane 4 actually reads: the whole graphs (608 MB for four) and
+# the coverage join (515 MB) are ignored above and are not in a clone, so a
+# clone with no summaries has no pane 4 at all.  Each is small enough to
+# track (41 KB to 3.3 MB).  Regenerate them with:
+#   /tmp/reconnect_venv/bin/python3 Research/compiler_graph/graph_files_build.py \
+#       go rust swift cpp
+#   /tmp/reconnect_venv/bin/python3 Research/compiler_graph/coverage_files_build.py
+!Research/compiler_graph/graph_go_files.json
+!Research/compiler_graph/graph_cpp_files.json
+!Research/compiler_graph/graph_rust_files.json
+!Research/compiler_graph/graph_swift_files.json
+!Research/compiler_graph/graph_go_defs.json
+!Research/compiler_graph/graph_cpp_defs.json
+!Research/compiler_graph/graph_rust_defs.json
+!Research/compiler_graph/graph_swift_defs.json
+
+# compiler_graph TASK 81 derived artifacts (log_190) — the c and cpp lap
+# of the same three rows the go lap filled. Regenerable output, not
+# findings, and each far over GitHub's file-size limit: the coverage
+# joins carry one ordered path per probe over 1,380 probes, and
+# super_ops_cpp.json carries every closed candidate with its spans.
+# Re-derived, in order, by lanes_t81/t81_l3, t81_l5, t81_l6, t81_l7.
+# THE FINDINGS STAY TRACKED: coverage_cpp_summary.json,
+# super_ops_comparison_cpp.json, t81/inject_report_cpp2.json,
+# t81/instrumented_cpp.json, t81/diary_state_cpp.json,
+# t81/sample_probe_cost.json, guard_task81.txt and DevComms/log_190.
+Research/compiler_graph/coverage_c.json
+Research/compiler_graph/coverage_cpp.json
+Research/compiler_graph/coverage_c_and_cpp.json
+Research/compiler_graph/super_ops_cpp.json
+Research/compiler_graph/t81/sample_one.diary
+Research/compiler_graph/coverage_extended.json
+
+# The compiler graphs and coverage joins -- 12.8 GB, 2026-09-04.
+# the owner's instruction: git-ignore them for now. They move to a companion
+# folder with its own local git, committed every 30 seconds, and the
+# dashboard's coverage tab reads them from there.
+Research/compiler_graph/graph_*.json
+Research/compiler_graph/coverage_*.json
+Research/compiler_graph/super_ops_*.json
+Research/compiler_graph/variant_connections_*.json
+Research/compiler_graph/diaries/

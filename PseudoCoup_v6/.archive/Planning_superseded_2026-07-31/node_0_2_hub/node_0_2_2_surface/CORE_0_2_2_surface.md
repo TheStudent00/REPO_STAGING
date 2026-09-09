@@ -31,7 +31,7 @@ How hub source spells qualified semantics: `a r./ b` meaning
 
 1. Transplant the import-hook mechanism as a PCv6 tool when the
    Hub assembly starts (T6 insertion's demo needs it): harvest
-   `<WORKSPACE_DIR>/PseudoCoup_v5/Research/rust_routing/pc_import.py`
+   `~/Programming/PseudoCoup_v5/Research/rust_routing/pc_import.py`
    + `pc_runtime.py`, re-keyed to the T2 ledger.
 2. Qualifier grammar as data: which spellings exist (`r./`,
    `r.%`, future `go.<op>`, …) derives from the intentions

@@ -82,7 +82,7 @@ import l3_accept as L3                                       # noqa: E402
 
 LANGS = ["cpp", "rust", "go", "swift"]
 
-DROP = "<WORKSPACE_DIR>/Airlock/agent/drop"
+DROP = "~/Programming/Airlock/agent/drop"
 
 SCALAR_FORMS = {"whole", "fractional", "truth"}
 

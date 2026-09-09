@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — rust ingestor
 
 projected 2026-07-30 from the previous plan, now archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_0_tools/node_0_0_2_transpiler/node_0_0_2_1_rust_ingestor/CORE_0_0_2_1_rust_ingestor.md  (279 words)

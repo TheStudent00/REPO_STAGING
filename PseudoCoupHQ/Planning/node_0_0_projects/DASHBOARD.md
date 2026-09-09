@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by <WORKSPACE_DIR>/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_0_projects
@@ -32,8 +32,8 @@ sub-node count: 0
 
 ## blocked
 
-- `<WORKSPACE_DIR>/PseudoCoupHQ/Planning/node_0_0_projects/PROGRESS.md` line 10 — - **blocked, and naming what is not**: PseudoCoup_v5's rebuild cannot
-- `<WORKSPACE_DIR>/PseudoCoupHQ/Planning/node_0_0_projects/PROGRESS.md` line 15 — through `PCV5_ROOT`, and 95 passed once it is set. NOT blocked by
+- `~/Programming/PseudoCoupHQ/Planning/node_0_0_projects/PROGRESS.md` line 10 — - **blocked, and naming what is not**: PseudoCoup_v5's rebuild cannot
+- `~/Programming/PseudoCoupHQ/Planning/node_0_0_projects/PROGRESS.md` line 15 — through `PCV5_ROOT`, and 95 passed once it is set. NOT blocked by
 
 ## PROGRESS bullet statuses
 

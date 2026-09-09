@@ -1,0 +1,69 @@
+# script: /drop/o4_l3b_claims_verify.sh
+# started: 2026-09-06T03:19:37+00:00
+# timeout: 7200s
+# work free before: 2048 MB
+------------------------------------------------------------
+[1/1] check_conventions_log_claims.py --verify over log_210 (after fixing the tail-6 paste and the py comment's literal 'exempt')
+sandbox map in use (from Airlock mounts.conf):
+  ~/Programming/PlanPlan           -> /projects/PlanPlan         present
+  ~/Programming/PseudoCoupGraphs   -> /projects/PseudoCoupGraphs present
+  ~/Programming/PseudoCoupHQ       -> /projects/PseudoCoupHQ     present
+  ~/Programming/PseudoCoup_v5      -> /projects/PseudoCoup_v5    present
+  ~/Programming/PseudoCoup_v6      -> /projects/PseudoCoup_v6    present
+  ~/Programming/Sources            -> /sources                   present
+work directory for every command: /projects/PseudoCoupHQ
+memory: bound 512 MB; ABORT: MEMORY_BOUND_EXCEEDED at 6144 MB, checked after every command
+peak RSS before any pass: 16.4 MB
+the ONLY grouping key in this program: (log file name, outcome name) -- see grouping_key(); no operator token enters it
+
+log_210_task_o4_operator_variants_by_search.md: 6 claims extracted
+
+[1/6] log_210_task_o4_operator_variants_by_search.md:535  shell_transcript
+[2/6] log_210_task_o4_operator_variants_by_search.md:554  shell_transcript
+[3/6] log_210_task_o4_operator_variants_by_search.md:572  shell_transcript
+[4/6] log_210_task_o4_operator_variants_by_search.md:591  shell_transcript
+[5/6] log_210_task_o4_operator_variants_by_search.md:612  shell_transcript
+[6/6] log_210_task_o4_operator_variants_by_search.md:622  shell_transcript
+
+==============================================================================
+PER-LOG REPORT
+==============================================================================
+
+## log_210_task_o4_operator_variants_by_search.md
+   claims 6 | MATCHES 3 | DIFFERS 0 | UNVERIFIABLE 0 | REFUSED 2 | NOT_RERUNNABLE 1
+   VERDICT: 3 of 6 claims reproduce; 0 (0%) carry nothing to re-run
+
+   | line | shape | outcome | claim / reason |
+   |---|---|---|---|
+   | 535 | shell_transcript | **REFUSED** | `python3 ~/Programming/Airlock/airlock up --instance o4` — submits_or_moves_the_sandbox -- matched `airlock up` |
+   | 554 | shell_transcript | **MATCHES** | `tail -6 /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T031410Z__o4_l1b` |
+   | 572 | shell_transcript | **MATCHES** | `cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T031549Z__o4_l2b_spe` |
+   | 591 | shell_transcript | **MATCHES** | `grep -c exempt  /projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_searc` |
+   | 612 | shell_transcript | **REFUSED** | `python3 ~/Programming/Airlock/airlock down --instance o4` — submits_or_moves_the_sandbox -- matched `airlock down` |
+   | 622 | shell_transcript | **NOT_RERUNNABLE** | `python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --t` — no_output_pasted -- the command has nothing under it |
+
+==============================================================================
+SUMMARY, ALL LOGS
+==============================================================================
+population: 6 claims across 1 logs
+  MATCHES          3
+  DIFFERS          0
+  UNVERIFIABLE     0
+  REFUSED          2
+  NOT_RERUNNABLE   1
+
+ONE LINE: 3 of 6 claims reproduce; 0 (0%) carry nothing to re-run
+
+causes, by name:
+  submits_or_moves_the_sandbox     2
+  no_output_pasted                 1
+
+peak RSS after the pass: 16.9 MB
+wrote /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_210_claims_final.json
+operator inventory: 91 tokens read from probe_manifest_*.json
+PASS log_210_claims_final.json -- no operator token in any key, grouping, pairing or row structure
+
+verifier exit: 0
+------------------------------------------------------------
+# exit 0 in 0.1s
+# work free after: 2048 MB (consumed 0 MB)

@@ -9,7 +9,7 @@ along with the commentary it depended on (2026-07-30) — determinism
 and runtime behavior are what this suite verifies now.
 
 Run:
-    python3 -m pytest <WORKSPACE_DIR>/PseudoCoup_v6/Tools/transpiler/test_llvm_encoder.py -q
+    python3 -m pytest ~/Programming/PseudoCoup_v6/Tools/transpiler/test_llvm_encoder.py -q
 
 No environment variable and no other repo needed. The source is
 vendored beside this test — see `fixtures/upstream/MANIFEST.md`.

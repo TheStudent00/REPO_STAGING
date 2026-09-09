@@ -26,7 +26,7 @@ disagree the disagreement is written out as a finding and is NOT
 resolved by preference.
 
   route_source     -- the pinned swift source clone
-                      (<WORKSPACE_DIR>/Sources/swift-6.0.3-RELEASE at
+                      (~/Programming/Sources/swift-6.0.3-RELEASE at
                       commit 6a862d2e..., tag swift-6.0.3-RELEASE).
                       The concrete scalar types are NOT hand-listed:
                       each .gyb template's own generation loop is read
@@ -82,7 +82,7 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SWIFT_SRC = "<WORKSPACE_DIR>/Sources/swift-6.0.3-RELEASE"
+SWIFT_SRC = "~/Programming/Sources/swift-6.0.3-RELEASE"
 CORE = os.path.join(SWIFT_SRC, "stdlib/public/core")
 UTILS = os.path.join(SWIFT_SRC, "utils")
 IFACE = os.path.join(HERE, "swift_stdlib_x86_64-unknown-linux-gnu.swiftinterface")

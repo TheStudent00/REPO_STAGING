@@ -10,7 +10,7 @@
 # Usage:  ./git_commit_push.sh ["commit message"]
 
 set +e
-REPO=<WORKSPACE_DIR>/PseudoIR
+REPO=~/Programming/PseudoIR
 MSGFILE="$REPO/DevComms/next_commit_message.txt"
 if [ -n "$1" ]; then
     MSG="$1"

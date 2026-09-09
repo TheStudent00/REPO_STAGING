@@ -5,7 +5,7 @@
 #   the container `trickle-runner` and the network `trickle-internal`.
 #
 # WHAT IT LEAVES ON DISK, DELIBERATELY
-#   <WORKSPACE_DIR>/AirlockTrickle/agent/{drop,out,logs,status} -- the lane
+#   ~/Programming/AirlockTrickle/agent/{drop,out,logs,status} -- the lane
 #   scripts and their raw products; and everything the trickle banked in
 #   Research/op_pipeline (trickle_state.json, trickle_store/, trickle_raw/,
 #   trickle_lanes/). The resume state is the point: a stopped trickle
@@ -34,7 +34,7 @@ podman network rm "$NETWORK" >/dev/null 2>&1 || true
 echo "  $NETWORK removed"
 echo
 echo "  left on disk (resume state):"
-echo "    <WORKSPACE_DIR>/AirlockTrickle/agent"
+echo "    ~/Programming/AirlockTrickle/agent"
 echo "    Research/op_pipeline/trickle_state.json"
 echo "    Research/op_pipeline/trickle_store/  trickle_raw/  trickle_lanes/"
 echo

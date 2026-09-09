@@ -7,10 +7,10 @@
 # (written by the sandbox session) > "update". The file is emptied
 # after use so a stale message never labels a later commit.
 #
-# Usage:  bash <WORKSPACE_DIR>/PlanPlan/git_commit_push.sh ["commit message"]
+# Usage:  bash ~/Programming/PlanPlan/git_commit_push.sh ["commit message"]
 
 set +e
-REPO=<WORKSPACE_DIR>/PlanPlan
+REPO=~/Programming/PlanPlan
 MSGFILE="$REPO/DevComms/next_commit_message.txt"
 if [ -n "$1" ]; then
     MSG="$1"

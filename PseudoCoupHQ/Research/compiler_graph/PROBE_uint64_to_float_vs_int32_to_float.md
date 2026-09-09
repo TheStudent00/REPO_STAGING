@@ -11,7 +11,7 @@ artifacts. Artifacts of this probe live under
 ## 1. what was available vs not
 
 - **LLVM/clang source tree: PRESENT**, at
-  `<WORKSPACE_DIR>/Sources/llvm-project` (a real git checkout, 3.9G,
+  `~/Programming/Sources/llvm-project` (a real git checkout, 3.9G,
   full tag history back to `llvmorg-8.0.0-rc2`). No download was
   needed or performed. Evidence class: **tool's own testimony**
   (`git log`, `git tag`, `du`).
@@ -318,7 +318,7 @@ honesty rule:
 
 | claim | class |
 | --- | --- |
-| LLVM source present at `<WORKSPACE_DIR>/Sources/llvm-project` | tool's own testimony (`git log`/`git tag`) |
+| LLVM source present at `~/Programming/Sources/llvm-project` | tool's own testimony (`git log`/`git tag`) |
 | pinned compiler is clang 21.1.8, tag available at commit 42befb84... | tool's own testimony (compiler.txt banner + git tag lookup) |
 | repo HEAD (24-init) is NOT the pinned compiler | forced by construction (date/commit comparison) |
 | `X86TargetLowering::LowerOperation` dispatches `ISD::UINT_TO_FP` to `LowerUINT_TO_FP` | forced by construction (source line quoted, singleton switch case) |

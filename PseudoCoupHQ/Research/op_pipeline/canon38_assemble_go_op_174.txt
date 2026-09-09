@@ -1,0 +1,89 @@
+---- the .s emitted for go/op_174 ----
+    .text
+x_runtime_panicshift:
+    ret
+    .globl u_go_op_174
+u_go_op_174:
+    mov ledger+0x00(%rip),%rax
+    mov 0x0(%rax),%rax
+    mov ledger+0x00(%rip),%rbx
+    mov 0x8(%rbx),%rbx
+    push %rbp
+    mov %rsp,%rbp
+    test %ebx,%ebx
+    jl .Lu_go_op_174_L0
+    mov %ebx,%ecx
+    shl %cl,%rax
+    cmp $0x40,%ecx
+    sbb %rdx,%rdx
+    and %rdx,%rax
+    pop %rbp
+    mov ledger+0x38(%rip),%r11
+    mov %rax,0x0(%r11)
+    ret
+.Lu_go_op_174_L0:
+    call x_runtime_panicshift
+    nop
+    .section .rodata
+    .align 16
+canon35_pool:
+    .quad 0
+    .quad 0
+    .quad 0
+    .quad 0
+    .data
+    .align 8
+ledger:
+    .quad 0    # the base address of the IN block, written by the runner
+    .quad 0    # the base address of the CONST block, written by the runner
+    .quad 0    # the base address of the TEMP block, written by the runner
+    .quad 0    # the base address of the OWN block, written by the runner
+    .quad 0    # the base address of the STACK block, written by the runner
+    .quad 0    # the base address of the X87 block, written by the runner
+    .quad 0    # the base address of the GUARD block, written by the runner
+    .quad 0    # the base address of the OUT block, written by the runner
+
+as --64 exit code: 0 
+---- objdump -d ----
+
+/tmp/canon38_one/one.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <x_runtime_panicshift>:
+   0:	c3                   	ret
+
+0000000000000001 <u_go_op_174>:
+   1:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 8 <u_go_op_174+0x7>
+   8:	48 8b 00             	mov    (%rax),%rax
+   b:	48 8b 1d 00 00 00 00 	mov    0x0(%rip),%rbx        # 12 <u_go_op_174+0x11>
+  12:	48 8b 5b 08          	mov    0x8(%rbx),%rbx
+  16:	55                   	push   %rbp
+  17:	48 89 e5             	mov    %rsp,%rbp
+  1a:	85 db                	test   %ebx,%ebx
+  1c:	7c 1a                	jl     38 <u_go_op_174+0x37>
+  1e:	89 d9                	mov    %ebx,%ecx
+  20:	48 d3 e0             	shl    %cl,%rax
+  23:	83 f9 40             	cmp    $0x40,%ecx
+  26:	48 19 d2             	sbb    %rdx,%rdx
+  29:	48 21 d0             	and    %rdx,%rax
+  2c:	5d                   	pop    %rbp
+  2d:	4c 8b 1d 00 00 00 00 	mov    0x0(%rip),%r11        # 34 <u_go_op_174+0x33>
+  34:	49 89 03             	mov    %rax,(%r11)
+  37:	c3                   	ret
+  38:	e8 c3 ff ff ff       	call   0 <x_runtime_panicshift>
+  3d:	90                   	nop
+
+---- objdump -r ----
+
+/tmp/canon38_one/one.o:     file format elf64-x86-64
+
+RELOCATION RECORDS FOR [.text]:
+OFFSET           TYPE              VALUE
+0000000000000004 R_X86_64_PC32     .data-0x0000000000000004
+000000000000000e R_X86_64_PC32     .data-0x0000000000000004
+0000000000000030 R_X86_64_PC32     .data+0x0000000000000034
+
+
+

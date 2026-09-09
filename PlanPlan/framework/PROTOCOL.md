@@ -65,7 +65,7 @@ ONE core file describing that branch at that level.
       standpoint to be relative to.
       - Repo-relative rather than absolute because `repo` and `remote`
         exist so a reference survives the repo being cloned somewhere
-        other than `<WORKSPACE_DIR>`. An absolute path in the same field
+        other than `~/Programming`. An absolute path in the same field
         would undo that.
       - Corrected 2026-08-02, after the owner: "bug: `path` is the document
         file name, instead its file path." It held a bare filename —
@@ -142,7 +142,7 @@ ONE core file describing that branch at that level.
 
   - **An edge that leaves the repo carries `repo` and `remote`
     alongside `path`** (the owner, 2026-08-02: "oh okay yeah that works!").
-    A `<WORKSPACE_DIR>/...` path assumes that layout exists on the
+    A `~/Programming/...` path assumes that layout exists on the
     machine reading it, and cloning one repo alone already produces
     references that resolve nowhere. The repo name and its remote make
     the edge followable without that assumption.
@@ -150,7 +150,7 @@ ONE core file describing that branch at that level.
     ```yaml
     super_node:
         name: projects
-        path: <WORKSPACE_DIR>/PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
+        path: ~/Programming/PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
         repo: PseudoCoupHQ
         remote: https://github.com/TheStudent00/PseudoCoupHQ.git
     ```
@@ -356,7 +356,7 @@ ONE core file describing that branch at that level.
   2026-07-28), named with the index path + description.
 - **DASHBOARD.md** — zero or one per node folder. GENERATED, not
   hand-written, by
-  `<WORKSPACE_DIR>/PlanPlan/framework/generate_dashboards.py`: a
+  `~/Programming/PlanPlan/framework/generate_dashboards.py`: a
   rollup over that node's own sub-tree (status and designation
   breakdowns, anything blocked, PROGRESS bullet-status counts, the
   SUPPORT files present). It is regenerated, never edited — a hand
@@ -499,7 +499,7 @@ sub_nodes:                    # address order; [] for a leaf — see §1
 ```
 
 **The field names live in one file** —
-`<WORKSPACE_DIR>/PlanPlan/framework/schema.py`, added 2026-08-02 at
+`~/Programming/PlanPlan/framework/schema.py`, added 2026-08-02 at
 the owner's request. Every tool asks it rather than carrying its own string
 literals, so renaming a field is one edit instead of four.
 
@@ -509,7 +509,7 @@ literals, so renaming a field is one edit instead of four.
 - **The documents are handled by a migration command instead of a
   reference**:
 
-      python3 <WORKSPACE_DIR>/PlanPlan/framework/generate_nodes.py \
+      python3 ~/Programming/PlanPlan/framework/generate_nodes.py \
           <root>... --rename-field <old> <new> --apply
 
   It enumerates and prints every site before writing, and writes
@@ -554,7 +554,7 @@ and stage 1 produces the measurement that unblocks stage 2."
 ## 3a. `designation`: what kind of thing a node is
 
 Added 2026-07-31. **The reasoning is not repeated here** — it is in
-`<WORKSPACE_DIR>/PseudoCoupHQ/plan_and_code.md`, which is the source. This
+`~/Programming/PseudoCoupHQ/plan_and_code.md`, which is the source. This
 section is the field's definition and what the grammar owes it.
 
 Required on **every** node, so a missing designation is a defect the
@@ -790,7 +790,7 @@ deepening. Sequencing to be discussed.
 
 - The project's planning root plays `node_0`: `CORE_0.md` +
   SUPPORT files + level-1 node folders conforming to §1–§5.
-  > **Note on Root Naming:** (<USER>, 2026-08-23) The root node's file and `id` should potentially be named after the project itself (e.g., `CORE_0_<project_name>.md` and `id: <project_name>`) rather than generic terms like `CORE_0_planning.md` or `id: root`. This prevents namespace collisions when cross-referencing between trees in a multi-project framework (like `PCHQ`).
+  > **Note on Root Naming:** (<user>, 2026-08-23) The root node's file and `id` should potentially be named after the project itself (e.g., `CORE_0_<project_name>.md` and `id: <project_name>`) rather than generic terms like `CORE_0_planning.md` or `id: root`. This prevents namespace collisions when cross-referencing between trees in a multi-project framework (like `PCHQ`).
 - The framework is a template, not a dependency: conforming
   projects copy the conventions; PlanPlan later EXTRACTS
   instances from their VCS histories for the ontology-evolution
@@ -812,15 +812,15 @@ deepening. Sequencing to be discussed.
   - "Mechanical (2026-08-01)" below means the older bar: the inline
     `nodes` register, a `## nodes` section in first position, and a
     CHECK and DASHBOARD in every node folder.
-  - `<WORKSPACE_DIR>/PseudoCoupHQ/Planning/` — mechanical (2026-08-01).
-  - `<WORKSPACE_DIR>/PseudoCoup_v5/Planning/` — mechanical (2026-08-01).
-  - `<WORKSPACE_DIR>/PlanPlan/Planning/` — mechanical (2026-08-01). This
+  - `~/Programming/PseudoCoupHQ/Planning/` — mechanical (2026-08-01).
+  - `~/Programming/PseudoCoup_v5/Planning/` — mechanical (2026-08-01).
+  - `~/Programming/PlanPlan/Planning/` — mechanical (2026-08-01). This
     repo's own tree, founded 2026-08-01.
-  - `<WORKSPACE_DIR>/PseudoCoup_v6/Planning/` — mechanical (2026-08-01)
+  - `~/Programming/PseudoCoup_v6/Planning/` — mechanical (2026-08-01)
     since the register was adopted into all 10 of its COREs. *(This
     entry read "not yet; no register on any of its 10 COREs" until
     2026-08-02; the adoption had been run and the wording lagged it.)*
-  - `<WORKSPACE_DIR>/PseudoIR/Planning/` — mechanical (2026-08-01) since
+  - `~/Programming/PseudoIR/Planning/` — mechanical (2026-08-01) since
     the register was adopted into all 18 of its COREs. *(Same
     correction as the entry above.)* It and PseudoCoup_v6 were one
     tree until 2026-07-31.
@@ -898,7 +898,7 @@ suite revealed.
   each node's definition line and sections, and every place the
   grammar in §1 and §3 is broken. Standard library only.
 
-      python3 <WORKSPACE_DIR>/PlanPlan/framework/render_plan.py \
+      python3 ~/Programming/PlanPlan/framework/render_plan.py \
           <planning root> -o out.html
 
   It checks, per node: exactly one CORE, a PROGRESS, no strays,

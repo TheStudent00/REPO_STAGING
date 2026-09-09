@@ -1,0 +1,219 @@
+====================================================================
+PART 0 -- the ONE table
+====================================================================
+
+LITERAL -- computed by this program:
+  arch opcodes the corpus's own bodies spell   162
+  entries in Reference.opcode_table            162
+  entries WITH a term builder                  143
+  entries with NO builder (census rows)        19
+
+LITERAL -- the census rows, by name:
+  call       reads nothing
+             cause: runtime callee not yet attached (Task 59, node 0_3_5_1_8): the callee's body is to be extracted from the toolchain's libgcc / compiler-rt archive and attached as an ArchUnit this caller references, with the producer {"kind": "runtime_callee"}
+  ja         reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jae        reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jb         reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jbe        reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  je         reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jg         reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jge        reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jl         reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jle        reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jmp        reads nothing
+             cause: a transfer or trap, and this reference walks a body in text order
+  jne        reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jns        reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  jo         reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  js         reads the flags
+             cause: a transfer or trap, and this reference walks a body in text order
+  pcmpeqb    reads the operands the opcode names
+             cause: no z3 term is written for this arch opcode yet
+  pcmpeqd    reads the operands the opcode names
+             cause: no z3 term is written for this arch opcode yet
+  pmovmskb   reads the operands the opcode names
+             cause: no z3 term is written for this arch opcode yet
+  ud2        reads nothing
+             cause: a transfer or trap, and this reference walks a body in text order
+
+GLOSS.  Every arch opcode any body in the corpus spells has
+exactly one entry.  An opcode with no builder is a census
+row and is refused BY NAME when a body reaches it, never
+stepped over.  Fifteen of the nineteen are transfers, which
+this reference refuses because it walks a body in text
+order.  `call` is a transfer into a routine whose body is
+not in the unit YET -- task 59 attaches the runtime callee
+(log_158, TASK 59(b)); until then the refusal says so.
+
+====================================================================
+PART (a) -- c/op_246, the division remainder
+====================================================================
+
+LITERAL -- the unit's own ship body, and its answer home:
+  body:        mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; ret
+  answer home: rax at 32 bits
+
+LITERAL -- the answer term this reference builds:
+  Extract(31,
+          0,
+          bvsrem_i(Concat(Extract(31, 0, seed_rdi) >> 31,
+                          Extract(31, 0, seed_rdi)),
+                   Concat(Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 31, seed_rsi),
+                          Extract(31, 0, seed_rsi))))
+
+LITERAL -- does the answer term use SRem?  yes
+
+LITERAL -- the two remainders at 32 bits, inputs 7 and -3:
+  z3.SRem(7, -3)  = 1   (as a signed value: 1)
+  7 % -3 in z3py  = 4294967294   (as a signed value: -2)
+
+LITERAL -- the reference run on this unit's own body with
+its two arrival registers bound to 7 and -3:
+  answer = 1   (as a signed value: 1)
+
+GLOSS.  `idiv` leaves a remainder whose sign follows the
+DIVIDEND, so 7 divided by -3 leaves 1.  z3py's `%` on a bit
+vector is `bvsmod`, whose sign follows the DIVISOR, and it
+gives -2.  The superseded route computed the second and
+compared it against a ledger term that computed the first,
+which is the whole of the 415-unit withdrawal of log 153
+section 5.  This reference computes 1.
+
+====================================================================
+PART (b) -- c/regen_11491, the machine stack
+====================================================================
+
+LITERAL -- the unit's own ship body:
+  push %rax
+  call L0 !!reloc=R_X86_64_PLT32:__divti3-0x4
+  L0:
+  pop %rcx
+  ret
+
+LITERAL -- the unit's own ledger rows:
+  IN-0     8-byte general value             {"kind": "non_opcode_phrase", "phrase": "arrival"}
+  STACK-0  8-byte value on the machine stack {"kind": "arch_opcode", "mnem": "push"}
+  OUT-0    8-byte general value             {"kind": "non_opcode_phrase", "phrase": "the body's last write to %rax"}
+
+LITERAL -- the machine state after the unit's own `push`:
+  stack pointer   18446744073709551608 + seed_rsp
+  cell at offset  -8
+  cell holds      seed_rax
+
+LITERAL -- the round trip, put to z3:
+  pushed  seed_rax
+  popped  seed_rax
+  solver.add(popped != pushed); solver.check() = unsat
+  stack pointer back to  seed_rsp
+  stack offset back to   0
+
+LITERAL -- the whole body, walked:
+  refused: arch opcode 'call' is a census row, not a silent gap: runtime callee not yet attached (Task 59, node 0_3_5_1_8): the callee's body is to be extracted from the toolchain's libgcc / compiler-rt archive and attached as an ArchUnit this caller references, with the producer {"kind": "runtime_callee"}
+
+GLOSS.  The value the `push` puts at stack offset -8 is the
+value a `pop` takes back: z3 answers `unsat` to the two
+being different, which is a proof for every value of the
+register, not a sample.  The pointer and the offset both
+return to where they started.  This unit's own body then
+transfers into `__divti3`, a compiler support routine whose
+body is not in the unit YET: the owner's round-12 ruling (log_158,
+TASK 59(b)) is that the callee's body is extracted from the
+toolchain's libgcc / compiler-rt archive and attached as an
+ArchUnit this caller references, with the producer
+{"kind": "runtime_callee", "callee": "__divti3"}.
+Task 59 delivers that attachment (node 0_3_5_1_8).  Until it
+lands the table carries `call` as an entry with no builder
+and the walk refuses it by name with that reason -- the
+earlier "out of scope" framing is superseded.
+
+====================================================================
+PART (c) -- cpp/regen_36796, the x87 compare
+====================================================================
+
+LITERAL -- the unit's own ship body:
+  fldt 0x18(%rsp)
+  fldt 0x8(%rsp)
+  fucomip %st(1),%st
+  fstp %st(0)
+  seta %al
+  ret
+
+LITERAL -- the unit's own ledger rows:
+  X87-0    x87 stack value          {"kind": "arch_opcode", "mnem": "fldt"} 
+  X87-1    x87 stack value          {"kind": "arch_opcode", "mnem": "fldt"} 
+  TEMP-0   flags only               {"kind": "arch_opcode", "mnem": "fucomip"} X87-0,X87-1
+  GUARD-0  flag-derived value       {"kind": "flag_pair", "mnem": ["fucomip", "seta"]} TEMP-0
+  OUT-0    1-byte general value     {"kind": "flag_pair", "mnem": ["fucomip", "seta"]} GUARD-0
+
+LITERAL -- the x87 stack after the unit's own two loads:
+  position 0 (the top)  x87_0x8_rsp_
+  position 1            x87_0x18_rsp_
+  depth                 2
+
+LITERAL -- the flag triple the compare leaves:
+  setter            fucomip
+  left  (the top)   x87_0x8_rsp_
+  right (position 1)x87_0x18_rsp_
+
+LITERAL -- the answer term this reference builds:
+  If(And(Not(x87_0x8_rsp_ < x87_0x18_rsp_),
+         Not(fpEQ(x87_0x8_rsp_, x87_0x18_rsp_)),
+         Not(Or(fpIsNaN(x87_0x18_rsp_), fpIsNaN(x87_0x8_rsp_)))),
+     1,
+     0)
+
+LITERAL -- do BOTH loads appear in the answer term?  yes
+
+GLOSS.  `fldt 0x18(%rsp)` loads 2.0 and becomes position 0.
+`fldt 0x8(%rsp)` loads 3.0 and pushes on top, so position 0
+holds 3.0 and position 1 holds 2.0.  `fucomip %st(1),%st` is
+AT&T order -- source `%st(1)`, destination `%st` -- so it
+compares the top against position 1 and leaves the triple
+(fucomip, top, position 1).  `seta` asks for above and
+ordered, which is exactly the two loads compared, and both
+of them are in the answer term.
+
+wrote ~/Programming/PseudoCoupHQ/Research/op_pipeline/acceptance57.json

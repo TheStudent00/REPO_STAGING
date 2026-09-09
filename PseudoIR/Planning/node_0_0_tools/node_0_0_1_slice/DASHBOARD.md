@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by <WORKSPACE_DIR>/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_0_1_slice
@@ -48,5 +48,5 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 ## SUPPORT files in this sub-tree
 
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`
-- `<WORKSPACE_DIR>/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_selection_and_extraction.md`
+- `~/Programming/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`
+- `~/Programming/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_selection_and_extraction.md`

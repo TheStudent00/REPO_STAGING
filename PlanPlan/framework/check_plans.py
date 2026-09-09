@@ -7,7 +7,7 @@ A thin entry point: builds the `checks.Checker` with every check in
 parsing and the exit-code contract.
 
 Usage:
-    python3 <WORKSPACE_DIR>/PlanPlan/framework/check_plans.py \
+    python3 ~/Programming/PlanPlan/framework/check_plans.py \
         <root>... [--strict] [--quiet]
 
 Exit codes: 0 = no errors, 1 = errors found, 2 = usage error.
@@ -33,7 +33,7 @@ def main():
                      help="print only the summary line")
     args = ap.parse_args()
 
-    programming_root = os.path.expanduser("<WORKSPACE_DIR>")
+    programming_root = os.path.expanduser("~/Programming")
 
     roots_existing = []
     items = []

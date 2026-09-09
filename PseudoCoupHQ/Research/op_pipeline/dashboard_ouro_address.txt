@@ -1,0 +1,35 @@
+The address bar in Ourobrowser, for the op-pipeline dashboard.
+Saved here because Ourobrowser's bookmark feature is not built yet.
+
+TYPE THIS INTO THE ADDRESS BAR:
+
+ourobrowser://local/~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html
+
+Reading it: `ourobrowser://local/` is the engine's own scheme and host
+(browser_engine.py line 282 builds every address as that prefix plus
+whatever follows). The rest is the ordinary absolute file path, which is
+why the run of slashes is doubled -- one closes the prefix, one opens
+`/home`. resolve_page_path (browser_engine.py line 88) serves an
+absolute path as given, so any file on disk can be opened this way, not
+only files inside the Ourobrowser repo.
+
+TO LAUNCH THE BROWSER AT THAT PAGE INSTEAD OF TYPING IT:
+
+cd ~/Programming/Ourobrowser && LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1 python3 browser_engine.py /~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html
+
+The command-line form takes the path only -- the engine adds the
+`ourobrowser://local/` prefix itself.
+
+THE PAGE ITSELF: dashboard_ouro.html beside this file, which carries no
+javascript; dashboard_ouro.py renders its FIVE panes at request time,
+with the chronology drawn above the tab bar as the outer controller --
+one selected moment for the whole page, applied to all five (task 85,
+DevComms/log_191).
+
+THE CHRONOLOGY'S SCALE IS VERSION CONTROL'S OWN (task 86,
+DevComms/log_192). A moment is a COMMIT: the commit row is `git log`,
+every commit of it, drawn a windowful at a time with the window's bounds
+and the whole population printed beside it. The day row above it moves
+that window and selects nothing, and the two arrows at the ends of the
+commit row shift it by a windowful, so every commit is reachable.
+Nothing reads a commit message to decide which commits matter.

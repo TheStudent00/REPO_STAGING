@@ -1,0 +1,104 @@
+-- THE SPLITS the corrected rule predicts
+   entries that stop being one entry 11
+   units to transcribe (one per group of each split) 22
+   units found in the shards 22
+
+-- THE CAUSE, decided by the solver, one comparison per pair of groups
+   comparisons whose two sides are PROVED DIFFERENT (a false merge repaired) 5
+   comparisons whose two sides are PROVED EQUAL (a real merge lost)      6
+   comparisons the solver left undecided                              0
+
+-- EVERY SPLIT, PRINTED
+   an entry of 18 members becomes 2
+     c/op_123
+       old text: Concat(Extract(63, 32, v1), fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1))))
+       new text: Concat(Extract(63, 32, v0), fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1))))
+     c/op_39
+       old text: Concat(Extract(63, 32, v0), fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1))))
+       new text: Concat(Extract(63, 32, v1), fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1))))
+       verdict : PROVED_DIFFERENT
+       at      : fp.to_ieee_bv = [NaN -> 2143095468, else -> fp.to_ieee_bv(Var(0))]; ripconst_0 = 2204403209; seed_xmm0 = 315621376; seed_xmm1 = 4289227017
+   an entry of 20 members becomes 2
+     c/op_555
+       old text: If(And(Not(fpToFP(Extract(31, 0, v0)) < fpToFP(Extract(31, 0, v1))), Not(fpEQ(fpToFP(Extract(31, 0, v0)), fpToFP(Extract(31, 0, v1)))), Not(Or(fpIsNaN(fpToFP(Extract(31, 0, v0))), fpIsNaN(fpToFP(Extra
+       new text: If(And(Not(fpEQ(fpToFP(Extract(31, 0, v0)), fpToFP(Extract(31, 0, v1)))), Not(fpToFP(Extract(31, 0, v0)) < fpToFP(Extract(31, 0, v1))), Not(Or(fpIsNaN(fpToFP(Extract(31, 0, v0))), fpIsNaN(fpToFP(Extra
+     c/op_663
+       old text: If(And(Not(fpToFP(Extract(31, 0, v0)) < fpToFP(Extract(31, 0, v1))), Not(fpEQ(fpToFP(Extract(31, 0, v0)), fpToFP(Extract(31, 0, v1)))), Not(Or(fpIsNaN(fpToFP(Extract(31, 0, v0))), fpIsNaN(fpToFP(Extra
+       new text: If(And(Not(fpEQ(fpToFP(Extract(31, 0, v0)), fpToFP(Extract(31, 0, v1)))), Not(fpToFP(Extract(31, 0, v1)) < fpToFP(Extract(31, 0, v0))), Not(Or(fpIsNaN(fpToFP(Extract(31, 0, v0))), fpIsNaN(fpToFP(Extra
+       verdict : PROVED_DIFFERENT
+       at      : seed_xmm0 = 612369407; seed_xmm1 = 2055076864
+   an entry of 20 members becomes 2
+     c/op_562
+       old text: If(And(Not(fpToFP(Extract(63, 0, v0)) < fpToFP(Extract(63, 0, v1))), Not(fpEQ(fpToFP(Extract(63, 0, v0)), fpToFP(Extract(63, 0, v1)))), Not(Or(fpIsNaN(fpToFP(Extract(63, 0, v0))), fpIsNaN(fpToFP(Extra
+       new text: If(And(Not(fpEQ(fpToFP(Extract(63, 0, v0)), fpToFP(Extract(63, 0, v1)))), Not(fpToFP(Extract(63, 0, v0)) < fpToFP(Extract(63, 0, v1))), Not(Or(fpIsNaN(fpToFP(Extract(63, 0, v0))), fpIsNaN(fpToFP(Extra
+     c/op_670
+       old text: If(And(Not(fpToFP(Extract(63, 0, v0)) < fpToFP(Extract(63, 0, v1))), Not(fpEQ(fpToFP(Extract(63, 0, v0)), fpToFP(Extract(63, 0, v1)))), Not(Or(fpIsNaN(fpToFP(Extract(63, 0, v1))), fpIsNaN(fpToFP(Extra
+       new text: If(And(Not(fpEQ(fpToFP(Extract(63, 0, v0)), fpToFP(Extract(63, 0, v1)))), Not(fpToFP(Extract(63, 0, v1)) < fpToFP(Extract(63, 0, v0))), Not(Or(fpIsNaN(fpToFP(Extract(63, 0, v0))), fpIsNaN(fpToFP(Extra
+       verdict : PROVED_DIFFERENT
+       at      : seed_xmm0 = 4684217227098980368; seed_xmm1 = 4687773597459021807
+   an entry of 162 members becomes 2
+     c/regen_34957
+       old text: If(And(Not(v0 < v1), Not(fpEQ(v0, v1)), Not(Or(fpIsNaN(v1), fpIsNaN(v0)))), 1, 0)
+       new text: If(And(Not(fpEQ(v0, v1)), Not(v1 < v0), Not(Or(fpIsNaN(v0), fpIsNaN(v1)))), 1, 0)
+     c/regen_36772
+       old text: If(And(Not(v0 < v1), Not(fpEQ(v0, v1)), Not(Or(fpIsNaN(v0), fpIsNaN(v1)))), 1, 0)
+       new text: If(And(Not(fpEQ(v0, v1)), Not(v0 < v1), Not(Or(fpIsNaN(v0), fpIsNaN(v1)))), 1, 0)
+       verdict : PROVED_DIFFERENT
+       at      : x87_0x8_rsp_ = -1.486204188156903231439291690474391316456603817641735076904296875*(2**13694); x87_m0x2_rsp_ = 1.513795811843096768452288092277058240142650902271270751953125*(2**-13693)
+   an entry of 4 members becomes 2
+     c/regen_35779
+       old text: If(And(Not(fpToFP(Concat(Extract(15, 0, v0), 0)) < fpToFP(Concat(Extract(15, 0, v1), 0))), Not(fpEQ(fpToFP(Concat(Extract(15, 0, v0), 0)), fpToFP(Concat(Extract(15, 0, v1), 0)))), Not(Or(fpIsNaN(fpToF
+       new text: If(And(Not(fpEQ(fpToFP(Concat(Extract(15, 0, v0), 0)), fpToFP(Concat(Extract(15, 0, v1), 0)))), Not(fpToFP(Concat(Extract(15, 0, v0), 0)) < fpToFP(Concat(Extract(15, 0, v1), 0))), Not(Or(fpIsNaN(fpToF
+     c/regen_45187
+       old text: If(And(Not(fpToFP(Concat(Extract(15, 0, v0), 0)) < fpToFP(Concat(Extract(15, 0, v1), 0))), Not(fpEQ(fpToFP(Concat(Extract(15, 0, v0), 0)), fpToFP(Concat(Extract(15, 0, v1), 0)))), Not(Or(fpIsNaN(fpToF
+       new text: If(And(Not(fpEQ(fpToFP(Concat(Extract(15, 0, v0), 0)), fpToFP(Concat(Extract(15, 0, v1), 0)))), Not(fpToFP(Concat(Extract(15, 0, v1), 0)) < fpToFP(Concat(Extract(15, 0, v0), 0))), Not(Or(fpIsNaN(fpToF
+       verdict : PROVED_DIFFERENT
+       at      : seed_xmm0 = 48639; seed_xmm1 = 12288
+   an entry of 2 members becomes 2
+     swift/regen_1000
+       old text: If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1) | If(0 <= Extract(15, 0, v0), 0, 1)
+       new text: If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1) | If(0 <= Extract(15, 0, v0), 0, 1)
+     swift/regen_1077
+       old text: If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1) | If(0 <= Extract(15, 0, v0), 0, 1)
+       new text: If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1) | If(0 <= Extract(15, 0, v1), 0, 1)
+       verdict : PROVED_EQUAL
+   an entry of 2 members becomes 2
+     swift/regen_1035
+       old text: If(Extract(15, 0, v0) == Extract(15, 0, v1), 0, 1) | If(0 <= Extract(7, 0, v0), 0, 1)
+       new text: If(Extract(15, 0, v0) == Extract(15, 0, v1), 0, 1) | If(0 <= Extract(7, 0, v0), 0, 1)
+     swift/regen_1068
+       old text: If(Extract(15, 0, v0) == Extract(15, 0, v1), 0, 1) | If(0 <= Extract(7, 0, v0), 0, 1)
+       new text: If(Extract(15, 0, v0) == Extract(15, 0, v1), 0, 1) | If(0 <= Extract(7, 0, v1), 0, 1)
+       verdict : PROVED_EQUAL
+   an entry of 2 members becomes 2
+     swift/regen_1036
+       old text: If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1) | If(0 <= Extract(7, 0, v0), 0, 1)
+       new text: If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1) | If(0 <= Extract(7, 0, v0), 0, 1)
+     swift/regen_1080
+       old text: If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1) | If(0 <= Extract(7, 0, v0), 0, 1)
+       new text: If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1) | If(0 <= Extract(7, 0, v1), 0, 1)
+       verdict : PROVED_EQUAL
+   an entry of 2 members becomes 2
+     swift/regen_1438
+       old text: ~(If(Extract(31, 0, v0) == Extract(31, 0, v1), 254, 255) | If(0 <= Extract(15, 0, v0), 254, 255))
+       new text: ~(If(Extract(31, 0, v0) == Extract(31, 0, v1), 254, 255) | If(0 <= Extract(15, 0, v0), 254, 255))
+     swift/regen_1515
+       old text: ~(If(Extract(31, 0, v0) == Extract(31, 0, v1), 254, 255) | If(0 <= Extract(15, 0, v0), 254, 255))
+       new text: ~(If(Extract(31, 0, v0) == Extract(31, 0, v1), 254, 255) | If(0 <= Extract(15, 0, v1), 254, 255))
+       verdict : PROVED_EQUAL
+   an entry of 2 members becomes 2
+     swift/regen_1473
+       old text: ~(If(Extract(15, 0, v0) == Extract(15, 0, v1), 254, 255) | If(0 <= Extract(7, 0, v0), 254, 255))
+       new text: ~(If(Extract(15, 0, v0) == Extract(15, 0, v1), 254, 255) | If(0 <= Extract(7, 0, v0), 254, 255))
+     swift/regen_1506
+       old text: ~(If(Extract(15, 0, v0) == Extract(15, 0, v1), 254, 255) | If(0 <= Extract(7, 0, v0), 254, 255))
+       new text: ~(If(Extract(15, 0, v0) == Extract(15, 0, v1), 254, 255) | If(0 <= Extract(7, 0, v1), 254, 255))
+       verdict : PROVED_EQUAL
+   an entry of 2 members becomes 2
+     swift/regen_1474
+       old text: ~(If(Extract(31, 0, v0) == Extract(31, 0, v1), 254, 255) | If(0 <= Extract(7, 0, v0), 254, 255))
+       new text: ~(If(Extract(31, 0, v0) == Extract(31, 0, v1), 254, 255) | If(0 <= Extract(7, 0, v0), 254, 255))
+     swift/regen_1518
+       old text: ~(If(Extract(31, 0, v0) == Extract(31, 0, v1), 254, 255) | If(0 <= Extract(7, 0, v0), 254, 255))
+       new text: ~(If(Extract(31, 0, v0) == Extract(31, 0, v1), 254, 255) | If(0 <= Extract(7, 0, v1), 254, 255))
+       verdict : PROVED_EQUAL

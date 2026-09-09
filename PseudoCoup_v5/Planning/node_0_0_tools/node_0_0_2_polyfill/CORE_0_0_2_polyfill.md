@@ -41,4 +41,4 @@ where the transpiler moves source INTO the hub, the polyfill is what
 lets the result behave as the source language did — the hub's surface
 wrapped to the source's expectations. built by composition from the
 lineage's best parts, mapped in
-`<WORKSPACE_DIR>/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`.
+`~/Programming/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`.

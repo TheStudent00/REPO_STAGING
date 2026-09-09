@@ -2,7 +2,7 @@
 """arch_read.py -- fold an ARCH lane's output back onto its manifest.
 
 Reads
-    <WORKSPACE_DIR>/Airlock/agent/out/arch_<lang>.txt
+    ~/Programming/Airlock/agent/out/arch_<lang>.txt
     arch_manifest_<lang>.json
 Writes
     arch_units_<lang>.json
@@ -64,7 +64,7 @@ import sys
 from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-AIRLOCK_OUT = "<WORKSPACE_DIR>/Airlock/agent/out"
+AIRLOCK_OUT = "~/Programming/Airlock/agent/out"
 
 LANGS = ["cpp", "rust", "go", "swift"]
 SCALAR_FORMS = {"whole", "fractional", "truth"}

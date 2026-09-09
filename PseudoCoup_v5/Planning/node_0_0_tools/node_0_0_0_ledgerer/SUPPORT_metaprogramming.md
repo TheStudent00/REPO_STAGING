@@ -8,7 +8,7 @@ status: draft
 How the ledgerer models code that writes code. Design direction settled
 in conversation 2026-08-02; the reasoning and the measurements behind
 it are in
-`<WORKSPACE_DIR>/PseudoCoup_v5/DevComms/log_003_metaprogramming_model.md`.
+`~/Programming/PseudoCoup_v5/DevComms/log_003_metaprogramming_model.md`.
 
 ---
 
@@ -68,7 +68,7 @@ decides how the ledger treats each one.
 A pattern and a template, both plain tokens. Reading them requires no
 compiler. Expansion is computable from them alone, which is
 demonstrated by the working engine at
-`<WORKSPACE_DIR>/PseudoCoup_v5/Research/macro_engine.py`.
+`~/Programming/PseudoCoup_v5/Research/macro_engine.py`.
 
 Covers everything defined in the corpus, including the standard
 library's own — `assert_eq!` is `macro_rules!`, in
@@ -185,7 +185,7 @@ an expansion without them is not reproducible.
 ## 7a. Two properties the design can rely on
 
 Measured 2026-08-02; the numbers are in
-`<WORKSPACE_DIR>/PseudoCoup_v5/DevComms/log_004_macro_resolution_and_names.md`.
+`~/Programming/PseudoCoup_v5/DevComms/log_004_macro_resolution_and_names.md`.
 
 **Finding the definition is free from the parse.** Two query patterns
 give every invocation's name and every definition's name and location.

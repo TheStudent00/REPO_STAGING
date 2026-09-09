@@ -60,7 +60,7 @@ import sys
 import slice_extractor_fix
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DUMPS = "<WORKSPACE_DIR>/Airlock/agent/out/t27"
+DUMPS = "~/Programming/Airlock/agent/out/t27"
 OUT = os.path.join(HERE, "op_units_ruby.json")
 
 # symbol -> (route role, how this symbol was reached)

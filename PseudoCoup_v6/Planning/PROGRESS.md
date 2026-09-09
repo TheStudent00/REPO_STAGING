@@ -31,7 +31,7 @@ status: living
   the owner's register. the old tree at ../Planning is untouched.
 - 2026-07-31: this tree promoted from Scratch to Planning. the
   previous Planning tree (35 nodes) moved to
-  <WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31
+  ~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31
   — its content was already projected into SUPPORT files across this
   tree and PseudoIR's. seven references from Tools/ and Research/
   repointed at the nodes that now hold that material.
@@ -43,20 +43,20 @@ status: living
   archived with the node it was named for. 128 tests green before and
   after.
 - 2026-07-31: insert/ and intentions/ moved to
-  <WORKSPACE_DIR>/PseudoIR/Tools/. An earlier entry recorded this as NOT
+  ~/Programming/PseudoIR/Tools/. An earlier entry recorded this as NOT
   done and pending a ruling on cross-repo imports; the move and the
   mechanism both landed and the entry was stale. The mechanism is the
   environment variable `PSEUDOCOUP_ROOT` (default
-  <WORKSPACE_DIR>/PseudoCoup_v6), read by
-  <WORKSPACE_DIR>/PseudoIR/Tools/insert/cross_border.py and
-  <WORKSPACE_DIR>/PseudoIR/Tools/intentions/validate_form.py, each
+  ~/Programming/PseudoCoup_v6), read by
+  ~/Programming/PseudoIR/Tools/insert/cross_border.py and
+  ~/Programming/PseudoIR/Tools/intentions/validate_form.py, each
   refusing with a named error when the directory is absent — recorded
-  in <WORKSPACE_DIR>/PseudoIR/Tools/README.md and Agent_Memory.md §7. No
+  in ~/Programming/PseudoIR/Tools/README.md and Agent_Memory.md §7. No
   ruling on cross-repo imports is recorded in either repo; if one was
   wanted, the code went ahead of it.
 - 2026-07-31 (verified in review, not from a recorded count): the 128
   split 95 here and 33 in PseudoIR, so the move lost nothing.
-  `PCV5_ROOT=<WORKSPACE_DIR>/PseudoCoup_v5 python3 -m pytest Tools -q`
-  in <WORKSPACE_DIR>/PseudoCoup_v6 gives 95 passed;
-  `PSEUDOCOUP_ROOT=<WORKSPACE_DIR>/PseudoCoup_v6 python3 -m pytest Tools
-  -q` in <WORKSPACE_DIR>/PseudoIR gives 33 passed.
+  `PCV5_ROOT=~/Programming/PseudoCoup_v5 python3 -m pytest Tools -q`
+  in ~/Programming/PseudoCoup_v6 gives 95 passed;
+  `PSEUDOCOUP_ROOT=~/Programming/PseudoCoup_v6 python3 -m pytest Tools
+  -q` in ~/Programming/PseudoIR gives 33 passed.

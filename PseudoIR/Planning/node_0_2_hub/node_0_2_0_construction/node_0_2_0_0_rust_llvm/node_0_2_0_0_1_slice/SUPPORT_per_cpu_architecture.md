@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — per cpu architecture
 
 projected 2026-07-30 from the previous plan, now archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_3_application_rust_llvm/node_0_3_3_architectures/CORE_0_3_3_architectures.md  (212 words)

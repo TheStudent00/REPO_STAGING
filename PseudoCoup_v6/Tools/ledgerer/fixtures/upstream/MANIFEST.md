@@ -21,13 +21,13 @@ Checksums at vendoring, 2026-07-31:
 
 ## Why they are here
 
-Until 2026-07-31 these were read out of `<WORKSPACE_DIR>/PseudoCoup_v5`
+Until 2026-07-31 these were read out of `~/Programming/PseudoCoup_v5`
 through a `PCV5_ROOT` environment variable. That made this repo's
 suite unable to pass without another repo on disk — six tests failing
 with `FileNotFoundError` if PCv5 was absent.
 
 By the transplant-versus-dependency test recorded in
-`<WORKSPACE_DIR>/PseudoCoup_v6/AgentMemory/02_decisions.md` — *after the
+`~/Programming/PseudoCoup_v6/AgentMemory/02_decisions.md` — *after the
 harvest, could the source repo be deleted without anything breaking?*
 — that was a dependency, which is not allowed. It is now a transplant:
 PCv5 can be deleted and this suite still passes. Verified the day of

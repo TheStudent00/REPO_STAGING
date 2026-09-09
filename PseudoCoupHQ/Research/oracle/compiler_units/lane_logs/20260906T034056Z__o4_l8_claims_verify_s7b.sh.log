@@ -1,0 +1,91 @@
+# script: /drop/o4_l8_claims_verify_s7b.sh
+# started: 2026-09-06T03:40:56+00:00
+# timeout: 7200s
+# work free before: 2048 MB
+------------------------------------------------------------
+[1/1] check_conventions_log_claims.py --verify over log_210 (section 7, final, after fixing the two truncated cat pastes and the grep -c exempt paste)
+sandbox map in use (from Airlock mounts.conf):
+  ~/Programming/PlanPlan           -> /projects/PlanPlan         present
+  ~/Programming/PseudoCoupGraphs   -> /projects/PseudoCoupGraphs present
+  ~/Programming/PseudoCoupHQ       -> /projects/PseudoCoupHQ     present
+  ~/Programming/PseudoCoup_v5      -> /projects/PseudoCoup_v5    present
+  ~/Programming/PseudoCoup_v6      -> /projects/PseudoCoup_v6    present
+  ~/Programming/Sources            -> /sources                   present
+work directory for every command: /projects/PseudoCoupHQ
+memory: bound 512 MB; ABORT: MEMORY_BOUND_EXCEEDED at 6144 MB, checked after every command
+peak RSS before any pass: 16.5 MB
+the ONLY grouping key in this program: (log file name, outcome name) -- see grouping_key(); no operator token enters it
+
+log_210_task_o4_operator_variants_by_search.md: 14 claims extracted
+
+[1/14] log_210_task_o4_operator_variants_by_search.md:535  shell_transcript
+[2/14] log_210_task_o4_operator_variants_by_search.md:556  shell_transcript
+[3/14] log_210_task_o4_operator_variants_by_search.md:574  shell_transcript
+[4/14] log_210_task_o4_operator_variants_by_search.md:593  shell_transcript
+[5/14] log_210_task_o4_operator_variants_by_search.md:614  shell_transcript
+[6/14] log_210_task_o4_operator_variants_by_search.md:624  shell_transcript
+[7/14] log_210_task_o4_operator_variants_by_search.md:816  prose_verification
+[8/14] log_210_task_o4_operator_variants_by_search.md:1011  prose_verification
+[9/14] log_210_task_o4_operator_variants_by_search.md:1071  shell_transcript
+[10/14] log_210_task_o4_operator_variants_by_search.md:1088  shell_transcript
+[11/14] log_210_task_o4_operator_variants_by_search.md:1116  shell_transcript
+[12/14] log_210_task_o4_operator_variants_by_search.md:1138  shell_transcript
+[13/14] log_210_task_o4_operator_variants_by_search.md:1167  shell_transcript
+[14/14] log_210_task_o4_operator_variants_by_search.md:1172  shell_transcript
+
+==============================================================================
+PER-LOG REPORT
+==============================================================================
+
+## log_210_task_o4_operator_variants_by_search.md
+   claims 14 | MATCHES 6 | DIFFERS 0 | UNVERIFIABLE 2 | REFUSED 5 | NOT_RERUNNABLE 1
+   VERDICT: 6 of 14 claims reproduce; 2 (14%) carry nothing to re-run
+
+   | line | shape | outcome | claim / reason |
+   |---|---|---|---|
+   | 535 | shell_transcript | **REFUSED** | `python3 ~/Programming/Airlock/airlock up --instance o4` — submits_or_moves_the_sandbox -- matched `airlock up` |
+   | 556 | shell_transcript | **MATCHES** | `tail -6 /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T031410Z__o4_l1b` |
+   | 574 | shell_transcript | **MATCHES** | `cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T031549Z__o4_l2b_spe` |
+   | 593 | shell_transcript | **MATCHES** | `grep -c exempt  /projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_searc` |
+   | 614 | shell_transcript | **REFUSED** | `python3 ~/Programming/Airlock/airlock down --instance o4` — submits_or_moves_the_sandbox -- matched `airlock down` |
+   | 624 | shell_transcript | **NOT_RERUNNABLE** | `python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --t` — timeout_20s -- it did not finish |
+   | 816 | prose_verification | **UNVERIFIABLE** | ``other (array_expression)` in rustc is UNCHANGED, checked and expected, not a miss: rule (1) abo` — prose_only -- a verification is asserted with nothing beside it |
+   | 1011 | prose_verification | **UNVERIFIABLE** | `1. **`~/Programming/Sources/golang_src/src/syscall/exec_plan9.go:313`** — `n == fd1 \|\|` — prose_only -- a verification is asserted with nothing beside it |
+   | 1071 | shell_transcript | **REFUSED** | `python3 ~/Programming/Airlock/airlock up --instance o4` — submits_or_moves_the_sandbox -- matched `airlock up` |
+   | 1088 | shell_transcript | **MATCHES** | `cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T032634Z__o4_l4_nest` |
+   | 1116 | shell_transcript | **MATCHES** | `cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T032918Z__o4_l5_spel` |
+   | 1138 | shell_transcript | **MATCHES** | `cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T033912Z__o4_l7_grep` |
+   | 1167 | shell_transcript | **REFUSED** | `cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/PLACEHOLDER__o4_l8_claims_ve` — log_unreachable -- /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/PLACEHOLDER__o4_l8_claims_v |
+   | 1172 | shell_transcript | **REFUSED** | `python3 ~/Programming/Airlock/airlock down --instance o4` — submits_or_moves_the_sandbox -- matched `airlock down` |
+
+   ### the 2 UNVERIFIABLE claim(s) -- nothing to re-run
+   line 816   prose_verification   `other (array_expression)` in rustc is UNCHANGED, checked and expected, not a miss: rule (1) above o
+   line 1011  prose_verification   1. **`~/Programming/Sources/golang_src/src/syscall/exec_plan9.go:313`** — `n == fd1 || n =
+
+==============================================================================
+SUMMARY, ALL LOGS
+==============================================================================
+population: 14 claims across 1 logs
+  MATCHES          6
+  DIFFERS          0
+  UNVERIFIABLE     2
+  REFUSED          5
+  NOT_RERUNNABLE   1
+
+ONE LINE: 6 of 14 claims reproduce; 2 (14%) carry nothing to re-run
+
+causes, by name:
+  submits_or_moves_the_sandbox     4
+  prose_only                       2
+  timeout_20s                      1
+  log_unreachable                  1
+
+peak RSS after the pass: 17.4 MB
+wrote /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_210_claims_s7_final.json
+operator inventory: 91 tokens read from probe_manifest_*.json
+PASS log_210_claims_s7_final.json -- no operator token in any key, grouping, pairing or row structure
+
+verifier exit: 0
+------------------------------------------------------------
+# exit 0 in 20.2s
+# work free after: 2048 MB (consumed 0 MB)

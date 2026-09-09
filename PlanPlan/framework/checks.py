@@ -33,7 +33,7 @@ def is_projection_section(heading):
     """
     return heading.lstrip("#").strip().lower() in PROJECTION_SECTIONS
 
-PATH_RE = re.compile(r"<WORKSPACE_DIR>/[^\s`)]*")
+PATH_RE = re.compile(r"~/Programming/[^\s`)]*")
 
 # A line carrying this marker is exempt from the dangling-path check.
 # It exists because the project's rule is to ANNOTATE a reference to
@@ -43,7 +43,7 @@ PATH_RE = re.compile(r"<WORKSPACE_DIR>/[^\s`)]*")
 # check would push writers toward deleting the history instead.
 #
 # Put the marker anywhere on the line:
-#     `<WORKSPACE_DIR>/PseudoCoup_v6/Tools/slicer/` (historical)
+#     `~/Programming/PseudoCoup_v6/Tools/slicer/` (historical)
 #
 # Keep it to lines where the path is genuinely being described in the
 # past tense. A marker used to silence a real stale pointer turns the
@@ -66,7 +66,7 @@ class Finding:
 class Check:
     """Base for one framework-wide consistency check."""
 
-    PROGRAMMING_ROOT = os.path.expanduser("<WORKSPACE_DIR>")
+    PROGRAMMING_ROOT = os.path.expanduser("~/Programming")
     name = ""
     severity = "ERROR"
 
@@ -77,12 +77,12 @@ class Check:
 
     @classmethod
     def disp(cls, path):
-        """Render an absolute path under <WORKSPACE_DIR> in that short form,
+        """Render an absolute path under ~/Programming in that short form,
         for readable diagnostics. Purely cosmetic — resolution always uses
         the real absolute path."""
         ap = os.path.abspath(path)
         if ap == cls.PROGRAMMING_ROOT or ap.startswith(cls.PROGRAMMING_ROOT + os.sep):
-            return "<WORKSPACE_DIR>" + ap[len(cls.PROGRAMMING_ROOT):]
+            return "~/Programming" + ap[len(cls.PROGRAMMING_ROOT):]
         return ap
 
     @staticmethod
@@ -305,7 +305,7 @@ class GrammarCheck(Check):
 
 
 class DanglingPathCheck(Check):
-    """<WORKSPACE_DIR>/... references that do not resolve on disk. Also
+    """~/Programming/... references that do not resolve on disk. Also
     feeds the stale-.archive reclassification: a subset of these where
     the referenced thing turns out to be archived."""
 
@@ -339,8 +339,8 @@ class DanglingPathCheck(Check):
 
     @staticmethod
     def repo_root_for(path_text, programming_root):
-        """The top-level project directory a `<WORKSPACE_DIR>/<X>/...` path
-        names, e.g. `<WORKSPACE_DIR>/PseudoCoup_v6` for anything under it."""
+        """The top-level project directory a `~/Programming/<X>/...` path
+        names, e.g. `~/Programming/PseudoCoup_v6` for anything under it."""
         rel = os.path.relpath(os.path.expanduser(path_text), programming_root)
         if rel.startswith(".."):
             return None
@@ -972,7 +972,7 @@ class EdgeRegisterCheck(Check):
     def resolve(entry_path, core_path):
         """An edge's `path`, as an absolute path. Relative entries are
         relative to the folder holding the CORE that states them;
-        `<WORKSPACE_DIR>/...` entries are absolute already. Cross-tree
+        `~/Programming/...` entries are absolute already. Cross-tree
         edges must use the absolute form, per §6a — the two trees move
         independently, so a relative path between them breaks the first
         time either one moves."""
@@ -1201,7 +1201,7 @@ class NodeSelfCheck(Check):
                 # Repo-relative rather than absolute because `repo` and
                 # `remote` on the tree root exist so that a reference
                 # survives the repo being cloned somewhere other than
-                # <WORKSPACE_DIR>. An absolute path here would undo that.
+                # ~/Programming. An absolute path here would undo that.
                 want_path = (os.path.relpath(os.path.abspath(core_path), repo_dir)
                              if repo_dir else core)
                 if entry[schema.EdgeKeys.PATH] != want_path:
@@ -1297,11 +1297,11 @@ class NodeSelfCheck(Check):
 
         Found by walking UP from the planning root to the nearest `.git`,
         which is what a repo actually is. Falls back to the old rule —
-        first path segment under `<WORKSPACE_DIR>` — for a tree that is not
+        first path segment under `~/Programming` — for a tree that is not
         in git at all.
 
         Corrected 2026-08-05. The old rule assumed every tree lives under
-        `<WORKSPACE_DIR>`, so a repo read from anywhere else returned None,
+        `~/Programming`, so a repo read from anywhere else returned None,
         `want_path` degraded to the bare filename, and EVERY `node.path`
         was reported wrong. Measured: 64 false errors when the same trees
         were checked through a container bind-mount at /projects, against
@@ -1533,7 +1533,7 @@ class Checker:
               "sweep over the")
         print("  whole tree. for the older register gap, adoption is "
               "mechanical:")
-        print("      python3 <WORKSPACE_DIR>/PlanPlan/framework/"
+        print("      python3 ~/Programming/PlanPlan/framework/"
               "generate_nodes.py \\")
         print("          <planning root> --adopt --apply")
         print("  which writes each register FROM the folders already on "

@@ -2,21 +2,21 @@
 # Fetches the rustc source the slices are cut from, and reports an
 # inventory. Run on the host from this folder:
 #
-#   bash <WORKSPACE_DIR>/PseudoCoup_v5/Research/rust_routing/fetch_sources.sh
+#   bash ~/Programming/PseudoCoup_v5/Research/rust_routing/fetch_sources.sh
 #
 #   rustc codegen — a sparse checkout of rust-lang/rust (~50 MB, not
 #   ~1 GB). Directories are added by
-#   <WORKSPACE_DIR>/PseudoCoup_v5/Research/llvm_trace/fetch_llvm.sh as it
+#   ~/Programming/PseudoCoup_v5/Research/llvm_trace/fetch_llvm.sh as it
 #   needs them.
 #
 # 2026-08-02: a second step was removed from this script by a standing
-# prohibition — see <WORKSPACE_DIR>/PseudoCoupHQ/CRANELIFT_IS_BANNED.md.
+# prohibition — see ~/Programming/PseudoCoupHQ/CRANELIFT_IS_BANNED.md.
 # It fetched and built a banned backend. Nothing here fetches it now,
 # and nothing here may fetch it again.
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
 # Language sources live OUTSIDE the repo, in one shared folder:
-# <WORKSPACE_DIR>/Sources (the owner, 2026-08-02). That folder is filtered out
+# ~/Programming/Sources (the owner, 2026-08-02). That folder is filtered out
 # of Timeshift, so multi-hundred-MB upstream checkouts are not carried
 # into system snapshots. Every fetcher in this repo writes here.
 SRC="${PC_SOURCES:-$HOME/Programming/Sources}"
@@ -55,4 +55,4 @@ inv "$CG/rustc_codegen_llvm/src/builder.rs"
 inv "$CG/rustc_codegen_llvm/src/declare.rs"
 
 echo
-echo "Share this output (or: bash <WORKSPACE_DIR>/PseudoCoup_v5/Research/rust_routing/fetch_sources.sh > fetch_report.txt)"
+echo "Share this output (or: bash ~/Programming/PseudoCoup_v5/Research/rust_routing/fetch_sources.sh > fetch_report.txt)"

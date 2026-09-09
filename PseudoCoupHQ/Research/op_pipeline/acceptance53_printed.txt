@@ -1,0 +1,144 @@
+==============================================================================
+(a) ONE WHOLE TRANSCRIPTION, the ledger and the term it reads to
+==============================================================================
+  c/op_104
+    LITERAL -- body:  movslq %edi,%rax; add %rsi,%rax; ret
+    LITERAL -- the stored ledger:
+      row       size type                               produced by                                  operands
+      IN-0      8    8-byte general value               arrival                                      
+      IN-1      8    8-byte general value               arrival                                      
+      TEMP-0    8    8-byte general value               movslq                                       IN-0
+      TEMP-1    8    8-byte general value               add                                          IN-1,TEMP-0
+      OUT-0     8    8-byte general value               add                                          TEMP-1
+    LITERAL -- the term each row reads to:
+      IN-0      seed_rdi
+      IN-1      seed_rsi
+      TEMP-0    SignExt(32, Extract(31, 0, seed_rdi))
+      TEMP-1    SignExt(32, Extract(31, 0, seed_rdi)) + seed_rsi
+      OUT-0     SignExt(32, Extract(31, 0, seed_rdi)) + seed_rsi
+    LITERAL -- the OUT-0 term:  SignExt(32, Extract(31, 0, seed_rdi)) + seed_rsi
+    route one (the ship simulation): PROVED_EQUAL
+        z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+    route two (the text-order walk): PROVED_EQUAL
+        z3 proved the ledger-transcribed OUT-0 term equal to the same body walked in text order, for every value of every register either walk reads before writing
+
+==============================================================================
+(b) THE MACHINE-STACK INSTANCE -- log 152 section 3.2's own unit
+==============================================================================
+  c/regen_11491
+    LITERAL -- body:  push %rax; call 6 <op_11491+0x6> !!reloc=R_X86_64_PLT32:__divti3-0x4; pop %rcx; ret
+    LITERAL -- the stored ledger:
+      row       size type                               produced by                                  operands
+      IN-0      8    8-byte general value               arrival                                      
+      STACK-0   8    8-byte value on the machine stack  push                                         
+      OUT-0     8    8-byte general value               the body's last write to %rax                
+    LITERAL -- the term each row reads to:
+      IN-0      seed_rcx
+      STACK-0   seed_rax
+      OUT-0     (none)
+    LITERAL -- the OUT-0 term:  (none)
+    a row with no term: OUT-0 -- no arch opcode in this body writes the answer register, so no row produces the answer
+    route one (the ship simulation): UNDECIDED
+        layer 4 built no term for OUT-0
+    route two (the text-order walk): UNDECIDED
+        layer 4 built no term for OUT-0
+
+==============================================================================
+(c) THE X87 INSTANCE -- log 152 section 3.3's own unit
+==============================================================================
+  cpp/regen_36796
+    LITERAL -- body:  fldt 0x18(%rsp); fldt 0x8(%rsp); fucomip %st(1),%st; fstp %st(0); seta %al; ret
+    LITERAL -- the stored ledger:
+      row       size type                               produced by                                  operands
+      X87-0     16   x87 stack value                    fldt                                         
+      X87-1     16   x87 stack value                    fldt                                         
+      TEMP-0    8    flags only                         fucomip                                      X87-0,X87-1
+      GUARD-0   8    flag-derived value                 fucomip + seta                               TEMP-0
+      OUT-0     1    1-byte general value               fucomip + seta                               GUARD-0
+    LITERAL -- the term each row reads to:
+      X87-0     x87_0x18_rsp_
+      X87-1     x87_0x8_rsp_
+      TEMP-0    0
+      GUARD-0   ZeroExt(56, If(And(Not(x87_0x8_rsp_ < x87_0x18_rsp_), Not(fpEQ(x87_0x8_rsp_, x87_0x18_rsp_)), Not(Or(fpIsNaN(x87_0x8_rsp_), fpIsNaN(x87_0x18_rsp_)))),
+      OUT-0     Extract(7, 0, ZeroExt(56, If(And(Not(x87_0x8_rsp_ < x87_0x18_rsp_), Not(fpEQ(x87_0x8_rsp_, x87_0x18_rsp_)), Not(Or(fpIsNaN(x87_0x8_rsp_), fpIsNaN(x87_
+    LITERAL -- the OUT-0 term:  Extract(7, 0, ZeroExt(56, If(And(Not(x87_0x8_rsp_ < x87_0x18_rsp_), Not(fpEQ(x87_0x8_rsp_, x87_0x18_rsp_)), Not(Or(fpIsNaN(x87_0x8_rsp_), fpIsNaN(x87_0x18_rsp_)))), 1, 0)))
+    route one (the ship simulation): UNDECIDED
+        this body has a flag-reading arch opcode whose nearest preceding flag-setting arch opcode is outside the reference simulator's own remembered set (cmp, test, ucomisd, ucomiss), so the reference would answer it with the f
+    route two (the text-order walk): UNDECIDED
+        the text-order walk: no z3 term is written for this arch opcode
+
+==============================================================================
+(d) THE DESTINATION-TABLE INSTANCE -- both halves carry a term
+==============================================================================
+  c/op_246
+    LITERAL -- body:  mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; ret
+    LITERAL -- the stored ledger:
+      row       size type                               produced by                                  operands
+      IN-0      8    8-byte general value               arrival                                      
+      IN-1      8    8-byte general value               arrival                                      
+      IN-2      8    8-byte general value               arrival                                      
+      TEMP-0    8    8-byte general value               mov                                          IN-0
+      TEMP-1    8    8-byte general value               cltd [the sign of the accumulator]           TEMP-0
+      TEMP-2    8    8-byte general value               idiv [quotient]                              TEMP-0,TEMP-1,IN-1
+      TEMP-3    8    8-byte general value               idiv [remainder]                             TEMP-0,TEMP-1,IN-1
+      TEMP-4    8    8-byte general value               mov                                          TEMP-3
+      OUT-0     4    4-byte general value               mov                                          TEMP-4
+    LITERAL -- the term each row reads to:
+      IN-0      seed_rdi
+      IN-1      seed_rsi
+      IN-2      seed_rdx
+      TEMP-0    ZeroExt(32, Extract(31, 0, seed_rdi))
+      TEMP-1    ZeroExt(32, If(1 == Extract(31, 31, Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rdi)))), 4294967295, 0))
+      TEMP-2    ZeroExt(32, Extract(31, 0, Concat(Extract(31, 0, ZeroExt(32, If(1 == Extract(31, 31, Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rdi)))), 429496729
+      TEMP-3    ZeroExt(32, Extract(31, 0, SRem(Concat(Extract(31, 0, ZeroExt(32, If(1 == Extract(31, 31, Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rdi)))), 4294
+      TEMP-4    ZeroExt(32, Extract(31, 0, ZeroExt(32, Extract(31, 0, SRem(Concat(Extract(31, 0, ZeroExt(32, If(1 == Extract(31, 31, Extract(31, 0, ZeroExt(32, Extrac
+      OUT-0     Extract(31, 0, ZeroExt(32, Extract(31, 0, ZeroExt(32, Extract(31, 0, SRem(Concat(Extract(31, 0, ZeroExt(32, If(1 == Extract(31, 31, Extract(31, 0, Zer
+    LITERAL -- the OUT-0 term:  Extract(31, 0, ZeroExt(32, Extract(31, 0, ZeroExt(32, Extract(31, 0, SRem(Concat(Extract(31, 0, ZeroExt(32, If(1 == Extract(31, 31, Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rdi)))), 4294967295, 0))), Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rdi)))), SignExt(32, Extract(31, 0, seed_rsi))))))))
+    route one (the ship simulation): DISPROVED
+        z3 found a starting state under which the ledger-transcribed term and the unit's own ship body differ: [seed_rsi = 3388997629, seed_rdi = 872415233]
+    route two (the text-order walk): UNDECIDED
+        the text-order walk: no z3 term is written for this arch opcode
+  c/op_253
+    LITERAL -- body:  mov %rdi,%rax; cqto; idiv %rsi; mov %rdx,%rax; ret
+    LITERAL -- the stored ledger:
+      row       size type                               produced by                                  operands
+      IN-0      8    8-byte general value               arrival                                      
+      IN-1      8    8-byte general value               arrival                                      
+      IN-2      8    8-byte general value               arrival                                      
+      TEMP-0    8    8-byte general value               mov                                          IN-0
+      TEMP-1    8    8-byte general value               cqto [the sign of the accumulator]           TEMP-0
+      TEMP-2    8    8-byte general value               idiv [quotient]                              TEMP-0,TEMP-1,IN-1
+      TEMP-3    8    8-byte general value               idiv [remainder]                             TEMP-0,TEMP-1,IN-1
+      TEMP-4    8    8-byte general value               mov                                          TEMP-3
+      OUT-0     8    8-byte general value               mov                                          TEMP-4
+    LITERAL -- the term each row reads to:
+      IN-0      seed_rdi
+      IN-1      seed_rsi
+      IN-2      seed_rdx
+      TEMP-0    seed_rdi
+      TEMP-1    If(1 == Extract(63, 63, seed_rdi), 18446744073709551615, 0)
+      TEMP-2    Extract(63, 0, Concat(If(1 == Extract(63, 63, seed_rdi), 18446744073709551615, 0), seed_rdi)/ SignExt(64, seed_rsi))
+      TEMP-3    Extract(63, 0, SRem(Concat(If(1 == Extract(63, 63, seed_rdi), 18446744073709551615, 0), seed_rdi), SignExt(64, seed_rsi)))
+      TEMP-4    Extract(63, 0, SRem(Concat(If(1 == Extract(63, 63, seed_rdi), 18446744073709551615, 0), seed_rdi), SignExt(64, seed_rsi)))
+      OUT-0     Extract(63, 0, SRem(Concat(If(1 == Extract(63, 63, seed_rdi), 18446744073709551615, 0), seed_rdi), SignExt(64, seed_rsi)))
+    LITERAL -- the OUT-0 term:  Extract(63, 0, SRem(Concat(If(1 == Extract(63, 63, seed_rdi), 18446744073709551615, 0), seed_rdi), SignExt(64, seed_rsi)))
+    route one (the ship simulation): DISPROVED
+        z3 found a starting state under which the ledger-transcribed term and the unit's own ship body differ: [seed_rsi = 2522632643120463872,
+ seed_rdi = 13504627818322995688]
+    route two (the text-order walk): UNDECIDED
+        the text-order walk: no z3 term is written for this arch opcode
+
+==============================================================================
+(e) LAYER 3 AGAINST LAYER 5 -- log 147 section 8.2's own two units
+==============================================================================
+  c/op_109
+    LITERAL -- body:      lea (%rdi,%rsi,1),%rax; ret
+    LITERAL -- layer 3:   mov ledger+0x00(%rip),%rdi; mov 0x0(%rdi),%rdi; mov ledger+0x00(%rip),%rsi; mov 0x8(%rsi),%rsi; lea (%rdi,%rsi,1),%rax; mov ledger+0x38(%rip),%r11; mov %rax,0x0(%r11); ret
+    LITERAL -- layer 5:   v0 + v1
+  go/op_319
+    LITERAL -- body:      add %rbx,%rax; ret
+    LITERAL -- layer 3:   mov ledger+0x00(%rip),%rax; mov 0x0(%rax),%rax; mov ledger+0x00(%rip),%rbx; mov 0x8(%rbx),%rbx; add %rbx,%rax; mov ledger+0x38(%rip),%r11; mov %rax,0x0(%r11); ret
+    LITERAL -- layer 5:   v0 + v1
+
+  layer 3 texts identical: False
+  layer 5 texts identical: True

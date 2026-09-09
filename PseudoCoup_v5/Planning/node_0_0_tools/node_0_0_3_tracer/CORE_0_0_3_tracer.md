@@ -49,4 +49,4 @@ two parts, both found in the lineage (the owner, 2026-07-31):
 a sibling of the ledgerer, not a part of it (the owner, 2026-08-01), keyed
 on the same positional-path ids — it is how the ledger's runtime axis
 gets its data. detail and inherited hazards in
-`<WORKSPACE_DIR>/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`.
+`~/Programming/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`.

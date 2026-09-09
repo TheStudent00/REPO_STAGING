@@ -1,0 +1,192 @@
+THE CENSUS -- rows whose producer has no z3 term
+population: every unit task 52 proved, all three populations
+
+producer                             rows  units kind       languages
+----------------------------------------------------------------------------------------------------
+the body's last write to %rax         303    303 irregular  c,cpp,go
+sbb + setl                            232    193 irregular  c,cpp,rust
+fucomip + setae                       186    186 irregular  c,cpp,swift
+sbb + setb                            175    175 irregular  c,cpp,rust,swift
+sbb + setae                           162    162 irregular  c,cpp,rust
+sbb + setge                           154    154 irregular  c,cpp,rust
+fadds                                  96     96 irregular  c,cpp
+the body's last write to %xmm0         32     32 irregular  c,cpp,go,rust,swift
+fiadds                                 28     28 irregular  c,cpp
+fimuls                                 28     28 irregular  c,cpp
+faddp                                  22     22 irregular  c,cpp
+fmulp                                  22     22 irregular  c,cpp
+fiaddl                                 16     16 irregular  c,cpp
+fimull                                 16     16 irregular  c,cpp
+fidivrs                                14     14 irregular  c,cpp
+fidivs                                 14     14 irregular  c,cpp
+fisubrs                                14     14 irregular  c,cpp
+fisubs                                 14     14 irregular  c,cpp
+fdivp                                  11     11 irregular  c,cpp
+fdivrp                                 11     11 irregular  c,cpp
+fsubp                                  11     11 irregular  c,cpp
+fsubrp                                 11     11 irregular  c,cpp
+sbb + jae                              11     11 irregular  swift
+sbb + jl                               10      9 irregular  swift
+sbb + cmovae                            9      9 irregular  swift
+fidivl                                  8      8 irregular  c,cpp
+fidivrl                                 8      8 irregular  c,cpp
+fisubl                                  8      8 irregular  c,cpp
+fisubrl                                 8      8 irregular  c,cpp
+fmuls                                   8      8 irregular  c,cpp
+movzbl                                  7      7 regular    c,cpp,rust,swift
+mul + jo                                6      6 irregular  swift
+sbb + jb                                5      5 irregular  swift
+sbb + jge                               5      5 irregular  swift
+faddl                                   4      4 irregular  c,cpp
+fdivrs                                  4      4 irregular  c,cpp
+fdivs                                   4      4 irregular  c,cpp
+fmull                                   4      4 irregular  c,cpp
+fsubrs                                  4      4 irregular  c,cpp
+fsubs                                   4      4 irregular  c,cpp
+mul + seto                              4      2 irregular  swift
+sbb + cmovb                             4      4 irregular  swift
+sbb + cmovl                             4      2 irregular  swift
+fdivl                                   2      2 irregular  c,cpp
+fdivrl                                  2      2 irregular  c,cpp
+fsubl                                   2      2 irregular  c,cpp
+fsubrl                                  2      2 irregular  c,cpp
+movsbl                                  2      2 regular    rust,swift
+pmovmskb                                2      2 irregular  rust
+sbb + jo                                2      2 irregular  swift
+adc + jb                                1      1 irregular  swift
+adc + jo                                1      1 irregular  swift
+imul + jo                               1      1 irregular  swift
+sbb + setne                             1      1 irregular  swift
+
+WHY EACH ONE CANNOT BE MODELLED
+  the body's last write to %rax
+      no arch opcode in this body writes the answer register, so no row produces the answer
+  sbb + setl
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  fucomip + setae
+      this suffix reads the carry bit, and the flag-setting arch opcode 'fucomip' has no carry model in this file
+  sbb + setb
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + setae
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + setge
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  fadds
+      no z3 term is written for this x87 arch opcode
+  the body's last write to %xmm0
+      no arch opcode in this body writes the answer register, so no row produces the answer
+  fiadds
+      no z3 term is written for this x87 arch opcode
+  fimuls
+      no z3 term is written for this x87 arch opcode
+  faddp
+      no z3 term is written for this x87 arch opcode
+  fmulp
+      no z3 term is written for this x87 arch opcode
+  fiaddl
+      no z3 term is written for this x87 arch opcode
+  fimull
+      no z3 term is written for this x87 arch opcode
+  fidivrs
+      no z3 term is written for this x87 arch opcode
+  fidivs
+      no z3 term is written for this x87 arch opcode
+  fisubrs
+      no z3 term is written for this x87 arch opcode
+  fisubs
+      no z3 term is written for this x87 arch opcode
+  fdivp
+      no z3 term is written for this x87 arch opcode
+  fdivrp
+      no z3 term is written for this x87 arch opcode
+  fsubp
+      no z3 term is written for this x87 arch opcode
+  fsubrp
+      no z3 term is written for this x87 arch opcode
+  sbb + jae
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + jl
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + cmovae
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  fidivl
+      no z3 term is written for this x87 arch opcode
+  fidivrl
+      no z3 term is written for this x87 arch opcode
+  fisubl
+      no z3 term is written for this x87 arch opcode
+  fisubrl
+      no z3 term is written for this x87 arch opcode
+  fmuls
+      no z3 term is written for this x87 arch opcode
+  movzbl
+      operand '%ah' names the SECOND byte of a register, which canon.py's register table does not carry as a family, so ledger47 made no row for it and there is no value to read
+  mul + jo
+      the flag-setting arch opcode 'mul' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + jb
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + jge
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  faddl
+      no z3 term is written for this x87 arch opcode
+  fdivrs
+      no z3 term is written for this x87 arch opcode
+  fdivs
+      no z3 term is written for this x87 arch opcode
+  fmull
+      no z3 term is written for this x87 arch opcode
+  fsubrs
+      no z3 term is written for this x87 arch opcode
+  fsubs
+      no z3 term is written for this x87 arch opcode
+  mul + seto
+      the flag-setting arch opcode 'mul' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + cmovb
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + cmovl
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  fdivl
+      no z3 term is written for this x87 arch opcode
+  fdivrl
+      no z3 term is written for this x87 arch opcode
+  fsubl
+      no z3 term is written for this x87 arch opcode
+  fsubrl
+      no z3 term is written for this x87 arch opcode
+  movsbl
+      operand '%ah' names the SECOND byte of a register, which canon.py's register table does not carry as a family, so ledger47 made no row for it and there is no value to read
+  pmovmskb
+      no z3 term is written for this arch opcode
+  sbb + jo
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  adc + jb
+      the flag-setting arch opcode 'adc' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  adc + jo
+      the flag-setting arch opcode 'adc' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  imul + jo
+      the flag-setting arch opcode 'imul' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + setne
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+
+THE ANSWER PRODUCED BY A LIBRARY CALL -- a census row, not a blocker
+  units: 300
+  cause: the answer is produced by a library call -- no opcode in the body writes OUT-0 -- awaiting the owner's ruling on `call` as a producer
+      __udivti3                                77 unit(s)
+      __umodti3                                77 unit(s)
+      __divti3                                 73 unit(s)
+      __modti3                                 73 unit(s)
+
+TALLY
+  gate ship: DISPROVED                         415
+  gate ship: NOT_GATED                         1287
+  gate ship: PROVED_EQUAL                      17489
+  gate ship: UNDECIDED                         11245
+  gate textorder: NOT_GATED                    1287
+  gate textorder: PROVED_EQUAL                 22715
+  gate textorder: UNDECIDED                    6434
+  units in the layer-4 population              30436
+  units with an OUT-0 term                     29149
+  units with no OUT-0 term                     1287
+  units, interpreter                           9
+  units, original                              1763
+  units, regenerated                           28664

@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — framing
 
 projected 2026-07-30 from the previous plan, now archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_3_application_rust_llvm/CORE_0_3_application_rust_llvm.md  (318 words)
@@ -23,14 +23,14 @@ backend already left unnamed throughout. Carried verbatim below.
 The intermediate goal as a campaign: Rust transpiling and slicing
 via the compiler Rust actually uses. Re-derived on the component
 frame; the PCv5-era chain plan
-(`<WORKSPACE_DIR>/PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`)
+(`~/Programming/PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`)
 is superseded reference. Work graduates general machinery into
-Tools. (It used to happen in `<WORKSPACE_DIR>/PseudoCoup_v6/Application/` (historical),
+Tools. (It used to happen in `~/Programming/PseudoCoup_v6/Application/` (historical),
 which was retired 2026-07-31 with the plan node of the same name and
 archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Application_retired_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Application_retired_2026-07-31/`.
 Its churn-then-graduate policy is now a rule in
-`<WORKSPACE_DIR>/PseudoCoup_v6/Tools/README.md`.)
+`~/Programming/PseudoCoup_v6/Tools/README.md`.)
 
 ## Where the campaign already stands (from the tools wave)
 
@@ -86,4 +86,4 @@ this same run.
 - all_llvm_chain — `node_0_2_0_0_2_insert/SUPPORT_whole_chain_from_llvm.md`
 
 all four relative to
-`<WORKSPACE_DIR>/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/`.
+`~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/`.

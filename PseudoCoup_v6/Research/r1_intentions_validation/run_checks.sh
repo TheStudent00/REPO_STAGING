@@ -7,7 +7,7 @@
 # restores the tree afterwards.
 
 set -u
-PCV5=<WORKSPACE_DIR>/PseudoCoup_v5
+PCV5=~/Programming/PseudoCoup_v5
 DESIGN="$PCV5/Designing"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 OUT="$HERE/runs"

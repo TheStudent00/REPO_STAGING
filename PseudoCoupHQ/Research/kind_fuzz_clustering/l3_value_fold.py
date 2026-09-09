@@ -33,7 +33,7 @@ RAW = os.path.join(HERE, "raw")
 OUT = ("/sessions/sharp-vigilant-volta/mnt/Programming/SandboxDesign"
        "/agent/out")
 if not os.path.isdir(OUT):
-    OUT = os.path.expanduser("<WORKSPACE_DIR>/SandboxDesign/agent/out")
+    OUT = os.path.expanduser("~/Programming/SandboxDesign/agent/out")
 
 from l3_accept import holders                               # noqa: E402
 import l3_construct_read as R                               # noqa: E402

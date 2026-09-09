@@ -31,9 +31,9 @@ point.
 ## Working conventions
 
 Same as the PseudoCoup repos: commit via
-`bash <WORKSPACE_DIR>/PlanPlan/git_commit_push.sh` (message from
+`bash ~/Programming/PlanPlan/git_commit_push.sh` (message from
 `DevComms/next_commit_message.txt`); repo created private via
-`bash <WORKSPACE_DIR>/PlanPlan/create_github_repo.sh`.
+`bash ~/Programming/PlanPlan/create_github_repo.sh`.
 Terminology: no socio-familial constructs for object relationships
 — super-sub / higher-lower, sub-nodes, co-nodes (full replacement
 lexicon in the communication protocol §1).

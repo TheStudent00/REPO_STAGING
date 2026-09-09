@@ -41,7 +41,7 @@ identified from the logs, all fixed in the script:
    (PYTHONPATH exported to the suite). 18/19 passed regardless —
    including the TypeScript three-way-oracle leg. Confirmation
    rerun of this one suite is optional:
-   `cd <WORKSPACE_DIR>/PseudoIR && PYTHONPATH=<WORKSPACE_DIR>/PseudoIR python3 -m pytest tests/ -q`
+   `cd ~/Programming/PseudoIR && PYTHONPATH=~/Programming/PseudoIR python3 -m pytest tests/ -q`
 
 ## Consequences for the tools program
 

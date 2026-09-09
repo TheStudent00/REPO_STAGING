@@ -1,7 +1,7 @@
 """ledger — the store. A deliberately dumb table, three doctrine-bearing operations.
 
 Plan node: pcv5.tools.ledgerer.ledger
-    <WORKSPACE_DIR>/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_1_ledger/CORE_0_0_0_1_ledger.md
+    ~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_1_ledger/CORE_0_0_0_1_ledger.md
 Shape pass 2026-08-06; logic pass the same day.
 
 The ledger defines no second vocabulary: every entry is a `ur.Node`

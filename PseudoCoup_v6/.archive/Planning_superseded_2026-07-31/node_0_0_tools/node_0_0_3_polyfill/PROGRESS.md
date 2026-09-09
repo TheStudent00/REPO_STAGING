@@ -7,7 +7,7 @@ status: living
 
 - plan — **settled** 2026-07-28.
 - build — **done** 2026-07-28 (delegated to a Sonnet subagent,
-  reviewed here): `<WORKSPACE_DIR>/PseudoCoup_v6/Tools/polyfill/`
+  reviewed here): `~/Programming/PseudoCoup_v6/Tools/polyfill/`
   — `wrap_fixed_width.py` (u8..u64 / i8..i64, operators routed
   through the wrappers: wrapping arithmetic, bitwise, shifts
   logical-vs-arithmetic by signedness, truncating div/rem,
@@ -22,7 +22,7 @@ status: living
   `_wrap(v, bits, signed)` from v0's `runtime/numbers.py`;
   truncating div/rem from v0 and PCv5's divergence suite; the
   shift-by-signedness rule from
-  `<WORKSPACE_DIR>/PseudoIR/DevComms/compiler_transpilation_experiment.md`
+  `~/Programming/PseudoIR/DevComms/compiler_transpilation_experiment.md`
   (no harvested source implemented it).
 
 ## Recorded deviations (pinned by tests, not papered over)

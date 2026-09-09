@@ -1,0 +1,89 @@
+# script: /drop/o3_l3_claims_verify.sh
+# started: 2026-09-06T02:01:11+00:00
+# timeout: 7200s
+# work free before: 2048 MB
+------------------------------------------------------------
+[1/1] check_conventions_log_claims.py --verify over log_209
+sandbox map in use (from Airlock mounts.conf):
+  ~/Programming/PlanPlan           -> /projects/PlanPlan         present
+  ~/Programming/PseudoCoupGraphs   -> /projects/PseudoCoupGraphs present
+  ~/Programming/PseudoCoupHQ       -> /projects/PseudoCoupHQ     present
+  ~/Programming/PseudoCoup_v5      -> /projects/PseudoCoup_v5    present
+  ~/Programming/PseudoCoup_v6      -> /projects/PseudoCoup_v6    present
+  ~/Programming/Sources            -> /sources                   present
+work directory for every command: /projects/PseudoCoupHQ
+memory: bound 512 MB; ABORT: MEMORY_BOUND_EXCEEDED at 6144 MB, checked after every command
+peak RSS before any pass: 18.5 MB
+the ONLY grouping key in this program: (log file name, outcome name) -- see grouping_key(); no operator token enters it
+
+log_209_task_o3_compiler_operators_used.md: 12 claims extracted
+
+[1/12] log_209_task_o3_compiler_operators_used.md:118  prose_verification
+[2/12] log_209_task_o3_compiler_operators_used.md:187  shell_transcript
+[3/12] log_209_task_o3_compiler_operators_used.md:211  shell_transcript
+[4/12] log_209_task_o3_compiler_operators_used.md:225  shell_transcript
+[5/12] log_209_task_o3_compiler_operators_used.md:226  shell_transcript
+[6/12] log_209_task_o3_compiler_operators_used.md:238  shell_transcript
+[7/12] log_209_task_o3_compiler_operators_used.md:255  shell_transcript
+[8/12] log_209_task_o3_compiler_operators_used.md:263  shell_transcript
+[9/12] log_209_task_o3_compiler_operators_used.md:266  prose_verification
+[10/12] log_209_task_o3_compiler_operators_used.md:274  prose_verification
+[11/12] log_209_task_o3_compiler_operators_used.md:294  prose_verification
+[12/12] log_209_task_o3_compiler_operators_used.md:312  shell_transcript
+
+==============================================================================
+PER-LOG REPORT
+==============================================================================
+
+## log_209_task_o3_compiler_operators_used.md
+   claims 12 | MATCHES 0 | DIFFERS 0 | UNVERIFIABLE 4 | REFUSED 7 | NOT_RERUNNABLE 1
+   VERDICT: nothing in this log was reproduced -- 4 of 12 claims (33%) carry no command at all, and no claim matched
+
+   | line | shape | outcome | claim / reason |
+   |---|---|---|---|
+   | 118 | prose_verification | **UNVERIFIABLE** | ``offered (grammar total)` differs from the brief's stated examples because the brief's examples ` — prose_only -- a verification is asserted with nothing beside it |
+   | 187 | shell_transcript | **REFUSED** | `bash ~/Programming/Airlock/up.sh --instance o3` — submits_or_moves_the_sandbox -- matched `up.sh` |
+   | 211 | shell_transcript | **REFUSED** | `tail -3 ~/AirlockRuns/o3/agent/logs/20260906T015906Z__o3_l1c_operators_used.sh.log` — log_unreachable -- ~/AirlockRuns/o3/agent/logs/20260906T015906Z__o3_l1c_operators_used.sh.log is not |
+   | 225 | shell_transcript | **REFUSED** | `python3 ~/Programming/Airlock/airlock submit ~/Programming/PseudoCoupHQ/Research/oracle/compiler` — submits_or_moves_the_sandbox -- matched `airlock submit` |
+   | 226 | shell_transcript | **REFUSED** | `cat ~/AirlockRuns/o3/agent/logs/20260906T015906Z__o3_l2c_spelling_guard.sh.log` — log_unreachable -- ~/AirlockRuns/o3/agent/logs/20260906T015906Z__o3_l2c_spelling_guard.sh.log is not |
+   | 238 | shell_transcript | **REFUSED** | `grep -c exempt  ~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_use` — log_unreachable -- ~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.json is n |
+   | 255 | shell_transcript | **REFUSED** | `bash ~/Programming/Airlock/down.sh --instance o3` — submits_or_moves_the_sandbox -- matched `down.sh` |
+   | 263 | shell_transcript | **NOT_RERUNNABLE** | `python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --t` — no_output_pasted -- the command has nothing under it |
+   | 266 | prose_verification | **UNVERIFIABLE** | `This command verifies this very file; it cannot paste its own output before it runs (expected NO` — prose_only -- a verification is asserted with nothing beside it |
+   | 274 | prose_verification | **UNVERIFIABLE** | `**Decided, recorded for audit:** - clang/llvm and swiftc are measured against the **cpp** invent` — prose_only -- a verification is asserted with nothing beside it |
+   | 294 | prose_verification | **UNVERIFIABLE** | `**Awaiting the owner:** - **The swift standard-library row is a FLAG, confirmed this task**: `tree_sit` — prose_only -- a verification is asserted with nothing beside it |
+   | 312 | shell_transcript | **REFUSED** | `python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --t` — log_unreachable -- /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims.json is not reachable  |
+
+   ### the 4 UNVERIFIABLE claim(s) -- nothing to re-run
+   line 118   prose_verification   `offered (grammar total)` differs from the brief's stated examples because the brief's examples were
+   line 266   prose_verification   This command verifies this very file; it cannot paste its own output before it runs (expected NOT_RE
+   line 274   prose_verification   **Decided, recorded for audit:** - clang/llvm and swiftc are measured against the **cpp** inventory 
+   line 294   prose_verification   **Awaiting the owner:** - **The swift standard-library row is a FLAG, confirmed this task**: `tree_sitter_
+
+==============================================================================
+SUMMARY, ALL LOGS
+==============================================================================
+population: 12 claims across 1 logs
+  MATCHES          0
+  DIFFERS          0
+  UNVERIFIABLE     4
+  REFUSED          7
+  NOT_RERUNNABLE   1
+
+ONE LINE: nothing in this log was reproduced -- 4 of 12 claims (33%) carry no command at all, and no claim matched
+
+causes, by name:
+  prose_only                       4
+  log_unreachable                  4
+  submits_or_moves_the_sandbox     3
+  no_output_pasted                 1
+
+peak RSS after the pass: 18.8 MB
+wrote /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims.json
+operator inventory: 91 tokens read from probe_manifest_*.json
+PASS log_209_claims.json -- no operator token in any key, grouping, pairing or row structure
+
+verifier exit: 0
+------------------------------------------------------------
+# exit 0 in 0.1s
+# work free after: 2048 MB (consumed 0 MB)

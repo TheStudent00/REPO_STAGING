@@ -5,9 +5,9 @@
 # https://silverbullet.md for the current one-liner.
 #
 # Usage:
-#   bash <WORKSPACE_DIR>/PlanningPlan/framework/install_silverbullet.sh
+#   bash ~/Programming/PlanningPlan/framework/install_silverbullet.sh
 #   # then serve a vault, e.g.:
-#   silverbullet <WORKSPACE_DIR>/PseudoCoup_v6/Planning
+#   silverbullet ~/Programming/PseudoCoup_v6/Planning
 #   # opens a local web UI (default http://localhost:3000)
 
 set -e
@@ -33,4 +33,4 @@ echo
 echo "done. serve a folder with:"
 echo "  silverbullet <path-to-folder>"
 echo "e.g.:"
-echo "  silverbullet <WORKSPACE_DIR>/PseudoCoup_v6/Planning"
+echo "  silverbullet ~/Programming/PseudoCoup_v6/Planning"

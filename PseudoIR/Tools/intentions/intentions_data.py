@@ -1,23 +1,23 @@
 """Data source for build_intentions.py: the copied-forward verdict data plus the four slicer-steering extensions.
 
 PROVENANCE (vendored, copy-forward):
-    Source 1: <WORKSPACE_DIR>/PseudoCoup_v5/Designing/intention_tables_gen.py
+    Source 1: ~/Programming/PseudoCoup_v5/Designing/intention_tables_gen.py
               (LANGS, CATS, T1, T2, DIAG, PRIMS, OPS -- verbatim data;
                the HTML rendering half of that file is NOT vendored)
-    Source 2: <WORKSPACE_DIR>/PseudoCoup_v5/Designing/build_verdicts.py
+    Source 2: ~/Programming/PseudoCoup_v5/Designing/build_verdicts.py
               (BASIS, LATTICE -- BASIS expanded from its row() helper
                to literal dicts, value-identical)
     Copied forward: 2026-07-28. Maintained in PCv6 from now on;
     PCv5 is archived research and is never written back to.
 
 EXTENSION DATA (the four fields of CORE 0_0_4_0), lifted by reading:
-    ROW_SATISFIERS  from <WORKSPACE_DIR>/PseudoCoup_v5/Designing/intention_row_satisfiers.md
-                    and  <WORKSPACE_DIR>/PseudoCoup_v5/Designing/BEJ_expansion.md
+    ROW_SATISFIERS  from ~/Programming/PseudoCoup_v5/Designing/intention_row_satisfiers.md
+                    and  ~/Programming/PseudoCoup_v5/Designing/BEJ_expansion.md
     CANON           from the pc_verdict strings in Source 1 (explicit
                     entries; each cites the verdict string it came from)
-    MINIMUM_SET     from <WORKSPACE_DIR>/PseudoCoup_v5/Designing/minimum_intention_set.md
+    MINIMUM_SET     from ~/Programming/PseudoCoup_v5/Designing/minimum_intention_set.md
     POLICIES and POLICY_REFS
-                    from <WORKSPACE_DIR>/PseudoCoup_v5/Designing/PCv7_policy_decisions.md
+                    from ~/Programming/PseudoCoup_v5/Designing/PCv7_policy_decisions.md
                     and the "policy N" mentions in the pc_verdict strings
 """
 

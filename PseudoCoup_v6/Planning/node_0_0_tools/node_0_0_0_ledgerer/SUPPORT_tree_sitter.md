@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — tree_sitter
 
 projected 2026-07-30 from the previous plan, now archived at
-`<WORKSPACE_DIR>/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_0_tools/node_0_0_0_tree_sitter_base/CORE_0_0_0_tree_sitter_base.md  (111 words)

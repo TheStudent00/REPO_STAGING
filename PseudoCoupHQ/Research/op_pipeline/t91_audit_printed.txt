@@ -1,0 +1,368 @@
+======================================================================
+THE POPULATION LINE
+======================================================================
+  units in log 153 section 1.2:                     30436
+  units in t91_populations.json:                    30436
+  units carrying a canon38 ledger:                  30436
+  units in the attached_callees       fix      run:  30436
+  units in the attached_callees       control  run:  30436
+  units in the no_attached_callees    fix      run:  30436
+  units in the no_attached_callees    control  run:  30436
+
+======================================================================
+THE FOUR STATES -- configuration 'attached_callees', run 'fix'
+======================================================================
+  state           log 153       here     delta
+  proved            23132      25658     +2526
+  withdrawn           415       3198     +2783
+  undecided          5602        293     -5309
+  no term            1287       1287        +0
+  units             30436      30436        +0
+
+  PER POPULATION
+    interpreter
+      proved              9
+      withdrawn           0
+      undecided           0
+      no term             0
+      units               9
+    original
+      proved           1665
+      withdrawn          47
+      undecided          16
+      no term            35
+      units            1763
+    regenerated
+      proved          23984
+      withdrawn        3151
+      undecided         277
+      no term          1252
+      units           28664
+
+======================================================================
+THE FOUR STATES -- configuration 'attached_callees', run 'control'
+======================================================================
+  state           log 153       here     delta
+  proved            23132      25658     +2526
+  withdrawn           415       3199     +2784
+  undecided          5602        292     -5310
+  no term            1287       1287        +0
+  units             30436      30436        +0
+
+  PER POPULATION
+    interpreter
+      proved              9
+      withdrawn           0
+      undecided           0
+      no term             0
+      units               9
+    original
+      proved           1665
+      withdrawn          47
+      undecided          16
+      no term            35
+      units            1763
+    regenerated
+      proved          23984
+      withdrawn        3152
+      undecided         276
+      no term          1252
+      units           28664
+
+======================================================================
+THE FOUR STATES -- configuration 'no_attached_callees', run 'fix'
+======================================================================
+  state           log 153       here     delta
+  proved            23132      25217     +2085
+  withdrawn           415        283      -132
+  undecided          5602       3649     -1953
+  no term            1287       1287        +0
+  units             30436      30436        +0
+
+  PER POPULATION
+    interpreter
+      proved              9
+      withdrawn           0
+      undecided           0
+      no term             0
+      units               9
+    original
+      proved           1665
+      withdrawn          47
+      undecided          16
+      no term            35
+      units            1763
+    regenerated
+      proved          23543
+      withdrawn         236
+      undecided        3633
+      no term          1252
+      units           28664
+
+======================================================================
+THE FOUR STATES -- configuration 'no_attached_callees', run 'control'
+======================================================================
+  state           log 153       here     delta
+  proved            23132      25217     +2085
+  withdrawn           415        277      -138
+  undecided          5602       3655     -1947
+  no term            1287       1287        +0
+  units             30436      30436        +0
+
+  PER POPULATION
+    interpreter
+      proved              9
+      withdrawn           0
+      undecided           0
+      no term             0
+      units               9
+    original
+      proved           1665
+      withdrawn          48
+      undecided          15
+      no term            35
+      units            1763
+    regenerated
+      proved          23543
+      withdrawn         229
+      undecided        3640
+      no term          1252
+      units           28664
+
+======================================================================
+THE TWO POPULATIONS TASK 91 RE-GATES -- configuration 'attached_callees', run 'fix'
+======================================================================
+
+  STARTING POPULATION: the 415 units log 153 records as withdrawn
+    proved            415   100.0% of the 415
+    withdrawn           0     0.0% of the 415
+    undecided           0     0.0% of the 415
+    no term             0     0.0% of the 415
+
+    -- withdrawn -> proved  (415 units), by computed cause
+          415 | the ONE reference's remainder is the machine's: SRem/URem, whose sign follows the dividend, in the place of the z3 operator whose sign follows the divisor (log 153 section 5)
+              sightings: c/op_246, c/op_247, c/op_252
+
+  STARTING POPULATION: the 5602 units log 153 records as undecided
+    proved           2356    42.1% of the 5602
+    withdrawn        2969    53.0% of the 5602
+    undecided         277     4.9% of the 5602
+    no term             0     0.0% of the 5602
+
+    -- undecided -> proved  (2356 units), by computed cause
+         1674 | the reference now models something this body spells that it refused before (the machine stack, the x87 stack, the narrow division and widening multiply, or a rip-relative address)
+              sightings: c/op_212, c/op_218, c/op_222
+          443 | the reference now enters the attached runtime callee's body and returns through its answer register
+              sightings: c/regen_1001, c/regen_10073, c/regen_10129
+          239 | the reference now follows this body's own branches and merges them at the join
+              sightings: go/op_110, go/op_146, go/op_168
+
+    -- undecided -> withdrawn  (2969 units), by computed cause
+         2916 | the unit's own stored canon38 ledger carries NO row for its transfer into the compiler's own runtime, so its term asserts the transfer changed nothing; the reference now walks that callee's body, and the two disagree
+              sightings: c/regen_10087, c/regen_10143, c/regen_10486
+           53 | the new run's own recorded reason: z3 found a starting state under which the two sides differ
+              sightings: c/regen_12973, cpp/regen_11824, cpp/regen_11844
+
+    -- undecided -> undecided  (277 units), by computed cause
+          132 | did not move; the run's own reason: the reference: the two sides of a branch leave the machine stack at different depths (-8 against -16)
+              sightings: c/regen_11268, c/regen_11543, c/regen_11554
+          122 | did not move; the run's own reason: the reference: every path through this body leaves the unit or is unreachable, so the body leaves no answer to read
+              sightings: c/regen_10483, c/regen_10484, c/regen_1075
+           10 | did not move; the run's own reason: the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+              sightings: c/regen_10464, c/regen_10485, c/regen_12383
+            7 | did not move; the run's own reason: the reference: this opcode reads the signed-overflow bit and no flag-setting arch opcode precedes it in this body
+              sightings: swift/op_128, swift/regen_303, swift/regen_304
+            6 | did not move; the run's own reason: the reference: this opcode reads the signed-overflow bit and the flag-setting arch opcode 'imul' has no overflow model in this file
+              sightings: swift/op_114, swift/op_121, swift/regen_298
+
+======================================================================
+THE TWO POPULATIONS TASK 91 RE-GATES -- configuration 'attached_callees', run 'control'
+======================================================================
+
+  STARTING POPULATION: the 415 units log 153 records as withdrawn
+    proved            415   100.0% of the 415
+    withdrawn           0     0.0% of the 415
+    undecided           0     0.0% of the 415
+    no term             0     0.0% of the 415
+
+    -- withdrawn -> proved  (415 units), by computed cause
+          415 | the ONE reference's remainder is the machine's: SRem/URem, whose sign follows the dividend, in the place of the z3 operator whose sign follows the divisor (log 153 section 5)
+              sightings: c/op_246, c/op_247, c/op_252
+
+  STARTING POPULATION: the 5602 units log 153 records as undecided
+    proved           2356    42.1% of the 5602
+    withdrawn        2969    53.0% of the 5602
+    undecided         277     4.9% of the 5602
+    no term             0     0.0% of the 5602
+
+    -- undecided -> proved  (2356 units), by computed cause
+         1674 | the reference now models something this body spells that it refused before (the machine stack, the x87 stack, the narrow division and widening multiply, or a rip-relative address)
+              sightings: c/op_212, c/op_218, c/op_222
+          443 | the reference now enters the attached runtime callee's body and returns through its answer register
+              sightings: c/regen_1001, c/regen_10073, c/regen_10129
+          239 | the reference now follows this body's own branches and merges them at the join
+              sightings: go/op_110, go/op_146, go/op_168
+
+    -- undecided -> withdrawn  (2969 units), by computed cause
+         2916 | the unit's own stored canon38 ledger carries NO row for its transfer into the compiler's own runtime, so its term asserts the transfer changed nothing; the reference now walks that callee's body, and the two disagree
+              sightings: c/regen_10087, c/regen_10143, c/regen_10464
+           53 | the new run's own recorded reason: z3 found a starting state under which the two sides differ
+              sightings: c/regen_12973, cpp/regen_11824, cpp/regen_11844
+
+    -- undecided -> undecided  (277 units), by computed cause
+          132 | did not move; the run's own reason: the reference: the two sides of a branch leave the machine stack at different depths (-8 against -16)
+              sightings: c/regen_11268, c/regen_11543, c/regen_11554
+          122 | did not move; the run's own reason: the reference: every path through this body leaves the unit or is unreachable, so the body leaves no answer to read
+              sightings: c/regen_10483, c/regen_10484, c/regen_1075
+           10 | did not move; the run's own reason: the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+              sightings: c/regen_10486, c/regen_10502, c/regen_10509
+            7 | did not move; the run's own reason: the reference: this opcode reads the signed-overflow bit and no flag-setting arch opcode precedes it in this body
+              sightings: swift/op_128, swift/regen_303, swift/regen_304
+            6 | did not move; the run's own reason: the reference: this opcode reads the signed-overflow bit and the flag-setting arch opcode 'imul' has no overflow model in this file
+              sightings: swift/op_114, swift/op_121, swift/regen_298
+
+======================================================================
+THE TWO POPULATIONS TASK 91 RE-GATES -- configuration 'no_attached_callees', run 'fix'
+======================================================================
+
+  STARTING POPULATION: the 415 units log 153 records as withdrawn
+    proved            415   100.0% of the 415
+    withdrawn           0     0.0% of the 415
+    undecided           0     0.0% of the 415
+    no term             0     0.0% of the 415
+
+    -- withdrawn -> proved  (415 units), by computed cause
+          415 | the ONE reference's remainder is the machine's: SRem/URem, whose sign follows the dividend, in the place of the z3 operator whose sign follows the divisor (log 153 section 5)
+              sightings: c/op_246, c/op_247, c/op_252
+
+  STARTING POPULATION: the 5602 units log 153 records as undecided
+    proved           1915    34.2% of the 5602
+    withdrawn          54     1.0% of the 5602
+    undecided        3633    64.9% of the 5602
+    no term             0     0.0% of the 5602
+
+    -- undecided -> proved  (1915 units), by computed cause
+         1674 | the reference now models something this body spells that it refused before (the machine stack, the x87 stack, the narrow division and widening multiply, or a rip-relative address)
+              sightings: c/op_212, c/op_218, c/op_222
+          239 | the reference now follows this body's own branches and merges them at the join
+              sightings: go/op_110, go/op_146, go/op_168
+            2 | the reference now enters the attached runtime callee's body and returns through its answer register
+              sightings: swift/regen_315, swift/regen_327
+
+    -- undecided -> withdrawn  (54 units), by computed cause
+           54 | the new run's own recorded reason: z3 found a starting state under which the two sides differ
+              sightings: c/regen_12973, cpp/regen_11824, cpp/regen_11844
+
+    -- undecided -> undecided  (3633 units), by computed cause
+         3619 | did not move; the run's own reason: the reference: every path through this body leaves the unit or is unreachable, so the body leaves no answer to read
+              sightings: c/regen_1001, c/regen_10073, c/regen_10087
+            7 | did not move; the run's own reason: the reference: this opcode reads the signed-overflow bit and no flag-setting arch opcode precedes it in this body
+              sightings: swift/op_128, swift/regen_303, swift/regen_304
+            6 | did not move; the run's own reason: the reference: this opcode reads the signed-overflow bit and the flag-setting arch opcode 'imul' has no overflow model in this file
+              sightings: swift/op_114, swift/op_121, swift/regen_298
+            1 | did not move; the run's own reason: the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+              sightings: go/op_103
+
+======================================================================
+THE TWO POPULATIONS TASK 91 RE-GATES -- configuration 'no_attached_callees', run 'control'
+======================================================================
+
+  STARTING POPULATION: the 415 units log 153 records as withdrawn
+    proved            415   100.0% of the 415
+    withdrawn           0     0.0% of the 415
+    undecided           0     0.0% of the 415
+    no term             0     0.0% of the 415
+
+    -- withdrawn -> proved  (415 units), by computed cause
+          415 | the ONE reference's remainder is the machine's: SRem/URem, whose sign follows the dividend, in the place of the z3 operator whose sign follows the divisor (log 153 section 5)
+              sightings: c/op_246, c/op_247, c/op_252
+
+  STARTING POPULATION: the 5602 units log 153 records as undecided
+    proved           1915    34.2% of the 5602
+    withdrawn          52     0.9% of the 5602
+    undecided        3635    64.9% of the 5602
+    no term             0     0.0% of the 5602
+
+    -- undecided -> proved  (1915 units), by computed cause
+         1674 | the reference now models something this body spells that it refused before (the machine stack, the x87 stack, the narrow division and widening multiply, or a rip-relative address)
+              sightings: c/op_212, c/op_218, c/op_222
+          239 | the reference now follows this body's own branches and merges them at the join
+              sightings: go/op_110, go/op_146, go/op_168
+            2 | the reference now enters the attached runtime callee's body and returns through its answer register
+              sightings: swift/regen_315, swift/regen_327
+
+    -- undecided -> withdrawn  (52 units), by computed cause
+           52 | the new run's own recorded reason: z3 found a starting state under which the two sides differ
+              sightings: c/regen_12973, cpp/regen_11824, cpp/regen_11844
+
+    -- undecided -> undecided  (3635 units), by computed cause
+         3619 | did not move; the run's own reason: the reference: every path through this body leaves the unit or is unreachable, so the body leaves no answer to read
+              sightings: c/regen_1001, c/regen_10073, c/regen_10087
+            7 | did not move; the run's own reason: the reference: this opcode reads the signed-overflow bit and no flag-setting arch opcode precedes it in this body
+              sightings: swift/op_128, swift/regen_303, swift/regen_304
+            6 | did not move; the run's own reason: the reference: this opcode reads the signed-overflow bit and the flag-setting arch opcode 'imul' has no overflow model in this file
+              sightings: swift/op_114, swift/op_121, swift/regen_298
+            3 | did not move; the run's own reason: the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+              sightings: go/op_103, go/regen_140, swift/regen_299
+
+======================================================================
+ZERO REGRESSION -- the 23,132 units log 153 records as proved
+======================================================================
+
+  configuration 'attached_callees', run 'fix'
+    units still proved (kept)             22887
+    proofs lost                             245
+          229 | withdrawn -- z3 found a starting state under which the two sides differ
+              sightings: c/op_117, c/op_122, c/op_158
+           16 | undecided -- the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+              sightings: c/op_153, c/op_225, c/op_230
+
+  configuration 'attached_callees', run 'control'
+    units still proved (kept)             22887
+    proofs lost                             245
+          230 | withdrawn -- z3 found a starting state under which the two sides differ
+              sightings: c/op_117, c/op_122, c/op_158
+           15 | undecided -- the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+              sightings: c/op_153, c/op_225, c/op_230
+
+  configuration 'no_attached_callees', run 'fix'
+    units still proved (kept)             22887
+    proofs lost                             245
+          229 | withdrawn -- z3 found a starting state under which the two sides differ
+              sightings: c/op_117, c/op_122, c/op_158
+           16 | undecided -- the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+              sightings: c/op_153, c/op_225, c/op_230
+
+  configuration 'no_attached_callees', run 'control'
+    units still proved (kept)             22887
+    proofs lost                             245
+          225 | withdrawn -- z3 found a starting state under which the two sides differ
+              sightings: c/op_117, c/op_122, c/op_158
+           20 | undecided -- the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+              sightings: c/op_153, c/op_230, c/regen_11967
+
+======================================================================
+THE WALL-CLOCK CONTROL -- unchanged code re-run
+======================================================================
+
+  configuration 'attached_callees': 17 of 30436 units answer differently when the SAME code is run twice (0.06%)
+          9 | undecided in the fix run, withdrawn in the control run
+            sightings: c/regen_10464, c/regen_10485, c/regen_12383
+          8 | withdrawn in the fix run, undecided in the control run
+            sightings: c/regen_10486, c/regen_10502, c/regen_10509
+
+  configuration 'no_attached_callees': 8 of 30436 units answer differently when the SAME code is run twice (0.03%)
+          7 | withdrawn in the fix run, undecided in the control run
+            sightings: c/regen_2559, c/regen_5695, cpp/regen_5689
+          1 | undecided in the fix run, withdrawn in the control run
+            sightings: c/op_225
+
+======================================================================
+THE CONSISTENCY LINE -- two routes never contradict
+======================================================================
+  attached_callees       fix       units proved on one route and disproved on the other: 0
+  attached_callees       control   units proved on one route and disproved on the other: 0
+  no_attached_callees    fix       units proved on one route and disproved on the other: 0
+  no_attached_callees    control   units proved on one route and disproved on the other: 0
+
+wrote /projects/PseudoCoupHQ/Research/op_pipeline/t91_audit.json

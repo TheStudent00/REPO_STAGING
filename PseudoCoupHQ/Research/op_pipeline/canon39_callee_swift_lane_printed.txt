@@ -1,0 +1,99 @@
+# script: /drop/runtime_callee_swift_lane2.sh
+# started: 2026-09-03T16:36:33+00:00
+# timeout: 3600s
+# work free before: 4096 MB
+------------------------------------------------------------
+=== task 63 (b) rerun, swiftc itself answering -- swift's runtime callees ===
+2026-09-03T16:36:33Z
+
+--- which side of the wall ---
+uname:   Linux 4963c357a353 7.0.0-30-generic #30-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul 31 18:22:54 UTC 2026 x86_64 GNU/Linux
+hostname: 4963c357a353
+lrwxrwxrwx 1 root root 12 Dec 11  2024 /persist/swift/usr/bin/swiftc -> swift-driver
+
+GNU nm (GNU Binutils for Ubuntu) 2.46
+GNU objdump (GNU Binutils for Ubuntu) 2.46
+Python 3.13.14
+
+== WHICH SIDE OF THE CONTAINER WALL IS THIS? ==
+  /persist/swift/usr/bin/swiftc      exists: True
+  /persist/swift/usr/bin             exists: True
+  /out                               exists: True
+  /work                              exists: True
+
+== SWIFT'S TOOLCHAIN, ASKED WHERE ITS OWN BUILTINS ARCHIVE IS ==
+$ /persist/swift/usr/bin/swiftc --version
+  Swift version 6.0.3 (swift-6.0.3-RELEASE)
+  Target: x86_64-unknown-linux-gnu
+$ /persist/swift/usr/bin/swiftc -print-target-info
+  {
+    "compilerVersion": "Swift version 6.0.3 (swift-6.0.3-RELEASE)",
+    "target": {
+      "triple": "x86_64-unknown-linux-gnu",
+      "unversionedTriple": "x86_64-unknown-linux-gnu",
+      "moduleTriple": "x86_64-unknown-linux-gnu",
+$ /persist/swift/usr/bin/clang -print-file-name=libclang_rt.builtins-x86_64.a
+  /persist/swift/usr/lib/clang/17/lib/linux/libclang_rt.builtins-x86_64.a
+
+the archive's own symbol index names 155 defined symbols  (nm --print-armap)
+
+== IS EACH NAME A ROUTINE OF SWIFT'S OWN RUNTIME? ==
+  __extendhfsf2    yes
+  __truncsfhf2     yes
+  __divti3         yes
+  __udivti3        yes
+  __modti3         yes
+  __umodti3        yes
+
+== THE BODIES, EXTRACTED (nested callees followed) ==
+  swiftc/__divti3                26 instructions   nested: __udivmodti4
+  swiftc/__extendhfsf2           33 instructions   nested: -
+  swiftc/__modti3                31 instructions   nested: __udivmodti4
+  swiftc/__truncsfhf2            79 instructions   nested: -
+  swiftc/__udivmodti4            90 instructions   nested: -
+  swiftc/__udivti3                2 instructions   nested: __udivmodti4
+  swiftc/__umodti3                7 instructions   nested: __udivmodti4
+
+== LITERAL -- swiftc/__extendhfsf2, the body as objdump printed it ==
+archive: /persist/swift/usr/lib/clang/17/lib/linux/libclang_rt.builtins-x86_64.a
+member:  extendhfsf2.c.o
+    0  mov %edi,%eax
+    1  and $0x7fff,%eax
+    2  lea -0x400(%rax),%ecx
+    3  movzwl %cx,%ecx
+    4  cmp $0x77ff,%ecx
+    5  ja 22 <__extendhfsf2+0x22>
+    6  shl $0xd,%eax
+    7  add $0x38000000,%eax
+    8  jmp 59 <__extendhfsf2+0x59>
+    9  cmp $0x7c00,%eax
+   10  jb 33 <__extendhfsf2+0x33>
+   11  shl $0xd,%eax
+   12  or $0x7f800000,%eax
+   13  jmp 59 <__extendhfsf2+0x59>
+   14  test %eax,%eax
+   15  je 57 <__extendhfsf2+0x57>
+   16  bsr %eax,%edx
+   17  xor $0x1f,%edx
+   18  lea -0x8(%rdx),%ecx
+   19  shl %cl,%eax
+   20  xor $0x800000,%eax
+   21  shl $0x17,%edx
+   22  mov $0x43000000,%ecx
+   23  sub %edx,%ecx
+   24  or %eax,%ecx
+   25  mov %ecx,%eax
+   26  jmp 59 <__extendhfsf2+0x59>
+   27  xor %eax,%eax
+   28  and $0x8000,%edi
+   29  shl $0x10,%edi
+   30  or %eax,%edi
+   31  movd %edi,%xmm0
+   32  ret
+
+done: 7 callee units written to /out/runtime_callee_swift.json
+
+lane exit: 0
+------------------------------------------------------------
+# exit 0 in 1.2s
+# work free after: 4096 MB (consumed 0 MB)

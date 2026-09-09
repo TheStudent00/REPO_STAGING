@@ -1,0 +1,2656 @@
+======================================================================
+UNIT cpython/long_add_fastpath
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+  L0:
+  mov 0x0(%r15),%r10
+  mov 0x8(%r15),%r11
+  mov 0x40(%r15),%rdi
+  sub %rdi,%rsp
+  mov 0x10(%r10),%rax
+  mov 0x10(%r11),%rcx
+  mov %r11,%rdx
+  mov %rax,%rsi
+  mov %rcx,%r11
+  or %rcx,%rax
+  mov 0x48(%r15),%rdi
+  and %edi,%esi
+  mov 0x48(%r15),%rdi
+  and %edi,%r11d
+  mov 0x50(%r15),%rdi
+  cmp %rdi,%rax
+  jbe L6
+  L1:
+  mov 0x58(%r15),%rdi
+  cmp %rdi,%rsi
+  je L4
+  L2:
+  mov 0x58(%r15),%rdi
+  cmp %rdi,%r11
+  mov %rdx,%r11
+  je L13
+  L3:
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  jmp 131e70 <x_add>
+  nopl 0x0(%rax)
+  L4:
+  mov 0x58(%r15),%rdi
+  cmp %rdi,%r11
+  je L14
+  L5:
+  mov %r10,%r11
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  mov %rdx,%r10
+  jmp 136ff0 <x_sub>
+  nopl 0x0(%rax)
+  L6:
+  mov 0x60(%r15),%rdi
+  mov %edi,%ecx
+  mov 0x18(%rdx),%edx
+  mov %rcx,%rax
+  sub %rsi,%rcx
+  sub %r11,%rax
+  imul %rdx,%rax
+  mov 0x18(%r10),%edx
+  imul %rdx,%rcx
+  lea (%rax,%rcx,1),%r10
+  lea 0x5(%r10),%rax
+  mov 0x68(%r15),%rdi
+  cmp %rdi,%rax
+  jbe L17
+  L7:
+  lea 0x3fffffff(%r10),%rax
+  mov 0x70(%r15),%rdi
+  cmp %rdi,%rax
+  jbe L18
+  L8:
+  mov %r10,%rcx
+  mov 0x78(%r15),%rdi
+  mov %edi,%edx
+  mov 0x80(%r15),%rdi
+  mov %edi,%eax
+  neg %rcx
+  test %r10,%r10
+  cmovns %r10,%rcx
+  cmovs %rax,%rdx
+  mov 0x58(%r15),%rdi
+  mov %edi,%r10d
+  mov %rcx,0x10(%rsp)
+  mov %rdx,0x8(%rsp)
+  mov %rdx,0x18(%rsp)
+  call 131d70 <long_alloc>
+  L9:
+  test %rax,%rax
+  je L11
+  L10:
+  mov 0x8(%rsp),%rdx
+  mov 0x10(%rsp),%rcx
+  mov %rdx,0x10(%rax)
+  mov %ecx,%edx
+  shr $0x1e,%rcx
+  mov 0x90(%r15),%rdi
+  and %edi,%edx
+  mov %ecx,0x1c(%rax)
+  mov %edx,0x18(%rax)
+  L11:
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  mov %rax,0x200(%r15)
+  ret
+  L12:
+  nopl 0x0(%rax)
+  L13:
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  jmp 136ff0 <x_sub>
+  nopl 0x0(%rax)
+  L14:
+  mov %rdx,%r11
+  call 131e70 <x_add>
+  L15:
+  test %rax,%rax
+  je L11
+  L16:
+  mov 0x10(%rax),%rdx
+  mov 0x58(%r15),%rdi
+  mov %edi,%ecx
+  mov %edx,%r11d
+  mov 0x98(%r15),%rdi
+  and %rdi,%rdx
+  mov 0x48(%r15),%rdi
+  and %edi,%r11d
+  sub %r11d,%ecx
+  or %rdx,%rcx
+  mov %rcx,0x10(%rax)
+  jmp L11
+  nopw 0x0(%rax,%rax,1)
+  L17:
+  mov 0xa0(%r15),%rdi
+  add %edi,%r10d
+  lea 0x49fb36(%rip),%rax
+  movslq %r10d,%r10
+  shl $0x5,%r10
+  lea 0x36f0(%rax,%r10,1),%rax
+  jmp L11
+  nopl 0x0(%rax,%rax,1)
+  L18:
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  jmp 131fe0 <_PyLong_FromMedium>
+
+-- FORM 2, canonical_form.py (PART A) --
+  mov ledger+0x00(%rip),%rdi
+  mov 0x0(%rdi),%rdi
+  mov ledger+0x00(%rip),%rsi
+  mov 0x8(%rsi),%rsi
+  sub $0x28,%rsp
+  mov 0x10(%rdi),%rax
+  mov 0x10(%rsi),%rdx
+  mov %rsi,%rcx
+  mov %rax,%r8
+  mov %rdx,%rsi
+  or %rdx,%rax
+  and $0x3,%r8d
+  and $0x3,%esi
+  cmp $0xf,%rax
+  jbe L1
+  cmp $0x2,%r8
+  je L0
+  cmp $0x2,%rsi
+  mov %rcx,%rsi
+  je L3
+  add $0x28,%rsp
+  jmp x_x_add
+  nopl 0x0(%rax)
+  L0:
+  cmp $0x2,%rsi
+  je L4
+  mov %rdi,%rsi
+  add $0x28,%rsp
+  mov %rcx,%rdi
+  jmp x_x_sub
+  nopl 0x0(%rax)
+  L1:
+  mov $0x1,%edx
+  mov 0x18(%rcx),%ecx
+  mov %rdx,%rax
+  sub %r8,%rdx
+  sub %rsi,%rax
+  imul %rcx,%rax
+  mov 0x18(%rdi),%ecx
+  imul %rcx,%rdx
+  lea (%rax,%rdx,1),%rdi
+  lea 0x5(%rdi),%rax
+  cmp $0x105,%rax
+  jbe L5
+  lea 0x3fffffff(%rdi),%rax
+  cmp $0x7ffffffe,%rax
+  jbe L6
+  mov %rdi,%rdx
+  mov $0x10,%ecx
+  mov $0x12,%eax
+  neg %rdx
+  test %rdi,%rdi
+  cmovns %rdi,%rdx
+  cmovs %rax,%rcx
+  mov $0x2,%edi
+  mov %rdx,0x10(%rsp)
+  mov %rcx,0x8(%rsp)
+  mov %rcx,0x18(%rsp)
+  call x_long_alloc
+  test %rax,%rax
+  je L2
+  mov 0x8(%rsp),%rcx
+  mov 0x10(%rsp),%rdx
+  mov %rcx,0x10(%rax)
+  mov %edx,%ecx
+  shr $0x1e,%rdx
+  and $0x3fffffff,%ecx
+  mov %edx,0x1c(%rax)
+  mov %ecx,0x18(%rax)
+  L2:
+  add $0x28,%rsp
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  nopl 0x0(%rax)
+  L3:
+  add $0x28,%rsp
+  jmp x_x_sub
+  nopl 0x0(%rax)
+  L4:
+  mov %rcx,%rsi
+  call x_x_add
+  test %rax,%rax
+  je L2
+  mov 0x10(%rax),%rcx
+  mov $0x2,%edx
+  mov %ecx,%esi
+  and $0xfffffffffffffff8,%rcx
+  and $0x3,%esi
+  sub %esi,%edx
+  or %rcx,%rdx
+  mov %rdx,0x10(%rax)
+  jmp L2
+  nopw 0x0(%rax,%rax,1)
+  L5:
+  add $0x5,%edi
+  lea 0x49fb36(%rip),%rax
+  movslq %edi,%rdi
+  shl $0x5,%rdi
+  lea 0x36f0(%rax,%rdi,1),%rax
+  jmp L2
+  nopl 0x0(%rax,%rax,1)
+  L6:
+  add $0x28,%rsp
+  jmp x__PyLong_FromMedium
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+  mov ledger+0x40(%rip),%rdi
+  mov ledger+0x40(%rip),%rsi
+  lea 0x100(%rsi),%rsi
+  sub $0x28,%rsp
+  mov 0x10(%rdi),%rax
+  mov 0x10(%rsi),%rdx
+  mov %rsi,%rcx
+  mov %rax,%r8
+  mov %rdx,%rsi
+  or %rdx,%rax
+  and $0x3,%r8d
+  and $0x3,%esi
+  cmp $0xf,%rax
+  jbe L1
+  cmp $0x2,%r8
+  je L0
+  cmp $0x2,%rsi
+  mov %rcx,%rsi
+  je L3
+  add $0x28,%rsp
+  jmp x_x_add
+  nopl 0x0(%rax)
+  L0:
+  cmp $0x2,%rsi
+  je L4
+  mov %rdi,%rsi
+  add $0x28,%rsp
+  mov %rcx,%rdi
+  jmp x_x_sub
+  nopl 0x0(%rax)
+  L1:
+  mov $0x1,%edx
+  mov 0x18(%rcx),%ecx
+  mov %rdx,%rax
+  sub %r8,%rdx
+  sub %rsi,%rax
+  imul %rcx,%rax
+  mov 0x18(%rdi),%ecx
+  imul %rcx,%rdx
+  lea (%rax,%rdx,1),%rdi
+  lea 0x5(%rdi),%rax
+  cmp $0x105,%rax
+  jbe L5
+  lea 0x3fffffff(%rdi),%rax
+  cmp $0x7ffffffe,%rax
+  jbe L6
+  mov %rdi,%rdx
+  mov $0x10,%ecx
+  mov $0x12,%eax
+  neg %rdx
+  test %rdi,%rdi
+  cmovns %rdi,%rdx
+  cmovs %rax,%rcx
+  mov $0x2,%edi
+  mov %rdx,0x10(%rsp)
+  mov %rcx,0x8(%rsp)
+  mov %rcx,0x18(%rsp)
+  call x_long_alloc
+  test %rax,%rax
+  je L2
+  mov 0x8(%rsp),%rcx
+  mov 0x10(%rsp),%rdx
+  mov %rcx,0x10(%rax)
+  mov %edx,%ecx
+  shr $0x1e,%rdx
+  and $0x3fffffff,%ecx
+  mov %edx,0x1c(%rax)
+  mov %ecx,0x18(%rax)
+  L2:
+  add $0x28,%rsp
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  nopl 0x0(%rax)
+  L3:
+  add $0x28,%rsp
+  jmp x_x_sub
+  nopl 0x0(%rax)
+  L4:
+  mov %rcx,%rsi
+  call x_x_add
+  test %rax,%rax
+  je L2
+  mov 0x10(%rax),%rcx
+  mov $0x2,%edx
+  mov %ecx,%esi
+  and $0xfffffffffffffff8,%rcx
+  and $0x3,%esi
+  sub %esi,%edx
+  or %rcx,%rdx
+  mov %rdx,0x10(%rax)
+  jmp L2
+  nopw 0x0(%rax,%rax,1)
+  L5:
+  add $0x5,%edi
+  lea 0x49fb36(%rip),%rax
+  movslq %edi,%rdi
+  shl $0x5,%rdi
+  lea 0x36f0(%rax,%rdi,1),%rax
+  jmp L2
+  nopl 0x0(%rax,%rax,1)
+  L6:
+  add $0x28,%rsp
+  jmp x__PyLong_FromMedium
+
+======================================================================
+UNIT java/op_1
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+REFUSED: the universal form refused by name: the core names the region base -- this unit's own core mentions %r15, which the form rules to be the region base and therefore not available to any lineage; the unit is refused by name rather than being rendered onto a base it also uses as a value
+
+-- FORM 2, canonical_form.py (PART A) --
+  mov ledger+0x00(%rip),%rsi
+  mov 0x0(%rsi),%rsi
+  mov ledger+0x00(%rip),%rdx
+  mov 0x8(%rdx),%rdx
+  sub $0x18,%rsp
+  mov %rbp,0x10(%rsp)
+  cmpl $0x0,0x20(%r15)
+  jne 0x7f99346aa443
+  lea (%rsi,%rdx,1),%eax
+  add $0x10,%rsp
+  pop %rbp
+  cmp 0x28(%r15),%rsp
+  ja 0x7f99346aa42d
+  mov ledger+0x38(%rip),%r11
+  mov %eax,0x0(%r11)
+  ret
+  movabs $0x7f99346aa422,%r10
+  mov %r10,0x538(%r15)
+  jmp 0x7f9934651b60
+  call 0x7f99346385c0
+  jmp 0x7f99346aa41a
+  hlt
+  hlt
+  hlt
+  jmp 0x7f993469dbe0
+  call 0x7f99346aa45a
+  subq $0x5,(%rsp)
+  jmp 0x7f99346502e0
+  hlt
+  hlt
+  hlt
+  hlt
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+REFUSED (arriving-area overflow): the unit reaches its arriving area at displacement 0x538, which is further than the extent's 0x100 bytes reach; the form refuses by name rather than wrapping it
+
+======================================================================
+UNIT java/op_2
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+REFUSED: the universal form refused by name: the core names the region base -- this unit's own core mentions %r15, which the form rules to be the region base and therefore not available to any lineage; the unit is refused by name rather than being rendered onto a base it also uses as a value
+
+-- FORM 2, canonical_form.py (PART A) --
+  mov ledger+0x00(%rip),%rsi
+  mov 0x0(%rsi),%rsi
+  mov ledger+0x00(%rip),%rdx
+  mov 0x8(%rdx),%rdx
+  mov %eax,-0x14000(%rsp)
+  push %rbp
+  sub $0x10,%rsp
+  cmpl $0x0,0x20(%r15)
+  jne 0x7f99346a9b72
+  mov %edx,%r11d
+  test %edx,%edx
+  je 0x7f99346a9b46
+  mov %esi,%eax
+  cmp $0x80000000,%eax
+  jne 0x7f99346a9b32
+  xor %edx,%edx
+  cmp $0xffffffff,%r11d
+  je 0x7f99346a9b36
+  cltd
+  idiv %r11d
+  add $0x10,%rsp
+  pop %rbp
+  cmp 0x28(%r15),%rsp
+  ja 0x7f99346a9b5c
+  mov ledger+0x38(%rip),%r11
+  mov %eax,0x0(%r11)
+  ret
+  mov %esi,%ebp
+  mov $0xffffff7e,%esi
+  xchg %ax,%ax
+  call 0x7f993469d8e0
+  nopl 0x14c(%rax,%rax,1)
+  movabs $0x7f99346a9b3b,%r10
+  mov %r10,0x538(%r15)
+  jmp 0x7f9934651b60
+  call 0x7f99346385c0
+  jmp 0x7f99346a9b1a
+  hlt
+  hlt
+  hlt
+  hlt
+  jmp 0x7f993469dbe0
+  call 0x7f99346a9b8a
+  subq $0x5,(%rsp)
+  jmp 0x7f99346502e0
+  hlt
+  hlt
+  hlt
+  hlt
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+REFUSED (arriving-area overflow): the unit reaches its arriving area at displacement 0x538, which is further than the extent's 0x100 bytes reach; the form refuses by name rather than wrapping it
+
+======================================================================
+UNIT ruby/vm_opt_plus
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+REFUSED: no STT_FUNC symbol named 'vm_opt_plus' exists in this binary's own symbol table, so this handler's function bounds cannot be read here
+
+-- FORM 2, canonical_form.py (PART A) --
+REFUSED (no canonical text): this handler has no ship body to wrap
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+REFUSED (no canonical text): this handler has no ship body to wrap
+
+======================================================================
+UNIT ruby/rb_fix_plus
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+  L0:
+  mov 0x0(%r15),%r10
+  mov 0x8(%r15),%r11
+  endbr64
+  mov 0x40(%r15),%rsi
+  sub %rsi,%rsp
+  mov %fs:0x28,%rax
+  mov %rax,0x28(%rsp)
+  mov %r11,%rax
+  mov 0x48(%r15),%rsi
+  and %esi,%r11d
+  jne L13
+  L1:
+  test $0x7,%al
+  je L7
+  L2:
+  mov %rax,%rcx
+  mov 0x58(%r15),%rsi
+  and %esi,%ecx
+  mov 0x60(%r15),%rsi
+  cmp %rsi,%rcx
+  je L16
+  L3:
+  mov %r10,0x10(%rsp)
+  lea 0x18(%rsp),%r11
+  lea 0x10(%rsp),%r10
+  mov 0x48(%r15),%rsi
+  mov %esi,%ecx
+  mov %rax,0x18(%rsp)
+  call f3950 <do_coerce>
+  L4:
+  mov 0x18(%rsp),%rax
+  mov 0x10(%rsp),%r10
+  lea 0x20(%rsp),%rdx
+  mov 0x48(%r15),%rsi
+  mov %esi,%ecx
+  mov 0x68(%r15),%rsi
+  mov %esi,%r11d
+  mov %rax,0x20(%rsp)
+  call 272030 <rb_funcallv>
+  L5:
+  mov 0x28(%rsp),%rcx
+  sub %fs:0x28,%rcx
+  jne L28
+  L6:
+  mov 0x40(%r15),%rsi
+  add %rsi,%rsp
+  mov %rax,0x200(%r15)
+  ret
+  L7:
+  test %rax,%rax
+  je L3
+  L8:
+  mov (%rax),%rcx
+  mov 0x70(%r15),%rsi
+  and %esi,%ecx
+  mov 0x78(%r15),%rsi
+  cmp %rsi,%rcx
+  je L25
+  L9:
+  mov 0x80(%r15),%rsi
+  cmp %rsi,%rcx
+  je L24
+  L10:
+  mov 0x88(%r15),%rsi
+  cmp %rsi,%rcx
+  jne L3
+  L11:
+  mov 0x28(%rsp),%rcx
+  sub %fs:0x28,%rcx
+  jne L28
+  L12:
+  mov %r10,%r11
+  mov 0x40(%r15),%rsi
+  add %rsi,%rsp
+  mov %rax,%r10
+  jmp 41a4a0 <rb_complex_plus>
+  nopl 0x0(%rax)
+  L13:
+  mov 0x48(%r15),%rsi
+  sub %rsi,%rax
+  add %r10,%rax
+  jno L5
+  L14:
+  mov 0x28(%rsp),%rcx
+  sub %fs:0x28,%rcx
+  jne L28
+  L15:
+  sar $1,%rax
+  mov 0x40(%r15),%rsi
+  add %rsi,%rsp
+  btc $0x3f,%rax
+  mov %rax,%r10
+  jmp 3b2830 <rb_int2big>
+  nopl 0x0(%rax)
+  L16:
+  sar $1,%r10
+  pxor %xmm0,%xmm0
+  pxor %xmm1,%xmm1
+  mov 0xa0(%r15),%rsi
+  mov %rsi,%rdx
+  cvtsi2sd %r10,%xmm0
+  cmp %rdx,%rax
+  je L18
+  L17:
+  mov %rax,%rdx
+  mov 0xa8(%r15),%rsi
+  and %rsi,%rax
+  shr $0x3f,%rdx
+  sub %rdx,%rcx
+  or %rax,%rcx
+  ror $0x3,%rcx
+  movq %rcx,%xmm1
+  nopl 0x0(%rax)
+  data16 cs nopw 0x0(%rax,%rax,1)
+  L18:
+  mov 0xb0(%r15),%rsi
+  mov %rsi,%rax
+  addsd %xmm0,%xmm1
+  movq %xmm1,%rcx
+  cmp %rax,%rcx
+  je L21
+  L19:
+  mov %rcx,%rax
+  shr $0x3c,%rax
+  mov 0x50(%r15),%rsi
+  and %esi,%eax
+  mov 0x58(%r15),%rsi
+  sub %esi,%eax
+  mov 0x48(%r15),%rsi
+  cmp %esi,%eax
+  jbe L27
+  L20:
+  mov 0xa0(%r15),%rsi
+  mov %rsi,%rax
+  test %rcx,%rcx
+  je L5
+  L21:
+  movsd %xmm1,0x8(%rsp)
+  mov 0xc0(%r15),%rsi
+  mov %esi,%edx
+  mov 0x80(%r15),%rsi
+  mov %esi,%ecx
+  mov 0xc8(%r15),%rsi
+  mov %rsi,%rax
+  mov 0x511349(%rip),%r11
+  mov %fs:(%rax),%r10
+  call 82050 <rb_wb_protected_newobj_of>
+  L22:
+  movsd 0x8(%rsp),%xmm1
+  mov %rax,%r10
+  mov %rax,0x8(%rsp)
+  movsd %xmm1,0x10(%rax)
+  call 248590 <rb_obj_freeze_inline>
+  L23:
+  mov 0x8(%rsp),%rax
+  jmp L5
+  nopw 0x0(%rax,%rax,1)
+  L24:
+  sar $1,%r10
+  pxor %xmm0,%xmm0
+  movsd 0x10(%rax),%xmm1
+  cvtsi2sd %r10,%xmm0
+  jmp L18
+  cs nopw 0x0(%rax,%rax,1)
+  L25:
+  mov 0x28(%rsp),%rcx
+  sub %fs:0x28,%rcx
+  jne L28
+  L26:
+  mov %r10,%r11
+  mov 0x40(%r15),%rsi
+  add %rsi,%rsp
+  mov %rax,%r10
+  jmp 3b6ad0 <rb_big_plus>
+  nop
+  L27:
+  rol $0x3,%rcx
+  mov 0xa8(%r15),%rsi
+  and %rsi,%rcx
+  mov %rcx,%rax
+  mov 0x60(%r15),%rsi
+  or %rsi,%rax
+  jmp L5
+  L28:
+  call 42b60 <__stack_chk_fail@plt>
+
+-- FORM 2, canonical_form.py (PART A) --
+  mov ledger+0x00(%rip),%rdi
+  mov 0x0(%rdi),%rdi
+  mov ledger+0x00(%rip),%rsi
+  mov 0x8(%rsi),%rsi
+  endbr64
+  sub $0x38,%rsp
+  mov %fs:0x28,%rax
+  mov %rax,0x28(%rsp)
+  mov %rsi,%rax
+  and $0x1,%esi
+  jne L3
+  test $0x7,%al
+  je L2
+  mov %rax,%rdx
+  and $0x3,%edx
+  cmp $0x2,%rdx
+  je L4
+  L0:
+  mov %rdi,0x10(%rsp)
+  lea 0x18(%rsp),%rsi
+  lea 0x10(%rsp),%rdi
+  mov $0x1,%edx
+  mov %rax,0x18(%rsp)
+  call x_do_coerce
+  mov 0x18(%rsp),%rax
+  mov 0x10(%rsp),%rdi
+  lea 0x20(%rsp),%rcx
+  mov $0x1,%edx
+  mov $0x2b,%esi
+  mov %rax,0x20(%rsp)
+  call x_rb_funcallv
+  L1:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L10
+  add $0x38,%rsp
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  L2:
+  test %rax,%rax
+  je L0
+  mov (%rax),%rdx
+  and $0x1f,%edx
+  cmp $0xa,%rdx
+  je L8
+  cmp $0x4,%rdx
+  je L7
+  cmp $0xe,%rdx
+  jne L0
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L10
+  mov %rdi,%rsi
+  add $0x38,%rsp
+  mov %rax,%rdi
+  jmp x_rb_complex_plus
+  nopl 0x0(%rax)
+  L3:
+  sub $0x1,%rax
+  add %rdi,%rax
+  jno L1
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L10
+  sar $1,%rax
+  add $0x38,%rsp
+  btc $0x3f,%rax
+  mov %rax,%rdi
+  jmp x_rb_int2big
+  nopl 0x0(%rax)
+  L4:
+  sar $1,%rdi
+  pxor %xmm1,%xmm1
+  pxor %xmm0,%xmm0
+  movabs $0x8000000000000002,%rcx
+  cvtsi2sd %rdi,%xmm1
+  cmp %rcx,%rax
+  je L5
+  mov %rax,%rcx
+  and $0xfffffffffffffffc,%rax
+  shr $0x3f,%rcx
+  sub %rcx,%rdx
+  or %rax,%rdx
+  ror $0x3,%rdx
+  movq %rdx,%xmm0
+  nopl 0x0(%rax)
+  data16 cs nopw 0x0(%rax,%rax,1)
+  L5:
+  movabs $0x3000000000000000,%rax
+  addsd %xmm1,%xmm0
+  movq %xmm0,%rdx
+  cmp %rax,%rdx
+  je L6
+  mov %rdx,%rax
+  shr $0x3c,%rax
+  and $0x7,%eax
+  sub $0x3,%eax
+  cmp $0x1,%eax
+  jbe L9
+  movabs $0x8000000000000002,%rax
+  test %rdx,%rdx
+  je L1
+  L6:
+  movsd %xmm0,0x8(%rsp)
+  mov $0x18,%ecx
+  mov $0x4,%edx
+  mov $0xffffffffffffffb0,%rax
+  mov 0x511349(%rip),%rsi
+  mov %fs:(%rax),%rdi
+  call x_rb_wb_protected_newobj_of
+  movsd 0x8(%rsp),%xmm0
+  mov %rax,%rdi
+  mov %rax,0x8(%rsp)
+  movsd %xmm0,0x10(%rax)
+  call x_rb_obj_freeze_inline
+  mov 0x8(%rsp),%rax
+  jmp L1
+  nopw 0x0(%rax,%rax,1)
+  L7:
+  sar $1,%rdi
+  pxor %xmm1,%xmm1
+  movsd 0x10(%rax),%xmm0
+  cvtsi2sd %rdi,%xmm1
+  jmp L5
+  cs nopw 0x0(%rax,%rax,1)
+  L8:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L10
+  mov %rdi,%rsi
+  add $0x38,%rsp
+  mov %rax,%rdi
+  jmp x_rb_big_plus
+  nop
+  L9:
+  rol $0x3,%rdx
+  and $0xfffffffffffffffc,%rdx
+  mov %rdx,%rax
+  or $0x2,%rax
+  jmp L1
+  L10:
+  call x___stack_chk_fail
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+  mov ledger+0x00(%rip),%rdi
+  mov 0x0(%rdi),%rdi
+  mov ledger+0x00(%rip),%rsi
+  mov 0x8(%rsi),%rsi
+  endbr64
+  sub $0x38,%rsp
+  mov %fs:0x28,%rax
+  mov %rax,0x28(%rsp)
+  mov %rsi,%rax
+  and $0x1,%esi
+  jne L3
+  test $0x7,%al
+  je L2
+  mov %rax,%rdx
+  and $0x3,%edx
+  cmp $0x2,%rdx
+  je L4
+  L0:
+  mov %rdi,0x10(%rsp)
+  lea 0x18(%rsp),%rsi
+  lea 0x10(%rsp),%rdi
+  mov $0x1,%edx
+  mov %rax,0x18(%rsp)
+  call x_do_coerce
+  mov 0x18(%rsp),%rax
+  mov 0x10(%rsp),%rdi
+  lea 0x20(%rsp),%rcx
+  mov $0x1,%edx
+  mov $0x2b,%esi
+  mov %rax,0x20(%rsp)
+  call x_rb_funcallv
+  L1:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L10
+  add $0x38,%rsp
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  L2:
+  test %rax,%rax
+  je L0
+  mov (%rax),%rdx
+  and $0x1f,%edx
+  cmp $0xa,%rdx
+  je L8
+  cmp $0x4,%rdx
+  je L7
+  cmp $0xe,%rdx
+  jne L0
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L10
+  mov %rdi,%rsi
+  add $0x38,%rsp
+  mov %rax,%rdi
+  jmp x_rb_complex_plus
+  nopl 0x0(%rax)
+  L3:
+  sub $0x1,%rax
+  add %rdi,%rax
+  jno L1
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L10
+  sar $1,%rax
+  add $0x38,%rsp
+  btc $0x3f,%rax
+  mov %rax,%rdi
+  jmp x_rb_int2big
+  nopl 0x0(%rax)
+  L4:
+  sar $1,%rdi
+  pxor %xmm1,%xmm1
+  pxor %xmm0,%xmm0
+  movabs $0x8000000000000002,%rcx
+  cvtsi2sd %rdi,%xmm1
+  cmp %rcx,%rax
+  je L5
+  mov %rax,%rcx
+  and $0xfffffffffffffffc,%rax
+  shr $0x3f,%rcx
+  sub %rcx,%rdx
+  or %rax,%rdx
+  ror $0x3,%rdx
+  movq %rdx,%xmm0
+  nopl 0x0(%rax)
+  data16 cs nopw 0x0(%rax,%rax,1)
+  L5:
+  movabs $0x3000000000000000,%rax
+  addsd %xmm1,%xmm0
+  movq %xmm0,%rdx
+  cmp %rax,%rdx
+  je L6
+  mov %rdx,%rax
+  shr $0x3c,%rax
+  and $0x7,%eax
+  sub $0x3,%eax
+  cmp $0x1,%eax
+  jbe L9
+  movabs $0x8000000000000002,%rax
+  test %rdx,%rdx
+  je L1
+  L6:
+  movsd %xmm0,0x8(%rsp)
+  mov $0x18,%ecx
+  mov $0x4,%edx
+  mov $0xffffffffffffffb0,%rax
+  mov 0x511349(%rip),%rsi
+  mov %fs:(%rax),%rdi
+  call x_rb_wb_protected_newobj_of
+  movsd 0x8(%rsp),%xmm0
+  mov %rax,%rdi
+  mov %rax,0x8(%rsp)
+  movsd %xmm0,0x10(%rax)
+  call x_rb_obj_freeze_inline
+  mov 0x8(%rsp),%rax
+  jmp L1
+  nopw 0x0(%rax,%rax,1)
+  L7:
+  sar $1,%rdi
+  pxor %xmm1,%xmm1
+  movsd 0x10(%rax),%xmm0
+  cvtsi2sd %rdi,%xmm1
+  jmp L5
+  cs nopw 0x0(%rax,%rax,1)
+  L8:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L10
+  mov %rdi,%rsi
+  add $0x38,%rsp
+  mov %rax,%rdi
+  jmp x_rb_big_plus
+  nop
+  L9:
+  rol $0x3,%rdx
+  and $0xfffffffffffffffc,%rdx
+  mov %rdx,%rax
+  or $0x2,%rax
+  jmp L1
+  L10:
+  call x___stack_chk_fail
+
+======================================================================
+UNIT ruby/rb_int_plus
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+  L0:
+  mov 0x0(%r15),%r10
+  mov 0x8(%r15),%r11
+  endbr64
+  push %rax
+  mov 0x40(%r15),%rdi
+  sub %rdi,%rsp
+  mov %fs:0x28,%rax
+  mov %rax,0x28(%rsp)
+  mov %r11,%rax
+  test $0x1,%r10b
+  jne L11
+  L1:
+  test $0x7,%r10b
+  jne L3
+  L2:
+  test %r10,%r10
+  jne L19
+  L3:
+  mov %r10,0x18(%rsp)
+  mov 0x51b235(%rip),%r11
+  lea 0x18(%rsp),%rcx
+  mov %rax,%r10
+  mov 0x48(%r15),%rdi
+  mov %edi,%edx
+  call 278240 <rb_check_funcall>
+  L4:
+  mov 0x58(%r15),%rdi
+  cmp %rdi,%rsi
+  je L9
+  L5:
+  test $0x7,%sil
+  jne L7
+  L6:
+  test %rsi,%rsi
+  jne L22
+  L7:
+  mov 0x52bdc9(%rip),%r10
+  lea 0x3812a2(%rip),%r11
+  xor %esi,%esi
+  call 450a20 <rb_raise>
+  L8:
+  nopl (%rsi)
+  L9:
+  mov 0x18(%rsp),%r10
+  mov %rax,%r11
+  call f38f0 <coerce_failed>
+  L10:
+  nopl (%rsi)
+  L11:
+  test $0x1,%al
+  jne L28
+  L12:
+  test $0x7,%al
+  jne L32
+  L13:
+  test %rax,%rax
+  je L33
+  L14:
+  mov (%rax),%rsi
+  mov 0x60(%r15),%rdi
+  and %edi,%esi
+  mov 0x68(%r15),%rdi
+  cmp %rdi,%rsi
+  je L46
+  L15:
+  mov 0x70(%r15),%rdi
+  cmp %rdi,%rsi
+  je L43
+  L16:
+  mov 0x78(%r15),%rdi
+  cmp %rdi,%rsi
+  jne L33
+  L17:
+  mov 0x28(%rsp),%rsi
+  sub %fs:0x28,%rsi
+  jne L49
+  L18:
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  mov %r10,%r11
+  mov %rax,%r10
+  pop %rax
+  jmp 41a4a0 <rb_complex_plus>
+  nopl 0x0(%rsi,%rsi,1)
+  L19:
+  mov (%r10),%rsi
+  mov 0x60(%r15),%rdi
+  and %edi,%esi
+  mov 0x68(%r15),%rdi
+  cmp %rdi,%rsi
+  jne L3
+  L20:
+  mov 0x28(%rsp),%rsi
+  sub %fs:0x28,%rsi
+  jne L49
+  L21:
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  mov %rax,%r11
+  pop %rax
+  jmp 3b6ad0 <rb_big_plus>
+  nopl 0x0(%rsi)
+  L22:
+  mov (%rsi),%rdx
+  mov %rdx,%rcx
+  mov 0x60(%r15),%rdi
+  and %edi,%ecx
+  mov 0x50(%r15),%rdi
+  cmp %rdi,%rcx
+  jne L7
+  L23:
+  test $0x20,%dh
+  je L44
+  L24:
+  mov 0x88(%r15),%rdi
+  and %edi,%edx
+  mov 0x90(%r15),%rdi
+  cmp %rdi,%rdx
+  jne L7
+  L25:
+  mov 0x10(%rsi),%r10
+  lea 0x10(%rsi),%rdx
+  L26:
+  mov 0x8(%rdx),%rsi
+  lea 0x20(%rsp),%rcx
+  mov 0x48(%r15),%rdi
+  mov %edi,%edx
+  mov 0x98(%r15),%rdi
+  mov %edi,%r11d
+  mov %r10,0x18(%rsp)
+  mov %rsi,0x20(%rsp)
+  call 272030 <rb_funcallv>
+  L27:
+  jmp L29
+  nopl 0x0(%rsi,%rsi,1)
+  L28:
+  mov 0x48(%r15),%rdi
+  sub %rdi,%rax
+  mov %r10,%rsi
+  add %rax,%rsi
+  jo L50
+  L29:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L49
+  L30:
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  pop %rax
+  mov %rsi,0x200(%r15)
+  ret
+  L31:
+  nopw 0x0(%rsi,%rsi,1)
+  L32:
+  mov %rax,%rsi
+  mov 0xa0(%r15),%rdi
+  and %edi,%esi
+  mov 0xa8(%r15),%rdi
+  cmp %rdi,%rsi
+  je L35
+  L33:
+  mov 0x28(%rsp),%rsi
+  sub %fs:0x28,%rsi
+  jne L49
+  L34:
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  mov %rax,%r11
+  mov 0x98(%r15),%rdi
+  mov %edi,%edx
+  pop %rax
+  jmp fa5e0 <rb_num_coerce_bin>
+  nopw 0x0(%rsi,%rsi,1)
+  L35:
+  sar $1,%r10
+  pxor %xmm0,%xmm0
+  pxor %xmm1,%xmm1
+  mov 0xb8(%r15),%rdi
+  mov %rdi,%rdx
+  cvtsi2sd %r10,%xmm0
+  cmp %rdx,%rax
+  je L37
+  L36:
+  mov %rax,%rdx
+  mov 0xc0(%r15),%rdi
+  and %rdi,%rax
+  shr $0x3f,%rdx
+  sub %rdx,%rsi
+  or %rax,%rsi
+  ror $0x3,%rsi
+  movq %rsi,%xmm1
+  nopl 0x0(%rsi)
+  L37:
+  mov 0xd0(%r15),%rdi
+  mov %rdi,%rsi
+  addsd %xmm0,%xmm1
+  movq %xmm1,%rdx
+  cmp %rsi,%rdx
+  je L40
+  L38:
+  mov %rdx,%rsi
+  shr $0x3c,%rsi
+  mov 0x50(%r15),%rdi
+  and %edi,%esi
+  mov 0xa0(%r15),%rdi
+  sub %edi,%esi
+  mov 0x48(%r15),%rdi
+  cmp %edi,%esi
+  jbe L48
+  L39:
+  mov 0xb8(%r15),%rdi
+  mov %rdi,%rsi
+  test %rdx,%rdx
+  je L29
+  L40:
+  movsd %xmm1,0x8(%rsp)
+  mov 0xe0(%r15),%rdi
+  mov %edi,%ecx
+  mov 0x70(%r15),%rdi
+  mov %edi,%edx
+  mov 0xe8(%r15),%rdi
+  mov %rdi,%rsi
+  mov 0x51af39(%rip),%r11
+  mov %fs:(%rsi),%r10
+  call 82050 <rb_wb_protected_newobj_of>
+  L41:
+  movsd 0x8(%rsp),%xmm1
+  mov %rsi,%r10
+  mov %rsi,0x8(%rsp)
+  movsd %xmm1,0x10(%rsi)
+  call 248590 <rb_obj_freeze_inline>
+  L42:
+  mov 0x8(%rsp),%rsi
+  jmp L29
+  L43:
+  sar $1,%r10
+  pxor %xmm0,%xmm0
+  movsd 0x10(%rax),%xmm1
+  cvtsi2sd %r10,%xmm0
+  jmp L37
+  L44:
+  cmpq $0x2,0x10(%rsi)
+  jne L7
+  L45:
+  mov 0x20(%rsi),%rdx
+  mov (%rdx),%r10
+  jmp L26
+  nopw 0x0(%rsi,%rsi,1)
+  L46:
+  mov 0x28(%rsp),%rsi
+  sub %fs:0x28,%rsi
+  jne L49
+  L47:
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  mov %r10,%r11
+  mov %rax,%r10
+  pop %rax
+  jmp 3b6ad0 <rb_big_plus>
+  L48:
+  rol $0x3,%rdx
+  mov 0xc0(%r15),%rdi
+  and %rdi,%rdx
+  mov %rdx,%rsi
+  mov 0xa8(%r15),%rdi
+  or %rdi,%rsi
+  jmp L29
+  L49:
+  call 42b60 <__stack_chk_fail@plt>
+  L50:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L49
+  L51:
+  sar $1,%rsi
+  mov 0x40(%r15),%rdi
+  add %rdi,%rsp
+  mov %rsi,%r10
+  pop %rax
+  btc $0x3f,%r10
+  jmp 3b2830 <rb_int2big>
+
+-- FORM 2, canonical_form.py (PART A) --
+  mov ledger+0x00(%rip),%rdi
+  mov 0x0(%rdi),%rdi
+  mov ledger+0x00(%rip),%rsi
+  mov 0x8(%rsi),%rsi
+  endbr64
+  push %rbx
+  sub $0x30,%rsp
+  mov %fs:0x28,%rbx
+  mov %rbx,0x28(%rsp)
+  mov %rsi,%rbx
+  test $0x1,%dil
+  jne L3
+  test $0x7,%dil
+  jne L0
+  test %rdi,%rdi
+  jne L4
+  L0:
+  mov %rdi,0x18(%rsp)
+  mov 0x51b235(%rip),%rsi
+  lea 0x18(%rsp),%rcx
+  mov %rbx,%rdi
+  mov $0x1,%edx
+  call x_rb_check_funcall
+  cmp $0x24,%rax
+  je L2
+  test $0x7,%al
+  jne L1
+  test %rax,%rax
+  jne L5
+  L1:
+  mov 0x52bdc9(%rip),%rdi
+  lea 0x3812a2(%rip),%rsi
+  xor %eax,%eax
+  call x_rb_raise
+  nopl (%rax)
+  L2:
+  mov 0x18(%rsp),%rdi
+  mov %rbx,%rsi
+  call x_coerce_failed
+  nopl (%rax)
+  L3:
+  test $0x1,%bl
+  jne L7
+  test $0x7,%bl
+  jne L9
+  test %rbx,%rbx
+  je L10
+  mov (%rbx),%rax
+  and $0x1f,%eax
+  cmp $0xa,%rax
+  je L16
+  cmp $0x4,%rax
+  je L14
+  cmp $0xe,%rax
+  jne L10
+  mov 0x28(%rsp),%rax
+  sub %fs:0x28,%rax
+  jne L18
+  add $0x30,%rsp
+  mov %rdi,%rsi
+  mov %rbx,%rdi
+  pop %rbx
+  jmp x_rb_complex_plus
+  nopl 0x0(%rax,%rax,1)
+  L4:
+  mov (%rdi),%rax
+  and $0x1f,%eax
+  cmp $0xa,%rax
+  jne L0
+  mov 0x28(%rsp),%rax
+  sub %fs:0x28,%rax
+  jne L18
+  add $0x30,%rsp
+  mov %rbx,%rsi
+  pop %rbx
+  jmp x_rb_big_plus
+  nopl 0x0(%rax)
+  L5:
+  mov (%rax),%rdx
+  mov %rdx,%rcx
+  and $0x1f,%ecx
+  cmp $0x7,%rcx
+  jne L1
+  test $0x20,%dh
+  je L15
+  and $0x3f8000,%edx
+  cmp $0x10000,%rdx
+  jne L1
+  mov 0x10(%rax),%rdi
+  lea 0x10(%rax),%rdx
+  L6:
+  mov 0x8(%rdx),%rax
+  lea 0x20(%rsp),%rcx
+  mov $0x1,%edx
+  mov $0x2b,%esi
+  mov %rdi,0x18(%rsp)
+  mov %rax,0x20(%rsp)
+  call x_rb_funcallv
+  jmp L8
+  nopl 0x0(%rax,%rax,1)
+  L7:
+  sub $0x1,%rbx
+  mov %rdi,%rax
+  add %rbx,%rax
+  jo L19
+  L8:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L18
+  add $0x30,%rsp
+  pop %rbx
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  nopw 0x0(%rax,%rax,1)
+  L9:
+  mov %rbx,%rax
+  and $0x3,%eax
+  cmp $0x2,%rax
+  je L11
+  L10:
+  mov 0x28(%rsp),%rax
+  sub %fs:0x28,%rax
+  jne L18
+  add $0x30,%rsp
+  mov %rbx,%rsi
+  mov $0x2b,%edx
+  pop %rbx
+  jmp x_rb_num_coerce_bin
+  nopw 0x0(%rax,%rax,1)
+  L11:
+  sar $1,%rdi
+  pxor %xmm1,%xmm1
+  pxor %xmm0,%xmm0
+  movabs $0x8000000000000002,%rdx
+  cvtsi2sd %rdi,%xmm1
+  cmp %rdx,%rbx
+  je L12
+  mov %rbx,%rdx
+  and $0xfffffffffffffffc,%rbx
+  shr $0x3f,%rdx
+  sub %rdx,%rax
+  or %rbx,%rax
+  ror $0x3,%rax
+  movq %rax,%xmm0
+  nopl 0x0(%rax)
+  L12:
+  movabs $0x3000000000000000,%rax
+  addsd %xmm1,%xmm0
+  movq %xmm0,%rdx
+  cmp %rax,%rdx
+  je L13
+  mov %rdx,%rax
+  shr $0x3c,%rax
+  and $0x7,%eax
+  sub $0x3,%eax
+  cmp $0x1,%eax
+  jbe L17
+  movabs $0x8000000000000002,%rax
+  test %rdx,%rdx
+  je L8
+  L13:
+  movsd %xmm0,0x8(%rsp)
+  mov $0x18,%ecx
+  mov $0x4,%edx
+  mov $0xffffffffffffffb0,%rax
+  mov 0x51af39(%rip),%rsi
+  mov %fs:(%rax),%rdi
+  call x_rb_wb_protected_newobj_of
+  movsd 0x8(%rsp),%xmm0
+  mov %rax,%rdi
+  mov %rax,0x8(%rsp)
+  movsd %xmm0,0x10(%rax)
+  call x_rb_obj_freeze_inline
+  mov 0x8(%rsp),%rax
+  jmp L8
+  L14:
+  sar $1,%rdi
+  pxor %xmm1,%xmm1
+  movsd 0x10(%rbx),%xmm0
+  cvtsi2sd %rdi,%xmm1
+  jmp L12
+  L15:
+  cmpq $0x2,0x10(%rax)
+  jne L1
+  mov 0x20(%rax),%rdx
+  mov (%rdx),%rdi
+  jmp L6
+  nopw 0x0(%rax,%rax,1)
+  L16:
+  mov 0x28(%rsp),%rax
+  sub %fs:0x28,%rax
+  jne L18
+  add $0x30,%rsp
+  mov %rdi,%rsi
+  mov %rbx,%rdi
+  pop %rbx
+  jmp x_rb_big_plus
+  L17:
+  rol $0x3,%rdx
+  and $0xfffffffffffffffc,%rdx
+  mov %rdx,%rax
+  or $0x2,%rax
+  jmp L8
+  L18:
+  call x___stack_chk_fail
+  L19:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L18
+  sar $1,%rax
+  add $0x30,%rsp
+  mov %rax,%rdi
+  pop %rbx
+  btc $0x3f,%rdi
+  jmp x_rb_int2big
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+  mov ledger+0x00(%rip),%rdi
+  mov 0x0(%rdi),%rdi
+  mov ledger+0x00(%rip),%rsi
+  mov 0x8(%rsi),%rsi
+  endbr64
+  push %rbx
+  sub $0x30,%rsp
+  mov %fs:0x28,%rbx
+  mov %rbx,0x28(%rsp)
+  mov %rsi,%rbx
+  test $0x1,%dil
+  jne L3
+  test $0x7,%dil
+  jne L0
+  test %rdi,%rdi
+  jne L4
+  L0:
+  mov %rdi,0x18(%rsp)
+  mov 0x51b235(%rip),%rsi
+  lea 0x18(%rsp),%rcx
+  mov %rbx,%rdi
+  mov $0x1,%edx
+  call x_rb_check_funcall
+  cmp $0x24,%rax
+  je L2
+  test $0x7,%al
+  jne L1
+  test %rax,%rax
+  jne L5
+  L1:
+  mov 0x52bdc9(%rip),%rdi
+  lea 0x3812a2(%rip),%rsi
+  xor %eax,%eax
+  call x_rb_raise
+  nopl (%rax)
+  L2:
+  mov 0x18(%rsp),%rdi
+  mov %rbx,%rsi
+  call x_coerce_failed
+  nopl (%rax)
+  L3:
+  test $0x1,%bl
+  jne L7
+  test $0x7,%bl
+  jne L9
+  test %rbx,%rbx
+  je L10
+  mov (%rbx),%rax
+  and $0x1f,%eax
+  cmp $0xa,%rax
+  je L16
+  cmp $0x4,%rax
+  je L14
+  cmp $0xe,%rax
+  jne L10
+  mov 0x28(%rsp),%rax
+  sub %fs:0x28,%rax
+  jne L18
+  add $0x30,%rsp
+  mov %rdi,%rsi
+  mov %rbx,%rdi
+  pop %rbx
+  jmp x_rb_complex_plus
+  nopl 0x0(%rax,%rax,1)
+  L4:
+  mov (%rdi),%rax
+  and $0x1f,%eax
+  cmp $0xa,%rax
+  jne L0
+  mov 0x28(%rsp),%rax
+  sub %fs:0x28,%rax
+  jne L18
+  add $0x30,%rsp
+  mov %rbx,%rsi
+  pop %rbx
+  jmp x_rb_big_plus
+  nopl 0x0(%rax)
+  L5:
+  mov (%rax),%rdx
+  mov %rdx,%rcx
+  and $0x1f,%ecx
+  cmp $0x7,%rcx
+  jne L1
+  test $0x20,%dh
+  je L15
+  and $0x3f8000,%edx
+  cmp $0x10000,%rdx
+  jne L1
+  mov 0x10(%rax),%rdi
+  lea 0x10(%rax),%rdx
+  L6:
+  mov 0x8(%rdx),%rax
+  lea 0x20(%rsp),%rcx
+  mov $0x1,%edx
+  mov $0x2b,%esi
+  mov %rdi,0x18(%rsp)
+  mov %rax,0x20(%rsp)
+  call x_rb_funcallv
+  jmp L8
+  nopl 0x0(%rax,%rax,1)
+  L7:
+  sub $0x1,%rbx
+  mov %rdi,%rax
+  add %rbx,%rax
+  jo L19
+  L8:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L18
+  add $0x30,%rsp
+  pop %rbx
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  nopw 0x0(%rax,%rax,1)
+  L9:
+  mov %rbx,%rax
+  and $0x3,%eax
+  cmp $0x2,%rax
+  je L11
+  L10:
+  mov 0x28(%rsp),%rax
+  sub %fs:0x28,%rax
+  jne L18
+  add $0x30,%rsp
+  mov %rbx,%rsi
+  mov $0x2b,%edx
+  pop %rbx
+  jmp x_rb_num_coerce_bin
+  nopw 0x0(%rax,%rax,1)
+  L11:
+  sar $1,%rdi
+  pxor %xmm1,%xmm1
+  pxor %xmm0,%xmm0
+  movabs $0x8000000000000002,%rdx
+  cvtsi2sd %rdi,%xmm1
+  cmp %rdx,%rbx
+  je L12
+  mov %rbx,%rdx
+  and $0xfffffffffffffffc,%rbx
+  shr $0x3f,%rdx
+  sub %rdx,%rax
+  or %rbx,%rax
+  ror $0x3,%rax
+  movq %rax,%xmm0
+  nopl 0x0(%rax)
+  L12:
+  movabs $0x3000000000000000,%rax
+  addsd %xmm1,%xmm0
+  movq %xmm0,%rdx
+  cmp %rax,%rdx
+  je L13
+  mov %rdx,%rax
+  shr $0x3c,%rax
+  and $0x7,%eax
+  sub $0x3,%eax
+  cmp $0x1,%eax
+  jbe L17
+  movabs $0x8000000000000002,%rax
+  test %rdx,%rdx
+  je L8
+  L13:
+  movsd %xmm0,0x8(%rsp)
+  mov $0x18,%ecx
+  mov $0x4,%edx
+  mov $0xffffffffffffffb0,%rax
+  mov 0x51af39(%rip),%rsi
+  mov %fs:(%rax),%rdi
+  call x_rb_wb_protected_newobj_of
+  movsd 0x8(%rsp),%xmm0
+  mov %rax,%rdi
+  mov %rax,0x8(%rsp)
+  movsd %xmm0,0x10(%rax)
+  call x_rb_obj_freeze_inline
+  mov 0x8(%rsp),%rax
+  jmp L8
+  L14:
+  sar $1,%rdi
+  pxor %xmm1,%xmm1
+  movsd 0x10(%rbx),%xmm0
+  cvtsi2sd %rdi,%xmm1
+  jmp L12
+  L15:
+  cmpq $0x2,0x10(%rax)
+  jne L1
+  mov 0x20(%rax),%rdx
+  mov (%rdx),%rdi
+  jmp L6
+  nopw 0x0(%rax,%rax,1)
+  L16:
+  mov 0x28(%rsp),%rax
+  sub %fs:0x28,%rax
+  jne L18
+  add $0x30,%rsp
+  mov %rdi,%rsi
+  mov %rbx,%rdi
+  pop %rbx
+  jmp x_rb_big_plus
+  L17:
+  rol $0x3,%rdx
+  and $0xfffffffffffffffc,%rdx
+  mov %rdx,%rax
+  or $0x2,%rax
+  jmp L8
+  L18:
+  call x___stack_chk_fail
+  L19:
+  mov 0x28(%rsp),%rdx
+  sub %fs:0x28,%rdx
+  jne L18
+  sar $1,%rax
+  add $0x30,%rsp
+  mov %rax,%rdi
+  pop %rbx
+  btc $0x3f,%rdi
+  jmp x_rb_int2big
+
+======================================================================
+UNIT ruby/rb_big_plus
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+  L0:
+  mov 0x0(%r15),%r10
+  mov 0x8(%r15),%r11
+  endbr64
+  test $0x1,%r11b
+  je L3
+  L1:
+  sar $1,%r11
+  movzbl 0x1(%r10),%eax
+  mov %r11,%rcx
+  neg %rcx
+  cmovs %r11,%rcx
+  test %r11,%r11
+  setg %dl
+  shr $0x5,%al
+  mov 0x40(%r15),%rsi
+  and %esi,%eax
+  mov %rcx,%r11
+  cmp %al,%dl
+  je L12
+  L2:
+  jmp 3b2350 <bigsub_int>
+  nopw 0x0(%rax,%rax,1)
+  L3:
+  mov 0x58(%r15),%rsi
+  sub %rsi,%rsp
+  test $0x7,%r11b
+  je L6
+  L4:
+  mov %r11,%rax
+  mov 0x68(%r15),%rsi
+  and %esi,%eax
+  mov 0x70(%r15),%rsi
+  cmp %rsi,%rax
+  je L13
+  L5:
+  mov 0x78(%r15),%rsi
+  mov %esi,%ecx
+  mov 0x58(%r15),%rsi
+  add %rsi,%rsp
+  jmp fa5e0 <rb_num_coerce_bin>
+  nopl 0x0(%rax)
+  L6:
+  test %r11,%r11
+  je L5
+  L7:
+  mov (%r11),%rax
+  mov 0x80(%r15),%rsi
+  and %esi,%eax
+  mov 0x88(%r15),%rsi
+  cmp %rsi,%rax
+  je L27
+  L8:
+  mov 0x90(%r15),%rsi
+  cmp %rsi,%rax
+  jne L5
+  L9:
+  mov %r11,0x400(%r15)
+  call 3ae420 <big2dbl>
+  L10:
+  mov 0x400(%r15),%r11
+  movapd %xmm0,%xmm1
+  andpd 0xe80a4(%rip),%xmm1
+  ucomisd 0xea644(%rip),%xmm1
+  ja L32
+  L11:
+  movsd 0x10(%r11),%xmm1
+  jmp L17
+  nopl 0x0(%rax)
+  L12:
+  jmp 3b2000 <bigadd_int>
+  nopl (%rax)
+  L13:
+  mov %r11,0x400(%r15)
+  call 3ae420 <big2dbl>
+  L14:
+  mov 0x400(%r15),%r11
+  movapd %xmm0,%xmm1
+  andpd 0xe8067(%rip),%xmm1
+  ucomisd 0xea607(%rip),%xmm1
+  ja L22
+  L15:
+  mov 0x98(%r15),%rsi
+  mov %rsi,%rax
+  pxor %xmm1,%xmm1
+  cmp %rax,%r11
+  je L17
+  L16:
+  mov %r11,%rcx
+  mov 0x70(%r15),%rsi
+  mov %esi,%eax
+  mov 0xa0(%r15),%rsi
+  and %rsi,%r11
+  shr $0x3f,%rcx
+  sub %rcx,%rax
+  or %r11,%rax
+  ror $0x3,%rax
+  movq %rax,%xmm1
+  nopl 0x0(%rax)
+  L17:
+  mov 0xb0(%r15),%rsi
+  mov %rsi,%rax
+  addsd %xmm1,%xmm0
+  movq %xmm0,%rcx
+  cmp %rax,%rcx
+  je L26
+  L18:
+  mov %rcx,%rax
+  shr $0x3c,%rax
+  mov 0x60(%r15),%rsi
+  and %esi,%eax
+  mov 0x68(%r15),%rsi
+  sub %esi,%eax
+  mov 0x40(%r15),%rsi
+  cmp %esi,%eax
+  jbe L31
+  L19:
+  mov 0x98(%r15),%rsi
+  mov %rsi,%rax
+  test %rcx,%rcx
+  jne L26
+  L20:
+  mov 0x58(%r15),%rsi
+  add %rsi,%rsp
+  mov %rax,0x200(%r15)
+  ret
+  L21:
+  nopw 0x0(%rax,%rax,1)
+  L22:
+  xor %eax,%eax
+  lea 0xd0c0a(%rip),%r10
+  mov %r11,0x8(%rsp)
+  movsd %xmm0,0x400(%r15)
+  call 44ed50 <rb_warning>
+  L23:
+  pxor %xmm1,%xmm1
+  comisd 0x400(%r15),%xmm1
+  mov 0x8(%rsp),%r11
+  ja L35
+  L24:
+  movsd 0xea55c(%rip),%xmm0
+  L25:
+  mov 0x98(%r15),%rsi
+  mov %rsi,%rax
+  cmp %rax,%r11
+  jne L16
+  L26:
+  mov 0x58(%r15),%rsi
+  add %rsi,%rsp
+  jmp fd110 <rb_float_new_in_heap>
+  nopl 0x0(%rax,%rax,1)
+  L27:
+  mov 0x40(%r15),%rsi
+  mov %esi,%ecx
+  call 3aa330 <bigadd>
+  L28:
+  test $0x7,%al
+  jne L20
+  L29:
+  test %rax,%rax
+  je L20
+  L30:
+  mov %rax,%r10
+  mov 0x58(%r15),%rsi
+  add %rsi,%rsp
+  jmp 3ae340 <bignorm.part.0>
+  nop
+  L31:
+  rol $0x3,%rcx
+  mov 0xa0(%r15),%rsi
+  and %rsi,%rcx
+  mov %rcx,%rax
+  mov 0x70(%r15),%rsi
+  or %rsi,%rax
+  jmp L20
+  nopl 0x0(%rax)
+  L32:
+  xor %eax,%eax
+  lea 0xd0b7a(%rip),%r10
+  mov %r11,0x8(%rsp)
+  movsd %xmm0,0x400(%r15)
+  call 44ed50 <rb_warning>
+  L33:
+  pxor %xmm1,%xmm1
+  comisd 0x400(%r15),%xmm1
+  mov 0x8(%rsp),%r11
+  ja L36
+  L34:
+  movsd 0xea4d0(%rip),%xmm0
+  jmp L11
+  L35:
+  movsd 0xea4bb(%rip),%xmm0
+  jmp L25
+  L36:
+  movsd 0xea4ae(%rip),%xmm0
+  jmp L11
+
+-- FORM 2, canonical_form.py (PART A) --
+  mov ledger+0x00(%rip),%rdi
+  mov 0x0(%rdi),%rdi
+  mov ledger+0x00(%rip),%rsi
+  mov 0x8(%rsi),%rsi
+  endbr64
+  test $0x1,%sil
+  je L0
+  sar $1,%rsi
+  movzbl 0x1(%rdi),%eax
+  mov %rsi,%rdx
+  neg %rdx
+  cmovs %rsi,%rdx
+  test %rsi,%rsi
+  setg %cl
+  shr $0x5,%al
+  and $0x1,%eax
+  mov %rdx,%rsi
+  cmp %al,%cl
+  je L4
+  jmp x_bigsub_int
+  nopw 0x0(%rax,%rax,1)
+  L0:
+  sub $0x18,%rsp
+  test $0x7,%sil
+  je L2
+  mov %rsi,%rax
+  and $0x3,%eax
+  cmp $0x2,%rax
+  je L5
+  L1:
+  mov $0x2b,%edx
+  add $0x18,%rsp
+  jmp x_rb_num_coerce_bin
+  nopl 0x0(%rax)
+  L2:
+  test %rsi,%rsi
+  je L1
+  mov (%rsi),%rax
+  and $0x1f,%eax
+  cmp $0xa,%rax
+  je L12
+  cmp $0x4,%rax
+  jne L1
+  mov %rsi,(%rsp)
+  call x_big2dbl
+  mov (%rsp),%rsi
+  movapd %xmm0,%xmm1
+  andpd 0xe80a4(%rip),%xmm1
+  ucomisd 0xea644(%rip),%xmm1
+  ja L14
+  L3:
+  movsd 0x10(%rsi),%xmm1
+  jmp L7
+  nopl 0x0(%rax)
+  L4:
+  jmp x_bigadd_int
+  nopl (%rax)
+  L5:
+  mov %rsi,(%rsp)
+  call x_big2dbl
+  mov (%rsp),%rsi
+  movapd %xmm0,%xmm1
+  andpd 0xe8067(%rip),%xmm1
+  ucomisd 0xea607(%rip),%xmm1
+  ja L9
+  movabs $0x8000000000000002,%rax
+  pxor %xmm1,%xmm1
+  cmp %rax,%rsi
+  je L7
+  L6:
+  mov %rsi,%rdx
+  mov $0x2,%eax
+  and $0xfffffffffffffffc,%rsi
+  shr $0x3f,%rdx
+  sub %rdx,%rax
+  or %rsi,%rax
+  ror $0x3,%rax
+  movq %rax,%xmm1
+  nopl 0x0(%rax)
+  L7:
+  movabs $0x3000000000000000,%rax
+  addsd %xmm1,%xmm0
+  movq %xmm0,%rdx
+  cmp %rax,%rdx
+  je L11
+  mov %rdx,%rax
+  shr $0x3c,%rax
+  and $0x7,%eax
+  sub $0x3,%eax
+  cmp $0x1,%eax
+  jbe L13
+  movabs $0x8000000000000002,%rax
+  test %rdx,%rdx
+  jne L11
+  L8:
+  add $0x18,%rsp
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  nopw 0x0(%rax,%rax,1)
+  L9:
+  xor %eax,%eax
+  lea 0xd0c0a(%rip),%rdi
+  mov %rsi,0x8(%rsp)
+  movsd %xmm0,(%rsp)
+  call x_rb_warning
+  pxor %xmm1,%xmm1
+  comisd (%rsp),%xmm1
+  mov 0x8(%rsp),%rsi
+  ja L15
+  movsd 0xea55c(%rip),%xmm0
+  L10:
+  movabs $0x8000000000000002,%rax
+  cmp %rax,%rsi
+  jne L6
+  L11:
+  add $0x18,%rsp
+  jmp x_rb_float_new_in_heap
+  nopl 0x0(%rax,%rax,1)
+  L12:
+  mov $0x1,%edx
+  call x_bigadd
+  test $0x7,%al
+  jne L8
+  test %rax,%rax
+  je L8
+  mov %rax,%rdi
+  add $0x18,%rsp
+  jmp x_bignorm_part_0
+  nop
+  L13:
+  rol $0x3,%rdx
+  and $0xfffffffffffffffc,%rdx
+  mov %rdx,%rax
+  or $0x2,%rax
+  jmp L8
+  nopl 0x0(%rax)
+  L14:
+  xor %eax,%eax
+  lea 0xd0b7a(%rip),%rdi
+  mov %rsi,0x8(%rsp)
+  movsd %xmm0,(%rsp)
+  call x_rb_warning
+  pxor %xmm1,%xmm1
+  comisd (%rsp),%xmm1
+  mov 0x8(%rsp),%rsi
+  ja L16
+  movsd 0xea4d0(%rip),%xmm0
+  jmp L3
+  L15:
+  movsd 0xea4bb(%rip),%xmm0
+  jmp L10
+  L16:
+  movsd 0xea4ae(%rip),%xmm0
+  jmp L3
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+  mov ledger+0x40(%rip),%rdi
+  mov ledger+0x00(%rip),%rsi
+  mov 0x0(%rsi),%rsi
+  endbr64
+  test $0x1,%sil
+  je L0
+  sar $1,%rsi
+  movzbl 0x1(%rdi),%eax
+  mov %rsi,%rdx
+  neg %rdx
+  cmovs %rsi,%rdx
+  test %rsi,%rsi
+  setg %cl
+  shr $0x5,%al
+  and $0x1,%eax
+  mov %rdx,%rsi
+  cmp %al,%cl
+  je L4
+  jmp x_bigsub_int
+  nopw 0x0(%rax,%rax,1)
+  L0:
+  sub $0x18,%rsp
+  test $0x7,%sil
+  je L2
+  mov %rsi,%rax
+  and $0x3,%eax
+  cmp $0x2,%rax
+  je L5
+  L1:
+  mov $0x2b,%edx
+  add $0x18,%rsp
+  jmp x_rb_num_coerce_bin
+  nopl 0x0(%rax)
+  L2:
+  test %rsi,%rsi
+  je L1
+  mov (%rsi),%rax
+  and $0x1f,%eax
+  cmp $0xa,%rax
+  je L12
+  cmp $0x4,%rax
+  jne L1
+  mov %rsi,(%rsp)
+  call x_big2dbl
+  mov (%rsp),%rsi
+  movapd %xmm0,%xmm1
+  andpd 0xe80a4(%rip),%xmm1
+  ucomisd 0xea644(%rip),%xmm1
+  ja L14
+  L3:
+  movsd 0x10(%rsi),%xmm1
+  jmp L7
+  nopl 0x0(%rax)
+  L4:
+  jmp x_bigadd_int
+  nopl (%rax)
+  L5:
+  mov %rsi,(%rsp)
+  call x_big2dbl
+  mov (%rsp),%rsi
+  movapd %xmm0,%xmm1
+  andpd 0xe8067(%rip),%xmm1
+  ucomisd 0xea607(%rip),%xmm1
+  ja L9
+  movabs $0x8000000000000002,%rax
+  pxor %xmm1,%xmm1
+  cmp %rax,%rsi
+  je L7
+  L6:
+  mov %rsi,%rdx
+  mov $0x2,%eax
+  and $0xfffffffffffffffc,%rsi
+  shr $0x3f,%rdx
+  sub %rdx,%rax
+  or %rsi,%rax
+  ror $0x3,%rax
+  movq %rax,%xmm1
+  nopl 0x0(%rax)
+  L7:
+  movabs $0x3000000000000000,%rax
+  addsd %xmm1,%xmm0
+  movq %xmm0,%rdx
+  cmp %rax,%rdx
+  je L11
+  mov %rdx,%rax
+  shr $0x3c,%rax
+  and $0x7,%eax
+  sub $0x3,%eax
+  cmp $0x1,%eax
+  jbe L13
+  movabs $0x8000000000000002,%rax
+  test %rdx,%rdx
+  jne L11
+  L8:
+  add $0x18,%rsp
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  nopw 0x0(%rax,%rax,1)
+  L9:
+  xor %eax,%eax
+  lea 0xd0c0a(%rip),%rdi
+  mov %rsi,0x8(%rsp)
+  movsd %xmm0,(%rsp)
+  call x_rb_warning
+  pxor %xmm1,%xmm1
+  comisd (%rsp),%xmm1
+  mov 0x8(%rsp),%rsi
+  ja L15
+  movsd 0xea55c(%rip),%xmm0
+  L10:
+  movabs $0x8000000000000002,%rax
+  cmp %rax,%rsi
+  jne L6
+  L11:
+  add $0x18,%rsp
+  jmp x_rb_float_new_in_heap
+  nopl 0x0(%rax,%rax,1)
+  L12:
+  mov $0x1,%edx
+  call x_bigadd
+  test $0x7,%al
+  jne L8
+  test %rax,%rax
+  je L8
+  mov %rax,%rdi
+  add $0x18,%rsp
+  jmp x_bignorm_part_0
+  nop
+  L13:
+  rol $0x3,%rdx
+  and $0xfffffffffffffffc,%rdx
+  mov %rdx,%rax
+  or $0x2,%rax
+  jmp L8
+  nopl 0x0(%rax)
+  L14:
+  xor %eax,%eax
+  lea 0xd0b7a(%rip),%rdi
+  mov %rsi,0x8(%rsp)
+  movsd %xmm0,(%rsp)
+  call x_rb_warning
+  pxor %xmm1,%xmm1
+  comisd (%rsp),%xmm1
+  mov 0x8(%rsp),%rsi
+  ja L16
+  movsd 0xea4d0(%rip),%xmm0
+  jmp L3
+  L15:
+  movsd 0xea4bb(%rip),%xmm0
+  jmp L10
+  L16:
+  movsd 0xea4ae(%rip),%xmm0
+  jmp L3
+
+======================================================================
+UNIT php/ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+REFUSED: this handler declares ZERO formal parameters and reads its operands out of the VM frame through %r15, which region36 rules to be the region base and therefore not available to any lineage.  The form refuses by name (region36 section 2) rather than rendering onto a base the unit also uses as a value.
+
+-- FORM 2, canonical_form.py (PART A) --
+  endbr64
+  movslq 0x8(%r15),%rdi
+  movslq 0xc(%r15),%rsi
+  add %r14,%rdi
+  add %r14,%rsi
+  mov 0x8(%rdi),%eax
+  cmp $0x4,%eax
+  jne L2
+  mov 0x8(%rsi),%eax
+  cmp $0x4,%eax
+  jne L1
+  movslq 0x10(%r15),%rdx
+  add %r14,%rdx
+  mov (%rdi),%rax
+  add (%rsi),%rax
+  jo L0
+  mov %rax,(%rdx)
+  movl $0x4,0x8(%rdx)
+  jmp L5
+  L0:
+  cvtsi2sdq (%rdi),%xmm0
+  cvtsi2sdq (%rsi),%xmm1
+  movl $0x5,0x8(%rdx)
+  addsd %xmm1,%xmm0
+  movsd %xmm0,(%rdx)
+  jmp L5
+  L1:
+  cmp $0x5,%eax
+  jne L7
+  cvtsi2sdq (%rdi),%xmm0
+  jmp L3
+  L2:
+  cmp $0x5,%eax
+  jne L7
+  mov 0x8(%rsi),%eax
+  cmp $0x5,%eax
+  jne L6
+  movsd (%rdi),%xmm0
+  L3:
+  movsd (%rsi),%xmm1
+  L4:
+  movslq 0x10(%r15),%rax
+  addsd %xmm1,%xmm0
+  movl $0x5,0x8(%r14,%rax,1)
+  movsd %xmm0,(%r14,%rax,1)
+  L5:
+  add $0x20,%r15
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  L6:
+  cmp $0x4,%eax
+  jne L7
+  cvtsi2sdq (%rsi),%xmm1
+  movsd (%rdi),%xmm0
+  jmp L4
+  L7:
+  jmp x_zend_add_helper_SPEC
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+  mov ledger+0x40(%rip),%r15
+  mov ledger+0x40(%rip),%r14
+  lea 0x100(%r14),%r14
+  endbr64
+  movslq 0x8(%r15),%rdi
+  movslq 0xc(%r15),%rsi
+  add %r14,%rdi
+  add %r14,%rsi
+  mov 0x8(%rdi),%eax
+  cmp $0x4,%eax
+  jne L2
+  mov 0x8(%rsi),%eax
+  cmp $0x4,%eax
+  jne L1
+  movslq 0x10(%r15),%rdx
+  add %r14,%rdx
+  mov (%rdi),%rax
+  add (%rsi),%rax
+  jo L0
+  mov %rax,(%rdx)
+  movl $0x4,0x8(%rdx)
+  jmp L5
+  L0:
+  cvtsi2sdq (%rdi),%xmm0
+  cvtsi2sdq (%rsi),%xmm1
+  movl $0x5,0x8(%rdx)
+  addsd %xmm1,%xmm0
+  movsd %xmm0,(%rdx)
+  jmp L5
+  L1:
+  cmp $0x5,%eax
+  jne L7
+  cvtsi2sdq (%rdi),%xmm0
+  jmp L3
+  L2:
+  cmp $0x5,%eax
+  jne L7
+  mov 0x8(%rsi),%eax
+  cmp $0x5,%eax
+  jne L6
+  movsd (%rdi),%xmm0
+  L3:
+  movsd (%rsi),%xmm1
+  L4:
+  movslq 0x10(%r15),%rax
+  addsd %xmm1,%xmm0
+  movl $0x5,0x8(%r14,%rax,1)
+  movsd %xmm0,(%r14,%rax,1)
+  L5:
+  add $0x20,%r15
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+  L6:
+  cmp $0x4,%eax
+  jne L7
+  cvtsi2sdq (%rsi),%xmm1
+  movsd (%rdi),%xmm0
+  jmp L4
+  L7:
+  jmp x_zend_add_helper_SPEC
+
+======================================================================
+UNIT php/ZEND_ADD_LONG_SPEC_TMPVARCV_TMPVARCV_HANDLER
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+REFUSED: this handler declares ZERO formal parameters and reads its operands out of the VM frame through %r15, which region36 rules to be the region base and therefore not available to any lineage.  The form refuses by name (region36 section 2) rather than rendering onto a base the unit also uses as a value.
+
+-- FORM 2, canonical_form.py (PART A) --
+  endbr64
+  movslq 0x8(%r15),%rsi
+  movslq 0xc(%r15),%rcx
+  movslq 0x10(%r15),%rdx
+  add %r14,%rsi
+  add %r14,%rcx
+  add %r14,%rdx
+  mov (%rsi),%rax
+  add (%rcx),%rax
+  jo L0
+  mov %rax,(%rdx)
+  movl $0x4,0x8(%rdx)
+  jmp L1
+  L0:
+  cvtsi2sdq (%rsi),%xmm0
+  cvtsi2sdq (%rcx),%xmm1
+  movl $0x5,0x8(%rdx)
+  addsd %xmm1,%xmm0
+  movsd %xmm0,(%rdx)
+  L1:
+  add $0x20,%r15
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+  mov ledger+0x40(%rip),%r15
+  endbr64
+  movslq 0x8(%r15),%rsi
+  movslq 0xc(%r15),%rcx
+  movslq 0x10(%r15),%rdx
+  add %r14,%rsi
+  add %r14,%rcx
+  add %r14,%rdx
+  mov (%rsi),%rax
+  add (%rcx),%rax
+  jo L0
+  mov %rax,(%rdx)
+  movl $0x4,0x8(%rdx)
+  jmp L1
+  L0:
+  cvtsi2sdq (%rsi),%xmm0
+  cvtsi2sdq (%rcx),%xmm1
+  movl $0x5,0x8(%rdx)
+  addsd %xmm1,%xmm0
+  movsd %xmm0,(%rdx)
+  L1:
+  add $0x20,%r15
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+
+======================================================================
+UNIT php/ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+REFUSED: this handler declares ZERO formal parameters and reads its operands out of the VM frame through %r15, which region36 rules to be the region base and therefore not available to any lineage.  The form refuses by name (region36 section 2) rather than rendering onto a base the unit also uses as a value.
+
+-- FORM 2, canonical_form.py (PART A) --
+  endbr64
+  movslq 0x8(%r15),%rcx
+  movslq 0xc(%r15),%rax
+  add $0x20,%r15
+  movslq -0x10(%r15),%rdx
+  mov (%r14,%rax,1),%rax
+  add (%r14,%rcx,1),%rax
+  mov %rax,(%r14,%rdx,1)
+  movl $0x4,0x8(%r14,%rdx,1)
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+  mov ledger+0x40(%rip),%r15
+  mov ledger+0x40(%rip),%r14
+  lea 0x100(%r14),%r14
+  endbr64
+  movslq 0x8(%r15),%rcx
+  movslq 0xc(%r15),%rax
+  add $0x20,%r15
+  movslq -0x10(%r15),%rdx
+  mov (%r14,%rax,1),%rax
+  add (%r14,%rcx,1),%rax
+  mov %rax,(%r14,%rdx,1)
+  movl $0x4,0x8(%r14,%rdx,1)
+  mov ledger+0x38(%rip),%r11
+  mov %rax,0x0(%r11)
+  ret
+
+======================================================================
+UNIT php/add_function
+======================================================================
+
+-- FORM 1, region36 + canon36_universal (SUPERSEDED RECORD) --
+  L0:
+  mov 0x0(%r15),%r10
+  mov 0x8(%r15),%r11
+  endbr64
+  movzbl 0x8(%r10),%eax
+  shl $0x4,%eax
+  or 0x8(%r11),%al
+  mov 0x48(%r15),%rdx
+  cmp %dl,%al
+  jne L6
+  L1:
+  mov (%r10),%rax
+  add (%r11),%rax
+  jo L5
+  L2:
+  mov %rax,(%rcx)
+  movl $0x4,0x8(%rcx)
+  L3:
+  xor %eax,%eax
+  mov %eax,%eax
+  mov %rax,0x200(%r15)
+  ret
+  L4:
+  nopw 0x0(%rax,%rax,1)
+  L5:
+  pxor %xmm0,%xmm0
+  pxor %xmm1,%xmm1
+  cvtsi2sdq (%r10),%xmm0
+  cvtsi2sdq (%r11),%xmm1
+  addsd %xmm1,%xmm0
+  movl $0x5,0x8(%rcx)
+  movsd %xmm0,(%rcx)
+  jmp L3
+  nopl 0x0(%rax,%rax,1)
+  L6:
+  mov 0x58(%r15),%rdx
+  cmp %dl,%al
+  jne L8
+  L7:
+  movsd (%r10),%xmm0
+  addsd (%r11),%xmm0
+  movl $0x5,0x8(%rcx)
+  movsd %xmm0,(%rcx)
+  jmp L3
+  nopl 0x0(%rax)
+  L8:
+  mov 0x60(%r15),%rdx
+  cmp %dl,%al
+  jne L10
+  L9:
+  pxor %xmm0,%xmm0
+  cvtsi2sdq (%r10),%xmm0
+  addsd (%r11),%xmm0
+  movl $0x5,0x8(%rcx)
+  movsd %xmm0,(%rcx)
+  jmp L3
+  L10:
+  mov 0x68(%r15),%rdx
+  cmp %dl,%al
+  jne L12
+  L11:
+  pxor %xmm0,%xmm0
+  cvtsi2sdq (%r11),%xmm0
+  addsd (%r10),%xmm0
+  movl $0x5,0x8(%rcx)
+  movsd %xmm0,(%rcx)
+  jmp L3
+  L12:
+  mov 0x70(%r15),%rdx
+  cmp %dl,%al
+  jne L15
+  L13:
+  push %rax
+  call 407b40 <add_function_array>
+  L14:
+  xor %eax,%eax
+  pop %r11
+  mov %eax,%eax
+  mov %rax,0x200(%r15)
+  ret
+  L15:
+  jmp 40bcc0 <add_function_slow>
+
+-- FORM 2, canonical_form.py (PART A) --
+  mov ledger+0x00(%rip),%rsi
+  mov 0x0(%rsi),%rsi
+  mov ledger+0x00(%rip),%rdx
+  mov 0x8(%rdx),%rdx
+  endbr64
+  movzbl 0x8(%rsi),%eax
+  shl $0x4,%eax
+  or 0x8(%rdx),%al
+  cmp $0x44,%al
+  jne L2
+  mov (%rsi),%rax
+  add (%rdx),%rax
+  jo L1
+  mov %rax,(%rdi)
+  movl $0x4,0x8(%rdi)
+  L0:
+  xor %eax,%eax
+  mov ledger+0x38(%rip),%r11
+  mov %eax,0x0(%r11)
+  ret
+  nopw 0x0(%rax,%rax,1)
+  L1:
+  pxor %xmm0,%xmm0
+  pxor %xmm1,%xmm1
+  cvtsi2sdq (%rsi),%xmm0
+  cvtsi2sdq (%rdx),%xmm1
+  addsd %xmm1,%xmm0
+  movl $0x5,0x8(%rdi)
+  movsd %xmm0,(%rdi)
+  jmp L0
+  nopl 0x0(%rax,%rax,1)
+  L2:
+  cmp $0x55,%al
+  jne L3
+  movsd (%rsi),%xmm0
+  addsd (%rdx),%xmm0
+  movl $0x5,0x8(%rdi)
+  movsd %xmm0,(%rdi)
+  jmp L0
+  nopl 0x0(%rax)
+  L3:
+  cmp $0x45,%al
+  jne L4
+  pxor %xmm0,%xmm0
+  cvtsi2sdq (%rsi),%xmm0
+  addsd (%rdx),%xmm0
+  movl $0x5,0x8(%rdi)
+  movsd %xmm0,(%rdi)
+  jmp L0
+  L4:
+  cmp $0x54,%al
+  jne L5
+  pxor %xmm0,%xmm0
+  cvtsi2sdq (%rdx),%xmm0
+  addsd (%rsi),%xmm0
+  movl $0x5,0x8(%rdi)
+  movsd %xmm0,(%rdi)
+  jmp L0
+  L5:
+  cmp $0x77,%al
+  jne L6
+  push %rax
+  call x_add_function_array
+  xor %eax,%eax
+  pop %rdx
+  mov ledger+0x38(%rip),%r11
+  mov %eax,0x0(%r11)
+  ret
+  L6:
+  jmp x_add_function_slow
+
+-- FORM 3, canonical_form.py + the seventh block kind (PART B) --
+  mov ledger+0x40(%rip),%rsi
+  mov ledger+0x40(%rip),%rdx
+  lea 0x100(%rdx),%rdx
+  mov ledger+0x40(%rip),%rdi
+  lea 0x200(%rdi),%rdi
+  endbr64
+  movzbl 0x8(%rsi),%eax
+  shl $0x4,%eax
+  or 0x8(%rdx),%al
+  cmp $0x44,%al
+  jne L2
+  mov (%rsi),%rax
+  add (%rdx),%rax
+  jo L1
+  mov %rax,(%rdi)
+  movl $0x4,0x8(%rdi)
+  L0:
+  xor %eax,%eax
+  mov ledger+0x38(%rip),%r11
+  mov %eax,0x0(%r11)
+  ret
+  nopw 0x0(%rax,%rax,1)
+  L1:
+  pxor %xmm0,%xmm0
+  pxor %xmm1,%xmm1
+  cvtsi2sdq (%rsi),%xmm0
+  cvtsi2sdq (%rdx),%xmm1
+  addsd %xmm1,%xmm0
+  movl $0x5,0x8(%rdi)
+  movsd %xmm0,(%rdi)
+  jmp L0
+  nopl 0x0(%rax,%rax,1)
+  L2:
+  cmp $0x55,%al
+  jne L3
+  movsd (%rsi),%xmm0
+  addsd (%rdx),%xmm0
+  movl $0x5,0x8(%rdi)
+  movsd %xmm0,(%rdi)
+  jmp L0
+  nopl 0x0(%rax)
+  L3:
+  cmp $0x45,%al
+  jne L4
+  pxor %xmm0,%xmm0
+  cvtsi2sdq (%rsi),%xmm0
+  addsd (%rdx),%xmm0
+  movl $0x5,0x8(%rdi)
+  movsd %xmm0,(%rdi)
+  jmp L0
+  L4:
+  cmp $0x54,%al
+  jne L5
+  pxor %xmm0,%xmm0
+  cvtsi2sdq (%rdx),%xmm0
+  addsd (%rsi),%xmm0
+  movl $0x5,0x8(%rdi)
+  movsd %xmm0,(%rdi)
+  jmp L0
+  L5:
+  cmp $0x77,%al
+  jne L6
+  push %rax
+  call x_add_function_array
+  xor %eax,%eax
+  pop %rdx
+  mov ledger+0x38(%rip),%r11
+  mov %eax,0x0(%r11)
+  ret
+  L6:
+  jmp x_add_function_slow
+

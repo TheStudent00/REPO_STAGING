@@ -4,17 +4,17 @@
 # locks the sandbox itself is denied deleting — cleared here).
 #
 # This commits HQ ALONE. To commit the whole line in one go, use
-# <WORKSPACE_DIR>/PseudoCoupHQ/git_commit_push_all.sh, which calls this
+# ~/Programming/PseudoCoupHQ/git_commit_push_all.sh, which calls this
 # script and each project repo's own copy.
 #
 # Message priority: explicit arg > DevComms/next_commit_message.txt
 # (written by the sandbox session) > "update". The file is emptied
 # after use so a stale message never labels a later commit.
 #
-# Usage:  bash <WORKSPACE_DIR>/PseudoCoupHQ/git_commit_push.sh ["commit message"]
+# Usage:  bash ~/Programming/PseudoCoupHQ/git_commit_push.sh ["commit message"]
 
 set +e
-REPO=<WORKSPACE_DIR>/PseudoCoupHQ
+REPO=~/Programming/PseudoCoupHQ
 MSGFILE="$REPO/DevComms/next_commit_message.txt"
 if [ -n "$1" ]; then
     MSG="$1"

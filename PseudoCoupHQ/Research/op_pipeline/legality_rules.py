@@ -31,7 +31,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-SRC = os.path.expanduser("<WORKSPACE_DIR>/Sources")
+SRC = os.path.expanduser("~/Programming/Sources")
 
 LLVM = os.path.join(SRC, "llvm-project")
 

@@ -16,7 +16,7 @@ ingressed application means the same thing. Behavior can.
 ## The harvest (the lineage's hardest, most valuable asset)
 
 v0's `oracle.py` + `fuzz.py`
-(`<WORKSPACE_DIR>/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/`,
+(`~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/`,
 verified green in place by R3): transpile the source language's
 OWN TEST SUITE alongside the program, run both sides, compare
 outputs — the compiler/program authors' own intent statements

@@ -77,7 +77,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SUPER_OPS2_PATH = os.path.join(HERE, "super_ops2.json")
 OUT_PATH = os.path.join(HERE, "super_ops3.json")
 
-LLVM_REPO = os.path.expanduser("<WORKSPACE_DIR>/Sources/llvm-project")
+LLVM_REPO = os.path.expanduser("~/Programming/Sources/llvm-project")
 LLVM_TAG = "llvmorg-21.1.8"
 
 REGION_FILES = [
@@ -533,7 +533,7 @@ def main():
             "llvm_commit_resolved_this_run": commit,
             "working_tree_branch_at_run_time": branch,
             "note": "all region source read via `git show <tag>:<path>` "
-                     "against <WORKSPACE_DIR>/Sources/llvm-project; the "
+                     "against ~/Programming/Sources/llvm-project; the "
                      "working tree itself was NOT read (it sits at %s, "
                      "verified above, not llvmorg-21.1.8)" % branch,
         },

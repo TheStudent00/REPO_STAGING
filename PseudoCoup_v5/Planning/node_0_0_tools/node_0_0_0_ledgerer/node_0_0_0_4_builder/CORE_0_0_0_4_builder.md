@@ -113,14 +113,14 @@ class Builder
 ## harvest
 
 which Frankenstein parts land here. part numbers are
-`<WORKSPACE_DIR>/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
+`~/Programming/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
 §2. placements are draft commentary, not settled.
 
 - **2.5 integrity** — the only `--check` in the lineage: ids
   globally unique, every id exactly once, `entry_count` equals node
   count, nonzero exit on failure. source: `ledger_unified.check()`,
   L243–281 of
-  `<WORKSPACE_DIR>/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py`.
+  `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py`.
   taken "verbatim, extended" with the two invariants that do not
   exist yet: COVERAGE (every emitted node traces to a ledger id) and
   SEMANTIC (every declaration id carries a type or an explicit
@@ -131,7 +131,7 @@ which Frankenstein parts land here. part numbers are
 - **2.7 verification half** — execute, introspect, compare, joined
   on id equality: v0's exec-and-introspect with dropped/relocated
   discrimination
-  (`<WORKSPACE_DIR>/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger.py`,
+  (`~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger.py`,
   370 lines) and `kit_ledger`'s `_lcs` + `_sig_match` comparison
   (`.../kit_ledger.py`, 374 lines). deliberately parser-free — it
   meets the static side only at the id (survey addendum §1c), a

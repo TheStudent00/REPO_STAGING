@@ -45,7 +45,7 @@ node's `name` (and the folder's name segment below a tree root) — so a
 folder renamed without changing its id fails that check immediately,
 and `check_plans.py` reports it as an ERROR. Framework tension recorded
 by the owner, 2026-08-14, at
-`<WORKSPACE_DIR>/PseudoCoupHQ/Planning/node_0_3_research/
+`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/
 node_0_3_0_kind_signature_clustering/PROGRESS.md`: "one of the two
 rules should give; the owner's call."
 
@@ -132,7 +132,7 @@ def tree_checks_clean(root):
     the list of ERROR-severity findings (empty means clean). Reused
     rather than reimplemented, per the framework's own rule that a tool
     asks `checks.py` rather than carrying its own opinion."""
-    programming_root = os.path.expanduser("<WORKSPACE_DIR>")
+    programming_root = os.path.expanduser("~/Programming")
     label = os.path.relpath(root, programming_root)
     if label.startswith(".."):
         label = root
@@ -279,7 +279,7 @@ def plan_node_rename(root, old_name, new_name):
     segments = old_id.split(".")
     new_id = ".".join(segments[:-1] + [new_name])
 
-    repo_dir = checks.NodeSelfCheck.repo_dir_of(root, os.path.expanduser("<WORKSPACE_DIR>"))
+    repo_dir = checks.NodeSelfCheck.repo_dir_of(root, os.path.expanduser("~/Programming"))
     new_core_path_after = os.path.join(new_dir, new_core_name)
     new_node_path_value = (os.path.relpath(new_core_path_after, repo_dir)
                             if repo_dir else new_core_name)
@@ -727,7 +727,7 @@ def main():
                       for r in args.scan_root]
     else:
         repo_dir = checks.NodeSelfCheck.repo_dir_of(
-            root, os.path.expanduser("<WORKSPACE_DIR>"))
+            root, os.path.expanduser("~/Programming"))
         scan_roots = [repo_dir or os.path.dirname(root)]
     for r in scan_roots:
         if not os.path.isdir(r):

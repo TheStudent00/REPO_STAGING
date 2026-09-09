@@ -49,7 +49,7 @@ nodes for things the file never defines.
 ## harvest
 
 which Frankenstein parts land here. part numbers are
-`<WORKSPACE_DIR>/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
+`~/Programming/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
 §2. placements are draft commentary, not settled.
 
 - **the derivation this node performs is the survey's "re-key the
@@ -73,7 +73,7 @@ which Frankenstein parts land here. part numbers are
   give the transpiler (or any later system) something to attach new
   connector types to.
 - **precedent, not transplant**: the ingress-writer pattern of
-  `<WORKSPACE_DIR>/PseudoCoup/pseudocoup/ingress/kotlin.py` (semantic
+  `~/Programming/PseudoCoup/pseudocoup/ingress/kotlin.py` (semantic
   facts written to the ledger during a walk) — with the difference
   that its walk was the parse walk, while this node walks UR.
 

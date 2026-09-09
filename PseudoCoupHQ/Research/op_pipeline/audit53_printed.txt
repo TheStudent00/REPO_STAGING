@@ -1,0 +1,106 @@
+POPULATION: interpreter
+  proved on route one (the ship simulation)              9
+  proved on route two (the text-order walk)              8
+  term built                                             9
+  term proved on at least one route                      9
+  units                                                  9
+  distinct layer-3 texts, every unit with a term         7
+  distinct layer-5 texts, every unit with a term         3
+  distinct layer-3 texts, proved units only              7
+  distinct layer-5 texts, proved units only              3
+
+POPULATION: original
+  no term built                                         35
+  proved on route one (the ship simulation)            951
+  proved on route two (the text-order walk)           1623
+  term DISPROVED -- withdrawn                           12
+  term built                                          1728
+  term proved on at least one route                   1635
+  term undecided on both routes                         81
+  units                                               1763
+  distinct layer-3 texts, every unit with a term       655
+  distinct layer-5 texts, every unit with a term       451
+  distinct layer-3 texts, proved units only            591
+  distinct layer-5 texts, proved units only            421
+
+POPULATION: regenerated
+  no term built                                       1252
+  proved on route one (the ship simulation)          16529
+  proved on route two (the text-order walk)          21084
+  term DISPROVED -- withdrawn                          403
+  term built                                         27412
+  term proved on at least one route                  21488
+  term undecided on both routes                       5521
+  units                                              28664
+  distinct layer-3 texts, every unit with a term      2703
+  distinct layer-5 texts, every unit with a term      1539
+  distinct layer-3 texts, proved units only           1471
+  distinct layer-5 texts, proved units only           1035
+
+ALL THREE POPULATIONS
+  no term built                                       1287
+  proved on route one (the ship simulation)          17489
+  proved on route two (the text-order walk)          22715
+  term DISPROVED -- withdrawn                          415
+  term built                                         29149
+  term proved on at least one route                  23132
+  term undecided on both routes                       5602
+  units                                              30436
+
+CONSISTENCY -- units proved on one route and disproved on the other: 0
+
+THE CENSUS DELTA BY CAUSE -- name_census3 (canon37) against name_census4 (canon38)
+
+cause (the artifact's own recorded reason)                   rows 3   rows 4    delta
+----------------------------------------------------------------------------------------
+an unconditional transfer is not a flag reader                  325        0     -325
+no opcode in the body writes the answer register                 36      335      299
+not yet grouped: no z3 term is written for this arch opcod        0        2        2
+not yet grouped: no z3 term is written for this x87 arch o        0      400      400
+not yet grouped: this suffix reads the carry bit, and the         0      186      186
+the flags the setter left are not in the ledger                 746      787       41
+the implicit destination                                       1558        0    -1558
+the machine stack has no block                                 4298        0    -4298
+the second byte of a register has no row                          8        9        1
+the x87 stack has no rows                                      1072        0    -1072
+this opcode reads a carry no earlier opcode set                   1        0       -1
+----------------------------------------------------------------------------------------
+TOTAL ROWS                                                     8044     1719    -6325
+DISTINCT PRODUCERS                                               47       54        7
+UNITS CARRYING AT LEAST ONE SUCH ROW                           5507     1668    -3839
+
+THE NEW CAUSE, reported rather than fixed
+  answer produced by a library call                              --      300
+  the answer is produced by a library call -- no opcode in the body writes OUT-0 -- awaiting the owner's ruling on `call` as a producer
+      __udivti3                                    77 unit(s)
+      __umodti3                                    77 unit(s)
+      __divti3                                     73 unit(s)
+      __modti3                                     73 unit(s)
+
+THE ROUTE-ONE DISPROOFS, split by the ledger's own `written_half` field
+  route-one disproofs in all: 415
+    remainder / the sign of the accumulator               305   c/op_246, c/op_247, c/op_252
+    remainder                                             110   c/op_276, c/op_277, cpp/op_276
+
+THE ROWS RULING 2 ADDED, and the gate's verdict on the units carrying them
+  STACK: units carrying such a row                        3360
+  STACK: units undecided on both routes                   3360
+  STACK: units with an OUT-0 term                         3056
+  X87: units carrying such a row                          1405
+  X87: units undecided on both routes                     1405
+  X87: units with an OUT-0 term                           1163
+
+THE TRANSITION PER UNIT -- task 48's layer-4 record against task 53's
+  task 48        task 53           units   examples
+  proved         proved            22715   c/op_0, c/op_1, c/op_101
+  no term        undecided          3700   go/op_110, rust/op_642, rust/op_649
+  undecided      undecided          1901   c/op_212, c/op_218, c/op_222
+  proved         no term             699   c/regen_34943, c/regen_35988, c/regen_36007
+  no term        no term             442   c/op_100, c/op_21, c/op_22
+  withdrawn      withdrawn           415   c/op_246, c/op_247, c/op_252
+  withdrawn      proved              410   c/op_210, c/op_211, c/op_216
+  undecided      no term             146   c/regen_30547, c/regen_30550, c/regen_31317
+  undecided      proved                7   c/regen_12733, c/regen_12746, cpp/regen_12108
+  withdrawn      undecided             1   cpp/regen_14397
+  units in task 53 with no task-48 record: 0
+

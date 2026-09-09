@@ -1,0 +1,44 @@
+UNIT            c/regen_36772   (from op_units2_c_c0091.json)
+language        c
+population      regenerated
+arrival         ["rdi"]
+answer home     rax at 8 bits
+
+THE BODY, VERBATIM (the compiler's own text, untouched)
+    fldt 0x8(%rsp)
+    mov %di,-0x2(%rsp)
+    filds -0x2(%rsp)
+    xor %eax,%eax
+    fxch %st(1)
+    fucomip %st(1),%st
+    fstp %st(0)
+    seta %al
+    ret
+
+THE WRAPPED TEXT (layer 3, the runnable record)
+    mov IN-0,%rdi; fldt 0x8(%rsp); mov %di,-0x2(%rsp); filds -0x2(%rsp); xor %eax,%eax; fxch %st(1); fucomip %st(1),%st; fstp %st(0); seta %al; mov %al,OUT-0; ret
+
+THE LEDGER, ROW BY ROW, WITH THE LINE THE RELINK ATTACHED
+    row      produced_by (typed)                            line                     term
+    IN-0     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rdi
+    X87-0    {"kind": "arch_opcode", "mnem": "fldt"}        fldt 0x8(%rsp)           x87_0x8_rsp_
+    OWN-0    {"kind": "non_opcode_phrase", "phrase": "the body's own stack displacement"} mov %di,-0x2(%rsp)       seed_rsp - 2
+    X87-1    {"kind": "arch_opcode", "mnem": "filds"}       filds -0x2(%rsp)         x87_m0x2_rsp_
+    TEMP-0   {"kind": "arch_opcode", "mnem": "xor"}         xor %eax,%eax            ZeroExt(32, Extract(31, 0, seed_rax) ^ Extract(31, 0, see...
+    TEMP-1   {"kind": "arch_opcode", "mnem": "fucomip"}     fucomip %st(1),%st       ('fucomip', x87_0x8_rsp_, x87_m0x2_rsp_)
+    GUARD-0  {"kind": "flag_pair", "mnem": ["fucomip", "seta"]} seta %al                 ZeroExt(56, If(And(Not(x87_0x8_rsp_ < x87_m0x2_rsp_), Not...
+    OUT-0    {"kind": "flag_pair", "mnem": ["fucomip", "seta"]} -                        Extract(7, 0, ZeroExt(56, If(And(Not(x87_0x8_rsp_ < x87_m...
+
+THE READ AT OUT-0 (layer 4, the term)
+    Extract(7, 0, ZeroExt(56, If(And(Not(x87_0x8_rsp_ < x87_m0x2_rsp_), Not(fpEQ(x87_0x8_rsp_, x87_m0x2_rsp_)), Not(Or(fpIsNaN(x87_0x8_rsp_), fpIsNaN(x87_m0x2_rsp_)))), 1, 0)))
+
+THE TWO GATE ROUTES
+    route one  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+    route two  UNDECIDED
+               the text-order walk: no z3 term is written for this arch opcode
+
+THE NORMALIZED TEXT (layer 5, the comparison key)
+    If(And(Not(v0 < v1), Not(fpEQ(v0, v1)), Not(Or(fpIsNaN(v0), fpIsNaN(v1)))), 1, 0)
+
+HOLES 0, CASCADES 0, SLOT DISAGREEMENTS 0

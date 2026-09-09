@@ -16,6 +16,34 @@ Amended 2026-09-07: cards `names.fill-my-sets` (§3) and
 `scope.length-matches-ask` (§9), from cases Appendix C; §7.1 table
 labels the same day.
 
+---
+
+# ⚠️ **CARDINAL SIN: NEVER PUT SENSITIVE INFORMATION IN A PUBLIC REPO**
+
+**THIS OUTRANKS EVERY RULE BELOW. IT APPLIES TO COMMITS, ISSUES, PULL
+REQUESTS, COMMENTS, LOGS, SCREENSHOTS, AND ANY TEXT PUSHED ANYWHERE
+PUBLIC.**
+
+**Never write into a public repo:**
+
+- **Real names** — mine, anyone else's, account names, usernames,
+  email addresses, handles.
+- **Network identity** — IP addresses, hostnames, MAC addresses,
+  domains, ports of my machines, anything that locates a machine.
+- **Absolute or machine paths** — anything outside the project
+  folder. `/home/<user>/Programming/Thing/src/x.py` is a violation;
+  `src/x.py` is correct. Paths are relative to the project root, always.
+- **Secrets** — keys, tokens, passwords, credentials, session ids.
+- **Machine or environment fingerprints** — serial numbers, device
+  ids, exact OS/hardware inventories, directory listings of my home.
+
+**IF IT IS UNCERTAIN WHETHER SOMETHING IS SENSITIVE, DO NOT PUBLISH
+IT — ASK ME FIRST.** Uncertainty is not a reason to guess in either
+direction; it is a reason to stop and ask. A leak cannot be taken
+back: git history, forks, and mirrors keep it after any delete.
+
+---
+
 How this file is read:
 
 - §0 is the reason for everything below it.

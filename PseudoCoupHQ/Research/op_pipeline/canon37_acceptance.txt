@@ -1,0 +1,449 @@
+======================================================================
+(a) THE FOUR UNITS ROUND 9 REFUSED FOR MENTIONING %r15
+======================================================================
+
+  GLOSS -- round 9 reserved %r15 as the region's base, so a unit whose own
+  body mentions %r15 had nowhere to put the base and was refused by name.
+  Round 10 reserves no register: the ledger is at an absolute address,
+  reached rip-relative.  The literal round-9 refusal and the literal
+  round-10 outcome for each unit follow.
+
+  ---- cpp/op_765
+  LITERAL -- round 9's own record (canon36_universal_cpp.json)
+      outcome        REFUSED
+      refusal_cause  the core names the region base
+      refusal        this unit's own core mentions %r15, which the form rules to be the region base and therefore not available to any lineage; the unit is refused by name rather than being rendered onto a base it also uses as a value
+
+  LITERAL -- round 10's outcome (canon37_wrapped_cpp.json)
+      outcome        WRAPPED_TEXT_PROVED
+      verdict        PROVED_BY_CONSTRUCTION
+      detail         equivalence is forced by construction: the wrapped text carries this unit's own body character-for-character, on the register state the prelude establishes from the input rows, and stores the compiler's own result register into OUT-0 immediately before every return
+
+  LITERAL -- the body, verbatim
+      test %rdi,%rdi
+      js c <op_765+0xc>
+      cvtsi2ss %rdi,%xmm1
+      jmp 21 <op_765+0x21>
+      mov %rdi,%rax
+      shr $1,%rax
+      and $0x1,%edi
+      or %rax,%rdi
+      cvtsi2ss %rdi,%xmm1
+      addss %xmm1,%xmm1
+      ucomiss %xmm1,%xmm0
+      setp %al
+      setne %cl
+      or %al,%cl
+      add %cl,%cl
+      ucomiss %xmm0,%xmm1
+      movzbl %cl,%eax
+      mov $0x1,%ecx
+      cmovbe %eax,%ecx
+      ucomiss %xmm1,%xmm0
+      mov $0xff,%eax
+      cmovbe %ecx,%eax
+      ret
+
+  LITERAL -- the wrapped text, as it is assembled
+      mov ledger+0x00(%rip),%r11
+      movdqu 0x0(%r11),%xmm0
+      mov ledger+0x00(%rip),%r11
+      movdqu 0x10(%r11),%xmm1
+      mov ledger+0x00(%rip),%rdi
+      mov 0x20(%rdi),%rdi
+      mov ledger+0x00(%rip),%rcx
+      mov 0x28(%rcx),%rcx
+      test %rdi,%rdi
+      js c <op_765+0xc>
+      cvtsi2ss %rdi,%xmm1
+      jmp 21 <op_765+0x21>
+      mov %rdi,%rax
+      shr $1,%rax
+      and $0x1,%edi
+      or %rax,%rdi
+      cvtsi2ss %rdi,%xmm1
+      addss %xmm1,%xmm1
+      ucomiss %xmm1,%xmm0
+      setp %al
+      setne %cl
+      or %al,%cl
+      add %cl,%cl
+      ucomiss %xmm0,%xmm1
+      movzbl %cl,%eax
+      mov $0x1,%ecx
+      cmovbe %eax,%ecx
+      ucomiss %xmm1,%xmm0
+      mov $0xff,%eax
+      cmovbe %ecx,%eax
+      mov ledger+0x28(%rip),%r11
+      mov %eax,0x0(%r11)
+      ret
+
+  ---- cpp/op_770
+  LITERAL -- round 9's own record (canon36_universal_cpp.json)
+      outcome        REFUSED
+      refusal_cause  the core names the region base
+      refusal        this unit's own core mentions %r15, which the form rules to be the region base and therefore not available to any lineage; the unit is refused by name rather than being rendered onto a base it also uses as a value
+
+  LITERAL -- round 10's outcome (canon37_wrapped_cpp.json)
+      outcome        WRAPPED_TEXT_PROVED
+      verdict        PROVED_BY_CONSTRUCTION
+      detail         equivalence is forced by construction: the wrapped text carries this unit's own body character-for-character, on the register state the prelude establishes from the input rows, and stores the compiler's own result register into OUT-0 immediately before every return
+
+  LITERAL -- the body, verbatim
+      test %rdi,%rdi
+      js c <op_770+0xc>
+      cvtsi2ss %rdi,%xmm1
+      jmp 21 <op_770+0x21>
+      mov %rdi,%rax
+      shr $1,%rax
+      and $0x1,%edi
+      or %rax,%rdi
+      cvtsi2ss %rdi,%xmm1
+      addss %xmm1,%xmm1
+      ucomiss %xmm1,%xmm0
+      setp %al
+      setne %cl
+      or %al,%cl
+      add %cl,%cl
+      ucomiss %xmm1,%xmm0
+      movzbl %cl,%eax
+      mov $0x1,%ecx
+      cmovbe %eax,%ecx
+      ucomiss %xmm0,%xmm1
+      mov $0xff,%eax
+      cmovbe %ecx,%eax
+      ret
+
+  LITERAL -- the wrapped text, as it is assembled
+      mov ledger+0x00(%rip),%r11
+      movdqu 0x0(%r11),%xmm0
+      mov ledger+0x00(%rip),%r11
+      movdqu 0x10(%r11),%xmm1
+      mov ledger+0x00(%rip),%rdi
+      mov 0x20(%rdi),%rdi
+      mov ledger+0x00(%rip),%rcx
+      mov 0x28(%rcx),%rcx
+      test %rdi,%rdi
+      js c <op_770+0xc>
+      cvtsi2ss %rdi,%xmm1
+      jmp 21 <op_770+0x21>
+      mov %rdi,%rax
+      shr $1,%rax
+      and $0x1,%edi
+      or %rax,%rdi
+      cvtsi2ss %rdi,%xmm1
+      addss %xmm1,%xmm1
+      ucomiss %xmm1,%xmm0
+      setp %al
+      setne %cl
+      or %al,%cl
+      add %cl,%cl
+      ucomiss %xmm1,%xmm0
+      movzbl %cl,%eax
+      mov $0x1,%ecx
+      cmovbe %eax,%ecx
+      ucomiss %xmm0,%xmm1
+      mov $0xff,%eax
+      cmovbe %ecx,%eax
+      mov ledger+0x28(%rip),%r11
+      mov %eax,0x0(%r11)
+      ret
+
+  ---- swift/op_703
+  LITERAL -- round 9's own record (canon36_universal_swift.json)
+      outcome        REFUSED
+      refusal_cause  the core names the region base
+      refusal        this unit's own core mentions %r15, which the form rules to be the region base and therefore not available to any lineage; the unit is refused by name rather than being rendered onto a base it also uses as a value
+
+  LITERAL -- round 10's outcome (canon37_wrapped_swift.json)
+      outcome        WRAPPED_TEXT_PROVED
+      verdict        PROVED_BY_CONSTRUCTION
+      detail         equivalence is forced by construction: the wrapped text carries this unit's own body character-for-character, on the register state the prelude establishes from the input rows, and stores the compiler's own result register into OUT-0 immediately before every return
+
+  LITERAL -- the body, verbatim
+      lea -0x41(%rsi),%rcx
+      cmp $0xffffffffffffff7e,%rcx
+      ja 10 <op_703+0x10>
+      xor %eax,%eax
+      ret
+      mov %rdi,%rax
+      test %rsi,%rsi
+      js 24 <op_703+0x24>
+      mov %esi,%ecx
+      shl %cl,%rax
+      cmp $0x40,%rsi
+      jae d <op_703+0xd>
+      ret
+      cmp $0xffffffffffffffc0,%rsi
+      jbe d <op_703+0xd>
+      neg %sil
+      mov %esi,%ecx
+      shr %cl,%rax
+      ret
+
+  LITERAL -- the wrapped text, as it is assembled
+      mov ledger+0x00(%rip),%rdi
+      mov 0x0(%rdi),%rdi
+      mov ledger+0x00(%rip),%rsi
+      mov 0x8(%rsi),%rsi
+      lea -0x41(%rsi),%rcx
+      cmp $0xffffffffffffff7e,%rcx
+      ja 10 <op_703+0x10>
+      xor %eax,%eax
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+      ret
+      mov %rdi,%rax
+      test %rsi,%rsi
+      js 24 <op_703+0x24>
+      mov %esi,%ecx
+      shl %cl,%rax
+      cmp $0x40,%rsi
+      jae d <op_703+0xd>
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+      ret
+      cmp $0xffffffffffffffc0,%rsi
+      jbe d <op_703+0xd>
+      neg %sil
+      mov %esi,%ecx
+      shr %cl,%rax
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+      ret
+
+  ---- swift/op_739
+  LITERAL -- round 9's own record (canon36_universal_swift.json)
+      outcome        REFUSED
+      refusal_cause  the core names the region base
+      refusal        this unit's own core mentions %r15, which the form rules to be the region base and therefore not available to any lineage; the unit is refused by name rather than being rendered onto a base it also uses as a value
+
+  LITERAL -- round 10's outcome (canon37_wrapped_swift.json)
+      outcome        WRAPPED_TEXT_PROVED
+      verdict        PROVED_BY_CONSTRUCTION
+      detail         equivalence is forced by construction: the wrapped text carries this unit's own body character-for-character, on the register state the prelude establishes from the input rows, and stores the compiler's own result register into OUT-0 immediately before every return
+
+  LITERAL -- the body, verbatim
+      lea -0x41(%rsi),%rcx
+      cmp $0xffffffffffffff7e,%rcx
+      ja 10 <op_739+0x10>
+      xor %eax,%eax
+      ret
+      mov %rdi,%rax
+      test %rsi,%rsi
+      js 24 <op_739+0x24>
+      mov %esi,%ecx
+      shr %cl,%rax
+      cmp $0x40,%rsi
+      jae d <op_739+0xd>
+      ret
+      cmp $0xffffffffffffffc0,%rsi
+      jbe d <op_739+0xd>
+      neg %sil
+      mov %esi,%ecx
+      shl %cl,%rax
+      ret
+
+  LITERAL -- the wrapped text, as it is assembled
+      mov ledger+0x00(%rip),%rdi
+      mov 0x0(%rdi),%rdi
+      mov ledger+0x00(%rip),%rsi
+      mov 0x8(%rsi),%rsi
+      lea -0x41(%rsi),%rcx
+      cmp $0xffffffffffffff7e,%rcx
+      ja 10 <op_739+0x10>
+      xor %eax,%eax
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+      ret
+      mov %rdi,%rax
+      test %rsi,%rsi
+      js 24 <op_739+0x24>
+      mov %esi,%ecx
+      shr %cl,%rax
+      cmp $0x40,%rsi
+      jae d <op_739+0xd>
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+      ret
+      cmp $0xffffffffffffffc0,%rsi
+      jbe d <op_739+0xd>
+      neg %sil
+      mov %esi,%ecx
+      shl %cl,%rax
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+      ret
+
+======================================================================
+(b) c/op_31 -- THE ANSWER IS AN ADDRESS
+======================================================================
+
+  LITERAL -- the record
+      outcome        WRAPPED_TEXT_PROVED
+      verdict        PROVED_ON_SHIP
+      detail         z3 proved the wrapped text's OUT-0 equal to the unit's own ship code at 64 bits, for every value of every input row, with each input row bound to the same symbol as the argument the reference text reads in its arrival register
+
+  LITERAL -- the body, verbatim
+      mov %rdi,-0x8(%rsp)
+      lea -0x8(%rsp),%rax
+      ret
+
+  LITERAL -- the wrapped text, as it is assembled
+      mov ledger+0x00(%rip),%rdi
+      mov 0x0(%rdi),%rdi
+      mov %rdi,-0x8(%rsp)
+      lea -0x8(%rsp),%rax
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+      ret
+
+  LITERAL -- the wrapped text as the gate reads it (the two-step pairs written as one line each; the two readings are the same bytes -- canon37_lemma.py)
+      mov IN-0,%rdi
+      mov %rdi,-0x8(%rsp)
+      lea -0x8(%rsp),%rax
+      mov %rax,OUT-0
+      ret
+
+  LITERAL -- the provenance ledger, as stored in the artifact
+      row      off   size type                         produced by                        operands
+      IN-0     0x0   8    8-byte general value         arrival                            
+      OWN-0    0x0   8    the unit's own stack address the body's own stack displacement  
+      TEMP-0   0x0   8    8-byte general value         lea                                OWN-0
+      OUT-0    0x0   8    8-byte general value         lea                                TEMP-0
+
+  LITERAL -- the OWN row's own recorded address
+      OWN-0   address_is = %rsp - 0x8
+
+  LITERAL -- z3, on the wrapped text's own arithmetic
+      OUT-0 holds       rsp - 8
+      OWN-0's address is rsp - 8
+      z3 on (OUT-0 != the address of OWN-0): unsat
+
+  GLOSS -- the unit's answer is the address of its own stack scratch.
+  The body computes it with `lea -0x8(%rsp),%rax` and the epilogue stores
+  that register into OUT-0, so OUT-0 holds %rsp - 0x8, which is exactly
+  the address the ledger records for OWN-0.  Round 9 could only place
+  this unit by moving its scratch, which moved its answer.
+
+======================================================================
+(c) cpp/regen_12934 -- A 16-BYTE LANE ROW
+======================================================================
+
+  LITERAL -- the record (op_units2_cpp_c0032.json)
+      outcome        WRAPPED_TEXT_PROVED
+      verdict        PROVED_BY_CONSTRUCTION
+      detail         equivalence is forced by construction: the wrapped text carries this unit's own ship body character-for-character, on the register state the prelude establishes from the input rows
+
+  LITERAL -- the body, verbatim
+      push %rax
+      pextrw $0x0,%xmm0,%eax
+      xorps %xmm0,%xmm0
+      cvtsi2ss %edi,%xmm0
+      shl $0x10,%eax
+      movd %eax,%xmm1
+      divss %xmm1,%xmm0
+      call 1d <op_12934+0x1d> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4
+      pop %rax
+      ret
+
+  LITERAL -- the wrapped text, as it is assembled
+      mov ledger+0x00(%rip),%r11
+      movdqu 0x0(%r11),%xmm0
+      mov ledger+0x00(%rip),%rdi
+      mov 0x10(%rdi),%rdi
+      push %rax
+      pextrw $0x0,%xmm0,%eax
+      xorps %xmm0,%xmm0
+      cvtsi2ss %edi,%xmm0
+      shl $0x10,%eax
+      movd %eax,%xmm1
+      divss %xmm1,%xmm0
+      call 1d <op_12934+0x1d> !!reloc=R_X86_64_PLT32:__truncsfbf2-0x4
+      pop %rax
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+      ret
+
+  LITERAL -- the provenance ledger, as stored in the artifact
+      row      off   size type                         produced by                        operands
+      IN-0     0x0   16   16-byte vector value         arrival                            
+      IN-1     0x10  8    8-byte general value         arrival                            
+      TEMP-0   0x0   8    8-byte general value         push                               
+      CONST-0  0x0   8    literal                      the body's own immediate operand   
+      TEMP-1   0x8   8    8-byte general value         pextrw                             CONST-0,IN-1,TEMP-0
+      TEMP-2   0x10  16   16-byte vector value         xorps                              IN-1
+      TEMP-3   0x20  16   16-byte vector value         cvtsi2ss                           IN-0,TEMP-2
+      CONST-1  0x8   8    literal                      the body's own immediate operand   
+      TEMP-4   0x30  8    8-byte general value         shl                                CONST-1,TEMP-1
+      TEMP-5   0x40  16   16-byte vector value         movd                               TEMP-4
+      TEMP-6   0x50  16   16-byte vector value         divss                              TEMP-5,TEMP-3
+      TEMP-7   0x60  8    8-byte general value         pop                                TEMP-4
+      OUT-0    0x0   8    8-byte general value         pop                                TEMP-7
+
+  GLOSS -- the arrival in %xmm0 gets a SIXTEEN-BYTE row and is loaded
+  whole with `movdqu`.  Round 9 gave every block an eight-byte slot and
+  refused 1,479 units by name because a lane read of a vector register
+  could not be carried in eight bytes.  A row sized by its type removes
+  the refusal rather than working around it.
+
+======================================================================
+(d) c/op_109 AND go/op_319 -- DIFFERENT BODIES, DIFFERENT PRELUDES, ONE LEDGER
+======================================================================
+
+  ---- c/op_109   (WRAPPED_TEXT_PROVED)
+  LITERAL -- the arrival contract, as recorded
+      {"a": "rdi", "b": "rsi", "c": null, "d": null, "e": null, "f": null, "g": null, "h": null, "result": "rax"}
+
+  LITERAL -- the body, verbatim
+      lea (%rdi,%rsi,1),%rax
+      ret
+
+  LITERAL -- the prelude
+      mov ledger+0x00(%rip),%rdi
+      mov 0x0(%rdi),%rdi
+      mov ledger+0x00(%rip),%rsi
+      mov 0x8(%rsi),%rsi
+
+  LITERAL -- the epilogue
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+
+  ---- go/op_319   (WRAPPED_TEXT_PROVED)
+  LITERAL -- the arrival contract, as recorded
+      {"a": "rax", "b": "rbx", "c": null, "d": null, "e": null, "f": null, "g": null, "h": null, "result": "rax"}
+
+  LITERAL -- the body, verbatim
+      add %rbx,%rax
+      ret
+
+  LITERAL -- the prelude
+      mov ledger+0x00(%rip),%rax
+      mov 0x0(%rax),%rax
+      mov ledger+0x00(%rip),%rbx
+      mov 0x8(%rbx),%rbx
+
+  LITERAL -- the epilogue
+      mov ledger+0x28(%rip),%r11
+      mov %rax,0x0(%r11)
+
+  LITERAL -- the two ledgers, side by side
+      c/op_109                                 | go/op_319                               
+      ---------------------------------------- | ----------------------------------------
+      IN-0    8   arrival                      | IN-0    8   arrival                     
+      IN-1    8   arrival                      | IN-1    8   arrival                     
+      TEMP-0  8   lea                  IN-0,IN-1 | TEMP-0  8   add                  IN-1,IN-0
+      OUT-0   8   lea                  TEMP-0  | OUT-0   8   add                  TEMP-0 
+
+  LITERAL -- the two ledgers' row shapes (row, size, type), compared
+      c/op_109   [('IN-0', 8, '8-byte general value'), ('IN-1', 8, '8-byte general value'), ('TEMP-0', 8, '8-byte general value'), ('OUT-0', 8, '8-byte general value')]
+      go/op_319  [('IN-0', 8, '8-byte general value'), ('IN-1', 8, '8-byte general value'), ('TEMP-0', 8, '8-byte general value'), ('OUT-0', 8, '8-byte general value')]
+      identical: True
+
+  GLOSS -- the two compilers wrote different instructions and expect their
+  arguments in different registers, so the two preludes differ.  What the
+  units DO to memory is the same table: two eight-byte input rows, one
+  eight-byte output row, and the same producers in the same order where
+  the bodies agree.
+

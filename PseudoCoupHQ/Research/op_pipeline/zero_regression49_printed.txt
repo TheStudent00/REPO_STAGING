@@ -1,0 +1,36 @@
+CLAIM ONE -- task 47's and task 48's artifacts are untouched
+  paths asked about: 678
+  command: git status --porcelain -- ... (678 paths)
+  the version control system reports 0 changed path(s)
+  PASS -- no prior artifact differs from what is committed, so none was modified by this lap.
+
+CLAIM TWO -- the_pool1.json and the_families1.json are untouched
+  the_families1.json is TRACKED; the version control system reports 0 changed path(s)
+  the_pool1.json is NOT tracked, so the version control system cannot answer for it.
+    sha256            e54b90848c498395cb42dd18ab0aff39e2510a9c0071cd289203fbe4cb86572f
+    size in bytes     18648016
+    modified at       1788381142
+    this lap's newest source file, modified at 1788398025
+    PASS -- the_pool1.json predates every source file this lap wrote, so no program of this lap rewrote it.
+  PASS
+
+CLAIM THREE -- no program of this lap opens a prior artifact for writing
+    build_the_pool2.py       open for writing: stem + ".s", "w"
+    build_the_pool2.py       open for writing: BYTE_CACHE, "w"
+    build_the_pool2.py       open for writing: path, "w"
+    build_the_families2.py   open for writing: path, "w"
+    compare_pool1_pool2.py   open for writing: path, "w"
+    acceptance49.py          open for writing: path, "w"
+  PASS -- every write names a file this lap created
+
+CLAIM FOUR -- no unit loses pool membership
+  pool1 member units                                28984
+  of those, still proved by task 47                 28378
+  of those, members of the_pool2.json               28378
+  missing                                           0
+  pool1 units task 47 did NOT prove, so not carried  606
+  pool2 units that are new this round                2058
+  every unit task 47 proved is a pool2 member: True
+  PASS
+
+ALL FOUR CLAIMS: PASS

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SUPERSEDED RECORD (2026-09-03, task 71): graph.py is the deliverable of plan node hq.research.compiler_graph.graph; this file is kept as the record of its lap and is no longer run.
 """build_graph.py -- static layer of the compiler-graph instrument (lap one).
 
 Parses a bounded REGION of the Go compiler's own source with tree-sitter-go and

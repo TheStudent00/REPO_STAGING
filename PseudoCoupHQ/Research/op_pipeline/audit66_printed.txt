@@ -1,0 +1,106 @@
+-- the populations
+   term66_store records (canon40 proved) 30280
+   term65_store records (canon39 proved) 30432
+   canon40 proved 30,324 of 31,078 attempted; canon39 proved 30,432 of the same 31,078 (log_185 section 4.1)
+
+-- THE FOUR STATES, per arrival population
+   population     state          term65    term66    move
+   original       proved           1665      1665      +0
+   original       disproved          49        47      -2
+   original       undecided          14        14      +0
+   original       no term            35        35      +0
+   interpreter    proved              9         9      +0
+   interpreter    disproved           0         0      +0
+   interpreter    undecided           0         0      +0
+   interpreter    no term             0         0      +0
+   regenerated    proved          24920     26192   +1272
+   regenerated    disproved        3085      1629   -1456
+   regenerated    undecided         271       239     -32
+   regenerated    no term           384       450     +66
+
+   ALL            proved          26594     27866   +1272
+   ALL            disproved        3134      1676   -1458
+   ALL            undecided         285       253     -32
+   ALL            no term           419       485     +66
+   ALL            TOTAL           30432     30280
+
+   the round-13 line: 26,594 proved / 3,134 disproved / 285 undecided / 419 no term over 30,432
+   term65_store reproduces:  26594 / 3134 / 285 / 419 over 30432
+   term66 over canon40:      27866 / 1676 / 253 / 485 over 30280
+
+-- EVERY MOVEMENT, joined on the unit name, with its computed cause
+    26594  proved                         -> proved                        
+           cause: no movement -- the state is the same in both rounds
+           sightings: c/op_0, c/op_1, c/op_101, c/op_102
+     1674  disproved                      -> disproved                     
+           cause: no movement -- the state is the same in both rounds
+           sightings: c/op_117, c/op_122, c/op_158, c/op_189
+     1272  disproved                      -> proved                        
+           cause: the ledger now rows the runtime transfer, so the term no longer asserts the transfer changed nothing (1272 of 1272 carry a runtime row in canon40)
+           sightings: c/regen_10143, c/regen_10464, c/regen_10485, c/regen_10486
+      419  no term                        -> no term                       
+           cause: no movement -- the state is the same in both rounds
+           sightings: c/op_100, c/op_21, c/op_22, c/op_87
+      221  undecided                      -> undecided                     
+           cause: no movement -- the state is the same in both rounds
+           sightings: c/op_153, c/op_225, c/regen_10483, c/regen_10484
+      156  disproved                      -> not in canon40's proved set   
+           cause: canon40 did not prove this unit's WRAPPED TEXT, so it was never transcribed this round; the layer-3 route is where it stopped, not the term route
+           sightings: c/regen_11267, c/regen_11487, c/regen_1859, c/regen_2079
+       62  undecided                      -> no term                       
+           cause: the transcription changed under canon40's ledger (62 of 62 carry a runtime row in canon40)
+           sightings: c/regen_29798, c/regen_29799, c/regen_30128, c/regen_30184
+       32  disproved                      -> undecided                     
+           cause: the transcription changed under canon40's ledger and neither route answered inside its limit (19 of 32 carry a runtime row in canon40)
+           sightings: c/regen_10099, c/regen_11295, c/regen_11298, c/regen_11967
+        4  not in canon39's proved set    -> no term                       
+           cause: canon39 did not prove this unit's WRAPPED TEXT, so term65 never transcribed it; canon40 proves it and the term route reaches it for the first time
+           sightings: swift/regen_315, swift/regen_321, swift/regen_327, swift/regen_333
+        2  undecided                      -> disproved                     
+           cause: the transcription changed under canon40's ledger and the gate now finds a starting state under which the term and the unit's own machine code differ (0 of 2 carry a runtime row in canon40)
+           sightings: c/op_230, go/regen_150
+
+-- THE CONSISTENCY LINE
+   units proved on one route and disproved on the other: 0
+
+-- LAYER 5, computed only for a PROVED term, by task 79's corrected rule
+   proved terms                       27866
+   of them, a normalized text exists  27866
+   of them, normalization refused     0
+   distinct layer-5 texts, term66     972
+   distinct layer-5 texts, term65     1267
+
+-- THE EXPECTATION OF log_168 SECTION 5.3, TESTED
+   the carrying population, recomputed on each store: a unit whose body transfers and whose ledger carries NO row naming a runtime callee
+   term65_store (canon39 proved, 30432 units)
+       units whose body transfers               0
+       of those, with NO runtime row            0
+       runtime_callee rows over the store       608
+   term66_store (canon40 proved, 30280 units)
+       units whose body transfers               4079
+       of those, with NO runtime row            196
+       runtime_callee rows over the store       48662
+
+   canon39's disproved population           3134
+   where each of them stands in canon40:
+         1674  disproved
+         1272  proved
+          156  not in canon40's proved set
+           32  undecided
+
+-- WHAT REMAINS DISPROVED, by cause
+     1525  the body transfers into the compiler's own runtime and canon40's ledger DID row it, one row per register family the attached callee changes; the disproof has another cause
+           sightings: c/regen_10087, c/regen_15810, c/regen_15825, c/regen_15835
+      135  the body does not transfer and the walk left a hole; the disproof is about a producer the one table has no builder for
+           sightings: c/op_117, c/op_122, c/op_158, c/op_189
+       14  the body transfers to a NAMED routine that is not a lowering -- a panic or abort path reached on a guard, so the disproof is about the guard's response and no runtime row is owed
+           sightings: go/op_103, go/op_132, go/op_139, go/op_96
+        2  the body transfers INDIRECTLY through memory, so the target is not statically named and no runtime row could be made for it
+           sightings: rust/regen_1068, rust/regen_1082
+
+-- THE 442 TASK 79 FLAGGED, resolved by cause
+   task 79 measured, over the 26,594 units term65 proved, that 442 build no OUT-0 term under the ledger as task 78 left it (209 c, 233 cpp).  The same population is recomputed here off the two stores rather than carried from the log.
+   units term65 PROVED whose term66 record has NO term  0
+   by language: {}
+   by the written reason the walk itself recorded:
+   of them, carrying at least one runtime_callee row in canon40: 0 of 0

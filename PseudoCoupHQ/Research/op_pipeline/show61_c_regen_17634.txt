@@ -1,0 +1,59 @@
+UNIT            c/regen_17634   (from op_units2_c_c0044.json)
+language        c
+population      regenerated
+arrival         ["rdx", "rcx"]
+answer home     rax at 32 bits
+
+THE BODY, VERBATIM (the compiler's own text, untouched)
+    fldt 0x18(%rsp)
+    fldt 0x8(%rsp)
+    fldz
+    fucomi %st(1),%st
+    fstp %st(1)
+    setp %al
+    setne %cl
+    or %al,%cl
+    fucomip %st(1),%st
+    fstp %st(0)
+    setp %al
+    setne %dl
+    or %al,%dl
+    or %cl,%dl
+    movzbl %dl,%eax
+    ret
+
+THE WRAPPED TEXT (layer 3, the runnable record)
+    mov IN-0,%rdx; mov IN-1,%rcx; fldt 0x18(%rsp); fldt 0x8(%rsp); fldz; fucomi %st(1),%st; fstp %st(1); setp %al; setne %cl; or %al,%cl; fucomip %st(1),%st; fstp %st(0); setp %al; setne %dl; or %al,%dl; or %cl,%dl; movzbl %dl,%eax; mov %eax,OUT-0; ret
+
+THE LEDGER, ROW BY ROW, WITH THE LINE THE RELINK ATTACHED
+    row      produced_by (typed)                            line                     term
+    IN-0     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rdx
+    IN-1     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rcx
+    X87-0    {"kind": "arch_opcode", "mnem": "fldt"}        fldt 0x18(%rsp)          x87_0x18_rsp_
+    X87-1    {"kind": "arch_opcode", "mnem": "fldt"}        fldt 0x8(%rsp)           x87_0x8_rsp_
+    X87-2    {"kind": "arch_opcode", "mnem": "fldz"}        fldz                     +0.0
+    TEMP-0   {"kind": "arch_opcode", "mnem": "fucomi"}      fucomi %st(1),%st        ('fucomi', +0.0, x87_0x8_rsp_)
+    GUARD-0  {"kind": "flag_pair", "mnem": ["fucomi", "setp"]} setp %al                 ZeroExt(56, If(Or(fpIsNaN(+0.0), fpIsNaN(x87_0x8_rsp_)), ...
+    GUARD-1  {"kind": "flag_pair", "mnem": ["fucomi", "setne"]} setne %cl                ZeroExt(56, If(Or(Not(fpEQ(+0.0, x87_0x8_rsp_)), Or(fpIsN...
+    TEMP-1   {"kind": "arch_opcode", "mnem": "or"}          or %al,%cl               ZeroExt(56, Extract(7, 0, ZeroExt(56, If(Or(Not(fpEQ(+0.0...
+    TEMP-2   {"kind": "arch_opcode", "mnem": "fucomip"}     fucomip %st(1),%st       ('fucomip', x87_0x8_rsp_, x87_0x18_rsp_)
+    GUARD-2  {"kind": "flag_pair", "mnem": ["fucomip", "setp"]} setp %al                 ZeroExt(56, If(Or(fpIsNaN(x87_0x8_rsp_), fpIsNaN(x87_0x18...
+    GUARD-3  {"kind": "flag_pair", "mnem": ["fucomip", "setne"]} setne %dl                ZeroExt(56, If(Or(Not(fpEQ(x87_0x8_rsp_, x87_0x18_rsp_)),...
+    TEMP-3   {"kind": "arch_opcode", "mnem": "or"}          or %al,%dl               ZeroExt(56, Extract(7, 0, ZeroExt(56, If(Or(Not(fpEQ(x87_...
+    TEMP-4   {"kind": "arch_opcode", "mnem": "or"}          or %cl,%dl               ZeroExt(56, Extract(7, 0, ZeroExt(56, Extract(7, 0, ZeroE...
+    TEMP-5   {"kind": "arch_opcode", "mnem": "movzbl"}      movzbl %dl,%eax          ZeroExt(32, ZeroExt(24, Extract(7, 0, ZeroExt(56, Extract...
+    OUT-0    {"kind": "arch_opcode", "mnem": "movzbl"}      -                        Extract(31, 0, ZeroExt(32, ZeroExt(24, Extract(7, 0, Zero...
+
+THE READ AT OUT-0 (layer 4, the term)
+    Extract(31, 0, ZeroExt(32, ZeroExt(24, Extract(7, 0, ZeroExt(56, Extract(7, 0, ZeroExt(56, Extract(7, 0, ZeroExt(56, If(Or(Not(fpEQ(x87_0x8_rsp_, x87_0x18_rsp_)), Or(fpIsNaN(x87_0x8_rsp_), fpIsNaN(x87_0x18_rsp_))), 1, 0))) | Extract(7, 0, ZeroExt(56, If(Or(fpIsNaN(x87_0x8_rsp_), fpIsNaN(x87_0x18_rsp_)), 1, 0))))) | Extract(7, 0, ZeroExt(56, Extract(7, 0, ZeroExt(56, If(Or(Not(fpEQ(+0.0, x87_0x8_rsp_)), Or(fpIsNaN(+0.0), fpIsNaN(x87_0x8_rsp_))), 1, 0))) | Extract(7, 0, ZeroExt(56, If(Or(fpIsNaN(+0.0), fpIsNaN(x87_0x8_rsp_)), 1, 0))))))))))
+
+THE TWO GATE ROUTES
+    route one  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+    route two  UNDECIDED
+               the text-order walk: no z3 term is written for this arch opcode
+
+THE NORMALIZED TEXT (layer 5, the comparison key)
+    Concat(0, If(fpIsNaN(v0), 1, 0) | If(Or(fpIsNaN(v0), fpIsNaN(v1)), 1, 0) | If(Or(fpIsNaN(v0), Not(fpEQ(+0.0, v0))), 1, 0) | If(Or(fpIsNaN(v0), fpIsNaN(v1), Not(fpEQ(v0, v1))), 1, 0))
+
+HOLES 0, CASCADES 0, SLOT DISAGREEMENTS 1

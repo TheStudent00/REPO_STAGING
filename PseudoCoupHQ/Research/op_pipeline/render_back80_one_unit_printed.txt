@@ -1,0 +1,122 @@
+render_back80 -- LITERAL, one conditional unit of each shape the corpus writes
+
+====================================================================
+UNIT c/op_0   language c   population original
+====================================================================
+
+ITS OWN SHIP BODY, as the compiler wrote it:
+    xor %eax,%eax
+    test %edi,%edi
+    sete %al
+    ret
+
+its arrival contract: families ['rdi'], answer home rax at 8 bits
+
+LAYER 3, the same body wrapped:
+    mov ledger+0x00(%rip),%rdi; mov 0x0(%rdi),%rdi; xor %eax,%eax; test %edi,%edi; sete %al; mov ledger+0x38(%rip),%r11; mov %al,0x0(%r11); ret
+
+ITS TERM, as the reference walk left it:
+    Extract(7, 0, ZeroExt(56, If(0 == Extract(31, 0, seed_rdi) & Extract(31, 0, seed_rdi), 1, 0)))
+
+the same term simplified once, which is what the return path renders:
+    If(Extract(31, 0, seed_rdi) == 0, 1, 0)
+
+THE RENDERED BODY, by the one fixed rule:
+    mov %rdi,%r11
+    mov $0x0,%r10d
+    cmp %r10d,%r11d
+    sete %r11b
+    mov %r11b,%al
+    ret
+
+THE RENDERED TEXT, wrapped by the same CanonicalForm.wrap layer 3 goes through:
+    mov ledger+0x00(%rip),%rdi; mov 0x0(%rdi),%rdi; mov %rdi,%r11; mov $0x0,%r10d; cmp %r10d,%r11d; sete %r11b; mov %r11b,%al; mov ledger+0x38(%rip),%r11; mov %al,0x0(%r11); ret
+
+ASSEMBLED by the real `as` and read back by the real `objdump -d`:
+    instructions written 10, read back 10
+    the disassembler's own lines:
+        
+        /tmp/render_back80_one_unit_work/one.o:     file format elf64-x86-64
+        
+        
+        Disassembly of section .text:
+        
+        0000000000000000 <rb80_one>:
+           0:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 7 <rb80_one+0x7>
+           7:	48 8b 3f             	mov    (%rdi),%rdi
+           a:	49 89 fb             	mov    %rdi,%r11
+           d:	41 ba 00 00 00 00    	mov    $0x0,%r10d
+          13:	45 39 d3             	cmp    %r10d,%r11d
+          16:	41 0f 94 c3          	sete   %r11b
+          1a:	44 88 d8             	mov    %r11b,%al
+          1d:	4c 8b 1d 00 00 00 00 	mov    0x0(%rip),%r11        # 24 <rb80_one+0x24>
+          24:	41 88 03             	mov    %al,(%r11)
+          27:	c3                   	ret
+
+THE GATE'S VERDICT, the rendered text against this unit's OWN ship body:
+    outcome: PROVED_ON_SHIP
+    reason:  z3 proved the wrapped text's OUT-0 equal to the value the unit's own ship body leaves in its own answer home, for every value of every input row, with each input row bound to the same symbol as the argument the reference reads in its arrival register
+
+====================================================================
+UNIT c/op_179   language c   population original
+====================================================================
+
+ITS OWN SHIP BODY, as the compiler wrote it:
+    mov %edi,%eax
+    test %esi,%esi
+    cmove %esi,%eax
+    ret
+
+its arrival contract: families ['rdi', 'rsi'], answer home rax at 32 bits
+
+LAYER 3, the same body wrapped:
+    mov ledger+0x00(%rip),%rdi; mov 0x0(%rdi),%rdi; mov ledger+0x00(%rip),%rsi; mov 0x8(%rsi),%rsi; mov %edi,%eax; test %esi,%esi; cmove %esi,%eax; mov ledger+0x38(%rip),%r11; mov %eax,0x0(%r11); ret
+
+ITS TERM, as the reference walk left it:
+    Extract(31, 0, ZeroExt(32, If(0 == Extract(31, 0, seed_rsi) & Extract(31, 0, seed_rsi), Extract(31, 0, seed_rsi), Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rdi))))))
+
+the same term simplified once, which is what the return path renders:
+    If(Extract(31, 0, seed_rsi) == 0, Extract(31, 0, seed_rsi), Extract(31, 0, seed_rdi))
+
+THE RENDERED BODY, by the one fixed rule:
+    mov %rdi,%r11
+    mov %rsi,%r10
+    mov %rsi,%rax
+    mov $0x0,%ecx
+    cmp %ecx,%eax
+    cmove %r10d,%r11d
+    mov %r11d,%eax
+    ret
+
+THE RENDERED TEXT, wrapped by the same CanonicalForm.wrap layer 3 goes through:
+    mov ledger+0x00(%rip),%rdi; mov 0x0(%rdi),%rdi; mov ledger+0x00(%rip),%rsi; mov 0x8(%rsi),%rsi; mov %rdi,%r11; mov %rsi,%r10; mov %rsi,%rax; mov $0x0,%ecx; cmp %ecx,%eax; cmove %r10d,%r11d; mov %r11d,%eax; mov ledger+0x38(%rip),%r11; mov %eax,0x0(%r11); ret
+
+ASSEMBLED by the real `as` and read back by the real `objdump -d`:
+    instructions written 14, read back 14
+    the disassembler's own lines:
+        
+        /tmp/render_back80_one_unit_work/one.o:     file format elf64-x86-64
+        
+        
+        Disassembly of section .text:
+        
+        0000000000000000 <rb80_one>:
+           0:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 7 <rb80_one+0x7>
+           7:	48 8b 3f             	mov    (%rdi),%rdi
+           a:	48 8b 35 00 00 00 00 	mov    0x0(%rip),%rsi        # 11 <rb80_one+0x11>
+          11:	48 8b 76 08          	mov    0x8(%rsi),%rsi
+          15:	49 89 fb             	mov    %rdi,%r11
+          18:	49 89 f2             	mov    %rsi,%r10
+          1b:	48 89 f0             	mov    %rsi,%rax
+          1e:	b9 00 00 00 00       	mov    $0x0,%ecx
+          23:	39 c8                	cmp    %ecx,%eax
+          25:	45 0f 44 da          	cmove  %r10d,%r11d
+          29:	44 89 d8             	mov    %r11d,%eax
+          2c:	4c 8b 1d 00 00 00 00 	mov    0x0(%rip),%r11        # 33 <rb80_one+0x33>
+          33:	41 89 03             	mov    %eax,(%r11)
+          36:	c3                   	ret
+
+THE GATE'S VERDICT, the rendered text against this unit's OWN ship body:
+    outcome: PROVED_ON_SHIP
+    reason:  z3 proved the wrapped text's OUT-0 equal to the value the unit's own ship body leaves in its own answer home, for every value of every input row, with each input row bound to the same symbol as the argument the reference reads in its arrival register
+

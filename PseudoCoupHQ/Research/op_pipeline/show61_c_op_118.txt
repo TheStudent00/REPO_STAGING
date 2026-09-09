@@ -1,0 +1,45 @@
+UNIT            c/op_118   (from canon39_wrapped_c.json)
+language        c
+population      original
+arrival         ["rdi", "xmm0"]
+answer home     xmm0 at 64 bits
+
+THE BODY, VERBATIM (the compiler's own text, untouched)
+    movq %rdi,%xmm1
+    punpckldq 0x0(%rip),%xmm1 !!reloc=R_X86_64_PC32:.LCPI0_0-0x4
+    subpd 0x0(%rip),%xmm1 !!reloc=R_X86_64_PC32:.LCPI0_1-0x4
+    movapd %xmm1,%xmm2
+    unpckhpd %xmm1,%xmm2
+    addsd %xmm1,%xmm2
+    addsd %xmm2,%xmm0
+    ret
+
+THE WRAPPED TEXT (layer 3, the runnable record)
+    mov IN-0,%rdi; movdqu IN-1,%xmm0; movq %rdi,%xmm1; punpckldq 0x0(%rip),%xmm1 !!reloc=R_X86_64_PC32:.LCPI0_0-0x4; subpd 0x0(%rip),%xmm1 !!reloc=R_X86_64_PC32:.LCPI0_1-0x4; movapd %xmm1,%xmm2; unpckhpd %xmm1,%xmm2; addsd %xmm1,%xmm2; addsd %xmm2,%xmm0; movq %xmm0,OUT-0; ret
+
+THE LEDGER, ROW BY ROW, WITH THE LINE THE RELINK ATTACHED
+    row      produced_by (typed)                            line                     term
+    IN-0     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rdi
+    IN-1     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_xmm0
+    TEMP-0   {"kind": "arch_opcode", "mnem": "movq"}        movq %rdi,%xmm1          ZeroExt(64, seed_rdi)
+    TEMP-1   {"kind": "arch_opcode", "mnem": "punpckldq"}   punpckldq 0x0(%rip),%xmm1 Concat(Concat(Concat(Extract(63, 32, ripconst_0), Extract...
+    TEMP-2   {"kind": "arch_opcode", "mnem": "subpd"}       subpd 0x0(%rip),%xmm1    Concat(fp.to_ieee_bv(fpToFP(Extract(127, 64, Concat(Conca...
+    TEMP-3   {"kind": "arch_opcode", "mnem": "movapd"}      movapd %xmm1,%xmm2       Concat(fp.to_ieee_bv(fpToFP(Extract(127, 64, Concat(Conca...
+    TEMP-4   {"kind": "arch_opcode", "mnem": "unpckhpd"}    unpckhpd %xmm1,%xmm2     Concat(Extract(127, 64, Concat(fp.to_ieee_bv(fpToFP(Extra...
+    TEMP-5   {"kind": "arch_opcode", "mnem": "addsd"}       addsd %xmm1,%xmm2        Concat(Extract(127, 64, Concat(Extract(127, 64, Concat(fp...
+    TEMP-6   {"kind": "arch_opcode", "mnem": "addsd"}       addsd %xmm2,%xmm0        Concat(Extract(127, 64, seed_xmm0), fp.to_ieee_bv(fpToFP(...
+    OUT-0    {"kind": "arch_opcode", "mnem": "addsd"}       -                        Extract(63, 0, Concat(Extract(127, 64, seed_xmm0), fp.to_...
+
+THE READ AT OUT-0 (layer 4, the term)
+    Extract(63, 0, Concat(Extract(127, 64, seed_xmm0), fp.to_ieee_bv(fpToFP(Extract(63, 0, seed_xmm0)) + fpToFP(Extract(63, 0, Concat(Extract(127, 64, Concat(Extract(127, 64, Concat(fp.to_ieee_bv(fpToFP(Extract(127, 64, Concat(Concat(Concat(Extract(63, 32, ripconst_0), Extract(63, 32, ZeroExt(64, seed_rdi))), Extract(31, 0, ripconst_0)), Extract(31, 0, ZeroExt(64, seed_rdi))))) - fpToFP(Extract(127, 64, ripconst_1))), fp.to_ieee_bv(fpToFP(Extract(63, 0, Concat(Concat(Concat(Extract(63, 32, ripconst_0), Extract(63, 32, ZeroExt(64, seed_rdi))), Extract(31, 0, ripconst_0)), Extract(31, 0, ZeroExt(64, seed_rdi))))) - fpToFP(Extract(63, 0, ripconst_1))))), Extract(127, 64, Concat(fp.to_ieee_bv(fpToFP(Extract(127, 64, Concat(Concat(Concat(Extract(63, 32, ripconst_0), Extract(63, 32, ZeroExt(64, seed_rdi))), Extract(31, 0, ripconst_0)), Extract(31, 0, ZeroExt(64, seed_rdi))))) - fpToFP(Extract(127, 64, ripconst_1))), fp.to_ieee_bv(fpToFP(Extract(63, 0, Concat(Concat(Concat(Extract(63, 32, ripconst_0), Extract(63, 32, ZeroExt(64, seed_rdi))), Extract(31, 0, ripconst_0)), Extract(31, 0, ZeroExt(64, seed_rdi))))) - fpToFP(Extract(63, 0, ripconst_1))))))), fp.to_ieee_bv(fpToFP(Extract(63, 0, Concat(Extract(127, 64, Concat(fp.to_ieee_bv(fpToFP(Extract(127, 64, Concat(Concat(Concat(..., ...), Extract(31, 0, ...)), Extract(31, 0, ZeroExt(64, ...))))) - fpToFP(Extract(127, 64, ripconst_1))), fp.to_ieee_bv(fpToFP(Extract(63, 0, Concat(Concat(Concat(..., ...), Extract(31, 0, ...)), Extract(31, 0, ZeroExt(64, ...))))) - fpToFP(Extract(63, 0, ripconst_1))))), Extract(127, 64, Concat(fp.to_ieee_bv(fpToFP(Extract(127, 64, Concat(Concat(Concat(..., ...), Extract(31, 0, ...)), Extract(31, 0, ZeroExt(64, ...))))) - fpToFP(Extract(127, 64, ripconst_1))), fp.to_ieee_bv(fpToFP(Extract(63, 0, Concat(Concat(Concat(..., ...), Extract(31, 0, ...)), Extract(31, 0, ZeroExt(64, ...))))) - fpToFP(Extract(63, 0, ripconst_1)))))))) + fpToFP(Extract(63, 0, Concat(fp.to_ieee_bv(fpToFP(Extract(127, 64, Concat(Concat(Concat(Extract(63, 32, ripconst_0), Extract(63, 32, ZeroExt(64, ...))), Extract(31, 0, ripconst_0)), Extract(31, 0, ZeroExt(64, seed_rdi))))) - fpToFP(Extract(127, 64, ripconst_1))), fp.to_ieee_bv(fpToFP(Extract(63, 0, Concat(Concat(Concat(Extract(63, 32, ripconst_0), Extract(63, 32, ZeroExt(64, ...))), Extract(31, 0, ripconst_0)), Extract(31, 0, ZeroExt(64, seed_rdi))))) - fpToFP(Extract(63, 0, ripconst_1)))))))))))))
+
+THE TWO GATE ROUTES
+    route one  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+    route two  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the same body walked in text order, for every value of every register either walk reads before writing
+
+THE NORMALIZED TEXT (layer 5, the comparison key)
+    fp.to_ieee_bv(fpToFP(fp.to_ieee_bv(fpToFP(fp.to_ieee_bv(-fpToFP(Extract(127, 64, v0)) + fpToFP(Concat(Extract(63, 32, v1), Extract(63, 32, v2))))) + fpToFP(fp.to_ieee_bv(-fpToFP(Extract(63, 0, v0)) + fpToFP(Concat(Extract(31, 0, v1), Extract(31, 0, v2))))))) + fpToFP(Extract(63, 0, v3)))
+
+HOLES 0, CASCADES 0, SLOT DISAGREEMENTS 0

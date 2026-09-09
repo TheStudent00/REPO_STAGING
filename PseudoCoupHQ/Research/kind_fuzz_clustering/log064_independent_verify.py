@@ -24,7 +24,7 @@ csv.field_size_limit(sys.maxsize)
 decimal.getcontext().prec = 80
 MANT_DIGITS = 31
 
-_BASES = ["<USER_HOME>/Programming", "/sessions/bold-relaxed-tesla/mnt/Programming"]
+_BASES = ["~/Programming", "/sessions/bold-relaxed-tesla/mnt/Programming"]
 _BASE = next((b for b in _BASES if os.path.isdir(b)), _BASES[0])
 HERE = os.path.join(_BASE, "PseudoCoupHQ/Research/kind_fuzz_clustering")
 CART = os.path.join(HERE, "matrices_cart_v2")

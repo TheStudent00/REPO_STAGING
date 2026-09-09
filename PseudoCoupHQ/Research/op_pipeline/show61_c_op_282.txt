@@ -1,0 +1,37 @@
+UNIT            c/op_282   (from canon39_wrapped_c.json)
+language        c
+population      original
+arrival         ["rdi", "rsi"]
+answer home     rax at 8 bits
+
+THE BODY, VERBATIM (the compiler's own text, untouched)
+    xor %eax,%eax
+    or %esi,%edi
+    setne %al
+    ret
+
+THE WRAPPED TEXT (layer 3, the runnable record)
+    mov IN-0,%rdi; mov IN-1,%rsi; xor %eax,%eax; or %esi,%edi; setne %al; mov %al,OUT-0; ret
+
+THE LEDGER, ROW BY ROW, WITH THE LINE THE RELINK ATTACHED
+    row      produced_by (typed)                            line                     term
+    IN-0     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rdi
+    IN-1     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rsi
+    TEMP-0   {"kind": "arch_opcode", "mnem": "xor"}         xor %eax,%eax            ZeroExt(32, Extract(31, 0, seed_rax) ^ Extract(31, 0, see...
+    TEMP-1   {"kind": "arch_opcode", "mnem": "or"}          or %esi,%edi             ZeroExt(32, Extract(31, 0, seed_rdi) | Extract(31, 0, see...
+    GUARD-0  {"kind": "flag_pair", "mnem": ["or", "setne"]} setne %al                ZeroExt(56, If(0 != Extract(31, 0, seed_rdi) | Extract(31...
+    OUT-0    {"kind": "flag_pair", "mnem": ["or", "setne"]} -                        Extract(7, 0, ZeroExt(56, If(0 != Extract(31, 0, seed_rdi...
+
+THE READ AT OUT-0 (layer 4, the term)
+    Extract(7, 0, ZeroExt(56, If(0 != Extract(31, 0, seed_rdi) | Extract(31, 0, seed_rsi), 1, 0)))
+
+THE TWO GATE ROUTES
+    route one  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+    route two  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the same body walked in text order, for every value of every register either walk reads before writing
+
+THE NORMALIZED TEXT (layer 5, the comparison key)
+    If(Extract(31, 0, v0) | Extract(31, 0, v1) == 0, 0, 1)
+
+HOLES 0, CASCADES 0, SLOT DISAGREEMENTS 0

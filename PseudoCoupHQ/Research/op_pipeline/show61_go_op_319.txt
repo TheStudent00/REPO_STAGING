@@ -1,0 +1,33 @@
+UNIT            go/op_319   (from canon39_wrapped_go.json)
+language        go
+population      original
+arrival         ["rax", "rbx"]
+answer home     rax at 64 bits
+
+THE BODY, VERBATIM (the compiler's own text, untouched)
+    add %rbx,%rax
+    ret
+
+THE WRAPPED TEXT (layer 3, the runnable record)
+    mov IN-0,%rax; mov IN-1,%rbx; add %rbx,%rax; mov %rax,OUT-0; ret
+
+THE LEDGER, ROW BY ROW, WITH THE LINE THE RELINK ATTACHED
+    row      produced_by (typed)                            line                     term
+    IN-0     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rax
+    IN-1     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rbx
+    TEMP-0   {"kind": "arch_opcode", "mnem": "add"}         add %rbx,%rax            seed_rax + seed_rbx
+    OUT-0    {"kind": "arch_opcode", "mnem": "add"}         -                        seed_rax + seed_rbx
+
+THE READ AT OUT-0 (layer 4, the term)
+    seed_rax + seed_rbx
+
+THE TWO GATE ROUTES
+    route one  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+    route two  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the same body walked in text order, for every value of every register either walk reads before writing
+
+THE NORMALIZED TEXT (layer 5, the comparison key)
+    v0 + v1
+
+HOLES 0, CASCADES 0, SLOT DISAGREEMENTS 0

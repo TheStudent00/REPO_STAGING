@@ -1,0 +1,233 @@
+====================================================================
+PART 1 -- go/op_174: a conditional transfer to a panic path
+====================================================================
+LITERAL -- the unit's own stored body (`canon39_wrapped_go.json`), 'body_verbatim':
+     0  push %rbp
+     1  mov %rsp,%rbp
+     2  test %ebx,%ebx
+     3  jl L0
+     4  mov %ebx,%ecx
+     5  shl %cl,%rax
+     6  cmp $0x40,%ecx
+     7  sbb %rdx,%rdx
+     8  and %rdx,%rax
+     9  pop %rbp
+    10  ret
+    11  L0:
+    12  call x_runtime_panicshift
+    13  nop
+
+LITERAL -- the control-flow graph this file reads off that text:
+    label -> instruction index: {"L0": 11}
+    block 0  instructions 0..3  terminator 'jl L0'                   taken: block 2 | not taken: block 1
+    block 1  instructions 4..10  terminator 'ret'                     returns
+    block 2  instructions 11..12  terminator 'nop'                     always: OUT OF THE UNIT
+
+GLOSS: block 0 ends `jl L0`.  L0 is a label this body defines,
+  so the TAKEN side is an edge inside the unit -- to block 2,
+  which transfers to `x_runtime_panicshift`, a name no
+  builtins archive defines, so THAT block leaves the unit.
+  The side that leaves is unreachable and contributes nothing
+  to the answer; its condition becomes a guard row.
+
+LITERAL -- the guard rows the walk left:
+    line      call x_runtime_panicshift
+    went to   runtime_panicshift
+    condition And(True, 0 > Extract(31, 0, seed_rbx) & Extract(31, 0, seed_rbx))
+
+GLOSS: `jl` after `test %ebx,%ebx` reads 'the shift count is
+  negative'.  Under that condition go's own runtime stops the
+  program; under its negation the shift runs.  The condition
+  is kept as data, which is what a guard row is for.
+
+LITERAL -- `Reference.answer_of` for this body, simplified:
+    ~(~(seed_rax << Concat(0, Extract(5, 0, seed_rbx))) |
+  ~(18446744073709551615*
+    If(Or(Not(Extract(31, 7, seed_rbx) == 0),
+          ULE(64, Extract(6, 0, seed_rbx))),
+       0,
+       1)))
+
+LITERAL -- the gate, route one (the term against the unit's own ship body):
+    outcome PROVED_ON_SHIP
+    reason  z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+
+LITERAL -- what round 12 recorded for the same unit (`term61_store/canon39_wrapped_go.json`):
+    outcome UNDECIDED
+    reason  the reference: arch opcode 'jl' is a census row, not a silent gap: a transfer or trap, and this reference walks a body in text order
+
+====================================================================
+PART 2 -- c/op_282: a straight-line logic unit, UNCHANGED
+====================================================================
+LITERAL -- the unit's own stored body (`canon39_wrapped_c.json`):
+     0  xor %eax,%eax
+     1  or %esi,%edi
+     2  setne %al
+     3  ret
+
+LITERAL -- `Reference.answer_of`, simplified:
+    If(Extract(31, 0, seed_rdi) | Extract(31, 0, seed_rsi) == 0, 0, 1)
+LITERAL -- the gate, route one:
+    outcome PROVED_ON_SHIP
+
+LITERAL -- round 12's record for the same unit:
+    outcome                PROVED_ON_SHIP
+    layer5_normalized_text If(Extract(31, 0, v0) | Extract(31, 0, v1) == 0, 0, 1)
+
+LITERAL -- this run's normalized text:
+    If(Extract(31, 0, v0) | Extract(31, 0, v1) == 0, 0, 1)
+    character-for-character identical to round 12's: True
+
+GLOSS: this body has no label, no conditional transfer and no
+  `call`, so the graph is one block and the walk is the walk
+  round 12 made.  The verdict and the text are the same ones.
+
+====================================================================
+PART 3 -- an `__extendhfsf2` caller: the callee entry and the return
+====================================================================
+------------------------------------------------------------
+UNIT cpp/regen_12920   (canon39_regen_store/op_units2_cpp_c0032.json)
+  its answer home: %rax, 64 bits
+LITERAL -- the caller's own stored body:
+     0  push %rax
+     1  cvtsi2ss %edi,%xmm1
+     2  movss %xmm1,0x4(%rsp)
+     3  call L0 !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4
+     4  L0:
+     5  movss 0x4(%rsp),%xmm1
+     6  divss %xmm0,%xmm1
+     7  movaps %xmm1,%xmm0
+     8  call L1 !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4
+     9  L1:
+    10  pop %rax
+    11  ret
+
+  THE ENTRY, at line `call L0`:
+    the transfer's own text names 'L0'; the RELOCATION names '__extendhfsf2'
+    the callee arch unit entered: runtime/clang++/__extendhfsf2
+      archive        /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+      member         extendhfsf2.c.o
+      instructions   40
+      ITS OWN arrival contract (the families its text reads before it writes them): %xmm0, %rax
+      the caller's registers already hold those values, so nothing about a calling rule is assumed
+    THE RETURN: the answer register computed off the callee's own body is %xmm0
+    the callee's body is itself a graph: 8 blocks, 3 of them ending in a conditional transfer
+
+  THE ENTRY, at line `call L1`:
+    the transfer's own text names 'L1'; the RELOCATION names '__truncsfhf2'
+    the callee arch unit entered: runtime/clang++/__truncsfhf2
+      archive        /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+      member         truncsfhf2.c.o
+      instructions   101
+      ITS OWN arrival contract (the families its text reads before it writes them): %xmm0, %rdi
+      the caller's registers already hold those values, so nothing about a calling rule is assumed
+    THE RETURN: the answer register computed off the callee's own body is %xmm0
+    the callee's body is itself a graph: 18 blocks, 8 of them ending in a conditional transfer
+
+  LITERAL -- `Reference.answer_of` for the caller, simplified to its first 400 characters:
+    seed_rax
+  LITERAL -- the gate, route one:
+    outcome PROVED_ON_SHIP
+    reason  z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+
+------------------------------------------------------------
+UNIT c/regen_1056   (canon39_regen_store/op_units2_c_c0002.json)
+  its answer home: %xmm0, 32 bits
+LITERAL -- the caller's own stored body:
+     0  push %rbx
+     1  mov %edi,%ebx
+     2  call L0 !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4
+     3  L0:
+     4  cvtsi2ss %ebx,%xmm1
+     5  addss %xmm1,%xmm0
+     6  call L1 !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4
+     7  L1:
+     8  pop %rbx
+     9  ret
+
+  THE ENTRY, at line `call L0`:
+    the transfer's own text names 'L0'; the RELOCATION names '__extendhfsf2'
+    the callee arch unit entered: runtime/clang/__extendhfsf2
+      archive        /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+      member         extendhfsf2.c.o
+      instructions   40
+      ITS OWN arrival contract (the families its text reads before it writes them): %xmm0, %rax
+      the caller's registers already hold those values, so nothing about a calling rule is assumed
+    THE RETURN: the answer register computed off the callee's own body is %xmm0
+    the callee's body is itself a graph: 8 blocks, 3 of them ending in a conditional transfer
+
+  THE ENTRY, at line `call L1`:
+    the transfer's own text names 'L1'; the RELOCATION names '__truncsfhf2'
+    the callee arch unit entered: runtime/clang/__truncsfhf2
+      archive        /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+      member         truncsfhf2.c.o
+      instructions   101
+      ITS OWN arrival contract (the families its text reads before it writes them): %xmm0, %rdi
+      the caller's registers already hold those values, so nothing about a calling rule is assumed
+    THE RETURN: the answer register computed off the callee's own body is %xmm0
+    the callee's body is itself a graph: 18 blocks, 8 of them ending in a conditional transfer
+
+  LITERAL -- `Reference.answer_of` for the caller, simplified to its first 400 characters:
+    Concat(Extract(31, 16, fp.to_ieee_bv(fpToFP(Concat(Extract(15, 15, seed_xmm0) | If(Or(And(Not(Extract(14, 10, seed_xmm0) == 0), Extract(14, 10, seed_xmm0) == 31), And(Not(Extract(14, 10, seed_xmm0) == 0), Not(Extract(14, 10, seed_xmm0) == 31)), Not(And(Extract(14, 10, seed_xmm0) == 0, Not(Extract(9, 0, seed_xmm0) == 0)))), 0, Extract(31, 31, Concat(0, Extract(9, 0, seed_xmm0)) << Concat(0, 24 +...
+  LITERAL -- the gate, route one:
+    outcome DISPROVED
+    reason  z3 found a starting state under which the two sides differ
+
+------------------------------------------------------------
+IS THE WALK OF THE CALLEE'S BODY RIGHT?  Concrete values through `clang/__extendhfsf2`, whose body has 5 conditional transfers and 8 blocks:
+
+  half in    what it is             float out    read as
+  0x3C00     1.0                    0x3F800000   1.0
+  0xC000     -2.0                   0xC0000000   -2.0
+  0x0001     the smallest subnormal 0x33800000   5.960464477539063e-08
+  0x7C00     +infinity              0x7F800000   inf
+  0x3555     the nearest half to 1/3 0x3EAAA000   0.333251953125
+
+  GLOSS: every one is the IEEE-correct widening, including the subnormal (2^-24 = 5.960464477539063e-08), which is the case the body's `bsr` / `shl` branch exists for.  A wrong fork, a wrong merge or a wrongly-kept unreachable side would show here as a wrong number.
+
+  and the inverse routine `clang/__truncsfhf2` (101 instructions, 18 blocks), narrowing them back:
+    1.0    -> 0x3C00
+    -2.5   -> 0xC100
+    0.0    -> 0x0000
+
+====================================================================
+PART 4 -- the narrow division, the widening multiply, and a rip-relative address
+====================================================================
+  LITERAL  idiv %sil
+  GLOSS    8-bit signed division: the dividend is the WHOLE 16-bit accumulator AX; the quotient lands in AL and the remainder in AH, which are two BYTES of one register
+  before   %rax = 0x1234000000000007, %rsi = 0xfd
+  after    %rax = 0x12340000000001fe
+  note     AX = 7, SIL = -3 (0xFD).  7 / -3 = -2 (0xFE) into AL and 7 % -3 = 1 into AH, so AX becomes 0x01FE and the upper 48 bits of %rax are untouched.  The remainder's sign follows the DIVIDEND, which is the SRem rule, not z3's `%`
+
+  LITERAL  idiv %si
+  GLOSS    16-bit signed division: the dividend is DX:AX, the quotient lands in AX and the remainder in DX
+  before   %rax = 0xaaaa000000000007, %rdx = 0xbbbb000000000000, %rsi = 0xcccc000000000003
+  after    %rax = 0xaaaa000000000002
+  after    %rdx = 0xbbbb000000000001
+  note     DX:AX = 0x00000007 = 7, SI = 3.  7 / 3 = 2 into AX and 7 % 3 = 1 into DX; both keep their upper 48 bits
+
+  LITERAL  div %sil
+  GLOSS    8-bit unsigned division, the same two places, unsigned
+  before   %rax = 0xff, %rsi = 0x10
+  after    %rax = 0xf0f
+  note     AX = 255, SIL = 16.  255 / 16 = 15 (0x0F) into AL and 255 % 16 = 15 (0x0F) into AH, so AX = 0x0F0F
+
+  LITERAL  mul %sil
+  GLOSS    8-bit unsigned widening multiply: AL times the operand, and the WHOLE 16-bit product IS AX -- there is no high half to put anywhere
+  before   %rax = 0xc8, %rsi = 0x3
+  after    %rax = 0x258
+  note     AL = 200, SIL = 3.  200 * 3 = 600 = 0x258, which does not fit in 8 bits and is exactly why the form widens: AX = 0x0258
+
+  LITERAL  mul %si
+  GLOSS    16-bit unsigned widening multiply: AX times the operand, the low half into AX and the high half into DX
+  before   %rax = 0xffff, %rdx = 0x0, %rsi = 0x2
+  after    %rax = 0xfffe
+  after    %rdx = 0x1
+  note     AX = 65535, SI = 2.  65535 * 2 = 131070 = 0x1FFFE, so AX takes 0xFFFE and DX takes 0x0001
+
+  LITERAL  lea 0x2e57(%rip),%rax
+  GLOSS    an address this artifact does not hold: the compiler placed the thing it points at in its own constant pool, whose bytes are not in the unit
+  after    %rax = Extract(63, 0, ripconst_0)
+           %rdx = Extract(63, 0, ripconst_1)
+  note     the k-th rip-relative place of a body is the k-th `ripconst_<k>`, the SAME counter a rip-relative READ uses, so this file and the ledger transcription name one constant.  Before task 64 this line refused: "an address computation over base register '%rip'" (32 units, log_160 section 1.7)
+

@@ -1,0 +1,645 @@
+== THE POPULATIONS WALKED ==
+  regenerated  29288 units
+  wrapped      1779 units
+  all          31067 units
+
+runtime routines handed to the ledger (from runtime_callee_units.json, which reads each toolchain's own archive index): __divti3, __modti3, __udivti3, __umodti3
+
+== THE SAMPLE, COMPUTED ==
+acceptance names read by pattern out of: log_152_task52_ledger_repaired_canon38.md, log_153_task53_layer4_canon38_census.md, acceptance48.py, acceptance53.py
+acceptance names found: 44; of those present in the recorded populations: 44; absent: 0 
+  population carry-in     728 units
+  population regenerated  29288 units
+  population runtime      308 units
+  population wrapped      1779 units
+  sample walked: 241 units (seed 59)
+
+== THE ACCEPTANCE UNITS, ROWS PRINTED ==
+  c/op_210   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov %edi,%eax; cltd; idiv %esi; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       cltd [the sign of the accumulator] TEMP-0
+    TEMP-2   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-1,IN-1
+    OUT-0    4-byte general value       idiv                               TEMP-2
+
+  go/op_174   [population: wrapped]
+    body: mov IN-0,%rax; mov IN-1,%rbx; push %rbp; mov %rsp,%rbp; test %ebx,%ebx; jl L0; mov %ebx,%ecx; shl %cl,%rax; cmp $0x40,%ecx; sbb %rdx,%rdx; and %rdx,%rax; pop %rbp; mov %rax,OUT-0; ret; L0:; call x_runtime_panicshift; nop
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   flags only                 test                               IN-1,IN-1
+    GUARD-0  flag-derived value         test + jl                          TEMP-0
+    TEMP-1   8-byte general value       mov                                IN-1
+    TEMP-2   8-byte general value       shl                                TEMP-1,IN-0
+    CONST-0  literal                    the body's own immediate operand   
+    TEMP-3   flags only                 cmp                                CONST-0,TEMP-1
+    TEMP-4   8-byte general value       sbb [the difference]               TEMP-3
+    TEMP-5   flags only                 sbb [the flags]                    TEMP-3
+    TEMP-6   8-byte general value       and                                TEMP-4,TEMP-2
+    OUT-0    8-byte general value       and                                TEMP-6
+
+  go/op_110   [population: wrapped]
+    body: mov IN-0,%rbx; push %rbp; mov %rsp,%rbp; test %rbx,%rbx; je L0; xor %edx,%edx; div %rbx; pop %rbp; mov %eax,OUT-0; ret; L0:; call x_runtime_panicdivide; nop
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   flags only                 test                               IN-0,IN-0
+    GUARD-0  flag-derived value         test + je                          TEMP-0
+    TEMP-1   8-byte general value       xor                                
+    TEMP-2   8-byte general value       div [quotient]                     TEMP-1,IN-0
+    TEMP-3   8-byte general value       div [remainder]                    TEMP-1,IN-0
+    OUT-0    4-byte general value       div                                TEMP-2
+
+  c/op_109   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; lea (%rdi,%rsi,1),%rax; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       lea                                IN-0,IN-1
+    OUT-0    8-byte general value       lea                                TEMP-0
+
+  c/regen_11491   [population: regenerated]
+    body: mov IN-0,%rcx; push %rax; call L0 !!reloc=R_X86_64_PLT32:__divti3-0x4; L0:; pop %rcx; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   8-byte general value       runtime __divti3 [the runtime routine's answer] IN-0
+    OUT-0    8-byte general value       runtime __divti3                   TEMP-0
+
+  cpp/regen_36796   [population: regenerated]
+    body: fldt 0x18(%rsp); fldt 0x8(%rsp); fucomip %st(1),%st; fstp %st(0); seta %al; mov %al,OUT-0; ret
+    row      type                       produced by                        operands
+    X87-0    x87 stack value            fldt                               
+    X87-1    x87 stack value            fldt                               
+    TEMP-0   flags only                 fucomip                            X87-0,X87-1
+    GUARD-0  flag-derived value         fucomip + seta                     TEMP-0
+    OUT-0    1-byte general value       fucomip + seta                     GUARD-0
+
+  go/op_180   [population: wrapped]
+    body: mov IN-0,%rax; mov IN-1,%rbx; push %rbp; mov %rsp,%rbp; test %ebx,%ebx; jl L0; mov %ebx,%ecx; shl %cl,%rax; cmp $0x40,%ecx; sbb %rdx,%rdx; and %rdx,%rax; pop %rbp; mov %rax,OUT-0; ret; L0:; call x_runtime_panicshift; nop
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   flags only                 test                               IN-1,IN-1
+    GUARD-0  flag-derived value         test + jl                          TEMP-0
+    TEMP-1   8-byte general value       mov                                IN-1
+    TEMP-2   8-byte general value       shl                                TEMP-1,IN-0
+    CONST-0  literal                    the body's own immediate operand   
+    TEMP-3   flags only                 cmp                                CONST-0,TEMP-1
+    TEMP-4   8-byte general value       sbb [the difference]               TEMP-3
+    TEMP-5   flags only                 sbb [the flags]                    TEMP-3
+    TEMP-6   8-byte general value       and                                TEMP-4,TEMP-2
+    OUT-0    8-byte general value       and                                TEMP-6
+
+  cpp/regen_11542   [population: regenerated]
+    body: mov IN-0,%rdx; mov IN-1,%rcx; push %rax; mov %edx,%edx; xor %ecx,%ecx; call L0 !!reloc=R_X86_64_PLT32:__udivti3-0x4; L0:; pop %rcx; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       xor                                IN-1,IN-1
+    TEMP-2   8-byte general value       runtime __udivti3 [the runtime routine's answer] TEMP-0,TEMP-1
+    OUT-0    8-byte general value       runtime __udivti3                  TEMP-2
+
+  c/op_0   [population: wrapped]
+    body: mov IN-0,%rdi; xor %eax,%eax; test %edi,%edi; sete %al; mov %al,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       xor                                
+    TEMP-1   flags only                 test                               IN-0,IN-0
+    GUARD-0  flag-derived value         test + sete                        TEMP-1,TEMP-0
+    OUT-0    1-byte general value       test + sete                        GUARD-0
+
+  c/op_1   [population: wrapped]
+    body: mov IN-0,%rdi; xor %eax,%eax; test %rdi,%rdi; sete %al; mov %al,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       xor                                
+    TEMP-1   flags only                 test                               IN-0,IN-0
+    GUARD-0  flag-derived value         test + sete                        TEMP-1,TEMP-0
+    OUT-0    1-byte general value       test + sete                        GUARD-0
+
+  c/op_11   [population: wrapped]
+    body: mov IN-0,%rdi; mov %edi,%eax; not %eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       not                                TEMP-0
+    OUT-0    4-byte general value       not                                TEMP-1
+
+  c/op_104   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; movslq %edi,%rax; add %rsi,%rax; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       movslq                             IN-0
+    TEMP-1   8-byte general value       add                                IN-1,TEMP-0
+    OUT-0    8-byte general value       add                                TEMP-1
+
+  go/regen_142   [population: regenerated]
+    body: mov IN-0,%rbx; push %rbp; mov %rsp,%rbp; test %rbx,%rbx; je L0; xor %edx,%edx; div %rbx; pop %rbp; mov %rbx,OUT-0; ret; L0:; call x_runtime_panicdivide; nop
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   flags only                 test                               IN-0,IN-0
+    GUARD-0  flag-derived value         test + je                          TEMP-0
+    TEMP-1   8-byte general value       xor                                
+    TEMP-2   8-byte general value       div [quotient]                     TEMP-1,IN-0
+    TEMP-3   8-byte general value       div [remainder]                    TEMP-1,IN-0
+    OUT-0    8-byte general value       arrival                            IN-0
+
+  c/op_253   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %rdi,%rax; cqto; idiv %rsi; mov %rdx,%rax; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       cqto [the sign of the accumulator] TEMP-0
+    TEMP-2   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-1,IN-1
+    TEMP-4   8-byte general value       mov                                TEMP-3
+    OUT-0    8-byte general value       mov                                TEMP-4
+
+  c/regen_34943   [population: regenerated]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %edi,%eax; cmp %rax,%rsi; sbb $0x0,%rdx; setl %al; movzbl %al,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   flags only                 cmp                                TEMP-0,IN-1
+    CONST-0  literal                    the body's own immediate operand   
+    TEMP-2   8-byte general value       sbb [the difference]               TEMP-1,CONST-0,IN-2
+    TEMP-3   flags only                 sbb [the flags]                    TEMP-1,CONST-0,IN-2
+    GUARD-0  flag-derived value         sbb + setl                         TEMP-3,TEMP-0
+    TEMP-4   8-byte general value       movzbl                             GUARD-0
+    OUT-0    4-byte general value       movzbl                             TEMP-4
+
+  c/regen_36623   [population: regenerated]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %rdi,%rax; sar $0x3f,%rax; cmp %rdi,%rsi; sbb %rax,%rdx; setl %al; movzbl %al,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    CONST-0  literal                    the body's own immediate operand   
+    TEMP-1   8-byte general value       sar                                CONST-0,TEMP-0
+    TEMP-2   flags only                 cmp                                IN-0,IN-1
+    TEMP-3   8-byte general value       sbb [the difference]               TEMP-2,TEMP-1,IN-2
+    TEMP-4   flags only                 sbb [the flags]                    TEMP-2,TEMP-1,IN-2
+    GUARD-0  flag-derived value         sbb + setl                         TEMP-4,TEMP-1
+    TEMP-5   8-byte general value       movzbl                             GUARD-0
+    OUT-0    4-byte general value       movzbl                             TEMP-5
+
+  c/op_101   [population: wrapped]
+    body: mov IN-0,%rdi; mov %edi,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    OUT-0    4-byte general value       mov                                TEMP-0
+
+  rust/op_642   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; push %rax; test %esi,%esi; je L0; mov %esi,%eax; not %eax; lea -0x80000000(%rdi),%ecx; or %eax,%ecx; je L1; mov %edi,%eax; cltd; idiv %esi; pop %rcx; mov %eax,OUT-0; ret; L0:; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e999d8e928eeaaa2810ddee94f44a439.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4; L1:; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e999d8e928eeaaa2810ddee94f44a439.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   flags only                 test                               IN-1,IN-1
+    GUARD-0  flag-derived value         test + je                          TEMP-0
+    TEMP-1   8-byte general value       mov                                IN-1
+    TEMP-2   8-byte general value       not                                TEMP-1
+    TEMP-3   8-byte general value       lea                                IN-0
+    TEMP-4   8-byte general value       or                                 TEMP-2,TEMP-3
+    GUARD-1  flag-derived value         or + je                            TEMP-4
+    TEMP-5   8-byte general value       mov                                IN-0
+    TEMP-6   8-byte general value       cltd [the sign of the accumulator] TEMP-5
+    TEMP-7   8-byte general value       idiv [quotient]                    TEMP-5,TEMP-6,IN-1
+    TEMP-8   8-byte general value       idiv [remainder]                   TEMP-5,TEMP-6,IN-1
+    TEMP-9   8-byte general value       lea                                
+    TEMP-10  8-byte general value       lea                                
+    OUT-0    4-byte general value       idiv                               TEMP-7
+
+  rust/op_649   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; push %rax; test %rsi,%rsi; je L0; mov %rsi,%rax; not %rax; movabs $0x8000000000000000,%rcx; xor %rdi,%rcx; or %rax,%rcx; je L1; mov %rdi,%rax; cqto; idiv %rsi; pop %rcx; mov %rax,OUT-0; ret; L0:; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.f827e8a11002c08557cadc9bf0371c45.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4; L1:; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.f827e8a11002c08557cadc9bf0371c45.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   flags only                 test                               IN-1,IN-1
+    GUARD-0  flag-derived value         test + je                          TEMP-0
+    TEMP-1   8-byte general value       mov                                IN-1
+    TEMP-2   8-byte general value       not                                TEMP-1
+    CONST-0  literal                    the body's own immediate operand   
+    TEMP-3   8-byte general value       movabs                             CONST-0
+    TEMP-4   8-byte general value       xor                                IN-0,TEMP-3
+    TEMP-5   8-byte general value       or                                 TEMP-2,TEMP-4
+    GUARD-1  flag-derived value         or + je                            TEMP-5
+    TEMP-6   8-byte general value       mov                                IN-0
+    TEMP-7   8-byte general value       cqto [the sign of the accumulator] TEMP-6
+    TEMP-8   8-byte general value       idiv [quotient]                    TEMP-6,TEMP-7,IN-1
+    TEMP-9   8-byte general value       idiv [remainder]                   TEMP-6,TEMP-7,IN-1
+    TEMP-10  8-byte general value       lea                                
+    TEMP-11  8-byte general value       lea                                
+    OUT-0    8-byte general value       idiv                               TEMP-8
+
+  c/op_212   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; movslq %edi,%rax; xor %edx,%edx; div %rsi; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       movslq                             IN-0
+    TEMP-1   8-byte general value       xor                                IN-2,IN-2
+    TEMP-2   8-byte general value       div [quotient]                     TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       div [remainder]                    TEMP-0,TEMP-1,IN-1
+    OUT-0    8-byte general value       div                                TEMP-2
+
+  c/op_218   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %rdi,%rax; xor %edx,%edx; div %rsi; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       xor                                IN-2,IN-2
+    TEMP-2   8-byte general value       div [quotient]                     TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       div [remainder]                    TEMP-0,TEMP-1,IN-1
+    OUT-0    8-byte general value       div                                TEMP-2
+
+  c/op_222   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %rdi,%rax; movslq %esi,%rcx; xor %edx,%edx; div %rcx; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       movslq                             IN-1
+    TEMP-2   8-byte general value       xor                                IN-2,IN-2
+    TEMP-3   8-byte general value       div [quotient]                     TEMP-0,TEMP-2,TEMP-1
+    TEMP-4   8-byte general value       div [remainder]                    TEMP-0,TEMP-2,TEMP-1
+    OUT-0    8-byte general value       div                                TEMP-3
+
+  c/regen_35988   [population: regenerated]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov IN-3,%rcx; mov %edx,%eax; xor %ecx,%ecx; cmp %rdi,%rax; sbb %rsi,%rcx; setl %al; movzbl %al,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    IN-3     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-2
+    TEMP-1   8-byte general value       xor                                IN-3,IN-3
+    TEMP-2   flags only                 cmp                                IN-0,TEMP-0
+    TEMP-3   8-byte general value       sbb [the difference]               TEMP-2,IN-1,TEMP-1
+    TEMP-4   flags only                 sbb [the flags]                    TEMP-2,IN-1,TEMP-1
+    GUARD-0  flag-derived value         sbb + setl                         TEMP-4,TEMP-0
+    TEMP-5   8-byte general value       movzbl                             GUARD-0
+    OUT-0    4-byte general value       movzbl                             TEMP-5
+
+  c/regen_36007   [population: regenerated]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov IN-3,%rcx; cmp %rdi,%rdx; sbb %rsi,%rcx; setl %al; movzbl %al,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    IN-3     8-byte general value       arrival                            
+    TEMP-0   flags only                 cmp                                IN-0,IN-2
+    TEMP-1   8-byte general value       sbb [the difference]               TEMP-0,IN-1,IN-3
+    TEMP-2   flags only                 sbb [the flags]                    TEMP-0,IN-1,IN-3
+    GUARD-0  flag-derived value         sbb + setl                         TEMP-2
+    TEMP-3   8-byte general value       movzbl                             GUARD-0
+    OUT-0    4-byte general value       movzbl                             TEMP-3
+
+  c/op_100   [population: wrapped]
+    body: movq %xmm0,OUT-0; ret
+    row      type                       produced by                        operands
+    OUT-0    8-byte vector-held value   the body's last write to %xmm0     
+
+  c/op_21   [population: wrapped]
+    body: movq %xmm0,OUT-0; ret
+    row      type                       produced by                        operands
+    OUT-0    8-byte vector-held value   the body's last write to %xmm0     
+
+  c/op_22   [population: wrapped]
+    body: movq %xmm0,OUT-0; ret
+    row      type                       produced by                        operands
+    OUT-0    8-byte vector-held value   the body's last write to %xmm0     
+
+  c/op_246   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       cltd [the sign of the accumulator] TEMP-0
+    TEMP-2   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-1,IN-1
+    TEMP-4   8-byte general value       mov                                TEMP-3
+    OUT-0    4-byte general value       mov                                TEMP-4
+
+  c/op_247   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; movslq %edi,%rax; cqto; idiv %rsi; mov %rdx,%rax; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       movslq                             IN-0
+    TEMP-1   8-byte general value       cqto [the sign of the accumulator] TEMP-0
+    TEMP-2   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-1,IN-1
+    TEMP-4   8-byte general value       mov                                TEMP-3
+    OUT-0    8-byte general value       mov                                TEMP-4
+
+  c/op_252   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %rdi,%rax; movslq %esi,%rcx; cqto; idiv %rcx; mov %rdx,%rax; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       movslq                             IN-1
+    TEMP-2   8-byte general value       cqto [the sign of the accumulator] TEMP-0
+    TEMP-3   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-2,TEMP-1
+    TEMP-4   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-2,TEMP-1
+    TEMP-5   8-byte general value       mov                                TEMP-4
+    OUT-0    8-byte general value       mov                                TEMP-5
+
+  c/op_211   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; movslq %edi,%rax; cqto; idiv %rsi; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       movslq                             IN-0
+    TEMP-1   8-byte general value       cqto [the sign of the accumulator] TEMP-0
+    TEMP-2   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-1,IN-1
+    OUT-0    8-byte general value       idiv                               TEMP-2
+
+  c/op_216   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov %rdi,%rax; movslq %esi,%rcx; cqto; idiv %rcx; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       movslq                             IN-1
+    TEMP-2   8-byte general value       cqto [the sign of the accumulator] TEMP-0
+    TEMP-3   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-2,TEMP-1
+    TEMP-4   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-2,TEMP-1
+    OUT-0    8-byte general value       idiv                               TEMP-3
+
+  c/regen_30547   [population: regenerated]
+    body: mov IN-0,%rdi; fldt 0x8(%rsp); mov %rdi,-0x8(%rsp); xor %eax,%eax; test %rdi,%rdi; sets %al; fildll -0x8(%rsp); lea 0x0(%rip),%rcx !!reloc=R_X86_64_PC32:.LCPI0_0-0x4; fadds (%rcx,%rax,4); fucomip %st(1),%st; fstp %st(0); setnp %al; sete %cl; and %al,%cl; movzbl %cl,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    X87-0    x87 stack value            fldt                               
+    OWN-0    the unit's own stack address the body's own stack displacement  
+    TEMP-0   8-byte general value       xor                                
+    TEMP-1   flags only                 test                               IN-0,IN-0
+    GUARD-0  flag-derived value         test + sets                        TEMP-1,TEMP-0
+    X87-1    x87 stack value            fildll                             OWN-0
+    TEMP-2   8-byte general value       lea                                
+    X87-2    x87 stack value            fadds                              X87-1,TEMP-2,GUARD-0
+    TEMP-3   flags only                 fucomip                            X87-0,X87-2
+    GUARD-1  flag-derived value         fucomip + setnp                    TEMP-3,GUARD-0
+    GUARD-2  flag-derived value         fucomip + sete                     TEMP-3,TEMP-2
+    TEMP-4   8-byte general value       and                                GUARD-1,GUARD-2
+    TEMP-5   8-byte general value       movzbl                             TEMP-4
+    OUT-0    4-byte general value       movzbl                             TEMP-5
+
+  c/regen_30550   [population: regenerated]
+    body: mov IN-0,%rdi; fldt 0x8(%rsp); mov %rdi,-0x8(%rsp); xor %eax,%eax; test %rdi,%rdi; sets %al; fildll -0x8(%rsp); lea 0x0(%rip),%rcx !!reloc=R_X86_64_PC32:.LCPI0_0-0x4; fadds (%rcx,%rax,4); fucomip %st(1),%st; fstp %st(0); setnp %al; sete %cl; and %al,%cl; movzbl %cl,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    X87-0    x87 stack value            fldt                               
+    OWN-0    the unit's own stack address the body's own stack displacement  
+    TEMP-0   8-byte general value       xor                                
+    TEMP-1   flags only                 test                               IN-0,IN-0
+    GUARD-0  flag-derived value         test + sets                        TEMP-1,TEMP-0
+    X87-1    x87 stack value            fildll                             OWN-0
+    TEMP-2   8-byte general value       lea                                
+    X87-2    x87 stack value            fadds                              X87-1,TEMP-2,GUARD-0
+    TEMP-3   flags only                 fucomip                            X87-0,X87-2
+    GUARD-1  flag-derived value         fucomip + setnp                    TEMP-3,GUARD-0
+    GUARD-2  flag-derived value         fucomip + sete                     TEMP-3,TEMP-2
+    TEMP-4   8-byte general value       and                                GUARD-1,GUARD-2
+    TEMP-5   8-byte general value       movzbl                             TEMP-4
+    OUT-0    4-byte general value       movzbl                             TEMP-5
+
+  c/regen_31317   [population: regenerated]
+    body: mov IN-0,%rdi; fldt 0x8(%rsp); mov %rdi,-0x8(%rsp); xor %eax,%eax; test %rdi,%rdi; sets %al; fildll -0x8(%rsp); lea 0x0(%rip),%rcx !!reloc=R_X86_64_PC32:.LCPI0_0-0x4; fadds (%rcx,%rax,4); fucomip %st(1),%st; fstp %st(0); setnp %al; sete %cl; and %al,%cl; movzbl %cl,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    X87-0    x87 stack value            fldt                               
+    OWN-0    the unit's own stack address the body's own stack displacement  
+    TEMP-0   8-byte general value       xor                                
+    TEMP-1   flags only                 test                               IN-0,IN-0
+    GUARD-0  flag-derived value         test + sets                        TEMP-1,TEMP-0
+    X87-1    x87 stack value            fildll                             OWN-0
+    TEMP-2   8-byte general value       lea                                
+    X87-2    x87 stack value            fadds                              X87-1,TEMP-2,GUARD-0
+    TEMP-3   flags only                 fucomip                            X87-0,X87-2
+    GUARD-1  flag-derived value         fucomip + setnp                    TEMP-3,GUARD-0
+    GUARD-2  flag-derived value         fucomip + sete                     TEMP-3,TEMP-2
+    TEMP-4   8-byte general value       and                                GUARD-1,GUARD-2
+    TEMP-5   8-byte general value       movzbl                             TEMP-4
+    OUT-0    4-byte general value       movzbl                             TEMP-5
+
+  c/regen_12733   [population: regenerated]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov %rdi,%rax; movslq %esi,%rcx; cqto; idiv %rcx; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       movslq                             IN-1
+    TEMP-2   8-byte general value       cqto [the sign of the accumulator] TEMP-0
+    TEMP-3   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-2,TEMP-1
+    TEMP-4   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-2,TEMP-1
+    OUT-0    8-byte general value       idiv                               TEMP-3
+
+  c/regen_12746   [population: regenerated]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov %rdi,%rax; movslq %esi,%rcx; cqto; idiv %rcx; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       movslq                             IN-1
+    TEMP-2   8-byte general value       cqto [the sign of the accumulator] TEMP-0
+    TEMP-3   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-2,TEMP-1
+    TEMP-4   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-2,TEMP-1
+    OUT-0    8-byte general value       idiv                               TEMP-3
+
+  cpp/regen_12108   [population: regenerated]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov %rdi,%rax; movslq %esi,%rcx; cqto; idiv %rcx; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       movslq                             IN-1
+    TEMP-2   8-byte general value       cqto [the sign of the accumulator] TEMP-0
+    TEMP-3   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-2,TEMP-1
+    TEMP-4   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-2,TEMP-1
+    OUT-0    8-byte general value       idiv                               TEMP-3
+
+  cpp/regen_14397   [population: regenerated]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %edi,%eax; xor %edx,%edx; idiv %rsi; mov %rdx,%rax; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       xor                                IN-2,IN-2
+    TEMP-2   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-1,IN-1
+    TEMP-4   8-byte general value       mov                                TEMP-3
+    OUT-0    8-byte general value       mov                                TEMP-4
+
+  c/op_276   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %edi,%eax; xor %edx,%edx; idiv %esi; mov %edx,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       xor                                IN-2,IN-2
+    TEMP-2   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-1,IN-1
+    TEMP-4   8-byte general value       mov                                TEMP-3
+    OUT-0    4-byte general value       mov                                TEMP-4
+
+  c/op_277   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %edi,%eax; xor %edx,%edx; idiv %rsi; mov %rdx,%rax; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       xor                                IN-2,IN-2
+    TEMP-2   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-1,IN-1
+    TEMP-4   8-byte general value       mov                                TEMP-3
+    OUT-0    8-byte general value       mov                                TEMP-4
+
+  cpp/op_276   [population: wrapped]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %edi,%eax; xor %edx,%edx; idiv %esi; mov %edx,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   8-byte general value       xor                                IN-2,IN-2
+    TEMP-2   8-byte general value       idiv [quotient]                    TEMP-0,TEMP-1,IN-1
+    TEMP-3   8-byte general value       idiv [remainder]                   TEMP-0,TEMP-1,IN-1
+    TEMP-4   8-byte general value       mov                                TEMP-3
+    OUT-0    4-byte general value       mov                                TEMP-4
+
+  go/op_319   [population: wrapped]
+    body: mov IN-0,%rax; mov IN-1,%rbx; add %rbx,%rax; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       add                                IN-1,IN-0
+    OUT-0    8-byte general value       add                                TEMP-0
+
+  c/op_105   [population: wrapped]
+    body: movdqu IN-0,%xmm0; movdqu IN-1,%xmm1; mov IN-2,%rdi; cvtsi2ss %edi,%xmm1; addss %xmm1,%xmm0; movq %xmm0,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     16-byte vector value       arrival                            
+    IN-1     16-byte vector value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   16-byte vector value       cvtsi2ss                           IN-0,IN-2
+    TEMP-1   16-byte vector value       addss                              TEMP-0,IN-1
+    OUT-0    8-byte vector-held value   addss                              TEMP-1
+
+== TWO CARRY-IN UNITS, ROWS PRINTED (the (a) repair) ==
+  c/regen_34943   [population: carry-in]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov %edi,%eax; cmp %rax,%rsi; sbb $0x0,%rdx; setl %al; movzbl %al,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-0
+    TEMP-1   flags only                 cmp                                TEMP-0,IN-1
+    CONST-0  literal                    the body's own immediate operand   
+    TEMP-2   8-byte general value       sbb [the difference]               TEMP-1,CONST-0,IN-2
+    TEMP-3   flags only                 sbb [the flags]                    TEMP-1,CONST-0,IN-2
+    GUARD-0  flag-derived value         sbb + setl                         TEMP-3,TEMP-0
+    TEMP-4   8-byte general value       movzbl                             GUARD-0
+    OUT-0    4-byte general value       movzbl                             TEMP-4
+
+  c/regen_35988   [population: carry-in]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; mov IN-3,%rcx; mov %edx,%eax; xor %ecx,%ecx; cmp %rdi,%rax; sbb %rsi,%rcx; setl %al; movzbl %al,%eax; mov %eax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    IN-3     8-byte general value       arrival                            
+    TEMP-0   8-byte general value       mov                                IN-2
+    TEMP-1   8-byte general value       xor                                IN-3,IN-3
+    TEMP-2   flags only                 cmp                                IN-0,TEMP-0
+    TEMP-3   8-byte general value       sbb [the difference]               TEMP-2,IN-1,TEMP-1
+    TEMP-4   flags only                 sbb [the flags]                    TEMP-2,IN-1,TEMP-1
+    GUARD-0  flag-derived value         sbb + setl                         TEMP-4,TEMP-0
+    TEMP-5   8-byte general value       movzbl                             GUARD-0
+    OUT-0    4-byte general value       movzbl                             TEMP-5
+
+== TWO RUNTIME-CALLER UNITS, ROWS PRINTED (the (b) repair) ==
+  c/regen_10427   [population: runtime]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; push %rax; mov %rdx,%rcx; mov %rsi,%rdx; mov %edi,%edi; xor %esi,%esi; call L0 !!reloc=R_X86_64_PLT32:__divti3-0x4; L0:; pop %rcx; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   8-byte general value       mov                                IN-2
+    TEMP-1   8-byte general value       mov                                IN-1
+    TEMP-2   8-byte general value       mov                                IN-0
+    TEMP-3   8-byte general value       xor                                IN-1,IN-1
+    TEMP-4   8-byte general value       runtime __divti3 [the runtime routine's answer] TEMP-2,TEMP-3,TEMP-1,TEMP-0
+    OUT-0    8-byte general value       runtime __divti3                   TEMP-4
+
+  c/regen_10428   [population: runtime]
+    body: mov IN-0,%rdi; mov IN-1,%rsi; mov IN-2,%rdx; push %rax; mov %rdx,%rcx; mov %rsi,%rdx; mov %edi,%edi; xor %esi,%esi; call L0 !!reloc=R_X86_64_PLT32:__udivti3-0x4; L0:; xor %edx,%edx; pop %rcx; mov %rax,OUT-0; ret
+    row      type                       produced by                        operands
+    IN-0     8-byte general value       arrival                            
+    IN-1     8-byte general value       arrival                            
+    IN-2     8-byte general value       arrival                            
+    STACK-0  8-byte value on the machine stack push                               
+    TEMP-0   8-byte general value       mov                                IN-2
+    TEMP-1   8-byte general value       mov                                IN-1
+    TEMP-2   8-byte general value       mov                                IN-0
+    TEMP-3   8-byte general value       xor                                IN-1,IN-1
+    TEMP-4   8-byte general value       runtime __udivti3 [the runtime routine's answer] TEMP-2,TEMP-3,TEMP-1,TEMP-0
+    TEMP-5   8-byte general value       xor                                TEMP-1,TEMP-1
+    OUT-0    8-byte general value       runtime __udivti3                  TEMP-4
+
+== THE WHOLE SAMPLE, WALKED ==
+units in the sample: 241
+units walked without refusal: 241
+units refused by name: 0
+rows built over the sample: 2189
+rows by producer kind, over the sample of 241 units:
+  arch_opcode          1167
+  flag_pair            229
+  non_opcode_phrase    689
+  runtime_callee       104
+rows by type, over the same sample:
+  1-byte general value               78
+  16-byte vector value               139
+  4-byte general value               64
+  8-byte general value               1325
+  8-byte value on the machine stack  62
+  8-byte vector-held value           14
+  flag-derived value                 170
+  flags only                         219
+  literal                            99
+  the unit's own stack address       4
+  x87 stack value                    15
+producer holes recorded over the sample: 0

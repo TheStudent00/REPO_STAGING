@@ -1,0 +1,105 @@
+POPULATION LINE
+  units in task 53's records: 30436
+  units in task 58's records: 30436
+  in task 53 and not in task 58: 0
+  in task 58 and not in task 53: 0
+
+POPULATION: interpreter
+  units 9
+  state                 task 53   task 58    delta
+  proved                      9         9       +0
+  withdrawn                   0         0       +0
+  undecided                   0         0       +0
+  no term                     0         0       +0
+  route one (the term against the ship body) proved 9
+  route two (the text-order walk) proved 8
+
+POPULATION: original
+  units 1763
+  state                 task 53   task 58    delta
+  proved                   1635      1671      +36
+  withdrawn                  12         0      -12
+  undecided                  81        57      -24
+  no term                    35        35       +0
+  route one (the term against the ship body) proved 1625
+  route two (the text-order walk) proved 1623
+
+POPULATION: regenerated
+  units 28664
+  state                 task 53   task 58    delta
+  proved                  21488     23499    +2011
+  withdrawn                 403         0     -403
+  undecided                5521      3913    -1608
+  no term                  1252      1252       +0
+  route one (the term against the ship body) proved 23299
+  route two (the text-order walk) proved 21084
+
+ALL THREE POPULATIONS, against log 153 section 1.2
+  state                log 153   task 53   task 58    delta
+  proved                 23132     23132     25179    +2047
+  withdrawn                415       415         0     -415
+  undecided               5602      5602      3970    -1632
+  no term                 1287      1287      1287       +0
+  units                  30436     30436     30436
+
+  log 153's per-population figures, reproduced from its own section 1.4, against this run:
+    (no MISMATCH line above means every one of the twelve figures agrees)
+
+CONSISTENCY -- units proved on one route and disproved on the other: 0
+
+THE TRANSITION, unit by unit
+  task 53        task 58          units   sightings
+  proved         proved           23132   c/op_0, c/op_1, c/op_101
+  undecided      undecided         3970   c/regen_1001, c/regen_10073, c/regen_10087
+  undecided      proved            1632   c/op_212, c/op_218, c/op_222
+  no term        no term           1287   c/op_100, c/op_21, c/op_22
+  withdrawn      proved             415   c/op_246, c/op_247, c/op_252
+
+EVERY GAINED PROOF, BY ITS COMPUTED CAUSE
+  (the cause is the reason the unit's OWN task-53 record recorded for not proving it)
+     705  the old run's route-one reason: this body has a flag-reading arch opcode whose nearest preceding flag-setting arch opcode is out
+          sightings: c/regen_15786, c/regen_16626, c/regen_16850
+     466  the old run's route-one reason: the reference simulator: mnemonic 'div' has no symbolic model in this checker
+          sightings: c/op_212, c/op_218, c/op_222
+     415  the old run DISPROVED it: z3 found a starting state under which the ledger-transcribed term and the unit's own ship body d
+          sightings: c/op_246, c/op_247, c/op_252
+     298  the old run's route-one reason: the reference simulator: mnemonic 'fldt' has no symbolic model in this checker
+          sightings: c/regen_10161, c/regen_1033, c/regen_10441
+     146  the old run's route-one reason: the reference simulator: mnemonic 'mul' has no symbolic model in this checker
+          sightings: c/regen_10091, c/regen_10092, c/regen_10147
+      16  the old run's route-one reason: the reference simulator: mnemonic 'pextrw' has no symbolic model in this checker
+          sightings: c/regen_11281, c/regen_12271, c/regen_1873
+       1  the old run's route-one reason: z3 returned unknown
+          sightings: cpp/regen_14397
+
+EVERY LOST PROOF, BY ITS COMPUTED CAUSE
+  (the cause is the reason the unit's OWN task-58 record gives)
+  (none)
+
+WHAT IS STILL UNDECIDED, BY THE NEW RUN'S OWN RECORDED REASON (route one)
+    3419  refused: runtime callee not yet attached (task 59, node 0_3_5_1_8) -- the reference's ow
+     177  the reference: arch opcode 'js' is a census row, not a silent gap: a transfer or trap, a
+     138  the reference: arch opcode 'jl' is a census row, not a silent gap: a transfer or trap, a
+      82  the reference: arch opcode 'je' is a census row, not a silent gap: a transfer or trap, a
+      36  the reference: arch opcode 'jb' is a census row, not a silent gap: a transfer or trap, a
+      34  the reference: arch opcode 'jo' is a census row, not a silent gap: a transfer or trap, a
+      32  the reference: an address computation over base register '%rip': this reference has no m
+      20  the reference: arch opcode 'jbe' is a census row, not a silent gap: a transfer or trap, 
+      10  the reference: a division at width 16 is not modeled
+       6  the reference: arch opcode 'jge' is a census row, not a silent gap: a transfer or trap, 
+       5  the reference: a division at width 8 is not modeled
+       5  the reference: arch opcode 'jg' is a census row, not a silent gap: a transfer or trap, a
+       4  the reference: a widening multiply at width 8 is not modeled: its destination pair is th
+       1  the reference: arch opcode 'jne' is a census row, not a silent gap: a transfer or trap, 
+       1  the reference: a widening multiply at width 16 is not modeled: its destination pair is t
+
+WHAT BUILDS NO TERM, BY THE ARTIFACT'S OWN RECORDED REASON
+    1287  the ledger built no OUT-0 term (a census row, not a silent gap)
+
+ZERO REGRESSION -- Gate.zero_regression over all three populations
+  units still proved (kept)                    23132
+  proofs lost                                  0
+  proofs gained                                2047
+  moved without ever holding a proof           0
+  units missing from the new run               0
+  LOST PROOFS WITH NO COMPUTED CAUSE           0

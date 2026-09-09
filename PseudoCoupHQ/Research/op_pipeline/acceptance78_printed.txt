@@ -1,0 +1,142 @@
+TASK 78 ACCEPTANCE -- THE RUNTIME ANSWER REGISTER
+
+PART 1 -- ONE ATTACHED CALLEE'S BODY, AND THE READING
+
+LITERAL -- canon39_callee_units.json, clang/__extendhfsf2
+    endbr64
+    pextrw $0x0,%xmm0,%eax
+    mov %eax,%edx
+    shr $0xa,%edx
+    and $0x1f,%edx
+    mov %eax,%ecx
+    and $0x3ff,%ecx
+    test %edx,%edx
+    je L0
+    cmp $0x1f,%edx
+    jne L1
+    movzwl %cx,%edx
+    shl $0xd,%edx
+    mov $0xff,%esi
+    jmp L3
+    L0:
+    test %cx,%cx
+    je L2
+    movzwl %cx,%edx
+    bsr %edx,%ecx
+    xor $0x1f,%ecx
+    mov $0x86,%esi
+    sub %ecx,%esi
+    add $0xf8,%cl
+    shl %cl,%edx
+    xor $0x800000,%edx
+    jmp L3
+    L1:
+    movzwl %dx,%esi
+    add $0x70,%esi
+    movzwl %cx,%edx
+    shl $0xd,%edx
+    jmp L3
+    L2:
+    xor %edx,%edx
+    xor %esi,%esi
+    L3:
+    shl $0x10,%eax
+    and $0x80000000,%eax
+    shl $0x17,%esi
+    or %eax,%esi
+    or %edx,%esi
+    movd %esi,%xmm0
+    ret
+
+LITERAL -- runtime_answers78.json, the same key
+    families: rcx,rdx,rax,rsi,xmm0
+    x87: False
+    how: the families whose token is no longer their own entry token after one text-order walk of the callee's body, with the machine stack tracked so a save-and-restore ends unchanged
+
+GLOSS: the last instruction before the return is `movd %esi,%xmm0`, so the family this routine answers in is read off the body as `xmm0` -- the accumulator the superseded rule 4 named is in the set too, because the body does change it, but it is not what the caller reads.
+
+PART 2 -- c/regen_1056, WHOSE ANSWER HOME IS %xmm0
+
+LITERAL -- canon39, c/regen_1056
+    outcome:        WRAPPED_TEXT_PROVED
+    result_family:  xmm0
+    runtime rows:   0
+    OUT-0 produced_by: {"kind": "arch_opcode", "mnem": "addss"}
+
+LITERAL -- canon40, c/regen_1056
+    outcome:        WRAPPED_TEXT_PROVED
+    result_family:  xmm0
+    runtime rows:   13
+      TEMP-1  __extendhfsf2  register %rcx
+      TEMP-2  __extendhfsf2  register %rdx
+      TEMP-3  __extendhfsf2  register %rax
+      TEMP-4  __extendhfsf2  register %rsi
+      TEMP-5  __extendhfsf2  register %xmm0
+      TEMP-8  __truncsfhf2  register %rdx
+      TEMP-9  __truncsfhf2  register %xmm0
+      TEMP-10  __truncsfhf2  register %r8
+      TEMP-11  __truncsfhf2  register %rdi
+      TEMP-12  __truncsfhf2  register %rax
+      TEMP-13  __truncsfhf2  register %rsi
+      TEMP-14  __truncsfhf2  register %rcx
+      OUT-0  __truncsfhf2  None
+    OUT-0 produced_by: {"callee": "__truncsfhf2", "kind": "runtime_callee"}
+
+PART 3 -- A GUARD EXIT, PRINTED
+
+LITERAL -- canon40, go/op_103
+    outcome: WRAPPED_TEXT_PROVED
+    push %rbp
+    mov %rsp,%rbp
+    test %rbx,%rbx
+    je L2
+    cmp $0xffffffffffffffff,%rbx
+    jne L0
+    neg %rax
+    xor %edx,%edx
+    jmp L1
+    L0:
+    cqto
+    idiv %rbx
+    L1:
+    pop %rbp
+    ret
+    L2:
+    nopl (%rax)
+    call x_runtime_panicdivide
+    nop
+    transfer_shapes: [{"callee": "runtime_panicdivide", "kind": "guard_exit", "why": "nothing follows this transfer on its own path -- the body ends, or the next line defines a label that is NOT this transfer's own return point -- so the compiler emitted no continuation and the routine does not come back: it produces no value and the ledger makes no row"}]
+
+PART 4 -- go/op_30, THE UNREAD RUNTIME ROUTINE
+
+LITERAL -- canon40, go/op_30
+    cmp 0x10(%r14),%rsp
+    jbe L0
+    push %rbp
+    mov %rsp,%rbp
+    sub $0x10,%rsp
+    mov %eax,0x20(%rsp)
+    lea 0x6d27(%rip),%rax
+    call x_runtime_newobject
+    mov 0x20(%rsp),%ecx
+    mov %ecx,(%rax)
+    add $0x10,%rsp
+    pop %rbp
+    ret
+    L0:
+    mov %eax,0x8(%rsp)
+    call x_runtime_morestack_noctxt_abi0
+    mov 0x8(%rsp),%eax
+    jmp x_main_op_30
+    transfer_shapes: [{"callee": "runtime_newobject", "kind": "unread_runtime_routine", "why": "the routine comes back -- an instruction of the same block follows the transfer, or the label the transfer itself names does -- but no archive index on this machine defines it, so the families it changes cannot be read and no row is guessed"}, {"callee": "runtime_morestack_noctxt_abi0", "kind": "unread_runtime_routine", "why": "the routine comes back -- an instruction of the same block follows the transfer, or the label the transfer itself names does -- but no archive index on this machine defines it, so the families it changes cannot be read and no row is guessed"}]
+    runtime rows: 0
+
+GLOSS: `call x_runtime_newobject` is followed by `mov 0x20(%rsp),%ecx` and `mov %ecx,(%rax)` in the same block, so the routine comes back and the caller reads %rax.  No archive index on this machine defines the routine, so its own answer cannot be read and no row is guessed.
+
+PART 5 -- THE CALLEE-SAVED CROSS-CHECK
+
+readings: 76
+readings naming a callee-saved family ('rbx', 'r12', 'r13', 'r14', 'r15', 'rbp'): 0 
+
+GLOSS: the reading was never told which families the calling convention preserves.  It walks the body and asks whether each family ends holding the value it arrived with.  That it names none of the preserved families is a cross-check the reading did not aim at: forced by construction, from the bodies themselves.
+

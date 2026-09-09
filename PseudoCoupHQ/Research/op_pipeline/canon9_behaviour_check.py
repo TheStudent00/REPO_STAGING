@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SUPERSEDED 2026-09-03 by reference.py (node 0_3_5_4 reference): one Reference, one MachineState, one opcode_table; this file is a record and is not edited further.
 """canon9_behaviour_check.py -- TASK 22 (log_105, round 4), a WRAPPER
 extension of the z3 simulator, adding exactly the coverage log_099's
 round-3 lap named as the checker's own gap and left as a frontier

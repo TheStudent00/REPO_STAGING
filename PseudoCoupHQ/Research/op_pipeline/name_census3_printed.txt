@@ -1,0 +1,163 @@
+THE CENSUS -- rows whose producer has no z3 term
+population: every unit task 47 wrapped, all three populations
+
+producer                             rows  units kind       languages
+----------------------------------------------------------------------------------------------------
+push                                 3237   3189 irregular  c,cpp,rust,swift
+pop                                  1061   1061 irregular  c,cpp,rust,swift
+idiv                                  875    875 irregular  c,cpp,go,java,rust,swift
+div                                   524    524 irregular  c,cpp,go,rust,swift
+fucomip + setp                        304    304 irregular  c,cpp,swift
+fucomip + setne                       290    290 irregular  c,cpp,swift
+test + jmp                            274    274 irregular  c,cpp,swift
+test + setne                          229    229 irregular  c,cpp
+ucomiss + seta                        164    164 irregular  c,cpp
+ucomiss + setae                       164    164 irregular  c,cpp
+mul                                   158    156 irregular  c,cpp,rust,swift
+fucomip + seta                         96     96 irregular  cpp,swift
+fucomip + setae                        96     96 irregular  cpp,swift
+fucomip + sete                         92     92 irregular  c,cpp,swift
+fucomip + setnp                        92     92 irregular  c,cpp,swift
+ucomiss + setne                        64     64 irregular  c,cpp
+ucomiss + setp                         54     54 irregular  c,cpp
+fucomi + setne                         51     51 irregular  c,cpp
+fucomi + setp                          51     51 irregular  c,cpp
+the body's last write to %xmm0         32     32 irregular  c,cpp,go,rust,swift
+or + je                                22     22 irregular  rust,swift
+add + jmp                              20     20 irregular  go
+cmp + jbe                              20     20 irregular  go
+xor + jmp                              18     18 irregular  go,swift
+movzbl                                  7      7 regular    c,cpp,rust,swift
+mul + jo                                6      6 irregular  swift
+shl + jmp                               5      5 irregular  swift
+shr + jmp                               5      5 irregular  swift
+or + setne                              4      4 irregular  c
+the body's last write to %rax           4      4 irregular  go
+mul + seto                              3      2 irregular  swift
+or + jne                                3      3 irregular  swift
+cmp + je                                2      2 irregular  rust
+sar + jmp                               2      1 irregular  swift
+test + jne                              2      1 irregular  swift
+test + sete                             2      2 irregular  c
+imul                                    1      1 regular    swift
+movsbl                                  1      1 regular    swift
+sbb                                     1      1 regular    swift
+cmp + jmp                               1      1 irregular  swift
+cmp + jne                               1      1 irregular  swift
+imul + jo                               1      1 irregular  swift
+sbb + jl                                1      1 irregular  swift
+test + setg                             1      1 irregular  c
+test + setle                            1      1 irregular  c
+test + setns                            1      1 irregular  c
+test + sets                             1      1 irregular  c
+
+WHY EACH ONE CANNOT BE MODELLED
+  push
+      this opcode moves a value to or from the machine stack, and the ledger has no block for the machine stack: no row holds the value it wrote, so there is nothing for a term to be about
+  pop
+      this opcode moves a value to or from the machine stack, and the ledger has no block for the machine stack: no row holds the value it wrote, so there is nothing for a term to be about
+  idiv
+      this opcode writes the quotient and the remainder into registers it does not name, and ledger47 takes the last named operand as the destination, so the row it made is attached to the divisor and no row holds the quotient
+  div
+      this opcode writes the quotient and the remainder into registers it does not name, and ledger47 takes the last named operand as the destination, so the row it made is attached to the divisor and no row holds the quotient
+  fucomip + setp
+      the flag-setting arch opcode 'fucomip' compares two values on the x87 register stack (%st, %st(1)), and the ledger has no block and no rows for the x87 stack, so neither side of the comparison exists as a row
+  fucomip + setne
+      the flag-setting arch opcode 'fucomip' compares two values on the x87 register stack (%st, %st(1)), and the ledger has no block and no rows for the x87 stack, so neither side of the comparison exists as a row
+  test + jmp
+      an unconditional transfer reads no flags: the ledger records it as a flag-reading opcode, which it is not, so the row it makes has no condition to be
+  test + setne
+      the flag-setting arch opcode 'test' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  ucomiss + seta
+      the flag-setting arch opcode 'ucomiss' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  ucomiss + setae
+      the flag-setting arch opcode 'ucomiss' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  mul
+      this opcode writes the wide product into registers it does not name, and ledger47 takes the last named operand as the destination, so the row it made is attached to the multiplier and no row holds the product
+  fucomip + seta
+      the flag-setting arch opcode 'fucomip' compares two values on the x87 register stack (%st, %st(1)), and the ledger has no block and no rows for the x87 stack, so neither side of the comparison exists as a row
+  fucomip + setae
+      the flag-setting arch opcode 'fucomip' compares two values on the x87 register stack (%st, %st(1)), and the ledger has no block and no rows for the x87 stack, so neither side of the comparison exists as a row
+  fucomip + sete
+      the flag-setting arch opcode 'fucomip' compares two values on the x87 register stack (%st, %st(1)), and the ledger has no block and no rows for the x87 stack, so neither side of the comparison exists as a row
+  fucomip + setnp
+      the flag-setting arch opcode 'fucomip' compares two values on the x87 register stack (%st, %st(1)), and the ledger has no block and no rows for the x87 stack, so neither side of the comparison exists as a row
+  ucomiss + setne
+      the flag-setting arch opcode 'ucomiss' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  ucomiss + setp
+      the flag-setting arch opcode 'ucomiss' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  fucomi + setne
+      the flag-setting arch opcode 'fucomi' compares two values on the x87 register stack (%st, %st(1)), and the ledger has no block and no rows for the x87 stack, so neither side of the comparison exists as a row
+  fucomi + setp
+      the flag-setting arch opcode 'fucomi' compares two values on the x87 register stack (%st, %st(1)), and the ledger has no block and no rows for the x87 stack, so neither side of the comparison exists as a row
+  the body's last write to %xmm0
+      no arch opcode in this body writes the answer register, so no row produces the answer
+  or + je
+      the flag-setting arch opcode 'or' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  add + jmp
+      an unconditional transfer reads no flags: the ledger records it as a flag-reading opcode, which it is not, so the row it makes has no condition to be
+  cmp + jbe
+      the flag-setting arch opcode 'cmp' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  xor + jmp
+      an unconditional transfer reads no flags: the ledger records it as a flag-reading opcode, which it is not, so the row it makes has no condition to be
+  movzbl
+      operand '%ah' names the SECOND byte of a register, which canon.py's register table does not carry as a family, so ledger47 made no row for it and there is no value to read
+  mul + jo
+      the flag-setting arch opcode 'mul' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  shl + jmp
+      an unconditional transfer reads no flags: the ledger records it as a flag-reading opcode, which it is not, so the row it makes has no condition to be
+  shr + jmp
+      an unconditional transfer reads no flags: the ledger records it as a flag-reading opcode, which it is not, so the row it makes has no condition to be
+  or + setne
+      the flag-setting arch opcode 'or' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  the body's last write to %rax
+      no arch opcode in this body writes the answer register, so no row produces the answer
+  mul + seto
+      the flag-setting arch opcode 'mul' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  or + jne
+      the flag-setting arch opcode 'or' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  cmp + je
+      the flag-setting arch opcode 'cmp' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sar + jmp
+      an unconditional transfer reads no flags: the ledger records it as a flag-reading opcode, which it is not, so the row it makes has no condition to be
+  test + jne
+      the flag-setting arch opcode 'test' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  test + sete
+      the flag-setting arch opcode 'test' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  imul
+      this opcode writes the wide product into registers it does not name, and ledger47 takes the last named operand as the destination, so the row it made is attached to the multiplier and no row holds the product
+  movsbl
+      operand '%ah' names the SECOND byte of a register, which canon.py's register table does not carry as a family, so ledger47 made no row for it and there is no value to read
+  sbb
+      this opcode reads the carry flag, and no arch opcode in this body before it sets a carry this file models
+  cmp + jmp
+      an unconditional transfer reads no flags: the ledger records it as a flag-reading opcode, which it is not, so the row it makes has no condition to be
+  cmp + jne
+      the flag-setting arch opcode 'cmp' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  imul + jo
+      the flag-setting arch opcode 'imul' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  sbb + jl
+      the flag-setting arch opcode 'sbb' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  test + setg
+      the flag-setting arch opcode 'test' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  test + setle
+      the flag-setting arch opcode 'test' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  test + setns
+      the flag-setting arch opcode 'test' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+  test + sets
+      the flag-setting arch opcode 'test' left flags this file could not build -- either its own row is missing from the ledger (ledger47 makes no row when the destination is a register it never renames) or that row's own operands have no term
+
+TALLY
+  gate ship: DISPROVED                         826
+  gate ship: NOT_GATED                         4142
+  gate ship: PROVED_EQUAL                      17072
+  gate ship: UNDECIDED                         8396
+  gate textorder: NOT_GATED                    4142
+  gate textorder: PROVED_EQUAL                 23414
+  gate textorder: UNDECIDED                    2880
+  units in the layer-4 population              30436
+  units with an OUT-0 term                     26294
+  units with no OUT-0 term                     4142
+  units, interpreter                           9
+  units, original                              1763
+  units, regenerated                           28664

@@ -1,0 +1,94 @@
+== THE TOOLCHAINS, ASKED WHERE THEIR OWN ARCHIVE IS ==
+$ gcc -print-libgcc-file-name
+  /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a
+$ clang -print-file-name=libclang_rt.builtins-x86_64.a
+  /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+$ clang++ -print-file-name=libclang_rt.builtins-x86_64.a
+  /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+$ rustc --print sysroot
+  ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu
+$ swiftc -print-target-info
+  exit 127  no such executable: swiftc
+
+archives located, per toolchain:
+  clang    /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+  clang++  /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+  gcc      /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a
+  rustc    ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib/libcompiler_builtins-17bce873ebfac7f5.rlib
+  swiftc   NOT LOCATED on this machine (swiftc -print-target-info)
+
+the recorded list names 308 callers over the routines __divti3, __modti3, __udivti3, __umodti3
+
+== IS EACH NAME A ROUTINE OF THE COMPILER'S OWN RUNTIME? (the archives' own symbol index) ==
+  __divti3   yes   defined in: gcc, clang, clang++, rustc
+  __modti3   yes   defined in: gcc, clang, clang++, rustc
+  __udivti3  yes   defined in: gcc, clang, clang++, rustc
+  __umodti3  yes   defined in: gcc, clang, clang++, rustc
+
+== THE BODIES, EXTRACTED ==
+  clang/__divti3       27 instructions,   251 bytes of text, arrival rbx,rsi,rcx,rdi,rdx
+  clang/__modti3       38 instructions,   401 bytes of text, arrival r14,rbx,rsp,rcx,rdx,rsi,rdi
+  clang/__udivti3       3 instructions,    35 bytes of text, arrival r8
+  clang/__umodti3      14 instructions,   182 bytes of text, arrival rsp
+  clang++/__divti3     27 instructions,   251 bytes of text, arrival rbx,rsi,rcx,rdi,rdx
+  clang++/__modti3     38 instructions,   401 bytes of text, arrival r14,rbx,rsp,rcx,rdx,rsi,rdi
+  clang++/__udivti3     3 instructions,    35 bytes of text, arrival r8
+  clang++/__umodti3    14 instructions,   182 bytes of text, arrival rsp
+  rustc/__divti3       40 instructions,   350 bytes of text, arrival rbp,rsp,r14,rbx,rcx,rdx,rsi,rdi
+  rustc/__modti3       38 instructions,   338 bytes of text, arrival rbp,rsp,rbx,rcx,rsi,rdi,rdx
+  rustc/__udivti3      67 instructions,   569 bytes of text, arrival rdx,rcx,r9,rsi,rdi
+  rustc/__umodti3      68 instructions,   590 bytes of text, arrival rdx,rcx,r9,rsi,rdi
+  swiftc/__divti3    could not be extracted: no archive was located for toolchain 'swiftc'
+  swiftc/__modti3    could not be extracted: no archive was located for toolchain 'swiftc'
+  swiftc/__udivti3   could not be extracted: no archive was located for toolchain 'swiftc'
+  swiftc/__umodti3   could not be extracted: no archive was located for toolchain 'swiftc'
+
+== LITERAL -- one body in full: clang/__divti3 ==
+archive: /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+member:  divti3.c.o
+arrival families (read before written): rbx, rsi, rcx, rdi, rdx
+    0  endbr64
+    1  push %rbx
+    2  mov %rsi,%rax
+    3  shr $0x3f,%rax
+    4  mov %rsi,%r8
+    5  sar $0x3f,%r8
+    6  mov %rcx,%r9
+    7  shr $0x3f,%r9
+    8  mov %rcx,%rbx
+    9  sar $0x3f,%rbx
+   10  xor %r8,%rsi
+   11  xor %r8,%rdi
+   12  add %rax,%rdi
+   13  adc $0x0,%rsi
+   14  xor %rbx,%rcx
+   15  xor %rbx,%rdx
+   16  add %r9,%rdx
+   17  adc $0x0,%rcx
+   18  xor %r8,%rbx
+   19  xor %r8d,%r8d
+   20  call 46 <__divti3+0x46>
+   21  xor %rbx,%rdx
+   22  xor %rbx,%rax
+   23  sub %rbx,%rax
+   24  sbb %rbx,%rdx
+   25  pop %rbx
+   26  ret
+
+== ATTACHING EACH CALLER ==
+callers in the recorded list: 308
+attached (answer row now produced by the runtime callee): 304
+  by language: {"c": 136, "cpp": 164, "rust": 4}
+not attached, no archive for the caller's own toolchain: 4
+not attached, the store carries no such unit: 0
+
+LITERAL -- attached caller c/regen_10427 (__divti3)
+  answer row produced_by: {"callee": "__divti3", "kind": "runtime_callee"}
+  it was:                 {"kind": "non_opcode_phrase", "phrase": "the body's last write to %rax"}
+  references: ["runtime/__divti3"]
+LITERAL -- attached caller c/regen_10428 (__udivti3)
+  answer row produced_by: {"callee": "__udivti3", "kind": "runtime_callee"}
+  it was:                 {"kind": "non_opcode_phrase", "phrase": "the body's last write to %rax"}
+  references: ["runtime/__udivti3"]
+
+written: runtime_callee_units.json, runtime_callee_attachments.json, out_of_scope_library_calls_superseded.json

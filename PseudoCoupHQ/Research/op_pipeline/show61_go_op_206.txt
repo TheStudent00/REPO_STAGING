@@ -1,0 +1,44 @@
+UNIT            go/op_206   (from canon39_wrapped_go.json)
+language        go
+population      original
+arrival         ["rax", "rbx", "rcx"]
+answer home     rax at 32 bits
+
+THE BODY, VERBATIM (the compiler's own text, untouched)
+    cmp $0x20,%rbx
+    sbb %rcx,%rcx
+    not %rcx
+    or %rbx,%rcx
+    sar %cl,%eax
+    ret
+
+THE WRAPPED TEXT (layer 3, the runnable record)
+    mov IN-0,%rax; mov IN-1,%rbx; mov IN-2,%rcx; cmp $0x20,%rbx; sbb %rcx,%rcx; not %rcx; or %rbx,%rcx; sar %cl,%eax; mov %eax,OUT-0; ret
+
+THE LEDGER, ROW BY ROW, WITH THE LINE THE RELINK ATTACHED
+    row      produced_by (typed)                            line                     term
+    IN-0     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rax
+    IN-1     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rbx
+    IN-2     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rcx
+    CONST-0  {"kind": "non_opcode_phrase", "phrase": "the body's own immediate operand"} cmp $0x20,%rbx           32
+    TEMP-0   {"kind": "arch_opcode", "mnem": "cmp"}         cmp $0x20,%rbx           ('cmp', seed_rbx, 32)
+    TEMP-1   {"kind": "arch_opcode", "mnem": "sbb", "writes_which_half": "the difference"} sbb %rcx,%rcx            seed_rcx - seed_rcx - If(ULT(seed_rbx, 32), 1, 0)
+    TEMP-2   {"kind": "arch_opcode", "mnem": "sbb", "writes_which_half": "the flags"} sbb %rcx,%rcx            ('sbb', seed_rcx, seed_rcx)
+    TEMP-3   {"kind": "arch_opcode", "mnem": "not"}         not %rcx                 ~(seed_rcx - seed_rcx - If(ULT(seed_rbx, 32), 1, 0))
+    TEMP-4   {"kind": "arch_opcode", "mnem": "or"}          or %rbx,%rcx             ~(seed_rcx - seed_rcx - If(ULT(seed_rbx, 32), 1, 0)) | se...
+    TEMP-5   {"kind": "arch_opcode", "mnem": "sar"}         sar %cl,%eax             ZeroExt(32, Extract(31, 0, seed_rax) >> ZeroExt(24, Extra...
+    OUT-0    {"kind": "arch_opcode", "mnem": "sar"}         -                        Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rax) >> Ze...
+
+THE READ AT OUT-0 (layer 4, the term)
+    Extract(31, 0, ZeroExt(32, Extract(31, 0, seed_rax) >> ZeroExt(24, Extract(7, 0, ~(seed_rcx - seed_rcx - If(ULT(seed_rbx, 32), 1, 0)) | seed_rbx) & 31)))
+
+THE TWO GATE ROUTES
+    route one  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every register either side reads before writing
+    route two  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the same body walked in text order, for every value of every register either walk reads before writing
+
+THE NORMALIZED TEXT (layer 5, the comparison key)
+    Extract(31, 0, v1) >> Concat(0, Extract(4, 0, v0) | ~(31*If(Or(Not(Extract(63, 6, v0) == 0), ULE(32, Extract(5, 0, v0))), 0, 1)))
+
+HOLES 0, CASCADES 0, SLOT DISAGREEMENTS 0

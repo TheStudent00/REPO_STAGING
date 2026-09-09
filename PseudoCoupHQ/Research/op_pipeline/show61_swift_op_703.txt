@@ -1,0 +1,71 @@
+UNIT            swift/op_703   (from canon39_wrapped_swift.json)
+language        swift
+population      original
+arrival         ["rdi", "rsi"]
+answer home     rax at 64 bits
+
+THE BODY, VERBATIM (the compiler's own text, untouched)
+    lea -0x41(%rsi),%rcx
+    cmp $0xffffffffffffff7e,%rcx
+    ja L1
+    L0:
+    xor %eax,%eax
+    ret
+    L1:
+    mov %rdi,%rax
+    test %rsi,%rsi
+    js L2
+    mov %esi,%ecx
+    shl %cl,%rax
+    cmp $0x40,%rsi
+    jae L0
+    ret
+    L2:
+    cmp $0xffffffffffffffc0,%rsi
+    jbe L0
+    neg %sil
+    mov %esi,%ecx
+    shr %cl,%rax
+    ret
+
+THE WRAPPED TEXT (layer 3, the runnable record)
+    mov IN-0,%rdi; mov IN-1,%rsi; lea -0x41(%rsi),%rcx; cmp $0xffffffffffffff7e,%rcx; ja L1; L0:; xor %eax,%eax; mov %rax,OUT-0; ret; L1:; mov %rdi,%rax; test %rsi,%rsi; js L2; mov %esi,%ecx; shl %cl,%rax; cmp $0x40,%rsi; jae L0; mov %rax,OUT-0; ret; L2:; cmp $0xffffffffffffffc0,%rsi; jbe L0; neg %sil; mov %esi,%ecx; shr %cl,%rax; mov %rax,OUT-0; ret
+
+THE LEDGER, ROW BY ROW, WITH THE LINE THE RELINK ATTACHED
+    row      produced_by (typed)                            line                     term
+    IN-0     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rdi
+    IN-1     {"kind": "non_opcode_phrase", "phrase": "arrival"} -                        seed_rsi
+    TEMP-0   {"kind": "arch_opcode", "mnem": "lea"}         lea -0x41(%rsi),%rcx     seed_rsi + 18446744073709551551
+    CONST-0  {"kind": "non_opcode_phrase", "phrase": "the body's own immediate operand"} cmp $0xffffffffffffff7e,%rcx 18446744073709551486
+    TEMP-1   {"kind": "arch_opcode", "mnem": "cmp"}         cmp $0xffffffffffffff7e,%rcx ('cmp', seed_rsi + 18446744073709551551, 1844674407370955...
+    GUARD-0  {"kind": "flag_pair", "mnem": ["cmp", "ja"]}   ja L1                    (no term)
+    TEMP-2   {"kind": "arch_opcode", "mnem": "xor"}         xor %eax,%eax            ZeroExt(32, Extract(31, 0, seed_rax) ^ Extract(31, 0, see...
+    TEMP-3   {"kind": "arch_opcode", "mnem": "mov"}         mov %rdi,%rax            seed_rdi
+    TEMP-4   {"kind": "arch_opcode", "mnem": "test"}        test %rsi,%rsi           ('test', seed_rsi & seed_rsi, 0)
+    GUARD-1  {"kind": "flag_pair", "mnem": ["test", "js"]}  js L2                    (no term)
+    TEMP-5   {"kind": "arch_opcode", "mnem": "mov"}         mov %esi,%ecx            ZeroExt(32, Extract(31, 0, seed_rsi))
+    TEMP-6   {"kind": "arch_opcode", "mnem": "shl"}         shl %cl,%rax             seed_rdi << ZeroExt(56, Extract(7, 0, ZeroExt(32, Extract...
+    CONST-1  {"kind": "non_opcode_phrase", "phrase": "the body's own immediate operand"} cmp $0x40,%rsi           64
+    TEMP-7   {"kind": "arch_opcode", "mnem": "cmp"}         cmp $0x40,%rsi           ('cmp', seed_rsi, 64)
+    GUARD-2  {"kind": "flag_pair", "mnem": ["cmp", "jae"]}  jae L0                   (no term)
+    CONST-2  {"kind": "non_opcode_phrase", "phrase": "the body's own immediate operand"} cmp $0xffffffffffffffc0,%rsi 18446744073709551552
+    TEMP-8   {"kind": "arch_opcode", "mnem": "cmp"}         cmp $0xffffffffffffffc0,%rsi ('cmp', seed_rsi, 18446744073709551552)
+    GUARD-3  {"kind": "flag_pair", "mnem": ["cmp", "jbe"]}  jbe L0                   (no term)
+    TEMP-9   {"kind": "arch_opcode", "mnem": "neg"}         neg %sil                 ZeroExt(56, -Extract(7, 0, seed_rsi))
+    TEMP-10  {"kind": "arch_opcode", "mnem": "mov"}         mov %esi,%ecx            ZeroExt(32, Extract(31, 0, ZeroExt(56, -Extract(7, 0, see...
+    TEMP-11  {"kind": "arch_opcode", "mnem": "shr"}         shr %cl,%rax             LShR(seed_rdi << ZeroExt(56, Extract(7, 0, ZeroExt(32, Ex...
+    OUT-0    {"kind": "arch_opcode", "mnem": "shr"}         -                        LShR(seed_rdi << ZeroExt(56, Extract(7, 0, ZeroExt(32, Ex...
+
+THE READ AT OUT-0 (layer 4, the term)
+    LShR(seed_rdi << ZeroExt(56, Extract(7, 0, ZeroExt(32, Extract(31, 0, seed_rsi))) & 63), ZeroExt(56, Extract(7, 0, ZeroExt(32, Extract(31, 0, ZeroExt(56, -Extract(7, 0, seed_rsi))))) & 63))
+
+THE TWO GATE ROUTES
+    route one  UNDECIDED
+               the reference: arch opcode 'ja' is a census row, not a silent gap: a transfer or trap, and this reference walks a body in text order
+    route two  PROVED_ON_SHIP
+               z3 proved the ledger-transcribed OUT-0 term equal to the same body walked in text order, for every value of every register either walk reads before writing
+
+THE NORMALIZED TEXT (layer 5, the comparison key)
+    LShR(v0 << Concat(0, Extract(5, 0, v1)), Concat(0, 63*Extract(5, 0, v1)))
+
+HOLES 4, CASCADES 0, SLOT DISAGREEMENTS 3

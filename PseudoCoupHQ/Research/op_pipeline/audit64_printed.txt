@@ -1,0 +1,160 @@
+======================================================================
+THE POPULATION
+======================================================================
+canon39 records 30,432 units WRAPPED_TEXT_PROVED.  Round 12's run (`term61_store`) holds 30432 of them; this round's re-gate (`regate64_store`) holds 30432.
+
+======================================================================
+THE FOUR STATES, PER POPULATION
+======================================================================
+population     state         task 61    task 64     move
+original       proved           1671       1665       -6
+original       disproved           0         49      +49
+original       undecided          57         14      -43
+original       no term            35         35       +0
+interpreter    proved              9          9       +0
+interpreter    disproved           0          0       +0
+interpreter    undecided           0          0       +0
+interpreter    no term             0          0       +0
+regenerated    proved          24360      24920     +560
+regenerated    disproved           0       3085    +3085
+regenerated    undecided        3808        271    -3537
+regenerated    no term           492        384     -108
+ALL            proved          26040      26594     +554
+ALL            TOTAL           30432      30432
+
+the round-12 baseline the brief names: 26,040 proved / 0 disproved / 3,865 undecided / 527 no term over 30,432
+recomputed here from `term61_store`: 26040 / 0 / 3865 / 527 over 30432
+
+======================================================================
+THE TRANSITION, UNIT BY UNIT (units in BOTH runs)
+======================================================================
+task 61    task 64       units   sightings
+proved     proved        25793   c/op_0, c/op_1, c/op_101
+undecided  disproved      2893   c/regen_10087, c/regen_10143, c/regen_10464
+undecided  proved          708   c/regen_1001, c/regen_10073, c/regen_10105
+no term    no term         419   c/op_100, c/op_21, c/op_22
+undecided  undecided       264   c/regen_10483, c/regen_10484, c/regen_1075
+proved     disproved       233   c/op_117, c/op_122, c/op_158
+no term    proved           93   c/regen_12973, c/regen_13315, c/regen_15263
+proved     undecided        14   c/op_153, c/op_225, c/op_230
+no term    disproved         8   go/regen_138, go/regen_141, go/regen_149
+no term    undecided         7   rust/regen_1067, rust/regen_1073, rust/regen_1081
+
+in task 64 and not task 61: 0 []
+in task 61 and not task 64: 0 []
+
+======================================================================
+EVERY MOVEMENT, BY COMPUTED CAUSE
+======================================================================
+-- undecided -> disproved  (2893 units)
+     2860 | the unit's own stored canon39 ledger carries NO row for its transfer into the compiler's own runtime, so its term asserts the transfer changed nothing; the reference now walks that callee's body, and the two disagree
+          | sightings: c/regen_10087, c/regen_10143, c/regen_10464
+       33 | the new run's own recorded reason: z3 found a starting state under which the two sides differ
+          | sightings: go/op_103, go/op_132, go/op_139
+
+-- undecided -> proved  (708 units)
+      442 | the reference now enters the attached runtime callee's body and returns through its answer register
+          | sightings: c/regen_1001, c/regen_10073, c/regen_10129
+      234 | the reference now follows this body's own branches and merges them at the join
+          | sightings: go/op_110, go/op_146, go/op_168
+       32 | the reference now models something this body spells that it refused before (the narrow division and widening multiply, or a rip-relative address)
+          | sightings: c/regen_10105, c/regen_12303, c/regen_12306
+
+-- proved -> disproved  (233 units)
+      233 | A PROOF WAS LOST: z3 found a starting state under which the two sides differ
+          | sightings: c/op_117, c/op_122, c/op_158
+
+-- no term -> proved  (93 units)
+       78 | the reference now models something this body spells that it refused before (the narrow division and widening multiply, or a rip-relative address)
+          | sightings: c/regen_12973, c/regen_13315, c/regen_15263
+       15 | the reference now follows this body's own branches and merges them at the join
+          | sightings: go/regen_146, go/regen_154, go/regen_157
+
+-- proved -> undecided  (14 units)
+       14 | A PROOF WAS LOST: the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+          | sightings: c/op_153, c/op_225, c/op_230
+
+-- no term -> disproved  (8 units)
+        6 | the new run's own recorded reason: z3 found a starting state under which the two sides differ
+          | sightings: go/regen_138, go/regen_141, go/regen_149
+        2 | the unit's own stored canon39 ledger carries NO row for its transfer into the compiler's own runtime, so its term asserts the transfer changed nothing; the reference now walks that callee's body, and the two disagree
+          | sightings: rust/regen_1068, rust/regen_1082
+
+-- no term -> undecided  (7 units)
+        3 | the new run's own recorded reason: the reference: this opcode reads the signed-overflow bit and no flag-setting arch opcode precedes it in this body
+          | sightings: swift/regen_303, swift/regen_306, swift/regen_309
+        2 | the new run's own recorded reason: the reference: arch opcode 'pcmpeqd' is a census row, not a silent gap: no z3 term is written for this arch opcode yet
+          | sightings: rust/regen_1067, rust/regen_1081
+        2 | the new run's own recorded reason: the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+          | sightings: rust/regen_1073, rust/regen_1087
+
+======================================================================
+ZERO REGRESSION
+======================================================================
+units PROVED in task 61 and not proved in task 64: 247
+   c/op_117: z3 found a starting state under which the two sides differ
+   c/op_122: z3 found a starting state under which the two sides differ
+   c/op_153: the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+   c/op_158: z3 found a starting state under which the two sides differ
+   c/op_189: z3 found a starting state under which the two sides differ
+   c/op_194: z3 found a starting state under which the two sides differ
+   c/op_225: the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+   c/op_230: the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved
+   c/op_477: z3 found a starting state under which the two sides differ
+   c/op_482: z3 found a starting state under which the two sides differ
+   c/op_513: z3 found a starting state under which the two sides differ
+   c/op_518: z3 found a starting state under which the two sides differ
+   c/op_549: z3 found a starting state under which the two sides differ
+   c/op_554: z3 found a starting state under which the two sides differ
+   c/op_585: z3 found a starting state under which the two sides differ
+   c/op_590: z3 found a starting state under which the two sides differ
+   c/op_621: z3 found a starting state under which the two sides differ
+   c/op_626: z3 found a starting state under which the two sides differ
+   c/op_657: z3 found a starting state under which the two sides differ
+   c/op_662: z3 found a starting state under which the two sides differ
+
+======================================================================
+THE CONSISTENCY LINE
+======================================================================
+units proved on one route and disproved on the other: 0
+
+======================================================================
+THE FOUR NAMED CAUSES OF log_160 SECTION 1.7, TESTED
+======================================================================
+task 61's undecided, by its own reason        units   what task 64 made of them
+runtime callee not yet attached                3359   {'proved': 410, 'disproved': 2716, 'undecided': 233}
+a conditional transfer                          474   {'proved': 266, 'disproved': 177, 'undecided': 31}
+a rip-relative address computation               32   {'proved': 32}
+a narrow division or widening multiply            0   {}
+another reason                                    0   {}
+
+======================================================================
+TASK 66's 36 RENDERED-BUT-UNPROVED UNITS
+======================================================================
+-- 15 units | the reference has no model for: arch opcode 'jae' is a census row, not a silent gap: a transfer or trap, and this reference walks a body in text order
+   the SIGHTINGS this task can join on (12 of the 15 the cause lists): {'disproved': 11, 'proved': 1}
+     swift/regen_1892 -> disproved | z3 found a starting state under which the two sides differ
+     swift/regen_1893 -> proved | z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every regist
+     swift/regen_1894 -> disproved | z3 found a starting state under which the two sides differ
+
+-- 14 units | the reference has no model for: arch opcode 'js' is a census row, not a silent gap: a transfer or trap, and this reference walks a body in text order
+   the SIGHTINGS this task can join on (12 of the 14 the cause lists): {'disproved': 12}
+     swift/regen_1886 -> disproved | z3 found a starting state under which the two sides differ
+     swift/regen_1887 -> disproved | z3 found a starting state under which the two sides differ
+     swift/regen_1888 -> disproved | z3 found a starting state under which the two sides differ
+
+-- 4 units | the reference has no model for: arch opcode 'movdqu' has no entry in the opcode table -- no body in the corpus this table was built over spells it
+   the SIGHTINGS this task can join on (4 of the 4 the cause lists): {'proved': 4}
+     rust/op_807 -> proved | z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every regist
+     rust/op_814 -> proved | z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every regist
+     rust/regen_1559 -> proved | z3 proved the ledger-transcribed OUT-0 term equal to the value the unit's own ship body leaves in its own answer home, for every value of every regist
+
+-- 2 units | the reference has no model for: arch opcode 'jl' is a census row, not a silent gap: a transfer or trap, and this reference walks a body in text order
+   the SIGHTINGS this task can join on (2 of the 2 the cause lists): {'disproved': 2}
+     swift/regen_1899 -> disproved | z3 found a starting state under which the two sides differ
+     swift/regen_1935 -> disproved | z3 found a starting state under which the two sides differ
+
+-- 1 units | the reference has no model for: arch opcode 'jbe' is a census row, not a silent gap: a transfer or trap, and this reference walks a body in text order
+   the SIGHTINGS this task can join on (1 of the 1 the cause lists): {'disproved': 1}
+     swift/regen_2089 -> disproved | z3 found a starting state under which the two sides differ
+

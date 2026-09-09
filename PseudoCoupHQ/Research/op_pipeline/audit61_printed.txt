@@ -1,0 +1,47 @@
+-- the populations
+   canon39 units transcribed (task 61) 610
+   canon38 units gated       (task 58) 30436
+
+-- THE FOUR STATES, task 58 over canon38 -> task 61 over canon39
+   state           task 58    task 61     move
+   proved            25179        516   -24663
+   withdrawn             0         61      +61
+   undecided          3970         20    -3950
+   no term            1287         13    -1274
+   TOTAL             30436        610   -29826
+
+CONSISTENCY -- units proved on one route and disproved on the other: 0
+
+-- by arrival population
+   original     total    610 | {"no term": 13, "proved": 516, "undecided": 20, "withdrawn": 61}
+
+-- by language
+   c        total    610 | {"no term": 13, "proved": 516, "undecided": 20, "withdrawn": 61}
+
+-- THE TRANSITION, unit by unit (only units in BOTH runs)
+   task 58      task 61         units   sightings
+   proved       proved            516   c/op_0, c/op_1, c/op_101
+   proved       withdrawn          61   c/op_246, c/op_247, c/op_248
+   proved       undecided          20   c/op_117, c/op_122, c/op_153
+   no term      no term             8   c/op_100, c/op_21, c/op_22
+   proved       no term             5   c/op_282, c/op_289, c/op_290
+
+-- GAINED, by COMPUTED cause (the reason the unit's OWN task-58 record recorded)
+   (none)
+
+-- LOST, by COMPUTED cause (the reason the unit's OWN task-61 record records)
+       61 | disproved now
+       20 | undecided now, route one: the reference: arch opcode 'js' is a census row, not a silent gap: a transfer or trap, and this reference walk
+        5 | no term now: the shared opcode table refused: a flag-reading arch opcode with no flag-setting arch opcode before it in this body
+
+-- units in one run and not the other
+   in task 61 and not task 58: 0 []
+   in task 58 and not task 61: 29826 ['c/regen_1', 'c/regen_1000', 'c/regen_1001', 'c/regen_10072']
+
+-- the runtime callee expectation
+   units carrying a runtime_callee row 0
+   runtime_callee rows 0
+   their states {}
+
+-- operand slots checked, not assumed
+   recorded slot disagreements 53

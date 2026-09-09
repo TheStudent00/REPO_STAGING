@@ -1,0 +1,11 @@
+/* task o13 emulation WITH THE MODE -- rendered by mode.py ModeRendererC from the layer-4 term
+   of c__E01562__go_regen_384, and from the guard the reference read off the x unit's own body.
+   The term's layer-5 text, LITERAL:
+   Concat(0, ~(~LShR(Extract(7, 0, v0), Concat(0, Extract(4, 0, v1))) | ~(255*If(Or(Not(Extract(63, 4, v1) == 0), ULE(8, Extract(3, 0, v1))), 0, 1)))) */
+#include <stdint.h>
+
+uint32_t
+emu_c__E01562__go_regen_384(uint8_t a, uint64_t b)
+{
+    return (uint32_t)((uint32_t)(((uint32_t)(UINT32_C(0x0)) << 8) | (uint32_t)(((uint32_t)(~(uint32_t)(((uint32_t)((uint32_t)(((uint32_t)(~(uint32_t)((((uint32_t)(((uint32_t)(((uint32_t)(UINT32_C(0x0)) << 5) | (uint32_t)(((uint32_t)((uint64_t)b >> 0) & UINT32_C(0x1f)))) & UINT32_C(0xff))) < (uint32_t)8) ? ((uint32_t)((uint32_t)((uint32_t)a) >> (unsigned)(uint32_t)(((uint32_t)(((uint32_t)(UINT32_C(0x0)) << 5) | (uint32_t)(((uint32_t)((uint64_t)b >> 0) & UINT32_C(0x1f)))) & UINT32_C(0xff)))) & UINT32_C(0xff)) : (uint32_t)0))) & UINT32_C(0xff))) | (uint32_t)(((uint32_t)(~(uint32_t)(((uint32_t)((uint32_t)(((((((uint32_t)(UINT32_C(0x8)) <= (uint32_t)(((uint32_t)((uint64_t)b >> 0) & UINT32_C(0xf))))) || ((!(((uint64_t)(((uint64_t)((uint64_t)b >> 4) & UINT64_C(0xfffffffffffffff))) == (uint64_t)(UINT64_C(0x0)))))))) ? (uint32_t)(UINT32_C(0x0)) : (uint32_t)(UINT32_C(0x1)))) * (uint32_t)(UINT32_C(0xff))) & UINT32_C(0xff)))) & UINT32_C(0xff)))) & UINT32_C(0xff)))) & UINT32_C(0xff)))));
+}

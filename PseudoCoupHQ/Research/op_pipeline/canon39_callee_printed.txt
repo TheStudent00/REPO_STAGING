@@ -1,0 +1,421 @@
+== PART 0 -- THE TOOLCHAINS, ASKED WHERE THEIR OWN ARCHIVE IS ==
+$ gcc -print-libgcc-file-name
+  /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a
+$ clang -print-file-name=libclang_rt.builtins-x86_64.a
+  /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+$ clang++ -print-file-name=libclang_rt.builtins-x86_64.a
+  /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+$ rustc --print sysroot
+  ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu
+$ swiftc -print-target-info
+  exit 127  no such executable: swiftc
+
+  clang    /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+  clang++  /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+  gcc      /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a
+  rustc    ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib/libcompiler_builtins-17bce873ebfac7f5.rlib
+
+== PART 1 -- THE CENSUS, COMPUTED OFF canon39 ==
+canon39 proved units walked: 30432
+  by language: {"c": 10367, "cpp": 17569, "cpython": 1, "go": 577, "java": 2, "php": 4, "ruby": 2, "rust": 685, "swift": 1225}
+call-bearing units: 4119
+  by language: {"c": 1579, "cpp": 2327, "go": 170, "rust": 30, "swift": 13}
+
+THE FULL LIST OF NAMES, by how many units spell each (computed, not typed):
+  __extendhfsf2                                                                 1398
+  __truncsfbf2                                                                   920
+  __truncsfhf2                                                                   911
+  __netf2                                                                        530
+  __floatsitf                                                                    310
+  __gttf2                                                                        157
+  __lttf2                                                                        157
+  <no relocation> call x_runtime_panicshift                                      122
+  __floatditf                                                                    112
+  __eqtf2                                                                        107
+  __getf2                                                                        104
+  __letf2                                                                        104
+  __floattisf                                                                     88
+  __floatuntisf                                                                   88
+  __udivti3                                                                       78
+  __umodti3                                                                       78
+  __divti3                                                                        74
+  __modti3                                                                        74
+  __extendsftf2                                                                   56
+  __floatunditf                                                                   56
+  __floattidf                                                                     44
+  __floattihf                                                                     44
+  __floatunsitf                                                                   44
+  __floatuntidf                                                                   44
+  __floatuntihf                                                                   44
+  <no relocation> call x_runtime_panicdivide                                      28
+  __extenddftf2                                                                   28
+  __extendhftf2                                                                   28
+  __extendhfxf2                                                                   28
+  __extendxftf2                                                                   28
+  __floattitf                                                                     28
+  __floattixf                                                                     28
+  __floatuntitf                                                                   28
+  __floatuntixf                                                                   28
+  <no relocation> call x_runtime_morestack_noctxt_abi0                            20
+  <no relocation> call x_runtime_newobject                                        20
+  _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero     15
+  _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero     15
+  _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow     8
+  _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow     8
+
+== PART 2 -- IS EACH NAME A ROUTINE OF THE COMPILER'S OWN RUNTIME? ==
+(machine-form evidence: the archive's own symbol index, nm --print-armap)
+swift: the lane ran inside the trickle Airlock instance, where /persist/swift is mounted
+swift: archive, quoted from the toolchain's own output: /persist/swift/usr/lib/clang/17/lib/linux/libclang_rt.builtins-x86_64.a
+swift: 7 callee units carried over
+
+  clang++/__divti3                                                                     yes
+  clang++/__eqtf2                                                                      yes
+  clang++/__extenddftf2                                                                yes
+  clang++/__extendhfsf2                                                                yes
+  clang++/__extendhftf2                                                                yes
+  clang++/__extendhfxf2                                                                yes
+  clang++/__extendsftf2                                                                yes
+  clang++/__extendxftf2                                                                yes
+  clang++/__floatditf                                                                  yes
+  clang++/__floatsitf                                                                  yes
+  clang++/__floattidf                                                                  yes
+  clang++/__floattihf                                                                  no
+  clang++/__floattisf                                                                  yes
+  clang++/__floattitf                                                                  yes
+  clang++/__floattixf                                                                  yes
+  clang++/__floatunditf                                                                yes
+  clang++/__floatunsitf                                                                yes
+  clang++/__floatuntidf                                                                yes
+  clang++/__floatuntihf                                                                no
+  clang++/__floatuntisf                                                                yes
+  clang++/__floatuntitf                                                                yes
+  clang++/__floatuntixf                                                                yes
+  clang++/__getf2                                                                      yes
+  clang++/__gttf2                                                                      yes
+  clang++/__letf2                                                                      yes
+  clang++/__lttf2                                                                      yes
+  clang++/__modti3                                                                     yes
+  clang++/__netf2                                                                      yes
+  clang++/__truncsfbf2                                                                 yes
+  clang++/__truncsfhf2                                                                 yes
+  clang++/__udivti3                                                                    yes
+  clang++/__umodti3                                                                    yes
+  clang/__divti3                                                                       yes
+  clang/__eqtf2                                                                        yes
+  clang/__extenddftf2                                                                  yes
+  clang/__extendhfsf2                                                                  yes
+  clang/__extendhftf2                                                                  yes
+  clang/__extendhfxf2                                                                  yes
+  clang/__extendsftf2                                                                  yes
+  clang/__extendxftf2                                                                  yes
+  clang/__floatditf                                                                    yes
+  clang/__floatsitf                                                                    yes
+  clang/__floattidf                                                                    yes
+  clang/__floattihf                                                                    no
+  clang/__floattisf                                                                    yes
+  clang/__floattitf                                                                    yes
+  clang/__floattixf                                                                    yes
+  clang/__floatunditf                                                                  yes
+  clang/__floatunsitf                                                                  yes
+  clang/__floatuntidf                                                                  yes
+  clang/__floatuntihf                                                                  no
+  clang/__floatuntisf                                                                  yes
+  clang/__floatuntitf                                                                  yes
+  clang/__floatuntixf                                                                  yes
+  clang/__getf2                                                                        yes
+  clang/__gttf2                                                                        yes
+  clang/__letf2                                                                        yes
+  clang/__lttf2                                                                        yes
+  clang/__modti3                                                                       yes
+  clang/__netf2                                                                        yes
+  clang/__truncsfbf2                                                                   yes
+  clang/__truncsfhf2                                                                   yes
+  clang/__udivti3                                                                      yes
+  clang/__umodti3                                                                      yes
+  rustc/_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero    no
+  rustc/_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero    no
+  rustc/_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow   no
+  rustc/_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow   no
+  rustc/__divti3                                                                       yes
+  rustc/__modti3                                                                       yes
+  rustc/__udivti3                                                                      yes
+  rustc/__umodti3                                                                      yes
+  swiftc/__extendhfsf2                                                                 yes
+  swiftc/__truncsfhf2                                                                  yes
+
+== PART 3 -- THE BODIES, EXTRACTED, NESTED CALLEES FOLLOWED ==
+  clang++/__clzti2                 12 instructions   nested: -
+  clang++/__divti3                 27 instructions   nested: __udivmodti4
+  clang++/__eqtf2                  53 instructions   nested: -
+  clang++/__extenddftf2            50 instructions   nested: -
+  clang++/__extendhfsf2            40 instructions   nested: -
+  clang++/__extendhftf2            48 instructions   nested: -
+  clang++/__extendhfxf2            43 instructions   nested: -
+  clang++/__extendsftf2            48 instructions   nested: -
+  clang++/__extendxftf2            42 instructions   nested: -
+  clang++/__floatditf              32 instructions   nested: -
+  clang++/__floatsitf              31 instructions   nested: -
+  clang++/__floattidf              84 instructions   nested: __clzti2
+  clang++/__floattisf              77 instructions   nested: __clzti2
+  clang++/__floattitf              92 instructions   nested: __clzti2
+  clang++/__floattixf              92 instructions   nested: __clzti2,__stack_chk_fail
+  clang++/__floatunditf            26 instructions   nested: -
+  clang++/__floatunsitf            25 instructions   nested: -
+  clang++/__floatuntidf            73 instructions   nested: __clzti2
+  clang++/__floatuntisf            68 instructions   nested: __clzti2
+  clang++/__floatuntitf            79 instructions   nested: __clzti2
+  clang++/__floatuntixf            80 instructions   nested: __clzti2,__stack_chk_fail
+  clang++/__getf2                  52 instructions   nested: -
+  clang++/__gttf2                  52 instructions   nested: -
+  clang++/__letf2                  53 instructions   nested: -
+  clang++/__lttf2                  53 instructions   nested: -
+  clang++/__modti3                 38 instructions   nested: __udivmodti4,__stack_chk_fail
+  clang++/__netf2                  53 instructions   nested: -
+  clang++/__truncsfbf2             90 instructions   nested: -
+  clang++/__truncsfhf2            101 instructions   nested: -
+  clang++/__udivmodti4             91 instructions   nested: -
+  clang++/__udivti3                 3 instructions   nested: __udivmodti4
+  clang++/__umodti3                14 instructions   nested: __udivmodti4,__stack_chk_fail
+  clang/__clzti2                   12 instructions   nested: -
+  clang/__divti3                   27 instructions   nested: __udivmodti4
+  clang/__eqtf2                    53 instructions   nested: -
+  clang/__extenddftf2              50 instructions   nested: -
+  clang/__extendhfsf2              40 instructions   nested: -
+  clang/__extendhftf2              48 instructions   nested: -
+  clang/__extendhfxf2              43 instructions   nested: -
+  clang/__extendsftf2              48 instructions   nested: -
+  clang/__extendxftf2              42 instructions   nested: -
+  clang/__floatditf                32 instructions   nested: -
+  clang/__floatsitf                31 instructions   nested: -
+  clang/__floattidf                84 instructions   nested: __clzti2
+  clang/__floattisf                77 instructions   nested: __clzti2
+  clang/__floattitf                92 instructions   nested: __clzti2
+  clang/__floattixf                92 instructions   nested: __clzti2,__stack_chk_fail
+  clang/__floatunditf              26 instructions   nested: -
+  clang/__floatunsitf              25 instructions   nested: -
+  clang/__floatuntidf              73 instructions   nested: __clzti2
+  clang/__floatuntisf              68 instructions   nested: __clzti2
+  clang/__floatuntitf              79 instructions   nested: __clzti2
+  clang/__floatuntixf              80 instructions   nested: __clzti2,__stack_chk_fail
+  clang/__getf2                    52 instructions   nested: -
+  clang/__gttf2                    52 instructions   nested: -
+  clang/__letf2                    53 instructions   nested: -
+  clang/__lttf2                    53 instructions   nested: -
+  clang/__modti3                   38 instructions   nested: __udivmodti4,__stack_chk_fail
+  clang/__netf2                    53 instructions   nested: -
+  clang/__truncsfbf2               90 instructions   nested: -
+  clang/__truncsfhf2              101 instructions   nested: -
+  clang/__udivmodti4               91 instructions   nested: -
+  clang/__udivti3                   3 instructions   nested: __udivmodti4
+  clang/__umodti3                  14 instructions   nested: __udivmodti4,__stack_chk_fail
+  rustc/_RNvNtNtCsNDsy69z6bA_17compiler_builtins3int19specialized_div_rem12u128_div_rem   77 instructions   nested: -
+  rustc/__divti3                   40 instructions   nested: _RNvNtNtCsNDsy69z6bA_17compiler_builtins3int19specialized_div_rem12u128_div_rem
+  rustc/__modti3                   38 instructions   nested: _RNvNtNtCsNDsy69z6bA_17compiler_builtins3int19specialized_div_rem12u128_div_rem
+  rustc/__udivti3                  67 instructions   nested: -
+  rustc/__umodti3                  68 instructions   nested: -
+  swiftc/__divti3                  26 instructions   nested: __udivmodti4
+  swiftc/__extendhfsf2             33 instructions   nested: -
+  swiftc/__modti3                  31 instructions   nested: __udivmodti4
+  swiftc/__truncsfhf2              79 instructions   nested: -
+  swiftc/__udivmodti4              90 instructions   nested: -
+  swiftc/__udivti3                  2 instructions   nested: __udivmodti4
+  swiftc/__umodti3                  7 instructions   nested: __udivmodti4
+
+callee arch units extracted: 76
+of those, reached ONLY as a nested callee of another body: 6  (clang++/__clzti2, clang++/__udivmodti4, clang/__clzti2, clang/__udivmodti4, rustc/_RNvNtNtCsNDsy69z6bA_17compiler_builtins3int19specialized_div_rem12u128_div_rem, swiftc/__udivmodti4)
+  NOT EXTRACTED clang++/__stack_chk_fail     the archive index of toolchain 'clang++' defines no symbol named __stack_chk_fail
+  NOT EXTRACTED clang/__stack_chk_fail       the archive index of toolchain 'clang' defines no symbol named __stack_chk_fail
+
+== PART 4 -- ATTACHING EVERY CALL-BEARING UNIT ==
+call-bearing units: 4119
+ATTACHED: 3923
+  by language: {"c": 1579, "cpp": 2327, "rust": 4, "swift": 13}
+NOT ATTACHED, BY CAUSE, PER LANGUAGE:
+  go       170  this body's transfer carries no relocation and no archive index defines its target: it is the language's own runtime panic path, not the compiler's lowering of an operation the hardware lacks
+  rust       6  no builtins archive of the caller's own toolchain (rustc) defines the names this body transfers to: _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero
+  rust       7  no builtins archive of the caller's own toolchain (rustc) defines the names this body transfers to: _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero, _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow
+  rust       6  no builtins archive of the caller's own toolchain (rustc) defines the names this body transfers to: _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero
+  rust       7  no builtins archive of the caller's own toolchain (rustc) defines the names this body transfers to: _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero, _RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow
+
+== PART 5 -- THE FOUR SWIFT CALLERS OF THE RECORDED 308-UNIT LIST ==
+(they are REFUSED in canon39, so the census over canon39's PROVED units cannot see them; log_161 left them unattached for want of the toolchain)
+  swift/regen_315    __divti3     outcome in canon39: REFUSED    callee body referenced: True   answer row repointed: this caller record carries no ledger
+  swift/regen_321    __udivti3    outcome in canon39: REFUSED    callee body referenced: True   answer row repointed: this caller record carries no ledger
+  swift/regen_327    __modti3     outcome in canon39: REFUSED    callee body referenced: True   answer row repointed: this caller record carries no ledger
+  swift/regen_333    __umodti3    outcome in canon39: REFUSED    callee body referenced: True   answer row repointed: this caller record carries no ledger
+
+== PART 6 -- LITERAL: cpp/regen_12920 WITH ITS CALLEE BODY ATTACHED ==
+LITERAL -- cpp/regen_12920, the caller's own body as stored (`body_verbatim`):
+    0  push %rax
+    1  cvtsi2ss %edi,%xmm1
+    2  movss %xmm1,0x4(%rsp)
+    3  call L0 !!reloc=R_X86_64_PLT32:__extendhfsf2-0x4
+    4  L0:
+    5  movss 0x4(%rsp),%xmm1
+    6  divss %xmm0,%xmm1
+    7  movaps %xmm1,%xmm0
+    8  call L1 !!reloc=R_X86_64_PLT32:__truncsfhf2-0x4
+    9  L1:
+   10  pop %rax
+   11  ret
+
+GLOSS -- line 3 transfers into the compiler's own half-float widening routine, and line 8 into its narrowing routine; the relocation is the only place either name survives, because an unlinked `call` disassembles as a transfer inside the unit.
+
+LITERAL -- the attached callee runtime/clang++/__extendhfsf2:
+  archive: /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+  member:  extendhfsf2.c.o
+  symbol at 0x0, size 0x77
+  arrival families (read before written): xmm0, rax
+    0  endbr64
+    1  pextrw $0x0,%xmm0,%eax
+    2  mov %eax,%edx
+    3  shr $0xa,%edx
+    4  and $0x1f,%edx
+    5  mov %eax,%ecx
+    6  and $0x3ff,%ecx
+    7  test %edx,%edx
+    8  je 2f <__extendhfsf2+0x2f>
+    9  cmp $0x1f,%edx
+   10  jne 51 <__extendhfsf2+0x51>
+   11  movzwl %cx,%edx
+   12  shl $0xd,%edx
+   13  mov $0xff,%esi
+   14  jmp 63 <__extendhfsf2+0x63>
+   15  test %cx,%cx
+   16  je 5f <__extendhfsf2+0x5f>
+   17  movzwl %cx,%edx
+   18  bsr %edx,%ecx
+   19  xor $0x1f,%ecx
+   20  mov $0x86,%esi
+   21  sub %ecx,%esi
+   22  add $0xf8,%cl
+   23  shl %cl,%edx
+   24  xor $0x800000,%edx
+   25  jmp 63 <__extendhfsf2+0x63>
+   26  movzwl %dx,%esi
+   27  add $0x70,%esi
+   28  movzwl %cx,%edx
+   29  shl $0xd,%edx
+   30  jmp 63 <__extendhfsf2+0x63>
+   31  xor %edx,%edx
+   32  xor %esi,%esi
+   33  shl $0x10,%eax
+   34  and $0x80000000,%eax
+   35  shl $0x17,%esi
+   36  or %eax,%esi
+   37  or %edx,%esi
+   38  movd %esi,%xmm0
+   39  ret
+
+LITERAL -- the attached callee runtime/clang++/__truncsfhf2:
+  archive: /usr/lib/llvm-21/lib/clang/21/lib/linux/libclang_rt.builtins-x86_64.a
+  member:  truncsfhf2.c.o
+  symbol at 0x0, size 0x13d
+  arrival families (read before written): xmm0, rdi
+    0  endbr64
+    1  movd %xmm0,%edx
+    2  mov %edx,%eax
+    3  shr $0x17,%eax
+    4  movzbl %al,%esi
+    5  mov %edx,%ecx
+    6  and $0x7fffff,%ecx
+    7  lea -0x71(%rsi),%eax
+    8  cmp $0x1d,%eax
+    9  ja 38 <__truncsfhf2+0x38>
+   10  shr $0xd,%ecx
+   11  mov %edx,%eax
+   12  and $0x1fff,%eax
+   13  cmp $0x1001,%eax
+   14  jb 5b <__truncsfhf2+0x5b>
+   15  movzwl %cx,%ecx
+   16  inc %ecx
+   17  jmp 6b <__truncsfhf2+0x6b>
+   18  cmp $0xff,%esi
+   19  setne %al
+   20  test %ecx,%ecx
+   21  sete %dil
+   22  or %al,%dil
+   23  jne 99 <__truncsfhf2+0x99>
+   24  shr $0xd,%ecx
+   25  or $0x200,%ecx
+   26  mov $0x1f,%si
+   27  jmp 80 <__truncsfhf2+0x80>
+   28  cmp $0x1000,%eax
+   29  jne 6b <__truncsfhf2+0x6b>
+   30  mov %ecx,%eax
+   31  and $0x1,%eax
+   32  add %ecx,%eax
+   33  mov %eax,%ecx
+   34  movzwl %cx,%ecx
+   35  xor %eax,%eax
+   36  cmp $0x400,%ecx
+   37  cmovae %eax,%ecx
+   38  sbb $0xffff,%si
+   39  add $0xffffff90,%esi
+   40  shr $0x10,%edx
+   41  and $0x8000,%edx
+   42  shl $0xa,%esi
+   43  movzwl %cx,%eax
+   44  or %esi,%eax
+   45  or %edx,%eax
+   46  pinsrw $0x0,%eax,%xmm0
+   47  ret
+   48  cmp $0x8e,%esi
+   49  jbe a9 <__truncsfhf2+0xa9>
+   50  mov $0x1f,%si
+   51  xor %ecx,%ecx
+   52  jmp 80 <__truncsfhf2+0x80>
+   53  cmp $0x1,%esi
+   54  mov $0x71,%r8d
+   55  sbb $0x0,%r8d
+   56  mov %r8d,%eax
+   57  sub %esi,%eax
+   58  cmp $0x17,%eax
+   59  jle c6 <__truncsfhf2+0xc6>
+   60  xor %ecx,%ecx
+   61  xor %esi,%esi
+   62  jmp 80 <__truncsfhf2+0x80>
+   63  lea 0x800000(%rcx),%edi
+   64  test %esi,%esi
+   65  cmove %ecx,%edi
+   66  cmp %esi,%r8d
+   67  setne %sil
+   68  mov %eax,%ecx
+   69  neg %cl
+   70  mov %edi,%r8d
+   71  shl %cl,%r8d
+   72  test %r8d,%r8d
+   73  setne %cl
+   74  and %sil,%cl
+   75  movzbl %cl,%esi
+   76  mov %eax,%ecx
+   77  shr %cl,%edi
+   78  mov %edi,%eax
+   79  shr $0xd,%eax
+   80  and $0x1fff,%edi
+   81  or %esi,%edi
+   82  cmp $0x1001,%edi
+   83  jb 10e <__truncsfhf2+0x10e>
+   84  movzwl %ax,%eax
+   85  inc %eax
+   86  jmp 11f <__truncsfhf2+0x11f>
+   87  cmp $0x1000,%edi
+   88  jne 11f <__truncsfhf2+0x11f>
+   89  mov %eax,%ecx
+   90  and $0x1,%ecx
+   91  add %eax,%ecx
+   92  mov %ecx,%eax
+   93  movzwl %ax,%ecx
+   94  mov %ecx,%eax
+   95  xor $0x400,%eax
+   96  xor %esi,%esi
+   97  cmp $0x400,%ecx
+   98  setae %sil
+   99  cmovae %eax,%ecx
+  100  jmp 80 <__truncsfhf2+0x80>
+
+LITERAL -- the caller's answer row, after attachment:
+  produced_by: {"callee": "__truncsfhf2", "kind": "runtime_callee"}
+  it was:      {"kind": "arch_opcode", "mnem": "push"}
+

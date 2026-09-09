@@ -438,8 +438,59 @@ UNSIGNED = {8: "uint8_t", 16: "uint16_t", 32: "uint32_t",
             64: "uint64_t", 128: "unsigned __int128"}
 SIGNED = {8: "int8_t", 16: "int16_t", 32: "int32_t",
           64: "int64_t", 128: "__int128"}
-FLOAT = {16: "_Float16", 32: "float", 64: "double"}
+FLOAT = {16: "_Float16", 32: "float", 64: "double",
+         # THE 80-BIT HOLDER (task ap3).  `long double` on
+         # x86-64 IS the x87 extended format, and 79 is the
+         # width of its IEEE bit-vector as z3 spells it:
+         # `reference.X87_SORT` is `FPSort(15, 64)` and
+         # `fp_width` adds the two, so a sign bit, 15 exponent
+         # bits and a 63-bit fraction -- the explicit integer
+         # bit the hardware stores in memory is not part of
+         # z3's spelling.  This entry is a HOLDER only: no
+         # `memcpy` helper is ever generated at this width,
+         # because the 80th bit is exactly where memory and
+         # z3 disagree.  Task ap3's probe, LITERAL, is in
+         # lane `ap3_l2`: a `long double` add at the corpus's
+         # own ship flags carves to
+         # `fldt 0x18(%rsp); fldt 0x8(%rsp); faddp %st,%st(1); ret`.
+         79: "long double"}
 PARAM_NAMES = ["a", "b", "c", "d", "e", "f", "g", "h"]
+
+
+X87_BITS = 79
+"""the width of an x87 value as z3 spells it: `reference.X87_SORT` is
+`FPSort(15, 64)` and `fp_width` adds the exponent and significand
+widths.  The hardware's own memory spelling is 80 bits, the extra one
+being the explicit integer bit; the two never meet in a rendering,
+because an x87 value is carried as a `long double` and never as its
+bits."""
+
+X87_ARRIVAL = ("X87_", "x87_")
+
+
+def is_an_x87_arrival(family):
+    """whether an arrival family or answer home names a position on the
+    x87 register stack.
+
+    THE TWO SPELLINGS ARE THE REFERENCE'S OWN and are not this file's to
+    change: the model table preseeds the stack as `seed_X87_0` /
+    `seed_X87_1` (`model_translate` writes them) and a literal memory
+    operand read at the x87 sort is `reference.x87_symbol`'s
+    `x87_<mangled operand>`.  A written place on the stack is named
+    `x87_<slot>` by the same rule.
+
+    `st` IS NOT ONE OF THEM, and the reason is measured: the first
+    twenty runs of lane `ap3_l6` refused `push` gpr_one 64 on all four
+    targets, because a bare `st` prefix also spells the STACK place
+    `push` writes.  The refusal a family spelled `st<n>` deserves is
+    the one `plan_parameters` already raises two lines below this
+    test."""
+    if family is None:
+        return False
+    for prefix in X87_ARRIVAL:
+        if family.startswith(prefix):
+            return True
+    return False
 
 
 def promoted_bits(width):
@@ -516,6 +567,23 @@ class Renderer(object):
             self.seed_names[name] = index
             uses = self.uses.get(name, [])
             vector = family in R.XMM_NAMES
+            if is_an_x87_arrival(family):
+                # THE 80-BIT HOLDER (task ap3).  An x87 arrival is a
+                # `long double` VALUE, not a bit pattern: the term
+                # reads the symbol whole, at `reference.X87_SORT`, and
+                # `long double` holds exactly that.  It is planned
+                # before the vector test because a whole read is what
+                # the vector branch refuses.
+                self.params.append({
+                    "index": index,
+                    "family": family,
+                    "name": PARAM_NAMES[index],
+                    "holder": FLOAT[X87_BITS],
+                    "kind": "fp",
+                    "bits": X87_BITS,
+                    "used": bool(uses),
+                })
+                continue
             if family.startswith("st") or family.startswith("x87"):
                 raise Refused(CAUSE_X87, family)
             max_hi = -1
@@ -644,6 +712,23 @@ class Renderer(object):
             self.helpers.add("bits_to_f%d" % width)
             return return_type, "bits_to_f%d((%s)(%s))" % (
                 width, UNSIGNED[width], root_text)
+        if is_an_x87_arrival(family):
+            # THE x87 ANSWER HOME (task ap3).  `handful.home_of` gives
+            # an x87 place the stack top by the same CONVENTION the
+            # flags place already carries a home by: the c calling rule
+            # leaves a `long double` answer in st(0).  The root must
+            # already be the float itself -- the driver hands the
+            # renderer the value under the place's own
+            # `fp.to_ieee_bv`, which is where the 79-against-80 seam
+            # would otherwise be crossed by a `memcpy`.
+            if width != X87_BITS:
+                raise Refused(CAUSE_WIDTH, "x87 answer %d bits" % width)
+            if root_kind != "fp" or root_width != X87_BITS:
+                raise Refused(CAUSE_X87,
+                              "an x87 answer home reached with a %s "
+                              "root of %d bits" % (root_kind,
+                                                   root_width))
+            return FLOAT[X87_BITS], root_text
         if family.startswith("st") or family.startswith("x87"):
             raise Refused(CAUSE_X87, family)
         if width not in UNSIGNED:
@@ -748,6 +833,19 @@ class Renderer(object):
                 return text, "bv", width
             return masked("%s >> %d" % (text, low), high - low + 1), \
                 "bv", high - low + 1
+        if param["bits"] == X87_BITS:
+            # AN x87 ARRIVAL IS THE FLOAT ITSELF (task ap3), and never
+            # its bits: `long double` and z3's `FPSort(15, 64)` agree
+            # on the value and disagree on the memory spelling (the
+            # explicit integer bit), so a `memcpy` helper here would be
+            # a different function from `fp.to_ieee_bv`.  The term
+            # reads the symbol whole; there is no lane to take.
+            if extract is not None:
+                raise Refused(CAUSE_X87,
+                              "%s read through Extract(%d, %d); an x87 "
+                              "arrival is a value, not a bit pattern"
+                              % (name, extract[0], extract[1]))
+            return param["name"], "fp", X87_BITS
         # a vector arrival planned as a float holder: its bits
         helper = "f%d_to_bits" % param["bits"]
         self.helpers.add(helper)
@@ -1004,6 +1102,24 @@ class Renderer(object):
         if kind == z3.Z3_OP_FPA_TO_IEEE_BV:
             text, akind, awidth = self.emit(node.arg(0))
             self.expect(akind, "fp", node)
+            if awidth == X87_BITS:
+                # THE SEAM, REFUSED RATHER THAN CROSSED (task ap3).
+                # This node's helper is a `memcpy` between a float and
+                # its bits, and at the x87 width the two spellings
+                # differ by the explicit integer bit the hardware
+                # stores and z3 does not -- so the helper would be a
+                # different function from the node.  Where an x87 value
+                # is the place's ANSWER the driver hands the renderer
+                # the float underneath instead (`handful.the_x87_value`)
+                # and this node is never reached; where the term reads
+                # an x87 value's BITS inside itself, as an x87 compare's
+                # flag pair does, there is nothing to hand and the
+                # place is refused by cause.
+                raise Refused(CAUSE_X87,
+                              "this term reads an x87 value's bits, "
+                              "and c's `long double` and z3's "
+                              "FPSort(15, 64) do not spell them the "
+                              "same")
             self.helpers.add("f%d_to_bits" % awidth)
             bits = promoted_bits(awidth)
             return "(%s)f%d_to_bits(%s)" % (UNSIGNED[bits], awidth, text), \

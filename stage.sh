@@ -32,6 +32,28 @@ for s in "${SOURCES[@]}"; do
     echo "  $s: refreshed ($(git -C "$src" rev-parse --short HEAD 2>/dev/null || echo 'no git') at source)"
 done
 
+# ---- scrub: the public snapshot carries no home path, no machine address,
+# no account name, no personal address. Patterns in scrub_patterns.tsv.
+echo "== scrubbing =="
+scrubbed=0
+while IFS=$'\t' read -r pat rep; do
+    [ -z "$pat" ] && continue; case "$pat" in '#'*) continue ;; esac
+    while IFS= read -r f; do
+        [ -f "$f" ] || continue
+        case "$(file -b --mime-type "$f")" in text/*|application/json|application/x-shellscript|application/javascript) ;; *) continue ;; esac
+        sed -i -E "s|$pat|$rep|g" "$f"; scrubbed=$((scrubbed+1))
+    done < <(grep -rlE --exclude-dir=.git -- "$pat" "${SOURCES[@]}" 2>/dev/null)
+done < scrub_patterns.tsv
+echo "  $scrubbed file-pattern replacements"
+left=0
+while IFS=$'\t' read -r pat rep; do
+    [ -z "$pat" ] && continue; case "$pat" in '#'*) continue ;; esac
+    n=$(grep -rlE --exclude-dir=.git -- "$pat" "${SOURCES[@]}" 2>/dev/null | wc -l)
+    [ "$n" -gt 0 ] && { echo "  STILL PRESENT after scrub: $pat in $n file(s)"; left=$((left+n)); }
+done < scrub_patterns.tsv
+[ "$left" -gt 0 ] && { echo "  refusing to commit: a pattern survived the scrub (a binary file, or a spelling the pattern misses)"; exit 1; }
+echo "  clean: no pattern remains"
+
 git add -A
 if git diff --cached --quiet; then echo "  nothing changed since the last staging"; exit 0; fi
 n_files=$(git diff --cached --name-only | wc -l)

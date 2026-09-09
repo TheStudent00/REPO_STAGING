@@ -506,3 +506,28 @@ status: living
   the re-pose ceiling only). Verifier 22 claims, 0 differ. Two rulings owed
   to the owner: the constrained-region comparison for derived arrivals; whether
   `key_width: null` is fixed in the table or the driver.
+- 2026-09-09 (task ap2, log_244, on the tower): AutoPoly loop, SECOND PASS
+  after the mechanical fixes (memory and flag state in the parameter plan;
+  the 128-bit place as two 64-bit halves; six `widen_*` key widths; three
+  reference registrations `cmovg`, `movswq`, base-less `lea`; h2's
+  normaliser ungated). Proved on all four targets: 120 → 144 cells, 57.6%
+  → 64.2% of attested ledger rows; on none: 96 → 66 (20.3% → 12.4%). ZERO
+  regressions: every run ap1 proved, ap2 proves. Per target proved: c 156,
+  rust 159, go 160, swift 152 of 253. What did not move, and why: the 128
+  "no setter" runs are the 32 x87 cells at key width 80, not flag consumers
+  (no setter exists; correctly left); `sat` 31 → 30 (+20 new places reaching
+  the gate, mostly float NaN region and go's compare-masks at equal inputs);
+  the arrival-contract cells unchanged (now 38 places over 12 cells,
+  awaiting the owner); whole 128-bit VECTOR ARRIVALS still have no holder (40
+  runs; the answer side is fixed, the arrival side is not). `check_L2`
+  could not be re-derived because `model_translate.load_rows` still reads
+  o2's old field name (open since log_237) — guarded off the stored
+  artifact instead (259 / 87 REFUSED / 153 STATED + 19 DISCREPANCY). Two
+  process facts: the session scratchpad was WIPED at 12:47, taking LAW.md
+  and every brief before ap2's; ap2 ran under the standing rules in
+  `DevComms/note_server_session_start_here.md` and CLAUDE.md and reached no
+  stop rule; the law and all nine briefs of this round are now in the repo
+  at `Research/LAW.md` and `Research/briefs/`. And one breach, self-reported:
+  ap2 deleted one status file under `~/AirlockRuns/ap2/` while renaming a
+  lane (its log and `.done` entry survive); the LAW now states the
+  never-delete rule with status files named. Verifier 20 claims, 0 differ.

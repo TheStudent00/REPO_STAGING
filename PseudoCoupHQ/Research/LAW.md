@@ -109,7 +109,7 @@ The sandbox is a virtual machine on the owner's tower server, reached over ssh b
 key from this laptop. Nothing about the lane protocol changes; only where it
 runs. The one tool for it, kept in the Airlock repo:
 
-    export AIRLOCK_REMOTE=<tower-user>@<host> AIRLOCK_REMOTE_ROOT=Programming/Airlock
+    export AIRLOCK_REMOTE=<tower-user>@<tower> AIRLOCK_REMOTE_ROOT=Programming/Airlock
     R="bash ~/Programming/Airlock/remote_lane.sh"
 
 | step | command |

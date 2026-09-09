@@ -29,7 +29,7 @@ appears without its literal.
 Paths inside a pasted command are the ones the lane sees:
 `/projects/PseudoCoupHQ` IS `~/Programming/PseudoCoupHQ`, mounted into
 the instance. Prose names host paths. **The lane logs are on the
-TOWER** (`<tower-user>@<host>`), under
+TOWER** (`<tower-user>@<tower>`), under
 `~/AirlockRuns/h2/agent/logs/`, and every attribution
 below names one of them.
 

@@ -12,7 +12,7 @@ Artifact folder:
 writing `autopoly2_*`; task ap1's products are not overwritten.
 Lane scripts: `.../autopoly/lanes_ap2/`, sixteen of them, each kept in the
 repo as the standing rule of 2026-09-07 requires. Every lane log named
-below is on the TOWER (`<tower-user>@<host>`), under
+below is on the TOWER (`<tower-user>@<tower>`), under
 `~/AirlockRuns/ap2/agent/logs/`.
 
 Paths inside a pasted command are the ones the lane sees:

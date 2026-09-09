@@ -260,7 +260,7 @@ corruption forward where copy-per-run cannot.
 copies the project into `/work`, which is capped, so copying a
 multi-gigabyte tree there fails with ENOSPC rather than silently
 consuming the host disk. If a project is already exposed read-only under
-`/projects/...` via `mounts.conf`, a lane script can use it in place
+`...` via `mounts.conf`, a lane script can use it in place
 instead of copying — faster, and immune to the cap. If a genuinely large
 copy-in is required, raise the cap deliberately in `up.sh` and the
 quadlet unit, or stage it through `/persist`.

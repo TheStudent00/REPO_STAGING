@@ -21,7 +21,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 PUSH=1; [ "${1:-}" = "--no-push" ] && PUSH=0
-SOURCES=(PlanPlan PseudoCoupHQ PseudoCoup_v5 PseudoCoup_v6 PseudoIR DevComms)
+SOURCES=(PlanPlan PseudoCoupHQ PseudoCoup_v5 PseudoCoup_v6 PseudoIR DevComms SandboxDesign)
 TMP=.stage_tmp
 STAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "== staging at $STAMP =="
@@ -31,7 +31,11 @@ rm -rf "$TMP"; mkdir -p "$TMP"   # the private area starts empty every run
 refreshed=()
 for s in "${SOURCES[@]}"; do
     src="$HOME/Programming/$s"
-    if [ ! -d "$src" ]; then echo "  $s: source absent here, staged copy left as is"; continue; fi
+    if [ ! -d "$src" ]; then
+        # the source is gone; its last snapshot still passes through the scrub
+        if [ -d "$s" ]; then mkdir -p "$TMP/$s"; rsync -a "$s/" "$TMP/$s/"; refreshed+=("$s"); echo "  $s: source absent here, last snapshot re-scrubbed"; fi
+        continue
+    fi
     mkdir -p "$TMP/$s"
     # only what the source repository TRACKS: the authored record, by the
     # source's own .gitignore; caches, virtual environments and generated

@@ -9,8 +9,8 @@
 # <WORKSPACE_DIR>/PseudoCoup_v6/Tools/tree_sitter_base/pins/MANIFEST.md.
 set -uo pipefail
 
-PCV6=/projects/PseudoCoup_v6
-export PCV5_ROOT=/projects/PseudoCoup_v5
+PCV6=PseudoCoup_v6
+export PCV5_ROOT=PseudoCoup_v5
 
 echo "== free space on /work before: $(df -Pm /work | awk 'NR==2{print $4" MB"}')"
 echo "== suite: PseudoCoup_v6 Tools (read-only mount)"

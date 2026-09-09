@@ -32,7 +32,7 @@ sandbox run.
 
 ## What a dropped script can see
 
-- `/projects/PseudoCoup_v6` and `/projects/PseudoCoup_v5` — **read-only**.
+- `PseudoCoup_v6` and `PseudoCoup_v5` — **read-only**.
   Test against the real tree with no copy step; you cannot alter the
   originals. Write products to `/out`.
 - `/work` — scratch, tmpfs, **capped at 4 GB**. Exceeding it fails loudly

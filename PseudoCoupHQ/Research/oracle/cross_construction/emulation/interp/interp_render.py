@@ -138,6 +138,13 @@ class Dialect(object):
     name = None
     suffix = None
     unbounded = False
+    prefix = ""
+    """what every helper name of this dialect's prelude carries in
+    front of it.  Only php has one: `fdiv` is a php BUILT-IN function
+    (php 8), and a prelude that declares it answers, LITERAL, `PHP
+    Fatal error:  Cannot redeclare function fdiv()` -- measured on the
+    first smoke run of lane ex1_l6, and the reason every php helper is
+    `ex_`-prefixed rather than only that one."""
     prelude = None
     main = None
     logic_and = "&&"
@@ -178,6 +185,17 @@ class Dialect(object):
 
     def command(self, folder, path, symbol):
         raise NotImplementedError
+
+    def prepare(self, folder, path, symbol, environment):
+        """what to RUN, once the source is on disk.  Every dialect but
+        one just runs its own runner over the file; c# has to build a
+        project first, and its build writes to standard output, so the
+        build is done here and the BINARY is what the measurement
+        runs -- otherwise the build's own lines would be read as
+        answers, which is exactly what the first smoke run of lane
+        ex1_l6 recorded (`the runner answered 9 lines for 900
+        points`)."""
+        return self.command(folder, path, symbol), None
 
     def check_width(self, width):
         if self.unbounded:
@@ -252,6 +270,7 @@ class Php(Dialect):
     unbounded = False
     prelude = D.PHP_PRELUDE
     main = D.PHP_MAIN
+    prefix = "ex_"
     version_command = ["php", "--version"]
 
     def param(self, name):
@@ -326,10 +345,28 @@ class Csharp(Dialect):
         return "%s {\n        return %s;\n    }\n" % (head, body)
 
     def command(self, folder, path, symbol):
-        # THE ONE RUNNER THAT IS A BUILD.  `dotnet run` needs a project
-        # directory; the driver writes one beside the source and hands
-        # the folder here.
-        return ["/persist/dotnet/dotnet", "run", "--project", folder]
+        return [os.path.join(folder, "bin", "Release", "net10.0", "emu")]
+
+    def prepare(self, folder, path, symbol, environment):
+        """THE ONE RUNNER THAT IS A BUILD."""
+        done = subprocess.run(
+            ["/persist/dotnet/dotnet", "build", "-c", "Release",
+             "--nologo", "-v", "quiet"],
+            cwd=folder, capture_output=True, text=True, timeout=1800,
+            env=environment)
+        binary = os.path.join(folder, "bin", "Release", "net10.0", "emu")
+        if not os.path.exists(binary):
+            first = "(no diagnostic)"
+            text = (done.stdout or done.stderr).strip()
+            for line in text.splitlines():
+                if "error" in line:
+                    first = line.strip()[:300]
+                    break
+            if first == "(no diagnostic)" and text:
+                first = text.splitlines()[0][:300]
+            return None, ("the c# build exited %d and left no binary: %s"
+                          % (done.returncode, first))
+        return [binary], None
 
 
 DIALECTS = {
@@ -491,7 +528,7 @@ class InterpRenderer(E.Renderer):
                 parts.append(self.dialect.width_text(one))
                 continue
             parts.append(one)
-        return self.dialect.call(name, parts)
+        return self.dialect.call(self.dialect.prefix + name, parts)
 
     # -- one node -----------------------------------------------------
 

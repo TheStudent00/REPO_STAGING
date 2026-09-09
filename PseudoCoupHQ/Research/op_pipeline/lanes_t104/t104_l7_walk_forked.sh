@@ -14,8 +14,8 @@
 # term66_store/ is never opened for writing.  The audit columns go to
 # t104_audit.json, so no record in the new store grows a field.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[0/1] term66_store shards before the walk"
 ls term66_store/*.json | wc -l
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_walk.py 1536 60 6144 600
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_walk.py 1536 60 6144 600
 echo "exit $?"

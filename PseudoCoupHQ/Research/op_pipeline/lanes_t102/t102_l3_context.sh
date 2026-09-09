@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -u
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 echo "=== A: node_0_3_1_10_dashboard/PROGRESS.md tail ==="
 tail -40 Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_10_dashboard/PROGRESS.md
 echo "=== B: node_0_3_1_9_graph/PROGRESS.md tail ==="

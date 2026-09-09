@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Runs the syn_shim demo against the vendored corpus.
 #
-#   bash ~/Programming/PseudoCoup_v5/Research/syn_shim/run.sh
+#   bash PseudoCoup_v5/Research/syn_shim/run.sh
 #
 # Needs: pip install tree-sitter==0.26.0 tree-sitter-rust==0.24.2
-# Corpus: ~/Programming/Sources/rust (override with PC_SOURCES)
+# Corpus: Sources/rust (override with PC_SOURCES)
 set -uo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 SRC="${PC_SOURCES:-$HOME/Programming/Sources}"

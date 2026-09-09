@@ -10,7 +10,7 @@
 #
 # MEMORY BOUND: 4 GB resident, named abort ABORT_MEMORY_G1.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/3] task g1: handful.py tally3"
 python3 $H/handful/handful.py tally3
 echo "[2/3] task g1: what did not work, by cause"
@@ -18,7 +18,7 @@ sed -n '\%^### 3.1 Refusals%,\%^## 5%p' $H/handful/handful3.md
 echo "[3/3] task g1: every gate call re-posed at 300,000 ms"
 python3 - <<'PY'
 import json
-d = json.load(open("/projects/PseudoCoupHQ/Research/oracle/"
+d = json.load(open("PseudoCoupHQ/Research/oracle/"
                    "cross_construction/emulation/handful/handful3.json"))
 print("re-posed:", d["meta"].get("recheck_count"),
       "at", d["meta"].get("recheck_ceiling_ms"), "ms")

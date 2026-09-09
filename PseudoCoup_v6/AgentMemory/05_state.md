@@ -86,7 +86,7 @@ Planning/Research.
 ## Planning stands (restructured 2026-07-28 to the node grammar)
 
 `Planning/` is `node_0` under the PlanPlan framework
-(`~/Programming/PlanPlan/framework/PROTOCOL.md` — CORE/SUPPORT/
+(`PlanPlan/framework/PROTOCOL.md` — CORE/SUPPORT/
 node_<indexpath>_<description>; NODE chosen over level/branch).
 Tree: `CORE_0.md` + `SUPPORT_0_dee_frame.md` (the owner's frame
 verbatim) → `node_0_0_tools/` (T1–T6, one node each; T2 ledger has
@@ -295,7 +295,7 @@ re-run here. STATUS:
 
 ## VERIFICATION VENUE: SandboxDesign (found 2026-07-30)
 
-`~/Programming/SandboxDesign/` is the owner's rootless-Podman sandbox —
+`SandboxDesign/` is the owner's rootless-Podman sandbox —
 the right place to run PCv6 suites, and the structural answer to
 the Cowork-sandbox disk-wedge failures. Documented by the
 `toolchain` skill (read it before building/testing anything in
@@ -320,16 +320,16 @@ the Cowork-sandbox disk-wedge failures. Documented by the
 **THE AGENT LANE (built 2026-07-30, the owner approved): a file write is
 a sandbox run — no shell needed, no waiting on the owner.**
 
-- Write a script to `~/Programming/SandboxDesign/agent/drop/x.sh`.
+- Write a script to `SandboxDesign/agent/drop/x.sh`.
   The daemon watches `close_write`, so a direct write runs; no
   rename needed.
-- Poll `~/Programming/SandboxDesign/agent/status/x.sh.status` —
+- Poll `SandboxDesign/agent/status/x.sh.status` —
   key=value, `state=running` then `state=done exit=<rc>` with
   `elapsed_s`, `log=`, `work_consumed_mb`. The path derives from
   the script name; the LOG name embeds a timestamp and cannot be
   predicted, which is why the status file exists.
 - Read products from `agent/out/`, logs from `agent/logs/`.
-- Scripts see `/projects/PseudoCoup_v6` and `/projects/PseudoCoup_v5`
+- Scripts see `PseudoCoup_v6` and `PseudoCoup_v5`
   READ-ONLY (no copy step, originals unalterable). Products go to
   `/out` and THE SESSION places them into the real tree — the
   session is the write path, which is why read-only suffices even
@@ -341,7 +341,7 @@ a sandbox run — no shell needed, no waiting on the owner.**
   synchronously) — two dropped scripts run one after the other,
   which is deliberate: concurrent heavy runs caused the wedge.
 - Ready-made suite run: copy the text of
-  `~/Programming/SandboxDesign/agent/templates/pcv6_suite.sh` into
+  `SandboxDesign/agent/templates/pcv6_suite.sh` into
   `agent/drop/<name>.sh`.
 - **FULLY OPERATIONAL as of 2026-07-30** (image rebuilt, quadlet
   reinstalled, both repos pushed). Status files confirmed working;
@@ -354,7 +354,7 @@ a sandbox run — no shell needed, no waiting on the owner.**
   `Linger=yes`), not `up.sh`. Quadlet unit files are COPIES living
   in `~/.config/containers/systemd/`, so editing
   `SandboxDesign/quadlet/*.container` in the repo changes nothing
-  until `cd ~/Programming/SandboxDesign && ./install_quadlet.sh`
+  until `cd SandboxDesign && ./install_quadlet.sh`
   re-installs them (it stops units, re-copies, daemon-reloads,
   restarts). `./down.sh && ./up.sh` is the MANUAL path and fights
   systemd — under quadlet, `podman rm -f` just triggers a restart

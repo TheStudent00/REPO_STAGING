@@ -18,7 +18,7 @@
 # MEMORY BOUND: 4 GB resident, named abort ABORT_MEMORY_H2; every step
 # here reads json files of a few hundred kB.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 echo "[1/7] task h2: handful.py report2, after the report writer's fix"
 python3 $H/handful.py report2
 echo "[2/7] task h2: the twenty-row table"
@@ -30,7 +30,7 @@ python3 $H/handful.py tally2
 echo "[5/7] task h2: task o8's four totals, off the scratch copy"
 python3 $H/o8_regression.py totals
 echo "[6/7] task h2: the unmodified spelling guard over every json this task wrote"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     $H/handful2.json $H/handful2_sources.json $H/handful2_classifier.json \
     $H/o8_regression/per_opcode_results.json \
     $H/o8_regression/per_opcode_population.json
@@ -39,5 +39,5 @@ grep -c exempt $H/o8_regression.py $H/classifier_probe.py $H/handful.py \
     $H/handful2.md $H/lanes_h2/h2_l1_classifier.sh \
     $H/lanes_h2/h2_l2_sources.sh $H/lanes_h2/h2_l3_run.sh \
     $H/lanes_h2/h2_l4_o8_regression.sh \
-    /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
+    PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
 echo "done"

@@ -19,7 +19,7 @@ python, typescript, java, csharp, go, rust, ruby, php, kotlin, cpp,
 dart, swift
 
 - source of record:
-  `~/Programming/PseudoIR/pseudoir/registry/data/xforms.json`
+  `PseudoIR/pseudoir/registry/data/xforms.json`
   (`"languages"` key; ops.json carries the same per-language
   columns).
 
@@ -58,7 +58,7 @@ PseudoIR and PCv6 changes are DEFERRED by recorded ruling.
 - Mirror tree-sitter's pin; pin bump before compiler fallback.
 - Refusal posture: refuse by name, never silently; UNRESOLVABLE is
   a value; unknown kind refuses.
-- cranelift is BANNED (`~/Programming/PseudoCoupHQ/CRANELIFT_IS_BANNED.md`).
+- cranelift is BANNED (`PseudoCoupHQ/CRANELIFT_IS_BANNED.md`).
 - `SUPPORT_BRAINSTORM_` / `SUPPORT_FUTURE_` filename convention for
   stage visibility (2026-08-12; PlanPlan
   `Planning/SUPPORT_FUTURE_stage_labels.md`). `.archive/` stays as
@@ -67,28 +67,28 @@ PseudoIR and PCv6 changes are DEFERRED by recorded ruling.
 ## where things are
 
 - planning framework of record:
-  `~/Programming/PlanPlan/framework/PROTOCOL.md`; conformance sweep:
-  `bash ~/Programming/PseudoCoupHQ/hq.sh check`.
+  `PlanPlan/framework/PROTOCOL.md`; conformance sweep:
+  `bash PseudoCoupHQ/hq.sh check`.
 - intentions vocabulary (11 objects + categories A-J):
-  `~/Programming/PseudoIR/Tools/intentions/pc_intentions.json`;
+  `PseudoIR/Tools/intentions/pc_intentions.json`;
   minimum-set argument: `.../minimum_intention_set.md`.
-- PCv5 ledgerer code: `~/Programming/PseudoCoup_v5/Tools/ledgerer/`
+- PCv5 ledgerer code: `PseudoCoup_v5/Tools/ledgerer/`
   (ur.py, ledger.py, ts_to_ur.py, test_ts_to_ur.py); research
-  scripts: `~/Programming/PseudoCoup_v5/Research/`.
+  scripts: `PseudoCoup_v5/Research/`.
 - pins: tree-sitter==0.26.0, tree-sitter-rust==0.24.2.
 - session records: per-repo `DevComms/log_NNN_*.md`; PCv5 state as
   of 2026-08-12: `PseudoCoup_v5/DevComms/log_020_session_state_2026_08_12.md`.
-- sandbox/toolchain: `~/Programming/Airlock` since 2026-08-22, derived
-  from `~/Programming/SandboxDesign` (which still works and is not
+- sandbox/toolchain: `Airlock` since 2026-08-22, derived
+  from `SandboxDesign` (which still works and is not
   retired, but shares container names, so never run both at once).
-  Way in: `python3 ~/Programming/Airlock/airlock submit <lane.sh>
+  Way in: `python3 Airlock/airlock submit <lane.sh>
   --batch <label> --weight <n>`, then `airlock status` (`watch` to
-  refresh) and `airlock doctor`. `bash ~/Programming/Airlock/progress.sh`
+  refresh) and `airlock doctor`. `bash Airlock/progress.sh`
   still exists and still works (`-w` refreshes). Underneath, the file
   protocol is unchanged: write `agent/drop/x.sh`, poll `agent/status/`,
   read `agent/logs/`, collect `agent/out/`; container has Rust 1.96.1.
   Migration record:
-  `~/Programming/PseudoCoupHQ/DevComms/log_060_sandbox_to_airlock_migration.md`.
+  `PseudoCoupHQ/DevComms/log_060_sandbox_to_airlock_migration.md`.
 
 ## the kinds vocabulary rulings of 2026-08-12 (basis-report walk)
 
@@ -142,7 +142,7 @@ anchor existed for phases to answer to; this anchor is the fix.
 
 ## communication — load-bearing, re-read EVERY session (2026-08-24)
 
-- `~/Programming/DevComms/LLM_communication_protocol_v2.md` is the
+- `DevComms/LLM_communication_protocol_v2.md` is the
   protocol of record (refactored 2026-08-24; v1 preserved beside
   it). Read it at session start and hold it every turn, alongside
   this file. the owner has had to demand this repeatedly; each repeat
@@ -300,7 +300,7 @@ log_138; serial execution stays (no `workers` key) — a trickle
 jams only its own instance, so the convention is ONE INSTANCE PER
 TASK, and `down` REFUSES while a lane's status is `running`
 (`--force` overrides); the default agent tree for a non-default
-instance moves OUTSIDE the checkout to `~/AirlockRuns/<name>/agent`;
+instance moves OUTSIDE the checkout to `<runs>/<name>/agent`;
 `daemon_file` is dropped after the next image build. the owner: "idc as
 long as it works for you … if its a problem we can revisit."
 Briefs: log_151.
@@ -308,7 +308,7 @@ Briefs: log_151.
 **THE PLAN TREE GOVERNS THE PIPELINE (the owner, 2026-09-03: "we have
 completely drifted away from the use of PlanPlan. unacceptable …
 plan out every fucking step").**
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/`
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/`
 now has nine ratified level-3 nodes —
 probes, arch_unit, canonical_form, ledger, reference, gate, term,
 pool, guard — and 31 level-4 nodes, each with designation,
@@ -327,11 +327,11 @@ OWN runtime (libgcc / compiler-rt: __divti3 family) is IN SCOPE and
 followed — the owner: "if its within the compiler, its not a library call";
 the "out of scope" note of 2026-09-03 is superseded, its 308-unit
 list stands. Render:
-`python3 ~/Programming/PlanPlan/framework/render_plan.py ~/Programming/PseudoCoupHQ/Planning -o ~/Programming/PseudoCoupHQ/DevComms/renders/plan_<date>.html`.
+`python3 PlanPlan/framework/render_plan.py PseudoCoupHQ/Planning -o PseudoCoupHQ/DevComms/renders/plan_<date>.html`.
 
 **THE VIRTUAL-MEMORY FORM — SEE LOG 141 (2026-09-02).** The full
 saved understanding, accepted by the owner, lives in
-`~/Programming/PseudoCoupHQ/DevComms/log_141_virtual_memory_form_explained.md`.
+`PseudoCoupHQ/DevComms/log_141_virtual_memory_form_explained.md`.
 Two additions over the refinement below: (1) NO CONTIGUITY
 ASSUMPTION — blocks are addressed through a LEDGER (an array of
 block base pointers, fixed order IN/CONST/TEMP/OWN/GUARD/OUT, one

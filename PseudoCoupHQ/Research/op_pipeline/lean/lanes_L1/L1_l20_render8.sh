@@ -5,7 +5,7 @@
 # number rather than on the holder; the append case at a zero-width left
 # operand needed that width substituted before the bits line up.
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 echo '[1/1] Render.lean, build 8'

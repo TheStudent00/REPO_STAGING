@@ -80,9 +80,9 @@ rust|cpp {'built': {'entry_id': 'E00006', 'x_text': '~Extract(31, 0, v0)', 'y_te
 
 Attribution: `Research/oracle/cross_construction/cross1_length_one.py`, run as
 lane `o1_l2_cross1.sh`, log
-`~/AirlockRuns/o1/agent/logs/20260906T002436Z__o1_l2_cross1.sh.log`
+`<runs>/o1/agent/logs/20260906T002436Z__o1_l2_cross1.sh.log`
 (o1's own run dir -- the daemon writes there per instance, distinct
-from the default instance's `~/Programming/Airlock/agent/logs/`).
+from the default instance's `Airlock/agent/logs/`).
 Peak RSS (children, `resource.getrusage`) 95,620 KB = 93.4 MB,
 against the 2 GB bound (`ABORT_MEMORY_O1`, not raised).
 
@@ -124,7 +124,7 @@ section 5). Per the brief's stop rule, these 22 texts are reported
 and EXCLUDED from length-two matching, not patched per text.
 
 Attribution: same lane, `o1_l4_cross2.sh`, log
-`~/AirlockRuns/o1/agent/logs/20260906T002905Z__o1_l4_cross2.sh.log`.
+`<runs>/o1/agent/logs/20260906T002905Z__o1_l4_cross2.sh.log`.
 Peak RSS 96,324 KB = 94.1 MB.
 
 ## 4. The length-two matrix, with quoted constructions
@@ -252,8 +252,8 @@ Attribution: same lane and log as section 3.
 
 ## 6. Lane logs and the verifier tally
 
-- lane `o1_l2_cross1.sh`: `~/AirlockRuns/o1/agent/logs/20260906T002436Z__o1_l2_cross1.sh.log`
-- lane `o1_l4_cross2.sh`: `~/AirlockRuns/o1/agent/logs/20260906T002905Z__o1_l4_cross2.sh.log`
+- lane `o1_l2_cross1.sh`: `<runs>/o1/agent/logs/20260906T002436Z__o1_l2_cross1.sh.log`
+- lane `o1_l4_cross2.sh`: `<runs>/o1/agent/logs/20260906T002905Z__o1_l4_cross2.sh.log`
 - guard: `check_no_spelling_keys.py` PASS on both
   `cross1_length_one.json` and `cross2_length_two.json` (section 0
   of the brief), re-run in lane `o1_l5_verify.sh`.
@@ -262,7 +262,7 @@ Attribution: same lane and log as section 3.
 
 Verifier tally, `check_conventions_log_claims.py --verify` over this
 log, lane `o1_l8_verify.sh`, log
-`~/AirlockRuns/o1/agent/logs/20260906T003609Z__o1_l8_verify.sh.log`:
+`<runs>/o1/agent/logs/20260906T003609Z__o1_l8_verify.sh.log`:
 
 ```
 claims 7 | MATCHES 5 | DIFFERS 0 | UNVERIFIABLE 2 | REFUSED 0 | NOT_RERUNNABLE 0

@@ -5,7 +5,7 @@ Date: 2026-09-04. Task 85, the top-priority item of
 
 The page changed is the PYTHON route — the one the owner opens:
 `Research/op_pipeline/dashboard_ouro.html` + `dashboard_ouro.py`, rendered
-by `~/Programming/Ourobrowser`. The JavaScript route is untouched and its
+by `Ourobrowser`. The JavaScript route is untouched and its
 `git diff` is pasted in §8.3.
 
 ---
@@ -585,12 +585,12 @@ PASS dashboard_pane6.js -- ... (0 named coincidences above)
   exit 0
 ```
 
-## 8.4 `~/Programming/Ourobrowser` untouched
+## 8.4 `Ourobrowser` untouched
 
 LITERAL, on the host:
 
 ```
-$ cd ~/Programming/Ourobrowser
+$ cd Ourobrowser
 $ git diff 642d4afa..HEAD -- browser_engine.py bridge.py test_page.html | wc -l
 0
 ```
@@ -624,7 +624,7 @@ That is the same footing on which task 77's present-day reads run.
 
 # 10. Complete file inventory
 
-## 10.1 `~/Programming/PseudoCoupHQ` — edited
+## 10.1 `PseudoCoupHQ` — edited
 
 | file | the whole of the edit |
 |---|---|
@@ -635,7 +635,7 @@ That is the same footing on which task 77's present-day reads run.
 | `Planning/.../node_0_3_5_10_dashboard/CORE_...md` | five realization rows; the task-77 row marked superseded |
 | `Planning/.../node_0_3_5_10_dashboard/PROGRESS.md` | seven dated entries |
 
-## 10.2 `~/Programming/PseudoCoupHQ` — new
+## 10.2 `PseudoCoupHQ` — new
 
 | file | what it is |
 |---|---|
@@ -666,7 +666,7 @@ That is the same footing on which task 77's present-day reads run.
 `check_no_spelling_keys.py`, `check_dashboard_js_no_spelling.py`,
 `check_dashboard_py_no_spelling.py`, `pane23_manifest_regex_check.py`,
 `chronology_build.py`, `chronology.json`, and everything in
-`~/Programming/Ourobrowser`. §8.3 and §8.4 paste the proof for the two
+`Ourobrowser`. §8.3 and §8.4 paste the proof for the two
 that were gated.
 
 ---

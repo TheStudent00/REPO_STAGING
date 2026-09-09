@@ -6,7 +6,7 @@ ONE AIRLOCK INSTANCE PER TASK. All of log_158's binding rules stand
 tree first; nothing reaches the owner that a CORE or AgentMemory answers;
 PROGRESS at the moment of progress; standing requirements).
 
-Tree: `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`.
+Tree: `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`.
 Every task is a node whose PROGRESS says **planned** after the
 round-12 audit (log_165).
 

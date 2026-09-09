@@ -68,7 +68,7 @@ Control: 14 of 33 compiled emulations of a c member's own term are byte-identica
 
 - from the x_to_c rows: entry `E00304`, x unit `go/op_110`
 - the term (layer-5 text), LITERAL: `Extract(31, 0, bvudiv_i(Concat(0, v0), Concat(0, v1)))`
-- the rendered source, LITERAL (`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/src/E00304__go_op_110.c`, on the host):
+- the rendered source, LITERAL (`PseudoCoupHQ/Research/oracle/cross_construction/emulation/src/E00304__go_op_110.c`, on the host):
 
 ```c
 /* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of E00304__go_op_110.  The term's layer-5 text, LITERAL:
@@ -92,7 +92,7 @@ emu_E00304__go_op_110(uint64_t a, uint64_t b)
 
 - from the x_to_c rows: entry `E00264`, x unit `rust/op_281`
 - the term (layer-5 text), LITERAL: `1 ^ Extract(7, 0, v0) ^ Extract(7, 0, v1)`
-- the rendered source, LITERAL (`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/src/E00264__rust_op_281.c`, on the host):
+- the rendered source, LITERAL (`PseudoCoupHQ/Research/oracle/cross_construction/emulation/src/E00264__rust_op_281.c`, on the host):
 
 ```c
 /* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of E00264__rust_op_281.  The term's layer-5 text, LITERAL:
@@ -116,7 +116,7 @@ emu_E00264__rust_op_281(uint8_t a, uint8_t b)
 
 - from the x_to_c rows: entry `E01532`, x unit `go/regen_146`
 - the term (layer-5 text), LITERAL: `Concat(0, Extract(15, 0, bvudiv_i(Concat(0, Extract(7, 0, v0)), Concat(0, Extract(7, 0, v1)))))`
-- the rendered source, LITERAL (`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/src/E01532__go_regen_146.c`, on the host):
+- the rendered source, LITERAL (`PseudoCoupHQ/Research/oracle/cross_construction/emulation/src/E01532__go_regen_146.c`, on the host):
 
 ```c
 /* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of E01532__go_regen_146.  The term's layer-5 text, LITERAL:

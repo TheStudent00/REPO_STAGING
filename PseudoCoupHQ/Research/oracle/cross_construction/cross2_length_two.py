@@ -27,9 +27,9 @@ import json
 import sys
 import time
 
-POOL_PATH = "/projects/PseudoCoupHQ/Research/op_pipeline/the_pool5.json"
-CROSS1_PATH = "/projects/PseudoCoupHQ/Research/oracle/cross_construction/cross1_length_one.json"
-OUT_PATH = "/projects/PseudoCoupHQ/Research/oracle/cross_construction/cross2_length_two.json"
+POOL_PATH = "PseudoCoupHQ/Research/op_pipeline/the_pool5.json"
+CROSS1_PATH = "PseudoCoupHQ/Research/oracle/cross_construction/cross1_length_one.json"
+OUT_PATH = "PseudoCoupHQ/Research/oracle/cross_construction/cross2_length_two.json"
 
 TIME_BUDGET_S = 30 * 60  # per the brief: 30 minutes wall clock before sampling
 SAMPLE_SIZE = 200

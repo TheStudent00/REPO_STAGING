@@ -149,7 +149,7 @@ not exist.** Measured just now:
 
 | generator | emitters present |
 | --- | --- |
-| `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_gen.py` | `emit_rust` (line 486), `emit_ruby` (line 865) — and nothing else |
+| `PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_gen.py` | `emit_rust` (line 486), `emit_ruby` (line 865) — and nothing else |
 
 The cartesian design was built for two languages. "Launching the other
 ten" is therefore not a launch; it is writing ten new emitters, each
@@ -158,10 +158,10 @@ payload encoding, and — per log 057 — a float payload path that
 converts through the double rather than through printed text. That is
 session-scale engineering, not an overnight kick-off.
 
-Additionally, c# is blocked below that: `~/Programming/SandboxDesign/README.md`
+Additionally, c# is blocked below that: `SandboxDesign/README.md`
 line 244 lists `.NET` under "Not included, by decision". kotlin, swift
 and dart are unconfirmed in the current image and need a live
-`bash ~/Programming/SandboxDesign/probe_host.sh` check before any lane
+`bash SandboxDesign/probe_host.sh` check before any lane
 is written for them.
 
 **So the honest state at end of session:** the gate is open, no compute

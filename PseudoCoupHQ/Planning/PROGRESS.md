@@ -16,9 +16,9 @@ status: living
   2026-08-02 rules — `super_node`, `sub_nodes`, and CHECK frontmatter
   carrying `id: <node id>.check`. This is the HQ half of the first
   chain conformance pass; the other half is recorded in
-  `~/Programming/PseudoCoup_v5/Planning/PROGRESS.md`.
+  `PseudoCoup_v5/Planning/PROGRESS.md`.
   - **The HQ-to-PCv5 edge is now stated, and it never was before.**
-    `hq.projects` names `~/Programming/PseudoCoup_v5/Planning/CORE_0.md`
+    `hq.projects` names `PseudoCoup_v5/Planning/CORE_0.md`
     in `sub_nodes` with `repo` and `remote`, and PCv5's root names
     `hq.projects` back in `super_node`. Until today the only thing
     joining the two trees was a sentence, and it pointed two levels
@@ -43,7 +43,7 @@ status: living
   exchange, conventions), all `status: draft` pending the owner. node names
   and the count are the first thing to cut or keep.
 - 2026-07-31: this tree carries `designation` on every node from
-  birth, per `~/Programming/PseudoCoupHQ/plan_and_code.md`. it is the
+  birth, per `PseudoCoupHQ/plan_and_code.md`. it is the
   first tree in the line that does — PseudoCoup_v6's and PseudoIR's
   predate the field and do not conform yet.
 - 2026-07-31: SUPPORT_planning_trees.md written at the owner's request —
@@ -53,7 +53,7 @@ status: living
   is true between the projects, each project settles its own
   subject).
 - raised by the owner 2026-07-31, **closed 2026-08-01** (see the closing
-  sub-bullet): `~/Programming/PseudoCoup_v5/` had NO planning tree,
+  sub-bullet): `PseudoCoup_v5/` had NO planning tree,
   which is why it was absent from every list of trees here and from
   the tools' configuration. Verified the same
   day: its top level is `Designing/`, `DevComms/`, `Research/`,
@@ -69,14 +69,14 @@ status: living
     the owner's to settle, and the first question it has to answer is what
     version 5 IS now that it is neither the old research nor PCv6.
   - 2026-07-31: a proposed definition written at the owner's request, in
-    `~/Programming/PseudoCoupHQ/DevComms/log_002_what_pcv5_is.md` —
+    `PseudoCoupHQ/DevComms/log_002_what_pcv5_is.md` —
     version 5 as the PseudoCoup that serves PseudoIR (eats compiler
     source, holds the Frankensteins, runs before a hub exists),
     version 6 as the one that serves applications. Derived clause by
     clause from what the owner has said, with the join marked as Claude's.
     Awaiting his yes or no; nothing is built on it.
   - 2026-08-01 **done**: the tree exists. Verified on disk:
-    `~/Programming/PseudoCoup_v5/Planning/` holds `CORE_0.md`
+    `PseudoCoup_v5/Planning/` holds `CORE_0.md`
     (`id: pcv5`, definition line confirmed by the owner 2026-07-31 and
     marked in the file), `PROGRESS.md`, `CHECK_0.md`, `DASHBOARD.md`,
     and three nodes (tools, research, api), every node carrying
@@ -86,8 +86,8 @@ status: living
     to four.
 - 2026-07-31 **done** (the owner: "yeah add them"): the project plans' cycle
   text now depends on this tree.
-  `~/Programming/PseudoCoup_v6/Planning/CORE_0.md` and
-  `~/Programming/PseudoIR/Planning/CORE_0.md` each open "the other
+  `PseudoCoup_v6/Planning/CORE_0.md` and
+  `PseudoIR/Planning/CORE_0.md` each open "the other
   project" by naming node_0_1_exchange as where it is settled, and
   state that a project copy disagreeing with HQ's is the project copy
   that is wrong. an earlier entry here recorded this as deferred

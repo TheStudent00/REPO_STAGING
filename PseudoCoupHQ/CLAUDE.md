@@ -127,40 +127,40 @@ special word kept.
 
 ## the sandbox — Airlock, since 2026-08-22
 
-The sandbox is `~/Programming/Airlock`. It was derived from
-`~/Programming/SandboxDesign` on 2026-08-22 and this line now uses it.
-`~/Programming/SandboxDesign` is not retired and still works, but the
+The sandbox is `Airlock`. It was derived from
+`SandboxDesign` on 2026-08-22 and this line now uses it.
+`SandboxDesign` is not retired and still works, but the
 two share container names and **must not run at the same time** — see
-`~/Programming/Airlock/MIGRATING.md`. The migration is recorded in
-`~/Programming/PseudoCoupHQ/DevComms/log_060_sandbox_to_airlock_migration.md`.
+`Airlock/MIGRATING.md`. The migration is recorded in
+`PseudoCoupHQ/DevComms/log_060_sandbox_to_airlock_migration.md`.
 
 - **The CLI is the way in.** Submit a lane with
-  `python3 ~/Programming/Airlock/airlock submit <lane.sh> --batch <label> --weight <n>`.
+  `python3 Airlock/airlock submit <lane.sh> --batch <label> --weight <n>`.
   It validates the lane before it becomes a run and refuses by name
   rather than queueing something that fails twenty minutes later. A
   batch decision is **mandatory** — `--batch <label>` or `--no-batch`,
   no default — so no lane is ever queued without a denominator.
 - The file protocol underneath is unchanged and is still the truth:
-  lanes land in `~/Programming/Airlock/agent/drop`, run serially by the
+  lanes land in `Airlock/agent/drop`, run serially by the
   watcher, logs in `agent/logs`, statuses in `agent/status`, products in
   `agent/out`. A direct file write into `agent/drop` still works and
   nothing is required to go through the CLI.
-- Progress across ALL runs: `python3 ~/Programming/Airlock/airlock status`
+- Progress across ALL runs: `python3 Airlock/airlock status`
   (or `airlock watch` to refresh). It shows the batch summary, the
   queue, the running lane with its latest progress line, and the most
-  recent finished. `bash ~/Programming/Airlock/progress.sh` still exists
+  recent finished. `bash Airlock/progress.sh` still exists
   and still works — it is carried across unchanged, `-w` still
   refreshes, and it is the only view that lists live processes inside
   `sandbox-runner`. Every CLI view ends by pointing at it.
-- `python3 ~/Programming/Airlock/airlock doctor` reports podman and
+- `python3 Airlock/airlock doctor` reports podman and
   container state, granted cores versus the configured cap, clutter in
   `agent/drop`, toolchains, the allowlist and free space — each finding
   with a severity and a one-line remedy.
 - **Lane scripts are kept in the repo** (the owner, 2026-09-07): every lane
   script is written under the task's artifact folder as
   `lanes_<task>/<lane>.sh` and submitted from there; Airlock's `.done/`
-  archive is not the record. Never delete under `~/Programming/Airlock/`
-  or `~/AirlockRuns/`.
+  archive is not the record. Never delete under `Airlock/`
+  or `<runs>/`.
 - "work free" in a lane footer is DISK SPACE in the work directory, not
   a worker state.
 - A lane the operating system stops on the wall-clock ceiling is
@@ -170,9 +170,9 @@ two share container names and **must not run at the same time** — see
   process. Compute is seconds to minutes; the long waits in a session
   are agent engineering, not probe throughput.
 - **Not yet migrated, deliberately:** the probe generators and readers
-  under `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/` and
+  under `PseudoCoupHQ/Research/kind_fuzz_clustering/` and
   `Research/data_representation/` still resolve
-  `~/Programming/SandboxDesign/agent/...`, because the 480 products of
+  `SandboxDesign/agent/...`, because the 480 products of
   the runs of record live in that tree and Airlock's `agent/out` starts
   empty. Repointing them is the owner's call; the inventory is in log 060.
 

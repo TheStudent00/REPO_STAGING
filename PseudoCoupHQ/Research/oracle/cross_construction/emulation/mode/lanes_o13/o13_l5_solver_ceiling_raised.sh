@@ -8,8 +8,8 @@
 # at most four solver calls -- into their own files, so the two answers
 # can be compared rather than the limit reported as a result.
 set -u
-M=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
-G=/projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+M=PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
+G=PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 export PATH=/opt/cargo/bin:$PATH
 echo "[1/3] the c re-run with the solver ceiling at 30000 ms"
 cd "$M" && python3 mode.py run c 30000

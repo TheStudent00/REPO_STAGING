@@ -9,7 +9,7 @@ its output.
 
 ALL COMPUTE RAN AS AIRLOCK LANES on instance `t83`. Not one line of
 this task's analysis ran as host python. The lane logs at
-`~/AirlockRuns/t83/agent/logs/` are the evidence and are cited by path
+`<runs>/t83/agent/logs/` are the evidence and are cited by path
 throughout.
 
 ---
@@ -56,7 +56,7 @@ it does not, this runs on canon39 and says that instead."*
 
 ## 1.1 canon40 is the newest canon, verified on disk
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T183152Z__t83_l1_sample.sh.log`,
+LITERAL — `<runs>/t83/agent/logs/20260904T183152Z__t83_l1_sample.sh.log`,
 lane `t83_l1_sample.sh` §2, run inside the sandbox:
 
 ```
@@ -94,17 +94,17 @@ LITERAL — the same lane log, §1:
 ```
 ======== 1. the imports term66_run.py needs, each named ========
   OK      z3                               /opt/venv/lib/python3.13/site-packages/z3/__init__.py
-  OK      canonical_form                   /projects/PseudoCoupHQ/Research/op_pipeline/canonical_form.py
-  OK      gate                             /projects/PseudoCoupHQ/Research/op_pipeline/gate.py
-  OK      reference                        /projects/PseudoCoupHQ/Research/op_pipeline/reference.py
-  OK      regate64_run                     /projects/PseudoCoupHQ/Research/op_pipeline/regate64_run.py
-  OK      term                             /projects/PseudoCoupHQ/Research/op_pipeline/term.py
-  OK      pool                             /projects/PseudoCoupHQ/Research/op_pipeline/pool.py
-  OK      pool65_run                       /projects/PseudoCoupHQ/Research/op_pipeline/pool65_run.py
-  OK      ledger                           /projects/PseudoCoupHQ/Research/op_pipeline/ledger.py
-  OK      dom_ops                          /projects/PseudoCoupHQ/Research/op_pipeline/dom_ops.py
-  OK      normalize79_pool_prediction      /projects/PseudoCoupHQ/Research/op_pipeline/normalize79_pool_prediction.py
-  OK      guard66                          /projects/PseudoCoupHQ/Research/op_pipeline/guard66.py
+  OK      canonical_form                   PseudoCoupHQ/Research/op_pipeline/canonical_form.py
+  OK      gate                             PseudoCoupHQ/Research/op_pipeline/gate.py
+  OK      reference                        PseudoCoupHQ/Research/op_pipeline/reference.py
+  OK      regate64_run                     PseudoCoupHQ/Research/op_pipeline/regate64_run.py
+  OK      term                             PseudoCoupHQ/Research/op_pipeline/term.py
+  OK      pool                             PseudoCoupHQ/Research/op_pipeline/pool.py
+  OK      pool65_run                       PseudoCoupHQ/Research/op_pipeline/pool65_run.py
+  OK      ledger                           PseudoCoupHQ/Research/op_pipeline/ledger.py
+  OK      dom_ops                          PseudoCoupHQ/Research/op_pipeline/dom_ops.py
+  OK      normalize79_pool_prediction      PseudoCoupHQ/Research/op_pipeline/normalize79_pool_prediction.py
+  OK      guard66                          PseudoCoupHQ/Research/op_pipeline/guard66.py
 ```
 
 GLOSS. One tool IS missing and it is a measuring tool, not an analysis
@@ -186,7 +186,7 @@ the process.
 
 ## 2.1 What happened when the resume was simply restarted
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T183235Z__t83_l2_sample.sh.log`,
+LITERAL — `<runs>/t83/agent/logs/20260904T183235Z__t83_l2_sample.sh.log`,
 the whole of lane `t83_l2_sample.sh`:
 
 ```
@@ -227,7 +227,7 @@ and it shows why `term66_run.py`'s own guard could not prevent it:
 `canon40_regen_store/op_units2_c_c0004.json` — unit by unit, reading
 `ru_maxrss` after each and printing any growth over 50 MB.
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T183428Z__t83_l3_memory_probe.sh.log`:
+LITERAL — `<runs>/t83/agent/logs/20260904T183428Z__t83_l3_memory_probe.sh.log`:
 
 ```
 -- the setup, the same objects term66_run.run builds
@@ -291,7 +291,7 @@ forked sub-process of its own**, so each body's peak is its own and a
 runaway is named rather than inherited. Bounds per sub-process: 4 GB of
 address space, 120 s.
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T183912Z__t83_l5_callee_bodies.sh.log`,
+LITERAL — `<runs>/t83/agent/logs/20260904T183912Z__t83_l5_callee_bodies.sh.log`,
 the summary and the hungriest rows:
 
 ```
@@ -335,7 +335,7 @@ size (from `/proc/self/statm`, which falls as well as rises, unlike
 the `ru_maxrss` high-water mark) and the AST node count of the
 register the row reads.
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T184118Z__t83_l7_unit_trace.sh.log`,
+LITERAL — `<runs>/t83/agent/logs/20260904T184118Z__t83_l7_unit_trace.sh.log`,
 the first, a middle and the last steps, and the result:
 
 ```
@@ -384,7 +384,7 @@ testable claim, and `probe83g_ceiling.py` tested it: the SAME unit,
 transcribed and gated in a forked sub-process at five ceilings, with the
 whole record read back each time.
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T184234Z__t83_l8_ceiling.sh.log`:
+LITERAL — `<runs>/t83/agent/logs/20260904T184234Z__t83_l8_ceiling.sh.log`:
 
 ```
    ceiling MB      peak kB    seconds      state   proved    holes  outcome
@@ -437,7 +437,7 @@ already holds. `term66_bounded.py --check` re-transcribes shards that
 are ALREADY in `term66_store` into scratch and compares them **record
 for record** against what is stored.
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T184356Z__t83_l9_zero_regression.sh.log`,
+LITERAL — `<runs>/t83/agent/logs/20260904T184356Z__t83_l9_zero_regression.sh.log`,
 lane `t83_l9_zero_regression.sh`, three stored shards under a 6 GB
 address-space bound:
 
@@ -539,7 +539,7 @@ GLOSS, and this is a SEPARATE finding from the memory one, flagged in
 
 ## 2.10 The bound that was used, and why that number
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T185126Z__t83_l14_ceiling_throughput.sh.log`,
+LITERAL — `<runs>/t83/agent/logs/20260904T185126Z__t83_l14_ceiling_throughput.sh.log`,
 lane `t83_l14_ceiling_throughput.sh`: the same shard
 (`canon40_regen_store/op_units2_c_c0002.json`, 99 records, which the
 host walked in 101 s) re-transcribed at three ceilings, timed, and
@@ -601,7 +601,7 @@ is the report.
 
 ## 3.1 The two kinds of shard, and the rate
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T185651Z__t83_l15_term66_full.sh.log`,
+LITERAL — `<runs>/t83/agent/logs/20260904T185651Z__t83_l15_term66_full.sh.log`,
 the per-input lines of the full resume at a 4096 MB ceiling (the
 seconds are cumulative from the start of the leg):
 
@@ -633,7 +633,7 @@ records it as a HOLE with a written reason. `MemoryError` is such an
 exception. So a ceiling that fires does not stop the run — it quietly
 turns a unit that would have had a term into a unit with a hole.
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T194034Z__t83_l19_hard_shard_safety.sh.log`
+LITERAL — `<runs>/t83/agent/logs/20260904T194034Z__t83_l19_hard_shard_safety.sh.log`
 §2, the scan over the store as the leg left it:
 
 ```
@@ -694,7 +694,7 @@ GLOSS, and this is the finding the task turns on:
 The part-run of 2026-09-03 walked 2,132 records in 147 s and nothing
 suggested a problem. The reason is in which records those were.
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T183909Z__t83_l4_callee_population.sh.log`,
+LITERAL — `<runs>/t83/agent/logs/20260904T183909Z__t83_l4_callee_population.sh.log`,
 `probe83d_callee_population.py` over **every one of the 30,324 units
 canon40 proves** (754 not proved, not counted):
 
@@ -744,7 +744,7 @@ Records produced by a bound that fired must not sit in the store where
 a resume would take them as done. They are also artifacts, and a
 defective artifact stays as a record.
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T195958Z__t83_l20_rollback.sh.log`:
+LITERAL — `<runs>/t83/agent/logs/20260904T195958Z__t83_l20_rollback.sh.log`:
 
 ```
 ======== [1/4] the store as it stands ========
@@ -817,7 +817,7 @@ all nine files of `term66_store_bound_fired_records`. Nothing added to
 any field set, no carve-out declared, no artifact put out of the walk,
 the stores walked shard by shard rather than sampled.
 
-LITERAL — `~/AirlockRuns/t83/agent/logs/20260904T200124Z__t83_l22_guard.sh.log`:
+LITERAL — `<runs>/t83/agent/logs/20260904T200124Z__t83_l22_guard.sh.log`:
 
 ```
 [1/4] the guard, one process, nothing skipped
@@ -825,7 +825,7 @@ TASK 83: 27 paths  PASS 27  FAIL 0  exempt 0  exit 0
 -- exit 0
 
 [2/4] the command the guard ran
-command: /opt/venv/bin/python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/op_pipeline/term66_state.json ... (27 paths)
+command: /opt/venv/bin/python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/op_pipeline/term66_state.json ... (27 paths)
 
 [3/4] grep -c exempt over the guard's own output
 0
@@ -859,14 +859,14 @@ which contained the word inside "exemption". The heading now says
 ## 6.1 All compute ran as Airlock lanes
 
 Instance `t83`, brought up from
-`~/Programming/Airlock/instances/t83.conf` (cpus 4, memory 8g, proxy
+`Airlock/instances/t83.conf` (cpus 4, memory 8g, proxy
 off, poll watch, script_timeout 21600). Every computation in this
 report is a lane; the lane scripts live in the project's own repo at
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/lanes_t83/`, are
+`PseudoCoupHQ/Research/op_pipeline/lanes_t83/`, are
 dropped by `airlock submit`, and their logs are cited by path in every
 section above.
 
-The project tree mounts read-write at `/projects/PseudoCoupHQ`, so the
+The project tree mounts read-write at `PseudoCoupHQ`, so the
 lanes read and write the real artifacts and nothing is shuffled through
 `/out`.
 
@@ -1002,7 +1002,7 @@ that replaced one that could not run.
 
 ## 8.1 Written by this task — code, all NEW files
 
-| path (under `~/Programming/PseudoCoupHQ/Research/op_pipeline/`) | what it is |
+| path (under `PseudoCoupHQ/Research/op_pipeline/`) | what it is |
 |---|---|
 | `probe83b_memory.py` | one shard walked unit by unit with a 5 GB address-space bound, to locate the excursion by unit name |
 | `probe83d_callee_population.py` | how many canon40-proved units reach `Term.runtime_row`, per attached callee, off the stored ledgers' typed producer objects |
@@ -1026,7 +1026,7 @@ edited by it.
 ## 8.2 Written by this task — lanes
 
 All under
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/lanes_t83/`; the lane
+`PseudoCoupHQ/Research/op_pipeline/lanes_t83/`; the lane
 belongs to the project's repo, is dropped into Airlock, and its log is
 the evidence.
 
@@ -1056,7 +1056,7 @@ the evidence.
 
 ## 8.3 Written by this task — artifacts
 
-| path (under `~/Programming/PseudoCoupHQ/Research/op_pipeline/`) | what it holds |
+| path (under `PseudoCoupHQ/Research/op_pipeline/`) | what it holds |
 |---|---|
 | `probe83d_callee_population.json` | 3,927 of 30,324 canon40-proved units carry a runtime-callee row; 49,362 rows over 30 callees, per callee and per language |
 | `probe83e_callee_bodies.json` | all 76 attached bodies walked alone: 60 walked, 16 refused by the opcode table, hungriest 56,676 kB / 0.21 s |

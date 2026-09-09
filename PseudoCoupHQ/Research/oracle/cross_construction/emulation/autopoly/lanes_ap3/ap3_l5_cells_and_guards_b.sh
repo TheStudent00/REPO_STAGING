@@ -34,7 +34,7 @@
 #
 # MEMORY BOUND: 6 GB resident, named abort ABORT_MEMORY_AP3.
 set -euo pipefail
-ART=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+ART=PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 mkdir -p "$ART/src3" "$ART/src3_off"
 
 echo "[1/6] the outer set: task ap2's cells file, copied"
@@ -43,7 +43,7 @@ if [ ! -f "$ART/autopoly3_cells.json" ]; then
 fi
 python3 - <<'PY'
 import json
-ART = ("/projects/PseudoCoupHQ/Research/oracle/cross_construction/"
+ART = ("PseudoCoupHQ/Research/oracle/cross_construction/"
        "emulation/autopoly")
 for name in ("autopoly2_cells.json", "autopoly3_cells.json"):
     document = json.load(open("%s/%s" % (ART, name)))
@@ -62,7 +62,7 @@ PY
 
 echo ""
 echo "[2/6] GUARD 1 -- task h2's own sources measurement"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 python3 handful.py sources_counts
 
 echo ""
@@ -74,7 +74,7 @@ import os
 import resource
 import sys
 
-HERE = "/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation"
+HERE = "PseudoCoupHQ/Research/oracle/cross_construction/emulation"
 sys.path.insert(0, os.path.join(HERE, "handful"))
 sys.path.insert(0, os.path.join(HERE, "autopoly"))
 import autopoly3 as A

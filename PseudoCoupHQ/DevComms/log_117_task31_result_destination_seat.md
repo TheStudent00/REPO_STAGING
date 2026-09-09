@@ -674,7 +674,7 @@ every 30 seconds, so `git status` is clean and proves nothing; the
 history is what proves it. Every path this session added or modified:
 
 ```
-$ cd ~/Programming/PseudoCoupHQ && git log --since="3 hours ago" --name-status --pretty=format:'%h %ad' --date=short | grep -E '^[AMD]\s' | sort | uniq -c | sort -rn
+$ cd PseudoCoupHQ && git log --since="3 hours ago" --name-status --pretty=format:'%h %ad' --date=short | grep -E '^[AMD]\s' | sort | uniq -c | sort -rn
       2 M	Research/op_pipeline/entry_contract3.py
       1 M	Research/op_pipeline/canon32_sret_units.json
       1 M	Research/op_pipeline/canon32_sret_survey.json

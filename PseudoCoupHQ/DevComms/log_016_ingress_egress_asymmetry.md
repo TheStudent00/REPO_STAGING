@@ -72,7 +72,7 @@ In descending settledness:
   stores facts about FILES; the basis is knowledge about LANGUAGES
   — pack-side and shared-basis data, versioned like the grammar
   pins, re-derivable by the scripts in
-  `~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/` (which is
+  `PseudoCoupHQ/Research/kind_signature_clustering/` (which is
   what keeps it maintainable under grammar churn).
 
 ## 4. Question 2 — egress: a router, never an authority
@@ -122,12 +122,12 @@ Held as proposals pending the talk-through:
 
 ## 7. Sources
 
-- `~/Programming/PseudoCoupHQ/DevComms/log_014_ecosystem_spectrum.md`
+- `PseudoCoupHQ/DevComms/log_014_ecosystem_spectrum.md`
   (the structure), `log_015_basis_report.md` (the cross-reference),
   logs 008–013 (the build-up).
 - PCv5 discipline history:
-  `~/Programming/PseudoCoup_v5/DevComms/log_013_discipline_history.md`
+  `PseudoCoup_v5/DevComms/log_013_discipline_history.md`
   (unverified this session — cited from memory of the campaign
   record; the discipline principle itself is quoted from the owner's
   recollection recorded in
-  `~/Programming/PseudoCoupHQ/DevComms/log_006_ur_research_record.md`).
+  `PseudoCoupHQ/DevComms/log_006_ur_research_record.md`).

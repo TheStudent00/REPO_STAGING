@@ -1,6 +1,6 @@
 """Acceptance test for tree_sitter_base: frozen-census equality, determinism, partition totality.
 
-Run:  python3 -m pytest ~/Programming/PseudoCoup_v6/Tools/ledgerer/tree_sitter/ -q
+Run:  python3 -m pytest PseudoCoup_v6/Tools/ledgerer/tree_sitter/ -q
 """
 import os
 

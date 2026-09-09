@@ -1,7 +1,7 @@
 """Define the Universal Rich AST node vocabulary (the hub-side program representation).
 
 Provenance: transplanted 2026-07-28 from
-~/Programming/PseudoCoup/pseudocoup/core/ur_ast.py (the v3-born,
+PseudoCoup/pseudocoup/core/ur_ast.py (the v3-born,
 v4-current UR-AST; R3-verified suite green). Kept: URNode with a
 metadata dict, and the general-purpose node set. Adapted for PCv6:
 UI-specific nodes (ModifierNode, DeclarativeNode) are NOT carried —

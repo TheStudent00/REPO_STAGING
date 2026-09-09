@@ -27,7 +27,7 @@
 # after every run and every re-pose.  Lane g1_l7's own forty runs peaked
 # at 459,092 kB.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/5] task g1: handful.py run3"
 python3 $H/handful/handful.py run3
 echo "[2/5] task g1: handful.py recheck3 300000"

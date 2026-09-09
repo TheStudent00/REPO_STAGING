@@ -7,7 +7,7 @@ set -euo pipefail
 echo "[1/1] the control transfers, with and without guard rows"
 python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 with_rows = []
 without = []
 for r in d['counts']['coverage']:

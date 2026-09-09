@@ -1,8 +1,8 @@
 # log 030 — layer 3 phase 4: the promoted clustering and the threshold sweep
 
 Date: 2026-08-18 (later the same day than logs 027, 028 and 029). Node:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 **Rewritten 2026-08-19 for readability at the owner's instruction. The content
 is identical — same facts, same numbers, same findings, same section
@@ -1073,7 +1073,7 @@ only c-sharp keyed|keyed, keyed|nesting,
 ## §7 — artifacts
 
 All paths are inside
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 | file | what it is |
 |---|---|

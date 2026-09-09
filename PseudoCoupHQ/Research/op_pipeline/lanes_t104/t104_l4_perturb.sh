@@ -11,7 +11,7 @@
 # MEMORY: one shard at a time, two terms per unit; hard cap 6 GB with
 # the named abort ABORT_MEMORY_T104.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/1] the perturbation acceptance"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_perturb.py
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_perturb.py
 echo "exit $?"

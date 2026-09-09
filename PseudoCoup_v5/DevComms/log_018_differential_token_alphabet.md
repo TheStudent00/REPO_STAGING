@@ -7,7 +7,7 @@ resource, and the burden was on me to examine it rather than defend
 the grammar's sufficiency.
 
 The script is
-`~/Programming/PseudoCoup_v5/Research/differential_alphabet.py`, run
+`PseudoCoup_v5/Research/differential_alphabet.py`, run
 with no arguments; it reads the pinned grammar live and holds rustc's
 list as a transcribed constant.
 

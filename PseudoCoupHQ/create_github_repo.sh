@@ -6,14 +6,14 @@
 # Idempotent-ish: safe to re-run if a step failed; it skips what
 # already exists.
 #
-# Usage:  bash ~/Programming/PseudoCoupHQ/create_github_repo.sh
+# Usage:  bash PseudoCoupHQ/create_github_repo.sh
 #
 # Invoke with `bash <path>` rather than `./create_github_repo.sh` so
 # the executable bit is never needed — the Cowork sandbox cannot set
 # it, which cost a step during the PCv6 founding.
 
 set -e
-REPO=~/Programming/PseudoCoupHQ
+REPO=PseudoCoupHQ
 cd "$REPO"
 
 # 1. local git repo

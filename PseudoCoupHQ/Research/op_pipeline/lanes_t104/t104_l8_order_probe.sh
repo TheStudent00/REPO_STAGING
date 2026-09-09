@@ -10,7 +10,7 @@
 # today beside the text pair with the candidate applied.  It edits
 # nothing.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/1] the flagged units, cause and candidate"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_order_probe.py 3072 300
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_order_probe.py 3072 300
 echo "exit $?"

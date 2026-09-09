@@ -1,6 +1,6 @@
 # log 160 — TASK 58: `gate.py`, and all 30,436 canon38 terms re-gated
 
-Date: 2026-09-03. Home: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+Date: 2026-09-03. Home: `PseudoCoupHQ/Research/op_pipeline`.
 Node: `hq.research.compiler_graph.gate`
 (`Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_5_gate/`)
 and its three sub-nodes `verdict`, `structural_checks`,
@@ -762,7 +762,7 @@ still not comparable, and saying so is still the honest verdict.
 | `node_0_3_5_4_reference/PROGRESS.md` | the one-line edit to `reference.py` |
 
 Paths are under
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`.
 
 ## 8.6 Read, never written
 

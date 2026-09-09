@@ -134,7 +134,7 @@ command. The harness absorbed a genuinely new kind of language behaviour
 in 193 lines with zero tool edits.
 
 **What moved underneath all of it.** On 2026-08-22 the sandbox of record
-moved from `~/Programming/SandboxDesign` to `~/Programming/Airlock`. This
+moved from `SandboxDesign` to `Airlock`. This
 is a derivation, not a rename: the file protocol is byte-identical, only
 the repository directory and the command name changed. As of today
 Airlock is the only lane that answers — verified below by execution, not
@@ -204,7 +204,7 @@ Date | ruling | log
 2026-08-21 | Scoring carries TWO numbers: agreement over VALUE cells, and agreement over ALL cells with the decline tokens treated as answers | log_054
 2026-08-22 | Dominance is an OPERATOR relation, one level above the profile relation: "operator A dominates operator B if A contains all the same profiles as B and more" | log_056
 2026-08-22 | The ten-language gate LIFTED, in conversation: "im gonna fall asleep soon. if you want to initialize those other runs for the remaining languages, we can review the results when im back on the laptop." COVERED: generating and running the lanes unattended. NOT COVERED: folding results into any matrices, drawing conclusions, or ruling which scoring is THE weight | log_058 postscript, log_059 correction
-2026-08-22 | "if you can migrate from SandboxDesign to Airlock for PCHQ — and the Claude skill if needed — yes please." The sandbox of record for this line is `~/Programming/Airlock` as of 2026-08-22 | log_060
+2026-08-22 | "if you can migrate from SandboxDesign to Airlock for PCHQ — and the Claude skill if needed — yes please." The sandbox of record for this line is `Airlock` as of 2026-08-22 | log_060
 2026-08-22 | SandboxDesign is NOT retired, NOT modified and NOT moved by the migration; it still works | log_060
 2026-08-22 | The sandbox CPU default is FULL (6) and the user throttles as they see fit | Airlock MIGRATING.md §2
 2026-08-22 | Staging ruling: extend the Cartesian run from rust+ruby to exactly TWO more first — python for the interpreted shape, go for the compiled shape — and prove both before eight more emitters are written | log_061
@@ -301,12 +301,12 @@ into each lane, and the container answered one of them.
 Airlock is a DERIVATION of SandboxDesign, made project-agnostic by
 construction and public-ready. It is not a rename and not a replacement.
 The derivation is recorded at
-`~/Programming/Airlock/DevComms/log_001_airlock_derivation.md`; the
-move-across instructions are `~/Programming/Airlock/MIGRATING.md`.
+`Airlock/DevComms/log_001_airlock_derivation.md`; the
+move-across instructions are `Airlock/MIGRATING.md`.
 
 What changed is small and can be said in four lines:
 
-- the repository directory: `~/Programming/SandboxDesign` → `~/Programming/Airlock`
+- the repository directory: `SandboxDesign` → `Airlock`
 - the command name: `sandbox` → `airlock` (same flags, same refusals, same exit codes)
 - the environment variables: `SANDBOX_DESIGN_ROOT` → `AIRLOCK_ROOT`, `SANDBOX_CPUS` → `AIRLOCK_CPUS`; the old spellings are still read, AFTER the new ones
 - the CPU default: 3 → 6, the full share, ruled 2026-08-22
@@ -342,33 +342,33 @@ The four directories:
 
 | host path | mounts at | direction | who writes |
 |---|---|---|---|
-| `~/Programming/Airlock/agent/drop/` | `/drop` | in | the session writes `x.sh` |
-| `~/Programming/Airlock/agent/status/` | `/status` | out | the daemon writes `x.sh.status` |
-| `~/Programming/Airlock/agent/logs/` | `/logs` | out | the daemon writes `<stamp>__x.sh.log` |
-| `~/Programming/Airlock/agent/out/` | `/out` | out | the lane script writes products |
+| `Airlock/agent/drop/` | `/drop` | in | the session writes `x.sh` |
+| `Airlock/agent/status/` | `/status` | out | the daemon writes `x.sh.status` |
+| `Airlock/agent/logs/` | `/logs` | out | the daemon writes `<stamp>__x.sh.log` |
+| `Airlock/agent/out/` | `/out` | out | the lane script writes products |
 
 Two more paths a session touches:
-`~/Programming/Airlock/agent/batch.json` (the manifest) and
-`~/Programming/Airlock/agent/drop/.done/` (where a run's script is archived
+`Airlock/agent/batch.json` (the manifest) and
+`Airlock/agent/drop/.done/` (where a run's script is archived
 once finished).
 
 The recipe, five steps:
 
-1. Write `~/Programming/Airlock/agent/drop/<lane>.sh`. A direct write is
+1. Write `Airlock/agent/drop/<lane>.sh`. A direct write is
    safe and is the truth underneath — the daemon watches `close_write` as
    well as `moved_to`, so it fires when the writer closes the file, never
    mid-write. The documented front door is
-   `python3 ~/Programming/Airlock/airlock submit <lane>.sh --batch <label> --weight <n>`,
+   `python3 Airlock/airlock submit <lane>.sh --batch <label> --weight <n>`,
    a validating wrapper that refuses ten named ways.
-2. Poll `~/Programming/Airlock/agent/status/<lane>.sh.status`. This path
+2. Poll `Airlock/agent/status/<lane>.sh.status`. This path
    follows from the script name alone; the log's name embeds a run
    timestamp and cannot be predicted, which is exactly why the status file
    exists.
 3. Read `state=running`, then `state=done`.
 4. Read the log named in the status file's `log=` field, under
-   `~/Programming/Airlock/agent/logs/`.
+   `Airlock/agent/logs/`.
 5. Collect anything the lane wrote to `/out`, which is
-   `~/Programming/Airlock/agent/out/` on the host. The SESSION places
+   `Airlock/agent/out/` on the host. The SESSION places
    products into the real tree — which is why project mounts can stay
    read-only.
 
@@ -413,15 +413,15 @@ Operator commands, for the owner at a terminal — NOT EXECUTED by this session,
 since podman is host-only:
 
 ```
-python3 ~/Programming/Airlock/airlock status            # all lanes
-python3 ~/Programming/Airlock/airlock status <lane>.sh  # one, renders ABORT for timeout
-python3 ~/Programming/Airlock/airlock watch
-python3 ~/Programming/Airlock/airlock doctor
-bash    ~/Programming/Airlock/progress.sh   (-w to refresh)
-bash    ~/Programming/Airlock/batch.sh <label> <lane>.sh:<weight>
-bash    ~/Programming/Airlock/down.sh && bash ~/Programming/Airlock/up.sh
-bash    ~/Programming/Airlock/allow.sh sync
-bash    ~/Programming/Airlock/selftest.sh
+python3 Airlock/airlock status            # all lanes
+python3 Airlock/airlock status <lane>.sh  # one, renders ABORT for timeout
+python3 Airlock/airlock watch
+python3 Airlock/airlock doctor
+bash    Airlock/progress.sh   (-w to refresh)
+bash    Airlock/batch.sh <label> <lane>.sh:<weight>
+bash    Airlock/down.sh && bash Airlock/up.sh
+bash    Airlock/allow.sh sync
+bash    Airlock/selftest.sh
 ```
 
 `progress.sh` is NOT deprecated and NOT replaced. It is the only view that
@@ -434,9 +434,9 @@ Two probes were dropped, one into each lane, at the same sitting.
 
 | lane | probe dropped at | answered | evidence |
 |---|---|---|---|
-| Airlock | `~/Programming/Airlock/agent/drop/d77_inventory.sh` | YES, in 20.9 s | status file written, log at `agent/logs/20260829T203216Z__d77_inventory.sh.log`, exit 0 |
-| Airlock | `~/Programming/Airlock/agent/drop/d77_ts_and_pins.sh` | YES, in 11.2 s | status file written, exit 0 |
-| SandboxDesign | `~/Programming/SandboxDesign/agent/drop/d77_probe_sbx.sh` | NO | no status file after many minutes; the file still sits in `drop/` |
+| Airlock | `Airlock/agent/drop/d77_inventory.sh` | YES, in 20.9 s | status file written, log at `agent/logs/20260829T203216Z__d77_inventory.sh.log`, exit 0 |
+| Airlock | `Airlock/agent/drop/d77_ts_and_pins.sh` | YES, in 11.2 s | status file written, exit 0 |
+| SandboxDesign | `SandboxDesign/agent/drop/d77_probe_sbx.sh` | NO | no status file after many minutes; the file still sits in `drop/` |
 
 Corroboration: SandboxDesign's `agent/status/` folder was last written
 2026-08-22 03:46 and its newest log is `20260822T073459Z`. Its `drop/`
@@ -457,7 +457,7 @@ ones a rebuild would NOT restore.
 
 Everything below is the output of `d77_inventory.sh` and
 `d77_ts_and_pins.sh`, run 2026-08-29 through the Airlock lane. Container
-base is Ubuntu 26.04 LTS, kernel 7.0.0-30-generic.
+base is <os>, kernel <kernel>.
 
 Container `PATH` as the daemon sets it:
 `/opt/cargo/bin:/opt/venv/bin:/usr/lib/go-1.26/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
@@ -520,9 +520,9 @@ a per-machine text file names. That file is instance state, gitignored, and
 is NOT the same file in the two repositories — Airlock's copy was never
 brought across from SandboxDesign.
 
-- **Live file:** `~/Programming/Airlock/proxy/allowlist.txt`
-- **Template:** `~/Programming/Airlock/proxy/allowlist.txt.example`
-- **Old file, no longer live:** `~/Programming/SandboxDesign/proxy/allowlist.txt`
+- **Live file:** `Airlock/proxy/allowlist.txt`
+- **Template:** `Airlock/proxy/allowlist.txt.example`
+- **Old file, no longer live:** `SandboxDesign/proxy/allowlist.txt`
 - If the live file is missing entirely, `airlock doctor` reports a FAULT
   and the proxy refuses everything.
 
@@ -530,11 +530,11 @@ brought across from SandboxDesign.
 may append the entry directly — the allowlist is the session's to manage —
 but the RELOAD runs podman and is host-only. So:
 
-1. Append the hostname to `~/Programming/Airlock/proxy/allowlist.txt`, with
+1. Append the hostname to `Airlock/proxy/allowlist.txt`, with
    a LEADING DOT so subdomains match (`.example.com` matches
    `files.example.com`).
 2. Ask the owner for one command:
-   `bash ~/Programming/Airlock/allow.sh sync`.
+   `bash Airlock/allow.sh sync`.
 3. Design probe scripts to report cleanly when the proxy has not yet
    reloaded — the observable is HTTP 000 or 403, not an exception.
 
@@ -579,16 +579,16 @@ research script under PseudoCoupHQ.
 
 | what is pinned | file | line | value |
 |---|---|---|---|
-| rust, in the image | `~/Programming/Airlock/Containerfile` | 82 | `--default-toolchain 1.96.1` |
-| rust, in the old repo (not live) | `~/Programming/SandboxDesign/Containerfile` | 79 | `--default-toolchain 1.96.1` |
-| go, by apt package and PATH | `~/Programming/Airlock/Containerfile` | 32 | `/usr/lib/go-1.26/bin` |
-| gcc / g++ / clang / lld / llvm | `~/Programming/Airlock/Containerfile` | 21 | `gcc-15 g++-15 clang-21 lld-21 llvm-21` |
-| openjdk | `~/Programming/Airlock/Containerfile` | 26 | `openjdk-25-jdk-headless` |
-| npm major | `~/Programming/Airlock/Containerfile` | ~76 | `npm install -g npm@11`, never fatal |
-| tree-sitter, grammar pin check | `~/Programming/PseudoCoup_v6/Tools/ledgerer/tree_sitter/test_tree_sitter_base.py` | — | tree-sitter 0.26.0, tree-sitter-rust 0.24.2, tree-sitter-python 0.25.0, tree-sitter-cpp 0.23.4 (12 checks, pass) |
-| tree-sitter, compiler graph | `~/Programming/PseudoCoupHQ/Research/compiler_graph/build_graph.py` | 12 | tree-sitter == 0.26.0; also tree-sitter-go 0.25.0, Go tree commit 9f1012d9 (1.28-dev), provenance UNVERIFIED |
-| tree-sitter, operator arity | `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.py` | 1127 | cross-check note: `tree-sitter==0.26.0` |
-| rustc token alphabet, transcribed | `~/Programming/PseudoCoup_v5/Research/differential_alphabet.py` | — | 53 rustc `TokenKind` punctuation names, fetch-dated 2026-08-12, **no refresh path** |
+| rust, in the image | `Airlock/Containerfile` | 82 | `--default-toolchain 1.96.1` |
+| rust, in the old repo (not live) | `SandboxDesign/Containerfile` | 79 | `--default-toolchain 1.96.1` |
+| go, by apt package and PATH | `Airlock/Containerfile` | 32 | `/usr/lib/go-1.26/bin` |
+| gcc / g++ / clang / lld / llvm | `Airlock/Containerfile` | 21 | `gcc-15 g++-15 clang-21 lld-21 llvm-21` |
+| openjdk | `Airlock/Containerfile` | 26 | `openjdk-25-jdk-headless` |
+| npm major | `Airlock/Containerfile` | ~76 | `npm install -g npm@11`, never fatal |
+| tree-sitter, grammar pin check | `PseudoCoup_v6/Tools/ledgerer/tree_sitter/test_tree_sitter_base.py` | — | tree-sitter 0.26.0, tree-sitter-rust 0.24.2, tree-sitter-python 0.25.0, tree-sitter-cpp 0.23.4 (12 checks, pass) |
+| tree-sitter, compiler graph | `PseudoCoupHQ/Research/compiler_graph/build_graph.py` | 12 | tree-sitter == 0.26.0; also tree-sitter-go 0.25.0, Go tree commit 9f1012d9 (1.28-dev), provenance UNVERIFIED |
+| tree-sitter, operator arity | `PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.py` | 1127 | cross-check note: `tree-sitter==0.26.0` |
+| rustc token alphabet, transcribed | `PseudoCoup_v5/Research/differential_alphabet.py` | — | 53 rustc `TokenKind` punctuation names, fetch-dated 2026-08-12, **no refresh path** |
 
 Bumping line 82 would REPLACE 1.96.1, not co-install beside it. The image
 was not rebuilt today and the pin was not bumped. The 1.98.0 toolchain
@@ -604,7 +604,7 @@ swift's chunk at 400.
 
 ### 4.7 Project entry points that changed since 2026-08-14
 
-`~/Programming/PseudoCoupHQ/Research/` had two folders and now has eight.
+`PseudoCoupHQ/Research/` had two folders and now has eight.
 One line each, with the main runnable script.
 
 | folder | what it is | main runnable |
@@ -620,10 +620,10 @@ One line each, with the main runnable script.
 
 Run-everything scripts, both current:
 
-- `~/Programming/PseudoCoupHQ/hq.sh` — the planning-tree check;
-  `bash ~/Programming/PseudoCoupHQ/hq.sh check` reports 0 errors and is the
+- `PseudoCoupHQ/hq.sh` — the planning-tree check;
+  `bash PseudoCoupHQ/hq.sh check` reports 0 errors and is the
   gate every housekeeping pass runs before and after.
-- `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/run_all_languages.sh`
+- `PseudoCoupHQ/Research/kind_fuzz_clustering/run_all_languages.sh`
   — new on 2026-08-22 (log_062). Submits every Cartesian lane for the
   remaining eight languages, in the one order that is safe, through the
   validating CLI, then watches status files. It never starts, stops or
@@ -635,10 +635,10 @@ Run-everything scripts, both current:
 
 Two files exist that the rewrite should start from rather than duplicate:
 
-- `~/Programming/Airlock/DevComms/toolchain_skill_airlock_patch.md` — the
+- `Airlock/DevComms/toolchain_skill_airlock_patch.md` — the
   exact replacement text for each affected section, quoted old against new,
   in file order, with a twelve-block table. Written 2026-08-22.
-- `~/Programming/Airlock/DevComms/toolchain_SKILL_updated.md` — a complete
+- `Airlock/DevComms/toolchain_SKILL_updated.md` — a complete
   478-line replacement skill, frontmatter included. The frontmatter is
   deliberately UNCHANGED, on the reasoning that the description is the
   trigger text and changing it risks changing when the skill fires for no
@@ -669,8 +669,8 @@ measurement, and the rewrite must correct it:
 
 **Item 1 — SandboxDesign's daemon. CONFIRMED.** A trivial probe,
 `d77_probe_sbx.sh`, was written into
-`~/Programming/SandboxDesign/agent/drop/` today. No status file appeared.
-The same sitting's probe into `~/Programming/Airlock/agent/drop/` was
+`SandboxDesign/agent/drop/` today. No status file appeared.
+The same sitting's probe into `Airlock/agent/drop/` was
 answered in 20.9 seconds with exit 0. SandboxDesign's status folder was
 last written 2026-08-22 03:46 and its newest log is 20260822T073459Z; ten
 unrun `d76_*.sh` scripts from today's earlier drill are still sitting in
@@ -763,13 +763,13 @@ check that regenerating a committed lane reproduces that lane.
 
 ## artifacts this log left behind
 
-- `~/Programming/Airlock/agent/drop/.done/…d77_inventory.sh` and
+- `Airlock/agent/drop/.done/…d77_inventory.sh` and
   `…d77_ts_and_pins.sh` — the two probes, archived by the daemon.
-- `~/Programming/Airlock/agent/logs/20260829T203216Z__d77_inventory.sh.log`
+- `Airlock/agent/logs/20260829T203216Z__d77_inventory.sh.log`
   — the full language inventory, verbatim.
-- `~/Programming/Airlock/agent/logs/20260829T203340Z__d77_ts_and_pins.sh.log`
+- `Airlock/agent/logs/20260829T203340Z__d77_ts_and_pins.sh.log`
   — the typescript and rust-1.98.0 follow-up.
-- `~/Programming/SandboxDesign/agent/drop/d77_probe_sbx.sh` — left in place
+- `SandboxDesign/agent/drop/d77_probe_sbx.sh` — left in place
   deliberately, as standing evidence that the lane does not answer.
 
 Nothing under `Research/`, `Planning/` or any census page was edited.

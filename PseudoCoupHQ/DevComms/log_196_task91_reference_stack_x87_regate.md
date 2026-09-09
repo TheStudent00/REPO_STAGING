@@ -41,7 +41,7 @@ line MUST paste this paragraph verbatim."
   registers, flags, memory, the machine stack and the x87 stack that
   hold z3 terms rather than numbers, and returns the term the body
   leaves in its answer place. Its file is
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/reference.py`.
+  `PseudoCoupHQ/Research/op_pipeline/reference.py`.
 - **THE LEDGER** is the stored provenance table for one unit: one row
   per value the unit's machine code produces, saying what produced it
   and which rows it read. `OUT-0` holds the answer. The stored ledgers
@@ -104,7 +104,7 @@ held at `layer4c`, only the reference moved:
 
 Eleven lanes, each name used once, each dropped through
 `airlock submit … --instance t91 --batch t91`. Logs in
-`~/AirlockRuns/t91/agent/logs/`; the elapsed column is each lane's own
+`<runs>/t91/agent/logs/`; the elapsed column is each lane's own
 `agent/status/<lane>.status` file.
 
 | lane | what it ran | elapsed |
@@ -801,7 +801,7 @@ provenance exemption is claimed by nothing (`grep -c exempt` = **0**).
 
 # 8. Every artifact this task wrote
 
-Home: `~/Programming/PseudoCoupHQ/Research/op_pipeline/`.
+Home: `PseudoCoupHQ/Research/op_pipeline/`.
 
 | artifact | what it is |
 |---|---|

@@ -2,7 +2,7 @@
 
 Law: `LAW.md` beside this file, ALL of it including the tower section.
 Read then `task_m1_brief.md` beside it (the task you are closing) and
-`~/Programming/PseudoCoupHQ/DevComms/log_236_task_m1_arch_opcode_model_table.md`
+`PseudoCoupHQ/DevComms/log_236_task_m1_arch_opcode_model_table.md`
 (what it delivered), then `Research/oracle/arch_opcodes/model/model_table.py`.
 Instance `m1b.conf` is on the tower (bring it up). Artifact folder: the same
 `Research/oracle/arch_opcodes/model/`; lanes under `lanes_m1b/`.

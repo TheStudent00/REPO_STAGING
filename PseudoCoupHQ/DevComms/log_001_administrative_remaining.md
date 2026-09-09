@@ -55,7 +55,7 @@ Recorded so none of it is re-opened.
 
 - **HQ's node names** — `projects`, `exchange`, `conventions`. the owner:
   "those are good. if i dont like something, we can change it later."
-- **`~/Programming/DevComms` version control** — ruled its own thing,
+- **`DevComms` version control** — ruled its own thing,
   not under HQ's authority. Repo created and pushed as
   `DevComms_root`; first commit `0b6d3de`.
 - **PseudoCoup_v5 has no planning tree** — founded. Level 0 and level
@@ -108,7 +108,7 @@ of date is invisible to a checker that reads references.
 Not a permission question, a scope one. the owner's framing, 2026-07-31:
 
 - Wearing the **HQ hat** we are devs of this repo and only USERS of
-  `~/Programming/PlanPlan`; from here we can only request a
+  `PlanPlan`; from here we can only request a
   framework change, and HQ does not dictate specifics to it.
 - Wearing the **PlanPlan hat** we are devs of that repo, and a
   request gets made if it is **abstract enough to serve every project
@@ -118,23 +118,23 @@ So the test before editing PlanPlan is *"would this be right for a
 project with nothing to do with PseudoCoup?"* Yes means make it — it
 is new and changes often. No means it belongs in HQ.
 
-`~/Programming/DevComms` is a third thing again: very high level, for
+`DevComms` is a third thing again: very high level, for
 decisions affecting most of the owner's LLM work, and light on purpose. It
 takes no line-specific content, which was the error —
 `plan_and_code.md` is about how THIS line maps plans to code and had
-been written there. Moved to `~/Programming/PseudoCoupHQ/` 2026-07-31
+been written there. Moved to `PseudoCoupHQ/` 2026-07-31
 with every reference repointed.
 
 Recorded as failure mode F12 and in full in
-`~/Programming/PseudoCoupHQ/Planning/node_0_2_conventions/CORE_0_2_conventions.md`.
+`PseudoCoupHQ/Planning/node_0_2_conventions/CORE_0_2_conventions.md`.
 
 ## 5. One thing not on any list
 
-`~/Programming/PseudoCoup_v6/AgentMemory/` still holds line-wide
+`PseudoCoup_v6/AgentMemory/` still holds line-wide
 material — the vocabulary, the lineage and harvest maps, the settled
 decisions, the lessons — inside one version's repo. the owner ruled that new
 versions get no AgentMemory, which stops it multiplying, but it does
 not answer where the line-wide half belongs now.
-`~/Programming/PseudoIR/Agent_Memory.md` §5 has flagged this as
+`PseudoIR/Agent_Memory.md` §5 has flagged this as
 pending since before this session. Not blocking anything; will get
 worse quietly.

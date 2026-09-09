@@ -58,7 +58,7 @@ step. The lane logs are named where their output is used.
 **LITERAL**, the ruling in its own file:
 
 ```
-$ sed -n '167,177p' /projects/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/CORE_0_3_5_1_arch_unit.md
+$ sed -n '167,177p' PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/CORE_0_3_5_1_arch_unit.md
 ## the unit's boundary — RULED by the owner 2026-09-05
 
 **A unit is a function body: from just after the wrapper-function call
@@ -80,7 +80,7 @@ path). This lap replaces the computed boundary with a read one.
 
 ## 1.2 What was read, per binary
 
-Lane log: `~/Programming/Airlock/agent/logs/20260905T060329Z__t94_l12_transcripts2.sh.log`.
+Lane log: `Airlock/agent/logs/20260905T060329Z__t94_l12_transcripts2.sh.log`.
 These three come back REFUSED from `check_conventions_log_claims.py`
 with the rule `head_not_on_the_read_only_allowlist` — `readelf` is not
 on its allowlist. They are kept because they are the primary evidence;
@@ -113,7 +113,7 @@ unit's bounds under the ruling.
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
 for r in d['records']:
     print(r['unit'], '| symbol table:', r['symbol_table_rows'], '| dwarf:', r['dwarf_rows'])
 "
@@ -158,7 +158,7 @@ in the ship build.
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
 for r in d['records']:
     print('%-58s %-10s %-10s %5s %5s  dwarf_agrees=%s' % (r['unit'], r.get('new_low'), r.get('new_high'), r.get('new_byte_length'), r.get('new_instruction_count'), r.get('symbol_table_and_dwarf_agree')))
 "
@@ -200,7 +200,7 @@ because a JIT has neither table (§1.4).
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/interp_jvm.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/interp_jvm.json'))
 for u in d['units']:
     rows=[l for r in u['arch_unit'] for l in r['objdump'] if not len(l.split(chr(9))) < 3]
     cont=[l for r in u['arch_unit'] for l in r['objdump'] if len(l.split(chr(9))) < 3]
@@ -221,7 +221,7 @@ Lane log: `20260905T060329Z__t94_l12_transcripts2.sh.log`.
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_recarve.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_recarve.json'))
 for r in d['records']:
     o=r['old']; n=r['recarved']
     print('%-58s old %-14s n=%-3s  new %-14s %-14s %4s %4s' % (r['unit'], o['old_low'], o['old_body_instruction_count'], n.get('new_low'), n.get('new_high'), n.get('new_byte_length'), n.get('new_instruction_count')))
@@ -302,7 +302,7 @@ allowlist. The same 92 is in `t94_bounds.json`'s
 field `prior_text`:
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/interp_canon35.json'));print(d['records'][0]['prior_text'])"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/interp_canon35.json'));print(d['records'][0]['prior_text'])"
 mov %rdi,%rax; mov %rsi,%r10; add %r10,%rax; ret
 ```
 
@@ -323,7 +323,7 @@ carried the c text forward as this unit's.
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
 r=[x for x in d['records'] if x['unit'].startswith('cpython')][0]
 for i in list(range(0,11)):
     b=r['body'][i]; print('%2d  %-9s %s' % (i,b['address'],b['mnem']))
@@ -366,7 +366,7 @@ That `jbe` is the branch the OLD boundary's entry point sat behind:
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
 r=[x for x in d['records'] if x['unit'].startswith('cpython')][0]
 for i in list(range(26,38)):
     b=r['body'][i]; print('%2d  %-9s %s' % (i,b['address'],b['mnem']))
@@ -408,7 +408,7 @@ jbe 1374c0              taken         7 is inside the cached range
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_bounds.json'))
 r=[x for x in d['records'] if x['unit'].startswith('cpython')][0]
 for i in list(range(83,89))+[63,64]:
     b=r['body'][i]; print('%2d  %-9s %s' % (i,b['address'],b['mnem']))
@@ -449,7 +449,7 @@ ret                          the answer is a POINTER, not the number 7
   **LITERAL**, `canon_interp_units_cpython.json`, `unit.arrival_boundary_note`:
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/canon_interp_units_cpython.json'));print(d['unit']['arrival_boundary_note'])"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/canon_interp_units_cpython.json'));print(d['unit']['arrival_boundary_note'])"
 lineage confluence, per AgentMemory 2026-08-31 -- the first instruction reading BOTH unpacked operand values; the 8 arrival instructions before it are REPRESENTATION only (typed-pointer(PyLongObject*) unpacking), not part of this canonicalization
 ```
 
@@ -531,7 +531,7 @@ Lane log: `20260905T060329Z__t94_l12_transcripts2.sh.log`.
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_recarve.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_recarve.json'))
 for m in d['verdict_movements']:
     print('%-58s %-18s  to  %-12s %s' % (m['unit'], m['from'], m['to'], m['cause'][:100]))
 "
@@ -576,7 +576,7 @@ cause. Four causes carry all eleven units:
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_analysis.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_analysis.json'))
 for r in d['records']:
     c=r.get('causes')
     if c is None: print('%-58s no body' % r['unit']); continue
@@ -639,7 +639,7 @@ which of the two it is, in its `kind` field.
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_recarve.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_recarve.json'))
 for r in d['records']:
     print('%-58s %-10s changed_with_more_room=%s' % (r['unit'], r.get('gate_at_120000ms',{}).get('verdict'), r.get('answer_changed_with_more_room')))
 "
@@ -672,7 +672,7 @@ Lane log: `20260905T060329Z__t94_l12_transcripts2.sh.log`.
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_analysis.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_analysis.json'))
 c={}
 for r in d['records']:
     for p in r.get('recurring_paths',[]):
@@ -692,7 +692,7 @@ for k in sorted(c, key=lambda x: 0-len(c[x])):
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_analysis.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_analysis.json'))
 r=[x for x in d['records'] if x['unit'].startswith('cpython')][0]
 for p in r['recurring_paths']:
     if p['recurring_path'].startswith('allocation'):
@@ -735,7 +735,7 @@ Lane log: `20260905T060329Z__t94_l12_transcripts2.sh.log`.
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t94_analysis.json'))['super_op_route']
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/t94_analysis.json'))['super_op_route']
 print('candidates in the miner artifact:', d['candidate_count'])
 print('languages the miner mined       :', d['languages_the_miner_mined'])
 print('interpreter languages among them:', d['interpreter_languages_in_that_population'])
@@ -778,7 +778,7 @@ changed, and neither `lineage_carve.json` nor any downstream artifact
 was touched):
 
 ```
-$ sed -n '4,14p' /projects/PseudoCoupHQ/Research/op_pipeline/lineage_carve.py
+$ sed -n '4,14p' PseudoCoupHQ/Research/op_pipeline/lineage_carve.py
 
 RETIRED FOR BOUNDARY USE, 2026-09-05, by the owner's ruling "the unit's
 boundary" in
@@ -801,7 +801,7 @@ THE RULE THIS IMPLEMENTS (the owner, 2026-08-31, AgentMemory: "THE ARRIVAL /
 Lane log: `20260905T060329Z__t94_l12_transcripts2.sh.log`.
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/op_pipeline/t94_bounds.json /projects/PseudoCoupHQ/Research/op_pipeline/t94_recarve.json /projects/PseudoCoupHQ/Research/op_pipeline/t94_analysis.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/op_pipeline/t94_bounds.json PseudoCoupHQ/Research/op_pipeline/t94_recarve.json PseudoCoupHQ/Research/op_pipeline/t94_analysis.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS t94_bounds.json -- no operator token in any key, grouping, pairing or row structure
 PASS t94_recarve.json -- no operator token in any key, grouping, pairing or row structure
@@ -809,10 +809,10 @@ PASS t94_analysis.json -- no operator token in any key, grouping, pairing or row
 ```
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/op_pipeline/t94_bounds.json /projects/PseudoCoupHQ/Research/op_pipeline/t94_recarve.json /projects/PseudoCoupHQ/Research/op_pipeline/t94_analysis.json
-/projects/PseudoCoupHQ/Research/op_pipeline/t94_bounds.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/t94_recarve.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/t94_analysis.json:0
+$ grep -c exempt PseudoCoupHQ/Research/op_pipeline/t94_bounds.json PseudoCoupHQ/Research/op_pipeline/t94_recarve.json PseudoCoupHQ/Research/op_pipeline/t94_analysis.json
+PseudoCoupHQ/Research/op_pipeline/t94_bounds.json:0
+PseudoCoupHQ/Research/op_pipeline/t94_recarve.json:0
+PseudoCoupHQ/Research/op_pipeline/t94_analysis.json:0
 ```
 
 - The checker is unmodified: `git diff --stat -- Research/op_pipeline/check_no_spelling_keys.py`
@@ -909,7 +909,7 @@ and the modules `region36.py`, `canon36_universal.py`, `canon.py`,
 | `t94_l12_transcripts2.sh` | `20260905T060329Z__t94_l12_transcripts2.sh.log` (the transcripts this log now pastes, re-run with absolute paths) |
 | `t94_l13_verify_log199.sh` | `20260905T060614Z__t94_l13_verify_log199.sh.log` (the log verifier's second pass; §11) |
 
-All under `~/Programming/Airlock/agent/logs/`. The two failed lanes are
+All under `Airlock/agent/logs/`. The two failed lanes are
 listed rather than hidden; both were program defects fixed the same lap.
 
 ---
@@ -937,7 +937,7 @@ inside Airlock, twice.
 - **First pass**, lane log `20260905T060227Z__t94_l11_verify_log199.sh.log`:
   27 claims, MATCHES 0, DIFFERS 5, UNVERIFIABLE 15, REFUSED 7. The five
   DIFFERS were all one cause: the verifier's working directory is
-  `/projects/PseudoCoupHQ`, and my pasted commands used paths relative
+  `PseudoCoupHQ`, and my pasted commands used paths relative
   to `Research/op_pipeline`, so they could not open their own files.
 - **Fix applied to this log, not to the verifier**: every pasted command
   now uses an absolute path, and none contains a bare `>` (the

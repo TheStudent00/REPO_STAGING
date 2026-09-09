@@ -18,8 +18,8 @@
 # 2,414,988 kB, so 388 pairs sit well inside it; the peak is printed at
 # the end of every measurement.
 set -euo pipefail
-mkdir -p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/src2
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+mkdir -p PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/src2
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 
 echo "===== FIX 1: a term that reads state that is not an arrival register ====="
 python3 autopoly2.py measure "not an arrival register"

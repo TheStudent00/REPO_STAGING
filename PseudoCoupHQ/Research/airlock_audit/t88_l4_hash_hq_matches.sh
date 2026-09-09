@@ -2,7 +2,7 @@
 # t88_l4_hash_hq_matches.sh -- TASK 88, lane 4.
 #
 # For every top-level product name in /out, search the real tree
-# (/projects/PseudoCoupHQ, read side of the rw mount -- this lane never
+# (PseudoCoupHQ, read side of the rw mount -- this lane never
 # writes there) for a file or directory of the SAME NAME, then hash the
 # overlap file-by-file, streaming, exactly as lane 2 hashed /out. This
 # is the data that lets the audit call PLACED/DIVERGED/ABSENT by
@@ -27,7 +27,7 @@ python3 - <<'PY'
 import json, os, subprocess, hashlib, sys
 
 OUT = "/out"
-HQ = "/projects/PseudoCoupHQ"
+HQ = "PseudoCoupHQ"
 
 def sha256_stream(path, bound_kb=6*1024*1024):
     h = hashlib.sha256()

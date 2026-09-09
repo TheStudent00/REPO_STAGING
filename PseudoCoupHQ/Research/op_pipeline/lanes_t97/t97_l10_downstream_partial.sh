@@ -18,7 +18,7 @@
 # (6 GB of address space); an allocation past it raises MemoryError,
 # which python reports BY NAME.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "======== the store this lane reads ========"
 python3 report97_numbers.py walk

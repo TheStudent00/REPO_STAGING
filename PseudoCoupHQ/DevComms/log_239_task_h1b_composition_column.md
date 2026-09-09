@@ -1,7 +1,7 @@
 # log 239 — task h1b: the composition column, closing task h1
 
 Node: `hq.research.arch_unit_oracle`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08). The
 PROGRESS entry is on the autopoly sub-node
 (`.../node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/PROGRESS.md`),
@@ -9,7 +9,7 @@ beside tasks o12, o13 and h1.
 
 Date: 2026-09-09. Instance `h1b`, on the TOWER, brought down at the
 end of this log. Artifact folder (the same one task h1 wrote):
-[`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
+[`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
 This task's own instruction was task h1's brief, §5, added 2026-09-09
 after h1 had already run: one new field on every run already in
 `handful.json`, `composition`, plus the matching column in
@@ -21,10 +21,10 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `~/Programming/PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
 the instance. Prose names host paths. **The lane logs are on the
-TOWER** (`<tower-user>@<tower>`), under
-`~/AirlockRuns/h1b/agent/logs/`, and every
+TOWER** (`<user>@<tower>`), under
+`<runs>/h1b/agent/logs/`, and every
 attribution below names one of them.
 
 | lane | what it did | log, on the tower |
@@ -39,7 +39,7 @@ attribution below names one of them.
 | `h1b_l8_evidence4.sh` | the LANDED-runs check re-run with the `->` removed from its print statement, so the REFUSED claim clears | `20260909T055154Z__h1b_l8_evidence4.sh.log` |
 
 Every lane script is kept in the repo at
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/`
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/`
 and was submitted from there.
 
 ---
@@ -138,7 +138,7 @@ not re-run, because the fix is in the report writer, not the data);
 # 3. The twenty-row table, with the composition column
 
 **LITERAL**, block `[1/5]` of
-`~/AirlockRuns/h1b/agent/logs/20260909T054519Z__h1b_l3_evidence.sh.log`:
+`<runs>/h1b/agent/logs/20260909T054519Z__h1b_l3_evidence.sh.log`:
 
 | cell | lang | landed | gate | composition (GLOSS) |
 |---|---|---|---|---|
@@ -264,10 +264,10 @@ from.
 # 5. The tally, and the LANDED check re-derived
 
 **LITERAL**, block `[2/5]` of
-`~/AirlockRuns/h1b/agent/logs/20260909T054519Z__h1b_l3_evidence.sh.log`:
+`<runs>/h1b/agent/logs/20260909T054519Z__h1b_l3_evidence.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py tally
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py tally
 add gpr_gpr 32               flags      SAME BYTES
 add gpr_gpr 32               reg_rdi    SAME BYTES
 cmovne gpr_gpr 32            reg_rdi    SAME BYTES
@@ -313,7 +313,7 @@ tested, and none of them are tested, by construction -- the counter
 only increments inside `if landing["verdict"] == "LANDED"`).
 
 **LITERAL**,
-`~/AirlockRuns/h1b/agent/logs/20260909T055154Z__h1b_l8_evidence4.sh.log`
+`<runs>/h1b/agent/logs/20260909T055154Z__h1b_l8_evidence4.sh.log`
 (lane `h1b_l8_evidence4.sh`; SUPERSEDES the same check as `h1b_l3`'s
 own block `[5/5]` ran it -- the verifier's own command parser reads
 this command's literal `->` as a shell redirect and scored that
@@ -323,7 +323,7 @@ the check re-run, never the verifier), the check re-derived
 independently of the tally function, straight from `handful.json`:
 
 ```
-$ python3 -c $'\nimport json\nd = json.load(open(\'/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json\'))\nfor run in d[\'runs\']:\n    place = None\n    for p in run[\'places\']:\n        if p[\'writes\'] != \'flags\':\n            place = p\n            break\n    if place is None and run[\'places\']:\n        place = run[\'places\'][0]\n    landing = place.get(\'landing\') if place is not None else None\n    if landing is None or landing[\'verdict\'] != \'LANDED\':\n        continue\n    cells = [c[\'mnem\'] for c in run[\'composition\'] if c[\'cell\']]\n    print(run[\'mnem\'], run[\'shape\'], run[\'key_width\'], run[\'lang\'],\n          \'composition cells:\', cells)\n'
+$ python3 -c $'\nimport json\nd = json.load(open(\'PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json\'))\nfor run in d[\'runs\']:\n    place = None\n    for p in run[\'places\']:\n        if p[\'writes\'] != \'flags\':\n            place = p\n            break\n    if place is None and run[\'places\']:\n        place = run[\'places\'][0]\n    landing = place.get(\'landing\') if place is not None else None\n    if landing is None or landing[\'verdict\'] != \'LANDED\':\n        continue\n    cells = [c[\'mnem\'] for c in run[\'composition\'] if c[\'cell\']]\n    print(run[\'mnem\'], run[\'shape\'], run[\'key_width\'], run[\'lang\'],\n          \'composition cells:\', cells)\n'
 imul gpr_gpr 32 c composition cells: ['imul']
 imul gpr_gpr 32 rust composition cells: ['imul']
 sar cl_gpr 32 c composition cells: ['sar']
@@ -367,7 +367,7 @@ requires.
 **LITERAL**, from lane `h1b_l1_compose_report.sh`'s own log:
 
 ```
-[1/2] the table's own TRANSLATED (mnem, shape, key_width) triples, from /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_rows.json
+[1/2] the table's own TRANSLATED (mnem, shape, key_width) triples, from PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_rows.json
    6218 distinct triples
    peak resident: 253716 kB
 ...
@@ -383,25 +383,25 @@ lanes read only `handful.json` (about 160 kB) and are lighter still.
 # 8. The guard, and `grep -c exempt`
 
 **LITERAL**, block `[3/5]` of
-`~/AirlockRuns/h1b/agent/logs/20260909T054519Z__h1b_l3_evidence.sh.log`:
+`<runs>/h1b/agent/logs/20260909T054519Z__h1b_l3_evidence.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful_cells.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful_cells.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS handful_cells.json -- no operator token in any key, grouping, pairing or row structure
 PASS handful.json -- no operator token in any key, grouping, pairing or row structure
 ```
 
-**LITERAL**, `~/AirlockRuns/h1b/agent/logs/20260909T054637Z__h1b_l5_evidence3.sh.log`
+**LITERAL**, `<runs>/h1b/agent/logs/20260909T054637Z__h1b_l5_evidence3.sh.log`
 (the corrected list; §10 below says why two earlier attempts named
 the wrong path):
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/h1b_l1_compose_report.sh /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/h1b_l2_report.sh
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/h1b_l1_compose_report.sh:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/h1b_l2_report.sh:0
+$ grep -c exempt PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/h1b_l1_compose_report.sh PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/h1b_l2_report.sh
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/h1b_l1_compose_report.sh:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/h1b_l2_report.sh:0
 ```
 
 **GLOSS.** `handful.json` PASSes the unmodified guard with the new
@@ -523,7 +523,7 @@ touching the verifier:
 - `h1b_l9_verify3.sh`, the third pass, **LITERAL**:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_239_task_h1b_composition_column.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_239_task_h1b_composition_column.md
 population: 17 claims across 1 logs
   MATCHES          4
   DIFFERS          0
@@ -544,6 +544,6 @@ peak RSS after the pass: 17.5 MB
 0 NOT_RERUNNABLE. Zero DIFFERS, zero REFUSED.** The 13 that carry
 nothing to re-run are 7 prose verifications and 6 attributions into
 `handful.json`. Full untruncated verifier output:
-`~/AirlockRuns/h1b/agent/logs/20260909T055300Z__h1b_l9_verify3.sh.log`,
+`<runs>/h1b/agent/logs/20260909T055300Z__h1b_l9_verify3.sh.log`,
 on the tower. Nothing above this ADDENDUM was edited after
 `h1b_l9_verify3.sh` ran.

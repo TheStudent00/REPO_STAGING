@@ -1,7 +1,7 @@
 # log_124 — TASK 34: the interpreter table, the join and the union, relaunched on the universal canonical form
 
 Date: 2026-09-01. Author: Claude Code (implementer), no sub-agents.
-Working directory: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+Working directory: `PseudoCoupHQ/Research/op_pipeline`.
 Python: `/tmp/reconnect_venv/bin/python3`.
 
 THE SPELLING BAN, ABSOLUTE (the owner, restated in anger 2026-08-25 after a
@@ -33,11 +33,11 @@ is too:
 
 ```
 $ ls -la interp_table1.json interp_join1.json union_table1.json
--rw-rw-r-- 1 <host> <host>   29587 Sep  1 17:10 interp_join1.json
--rw-rw-r-- 1 <host> <host>   25070 Sep  1 17:07 interp_table1.json
--rw-rw-r-- 1 <host> <host>  828414 Sep  1 17:11 union_table1.json
-$ ls -la ~/Programming/PseudoCoupHQ/DevComms/log_119*
--rw-rw-r-- 1 <host> <host> 36483 Sep  1 17:15 log_119_task32_interp_table_union.md
+-rw-rw-r-- 1 <user> <user>   29587 Sep  1 17:10 interp_join1.json
+-rw-rw-r-- 1 <user> <user>   25070 Sep  1 17:07 interp_table1.json
+-rw-rw-r-- 1 <user> <user>  828414 Sep  1 17:11 union_table1.json
+$ ls -la PseudoCoupHQ/DevComms/log_119*
+-rw-rw-r-- 1 <user> <user> 36483 Sep  1 17:15 log_119_task32_interp_table_union.md
 ```
 
 So the first act of this lap is an audit, not a rebuild from nothing.
@@ -83,18 +83,18 @@ no work to do here; its real effect on this population is §2.
 ## 1.4 Log 121 does not exist, verified against the whole tree
 
 ```
-$ ls ~/Programming/PseudoCoupHQ/DevComms/log_12*.md
+$ ls PseudoCoupHQ/DevComms/log_12*.md
 .../log_120_task33_bank_round6.md
 .../log_122_swift_source_obtained.md
 .../log_123_claude_code_task_briefs_round7.md
 $ find ~/Programming -name "log_121*" 2>/dev/null
-~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_121_reactivity_model.md
+StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_121_reactivity_model.md
 ```
 
 - The one hit is in an unrelated repo (`PseudoCoup_v0`) and is about a
   reactivity model, not about this line.
 - WHICH SIDE OF THE CONTAINER WALL: this check ran on the HOST — the
-  shell's `hostname` is `<host>` and `~/Programming/PseudoCoupHQ`
+  shell's `hostname` is `<user>` and `PseudoCoupHQ`
   resolves, which it does not inside the Airlock container. So the
   absence is an absence in the real tree, not a mount artefact.
 - Citations in this log therefore go to **log_116, log_118, log_119**.

@@ -17,7 +17,7 @@
 # are proved.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 
 say "[1/7] reset the working tree to the pin"
 T=$(date +%s)
@@ -46,7 +46,7 @@ if [ $RC -ne 0 ]; then echo "   STOP: the injector failed"; exit 2; fi
 say "[3/7] every injected statement is ONE well-formed line"
 python3 - <<'PY'
 import json, os, re, sys
-report = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+report = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                         't81/inject_report_cpp2.json'))
 files = sorted({c.rsplit(':', 1)[0]
                 for c in report['instrumented_coordinates']})

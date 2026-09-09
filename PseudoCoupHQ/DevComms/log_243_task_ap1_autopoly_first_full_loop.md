@@ -1,18 +1,18 @@
 # log 243 — task ap1: AutoPoly's first full loop, every attested cell of the model table on four compiled targets
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the ruling of
 2026-09-08 in
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
 Date: 2026-09-09. Instance `ap1`, on the tower guest.
 
 Artifact folder:
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`.
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`.
 Lane scripts: `.../autopoly/lanes_ap1/`, nineteen of them, each kept in
 the repo as the standing rule of 2026-09-07 requires. Every lane log named
 below is on the TOWER, under
-`~/AirlockRuns/ap1/agent/logs/`, and says so.
+`<runs>/ap1/agent/logs/`, and says so.
 
 ---
 
@@ -20,13 +20,13 @@ below is on the TOWER, under
 
 - **A CELL** is one (`mnem`, operand shape, `key_width`) row of the
   arch-opcode model table
-  (`~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
+  (`PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
   tasks m1/m1b), which holds, per place the opcode writes, the z3 term the
   reference simulator's own builder puts there.
 - **THE OUTER SET** is every cell that the canon40 corpus actually
   attests: a distinct triple with a `TRANSLATED` row whose
   `attestation.ledger_rows` is greater than zero. Task m1b measured it at
-  253 (log_237 §8, `~/Programming/PseudoCoupHQ/DevComms/log_237_task_m1b_model_table_join_closer.md`);
+  253 (log_237 §8, `PseudoCoupHQ/DevComms/log_237_task_m1b_model_table_join_closer.md`);
   this task counted it again from the table itself and got 253.
 - **A RUN** is `find_emulation(cell, lang)` for one of the four compiled
   targets (c, rust, go, swift): the target's own operator where it has one
@@ -34,11 +34,11 @@ below is on the TOWER, under
   target's operators where it has not; then compiled at the corpus's ship
   flags, carved, and put back to z3 against the cell's own term.
 - **THE DRIVER** is
-  `~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`
+  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`
   as task g1b left it (log_242). It is imported and called; not one line
   of it was edited by this task.
 - **THIS TASK'S OWN PROGRAM** is
-  `~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py`,
+  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py`,
   the loop around that driver and the bookkeeping, and nothing that
   decides an answer.
 - **THE ATTESTED LEDGER ROWS** of a cell are how many rows of the canon40
@@ -99,10 +99,10 @@ touched to make that happen.
 # 3. The outer set: how the 253 were taken, and the four cells that are not in it
 
 **LITERAL**, lane `ap1_l1_cells.sh`, on the tower at
-`~/AirlockRuns/ap1/agent/logs/20260909T103531Z__ap1_l1_cells.sh.log`:
+`<runs>/ap1/agent/logs/20260909T103531Z__ap1_l1_cells.sh.log`:
 
 ```
-   parsing /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json
+   parsing PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json
    peak after the parse: 290040 kB
    rows in the table: 71778
    the table's own counts: attested_cells 257 placed 253
@@ -124,11 +124,11 @@ which is why they are printed in both directions rather than summarised.
 **THE ORDER** is the attested ledger rows, descending, so a stopped lane
 has already finished the cells that carry most of the corpus. The outer
 set as the loop walks it, **LITERAL**, lane `ap1_l14_claims3.sh` on the
-tower at `~/AirlockRuns/ap1/agent/logs/20260909T112049Z__ap1_l14_claims3.sh.log`:
+tower at `<runs>/ap1/agent/logs/20260909T112049Z__ap1_l14_claims3.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py preflight | grep -v 'peak resident'
-cells on /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_cells.json: 253
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py preflight | grep -v 'peak resident'
+cells on PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_cells.json: 253
 targets: c, rust, go, swift
 pairs: 1012
 attested ledger rows over the whole outer set: 133044
@@ -155,7 +155,7 @@ cells whose key_width is null: 8
    movsbq widen_gpr_gpr None
    movzwl widen_mem_gpr None
 
-runs already on /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_runs.jsonl: 1012
+runs already on PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_runs.jsonl: 1012
 ```
 
 **GLOSS**: 253 cells, 1,012 pairs, 133,044 attested ledger rows, and the
@@ -180,7 +180,7 @@ list so the drop is visible rather than asserted.
 # 4. The loop: 1,012 runs, the pace, and the ceilings
 
 **LITERAL**, lane `ap1_l5_run.sh`, on the tower at
-`~/AirlockRuns/ap1/agent/logs/20260909T104708Z__ap1_l5_run.sh.log`,
+`<runs>/ap1/agent/logs/20260909T104708Z__ap1_l5_run.sh.log`,
 its first lines and its last:
 
 ```
@@ -197,7 +197,7 @@ peak resident after the two reads: 260192 kB
 
 ```
 runs performed this lane: 992 in 1139 s
-lines on /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_runs.jsonl: 1012
+lines on PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_runs.jsonl: 1012
 peak resident: 2414988 kB
 ```
 
@@ -219,10 +219,10 @@ section 8.
 # 5. THE table: per target, what the loop reached
 
 **LITERAL**, lane `ap1_l11_claims2.sh`, on the tower at
-`~/AirlockRuns/ap1/agent/logs/20260909T111309Z__ap1_l11_claims2.sh.log`:
+`<runs>/ap1/agent/logs/20260909T111309Z__ap1_l11_claims2.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py tables
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py tables
 ## 1. THE table: per target, what the loop reached
 
 Table 1 -- one row per target. `cells` counts runs; `rows` is the attested ledger rows those cells cover and `share` that as a percentage of 133044.
@@ -290,10 +290,10 @@ asks for. Summed over all 1,012 runs it is twelve causes and one of them
 is a question rather than a limit.
 
 **LITERAL**, same lane
-(`~/AirlockRuns/ap1/agent/logs/20260909T111309Z__ap1_l11_claims2.sh.log`):
+(`<runs>/ap1/agent/logs/20260909T111309Z__ap1_l11_claims2.sh.log`):
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py causes
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py causes
 Table 5 -- what did not work, by cause, the four targets summed. `rows` counts a cell's attested ledger rows once per run, so a cause seen on all four targets counts them four times.
 
 | cause | runs | ledger rows | targets |
@@ -409,10 +409,10 @@ two different things.
 - **Table 1's `sat` row is 31**, because it counts only the destination
   place; the other eight of the 39 are on flags places.
 
-**LITERAL**, lane `ap1_l14_claims3.sh` on the tower at `~/AirlockRuns/ap1/agent/logs/20260909T112049Z__ap1_l14_claims3.sh.log`:
+**LITERAL**, lane `ap1_l14_claims3.sh` on the tower at `<runs>/ap1/agent/logs/20260909T112049Z__ap1_l14_claims3.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py sat
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py sat
 sat at the plain comparison, every written place: 110
 sat surviving the caller-extension re-pose: 39
    c      13
@@ -448,7 +448,7 @@ order, item 4).
 
 The whole list of 110, each with its counterexample and whether it
 survives the re-pose, is section 5 of
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
 
 ---
 
@@ -459,16 +459,16 @@ survives the re-pose, is section 5 of
 12.77%. Two: 14, 7.47%. One: 6, 1.86%. None: 96 cells, 27,011 rows,
 20.3%. The 120 in full, and the 96 in full with the cause on each of the
 four targets, are sections 4.1 and 4.2 of
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
 
 **THE RE-POSE.** The law's rule on a time limit is that it is a FLAG:
 re-run with more room and report whether the answer changed.
 
 **LITERAL**, lane `ap1_l11_claims2.sh`, on the tower at
-`~/AirlockRuns/ap1/agent/logs/20260909T111309Z__ap1_l11_claims2.sh.log`:
+`<runs>/ap1/agent/logs/20260909T111309Z__ap1_l11_claims2.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py repose
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py repose
 places UNDECIDED at the 3,000 ms ceiling of record and re-posed once at 30,000 ms: 56
    DISPROVED        1
    PROVED_ON_SHIP   2
@@ -495,10 +495,10 @@ which no ceiling can move because the reason is structural.
 
 **LITERAL**, eight rows copied verbatim out of the forty that lane
 `ap1_l11_claims2.sh` printed, on the tower at
-`~/AirlockRuns/ap1/agent/logs/20260909T111309Z__ap1_l11_claims2.sh.log`
+`<runs>/ap1/agent/logs/20260909T111309Z__ap1_l11_claims2.sh.log`
 under its `===== reproduce =====` heading. The whole forty-row table is
 section 6 of
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`,
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`,
 and the three counts under it are the last line of the `tables` transcript
 in section 5 of this log, which re-runs.
 
@@ -525,7 +525,7 @@ are UNDECIDED at both ceilings.
 **THE FOUR PAIRS THIS LOOP DID NOT RUN ARE ONE CELL**, `sub` imm_gpr 64,
 and the reason is that it is not in the outer set. **LITERAL**, lane
 `ap1_l7_report_evidence.sh`, on the tower at
-`~/AirlockRuns/ap1/agent/logs/20260909T110920Z__ap1_l7_report_evidence.sh.log`
+`<runs>/ap1/agent/logs/20260909T110920Z__ap1_l7_report_evidence.sh.log`
 — every `sub` cell task m1's own attestation file holds:
 
 ```
@@ -551,7 +551,7 @@ it, and that is a fact about the corpus rather than a gap in this run.
 The aggregate written from the first twenty runs was refused by the
 spelling guard. **LITERAL**, lane `ap1_l3_aggregate_probe.sh`, on the
 tower at
-`~/AirlockRuns/ap1/agent/logs/20260909T104313Z__ap1_l3_aggregate_probe.sh.log`:
+`<runs>/ap1/agent/logs/20260909T104313Z__ap1_l3_aggregate_probe.sh.log`:
 
 ```
 FAIL autopoly.json -- 24 spelling-keyed place(s)
@@ -583,27 +583,27 @@ in `handful.py`, which this task does not edit.
 
 **LITERAL**, the final state, lane `ap1_l12_guard_and_branch.sh`, on the
 tower at
-`~/AirlockRuns/ap1/agent/logs/20260909T111412Z__ap1_l12_guard_and_branch.sh.log`:
+`<runs>/ap1/agent/logs/20260909T111412Z__ap1_l12_guard_and_branch.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_cells.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_cells.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS autopoly_cells.json -- no operator token in any key, grouping, pairing or row structure
 PASS autopoly.json -- no operator token in any key, grouping, pairing or row structure
 ```
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l1_cells.sh /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l5_run.sh
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l1_cells.sh:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l5_run.sh:0
+$ grep -c exempt PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l1_cells.sh PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l5_run.sh
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l1_cells.sh:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l5_run.sh:0
 ```
 
 **THE STORE AND THE AGGREGATE HOLD THE SAME RUNS**, checked rather than
-assumed. **LITERAL**, lane `ap1_l14_claims3.sh` on the tower at `~/AirlockRuns/ap1/agent/logs/20260909T112049Z__ap1_l14_claims3.sh.log`:
+assumed. **LITERAL**, lane `ap1_l14_claims3.sh` on the tower at `<runs>/ap1/agent/logs/20260909T112049Z__ap1_l14_claims3.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py store
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py store
 lines on the store: 1012
 runs on the aggregate: 1012
 run for run identical: 1012
@@ -621,10 +621,10 @@ other.
 
 `handful.renderer_input` decides which form of a cell's term the renderer
 is handed, and it names two tasks by name. **LITERAL**, lane
-`ap1_l14_claims3.sh` on the tower at `~/AirlockRuns/ap1/agent/logs/20260909T112049Z__ap1_l14_claims3.sh.log`:
+`ap1_l14_claims3.sh` on the tower at `<runs>/ap1/agent/logs/20260909T112049Z__ap1_l14_claims3.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py branch
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py branch
 def renderer_input(term, how):
     """the term the renderer is handed, by task.
 
@@ -651,7 +651,7 @@ closers, so tasks g1b, g1c and this task all render from
 from the normalised term. Task h2 measured that fix as a NO-OP on its own
 population: all 24 rendered places produced a source character for
 character identical both ways (log_240, and
-`~/Programming/PseudoCoupHQ/DevComms/log_240_task_h2_two_printing_fixes.md`).
+`PseudoCoupHQ/DevComms/log_240_task_h2_two_printing_fixes.md`).
 So this is a fact about what ran, not a claim that a result is wrong, and
 it is REPORTED rather than fixed: this brief's own instruction is the
 driver as task g1b left it, unchanged, and changing which term the
@@ -662,7 +662,7 @@ standing rule forbids. It is in the awaiting-the owner list.
 
 # 12. Memory
 
-The bound stated in `~/Programming/Airlock/instances/ap1.conf`, in
+The bound stated in `Airlock/instances/ap1.conf`, in
 `autopoly.py`'s own docstring and in every lane header is 6 GB resident on
 the one collecting process, named abort `ABORT_MEMORY_AP1`, checked after
 every run. The peaks the programs printed:
@@ -688,7 +688,7 @@ what the incremental store was for.
 # 13. The deliverables
 
 Under
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
 
 | file | what it is |
 |---|---|

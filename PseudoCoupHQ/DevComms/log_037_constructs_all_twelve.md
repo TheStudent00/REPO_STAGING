@@ -1,8 +1,8 @@
 # log 037 — the constructs, all twelve languages
 
 Date: 2026-08-19. Node:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 Written in the readable register of the rewritten logs 034 and 035.
 Every word this node invented is defined before it is used. Every claim

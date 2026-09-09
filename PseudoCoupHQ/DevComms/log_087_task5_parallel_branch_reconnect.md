@@ -1,11 +1,11 @@
 # log 087 — Task 5: reconnecting the parallel language branch (java, cpython, ruby, php)
 
 Date: 2026-08-31. This is Task 5 of
-`~/Programming/PseudoCoupHQ/DevComms/log_083_claude_code_task_briefs.md`,
+`PseudoCoupHQ/DevComms/log_083_claude_code_task_briefs.md`,
 against the six findings of
-`~/Programming/PseudoCoupHQ/DevComms/log_082_state_of_research_and_parallel_branch.md`
+`PseudoCoupHQ/DevComms/log_082_state_of_research_and_parallel_branch.md`
 PART 2. Working directory throughout:
-`~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+`PseudoCoupHQ/Research/op_pipeline`.
 
 THE SPELLING BAN, held throughout this task and pasted here verbatim
 as the brief requires: "No operator token may appear in ANY key,
@@ -132,7 +132,7 @@ this one row on top of `guards2.json`'s own 305 UNCHANGED rows —
 
 **(d) Ruby and php were measured and orphaned** (finding 5) —
 confirmed against the raw Airlock outputs directly:
-`~/Programming/Airlock/agent/out/interp_ruby_b/` (bytecode.txt,
+`Airlock/agent/out/interp_ruby_b/` (bytecode.txt,
 dispatch_diff.json, dispatch_report.txt, 4 probe sources) and
 `interp_php_b/` (dispatch_diff.json, dispatch_report.txt, 3 probe
 sources) both existed, dated 2026-08-31, with no fold script and
@@ -288,28 +288,28 @@ file below was touched). See "Flagged for the owner".
 
 ## Files (new, this task)
 
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_feeder.py`
+- `PseudoCoupHQ/Research/op_pipeline/interp_feeder.py`
   (edited: `cpython_type_key()` added, `format_cpython()` now calls
   it instead of hardcoding the type key)
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/langs.py`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/reconnect_parallel.py`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/op_units_java2.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/op_units_cpython2.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/sem_anchored_java2.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/sem_anchored_cpython2.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/sem_anchored_spill_java2.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/sem_anchored_spill_cpython2.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/tree_units3_parallel.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/tree_matches3_parallel.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/core_modes_java2.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/guards2_parallel.py`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/guards2_parallel.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/fold_interp_ruby.py`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_ruby.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_ruby.md`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/fold_interp_php.py`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_php.json`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_php.md`
+- `PseudoCoupHQ/Research/op_pipeline/langs.py`
+- `PseudoCoupHQ/Research/op_pipeline/reconnect_parallel.py`
+- `PseudoCoupHQ/Research/op_pipeline/op_units_java2.json`
+- `PseudoCoupHQ/Research/op_pipeline/op_units_cpython2.json`
+- `PseudoCoupHQ/Research/op_pipeline/sem_anchored_java2.json`
+- `PseudoCoupHQ/Research/op_pipeline/sem_anchored_cpython2.json`
+- `PseudoCoupHQ/Research/op_pipeline/sem_anchored_spill_java2.json`
+- `PseudoCoupHQ/Research/op_pipeline/sem_anchored_spill_cpython2.json`
+- `PseudoCoupHQ/Research/op_pipeline/tree_units3_parallel.json`
+- `PseudoCoupHQ/Research/op_pipeline/tree_matches3_parallel.json`
+- `PseudoCoupHQ/Research/op_pipeline/core_modes_java2.json`
+- `PseudoCoupHQ/Research/op_pipeline/guards2_parallel.py`
+- `PseudoCoupHQ/Research/op_pipeline/guards2_parallel.json`
+- `PseudoCoupHQ/Research/op_pipeline/fold_interp_ruby.py`
+- `PseudoCoupHQ/Research/op_pipeline/interp_ruby.json`
+- `PseudoCoupHQ/Research/op_pipeline/interp_ruby.md`
+- `PseudoCoupHQ/Research/op_pipeline/fold_interp_php.py`
+- `PseudoCoupHQ/Research/op_pipeline/interp_php.json`
+- `PseudoCoupHQ/Research/op_pipeline/interp_php.md`
 
 No existing artifact was modified or deleted. `interp_feeder.py` was
 edited (it is the script named by finding 2 as the one to fix — its

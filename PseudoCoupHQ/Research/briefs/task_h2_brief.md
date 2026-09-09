@@ -9,7 +9,7 @@ layer-5 printer; log_233 for what the normaliser does), the two renderers
 (`emulation/emulate.py`, `emulation/rust/rust_render.py`), and
 `Research/oracle/arch_opcodes/model/model_table.py` (`classify_line`,
 `key_width`). Instance `h2.conf` (copy to the tower yourself from
-`~/Programming/Airlock/instances/h2.conf`, bring it up). Artifact folder:
+`Airlock/instances/h2.conf`, bring it up). Artifact folder:
 the same `.../emulation/handful/`; lanes under `lanes_h2/`.
 
 ## 1. What this is

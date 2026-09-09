@@ -13,9 +13,9 @@ in the repo it belongs to, per the hats rule.
 ## 1. Where the detail is
 
 - **PlanPlan's readiness, and its new tree** —
-  `~/Programming/PlanPlan/DevComms/log_001_readiness_and_tree.md`
+  `PlanPlan/DevComms/log_001_readiness_and_tree.md`
 - **Proposed communication-protocol changes** —
-  `~/Programming/DevComms/proposal_2026-08-01_communication_protocol.md`
+  `DevComms/proposal_2026-08-01_communication_protocol.md`
 - **This session's HQ and PCv5 work** — sections 2 and 3 below.
 
 ---
@@ -25,7 +25,7 @@ in the repo it belongs to, per the hats rule.
 ### PseudoCoupHQ
 
 - Two stale open items closed: PCv5's planning tree exists, and
-  `~/Programming/DevComms` is its own pushed repo.
+  `DevComms` is its own pushed repo.
 - `SUPPORT_planning_trees.md` now lists four trees, not three. The
   record of the gap is kept in past tense.
 - Roster corrections in `node_0_0_projects/CORE_0_0_projects.md`:
@@ -75,7 +75,7 @@ in the repo it belongs to, per the hats rule.
 1. **Whether to run `--adopt` on PseudoCoup_v6 and PseudoIR.** Those
    two trees have no register: 10 of 10 and 18 of 18 COREs. The
    command is
-   `python3 ~/Programming/PlanPlan/framework/generate_nodes.py <root> --adopt --apply`.
+   `python3 PlanPlan/framework/generate_nodes.py <root> --adopt --apply`.
    It was verified on a COPY of PseudoIR's tree — 18 registers
    written, projections rebuilt, 0 errors — and has NOT been run on
    any real tree.
@@ -105,10 +105,10 @@ in the repo it belongs to, per the hats rule.
 
 ## 4. Two things worth carrying forward
 
-- **`bash ~/Programming/PseudoCoupHQ/hq.sh` is the runnable form.**
+- **`bash PseudoCoupHQ/hq.sh` is the runnable form.**
   There is no `hq.sh` command; it is a file, not on PATH and not
   executable. An alias was offered and not yet added.
 - **Running the tools from the sandbox needs `$HOME` mapped**, or
-  every `~/Programming/...` reference resolves nowhere and the
+  every `...` reference resolves nowhere and the
   checker reports ~85 false dangling paths. This cost two separate
   agents a wrong first result today.

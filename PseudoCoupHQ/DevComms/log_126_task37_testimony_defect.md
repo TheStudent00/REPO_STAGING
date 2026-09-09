@@ -59,7 +59,7 @@ $ /tmp/reconnect_venv/bin/python3 -c "import json;d=json.load(open('op_units_rus
 no log 121 in this repository.** Verified:
 
 ```
-$ ls ~/Programming/PseudoCoupHQ/DevComms/ | grep -E "log_1(1[5-9]|2[0-6])"
+$ ls PseudoCoupHQ/DevComms/ | grep -E "log_1(1[5-9]|2[0-6])"
 log_115_claude_code_task_briefs_round6.md
 log_116_task29_type_inventory.md
 log_117_task31_result_destination_seat.md
@@ -70,7 +70,7 @@ log_122_swift_source_obtained.md
 log_123_claude_code_task_briefs_round7.md
 
 $ find ~/Programming -name "*log_121*"
-~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_121_reactivity_model.md
+StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_121_reactivity_model.md
 ```
 
 The one file with that number anywhere under `~/Programming` is in an
@@ -182,7 +182,7 @@ refuses any lane file without the marker, by name:
 
 ```
 $ /tmp/reconnect_venv/bin/python3 fold_verbatim.py rust
-rust   REFUSED: these lane files carry no '#verbatim-escape v1' marker, so they are legacy captures and must not be decoded: ~/Programming/Airlock/agent/out/op_rust.txt
+rust   REFUSED: these lane files carry no '#verbatim-escape v1' marker, so they are legacy captures and must not be decoded: Airlock/agent/out/op_rust.txt
 rc=1
 ```
 
@@ -516,7 +516,7 @@ re-capture ruling, so it waits here with it.
 
 ## 6. File inventory — every file created by this task
 
-New, in `~/Programming/PseudoCoupHQ/Research/op_pipeline/`:
+New, in `PseudoCoupHQ/Research/op_pipeline/`:
 
 | file | what it is |
 | --- | --- |
@@ -531,7 +531,7 @@ New, in `~/Programming/PseudoCoupHQ/Research/op_pipeline/`:
 | `audit_altered_consumers.json` | the carrier list |
 | `lanes/op_rust_vb.sh` | one generated verbatim lane, 858 probes, 32,337 bytes — generated as proof, NOT submitted |
 
-New, in `~/Programming/PseudoCoupHQ/DevComms/`:
+New, in `PseudoCoupHQ/DevComms/`:
 
 | file | what it is |
 | --- | --- |

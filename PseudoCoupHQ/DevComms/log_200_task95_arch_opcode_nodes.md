@@ -34,7 +34,7 @@ the two this machine cannot instrument.
 **LITERAL**, lane `t95_l10_own_evidence.sh` §[1/8]:
 
 ```
-$ python3 -c "import json;d={l:json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l)) for l in ('go','cpp','rust','swift')};[print(l, d[l]['by_state'], 'sum', sum(d[l]['by_state'].values()), 'population', d[l]['populations']['definitions']) for l in d]"
+$ python3 -c "import json;d={l:json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l)) for l in ('go','cpp','rust','swift')};[print(l, d[l]['by_state'], 'sum', sum(d[l]['by_state'].values()), 'population', d[l]['populations']['definitions']) for l in d]"
 go {'names_its_opcode': 13, 'one_static_hop': 39, 'emits_opcode_dynamic': 5, 'emits_nothing': 1802} sum 1859 population 1859
 cpp {'names_its_opcode': 174, 'one_static_hop': 8, 'emits_opcode_dynamic': 69, 'emits_nothing': 10538} sum 10789 population 10789
 rust {'names_its_opcode': 0, 'one_static_hop': 0, 'emits_opcode_dynamic': 1, 'emits_nothing': 3312} sum 3313 population 3313
@@ -129,7 +129,7 @@ that RETURNS it. Both are read off the declaration.
 **LITERAL**, lane `t95_l13_own_evidence3.sh` §[1/8]:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py declarations go
+$ python3 PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py declarations go
 go: 7 declarations of the arch opcode type
   src/cmd/compile/internal/amd64/ssa.go:67  returns the arch opcode type -- a TABLE
      func loadByRegWidth(r int16, width int64) obj.As {
@@ -168,7 +168,7 @@ out of the same rule rather than being named by hand.
 **LITERAL**, lane `t95_l10_own_evidence.sh` §[2/8]:
 
 ```
-$ python3 -c "import json;[print(l, json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['emitter_census']) for l in ('go','cpp','rust','swift')]"
+$ python3 -c "import json;[print(l, json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['emitter_census']) for l in ('go','cpp','rust','swift')]"
 go {'Prog': 206, 'Br': 9, 'opregreg': 23}
 cpp {'BuildMI': 724, 'setDesc': 57, 'MCInstBuilder': 53, 'setOpcode': 36}
 rust {'InlineAsmCall': 0, 'LLVMRustInlineAsm': 0, 'inline_asm_call': 2}
@@ -278,7 +278,7 @@ definition node of the graph and are reported as such. The 251 sit in
 whole:
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_swift.json'));[print(c['file']+':'+str(c['line']), c['state'], c['argument']['text'], [k['text'] for k in c['opcodes']]) for c in d['call_sites']]"
+$ python3 -c "import json;d=json.load(open('PseudoCoupGraphs/arch_opcode_nodes_swift.json'));[print(c['file']+':'+str(c['line']), c['state'], c['argument']['text'], [k['text'] for k in c['opcodes']]) for c in d['call_sites']]"
 lib/IRGen/GenDecl.cpp:2030 emits_nothing "" []
 lib/IRGen/GenObjC.cpp:144 emits_opcode_dynamic asmString []
 lib/IRGen/IRGenFunction.cpp:461 emits_nothing "" []
@@ -302,7 +302,7 @@ the region: `emits_opcode_dynamic`, named, never guessed. One names
 **LITERAL**, lane `t95_l10_own_evidence.sh` §[4/8]:
 
 ```
-$ python3 -c "import json;[print(l, json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['distinct_arch_opcodes'], json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['distinct_pseudo_opcodes']) for l in ('go','cpp','rust','swift')]"
+$ python3 -c "import json;[print(l, json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['distinct_arch_opcodes'], json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['distinct_pseudo_opcodes']) for l in ('go','cpp','rust','swift')]"
 go 578 6
 cpp 400 9
 rust 0 0
@@ -350,7 +350,7 @@ share of the definition population that survives restriction to the
 emitters and their callers:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py shrink
+$ python3 PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py shrink
 region  definitions  emitters  +direct  +all  emits_nothing  kept
 go             1859        57       66    66           1802  3.6%
 cpp           10789       251      319   356          10538  3.3%
@@ -382,7 +382,7 @@ emitter set itself, which needs no edges at all.
 **LITERAL**, lane `t95_l10_own_evidence.sh` §[4/8]:
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_go.json'));s=[c for c in d['call_sites'] if c['emitter']=='Prog' and c['state']=='names_its_opcode' and c['opcodes']];o=sorted({k['text'] for c in s for k in c['opcodes']});print(len(s),'Prog sites name an arch constant;',len(o),'distinct:');print(' '.join(o))"
+$ python3 -c "import json;d=json.load(open('PseudoCoupGraphs/arch_opcode_nodes_go.json'));s=[c for c in d['call_sites'] if c['emitter']=='Prog' and c['state']=='names_its_opcode' and c['opcodes']];o=sorted({k['text'] for c in s for k in c['opcodes']});print(len(s),'Prog sites name an arch constant;',len(o),'distinct:');print(' '.join(o))"
 50 Prog sites name an arch constant; 24 distinct:
 ADDQ CMOVLPC CMOVLPS CMOVQPC CMOVQPS CMOVWPC CMOVWPS DECL JNE LOCK MOVB MOVBLZX MOVL MOVQ MOVSQ MOVUPS RCRQ REP SETEQ SETPC SETPS STOSQ TESTB XCHGL
 ```
@@ -409,7 +409,7 @@ differences in COUNTING and not in the source:
 **LITERAL**, lane `t95_l11_own_evidence2.sh` §[1/3] and §[2/3]:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_compare.py go
+$ python3 PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_compare.py go
 go: 1859 definitions, 1534 instrumented bodies, 590 probes
   entered by at least one probe             724 of 1859 definitions
   instrumented, entered by none             810 of 1859 definitions
@@ -420,7 +420,7 @@ go: 1859 definitions, 1534 instrumented bodies, 590 probes
   emitters never instrumented                 0 of 57 emitters
   entered but emitting nothing              712 of 724 entered
 
-$ python3 /projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_compare.py cpp
+$ python3 PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_compare.py cpp
 cpp: 10789 definitions, 8871 instrumented bodies, 1380 probes
   entered by at least one probe            1331 of 10789 definitions
   instrumented, entered by none            7540 of 10789 definitions
@@ -479,7 +479,7 @@ Both have graphs. A static pass needs only source, so both got marked.
 **LITERAL**, lane `t95_l10_own_evidence.sh` §[6/8]:
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_rust.json'));print(d['unmeasured_by_absence_of_an_emitter'])"
+$ python3 -c "import json;d=json.load(open('PseudoCoupGraphs/arch_opcode_nodes_rust.json'));print(d['unmeasured_by_absence_of_an_emitter'])"
 arch_opcode_emitter_outside_the_region -- measured, not assumed: 0 files of the whole rust checkout name BuildMI(, MCInst, MachineInstr or an X86 instruction namespace (lane t95_l3_recon2.sh step 4). rustc's region emits LLVM IR; the machine instruction is emitted by LLVM, whose source IS the cpp region, where it is measured. The inline-assembly path carries a template the COMPILED PROGRAM supplies, which is not the compiler naming an opcode.
 ```
 
@@ -518,7 +518,7 @@ and the region does keep all 61 of them. It could not serve.
 rides on the cpp artifact:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py frontier
+$ python3 PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py frontier
 the_td_files_are_not_a_complete_instruction_table -- the CORE names LLVM's .td as the static table the hop reads, and the region does keep all 61 of them, but a plain `def <name>` scan of them answers 7,227 records and MISSES the instructions X86 defines through `defm` multiclasses: 100 call sites naming a real instruction (CMP64rr, ADD32ri, XOR32rr and so on) were read as `not a .td record` when the table was used that way (lane t95_l3_recon2.sh step 3). The complete enumeration lives in X86GenInstrInfo.inc, which TableGen writes at BUILD time and which is not on this disk. So the arch-opcode namespace X86:: is what identifies an instruction here, taken from the argument's POSITION in the call, and the hop reads the in-region static helpers and `static const TableEntry[]` arrays instead. The .td shortfall is written down, not worked around.
 ```
 
@@ -533,7 +533,7 @@ down, not worked around.
 **LITERAL**, lane `t95_l13_own_evidence3.sh` §[6/8]:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py reasons
+$ python3 PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py reasons
 go {"argument_is_not_a_named_constant": 24, "argument_named_nothing": 1}
 cpp {"argument_is_not_a_named_constant": 243, "callee_body_has_no_return": 8, "callee_not_declared_inside_the_region": 1, "the_call_carries_no_instruction_descriptor_argument": 13, "token_pasting_suffix_not_readable_from_source": 6}
 rust {"empty_template_emits_no_instruction": 1, "template_is_not_a_string_literal_in_this_region": 1}
@@ -587,10 +587,10 @@ verdict at `spelling_guard`.
 **LITERAL**, lane `t95_l10_own_evidence.sh` §[8/8]:
 
 ```
-$ md5sum /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
-1d6aba67cbcdb021c3bdfd7f40fd2020  /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+$ md5sum PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+1d6aba67cbcdb021c3bdfd7f40fd2020  PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 
-$ cat /projects/PseudoCoupHQ/Research/compiler_graph/guard_task95.txt
+$ cat PseudoCoupHQ/Research/compiler_graph/guard_task95.txt
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS arch_opcode_nodes_go.json -- no operator token in any key, grouping, pairing or row structure
 PASS arch_opcode_nodes_cpp.json -- no operator token in any key, grouping, pairing or row structure
@@ -601,7 +601,7 @@ PASS arch_opcode_nodes_cpp_summary.json -- no operator token in any key, groupin
 PASS arch_opcode_nodes_rust_summary.json -- no operator token in any key, grouping, pairing or row structure
 PASS arch_opcode_nodes_swift_summary.json -- no operator token in any key, grouping, pairing or row structure
 
-$ grep -c exempt /projects/PseudoCoupHQ/Research/compiler_graph/guard_task95.txt
+$ grep -c exempt PseudoCoupHQ/Research/compiler_graph/guard_task95.txt
 0
 ```
 
@@ -629,7 +629,7 @@ Measured peaks of the pass itself, each written onto its own artifact —
 **LITERAL**, lane `t95_l13_own_evidence3.sh` §[7/8]:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py cost
+$ python3 PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_show.py cost
 go     wall  0.5 s  peak  120.9 MB  ceiling 6144 MB  refusal MemoryCeilingReached  files 112  co-located 0
 cpp    wall  2.9 s  peak  566.9 MB  ceiling 6144 MB  refusal MemoryCeilingReached  files 269  co-located 46
 rust   wall  0.3 s  peak  117.1 MB  ceiling 6144 MB  refusal MemoryCeilingReached  files 134  co-located 0
@@ -650,10 +650,10 @@ The `co-located` column is §8.3's number, and it is not a promotion.
 
 | path | bytes | md5 |
 |---|---|---|
-| `~/Programming/PseudoCoupGraphs/arch_opcode_nodes_go.json` | 4,830,504 | `9d90753f9d2b432db55624a2426b8bc1` |
-| `~/Programming/PseudoCoupGraphs/arch_opcode_nodes_cpp.json` | 1,254,695 | `2890bd8edb8ba2c1c64cde6fca976f57` |
-| `~/Programming/PseudoCoupGraphs/arch_opcode_nodes_rust.json` | 210,756 | `8efc2836ebaf707928c1065bce484b36` |
-| `~/Programming/PseudoCoupGraphs/arch_opcode_nodes_swift.json` | 419,946 | `58c6a32341fbd9b56dbab32586a8eda0` |
+| `PseudoCoupGraphs/arch_opcode_nodes_go.json` | 4,830,504 | `9d90753f9d2b432db55624a2426b8bc1` |
+| `PseudoCoupGraphs/arch_opcode_nodes_cpp.json` | 1,254,695 | `2890bd8edb8ba2c1c64cde6fca976f57` |
+| `PseudoCoupGraphs/arch_opcode_nodes_rust.json` | 210,756 | `8efc2836ebaf707928c1065bce484b36` |
+| `PseudoCoupGraphs/arch_opcode_nodes_swift.json` | 419,946 | `58c6a32341fbd9b56dbab32586a8eda0` |
 | `Research/compiler_graph/arch_opcode_nodes_go_summary.json` | 6,325 | `396f1910ddcb0ba4328bdcafd84df8e3` |
 | `Research/compiler_graph/arch_opcode_nodes_cpp_summary.json` | 4,959 | `a1245dfeeaddf4575429bd1c040bc955` |
 | `Research/compiler_graph/arch_opcode_nodes_rust_summary.json` | 4,744 | `54570ae06fef23276b00f07ba5755180` |
@@ -686,7 +686,7 @@ The `co-located` column is §8.3's number, and it is not a promotion.
 - `t95_l10_own_evidence.sh`, `t95_l11_own_evidence2.sh`,
   `t95_compare.py` — this log's own evidence.
 
-Lane logs, in `~/Programming/Airlock/agent/logs/`:
+Lane logs, in `Airlock/agent/logs/`:
 `20260905T053851Z__t95_l1_recon.sh.log`,
 `20260905T054126Z__t95_l2_recon.sh.log`,
 `20260905T054346Z__t95_l3_recon2.sh.log`,
@@ -701,8 +701,8 @@ Lane logs, in `~/Programming/Airlock/agent/logs/`:
 
 ## 11.4 One operational fact, recorded because it changed the sandbox
 
-`mounts.conf` DID name `~/Programming/PseudoCoupGraphs:/projects/PseudoCoupGraphs:rw`
-and `~/Programming/PseudoCoupHQ:/projects/PseudoCoupHQ:rw`, but the
+`mounts.conf` DID name `PseudoCoupGraphs:PseudoCoupGraphs:rw`
+and `PseudoCoupHQ:PseudoCoupHQ:rw`, but the
 running `sandbox-runner` had neither: it is a systemd quadlet, and the
 quadlet unit had been rendered before those lines were added. `./down.sh`
 plus `./up.sh` could not fix it — the unit restarts the container from

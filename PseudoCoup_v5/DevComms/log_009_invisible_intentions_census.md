@@ -3,8 +3,8 @@
 Date: 2026-08-05
 
 **Scope caveat:** this measurement covers exactly two crates —
-`~/Programming/Sources/rust/compiler/rustc_codegen_ssa` and
-`~/Programming/Sources/rust/compiler/rustc_codegen_llvm` — 111 `.rs` files total.
+`Sources/rust/compiler/rustc_codegen_ssa` and
+`Sources/rust/compiler/rustc_codegen_llvm` — 111 `.rs` files total.
 `rustc_codegen_cranelift` was excluded per instruction (prohibited). This is not
 "rustc" and not even "all of codegen"; it is two sparse, backend-specific crates.
 Any generalization beyond this corpus is unsupported by this log.
@@ -30,7 +30,7 @@ The single `use_declaration` hit:
 
 | file | line | text |
 |---|---|---|
-| `~/Programming/Sources/rust/compiler/rustc_codegen_ssa/src/back/write.rs` | 5 | `use std::sync::mpsc::{Receiver, Sender, channel};` |
+| `Sources/rust/compiler/rustc_codegen_ssa/src/back/write.rs` | 5 | `use std::sync::mpsc::{Receiver, Sender, channel};` |
 
 Grep cross-check shows the keyword appears in 3 files, but 2 of the 3
 (`rustc_codegen_ssa/src/back/link.rs`, `rustc_codegen_llvm/src/builder.rs`) are

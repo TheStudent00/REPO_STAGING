@@ -56,9 +56,9 @@ CARDS = {
     "6": ["media.structural-overview, scope.code-shape (family heading)"],
     "6.1": ["media.structural-overview", "media.call-flow-arrows"],
     "6.2": ["scope.code-shape — text lives in "
-            "~/Programming/PseudoCoupHQ/plan_and_code.md §1–§2"],
+            "PseudoCoupHQ/plan_and_code.md §1–§2"],
     "6.3": ["scope.code-shape — text moved to "
-            "~/Programming/PseudoCoupHQ/plan_and_code.md §7"],
+            "PseudoCoupHQ/plan_and_code.md §7"],
     "7": ["scope.* (family heading)"],
     "7.1": ["scope.who-decides"],
     "7.2": ["scope.do-what-was-asked"],
@@ -172,7 +172,7 @@ w = out.append
 w("# Communication Protocol — cases")
 w("")
 w("The account behind every rule in")
-w("`~/Programming/DevComms/LLM_communication_protocol.md` (v3). Each")
+w("`DevComms/LLM_communication_protocol.md` (v3). Each")
 w("v2 section is reproduced here VERBATIM — its rule text, its dated")
 w("failure, and every quote — under the card or cards it now feeds.")
 w("Nothing from v2 was dropped; the rulebook carries the distilled")
@@ -181,7 +181,7 @@ w("`scope.three-stores`: the rulebook says what a rule IS; this file")
 w("is the working record of why.")
 w("")
 w("Built 2026-09-06 from")
-w("`~/Programming/DevComms/0_Archive/LLM_communication_protocol_v2.md`")
+w("`DevComms/0_Archive/LLM_communication_protocol_v2.md`")
 w("by `build_cases.py` (kept beside this file). To add a case: append")
 w("a dated entry under the card's section; do not edit the verbatim")
 w("v2 text.")

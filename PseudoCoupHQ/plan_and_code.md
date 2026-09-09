@@ -2,8 +2,8 @@
 
 Written 2026-07-31 from the owner's statement. This is a note of intent,
 not an implementation. The plan trees at
-`~/Programming/PseudoCoup_v6/Planning/` and
-`~/Programming/PseudoIR/Planning/` do not yet conform to it. Bringing
+`PseudoCoup_v6/Planning/` and
+`PseudoIR/Planning/` do not yet conform to it. Bringing
 them into conformance is a separate job for a separate conversation.
 
 ---
@@ -65,7 +65,7 @@ designation: work
   the OO instance sense. It refines to a specific kind the way a node
   deepens, and a node may not reach `status: settled` still carrying
   it — the settle-guard, enforced by `check_plans.py`. The framework
-  definition is `~/Programming/PlanPlan/framework/PROTOCOL.md`
+  definition is `PlanPlan/framework/PROTOCOL.md`
   §3a.
 
 **Only `code` designations have concrete influence** (the owner). They are
@@ -186,7 +186,7 @@ the code.
 ### The bridge already exists
 
 The structural overview format in
-`~/Programming/DevComms/LLM_communication_protocol.md` §2 — class
+`DevComms/LLM_communication_protocol.md` §2 — class
 name, attributes, methods, no logic — **is a plan node one level
 above code.** It was never a separate request format. It is what a
 node looks like at the depth where the next descent produces a file.
@@ -282,7 +282,7 @@ from this document.
 - **Shape is aimed at, not enforced.** Trivial mapping is the target;
   1:1 is not required.
 - **The protocol carries the standing instruction**, as card `scope.code-shape` (v1 §2a) of
-  `~/Programming/DevComms/LLM_communication_protocol.md`, beside the
+  `DevComms/LLM_communication_protocol.md`, beside the
   structural overviews.
 - **The four non-code designation names** — `rule`, `work`,
   `finding`, `grouping` — approved by the owner as proposed, names and
@@ -296,7 +296,7 @@ from this document.
   are the only ones with concrete influence, but influence is not
   rank — a `rule`, `work`, `finding` or `grouping` node is as
   legitimate as a `class` node. Written into
-  `~/Programming/PlanPlan/framework/PROTOCOL.md` §3a, 2026-07-31,
+  `PlanPlan/framework/PROTOCOL.md` §3a, 2026-07-31,
   because the protocol carried the spirit only by implication and the owner
   asked for it to be stated.
 

@@ -27,13 +27,13 @@ proof is that it is now on disk.
 
 ## 2. Where it lives
 
-- `~/Programming/Sources/swift-6.0.3-RELEASE/` — beside
+- `Sources/swift-6.0.3-RELEASE/` — beside
   llvm-project, golang_src, rust, jdk, graal, matching the
   existing convention of pinned sources under Sources/.
 - The type-authority files log 121 route (c) wanted are present,
   e.g. `stdlib/public/core/Integers.swift`, `Bool.swift`,
   `FloatingPointTypes.swift.gyb`.
-- HOUSEKEEPING NOTE: `~/Programming/Sources/swift/` is a STALE,
+- HOUSEKEEPING NOTE: `Sources/swift/` is a STALE,
   BROKEN partial clone (a .git with no commits) left by an
   earlier attempt; the sandbox cannot unlink its lock files.
   the owner can delete the directory from the host. Nothing reads it.

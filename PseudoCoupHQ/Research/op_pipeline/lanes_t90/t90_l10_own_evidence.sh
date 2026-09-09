@@ -6,7 +6,7 @@
 # path, no wall clock.  Reads only.
 # Node: hq.conventions
 set -uo pipefail
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 run () { echo "\$ $1"; eval "$1"; }
 echo "[1/7]"; run 'wc -l Research/op_pipeline/check_conventions_log_claims.py'
 echo "[2/7]"; run 'grep -c "^def " Research/op_pipeline/check_conventions_log_claims.py'

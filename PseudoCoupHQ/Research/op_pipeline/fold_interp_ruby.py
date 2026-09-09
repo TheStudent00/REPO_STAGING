@@ -2,7 +2,7 @@
 """fold_interp_ruby.py -- task 5(d): fold the ruby dispatch pilot into
 the pilots' own .md+.json format (log_082 finding 5).
 
-SOURCE, unmodified, read only: `~/Programming/Airlock/agent/out/
+SOURCE, unmodified, read only: `Airlock/agent/out/
 interp_ruby_b/{dispatch_report.txt,dispatch_diff.json,bytecode.txt,
 probes/*.rb}`, plus the pin (`ruby_pin.txt` and the build log's own
 banner line) and the build log (`ruby_configure.log`,
@@ -39,7 +39,7 @@ import os
 import re
 
 AIRLOCK_OUT = os.path.expanduser(
-    "~/Programming/Airlock/agent/out")
+    "Airlock/agent/out")
 RUBY_DIR = os.path.join(AIRLOCK_OUT, "interp_ruby_b")
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -209,7 +209,7 @@ def main():
                      "interpreter track\n")
     md_lines.append("Folded 2026-08-31 by `fold_interp_ruby.py`, task "
                      "5(d), from the Airlock lane outputs under "
-                     "`~/Programming/Airlock/agent/out/interp_ruby_b/` "
+                     "`Airlock/agent/out/interp_ruby_b/` "
                      "(real gcov deltas, dated 2026-08-31: 1,050 "
                      "lines with a positive delta across 27 files for "
                      "the smallint probe -- the number log_082 named "

@@ -37,7 +37,7 @@ sub_nodes: []
 
 the UR node — one node shape in four layers, each layer owned by a
 different writer, none replacing the one beneath it (drafted in
-`~/Programming/PseudoCoup_v5/DevComms/log_002_ur_brainstorm.md` §7.1).
+`PseudoCoup_v5/DevComms/log_002_ur_brainstorm.md` §7.1).
 
 ## design
 

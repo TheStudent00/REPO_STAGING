@@ -78,7 +78,7 @@ Founded by the owner, 2026-09-05, verbatim:
 ## goal, added 2026-09-07: full modelling of `set_of_unique_arch_opcodes`, and the owner's loop
 
 the owner's names, 2026-09-07 (verbatim definitions in
-`~/Programming/DevComms/LLM_communication_protocol_cases.md` Appendix C.1),
+`DevComms/LLM_communication_protocol_cases.md` Appendix C.1),
 adopted as this node's names:
 
 | name | definition | what holds it today |
@@ -115,7 +115,7 @@ those interpolations could be added/combined/composed
 (function-composition f(g(x)) and whatever else) to match (emulate) the
 arch-opcode regression-fitting." The coordinator's reading of that idea,
 with the bases in which each opcode class is an exact fit, is
-`~/Programming/PseudoCoupHQ/DevComms/log_234_arch_opcode_mappings_as_fits.md`.
+`PseudoCoupHQ/DevComms/log_234_arch_opcode_mappings_as_fits.md`.
 
 **Ruling, 2026-09-08 (the owner, after the spelling guard flagged `and`/`or`/`xor`
 in the o2 artifacts): a mnemonic alone is a spelling; the machine-form key
@@ -163,7 +163,7 @@ server (the owner, 2026-09-07).
   2026-09-05), and the compiler graphs. This node reads them and
   never writes them.
 - **Own, and never written by the main line:** everything under
-  `~/Programming/PseudoCoupHQ/Research/oracle/`, every sub-node
+  `PseudoCoupHQ/Research/oracle/`, every sub-node
   below this CORE, and every Airlock instance named `o<N>.conf`.
   the owner, 2026-09-05: "i dont want either to interfere with the other."
 - **Shared by repo, not by line:** the DevComms log numbering, which
@@ -217,7 +217,7 @@ order now follows the research master plan.
 | hub_compiler | steps 4–5 of the master order | the Hub v1 dictionary read; one explicitly typed go file lowered by lookup and join, gated against go's output | after steps 2–3 |
 
 The master order is [research](../CORE_0_3_research.md) §4.2. The
-review that set it: `~/Programming/PseudoCoupHQ/DevComms/log_211_review_paths_to_the_hub.md`.
+review that set it: `PseudoCoupHQ/DevComms/log_211_review_paths_to_the_hub.md`.
 
 ## what this node does not decide
 

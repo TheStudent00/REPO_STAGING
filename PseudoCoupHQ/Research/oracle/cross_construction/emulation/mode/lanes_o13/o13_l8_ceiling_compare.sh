@@ -4,7 +4,7 @@
 # ceiling (the verdict of record) and the 30,000 ms re-run, per entry,
 # using the report's own outcome_word() so nothing is re-defined here.
 set -u
-M=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
+M=PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
 export PATH=/opt/cargo/bin:$PATH
 cd "$M" && python3 - <<'PY'
 import json, sys

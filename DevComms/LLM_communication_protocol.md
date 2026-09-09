@@ -4,10 +4,10 @@ Instructions for how to communicate with me. Apply these in every
 conversation, not just one project.
 
 v3, 2026-09-06, restructured from v2 (archived at
-`~/Programming/DevComms/0_Archive/LLM_communication_protocol_v2.md`).
+`DevComms/0_Archive/LLM_communication_protocol_v2.md`).
 Every rule is now one card of one fixed shape, grouped by cause. The
 dated failures that produced each rule were moved, verbatim, to
-`~/Programming/DevComms/LLM_communication_protocol_cases.md`, which
+`DevComms/LLM_communication_protocol_cases.md`, which
 also maps every v1 and v2 section number to its card. Nothing was
 dropped. A rule is cited by its card id (`names.one-name-one-thing`),
 never by a number; ids survive insertions.
@@ -419,7 +419,7 @@ TermName
   define it on the spot. Do not imitate the lists mechanically or
   narrow your precision to match them. Bring the full idea; bring it
   in these words.
-- **FILES.** In `~/Programming/DevComms/`, each a frequency list
+- **FILES.** In `DevComms/`, each a frequency list
   (rank, count, root, folded surface forms):
 
 | file | contents |
@@ -949,12 +949,12 @@ table in another document names the document and the label.
 
 #### refs.full-paths
 - **RULE.** Every file or folder reference carries its full path from
-  home (`~/Programming/...`) or absolute if outside it. Project name
+  home (`...`) or absolute if outside it. Project name
   plus internal path is fine when the project is named. Never a bare
   fragment: too many projects are in play for fragments to resolve.
 - **TEST.** Does every path resolve from home?
 - **BAD.** `pins/MANIFEST.md`
-- **GOOD.** `~/Programming/PseudoCoupHQ/pins/MANIFEST.md`
+- **GOOD.** `PseudoCoupHQ/pins/MANIFEST.md`
 - **CASE.** cases §8.
 
 #### refs.carry-context
@@ -964,8 +964,8 @@ table in another document names the document and the label.
   name plus path alone is a dead end.
 - **TEST.** For each reference to something I may not have seen: did
   I say what it is?
-- **BAD.** "see `~/Programming/X/prober.py`"
-- **GOOD.** "`~/Programming/X/prober.py`, the script that runs one
+- **BAD.** "see `X/prober.py`"
+- **GOOD.** "`X/prober.py`, the script that runs one
   unit through the gate and records the verdict"
 - **CASE.** cases §8.
 
@@ -983,7 +983,7 @@ table in another document names the document and the label.
   not exist yet and give the line that would create it.
 - **TEST.** Is every command in the exact form that runs it?
 - **BAD.** `hq.sh check` — referred to repeatedly; does not run.
-- **GOOD.** `bash ~/Programming/PseudoCoupHQ/hq.sh check`
+- **GOOD.** `bash PseudoCoupHQ/hq.sh check`
 - **CASE.** cases §8, 2026-08-01.
 
 #### refs.non-local-said
@@ -1000,7 +1000,7 @@ table in another document names the document and the label.
   path. Never "as discussed earlier".
 - **TEST.** Does each log reference carry all four?
 - **BAD.** "as discussed in log 3"
-- **GOOD.** "`~/Programming/PseudoIR/DevComms/log_001_activation_slice_closure.md` §6"
+- **GOOD.** "`PseudoIR/DevComms/log_001_activation_slice_closure.md` §6"
 - **CASE.** cases §9.2.
 
 ---
@@ -1080,7 +1080,7 @@ table in another document names the document and the label.
   prompt box covers the conversation while I type. Direct answers,
   status lines, and confirmations do NOT get logs. Location: the
   project's own `DevComms/`; line-wide work in
-  `~/Programming/PseudoCoupHQ/DevComms/`. Naming:
+  `PseudoCoupHQ/DevComms/`. Naming:
   `log_<nnn>_<topic>.md`, three digits, lower case with underscores,
   numbering per repo. The chat still carries the conclusion, the
   decision it forces, and anything I must act on, in
@@ -1109,7 +1109,7 @@ table in another document names the document and the label.
 - **RULE.** How code is shaped — plan and code share names, code is
   written top-down with logic last, methods do not need the instance
   by default — is stated in full in
-  `~/Programming/PseudoCoupHQ/plan_and_code.md` (§1, §2, and §7
+  `PseudoCoupHQ/plan_and_code.md` (§1, §2, and §7
   there). Read it before writing code or a plan node.
 - **TEST.** Before writing code: read plan_and_code.md this session?
 - **CASE.** cases §6.2, §6.3.

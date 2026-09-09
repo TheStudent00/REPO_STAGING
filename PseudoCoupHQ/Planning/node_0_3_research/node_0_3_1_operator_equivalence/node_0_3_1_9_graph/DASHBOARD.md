@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_3_1_9_graph
@@ -33,7 +33,7 @@ sub-node count: 0
 
 ## blocked
 
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_9_graph/PROGRESS.md` line 559 — **WHAT RUST AND SWIFT GAINED.** Both are blocked from instrumentation
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_9_graph/PROGRESS.md` line 559 — **WHAT RUST AND SWIFT GAINED.** Both are blocked from instrumentation
 
 ## PROGRESS bullet statuses
 

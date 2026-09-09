@@ -52,7 +52,7 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-LOGS = os.path.expanduser("~/Programming/Airlock/agent/logs")
+LOGS = os.path.expanduser("Airlock/agent/logs")
 LANGS = ["c", "cpp", "go", "rust", "swift"]
 
 # The two lanes each language ran.  `store` is the file the lane folded

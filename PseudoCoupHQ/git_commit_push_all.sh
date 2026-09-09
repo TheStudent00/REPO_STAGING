@@ -12,13 +12,13 @@
 # message option: one message labelling four unrelated commits is
 # what the staged-message convention exists to avoid. For a one-off
 # message in a single repo, call that repo's script directly —
-#     bash ~/Programming/PseudoIR/git_commit_push.sh "quick fix"
+#     bash PseudoIR/git_commit_push.sh "quick fix"
 # which is exactly why the per-repo scripts were kept.
 #
 # Usage:
-#   bash ~/Programming/PseudoCoupHQ/git_commit_push_all.sh
-#   bash ~/Programming/PseudoCoupHQ/git_commit_push_all.sh --only PseudoIR
-#   bash ~/Programming/PseudoCoupHQ/git_commit_push_all.sh --list
+#   bash PseudoCoupHQ/git_commit_push_all.sh
+#   bash PseudoCoupHQ/git_commit_push_all.sh --only PseudoIR
+#   bash PseudoCoupHQ/git_commit_push_all.sh --list
 
 set +e
 
@@ -27,14 +27,14 @@ set +e
 # included so the meta-planning commits alongside the work it
 # describes — delete that line if HQ should be committed separately.
 #
-# NOT in this list: ~/Programming/PlanPlan. It is the framework
+# NOT in this list: PlanPlan. It is the framework
 # research repo rather than part of the PseudoCoup line; commit it
 # with its own script. Add it here if that changes.
 REPOS=(
-    ~/Programming/PseudoCoupHQ
-    ~/Programming/PseudoCoup_v5
-    ~/Programming/PseudoCoup_v6
-    ~/Programming/PseudoIR
+    PseudoCoupHQ
+    PseudoCoup_v5
+    PseudoCoup_v6
+    PseudoIR
 )
 
 if [ "$1" = "--list" ]; then

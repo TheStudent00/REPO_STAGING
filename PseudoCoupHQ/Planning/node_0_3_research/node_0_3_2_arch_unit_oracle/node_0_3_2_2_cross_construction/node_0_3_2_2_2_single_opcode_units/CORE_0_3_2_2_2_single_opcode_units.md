@@ -40,7 +40,7 @@ construction: per language, the compiler-operators that lower to a
 single arch opcode (chaff = `ret` and plain register moves), and the
 distinct arch opcodes across all of the language's arch-units.
 `single_opcode_units.py`, `unique_opcodes.py` and their json/md under
-`~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/` (folder
+`PseudoCoupHQ/Research/oracle/arch_opcodes/` (folder
 name provisional). Task o2, log_208. Result per compiled language:
 c 20 of 27 operators, cpp 26 of 32, rust 14 of 21, go 10 of 20,
 swift 12 of 26 have at least one single-opcode unit, most only on

@@ -3,12 +3,12 @@
 # after §3.2's quotation was narrowed to fold.py's arrow-free lines.
 # The verifier is never modified.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "======== [1/1] check_conventions_log_claims.py --verify log_213 ========"
 python3 check_conventions_log_claims.py --verify \
   --timeout 20 \
   --json /out/t101_l9_claims2_log213.json \
-  /projects/PseudoCoupHQ/DevComms/log_213_task_t101_dominant_types_dwarf_flag.md
+  PseudoCoupHQ/DevComms/log_213_task_t101_dominant_types_dwarf_flag.md
 rc=$?
 echo "verifier exit ${rc}"
 exit ${rc}

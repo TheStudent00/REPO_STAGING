@@ -3,7 +3,7 @@
 # it, given a command that reproduces it: what log_202 says the 44 units
 # short of the term store actually are.
 set -u
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 echo
 echo "\$ grep -c \"does not converge\" DevComms/log_202_task97_term_pool_canon40.md"
 grep -c "does not converge" DevComms/log_202_task97_term_pool_canon40.md

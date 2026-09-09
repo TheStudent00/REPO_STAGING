@@ -19,8 +19,8 @@
 # MEMORY: reads json files of a few hundred kB; the task's bound is
 # 4 GB with the named abort ABORT_MEMORY_H2.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
-P=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+P=PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode
 run () { echo; printf '$'; printf ' %q' "$@"; echo; "$@"; }
 
 echo "[1/10] change 3: what the zero-operand width rule reads and answers"
@@ -48,9 +48,9 @@ echo "[8/10] the regression: task o8's four totals off the scratch copy"
 run python3 $H/o8_regression.py totals
 
 echo "[9/10] the spelling guard, unmodified: this task's own three json, then task o8's inherited pair"
-run python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+run python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     $H/handful2.json $H/handful2_sources.json $H/handful2_classifier.json
-run python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+run python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     $P/per_opcode_results.json $H/o8_regression/per_opcode_results.json || true
 
 echo "[10/10] grep -c exempt over every file this task added"
@@ -63,4 +63,4 @@ run grep -c exempt \
     $H/lanes_h2/h2_l2_sources.sh \
     $H/lanes_h2/h2_l3_run.sh \
     $H/lanes_h2/h2_l4_o8_regression.sh \
-    /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py || true
+    PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py || true

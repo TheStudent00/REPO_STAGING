@@ -777,7 +777,7 @@ PASS coverage_extended.json -- no operator token in any key, grouping, pairing o
    grep -c exempt on that output:
 0
    (no line above means the guard file is untouched)
-1d6aba67cbcdb021c3bdfd7f40fd2020  /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+1d6aba67cbcdb021c3bdfd7f40fd2020  PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 ```
 
 Sixteen artifacts, one process, exit 0, `grep -c exempt` = 0, the guard
@@ -843,8 +843,8 @@ file unmodified with `git status --porcelain` printing nothing for it.
 | `t81_l16_typed_rows_and_guard.sh` | exit 0, 360.0 s | typed rows, four joins rebuilt, guard PASS |
 | `t81_l17_report_literals.sh` | exit 0, 0.6 s | the literals this log quotes |
 
-Logs: `~/AirlockRuns/t81/agent/logs/`, statuses
-`~/AirlockRuns/t81/agent/status/`. Lane scripts:
+Logs: `<runs>/t81/agent/logs/`, statuses
+`<runs>/t81/agent/status/`. Lane scripts:
 `Research/compiler_graph/lanes_t81/`. Superseded artifacts are kept as
 records, unedited: `t81/inject_report_cpp.json` (the failed first
 injection) and lanes `t81_l6`, `t81_l8`, `t81_l10`, `t81_l13`.

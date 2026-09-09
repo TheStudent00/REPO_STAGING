@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — converting programs
 
 projected 2026-07-30 from the previous plan, now archived at
-`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_4_application_ingress/CORE_0_4_application_ingress.md  (416 words)
@@ -128,5 +128,5 @@ intention objects instead of at reproducing compiler vocabulary.
 ## where those nodes went
 
 - language_ingestors — carried in this file, above.
-- intent_capture — `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_recording_intentions.md`
-- behavioral_oracle — `~/Programming/PseudoCoup_v6/Planning/node_0_2_api/node_0_2_0_examples/node_0_2_0_0_on_scripts/SUPPORT_behavioral_oracle.md`
+- intent_capture — `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_recording_intentions.md`
+- behavioral_oracle — `PseudoCoup_v6/Planning/node_0_2_api/node_0_2_0_examples/node_0_2_0_0_on_scripts/SUPPORT_behavioral_oracle.md`

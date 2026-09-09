@@ -2,7 +2,7 @@
 """canonical_form.py -- THE CANONICAL FORM.
 
 The code of node `hq.research.compiler_graph.canonical_form`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_2_canonical_form/CORE_0_3_5_2_canonical_form.md`).
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_2_canonical_form/CORE_0_3_5_2_canonical_form.md`).
 Its class is `CanonicalForm`; its methods are the CORE's `methods:`
 (`wrap`, `assemble`, `refuse`); its attributes are the CORE's
 `attributes:` (`block_order`, `wrapped_text`).  Its four realized

@@ -2,7 +2,7 @@
 """Differential token-alphabet check — two independent authorities on
 Rust's token set, compared.
 
-    python3 ~/Programming/PseudoCoup_v5/Research/differential_alphabet.py
+    python3 PseudoCoup_v5/Research/differential_alphabet.py
 
 Why it exists (the owner, 2026-08-12): the compiler "cares about compiling,
 not creating a user interface for interpreting/processing tokens" —

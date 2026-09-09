@@ -139,7 +139,7 @@ Example of how to describe a structural choice in prose:
 
 ## 2a. Plan and code share names, and code is written top-down
 
-Full statement: `~/Programming/PseudoCoupHQ/plan_and_code.md`. The
+Full statement: `PseudoCoupHQ/plan_and_code.md`. The
 standing instruction, in short:
 
 ### Names
@@ -265,7 +265,7 @@ ontological independence
     between classes costs a rename rather
     than a rewrite.
     example tied to context:
-        ~/Programming/PseudoCoupHQ/
+        PseudoCoupHQ/
         plan_and_code.md §1 shows a node
         chain reading as
         `ledgerer.Ledger.build`. If `Ledger`
@@ -535,7 +535,7 @@ This is a normal part of how we work, not friction. You asking "why do you think
 ## 9a. The first sentence rests on nothing later
 
 Adopted 2026-08-01, from the proposal in
-`~/Programming/DevComms/proposal_2026-08-01_communication_protocol.md` §2.
+`DevComms/proposal_2026-08-01_communication_protocol.md` §2.
 
 The opening sentence of a message may not depend on a name, file, or
 model introduced further down. If a summary line cannot be written
@@ -642,7 +642,7 @@ parts compose the object.
 ## 12a. Quote the object, then characterize it
 
 Adopted 2026-08-01, from the proposal in
-`~/Programming/DevComms/proposal_2026-08-01_communication_protocol.md` §1.
+`DevComms/proposal_2026-08-01_communication_protocol.md` §1.
 
 A claim about a file's content includes that content, in a `>` block,
 with the file's path. A claim that two things conflict quotes BOTH
@@ -713,7 +713,7 @@ If you reference a file, path, or tool, explicitly state where it is located. If
 
 ### File and folder references carry the full path
 
-Every reference to a file or folder includes its full Linux path from home (`~/Programming/...`), or the absolute path if it lives outside `~`. Referencing by project name plus a path inside that project is fine — but the project must be named (established shorthand like PCv6, or the literal folder name PseudoCoup_v6). Never a bare relative fragment like `pins/MANIFEST.md` or `v2/grammars/` — there are too many projects and folders in play for those to resolve.
+Every reference to a file or folder includes its full Linux path from home (`...`), or the absolute path if it lives outside `~`. Referencing by project name plus a path inside that project is fine — but the project must be named (established shorthand like PCv6, or the literal folder name PseudoCoup_v6). Never a bare relative fragment like `pins/MANIFEST.md` or `v2/grammars/` — there are too many projects and folders in play for those to resolve.
 
 ### References carry context, not just location
 
@@ -724,14 +724,14 @@ The agent operates with a high degree of freedom inside these projects, which me
 When giving me a command to run (a bash script, a python invocation, anything), write it with the full path to the script/file so it runs from any working directory. I should never have to locate the file and `cd` into its folder first.
 
 - **Wrong:** `bash run_checks.sh`
-- **Right:** `bash ~/Programming/PseudoCoup_v6/Research/r1_intentions_validation/run_checks.sh`
+- **Right:** `bash PseudoCoup_v6/Research/r1_intentions_validation/run_checks.sh`
 
 If the command genuinely must run from a specific directory (relative paths inside the script, output written to cwd), give it as one copy-pasteable line that handles that: `cd ~/path/to/folder && bash run_checks.sh` — never a bare filename with the location implied elsewhere in the message.
 
 ## 14a. A command appears as it is typed
 
 Adopted 2026-08-01, from the proposal in
-`~/Programming/DevComms/proposal_2026-08-01_communication_protocol.md` §4.
+`DevComms/proposal_2026-08-01_communication_protocol.md` §4.
 
 Reference a command in the exact form that runs it, including its
 path. If a shorter form is being proposed, say that it does not exist
@@ -739,7 +739,7 @@ yet and give the line that would create it.
 
 The failure it exists to stop: `hq.sh check` was referred to
 repeatedly as though it were a command. It is not one. The form that
-runs is `bash ~/Programming/PseudoCoupHQ/hq.sh check`.
+runs is `bash PseudoCoupHQ/hq.sh check`.
 
 ---
 
@@ -755,7 +755,7 @@ Never assert that your interpretation of my query is absolutely correct and then
 ## 15a. A question states the facts it rests on
 
 Adopted 2026-08-01, from the proposal in
-`~/Programming/DevComms/proposal_2026-08-01_communication_protocol.md` §3.
+`DevComms/proposal_2026-08-01_communication_protocol.md` §3.
 
 Before asking me to decide, state what is true, where, in enough
 detail that the question can be answered from the message alone. A
@@ -802,9 +802,9 @@ Do not write a log for a direct answer to a direct question, a status line, or a
 
 ### Where logs live
 
-- Work concerning one project goes in that project's `DevComms/`, e.g. `~/Programming/PseudoIR/DevComms/`.
-- Work concerning the line as a whole goes in `~/Programming/PseudoCoupHQ/DevComms/`.
-- Naming: `log_<nnn>_<topic>.md`, zero-padded to three digits, topic in lower case with underscores. This is carried from my own earlier practice in `~/Programming/StressBot/RelevantProjects/WFL_MixingCenter/DevComms/`, which numbers its logs the same way. Numbering restarts per repo, so "PseudoIR log 1" is unambiguous.
+- Work concerning one project goes in that project's `DevComms/`, e.g. `PseudoIR/DevComms/`.
+- Work concerning the line as a whole goes in `PseudoCoupHQ/DevComms/`.
+- Naming: `log_<nnn>_<topic>.md`, zero-padded to three digits, topic in lower case with underscores. This is carried from my own earlier practice in `StressBot/RelevantProjects/WFL_MixingCenter/DevComms/`, which numbers its logs the same way. Numbering restarts per repo, so "PseudoIR log 1" is unambiguous.
 
 ### What the chat response must still carry
 
@@ -826,7 +826,7 @@ A fact that starts in a log and turns out to be load-bearing GRADUATES — into 
 
 ### Referencing a log later
 
-Name it by repo, number and section, with the full path per sections 14 and 16 — "`~/Programming/PseudoIR/DevComms/log_001_activation_slice_closure.md` §6" — never "as discussed earlier" and never a bare number.
+Name it by repo, number and section, with the full path per sections 14 and 16 — "`PseudoIR/DevComms/log_001_activation_slice_closure.md` §6" — never "as discussed earlier" and never a bare number.
 
 ## 18b. Walkthrough before numbers
 
@@ -853,18 +853,18 @@ Everything above tells you how to write to me. This section is the evidence of h
 
 ### The files
 
-These sit beside this document in `~/Programming/DevComms/`. Each is a frequency list: rank, count, root, and the surface forms folded into that root.
+These sit beside this document in `DevComms/`. Each is a frequency list: rank, count, root, and the surface forms folded into that root.
 
 | file | what is in it |
 |---|---|
-| `~/Programming/DevComms/vocabulary_dictionary.txt` | 2,427 ordinary English roots — the main list |
-| `~/Programming/DevComms/vocabulary_dictionary_bars.txt` | the same list as root, count, and a bar per 10 uses — a reading aid, keyed to the main list |
-| `~/Programming/DevComms/vocabulary_connectives.txt` | 102 function words, held out of the main list |
-| `~/Programming/DevComms/vocabulary_informal.txt` | 733 roots absent from the dictionary but common in informal English — `idk`, `idu`, contractions |
-| `~/Programming/DevComms/vocabulary_technical.txt` | 48 roots that are neither — `transpiler`, `haxe`, `pseudocoup`, `pcv6` |
-| `~/Programming/DevComms/vocabulary_unclassified.txt` | 312 leftovers: typos, one-off fragments, identifiers |
+| `DevComms/vocabulary_dictionary.txt` | 2,427 ordinary English roots — the main list |
+| `DevComms/vocabulary_dictionary_bars.txt` | the same list as root, count, and a bar per 10 uses — a reading aid, keyed to the main list |
+| `DevComms/vocabulary_connectives.txt` | 102 function words, held out of the main list |
+| `DevComms/vocabulary_informal.txt` | 733 roots absent from the dictionary but common in informal English — `idk`, `idu`, contractions |
+| `DevComms/vocabulary_technical.txt` | 48 roots that are neither — `transpiler`, `haxe`, `pseudocoup`, `pcv6` |
+| `DevComms/vocabulary_unclassified.txt` | 312 leftovers: typos, one-off fragments, identifiers |
 
-The corpus is 1,489 of my own messages taken from the conversation transcripts stored on this machine, with quoted text, code fences, pasted terminal output, and machine-fed harness templates removed — 69,344 words. The pipeline that produced them is `~/Programming/VocabularyAnalysis/`, and every grouping decision I made by hand is recorded in `~/Programming/VocabularyAnalysis/analysis/families_review.txt` (suffixes, 345 families) and `~/Programming/VocabularyAnalysis/analysis/prefixes_review.txt` (prefixes, 120 families).
+The corpus is 1,489 of my own messages taken from the conversation transcripts stored on this machine, with quoted text, code fences, pasted terminal output, and machine-fed harness templates removed — 69,344 words. The pipeline that produced them is `VocabularyAnalysis/`, and every grouping decision I made by hand is recorded in `VocabularyAnalysis/analysis/families_review.txt` (suffixes, 345 families) and `VocabularyAnalysis/analysis/prefixes_review.txt` (prefixes, 120 families).
 
 ### What it shows
 
@@ -874,10 +874,10 @@ The corpus is 1,489 of my own messages taken from the conversation transcripts s
 
 ### One thing not to over-read
 
-The 1.2% is a property of how these files are bucketed, not proof that I never use technical words. `transpiler` (121 uses) did not vanish; it is in `~/Programming/DevComms/vocabulary_technical.txt`. Read the main list alone and you will conclude I have no technical vocabulary at all. I have 48 words of it, used sparingly, and most of them are project names.
+The 1.2% is a property of how these files are bucketed, not proof that I never use technical words. `transpiler` (121 uses) did not vanish; it is in `DevComms/vocabulary_technical.txt`. Read the main list alone and you will conclude I have no technical vocabulary at all. I have 48 words of it, used sparingly, and most of them are project names.
 
 ### What to do with it
 
-- When choosing between a plain word and a specialist synonym, choose the one already in `~/Programming/DevComms/vocabulary_dictionary.txt`.
+- When choosing between a plain word and a specialist synonym, choose the one already in `DevComms/vocabulary_dictionary.txt`.
 - A word absent from all of these lists is a word I have never used with you. That is not a ban, but it is a reason to define it on the spot (section 4) rather than assume it lands.
 - Do not imitate the lists mechanically or narrow your own precision to match them. Bring the full idea (section 11); just bring it in these words.

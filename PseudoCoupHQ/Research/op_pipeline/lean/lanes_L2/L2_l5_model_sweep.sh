@@ -5,7 +5,7 @@
 set -u
 
 TOTAL=3
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L2home
 mkdir -p "$HOME"
 cd "$LEANDIR" || exit 1
@@ -17,7 +17,7 @@ echo "--- exit $?"
 echo "[2/$TOTAL] the sweep"
 python3 -c "
 import resource, sys, time
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline/lean')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline/lean')
 import model_translate as M
 start = time.time()
 M.model_command(M.HERE, M.os.path.join(M.HERE, 'archproof', 'Archproof'))

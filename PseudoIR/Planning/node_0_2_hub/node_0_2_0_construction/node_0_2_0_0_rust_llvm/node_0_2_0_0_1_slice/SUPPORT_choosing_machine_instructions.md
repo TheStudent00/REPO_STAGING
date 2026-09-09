@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — choosing machine instructions
 
 projected 2026-07-30 from the previous plan, now archived at
-`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_3_application_rust_llvm/node_0_3_1_isel_gap/CORE_0_3_1_isel_gap.md  (304 words)
@@ -34,7 +34,7 @@ CORE.
 it sits between two stages we CAN get: rust source to llvm ir, and
 a machine instruction to bytes. the full three-stage picture is in
 this node's CORE at
-`~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/CORE_0_2_0_0_1_slice.md`.
+`PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/CORE_0_2_0_0_1_slice.md`.
 
 vocabulary the carried text uses without defining:
 

@@ -4,7 +4,7 @@
 `log_109_claude_code_task_briefs_round5.md`. Date: 2026-09-01. No
 sub-agents used -- every command below was run directly in this
 session with `/tmp/reconnect_venv/bin/python3`, from
-`~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+`PseudoCoupHQ/Research/op_pipeline`.
 
 **Evidence class is stated per claim.** Every "I verified X" sentence
 below is followed by the command and its output, per the round-5
@@ -34,15 +34,15 @@ this line MUST paste this paragraph verbatim."
 
 ## 0. what I read first
 
-`~/Programming/PseudoCoupHQ/AgentMemory.md` in full;
-`~/Programming/DevComms/LLM_communication_protocol.md` -- **named
+`PseudoCoupHQ/AgentMemory.md` in full;
+`DevComms/LLM_communication_protocol.md` -- **named
 honestly, as logs 110/112 already found: this is the v2 refactor,
 its own first line reads "# Communication Protocol, v2"; the path
 `LLM_communication_protocol_v2.md` that the task brief names does not
 exist on disk, confirmed:**
 
 ```
-$ ls ~/Programming/DevComms/ | grep -i protocol
+$ ls DevComms/ | grep -i protocol
 LLM_communication_protocol.md
 proposal_2026-08-01_communication_protocol.md
 ```
@@ -77,7 +77,7 @@ created. Cross-checked against disk by modification time (everything
 touched 2026-09-01, this round):
 
 ```
-$ cd ~/Programming/PseudoCoupHQ/Research/op_pipeline
+$ cd PseudoCoupHQ/Research/op_pipeline
 $ ls -la --time-style=full-iso *.json *.py 2>/dev/null | awk '$6>="2026-09-01"' | wc -l
 54
 ```
@@ -252,7 +252,7 @@ So THREE populations must stay distinct, per the contrast rule:
 ## 4. family diffs vs `dominant_table24`/`dom_ops22` -- expected untouched, verified
 
 ```
-$ cd ~/Programming/PseudoCoupHQ
+$ cd PseudoCoupHQ
 $ git status --porcelain -- Research/op_pipeline/dominant_table24.json Research/op_pipeline/dom_ops22.json
 (no output)
 
@@ -386,12 +386,12 @@ DWARF fact -- ready for the owner's ratification of option B / B-with-A.
 
 ## 6. the posterity message
 
-Written to `~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt`
+Written to `PseudoCoupHQ/DevComms/next_commit_message.txt`
 immediately before this section, `wc -c` and `head -5` run right
 after the write, per the round's rule:
 
 ```
-$ cd ~/Programming/PseudoCoupHQ
+$ cd PseudoCoupHQ
 $ wc -c DevComms/next_commit_message.txt
 4670 DevComms/next_commit_message.txt
 
@@ -428,18 +428,18 @@ this file.)
 
 Written (new):
 
-- `~/Programming/PseudoCoupHQ/DevComms/log_114_task28_bank_round5.md`
+- `PseudoCoupHQ/DevComms/log_114_task28_bank_round5.md`
   -- this report.
 
 Written (overwrite of an empty file, per the task):
 
-- `~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt` --
+- `PseudoCoupHQ/DevComms/next_commit_message.txt` --
   4,670 bytes at write time; will be emptied by the commit driver on
   its next cycle per design.
 
 Appended to (existing text unchanged, dated entry added at the foot):
 
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`
   -- this task's dated entry, under the single `# PROGRESS` heading.
 
 Read only, not modified (every command in sections 2-4 above ran
@@ -460,7 +460,7 @@ task -- section 3's numbers are read off the artifacts tasks 24-27
 already produced, not recomputed differently here.
 
 ```
-$ cd ~/Programming/PseudoCoupHQ && git status --short
+$ cd PseudoCoupHQ && git status --short
 ?? Research/compiler_graph/graph_cpp2.json
 ?? Research/compiler_graph/graph_cpp3.json
 ```

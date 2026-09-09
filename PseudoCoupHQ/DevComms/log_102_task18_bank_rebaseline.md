@@ -2,7 +2,7 @@
 
 Date: 2026-08-31. Session: Claude Code, log_097 TASK 18, run after
 tasks 14-17 (logs 098-101). Working directory:
-`~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+`PseudoCoupHQ/Research/op_pipeline`.
 
 THE SPELLING BAN, ABSOLUTE (the owner, restated in anger 2026-08-25 after
 a second violation). No operator token may appear in ANY key,
@@ -282,9 +282,9 @@ One instance per line, as required:
 ## 8. file inventory -- this session
 
 New:
-- `~/Programming/PseudoCoupHQ/DevComms/log_102_task18_bank_rebaseline.md`
+- `PseudoCoupHQ/DevComms/log_102_task18_bank_rebaseline.md`
   -- this log.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/next_commit_message.txt`
+- `PseudoCoupHQ/Research/op_pipeline/next_commit_message.txt`
   -- staged commit message naming every round-3 artifact (tasks
   14-18); not committed, not pushed, per the brief.
 

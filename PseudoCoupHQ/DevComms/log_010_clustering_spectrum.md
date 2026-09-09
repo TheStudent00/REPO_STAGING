@@ -2,9 +2,9 @@
 
 Date: 2026-08-12. Author: clustering agent for the owner's PseudoCoup research node (PCHQ). Second pass over the first-pass pipeline of `log_009`, implementing the owner's three rulings of 2026-08-12.
 
-Inputs: `~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/` — `features.py` and the weighted-Jaccard distance function of `cluster.py` reused AS IS (the only change to `features.py` is an additive hold-out flag); five languages pooled (rust, python, dart, c, cpp; kotlin still excluded), 800 named kinds — the FULL population, none sampled.
+Inputs: `PseudoCoupHQ/Research/kind_signature_clustering/` — `features.py` and the weighted-Jaccard distance function of `cluster.py` reused AS IS (the only change to `features.py` is an additive hold-out flag); five languages pooled (rust, python, dart, c, cpp; kotlin still excluded), 800 named kinds — the FULL population, none sampled.
 
-New outputs on disk, all under `~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/`:
+New outputs on disk, all under `PseudoCoupHQ/Research/kind_signature_clustering/`:
 
 | file | what |
 |---|---|
@@ -74,7 +74,7 @@ Secondary check, clearly labeled HAND-PICKED: the 15-row key of `validate.py`, s
 
 ## §4 Clusters by language
 
-Full table: `~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/cluster_by_language.md` — 88 non-singleton clusters at the reference threshold 0.40 (45 singletons omitted from the table, listed count only), each with cohesion (mean within-cluster raw weighted-Jaccard similarity) and stability band (the threshold range over which that exact member set is a maximal cluster in the merge tree). The 15 largest, inline (columns rust | python | dart | c | cpp):
+Full table: `PseudoCoupHQ/Research/kind_signature_clustering/cluster_by_language.md` — 88 non-singleton clusters at the reference threshold 0.40 (45 singletons omitted from the table, listed count only), each with cohesion (mean within-cluster raw weighted-Jaccard similarity) and stability band (the threshold range over which that exact member set is a maximal cluster in the merge tree). The 15 largest, inline (columns rust | python | dart | c | cpp):
 
 | cluster | cohesion | band (width) | rust | python | dart | c | cpp |
 |---|---|---|---|---|---|---|---|

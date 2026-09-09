@@ -6,7 +6,7 @@
 #         the data), the shortest PROVED texts, and the UNDECIDED shapes
 set -u
 
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 

@@ -1,6 +1,6 @@
 # log 159 — TASK 57: `reference.py`, the one symbolic simulator
 
-Date: 2026-09-03. Home: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+Date: 2026-09-03. Home: `PseudoCoupHQ/Research/op_pipeline`.
 Node: `hq.research.compiler_graph.reference`
 (`Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/`)
 and its two sub-nodes `opcode_table`, `machine_state`.
@@ -396,7 +396,7 @@ The one line, identical in each, inserted after the shebang:
 
 ## 7. File inventory
 
-New files, all in `~/Programming/PseudoCoupHQ/Research/op_pipeline/`:
+New files, all in `PseudoCoupHQ/Research/op_pipeline/`:
 
 | file | lines | what it is |
 |---|---|---|
@@ -416,7 +416,7 @@ Edited (the ONE permitted edit, one header comment line each):
 `canon12_behaviour_check.py`.
 
 Planning files touched, all under
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/`:
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/`:
 
 | file | what changed |
 |---|---|

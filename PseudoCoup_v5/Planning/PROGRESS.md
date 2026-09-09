@@ -14,7 +14,7 @@ status: living
 - 2026-08-02 **done**: `pcv5`, `pcv5.tools` and `pcv5.tools.ledgerer`
   brought to the 2026-08-02 rules — `super_node`, `sub_nodes`, and
   CHECK frontmatter carrying `id: <node id>.check`. The HQ half of the
-  same pass is in `~/Programming/PseudoCoupHQ/Planning/PROGRESS.md`.
+  same pass is in `PseudoCoupHQ/Planning/PROGRESS.md`.
   - This tree's root now states what it hangs under:
     `hq.projects`, by absolute path, with `repo: PseudoCoupHQ` and its
     remote — the first cross-repo edge written under the new rules.

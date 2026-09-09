@@ -39,7 +39,7 @@ PIN CORRECTION (recorded, not hidden): the cpp probe's own report
 as 42befb84c672d78de430feb4c96710e6aa4fc774. Re-resolving the tag now
 (`git rev-list -n1 llvmorg-21.1.8` /
 `git log -1 --format='%H %ci' llvmorg-21.1.8` against
-~/Programming/Sources/llvm-project) gives
+Sources/llvm-project) gives
 2078da43e25a4623cab2d0d60decddf709aaea28, dated 2025-12-12 10:35:47
 +0000 -- the SAME date the probe recorded, but a DIFFERENT hash. Tags
 in this repo are not force-moved between the probe's run (2026-08-31

@@ -18,7 +18,7 @@
 # prints its own peak.  Lane g1_l3 measured it at 27,696 kB.
 set -euo pipefail
 echo "[1/2] task g1: go_facts.py probe, both sets"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py probe
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py probe
 echo "[2/2] done"
 # WHY THIS LANE EXISTS BESIDE g1_l4: lane g1_l4 stopped on this task's
 # own defect -- `lane_gen.firstline` is defined INSIDE `lane_gen.DRIVER`

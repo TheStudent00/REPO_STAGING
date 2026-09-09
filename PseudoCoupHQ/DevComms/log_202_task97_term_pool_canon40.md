@@ -105,28 +105,28 @@ records pass 2 added                 184
 The stop rule says an absent import stops the task. None is absent.
 
 LITERAL — lane log
-`~/AirlockRuns/t97/agent/logs/20260905T070502Z__t97_l1_sample.sh.log`,
+`<runs>/t97/agent/logs/20260905T070502Z__t97_l1_sample.sh.log`,
 lane `t97_l1_sample.sh` §1:
 
 ```
 $ sed -n '6,22p' /logs/20260905T070502Z__t97_l1_sample.sh.log
 ======== 1. the imports the walk needs, each named ========
   OK      z3                               /opt/venv/lib/python3.13/site-packages/z3/__init__.py
-  OK      canonical_form                   /projects/PseudoCoupHQ/Research/op_pipeline/canonical_form.py
-  OK      gate                             /projects/PseudoCoupHQ/Research/op_pipeline/gate.py
-  OK      reference                        /projects/PseudoCoupHQ/Research/op_pipeline/reference.py
-  OK      regate64_run                     /projects/PseudoCoupHQ/Research/op_pipeline/regate64_run.py
-  OK      term                             /projects/PseudoCoupHQ/Research/op_pipeline/term.py
-  OK      pool                             /projects/PseudoCoupHQ/Research/op_pipeline/pool.py
-  OK      pool65_run                       /projects/PseudoCoupHQ/Research/op_pipeline/pool65_run.py
-  OK      pool66_run                       /projects/PseudoCoupHQ/Research/op_pipeline/pool66_run.py
-  OK      ledger                           /projects/PseudoCoupHQ/Research/op_pipeline/ledger.py
-  OK      dom_ops                          /projects/PseudoCoupHQ/Research/op_pipeline/dom_ops.py
-  OK      normalize79_pool_prediction      /projects/PseudoCoupHQ/Research/op_pipeline/normalize79_pool_prediction.py
-  OK      guard66                          /projects/PseudoCoupHQ/Research/op_pipeline/guard66.py
-  OK      term66_run                       /projects/PseudoCoupHQ/Research/op_pipeline/term66_run.py
-  OK      name_census7                     /projects/PseudoCoupHQ/Research/op_pipeline/name_census7.py
-  OK      audit66                          /projects/PseudoCoupHQ/Research/op_pipeline/audit66.py
+  OK      canonical_form                   PseudoCoupHQ/Research/op_pipeline/canonical_form.py
+  OK      gate                             PseudoCoupHQ/Research/op_pipeline/gate.py
+  OK      reference                        PseudoCoupHQ/Research/op_pipeline/reference.py
+  OK      regate64_run                     PseudoCoupHQ/Research/op_pipeline/regate64_run.py
+  OK      term                             PseudoCoupHQ/Research/op_pipeline/term.py
+  OK      pool                             PseudoCoupHQ/Research/op_pipeline/pool.py
+  OK      pool65_run                       PseudoCoupHQ/Research/op_pipeline/pool65_run.py
+  OK      pool66_run                       PseudoCoupHQ/Research/op_pipeline/pool66_run.py
+  OK      ledger                           PseudoCoupHQ/Research/op_pipeline/ledger.py
+  OK      dom_ops                          PseudoCoupHQ/Research/op_pipeline/dom_ops.py
+  OK      normalize79_pool_prediction      PseudoCoupHQ/Research/op_pipeline/normalize79_pool_prediction.py
+  OK      guard66                          PseudoCoupHQ/Research/op_pipeline/guard66.py
+  OK      term66_run                       PseudoCoupHQ/Research/op_pipeline/term66_run.py
+  OK      name_census7                     PseudoCoupHQ/Research/op_pipeline/name_census7.py
+  OK      audit66                          PseudoCoupHQ/Research/op_pipeline/audit66.py
 ```
 
 ## 1.2 THE CORRECTED REFERENCE — this walk transcribes against it, and here is the proof
@@ -144,8 +144,8 @@ was missing was the COREs' realization tables (log_196 §0.2 Part A and
 Part B). LITERAL — the file's identity, printed inside the sandbox:
 
 ```
-$ md5sum /projects/PseudoCoupHQ/Research/op_pipeline/reference.py
-041eb9e38c7f515beebae7895641dfc9  /projects/PseudoCoupHQ/Research/op_pipeline/reference.py
+$ md5sum PseudoCoupHQ/Research/op_pipeline/reference.py
+041eb9e38c7f515beebae7895641dfc9  PseudoCoupHQ/Research/op_pipeline/reference.py
 ```
 
 LITERAL — the remainder whose sign follows the dividend. Lane
@@ -153,13 +153,13 @@ LITERAL — the remainder whose sign follows the dividend. Lane
 the two commands below print the same lines one pattern at a time:
 
 ```
-$ grep -n "z3.SRem" /projects/PseudoCoupHQ/Research/op_pipeline/reference.py
+$ grep -n "z3.SRem" PseudoCoupHQ/Research/op_pipeline/reference.py
 1034:        remainder = z3.SRem(dividend, wide)
 1094:        remainder = z3.SRem(dividend, grown)
 ```
 
 ```
-$ grep -n "z3.URem" /projects/PseudoCoupHQ/Research/op_pipeline/reference.py
+$ grep -n "z3.URem" PseudoCoupHQ/Research/op_pipeline/reference.py
 1038:        remainder = z3.URem(dividend, wide)
 1098:        remainder = z3.URem(dividend, grown)
 ```
@@ -350,7 +350,7 @@ print WHICH token fired and on WHAT FIELD before any walk used the
 list, and `canceled` was removed on the evidence.
 
 LITERAL — lane log
-`~/AirlockRuns/t97/agent/logs/20260905T070634Z__t97_l2_flag_reason.sh.log`,
+`<runs>/t97/agent/logs/20260905T070634Z__t97_l2_flag_reason.sh.log`,
 lane `t97_l2_flag_reason.sh`, the unit task 83 traced:
 
 ```
@@ -486,7 +486,7 @@ pastes the audit line that says so.
 ## 3.3 What pass 1 did
 
 LITERAL — lane log
-`~/AirlockRuns/t97/agent/logs/20260905T071105Z__t97_l3_pass1.sh.log`,
+`<runs>/t97/agent/logs/20260905T071105Z__t97_l3_pass1.sh.log`,
 lane `t97_l3_pass1.sh`, the six slice summaries:
 
 ```
@@ -524,7 +524,7 @@ $ sed -n '6,35p' /logs/20260905T071105Z__t97_l3_pass1.sh.log
 ```
 
 LITERAL — the lane's own status file,
-`~/AirlockRuns/t97/agent/status/t97_l3_pass1.sh.status`:
+`<runs>/t97/agent/status/t97_l3_pass1.sh.status`:
 
 ```
 $ sed -n '1,6p' /status/t97_l3_pass1.sh.status
@@ -556,7 +556,7 @@ elapsed_s=581.7
 LITERAL, and this is the block every figure in §3 can be re-run from:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/report97_numbers.py flags
+$ python3 PseudoCoupHQ/Research/op_pipeline/report97_numbers.py flags
 flagged by pass 1                    228
 flagged by the word pass 1 recorded  {"MEMORY_REASON": 228}
 flagged by the token that fired      {"MemoryError": 228}
@@ -605,7 +605,7 @@ holding rows of one shard would read and write one file at once.
 LITERAL:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/report97_numbers.py pass2
+$ python3 PseudoCoupHQ/Research/op_pipeline/report97_numbers.py pass2
 term97_pass2_a_slice0.json       ceiling   4096 MB  wall  1800 s  flagged  68  stored  57  not finished  11
 term97_pass2_a_slice1.json       ceiling   4096 MB  wall  1800 s  flagged  57  stored  43  not finished  14
 term97_pass2_a_slice2.json       ceiling   4096 MB  wall  1800 s  flagged  46  stored  38  not finished   8
@@ -675,7 +675,7 @@ GLOSS, with the population and the direction the brief asked for.
 ## 4.3 The 44, and why a bigger machine buys nothing
 
 LITERAL — lane log
-`~/AirlockRuns/t97/agent/logs/20260905T094242Z__t97_l6_pass2_residue.sh.log`,
+`<runs>/t97/agent/logs/20260905T094242Z__t97_l6_pass2_residue.sh.log`,
 lane `t97_l6_pass2_residue.sh`, its last rows and its summary:
 
 ```
@@ -688,7 +688,7 @@ $ sed -n '56,59p' /logs/20260905T094242Z__t97_l6_pass2_residue.sh.log
 
 LITERAL — the ceiling ladder for one of the 44, printed off the three
 pass artifacts by lane `t97_l14_ladder.sh`, log
-`~/AirlockRuns/t97/agent/logs/20260905T100550Z__t97_l14_ladder.sh.log`:
+`<runs>/t97/agent/logs/20260905T100550Z__t97_l14_ladder.sh.log`:
 
 ```
 $ sed -n '6,9p' /logs/20260905T100550Z__t97_l14_ladder.sh.log
@@ -740,7 +740,7 @@ round, and the 322 walked here — so the store's own inhomogeneity
 (log_189 §7.1) is measured rather than assumed.
 
 LITERAL — lane log
-`~/AirlockRuns/t97/agent/logs/20260905T094744Z__t97_l7_finalize_and_control.sh.log`,
+`<runs>/t97/agent/logs/20260905T094744Z__t97_l7_finalize_and_control.sh.log`,
 lane `t97_l7_finalize_and_control.sh`:
 
 ```
@@ -778,7 +778,7 @@ named.
 LITERAL:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/report97_numbers.py walk
+$ python3 PseudoCoupHQ/Research/op_pipeline/report97_numbers.py walk
 canon40 inputs                       332
 canon40 units attempted              31078
 canon40 units proved (the population) 30324
@@ -802,7 +802,7 @@ out and a later resume picks them up rather than reading a gap as an
 answer.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/term97_finalize.json'));print('inputs complete',d['inputs_complete'],'of',d['inputs_total'],'| inputs short',len(d['inputs_short']),'| records in store',d['records_in_store'])"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/term97_finalize.json'));print('inputs complete',d['inputs_complete'],'of',d['inputs_total'],'| inputs short',len(d['inputs_short']),'| records in store',d['records_in_store'])"
 inputs complete 297 of 332 | inputs short 35 | records in store 30280
 ```
 
@@ -811,7 +811,7 @@ inputs complete 297 of 332 | inputs short 35 | records in store 30280
 LITERAL:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/report97_numbers.py states
+$ python3 PseudoCoupHQ/Research/op_pipeline/report97_numbers.py states
 the round-14 line, over 30432 records
    proved 26594  disproved 3134  undecided 285  no term 419
 term66 over canon40, over 30280 records
@@ -899,11 +899,11 @@ the unit has a record in `term66_store`. 44 units have no record
 because their layer-5 normalization does not converge, **not** because
 canon40 refused them — so for those 44, the sentence
 `audit66.json` now carries is false. LITERAL — lane log
-`~/AirlockRuns/t97/agent/logs/20260905T095648Z__t97_l11_contamination.sh.log`,
+`<runs>/t97/agent/logs/20260905T095648Z__t97_l11_contamination.sh.log`,
 lane `t97_l11_contamination.sh`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/report97_numbers.py contamination
+$ python3 PseudoCoupHQ/Research/op_pipeline/report97_numbers.py contamination
 the movement row, its population and its cause
    units 156
    was disproved, now not in canon40's proved set
@@ -935,7 +935,7 @@ GLOSS, and the corrected reading of that row:
 ## 6.1 The strict lane refused before anything was overwritten
 
 LITERAL — lane log
-`~/AirlockRuns/t97/agent/logs/20260905T095100Z__t97_l5_downstream.sh.log`,
+`<runs>/t97/agent/logs/20260905T095100Z__t97_l5_downstream.sh.log`,
 lane `t97_l5_downstream.sh`, which is the downstream lane with its
 precondition intact:
 
@@ -952,7 +952,7 @@ The pool was then run anyway, so that its OWN guard — not a lane
 precondition of ours — is the thing on the record.
 
 LITERAL — lane log
-`~/AirlockRuns/t97/agent/logs/20260905T095120Z__t97_l10_downstream_partial.sh.log`,
+`<runs>/t97/agent/logs/20260905T095120Z__t97_l10_downstream_partial.sh.log`,
 lane `t97_l10_downstream_partial.sh`, step 3 of 4:
 
 ```
@@ -977,7 +977,7 @@ record was composed for the 44.
 LITERAL:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/report97_numbers.py pool
+$ python3 PseudoCoupHQ/Research/op_pipeline/report97_numbers.py pool
 the_pool6.json is NOT on disk.
 pool66_run.py refused its own output: a pool cannot be built over a member set short of the population it names.
 the pool5 line this round would have been read against:
@@ -1014,7 +1014,7 @@ that would have fewer entries than 1,831. **That is not the delta and
 must not be banked as one.**
 
 ```
-$ python3 -c "import json;a=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/the_pool5.json'))['summary'];b=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/the_families5.json'))['summary'];print('entries',a['entries'],'| members',a['members'],'| more than one language',a['entries_spanning_more_than_one_language'],'| compiled and interpreted',a['entries_spanning_compiled_and_interpreted'],'| families',b['families'])"
+$ python3 -c "import json;a=json.load(open('PseudoCoupHQ/Research/op_pipeline/the_pool5.json'))['summary'];b=json.load(open('PseudoCoupHQ/Research/op_pipeline/the_families5.json'))['summary'];print('entries',a['entries'],'| members',a['members'],'| more than one language',a['entries_spanning_more_than_one_language'],'| compiled and interpreted',a['entries_spanning_compiled_and_interpreted'],'| families',b['families'])"
 entries 1831 | members 30432 | more than one language 490 | compiled and interpreted 3 | families 34
 ```
 
@@ -1065,7 +1065,7 @@ $ sed -n '129,148p' /logs/20260905T095120Z__t97_l10_downstream_partial.sh.log
 LITERAL — the artifact it wrote:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/report97_numbers.py census
+$ python3 PseudoCoupHQ/Research/op_pipeline/report97_numbers.py census
 delta_against_census6                                       3 keys
 entries                                                    50 rows
 meta                                                        7 keys
@@ -1098,7 +1098,7 @@ were never written.
 
 ```
 $ python3 -c "import json,glob;n=0;r=0;
-for p in sorted(glob.glob('/projects/PseudoCoupHQ/Research/op_pipeline/term66_store/*.json')):
+for p in sorted(glob.glob('PseudoCoupHQ/Research/op_pipeline/term66_store/*.json')):
     d=json.load(open(p))
     for k in d['units']:
         r+=1
@@ -1126,7 +1126,7 @@ grep -c exempt over the guard's own output:
 
 LITERAL — the guard run AGAIN over the FINAL artifact set, after this
 log's own claims artifacts landed. Lane log
-`~/AirlockRuns/t97/agent/logs/20260905T101055Z__t97_l17_guard.sh.log`,
+`<runs>/t97/agent/logs/20260905T101055Z__t97_l17_guard.sh.log`,
 lane `t97_l17_guard.sh`:
 
 ```
@@ -1230,7 +1230,7 @@ written and the superseded one stays on disk exactly as it is.
   under the fork-per-unit arrangement.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/term97_control.json'));print('compared',d['compared'],'| identical',d['identical'],'| differ',d['differ'],'| ceiling MB',d['ceiling_mb'],'| wall clock s',d['seconds'])"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/term97_control.json'));print('compared',d['compared'],'| identical',d['identical'],'| differ',d['differ'],'| ceiling MB',d['ceiling_mb'],'| wall clock s',d['seconds'])"
 compared 302 | identical 302 | differ 0 | ceiling MB 4096 | wall clock s 1800.0
 ```
 - WHY IT IS DEE'S ANYWAY: the underlying fact task 83 raised —
@@ -1245,12 +1245,12 @@ compared 302 | identical 302 | differ 0 | ceiling MB 4096 | wall clock s 1800.0
 
 ## 10.1 Every computation ran in Airlock, instance `t97`
 
-Instance `t97` was created by copying `~/Programming/Airlock/instances/t87.conf`
+Instance `t97` was created by copying `Airlock/instances/t87.conf`
 to `instances/t97.conf` and rewriting its header, as the brief
 required. Every lane was dropped with
 `./airlock submit <lane.sh> --instance t97 --batch t97 --weight <n>`.
 Lane scripts live in the project's own repo at
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/lanes_t97/`.
+`PseudoCoupHQ/Research/op_pipeline/lanes_t97/`.
 
 | lane | what it ran | elapsed |
 |---|---|---|
@@ -1317,7 +1317,7 @@ Every file this task wrote is NEW and is named in §11.
 
 ## 11.1 Written by this task — code, all NEW files
 
-| path (under `~/Programming/PseudoCoupHQ/Research/op_pipeline/`) | what it is |
+| path (under `PseudoCoupHQ/Research/op_pipeline/`) | what it is |
 |---|---|
 | `probe97a_unit_cost.py` | the sample: one shard walked unit by unit, one forked sub-process per unit, each unit's wall time and peak resident size read by the parent through `wait4` |
 | `probe97b_flag_reason.py` | which token fired and on which FIELD, and the same unit at a ladder of ceilings with the whole record read back at each |
@@ -1327,7 +1327,7 @@ Every file this task wrote is NEW and is named in §11.
 
 ## 11.2 Written by this task — lanes
 
-All under `~/Programming/PseudoCoupHQ/Research/op_pipeline/lanes_t97/`:
+All under `PseudoCoupHQ/Research/op_pipeline/lanes_t97/`:
 `t97_l1_sample.sh`, `t97_l2_flag_reason.sh`, `t97_l3_pass1.sh`,
 `t97_l4_pass2.sh`, `t97_l5_downstream.sh`, `t97_l6_pass2_residue.sh`,
 `t97_l7_finalize_and_control.sh`, `t97_l8_numbers.sh`,
@@ -1336,7 +1336,7 @@ All under `~/Programming/PseudoCoupHQ/Research/op_pipeline/lanes_t97/`:
 `t97_l13_evidence.sh`, `t97_l14_ladder.sh`, `t97_l15_claims.sh`,
 `t97_l16_claims.sh`, `t97_l17_guard.sh`, `t97_l18_claims.sh`.
 The instance's own configuration file,
-`~/Programming/Airlock/instances/t97.conf`, was created by copying
+`Airlock/instances/t97.conf`, was created by copying
 `t87.conf` and rewriting its header; it is Airlock's file, not this
 project's, and it is named here because it carries the memory
 arithmetic §10.2 states.
@@ -1430,7 +1430,7 @@ unverifiable. Beat it."*
 It was run against this log, inside Airlock, four times, and every
 result is on disk; none was discarded. The measurement of record is the
 last, over the log as this section leaves it. LITERAL — lane log
-`~/AirlockRuns/t97/agent/logs/20260905T101128Z__t97_l18_claims.sh.log`,
+`<runs>/t97/agent/logs/20260905T101128Z__t97_l18_claims.sh.log`,
 lane `t97_l18_claims.sh`:
 
 ```

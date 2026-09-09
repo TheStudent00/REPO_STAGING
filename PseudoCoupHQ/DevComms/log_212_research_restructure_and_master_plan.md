@@ -99,10 +99,10 @@ because it is the kind of claim that survives if unchecked.
 
 ## 5. Checks
 
-`bash ~/Programming/PlanPlan/plan.sh check ~/Programming/PseudoCoupHQ/Planning`
+`bash PlanPlan/plan.sh check PseudoCoupHQ/Planning`
 after the work: the errors under `node_0_3_research` are six
 dangling paths that predate this session (elided log names,
-`~/Programming/SandboxDesign/allow.sh`, a shell glob in a PROGRESS
+`SandboxDesign/allow.sh`, a shell glob in a PROGRESS
 line). The 60 "`## sub_nodes` not first section" warnings are
 tree-wide and older than this node. The framework's `heal_tree.py`
 was read and not used: it re-indexes and renames but does not

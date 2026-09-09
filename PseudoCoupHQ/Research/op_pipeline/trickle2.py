@@ -4,15 +4,15 @@
 WHAT THIS REPLACES, AND WHY
 
 `trickle.py` (2026-09-02) ran its chunks by reaching into a container with
-`podman exec`, against a COPY of Airlock at `~/Programming/AirlockTrickle`.
+`podman exec`, against a COPY of Airlock at `AirlockTrickle`.
 The copy existed because Airlock bound its container names and its caps to
 the install, so a second sandbox at half the cores could not be asked for.
 
 Airlock now has INSTANCES. A second sandbox is a name and a settings file
 inside Airlock itself:
 
-    ~/Programming/Airlock/instances/trickle.conf
-    bash ~/Programming/Airlock/up.sh --instance trickle
+    Airlock/instances/trickle.conf
+    bash Airlock/up.sh --instance trickle
 
 So this program submits lanes the documented way -- `airlock submit` --
 polls the status file, and reads the product out of the instance's own
@@ -81,7 +81,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 # ---- where Airlock is, and which instance -------------------------------
 AIRLOCK_ROOT = os.environ.get(
-    "AIRLOCK_ROOT", os.path.expanduser("~/Programming/Airlock"))
+    "AIRLOCK_ROOT", os.path.expanduser("Airlock"))
 INSTANCE = os.environ.get("AIRLOCK_INSTANCE", "trickle")
 
 STATE = os.path.join(HERE, "trickle2_state.json")

@@ -195,15 +195,15 @@ From log_174 §8 (task 71, the four graphs):
 $ ls -la graph_go.json graph_cpp.json graph_rust.json graph_swift.json \
        graph_go_lapone.json report_task71.json query_task71.json \
        coverage_go_summary.json guard_task71.txt
--rw-rw-r-- 1 <host> <host>       600 Sep  3 18:47 coverage_go_summary.json
--rw-rw-r-- 1 <host> <host> 331704231 Sep  3 18:41 graph_cpp.json
--rw-r--r-- 1 <host> <host>  49278033 Sep  3 18:40 graph_go.json
--rw-rw-r-- 1 <host> <host> 126304023 Sep  3 18:31 graph_go_lapone.json
--rw-rw-r-- 1 <host> <host>  61987708 Sep  3 18:40 graph_rust.json
--rw-rw-r-- 1 <host> <host> 165106660 Sep  3 18:41 graph_swift.json
--rw-rw-r-- 1 <host> <host>       416 Sep  3 18:43 guard_task71.txt
--rw-rw-r-- 1 <host> <host>     18744 Sep  3 18:39 query_task71.json
--rw-rw-r-- 1 <host> <host>     23956 Sep  3 18:47 report_task71.json
+-rw-rw-r-- 1 <user> <user>       600 Sep  3 18:47 coverage_go_summary.json
+-rw-rw-r-- 1 <user> <user> 331704231 Sep  3 18:41 graph_cpp.json
+-rw-r--r-- 1 <user> <user>  49278033 Sep  3 18:40 graph_go.json
+-rw-rw-r-- 1 <user> <user> 126304023 Sep  3 18:31 graph_go_lapone.json
+-rw-rw-r-- 1 <user> <user>  61987708 Sep  3 18:40 graph_rust.json
+-rw-rw-r-- 1 <user> <user> 165106660 Sep  3 18:41 graph_swift.json
+-rw-rw-r-- 1 <user> <user>       416 Sep  3 18:43 guard_task71.txt
+-rw-rw-r-- 1 <user> <user>     18744 Sep  3 18:39 query_task71.json
+-rw-rw-r-- 1 <user> <user>     23956 Sep  3 18:47 report_task71.json
 ```
 All nine present. md5 of the four graphs (recorded here as the round's
 own record; not compared against a prior hash since this task did not
@@ -221,19 +221,19 @@ From log_177 §8.1 (task 75, super-ops):
 $ ls -la super_ops_go.json super_ops_go_top20.txt \
        super_ops_go_discriminating10.txt super_ops_comparison_go.json \
        coverage_go2.json report_super_ops.py guard_task75.txt
--rw-rw-r-- 1 <host> <host> 515160866 Sep  3 19:14 coverage_go2.json
--rw-rw-r-- 1 <host> <host>       346 Sep  3 19:32 guard_task75.txt
--rw-rw-r-- 1 <host> <host>     14568 Sep  3 19:31 report_super_ops.py
--rw-rw-r-- 1 <host> <host>   3480700 Sep  3 19:32 super_ops_comparison_go.json
--rw-rw-r-- 1 <host> <host> 103597545 Sep  3 19:30 super_ops_go.json
--rw-rw-r-- 1 <host> <host>     43636 Sep  3 19:31 super_ops_go_discriminating10.txt
--rw-rw-r-- 1 <host> <host>    101071 Sep  3 19:31 super_ops_go_top20.txt
+-rw-rw-r-- 1 <user> <user> 515160866 Sep  3 19:14 coverage_go2.json
+-rw-rw-r-- 1 <user> <user>       346 Sep  3 19:32 guard_task75.txt
+-rw-rw-r-- 1 <user> <user>     14568 Sep  3 19:31 report_super_ops.py
+-rw-rw-r-- 1 <user> <user>   3480700 Sep  3 19:32 super_ops_comparison_go.json
+-rw-rw-r-- 1 <user> <user> 103597545 Sep  3 19:30 super_ops_go.json
+-rw-rw-r-- 1 <user> <user>     43636 Sep  3 19:31 super_ops_go_discriminating10.txt
+-rw-rw-r-- 1 <user> <user>    101071 Sep  3 19:31 super_ops_go_top20.txt
 ```
 All seven present, sizes matching the log (103.6 MB / 515 MB as
 claimed). `super_ops_go.json` and `coverage_go2.json` are gitignored,
 per §8.3a — confirmed:
 ```
-$ grep -n "super_ops_go.json\|coverage_go2.json" ~/Programming/PseudoCoupHQ/.gitignore
+$ grep -n "super_ops_go.json\|coverage_go2.json" PseudoCoupHQ/.gitignore
 44:Research/compiler_graph/super_ops_go.json
 45:Research/compiler_graph/coverage_go2.json
 ```
@@ -361,7 +361,7 @@ $ git log --oneline --since="2026-09-03 19:30" -- Research/compiler_graph/graph_
 ## 3.5 The plan checker
 
 ```
-$ python3 ~/Programming/PlanPlan/framework/check_plans.py ~/Programming/PseudoCoupHQ/Planning
+$ python3 PlanPlan/framework/check_plans.py PseudoCoupHQ/Planning
 ...
 [WARN] edge-register: `super_node`/`sub_nodes` missing on 14 of 69 nodes (PROTOCOL §1, 2026-08-02; brought in chain by chain, not by a sweep)
     - PseudoCoupHQ/Planning: 14 of 69
@@ -526,7 +526,7 @@ $ /tmp/reconnect_venv/bin/python3 chronology_build.py --append
 append: 1 step(s) to build (38 carried forward unchanged)
   2026-09-03 45beecd9 round    {"census_producers": 49, "families": 34, "no_term": 419, ...}
 ...
-wrote ~/Programming/PseudoCoupHQ/Research/op_pipeline/chronology.json  (39 steps: 13 with a recomputed number, 1 with a testimony number, 26 with no tracked artifact; 60621 bytes)
+wrote PseudoCoupHQ/Research/op_pipeline/chronology.json  (39 steps: 13 with a recomputed number, 1 with a testimony number, 26 with no tracked artifact; 60621 bytes)
 ```
 
 38 steps before, 39 after — the bank commit `45beecd` joined

@@ -299,7 +299,7 @@ lines). Every excerpt below is taken from the PINNED tree, not the
 working tree:
 
 ```
-$ git -C ~/Programming/Sources/golang_src log -1 --format=%H
+$ git -C Sources/golang_src log -1 --format=%H
 9f1012d9a1aa0831ff44ac9c767e96f9943d13fe
 ```
 

@@ -6,7 +6,7 @@
 # holder table, the spellings table, the per-entry holders with the
 # coverage over the type keys, the disagreements.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "======== [1/1] types101_join.py ========"
 python3 types101_join.py
 rc=$?

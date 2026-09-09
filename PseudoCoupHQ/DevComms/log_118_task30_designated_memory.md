@@ -519,7 +519,7 @@ proves nothing; the history is what proves it. This session began at
 16:39. Everything under `Research/op_pipeline` committed since 16:00:
 
 ```
-$ cd ~/Programming/PseudoCoupHQ && git log --since="16:00" --name-status --pretty=format:'' -- Research/op_pipeline | grep -E '^[AM]' | awk '{print $2}' | sort -u
+$ cd PseudoCoupHQ && git log --since="16:00" --name-status --pretty=format:'' -- Research/op_pipeline | grep -E '^[AM]' | awk '{print $2}' | sort -u
 Research/op_pipeline/arrival_modes.py
 Research/op_pipeline/canon32_sret_controls.json
 Research/op_pipeline/canon32_sret_controls.py

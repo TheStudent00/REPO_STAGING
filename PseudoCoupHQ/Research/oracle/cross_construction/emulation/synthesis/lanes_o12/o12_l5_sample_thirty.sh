@@ -4,7 +4,7 @@
 # thirty targets across three machine type keys, and the guard over
 # both json files this lane writes.
 set -u
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
 echo "======== 1. the plan ========"
 echo "[1/4] census"
 python3 synthesize.py census
@@ -51,6 +51,6 @@ echo "-- exit $?"
 echo
 echo "======== 4. the guard ========"
 echo "[4/4] guard"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
   synthesis_plan.json synthesis_sample.json
 echo "-- guard exit $?"

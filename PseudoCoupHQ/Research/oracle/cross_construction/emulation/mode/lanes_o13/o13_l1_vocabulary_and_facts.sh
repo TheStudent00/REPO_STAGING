@@ -8,8 +8,8 @@
 #       (`mode.py facts`)
 #   [4] the unmodified spelling guard over both json files
 set -u
-M=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
-G=/projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+M=PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
+G=PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 export PATH=/opt/cargo/bin:$PATH
 echo "[1/4] where the toolchain is"
 command -v clang || echo "clang NOT on PATH"

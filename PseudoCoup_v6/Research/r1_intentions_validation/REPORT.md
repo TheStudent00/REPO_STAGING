@@ -93,4 +93,4 @@ slicer (T6) can be steered by this file:
 - **T6 (slicer)**: its steering schema should be designed against
   the four gaps above; item 1 is the entry point.
 - Provenance note: all subject artifacts remain in
-  `~/Programming/PseudoCoup_v5/Designing/`; nothing was modified.
+  `PseudoCoup_v5/Designing/`; nothing was modified.

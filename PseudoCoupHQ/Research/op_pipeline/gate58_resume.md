@@ -1,7 +1,7 @@
 # task 58 resume state
 
 Written before the work and updated during it.  Home:
-`~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+`PseudoCoupHQ/Research/op_pipeline`.
 
 ## nothing is part-done
 

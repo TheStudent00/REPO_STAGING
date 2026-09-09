@@ -16,10 +16,10 @@
 #
 # Reads only; writes t104_diagnose.json under the artifact folder.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/3] the opcode table, from z3's own enumeration"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_diagnose.py table
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_diagnose.py table
 echo "[2/3] the six units log_224 names"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_diagnose.py units
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_diagnose.py units
 echo "[3/3] done"
 ls -la t104_diagnose.json

@@ -1,8 +1,8 @@
 # 03 — Lineage and Harvest
 
 Condensed from the two surveys (full evidence, line-cited):
-- `~/Programming/PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`
-- `~/Programming/PseudoCoup_v5/DevComms/ledger_survey_2026-07-27.md`
+- `PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`
+- `PseudoCoup_v5/DevComms/ledger_survey_2026-07-27.md`
 
 ## Version map (identity-corrected)
 

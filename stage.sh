@@ -43,7 +43,11 @@ done
 
 # ---- 2. scrub the private area; refuse if anything survives ----------------
 echo "== scrubbing =="
-is_text() { case "$(file -b --mime-type "$1")" in text/*|application/json|application/x-shellscript|application/javascript) return 0 ;; *) return 1 ;; esac; }
+# text by extension first (file(1) misreads some sources as binary), then by mime
+is_text() {
+    case "$1" in *.md|*.py|*.sh|*.js|*.ts|*.txt|*.json|*.jsonl|*.tsv|*.csv|*.conf|*.cfg|*.ini|*.toml|*.yaml|*.yml|*.html|*.css|*.lean|*.c|*.h|*.cpp|*.hpp|*.rs|*.go|*.swift|*.java|*.php|*.rb|*.kt|*.dart|*.cs|*.tex|*.rst|*.log|*.sql|*.xml|*.svg|*.mmd|*.gitignore|Containerfile|Makefile) return 0 ;; esac
+    case "$(file -b --mime-type "$1")" in text/*|application/json|application/x-shellscript|application/javascript) return 0 ;; *) return 1 ;; esac
+}
 scrubbed=0
 while IFS=$'\t' read -r pat rep; do
     if [ -z "$pat" ]; then continue; fi
@@ -59,7 +63,7 @@ while IFS=$'\t' read -r pat rep; do
     case "$pat" in '#'*) continue ;; esac
     # a survivor counts only if THIS repository would track it: a file its
     # own .gitignore excludes (generated data, build output) never enters the tip
-    survivors=$( (grep -rlE -- "$pat" "$TMP" 2>/dev/null || true) | sed "s|^$TMP/||" | (git check-ignore -v -n --stdin 2>/dev/null || true) | awk -F'\t' '$1 == "::" {print $2}' )
+    survivors=$( (grep -rlE -- "$pat" "$TMP" 2>/dev/null || true) | while IFS= read -r f; do if is_text "$f"; then echo "$f"; fi; done | sed "s|^$TMP/||" | (git check-ignore -v -n --stdin 2>/dev/null || true) | awk -F'\t' '$1 == "::" {print $2}' )
     n=$( [ -n "$survivors" ] && printf '%s\n' "$survivors" | wc -l || echo 0 )
     if [ "$n" -gt 0 ]; then echo "  STILL PRESENT after scrub (would be tracked): $pat in $n file(s):"; printf '%s\n' "$survivors" | head -5 | sed 's/^/      /'; left=$((left+n)); fi
 done < scrub_patterns.tsv

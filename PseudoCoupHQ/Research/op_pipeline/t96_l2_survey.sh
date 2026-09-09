@@ -2,7 +2,7 @@
 # TASK 96 round 19, lane 2.  The measurement that decides AREA_ORIGIN.
 # Nothing is written.
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "[1/2] the displacements every body spells from an arriving base"
 python3 - <<'PY'

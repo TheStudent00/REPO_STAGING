@@ -9,7 +9,7 @@
 set -u
 
 TOTAL=1
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L2home
 mkdir -p "$HOME"
 cd "$LEANDIR" || exit 1
@@ -17,7 +17,7 @@ cd "$LEANDIR" || exit 1
 echo "[1/$TOTAL] model_translate.py check"
 python3 -c "
 import resource, sys, time
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline/lean')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline/lean')
 import model_translate as M
 start = time.time()
 M.check_command()

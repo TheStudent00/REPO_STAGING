@@ -1,7 +1,7 @@
 """Generate positional-path node ids over tree_sitter_base trees; unique by construction.
 
 Provenance: transplanted 2026-07-28 from
-~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py
+StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py
 (v0's id generator, verified green in place by R3). Kept exactly:
 the segment rule "<childIndex>:<nodeKind>" recorded UNCONDITIONALLY
 at every node (tree-sitter's own child order, named and anonymous

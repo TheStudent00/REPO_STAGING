@@ -28,20 +28,20 @@
 # own output on failure.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+REPO=PseudoCoupHQ/Research/compiler_graph
+PIPE=PseudoCoupHQ/Research/op_pipeline
 cd "$REPO"
 
 say "[1/5] the population, RECOUNTED here"
 python3 - <<'PY'
 import json, os
-base = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/c_and_cpp'
+base = 'PseudoCoupHQ/Research/compiler_graph/diaries/c_and_cpp'
 names = sorted(n for n in os.listdir(base) if n.endswith('.txt'))
 c = [n for n in names if n.startswith('c__')]
 cpp = [n for n in names if n.startswith('cpp__')]
 print("   diaries/c_and_cpp : %d files  (c %d, cpp %d)" % (len(names), len(c), len(cpp)))
 for lang, n in (("c", 610), ("cpp", 770)):
-    doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+    doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                          'canon39_wrapped_%s.json' % lang))
     print("   canon39_wrapped_%-3s : %d units" % (lang, len(doc["units"])))
 PY
@@ -52,7 +52,7 @@ for N in 100 400; do
   python3 - "$N" <<'PY'
 import os, sys
 n = int(sys.argv[1])
-source = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/c_and_cpp'
+source = 'PseudoCoupHQ/Research/compiler_graph/diaries/c_and_cpp'
 names = sorted(x for x in os.listdir(source) if x.endswith('.txt'))
 for name in names[:n]:
     os.symlink(os.path.join(source, name), os.path.join('/work/var_s%d' % n, name))

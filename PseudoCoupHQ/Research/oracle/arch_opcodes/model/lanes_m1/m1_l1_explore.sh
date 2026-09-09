@@ -7,7 +7,7 @@
 # the end from resource.getrusage.
 set -euo pipefail
 echo "[1/6] task m1: the reference's opcode table, counted"
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 - <<'PY'
 import json
 import os
@@ -15,8 +15,8 @@ import resource
 import sys
 import time
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline/lean")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline/lean")
 import z3
 import reference as R
 import layer5
@@ -62,7 +62,7 @@ for g in groups:
 print("")
 print("[3/6] the table's mnemonics beside the corpus's 162")
 corpus = json.load(open(
-    "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/"
+    "PseudoCoupHQ/Research/oracle/arch_opcodes/"
     "unique_opcodes.json"))
 corpus_mnems = sorted(r["mnem"] for r in corpus["cross_language_rows"])
 print("corpus mnemonics: %d" % len(corpus_mnems))

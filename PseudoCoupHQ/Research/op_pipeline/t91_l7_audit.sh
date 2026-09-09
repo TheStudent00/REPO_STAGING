@@ -15,7 +15,7 @@
 # Products: t91_audit.json, t91_audit_printed.txt in the project tree.
 set -uo pipefail
 
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 
 expected=332
 status=0

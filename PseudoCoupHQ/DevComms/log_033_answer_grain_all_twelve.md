@@ -1,8 +1,8 @@
 # log 033 — layer 3 phase 4: the answer grain, all twelve languages
 
 Date: 2026-08-19. Node:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 **Rewritten 2026-08-19 for readability at the owner's instruction. The content
 is identical — same facts, same numbers, same findings, same section
@@ -1178,7 +1178,7 @@ Per operation, pooled over every language pair that spells it:
 ## §7 — artifacts
 
 All of these live in
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 | file | what it is |
 |---|---|
@@ -1194,11 +1194,11 @@ All of these live in
 Reproduce with two commands, neither of which starts a lane:
 
 ```
-cd ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering && python3 l3_answers12.py
-cd ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering && python3 make_dendrogram_all12.py
+cd PseudoCoupHQ/Research/kind_fuzz_clustering && python3 l3_answers12.py
+cd PseudoCoupHQ/Research/kind_fuzz_clustering && python3 make_dendrogram_all12.py
 ```
 
-`cd ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering && python3 l3_answers.py`
+`cd PseudoCoupHQ/Research/kind_fuzz_clustering && python3 l3_answers.py`
 still reproduces log 031's result exactly; the bridge is added beside
 its decisions and its `main` is untouched.
 
@@ -1217,4 +1217,4 @@ run to completion with zero throws. The icicle and the curve each
 append their drawing. `#count` reads **115** at the default threshold
 0.700, which matches the [0.697, 0.730) plateau exactly. All five
 innerHTML panels are written *(measured)*. Run it with
-`cd ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering && node domstub.js dendrogram_all12.html`.
+`cd PseudoCoupHQ/Research/kind_fuzz_clustering && node domstub.js dendrogram_all12.html`.

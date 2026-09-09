@@ -3,8 +3,8 @@
 Date: 2026-08-05
 
 **Scope caveat (read first):** this is the sparse codegen slice — two crates,
-`~/Programming/Sources/rust/compiler/rustc_codegen_ssa` and
-`~/Programming/Sources/rust/compiler/rustc_codegen_llvm` — not rustc entire.
+`Sources/rust/compiler/rustc_codegen_ssa` and
+`Sources/rust/compiler/rustc_codegen_llvm` — not rustc entire.
 `rustc_codegen_cranelift` was excluded entirely per project policy (that
 backend is prohibited in this project line); no file under it was read or
 counted.
@@ -27,11 +27,11 @@ counted.
 
 Files with `has_error`:
 
-- `~/Programming/Sources/rust/compiler/rustc_codegen_llvm/src/llvm/enzyme_ffi.rs`
-- `~/Programming/Sources/rust/compiler/rustc_codegen_llvm/src/llvm/ffi.rs`
-- `~/Programming/Sources/rust/compiler/rustc_codegen_llvm/src/macros.rs`
-- `~/Programming/Sources/rust/compiler/rustc_codegen_ssa/src/traits/mod.rs`
-- `~/Programming/Sources/rust/compiler/rustc_codegen_ssa/src/traits/type_.rs`
+- `Sources/rust/compiler/rustc_codegen_llvm/src/llvm/enzyme_ffi.rs`
+- `Sources/rust/compiler/rustc_codegen_llvm/src/llvm/ffi.rs`
+- `Sources/rust/compiler/rustc_codegen_llvm/src/macros.rs`
+- `Sources/rust/compiler/rustc_codegen_ssa/src/traits/mod.rs`
+- `Sources/rust/compiler/rustc_codegen_ssa/src/traits/type_.rs`
 
 These 5 files account for all 71 occurrences of the `ERROR` kind in the
 frequency table below (`ERROR` appears in exactly 5 files, matching the

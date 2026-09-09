@@ -13,7 +13,7 @@ go env GOROOT
 head -12 /sources/golang_src/src/internal/goversion/goversion.go | grep -n "Version"
 grep -n "^go " /sources/golang_src/src/go.mod
 echo "[2/4] build"
-cp /projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go /work/o6/mod/main.go
+cp PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go /work/o6/mod/main.go
 cd /work/o6/mod
 printf 'module o6\n\ngo 1.26\n' > go.mod
 gofmt -l main.go && echo "gofmt: listed files above need formatting (none = clean)"

@@ -14,29 +14,29 @@
 # units must run op_pipeline/check_no_spelling_keys.py and refuse its own
 # output on failure.
 set -u
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
-GR=/projects/PseudoCoupGraphs
-git config --global --add safe.directory /projects/PseudoCoupHQ 2>/dev/null
-git config --global --add safe.directory /projects/PseudoCoupGraphs 2>/dev/null
+CG=PseudoCoupHQ/Research/compiler_graph
+GR=PseudoCoupGraphs
+git config --global --add safe.directory PseudoCoupHQ 2>/dev/null
+git config --global --add safe.directory PseudoCoupGraphs 2>/dev/null
 total=5; i=0
 step() { i=$((i+1)); echo; echo "======== [$i/$total] $* ========"; }
 
 step "the planning tree still checks"
-if [ -f /projects/PlanPlan/check_plans.py ]; then
-  python3 /projects/PlanPlan/check_plans.py /projects/PseudoCoupHQ 2>&1 | tail -25
+if [ -f PlanPlan/check_plans.py ]; then
+  python3 PlanPlan/check_plans.py PseudoCoupHQ 2>&1 | tail -25
 else
-  ls /projects/PlanPlan | head -20
+  ls PlanPlan | head -20
 fi
 
 step "the JavaScript route and the engine, untouched"
 echo "   git diff over dashboard.html and every dashboard_pane*.js:"
-git -C /projects/PseudoCoupHQ diff -- Research/op_pipeline/dashboard.html \
+git -C PseudoCoupHQ diff -- Research/op_pipeline/dashboard.html \
     'Research/op_pipeline/dashboard_pane*.js' | tee /work/js.diff | wc -l
 echo "   (0 lines above means untouched)"
 echo "   the guard itself, unmodified:"
-git -C /projects/PseudoCoupHQ status --porcelain \
+git -C PseudoCoupHQ status --porcelain \
     Research/op_pipeline/check_no_spelling_keys.py
-md5sum /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+md5sum PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 
 step "the sizes, read off disk one last time"
 echo "   the four graphs, in the companion folder, compact:"
@@ -53,10 +53,10 @@ ls -la "$CG"/graph_go2.json "$CG"/graph_go3.json "$CG"/graph_go4.json \
    "$CG"/coverage_go.json 2>&1 | sed 's/^/     /'
 
 step "pane 4, rendered once more for every compiler, after every edit"
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 - <<'PY'
 import resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 import dashboard_ouro as D
 for lang in ("go", "cpp", "rust", "swift"):
     html = D.render(4, lang, None, None)
@@ -69,7 +69,7 @@ print("   peak resident %.1f MB (cap %d MB)"
 PY
 
 step "the guard, UNMODIFIED, one process, one more time"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     "$GR"/graph_go.json "$GR"/graph_cpp.json "$GR"/graph_rust.json \
     "$GR"/graph_swift.json "$GR"/variant_connections_*.json \
     "$CG"/graph_*_files.json "$CG"/graph_*_defs.json \

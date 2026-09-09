@@ -103,9 +103,9 @@ D0015 (modulo)
 ## 2.1 Where it lives
 
 There is no separate directory. The work sits inside
-`~/Programming/PseudoCoupHQ/Research/op_pipeline` alongside the
+`PseudoCoupHQ/Research/op_pipeline` alongside the
 five-language line, plus raw output in
-`~/Programming/Airlock/agent/out/`, plus new empty planning nodes.
+`Airlock/agent/out/`, plus new empty planning nodes.
 
 - Written pilots: `interp_cpython.{md,json}` and
   `interp_jvm.{md,json}`, both 2026-08-26, each with pins,

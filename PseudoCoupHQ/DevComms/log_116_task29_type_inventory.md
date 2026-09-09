@@ -66,7 +66,7 @@ Three things came out of it.
 
 ## 2.1 The thing being replaced, quoted
 
-> `~/Programming/PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
+> `PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
 > lines 76–92
 >
 > ```
@@ -86,7 +86,7 @@ arch campaign used" — a decision recorded, not an authority read.
 
 Against it, the precedent the ruling points at:
 
-> `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.json`
+> `PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.json`
 >
 > ```
 > "authority": "tree-sitter grammar sources; every operator is
@@ -139,8 +139,8 @@ Against it, the precedent the ruling points at:
 | `go.js` | `tree-sitter/tree-sitter-go@v0.25.0 :: grammar.js` | same |
 | `swift.js` | `alex-pinkus/tree-sitter-swift@0.7.3 :: grammar.js` | same |
 | clang type table | `clang/include/clang/AST/BuiltinTypes.def` @ `llvmorg-21.1.8`, read by `git show` | the working tree is at `llvmorg-24-init` and is NOT read |
-| go tree | `golang_src` commit `9f1012d9a1aa0831ff44ac9c767e96f9943d13fe` | `git -C ~/Programming/Sources/golang_src log -1` |
-| rust tree | `rust` commit `7c329d6c76e11ca40c5673818ab0439c1be8962c` | `git -C ~/Programming/Sources/rust log -1` |
+| go tree | `golang_src` commit `9f1012d9a1aa0831ff44ac9c767e96f9943d13fe` | `git -C Sources/golang_src log -1` |
+| rust tree | `rust` commit `7c329d6c76e11ca40c5673818ab0439c1be8962c` | `git -C Sources/rust log -1` |
 
 Two pin caveats are recorded IN the artifact rather than smoothed
 over:
@@ -148,7 +148,7 @@ over:
 - The go tree is `goversion.Version = 28` (go 1.28-dev); the corpus's
   go probes were compiled by the container's `go1.26.0`. The table is
   read from the tree on disk because that is the tree on disk.
-- The rust tree is a PARTIAL checkout: `~/Programming/Sources/rust/compiler`
+- The rust tree is a PARTIAL checkout: `Sources/rust/compiler`
   holds three crates (`rustc_codegen_cranelift`, `rustc_codegen_llvm`,
   `rustc_codegen_ssa`) and nothing else, so rustc's own
   `ty::IntTy/UintTy/FloatTy` definitions are not on disk.
@@ -159,7 +159,7 @@ over:
 
 The rule, quoted from the pinned cache:
 
-> `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/grammar_cache/c.js`,
+> `PseudoCoupHQ/Research/kind_fuzz_clustering/grammar_cache/c.js`,
 > line 640
 >
 > ```
@@ -206,7 +206,7 @@ class marking: numeric versus not.
 The compiler table for rust is the cranelift back end's exhaustive
 match over rustc's scalar enums:
 
-> `~/Programming/Sources/rust/compiler/rustc_codegen_cranelift/src/common.rs`
+> `Sources/rust/compiler/rustc_codegen_cranelift/src/common.rs`
 >
 > ```
 > UintTy::U8 => types::I8,
@@ -237,7 +237,7 @@ recorded the refusal with the list of names searched.
 
 The authority is go/types' universe:
 
-> `~/Programming/Sources/golang_src/src/go/types/universe.go`, line 41
+> `Sources/golang_src/src/go/types/universe.go`, line 41
 >
 > ```
 > var Typ = []*Basic{
@@ -259,7 +259,7 @@ and `Bool` are STDLIB DECLARATIONS, and no swift compiler or stdlib
 source is on this machine:
 
 ```
-$ ls ~/Programming/Sources
+$ ls Sources
 clif_probe  encoder  golang_src  graal  jdk  llvm-project  runtime  rust  sdk
 ```
 
@@ -564,7 +564,7 @@ recommendation:
 ## 6.1 The spelling-key check, both artifacts
 
 ```
-$ cd ~/Programming/PseudoCoupHQ/Research/op_pipeline
+$ cd PseudoCoupHQ/Research/op_pipeline
 $ /tmp/reconnect_venv/bin/python3 check_no_spelling_keys.py \
       type_inventory.json type_inventory_validation.json
 operator inventory: 91 tokens read from probe_manifest_*.json
@@ -582,7 +582,7 @@ inherit.
 ## 6.2 Zero regressions
 
 ```
-$ cd ~/Programming/PseudoCoupHQ && git status --porcelain
+$ cd PseudoCoupHQ && git status --porcelain
  M Research/op_pipeline/type_inventory.py
  M Research/op_pipeline/type_inventory_validate.py
 ?? Research/compiler_graph/graph_cpp2.json
@@ -626,17 +626,17 @@ Created this session, all new, nothing existing modified:
 
 | path | what it is |
 |---|---|
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/type_inventory.py` | the extractor (TASK 29a) |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/type_inventory.json` | the extracted inventory, pinned, per language, per type, with the authority that admits it |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/type_inventory.md` | the readable rendering of the same |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/type_inventory_validate.py` | the two-direction validation (TASK 29b/c) |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/type_inventory_validation.json` | the measurements, per language, with the cells and the cause families |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/type_inventory_validation.md` | the readable rendering of the same |
-| `~/Programming/PseudoCoupHQ/DevComms/log_116_task29_type_inventory.md` | this log |
+| `PseudoCoupHQ/Research/op_pipeline/type_inventory.py` | the extractor (TASK 29a) |
+| `PseudoCoupHQ/Research/op_pipeline/type_inventory.json` | the extracted inventory, pinned, per language, per type, with the authority that admits it |
+| `PseudoCoupHQ/Research/op_pipeline/type_inventory.md` | the readable rendering of the same |
+| `PseudoCoupHQ/Research/op_pipeline/type_inventory_validate.py` | the two-direction validation (TASK 29b/c) |
+| `PseudoCoupHQ/Research/op_pipeline/type_inventory_validation.json` | the measurements, per language, with the cells and the cause families |
+| `PseudoCoupHQ/Research/op_pipeline/type_inventory_validation.md` | the readable rendering of the same |
+| `PseudoCoupHQ/DevComms/log_116_task29_type_inventory.md` | this log |
 
 Modified this session: one line appended under the single
 `# PROGRESS` heading of
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
 
 Read but not modified: `probe_gen.py`, `check_no_spelling_keys.py`,
 `lane_gen.py`, `op_units_<lang>.json` (five),
@@ -644,9 +644,9 @@ Read but not modified: `probe_gen.py`, `check_no_spelling_keys.py`,
 `../kind_fuzz_clustering/operator_arity.json`,
 `../kind_fuzz_clustering/operator_arity.py`,
 `../kind_fuzz_clustering/grammar_cache/{c,c_for_cpp,go,rust,swift}.js`,
-`~/Programming/Sources/golang_src/src/go/types/universe.go`,
-`~/Programming/Sources/rust/compiler/rustc_codegen_cranelift/src/common.rs`,
-`~/Programming/Sources/llvm-project` at `llvmorg-21.1.8` via `git show`.
+`Sources/golang_src/src/go/types/universe.go`,
+`Sources/rust/compiler/rustc_codegen_cranelift/src/common.rs`,
+`Sources/llvm-project` at `llvmorg-21.1.8` via `git show`.
 
 ---
 

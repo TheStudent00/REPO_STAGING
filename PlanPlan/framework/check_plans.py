@@ -7,7 +7,7 @@ A thin entry point: builds the `checks.Checker` with every check in
 parsing and the exit-code contract.
 
 Usage:
-    python3 ~/Programming/PlanPlan/framework/check_plans.py \
+    python3 PlanPlan/framework/check_plans.py \
         <root>... [--strict] [--quiet]
 
 Exit codes: 0 = no errors, 1 = errors found, 2 = usage error.

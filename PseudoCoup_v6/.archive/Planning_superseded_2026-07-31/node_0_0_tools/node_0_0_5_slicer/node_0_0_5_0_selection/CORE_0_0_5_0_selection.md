@@ -41,7 +41,7 @@ mechanical once the set is stated.
   truth. The forward direction is LLVM/rustc-LLVM — a future
   increment re-derives its own proven slices against that target.
 - Mechanism detail:
-  `~/Programming/PseudoCoup_v6/Research/r5_slice_mechanism_survey/REPORT.md`.
+  `PseudoCoup_v6/Research/r5_slice_mechanism_survey/REPORT.md`.
 
 ## Acceptance (delegation-ready)
 

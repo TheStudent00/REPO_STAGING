@@ -76,7 +76,7 @@ recorded the `llvmorg-21.1.8` tag's commit as
 `42befb84c672d78de430feb4c96710e6aa4fc774`. Re-resolving the SAME
 tag this session (`git rev-list -n1 llvmorg-21.1.8` and
 `git log -1 --format='%H %ci' llvmorg-21.1.8` against
-`~/Programming/Sources/llvm-project`) gives
+`Sources/llvm-project`) gives
 `2078da43e25a4623cab2d0d60decddf709aaea28`, dated the SAME date
 (2025-12-12 10:35:47 +0000). Read as a probe transcription slip,
 not a moved tag — both hashes name a commit on the exact same day,

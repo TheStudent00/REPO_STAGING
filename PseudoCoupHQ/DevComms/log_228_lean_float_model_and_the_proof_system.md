@@ -7,7 +7,7 @@ the owner's words are verbatim. Where the coordinator's earlier statements
 were wrong, the wrong statement is quoted and the correction follows
 it, per protocol §2.2 (retraction and replacement as two statements).
 Nothing here is ruled unless it says so; the node is
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`.
 
 ## 0. The two lists
 

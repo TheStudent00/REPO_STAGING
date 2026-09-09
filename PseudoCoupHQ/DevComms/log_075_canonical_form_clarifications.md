@@ -1,14 +1,14 @@
 # log 075 — the canonical form, clarified and enforced
 
 Date: 2026-08-26. Follows
-`~/Programming/PseudoCoupHQ/DevComms/log_074_canonical_form_audit.md`,
+`PseudoCoupHQ/DevComms/log_074_canonical_form_audit.md`,
 which measured that the ratified canonical form was decorating
 the pipeline rather than driving it. This log records what the owner
 clarified afterwards, what was ruled, what was built in response,
 and what the measurements said.
 
 Companion ruling, held in
-`~/Programming/PseudoCoupHQ/AgentMemory.md` under "THE CANONICAL
+`PseudoCoupHQ/AgentMemory.md` under "THE CANONICAL
 FORM IS ENFORCED".
 
 ---
@@ -80,7 +80,7 @@ the owner asked whether the assembled bytes are a semantic re-mapping of
 the text, whether the two actually differ, and what utility the
 bytes have over the text. Measured over the 1,562 units that carry
 both, in
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/canon_roundtrip.json`:
+`PseudoCoupHQ/Research/op_pipeline/canon_roundtrip.json`:
 
 | question | measured answer |
 |---|---|
@@ -124,7 +124,7 @@ Line for line: `mov %edi,%eax` is `89 f8`; `cltd` is `99`;
 ## 5. What was built, and what it measured
 
 Programs added, all in
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/`:
+`PseudoCoupHQ/Research/op_pipeline/`:
 
 - `canon3.py` — canonical text for every unit it can reach,
   including the three populations that had been refused all

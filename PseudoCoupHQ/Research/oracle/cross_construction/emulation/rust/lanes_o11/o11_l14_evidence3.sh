@@ -4,7 +4,7 @@
 # per-opcode tables that are not LANDED.
 set -u
 export PATH=/opt/cargo/bin:$PATH
-R=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
+R=PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
 
 run() {
   echo "\$ $1"

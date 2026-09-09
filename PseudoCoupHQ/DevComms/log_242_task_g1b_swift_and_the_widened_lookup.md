@@ -1,7 +1,7 @@
 # log 242 — task g1b: swift on the rebuilt image, and the primitive lookup widened by one step
 
 Node: `hq.research.arch_unit_oracle`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08). The
 PROGRESS entry is on the autopoly sub-node
 (`.../node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/PROGRESS.md`),
@@ -10,12 +10,12 @@ beside tasks o12, o13, h1, h1b, h2 and g1.
 Date: 2026-09-09. Instance `g1`, on the TOWER, brought down at the end
 of this log. Artifact folder (the same one tasks h1, h1b, h2 and g1
 wrote):
-[`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
+[`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
 
 **WHAT THIS TASK IS.** Task g1b is the closer for task g1. Its first
 job was to bank task g1's own record from what task g1 left on disk,
 and that is
-[`log_241`](file://~/Programming/PseudoCoupHQ/DevComms/log_241_task_g1_find_emulation_go_and_swift.md),
+[`log_241`](file://PseudoCoupHQ/DevComms/log_241_task_g1_find_emulation_go_and_swift.md),
 a separate log. This one carries task g1b's own two pieces of work: the
 same forty runs re-run on a machine where a swift compiler exists, and
 the primitive lookup widened by one step so that a divide can take the
@@ -23,18 +23,18 @@ primitive route.
 
 The deliverables:
 
-- [`handful/handful3b.json`](file://~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.json)
+- [`handful/handful3b.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.json)
   and
-  [`handful/handful3b.md`](file://~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md)
+  [`handful/handful3b.md`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md)
   — the second run of record: the same forty runs, on the rebuilt image.
-- [`handful/handful3c.json`](file://~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.json)
+- [`handful/handful3c.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.json)
   and
-  [`handful/handful3c.md`](file://~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md)
+  [`handful/handful3c.md`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md)
   — the widened lookup, and the ONE run it changes.
-- [`handful/handful.py`](file://~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
+- [`handful/handful.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
   extended with section 2e (the widened rule) and the `*3b` / `*3c`
   commands, and with one defect fixed in `one_recheck` (§8).
-- `~/Programming/Airlock/instances/g1.conf` — one change, stated with
+- `Airlock/instances/g1.conf` — one change, stated with
   its reason in the file: the instance now mounts `sandbox-persist`
   READ-ONLY (§3). Airlock's own `.gitignore` line 35 excludes
   `instances/*.conf` as per-machine configuration, so this one lives on
@@ -53,10 +53,10 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `~/Programming/PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
 the instance. Prose names host paths. **The lane logs are on the
-TOWER** (`<tower-user>@<tower>`), under
-`~/AirlockRuns/g1/agent/logs/`, and every attribution
+TOWER** (`<user>@<tower>`), under
+`<runs>/g1/agent/logs/`, and every attribution
 below names one of them.
 
 | lane | what it did | log, on the tower |
@@ -77,7 +77,7 @@ below names one of them.
 | `g1b_l16_verify_242_2.sh` | the verifier again, over this log as it stands: 13 MATCHES, 0 DIFFERS | `20260909T102006Z__g1b_l16_verify_242_2.sh.log` |
 
 Every lane script is kept in the repo at
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/`
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/`
 and was submitted from there.
 
 ---
@@ -183,7 +183,7 @@ Task g1's refusal text, which log 241 §9 carries in full, was
 FILE. Its lane `g1_l2_swift_where.sh` also measured that `/persist`
 inside the `g1` container held two entries and nothing else.
 
-**LITERAL**, `~/Programming/Airlock/instance.sh` lines 174-176, which is
+**LITERAL**, `Airlock/instance.sh` lines 174-176, which is
 where the empty volume comes from:
 
 ```
@@ -207,7 +207,7 @@ then `up --instance g1`), which is what makes an instance pick up the
 rebuilt image. Lane `g1b_l5_swift_probe.sh` asked the questions that
 separate the two obstacles. **LITERAL**, printed by that lane, steps
 [2/6] to [4/6], on the tower at
-`~/AirlockRuns/g1/agent/logs/20260909T092938Z__g1b_l5_swift_probe.sh.log`:
+`<runs>/g1/agent/logs/20260909T092938Z__g1b_l5_swift_probe.sh.log`:
 
 ```
 $ ls -la /persist/swift/usr/bin/swiftc
@@ -249,7 +249,7 @@ lowered body IS the cell and `term` where it has not; `rendered` and
 of `handful3b.md`.
 
 ```
-$ sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ rendered%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md
+$ sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ rendered%\,\\%\^\$%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md
 | cell | lang | route | rendered (GLOSS) | landed | composition (GLOSS) | gate (verdict, and where it holds) | cause if refused |
 |---|---|---|---|---|---|---|---|
 | `add` gpr_gpr 32 | c | term | `((((UINT32_C(0x0)) << 32) \| (((a) + (b)))))` | LANDED_ELSEWHERE on `lea` | `lea` (+1 chaff) | PROVED_ON_SHIP -- holds on every input of every aligned row |  |
@@ -305,7 +305,7 @@ the thirty are the check that re-creating the container changed the
 machine and not the method.
 
 ```
-$ sed -n \\%\^.\ cell\ .\ lang\ .\ g1\ route%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md
+$ sed -n \\%\^.\ cell\ .\ lang\ .\ g1\ route%\,\\%\^\$%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md
 | cell | lang | g1 route | g1 verdict | this route | this verdict | moved |
 |---|---|---|---|---|---|---|
 | `add` gpr_gpr 32 | c | term | PROVED_ON_SHIP | term | PROVED_ON_SHIP | no |
@@ -353,7 +353,7 @@ $ sed -n \\%\^.\ cell\ .\ lang\ .\ g1\ route%\,\\%\^\$%p /projects/PseudoCoupHQ/
 Table 3 — the run counted.
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py tally3b
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py tally3b
 add gpr_gpr 32               flags      SAME BYTES       c, rust, swift
 add gpr_gpr 32               reg_rdi    DIFFERENT BYTES  c, go, rust, swift
 addss xmm_xmm 32             reg_xmm0   DIFFERENT BYTES  c, go, rust, swift
@@ -407,7 +407,7 @@ composition tally counts 462 raw carved instructions (was 434), of which
 ## 6.1 Refusals and gate calls that did not prove
 
 ```
-$ sed -n \\%\^###\ 3.1\ Refusals%\,\\%\^###\ 3.2%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md
+$ sed -n \\%\^###\ 3.1\ Refusals%\,\\%\^###\ 3.2%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md
 ### 3.1 Refusals and gate calls that did not prove
 
 - `a width c has no holder for`: 2 -- sub imm_gpr 64/go [flags], sub imm_gpr 64/swift [flags]
@@ -437,7 +437,7 @@ accounts for none here.
 ## 6.2 The landings that were not LANDED, by cause
 
 ```
-$ sed -n \\%\^###\ 3.2\ The\ landings%\,\\%\^##\ 4%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md
+$ sed -n \\%\^###\ 3.2\ The\ landings%\,\\%\^##\ 4%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md
 ### 3.2 The landings that were not LANDED, by cause
 
 - the cell's own arch opcode IS among the ones that remain; what sits beside it is what the term carries beyond the operation (2 remain): 2 -- sar cl_gpr 32/go [reg_rdi], shr cl_gpr 64/go [reg_rdi]
@@ -488,7 +488,7 @@ own line.
 ## 7.1 The rule, LITERAL
 
 **LITERAL**,
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`,
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`,
 section 2e, `is_setup_line` — what counts as setup:
 
 ```python
@@ -537,7 +537,7 @@ none, which is task g1's own answer unchanged.
 ## 7.2 Which pairs it changes: one of forty
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py changes3c
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py changes3c
 the (cell, target) pairs the widened lookup changes
    [21/40] idiv gpr_one 32 -> c: term becomes primitive+setup, on `mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; ret`
    1 of 40 pair(s) change
@@ -558,7 +558,7 @@ misfire on real output, and it is left rather than worked around.)
 ## 7.3 Why one and not three
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py whynot3c idiv gpr_one 32 | grep -v 'peak resident'
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py whynot3c idiv gpr_one 32 | grep -v 'peak resident'
 cell idiv gpr_one 32
 
 c: 2 row(s) accepted by the widened rule at this cell; 10 row(s) of 109 carry the mnemonic at all
@@ -639,7 +639,7 @@ THIS rule could reach them; the limit is in task o2's input artifact,
 and the reason is in the corpus underneath it:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py bodies3c idiv | grep -v 'peak resident'
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py bodies3c idiv | grep -v 'peak resident'
 
 c: 12 unit(s) of 610 carry `idiv`
    the shortest such body, 4 instruction(s), unit c/op_210 (display label `/`):
@@ -787,7 +787,7 @@ undefined.**
 ## 7.4 What the one changed run answers
 
 ```
-$ sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ single-opcode\ rows%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md
+$ sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ single-opcode\ rows%\,\\%\^\$%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md
 | cell | lang | route | single-opcode rows at this cell | chosen row's body, LITERAL | the setup cells the row carries | the operator and operand types the manifest records | cause if no primitive |
 |---|---|---|---|---|---|---|---|
 | `idiv` gpr_one 32 | c | primitive+setup | 2 | `mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; ret` | `cltd` = (`cltd`, none, 32) | `a % b on int32_t and int32_t` (probe c/op_246 of c) |  |
@@ -799,7 +799,7 @@ the model-table cell (`cltd`, `none`, 32). What is rendered is the
 member's own probe source, one line.
 
 ```
-$ sed -n \\%\^.\ cell\ .\ lang\ .\ g1\ route%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md
+$ sed -n \\%\^.\ cell\ .\ lang\ .\ g1\ route%\,\\%\^\$%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md
 | cell | lang | g1 route | g1 verdict | this route | this verdict | moved |
 |---|---|---|---|---|---|---|
 | `idiv` gpr_one 32 | c | term | UNDECIDED, UNDECIDED at 300000 ms | primitive+setup | UNDECIDED, UNDECIDED at 300000 ms | **yes** |
@@ -882,7 +882,7 @@ records a plan at all; they all do). What matters is whether the two
 plans give the same ARRIVAL CONTRACT:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py rechecked3b
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py rechecked3b
 idiv gpr_one 32/c [reg_rax]: run route term; the plan the place RECORDS gives ['rdi', 'rsi', 'rdx']; the plan the old code REBUILT gives ['rdi', 'rsi', 'rdx']; the same
 idiv gpr_one 32/c [reg_rdx]: run route term; the plan the place RECORDS gives ['rdi', 'rsi', 'rdx']; the plan the old code REBUILT gives ['rdi', 'rsi', 'rdx']; the same
 idiv gpr_one 32/rust [reg_rax]: run route term; the plan the place RECORDS gives ['rdi', 'rsi', 'rdx']; the plan the old code REBUILT gives ['rdi', 'rsi', 'rdx']; the same
@@ -898,7 +898,7 @@ so the parameter-plan fix moves: 0 of them
 ```
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py rechecked3c
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py rechecked3c
 idiv gpr_one 32/c [reg_rax]: run route primitive+setup; the plan the place RECORDS gives ['rdi', 'rsi']; the plan the old code REBUILT gives ['rdi', 'rsi', 'rdx']; DIFFERS
 idiv gpr_one 32/c [reg_rdx]: run route primitive+setup; the plan the place RECORDS gives ['rdi', 'rsi']; the plan the old code REBUILT gives ['rdi', 'rsi', 'rdx']; DIFFERS
 
@@ -937,7 +937,7 @@ The spelling-key check was run over every json this task's own programs
 write, and `grep -c exempt` over every file this task added or changed.
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b_primitive.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b_spellings.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c_primitive.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b_primitive.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b_spellings.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c_primitive.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS handful3b.json -- no operator token in any key, grouping, pairing or row structure
 PASS handful3b_primitive.json -- no operator token in any key, grouping, pairing or row structure
@@ -947,12 +947,12 @@ PASS handful3c_primitive.json -- no operator token in any key, grouping, pairing
 ```
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/g1b_l8_run_of_record_b.sh /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/g1b_l11_run_of_record_c2.sh
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/g1b_l8_run_of_record_b.sh:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/g1b_l11_run_of_record_c2.sh:0
+$ grep -c exempt PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/g1b_l8_run_of_record_b.sh PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/g1b_l11_run_of_record_c2.sh
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/g1b_l8_run_of_record_b.sh:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/g1b_l11_run_of_record_c2.sh:0
 ```
 
 `grep -c` exits 1 when a count it prints is zero, which is why the lane
@@ -972,7 +972,7 @@ introduces a token anywhere.
 # 11. The conventions verifier over this log
 
 **LITERAL**, printed by lane `g1b_l16_verify_242_2.sh`, on the tower at
-`~/AirlockRuns/g1/agent/logs/20260909T102006Z__g1b_l16_verify_242_2.sh.log`.
+`<runs>/g1/agent/logs/20260909T102006Z__g1b_l16_verify_242_2.sh.log`.
 It was run over this log AS IT STOOD BEFORE THIS SECTION WAS APPENDED
 and before the note about Airlock's `.gitignore` was added to the
 deliverables list above.  Between them those two additions add one
@@ -990,28 +990,28 @@ two additions are the two extra UNVERIFIABLE and change nothing else.
    | line | shape | outcome | claim / reason |
    |---|---|---|---|
    | 138 | prose_verification | **UNVERIFIABLE** | `The forty runs were then run again, unchanged in every other respect. All forty reach a compiled` — prose_only -- a verification is asserted with nothing beside it |
-   | 185 | attribution | **UNVERIFIABLE** | `**LITERAL**, `~/Programming/Airlock/instance.sh` lines 174-176, which is where the empty volume ` — attribution_only -- cites `~/Programming/Airlock/instance.sh`, carries no command |
+   | 185 | attribution | **UNVERIFIABLE** | `**LITERAL**, `Airlock/instance.sh` lines 174-176, which is where the empty volume ` — attribution_only -- cites `Airlock/instance.sh`, carries no command |
    | 209 | shell_transcript | **NOT_RERUNNABLE** | `ls -la /persist/swift/usr/bin/swiftc` — output_annotated -- the paste carries an arrow gloss (`->`); an exact comparison is impossible |
    | 213 | shell_transcript | **NOT_RERUNNABLE** | `ls -la /usr/lib/x86_64-linux-gnu/libncurses.so.6` — output_annotated -- the paste carries an arrow gloss (`->`); an exact comparison is impossible |
    | 217 | shell_transcript | **REFUSED** | `/persist/swift/usr/bin/swiftc --version` — head_not_on_the_read_only_allowlist -- `/persist/swift/usr/bin/swiftc` |
-   | 248 | shell_transcript | **MATCHES** | `sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ rendered%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/` |
-   | 304 | shell_transcript | **MATCHES** | `sed -n \\%\^.\ cell\ .\ lang\ .\ g1\ route%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/oracle/cr` |
-   | 352 | shell_transcript | **MATCHES** | `python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py t` |
-   | 406 | shell_transcript | **MATCHES** | `sed -n \\%\^###\ 3.1\ Refusals%\,\\%\^###\ 3.2%p /projects/PseudoCoupHQ/Research/oracle/cross_co` |
-   | 436 | shell_transcript | **MATCHES** | `sed -n \\%\^###\ 3.2\ The\ landings%\,\\%\^##\ 4%p /projects/PseudoCoupHQ/Research/oracle/cross_` |
-   | 490 | attribution | **UNVERIFIABLE** | `**LITERAL**, `~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/ha` — attribution_only -- cites `~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/han |
+   | 248 | shell_transcript | **MATCHES** | `sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ rendered%\,\\%\^\$%p PseudoCoupHQ/Research/` |
+   | 304 | shell_transcript | **MATCHES** | `sed -n \\%\^.\ cell\ .\ lang\ .\ g1\ route%\,\\%\^\$%p PseudoCoupHQ/Research/oracle/cr` |
+   | 352 | shell_transcript | **MATCHES** | `python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py t` |
+   | 406 | shell_transcript | **MATCHES** | `sed -n \\%\^###\ 3.1\ Refusals%\,\\%\^###\ 3.2%p PseudoCoupHQ/Research/oracle/cross_co` |
+   | 436 | shell_transcript | **MATCHES** | `sed -n \\%\^###\ 3.2\ The\ landings%\,\\%\^##\ 4%p PseudoCoupHQ/Research/oracle/cross_` |
+   | 490 | attribution | **UNVERIFIABLE** | `**LITERAL**, `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/ha` — attribution_only -- cites `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/han |
    | 503 | attribution | **UNVERIFIABLE** | `**LITERAL**, the same file and section, `primitive_rows_with_setup` — the acceptance itself:` — attribution_only -- cites `primitive_rows_with_setup`, carries no command |
-   | 536 | shell_transcript | **NOT_RERUNNABLE** | `python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py c` — output_annotated -- the paste carries an arrow gloss (`->`); an exact comparison is impossible |
-   | 557 | shell_transcript | **MATCHES** | `python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py w` |
-   | 638 | shell_transcript | **MATCHES** | `python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py b` |
-   | 786 | shell_transcript | **MATCHES** | `sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ single-opcode\ rows%\,\\%\^\$%p /projects/PseudoCoupH` |
-   | 798 | shell_transcript | **MATCHES** | `sed -n \\%\^.\ cell\ .\ lang\ .\ g1\ route%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/oracle/cr` |
+   | 536 | shell_transcript | **NOT_RERUNNABLE** | `python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py c` — output_annotated -- the paste carries an arrow gloss (`->`); an exact comparison is impossible |
+   | 557 | shell_transcript | **MATCHES** | `python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py w` |
+   | 638 | shell_transcript | **MATCHES** | `python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py b` |
+   | 786 | shell_transcript | **MATCHES** | `sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ single-opcode\ rows%\,\\%\^\$%p PseudoCoupH` |
+   | 798 | shell_transcript | **MATCHES** | `sed -n \\%\^.\ cell\ .\ lang\ .\ g1\ route%\,\\%\^\$%p PseudoCoupHQ/Research/oracle/cr` |
    | 816 | attribution | **UNVERIFIABLE** | `- **Task g1's**, term route — the reason is the solver's clock. The emulation was 76 instruction` — attribution_only -- cites `handful3c.json`, carries no command |
    | 849 | attribution | **UNVERIFIABLE** | `**LITERAL**, `handful.py`, `one_recheck` as it stood before this task:` — attribution_only -- cites `handful.py`, carries no command |
-   | 881 | shell_transcript | **MATCHES** | `python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py r` |
-   | 897 | shell_transcript | **MATCHES** | `python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py r` |
-   | 936 | shell_transcript | **MATCHES** | `python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCo` |
-   | 946 | shell_transcript | **MATCHES** | `grep -c exempt /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handf` |
+   | 881 | shell_transcript | **MATCHES** | `python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py r` |
+   | 897 | shell_transcript | **MATCHES** | `python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py r` |
+   | 936 | shell_transcript | **MATCHES** | `python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCo` |
+   | 946 | shell_transcript | **MATCHES** | `grep -c exempt PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handf` |
    | 972 | prose_verification | **UNVERIFIABLE** | `1. **`g1.conf` now mounts `sandbox-persist` read-only**, with the reason written into its header` — prose_only -- a verification is asserted with nothing beside it |
 ```
 

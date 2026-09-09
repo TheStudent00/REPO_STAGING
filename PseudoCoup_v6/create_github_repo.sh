@@ -9,7 +9,7 @@
 # Usage:  ./create_github_repo.sh
 
 set -e
-REPO=~/Programming/PseudoCoup_v6
+REPO=PseudoCoup_v6
 cd "$REPO"
 
 # 1. local git repo

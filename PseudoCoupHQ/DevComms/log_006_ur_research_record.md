@@ -10,7 +10,7 @@ what was learned, where each finding lives, and what remained open
 without re-reading the whole campaign.
 
 **Numbering note.** This record shares the name `log_006` with
-`~/Programming/PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`
+`PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`
 because it consolidates that log and its downstream logs 007–013; the two
 are different files in different repositories and neither supersedes the
 other.
@@ -39,13 +39,13 @@ The campaign had two threads that ran together:
 - **Settling `kinds`'s organizing principle** — the register commits to
   `kinds` as data, checked for totality against `node-types.json`, but
   never settled what the INITIAL content should be or what it should
-  classify. log 006 (`~/Programming/PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`)
+  classify. log 006 (`PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`)
   opened this as five separately-judgeable claims; logs 007–013 are the
   evidence-gathering that followed, one measurement or history pass per
   open question.
 
 All source logs live in
-`~/Programming/PseudoCoup_v5/DevComms/`: `log_002_ur_brainstorm.md`,
+`PseudoCoup_v5/DevComms/`: `log_002_ur_brainstorm.md`,
 `log_006_ur_kinds_vocabulary.md`, `log_007_rust_kind_census.md`,
 `log_008_kinds_coarse_tagging_draft.md`,
 `log_009_invisible_intentions_census.md`,
@@ -64,13 +64,13 @@ below is 2–4 sentences with its path.
 
 | settlement | summary | path |
 | --- | --- | --- |
-| `ur` is the whole tree, richer by annotation, not replacement | The UR is the tree-sitter tree kept whole plus layers it never had: substrate (ts_kind, span, bytes, fields, children), identity (id), normalization (ur_kind), annotation (semantic, connections). The prior UR-AST failed by REPLACING the tree with ~30 neutral classes; the fix makes normalization an annotation on the tree, not a substitute for it. | `~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/CORE_0_0_0_0_ur.md` |
+| `ur` is the whole tree, richer by annotation, not replacement | The UR is the tree-sitter tree kept whole plus layers it never had: substrate (ts_kind, span, bytes, fields, children), identity (id), normalization (ur_kind), annotation (semantic, connections). The prior UR-AST failed by REPLACING the tree with ~30 neutral classes; the fix makes normalization an annotation on the tree, not a substitute for it. | `PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/CORE_0_0_0_0_ur.md` |
 | `tree` — the per-file container | `code (class)`, `realize: false`. Holds retained source bytes, `language`, grammar `semantic_version`, and the root `node`. Exists because losslessness is substrate PLUS bytes (a node alone cannot answer `text()`), and the grammar version on it is what makes pinning checkable at runtime. Graduates to its own folder only if serialization is ever ruled yes. | same CORE, `## design` |
 | `kinds` — the destination vocabulary | `code (variable)`, `realize: false`. DATA, derived from the target grammars, not inherited from the old thirty neutral classes. Checked for totality against `node-types.json` by the census. Append-only in spirit: a kind that vanished would orphan `ur_kind` tags in existing ledgers, so kinds are superseded by addition, never removed. The per-language ts_kind→ur_kind maps live in `ts_to_ur`, not here. | same CORE, `## design` |
-| `node` — origin is an attachment, not baked-in fields | Settled 2026-08-05. `Node` carries only what is true of every node — `id`, `ur_kind`, `sub_nodes`, `semantic`, `connectors`, `origin` — and `origin` is an instance of one origin class per producer (`TsOrigin` for parsed nodes carrying `ts_kind`/`named`/`fields`/`span`/`language`; co-shapes for generated/abstract nodes). This scopes "strictly richer than tree-sitter" correctly: for parsed nodes everything tree-sitter knows lives in `TsOrigin`, nothing lost; for macro-generated or abstract (to-be-wrapper) nodes there is honestly no tree-sitter origin to be richer than. | `~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_0_node/CORE_0_0_0_0_0_node.md` |
+| `node` — origin is an attachment, not baked-in fields | Settled 2026-08-05. `Node` carries only what is true of every node — `id`, `ur_kind`, `sub_nodes`, `semantic`, `connectors`, `origin` — and `origin` is an instance of one origin class per producer (`TsOrigin` for parsed nodes carrying `ts_kind`/`named`/`fields`/`span`/`language`; co-shapes for generated/abstract nodes). This scopes "strictly richer than tree-sitter" correctly: for parsed nodes everything tree-sitter knows lives in `TsOrigin`, nothing lost; for macro-generated or abstract (to-be-wrapper) nodes there is honestly no tree-sitter origin to be richer than. | `PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_0_node/CORE_0_0_0_0_0_node.md` |
 | `node` — the opacity form | A `token_tree` (or any grammar-declared-opaque region) becomes ONE node marked opaque — never silently empty, so a consumer halts or skips knowingly. Re-parsed content (via `injections.scm`) hangs beneath the opaque node, marked injected, so direct and recovered structure are never confusable. | same CORE, `## rules` |
-| `connector` — the static graph object | Joins two nodes by id; every writer that extends a ledger after its build writes connectors against existing ids, making late arrival uniform. The kind vocabulary is an open set by design (new kinds are data, not schema); kinds already named: definition↔instance, instance→abstract, invocation→macro-definition, produced→producer, runtime, expansion. | `~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_1_connector/CORE_0_0_0_0_1_connector.md` |
-| `id` — the spacetime id | Settled 2026-08-05. Uniqueness by exclusion principle: no two admissions occupy the same cell, so the id is unique by EVENT, not by description — the connector circularity vanishes because the id derives from the admission, not the graph. Coordinates are LOGICAL (a Lamport-clock shape, not wall clock): a two-level clock `id = (batch, ordinal)` within one ledger, both assigned by one sequencer; a FRAME id joins the tuple only at merge across independent sequencers. | `~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_2_id/CORE_0_0_0_0_2_id.md` |
+| `connector` — the static graph object | Joins two nodes by id; every writer that extends a ledger after its build writes connectors against existing ids, making late arrival uniform. The kind vocabulary is an open set by design (new kinds are data, not schema); kinds already named: definition↔instance, instance→abstract, invocation→macro-definition, produced→producer, runtime, expansion. | `PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_1_connector/CORE_0_0_0_0_1_connector.md` |
+| `id` — the spacetime id | Settled 2026-08-05. Uniqueness by exclusion principle: no two admissions occupy the same cell, so the id is unique by EVENT, not by description — the connector circularity vanishes because the id derives from the admission, not the graph. Coordinates are LOGICAL (a Lamport-clock shape, not wall clock): a two-level clock `id = (batch, ordinal)` within one ledger, both assigned by one sequencer; a FRAME id joins the tuple only at merge across independent sequencers. | `PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_2_id/CORE_0_0_0_0_2_id.md` |
 | `id` — what sits beside the id, deliberately outside it | The node+connector fingerprint is an attribute, never the key (content-derived identity was rejected as a key on recorded evidence — identical co-nodes collide). One wall-clock stamp per file admission is kept as provenance metadata, not as a coordinate (clocks can tie; the frame coordinate is what actually excludes ties). Re-ingesting a file gets a new id correctly, as a different admission event; the fingerprint triages redundant re-admission versus an updated file. | same CORE, `## design` |
 | the assigner | The sequencer — the counter handing out coordinates at admission — is the builder's held state, not part of the `id` class itself; the `id` class is the value the sequencer produces. | same CORE, `## design` |
 
@@ -108,7 +108,7 @@ surface (153/164 named kinds occurring) that log 008's coarse-tagging
 draft was built against, and gave a real "totality" baseline for the
 census the `kinds` CORE commits to.
 
-**Path:** `~/Programming/PseudoCoup_v5/DevComms/log_007_rust_kind_census.md`
+**Path:** `PseudoCoup_v5/DevComms/log_007_rust_kind_census.md`
 
 ### 3.2 log 008 — coarse tagging draft: rust named kinds → the 21 intention buckets
 
@@ -135,7 +135,7 @@ impl. H (events) is nearly as empty, appearing only as a flagged dual on
 types, borrowing, error propagation, structural containers), which log
 011 investigates one at a time.
 
-**Path:** `~/Programming/PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
+**Path:** `PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
 
 ### 3.3 log 009 — the form-invisible intentions (B, G, I): how they manifest in the codegen corpus
 
@@ -164,7 +164,7 @@ any of the other 259 ordinary trait impls in the corpus (276 total);
 recovering the intention requires reading the `trait` field text, which
 is ledger-level work, not `ur_kind` tagging.
 
-**Path:** `~/Programming/PseudoCoup_v5/DevComms/log_009_invisible_intentions_census.md`
+**Path:** `PseudoCoup_v5/DevComms/log_009_invisible_intentions_census.md`
 
 ### 3.4 log 010 — token_tree re-parse coverage, measured
 
@@ -190,7 +190,7 @@ the earlier ~94% estimate is superseded by a measured 82.98% on real
 data, and the residue is explained rather than left as noise (own-
 grammar macros are a structural category, not sampling error).
 
-**Path:** `~/Programming/PseudoCoup_v5/DevComms/log_010_token_tree_reparse_coverage.md`
+**Path:** `PseudoCoup_v5/DevComms/log_010_token_tree_reparse_coverage.md`
 
 ### 3.5 log 011 — the five uncertain families: evidence and recommendations
 
@@ -198,7 +198,7 @@ grammar macros are a structural category, not sampling error).
 namespacing, (2) sum types/enums, (3) borrowing/references/lifetimes,
 (4) error propagation, (5) structural containers — evidence quoted from
 the validated intentions artifact
-(`~/Programming/PseudoIR/Tools/intentions/pc_intentions.json`), a
+(`PseudoIR/Tools/intentions/pc_intentions.json`), a
 cross-language check against 2–3 of the other eleven target languages,
 a cost-asymmetry table, and one labelled RECOMMENDATION with an
 explicit confidence.
@@ -231,7 +231,7 @@ argued, sourced, reversible recommendations, and surfaces the three gap
 questions that log 013 later resolves as project history rather than
 open research.
 
-**Path:** `~/Programming/PseudoCoup_v5/DevComms/log_011_uncertain_families_evidence.md`
+**Path:** `PseudoCoup_v5/DevComms/log_011_uncertain_families_evidence.md`
 
 ### 3.6 log 012 — discipline history
 
@@ -264,7 +264,7 @@ every other distinct sense of "discipline"/"doctrine" found across the
 whole `0_Archive` + `StressBot` lineage (13 further senses, tabulated in
 the source log) so future readers don't re-derive the ambiguity.
 
-**Path:** `~/Programming/PseudoCoup_v5/DevComms/log_012_discipline_history.md`
+**Path:** `PseudoCoup_v5/DevComms/log_012_discipline_history.md`
 
 ### 3.7 log 013 — history of the three gap-questions: sum types, error flow, aliasing
 
@@ -276,12 +276,12 @@ back through deleted git history.
 
 **Headline finding — the copy-forward root cause, one event for all
 three questions:** the source document
-(`~/Programming/PseudoCoup_v5/Designing/minimum_intention_set.md`,
+(`PseudoCoup_v5/Designing/minimum_intention_set.md`,
 byte-identical across all three PCv5 commits that held it) has SIX
 sections — "The set", "Why the set stops here", "Derived (not in the
 set)", "Relation to the divergence study", "Audit", "Non-object
 finding", "Audit verdict", "Open" — and only "The set" was lifted into
-`~/Programming/PseudoIR/Tools/intentions/intentions_data.py`. The exact
+`PseudoIR/Tools/intentions/intentions_data.py`. The exact
 git quote fixing the scope of what was taken:
 
 > "# Extension field 3: MINIMUM_SET
@@ -318,7 +318,7 @@ copy-forward took a conclusion and left its argument behind" — a
 verifiable, sourced history rather than a guess, delivered as readings
 for the owner to rule on rather than as corrections.
 
-**Path:** `~/Programming/PseudoCoup_v5/DevComms/log_013_intentions_gap_history.md`
+**Path:** `PseudoCoup_v5/DevComms/log_013_intentions_gap_history.md`
 
 ---
 
@@ -399,10 +399,10 @@ stated plainly here rather than silently folded into the numbers above.
   took only the conclusion. log 013 open question 4 proposes making the
   derived list and the non-object finding into DATA — a `derived` and a
   `non_objects` field alongside `minimum_set` in
-  `~/Programming/PseudoIR/Tools/intentions/pc_intentions.json` — so the
+  `PseudoIR/Tools/intentions/pc_intentions.json` — so the
   argument travels with the conclusion going forward, bringing
   `minimum_intention_set.md`'s six sections forward beside
-  `~/Programming/PseudoIR/Tools/intentions/intentions_data.py` rather
+  `PseudoIR/Tools/intentions/intentions_data.py` rather
   than leaving them recoverable only via PCv5 git archaeology. Not yet
   decided; also unresolved is whether the 2026-07-28 lift's narrow scope
   was ever an explicit decision or merely a default nobody recorded
@@ -427,12 +427,12 @@ stated plainly here rather than silently folded into the numbers above.
     token_tree content gets ids under the enclosing opaque node's path
     as a sub-address space; leaning yes (byte offsets already stay true
     to the original file under `included_ranges`), unruled. Recorded in
-    `~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_0_node/CORE_0_0_0_0_0_node.md`.
+    `PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_0_node/CORE_0_0_0_0_0_node.md`.
   - **supersedes connector kind** — a candidate connector kind for
     joining two admissions of an updated file (differing fingerprint,
     same origin file name), named but not yet added to the connector
     kind vocabulary. Recorded in
-    `~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_2_id/CORE_0_0_0_0_2_id.md`.
+    `PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/node_0_0_0_0_2_id/CORE_0_0_0_0_2_id.md`.
   - **serialization** — whether a UR tree is ever written to a file or
     exists only in memory during a run; if `tree`/`kinds` ever need a
     byte-fidelity round-trip discipline (as the 289-line ledger already
@@ -459,7 +459,7 @@ worth repeating on future research passes of this shape:
   ends in RECOMMENDATIONS, QUESTIONS, or READINGS with explicit
   confidence levels, never a settlement.
 - **Planning untouched.** None of logs 002 or 006–013 edits anything
-  under `~/Programming/PseudoCoup_v5/Planning/`. The settled design
+  under `PseudoCoup_v5/Planning/`. The settled design
   captured in §2 above reached the COREs only through the owner's own rulings,
   quoted verbatim in each CORE with the date and the exact words ("yes
   ... and yes," "we are aligned. lets proceed," "yeah logical space
@@ -490,7 +490,7 @@ transferable practice, not just as this campaign's history.
 ## sources
 
 All source logs are under
-`~/Programming/PseudoCoup_v5/DevComms/`:
+`PseudoCoup_v5/DevComms/`:
 `log_002_ur_brainstorm.md`, `log_006_ur_kinds_vocabulary.md`,
 `log_007_rust_kind_census.md`, `log_008_kinds_coarse_tagging_draft.md`,
 `log_009_invisible_intentions_census.md`,
@@ -499,12 +499,12 @@ All source logs are under
 `log_012_discipline_history.md`, `log_013_intentions_gap_history.md`.
 
 The settled ur design is under
-`~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/`:
+`PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/`:
 `CORE_0_0_0_0_ur.md`,
 `node_0_0_0_0_0_node/CORE_0_0_0_0_0_node.md`,
 `node_0_0_0_0_1_connector/CORE_0_0_0_0_1_connector.md`,
 `node_0_0_0_0_2_id/CORE_0_0_0_0_2_id.md`.
 
 The intentions artifact is
-`~/Programming/PseudoIR/Tools/intentions/pc_intentions.json` and its
+`PseudoIR/Tools/intentions/pc_intentions.json` and its
 `README.md` in the same directory.

@@ -3,7 +3,7 @@
 arch-opcode model table.  Ten cells, two targets, twenty runs.
 
 Node: hq.research.arch_unit_oracle
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08).
 
 THE OBJECTS, one sentence each, in relation.
@@ -281,6 +281,7 @@ and caches it beside the first.
 
 import json
 import os
+import re
 import resource
 import sys
 
@@ -304,8 +305,10 @@ sys.path.insert(0, MODEL)
 
 GO = os.path.join(EMULATION, "go")
 SWIFT = os.path.join(EMULATION, "swift")
+CPP = os.path.join(EMULATION, "cpp")
 sys.path.insert(0, GO)
 sys.path.insert(0, SWIFT)
+sys.path.insert(0, CPP)
 
 import z3                                                        # noqa: E402
 import canon                                                     # noqa: E402
@@ -315,6 +318,7 @@ import emulate as E                                              # noqa: E402
 import rust_render as RR                                         # noqa: E402
 import go_render as GR                                           # noqa: E402
 import swift_render as SR                                        # noqa: E402
+import cpp_render as CPR                                          # noqa: E402
 import model_table as MTAB                                       # noqa: E402
 import model_translate as MT                                     # noqa: E402
 import single_opcode_units as SOU                                # noqa: E402
@@ -349,7 +353,7 @@ RESULTS_G1C = os.path.join(HERE, "handful3c.json")
 REPORT_G1C = os.path.join(HERE, "handful3c.md")
 SRC_G1C = os.path.join(HERE, "src3c")
 PRIMITIVE_G1C = os.path.join(HERE, "handful3c_primitive.json")
-HOST_FOLDER = ("~/Programming/PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/handful")
 
 # WHICH TASK IS RUNNING, and what it changes. `h1` is the run of record
@@ -474,6 +478,40 @@ def use_task_ap3():
     ABORT_NAME = "ABORT_MEMORY_AP3"
 
 
+def use_task_ap4():
+    """task ap4's entry: task ap3's route, with the three changes the owner's
+    ruling of 2026-09-09 states -- the contract for a value that is not
+    in a fresh register.
+
+    THE CHANGES ARE NOT GATED ON THIS NAME either, for the reason
+    `use_task_ap2`'s docstring gives and `use_task_ap3` repeats: an
+    arrival that is a function of another arrival IS one, an emulation
+    whose carved body carries no instruction IS the identity on its
+    arrival, a half of the flags place IS the flags place, and an
+    answer left on the x87 stack IS an answer -- for every task, not
+    for this one.  What is task-scoped is where the products are
+    written and the named abort."""
+    global TASK, ABORT_NAME
+    TASK = "ap4"
+    ABORT_NAME = "ABORT_MEMORY_AP4"
+
+
+def use_task_ex1():
+    """task ex1's entry: task ap4's route exactly, over FIVE compiled
+    targets instead of four -- cpp added as the fifth.
+
+    NOTHING ABOUT THE ROUTE MOVES.  `fixes_are_on`, `primitive_first`
+    and `setup_is_allowed` answer for `ex1` the way they answer for
+    `ap4`, and the three changes task ap4 made are not gated on a task
+    name at all, so a cpp run is put through the same four steps a c
+    run is.  What this name decides is the ONE thing that is genuinely
+    task-scoped: which targets `targets()` walks, and where the
+    products are written (`autopoly/expand1.py` repoints those)."""
+    global TASK, ABORT_NAME
+    TASK = "ex1"
+    ABORT_NAME = "ABORT_MEMORY_EX1"
+
+
 def fixes_are_on():
     """whether the two printing fixes of task h2 apply.
 
@@ -482,7 +520,8 @@ def fixes_are_on():
     all, and the normalised term is what the model table prints.
     Written as one function rather than `TASK == "h2"` in three places,
     so a later task cannot half-inherit them."""
-    return TASK in ("h2", "g1", "g1b", "g1c", "ap2", "ap3")
+    return TASK in ("h2", "g1", "g1b", "g1c", "ap2", "ap3", "ap4",
+                    "ex1")
 
 
 def primitive_first():
@@ -493,7 +532,7 @@ def primitive_first():
     lookup widened by one step (section 2e).  One function rather than
     `TASK == "g1"` in five places, for the same reason
     `fixes_are_on` is one function."""
-    return TASK in ("g1", "g1b", "g1c", "ap2", "ap3")
+    return TASK in ("g1", "g1b", "g1c", "ap2", "ap3", "ap4", "ex1")
 
 
 def setup_is_allowed():
@@ -502,13 +541,22 @@ def setup_is_allowed():
 
     Task g1c's one change, and the only thing that separates it from
     task g1b."""
-    return TASK in ("g1c", "ap2", "ap3")
+    return TASK in ("g1c", "ap2", "ap3", "ap4", "ex1")
 
 
 def targets():
     """the target languages of the running task.  Tasks h1 and h2 ran
     two; task g1 and its closers run four, and the order is the brief's
-    own."""
+    own; task ex1 runs FIVE, cpp added as the fifth COMPILED target.
+
+    The fifth is task-scoped, which is what a task name is for here: it
+    changes WHICH pairs the loop walks, and tasks ap1 to ap4 counted
+    "proved on all four" over four.  Nothing else about cpp is gated on
+    a task name -- `renderer_for`, `suffix_of`, `compile_one_place` and
+    `wrapped_body` know cpp for every task, because a cpp emulation IS
+    rendered by `CppRenderer` and compiled by clang++ whoever asks."""
+    if TASK == "ex1":
+        return ["c", "cpp", "rust", "go", "swift"]
     if primitive_first():
         return ["c", "rust", "go", "swift"]
     return ["c", "rust"]
@@ -766,6 +814,8 @@ def run_command():
             "ship_flags_rust": RR.SHIP_FLAGS_SOURCE,
             "ship_flags_go": GR.SHIP_FLAGS_SOURCE,
             "ship_flags_swift": SR.SHIP_FLAGS_SOURCE,
+            "ship_flags_cpp": CPR.SHIP_FLAGS_SOURCE,
+            "clangxx_answer": CPR.clangxx_answer(),
             "swiftc_answer": SR.swiftc_answer(),
             "go_argument_sequence": GR.sequence_agrees(),
             "solver_ceiling_ms": shared["gate"].solver_timeout_ms,
@@ -870,7 +920,11 @@ def one_recheck(shared, cells, run, place):
     raw_bytes = place["body_bytes"].split()
     mnem = place["body_text"].split("; ")
     return check_one_place(shared, wanted, params, raw_bytes,
-                           mnem, place["label"], run["lang"])
+                           mnem, place["label"], run["lang"],
+                           attested=attested_of(
+                               held,
+                               ((run.get("primitive") or {})
+                                .get("row"))))
 
 
 def rebuilt_renderer(place, lang, label):
@@ -1000,7 +1054,8 @@ def one_place(shared, held, place, lang):
     out["body_text"] = "; ".join(mnem)
     out["landing"] = landing_of(mnem, held["mnem"])
     out["check"] = check_one_place(shared, working, renderer.params,
-                                   raw_bytes, mnem, label, lang)
+                                   raw_bytes, mnem, label, lang,
+                                   attested=attested_of(held, None))
     return out
 
 
@@ -1958,7 +2013,11 @@ def render_one_place(place, lang, label, how=None, write=True):
 def renderer_for(lang, families, family, bits, label):
     """the ONE renderer of the target, each in its own sub-folder, each
     deriving from task o7's `emulate.Renderer`: c is that class itself,
-    rust is task o11's, go and swift are task g1's."""
+    rust is task o11's, go and swift are task g1's, cpp is task ex1's
+    (c's renderer with cpp's linkage and headers -- the two things
+    measured to differ, `cpp/cpp_render.py`'s own header says how)."""
+    if lang == "cpp":
+        return CPR.CppRenderer(families, family, bits, label)
     if lang == "rust":
         return RR.RustRenderer(families, family, bits, label)
     if lang == "go":
@@ -1969,6 +2028,8 @@ def renderer_for(lang, families, family, bits, label):
 
 
 def suffix_of(lang):
+    if lang == "cpp":
+        return ".cpp"
     if lang == "rust":
         return ".rs"
     if lang == "go":
@@ -1987,7 +2048,10 @@ def compile_one_place(source, symbol, lang):
     `-std=c17 -O1 -c`, rustc `--emit=obj -C opt-level=1 -C
     debug-assertions=off`, a plain `go build` in a module directory, or
     `swiftc -O -c` -- each read off `lane_gen.py`'s own branch for that
-    language."""
+    language.  Task ex1 adds cpp's, which is
+    `clang++ -std=c++20 -O1 -c`, read off the same file's cpp branch."""
+    if lang == "cpp":
+        return CPR.compile_and_carve(source, symbol)
     if lang == "rust":
         return RR.compile_and_carve(source, symbol)
     if lang == "go":
@@ -2030,10 +2094,39 @@ def expected_families(lang, params):
     return E.expected_c_families(params)
 
 
+def attested_of(held, found_row):
+    """what task ap4's change 1 reads the relation between the two
+    arrival contracts from, and it is three facts off objects that
+    already exist: the cell's own triple, the cell's own line as the
+    model table spells it, and the body of the corpus row the primitive
+    lookup matched.  A term-route place is handed no body, because a
+    term-route emulation is rendered FROM the cell's own families and
+    the two contracts cannot differ in count."""
+    held = held or {}
+    return {
+        "mnem": held.get("mnem"),
+        "shape": held.get("shape"),
+        "key_width": held.get("key_width"),
+        "cell_line": held.get("line"),
+        "body_text": (found_row or {}).get("body_text"),
+    }
+
+
 def landing_of(mnem, cell_mnem):
     """task o8's question: chaff-stripped by task o2's own narrow rule,
-    is what remains exactly the cell's own arch opcode?"""
+    is what remains exactly the cell's own arch opcode?
+
+    TASK ap4, CHANGE 3: a body that carries no instruction at all is
+    the IDENTITY, which is a LANDING and not a new outcome name -- the
+    compiler emitted nothing because the value asked for is already in
+    the register it answers in."""
     import single_opcode_units as SOU
+    if the_body_is_empty(mnem):
+        return {"stripped_text": "",
+                "stripped_count": 0,
+                "remaining": [],
+                "verdict": "IDENTITY",
+                "holds_the_cells_own_opcode": False}
     stripped = SOU.strip_chaff(mnem, "narrow")
     out = {"stripped_text": "; ".join(stripped),
            "stripped_count": len(stripped)}
@@ -2062,8 +2155,473 @@ def landing_of(mnem, cell_mnem):
 # step 4: the check -- the cell's term against the carved body's term
 # ------------------------------------------------------------------
 
+# ==================================================================
+# TASK ap4 -- THE CONTRACT FOR A VALUE THAT IS NOT IN A FRESH REGISTER
+# ==================================================================
+#
+# the owner's ruling of 2026-09-09: "the contract may state a place by a
+# CONSTRAINT, not only by a register name.  One extension, in the layer
+# that owns each half."  Three changes carry it out and two of them are
+# here, in the driver; the third is the ledger's x87 prelude and
+# epilogue (`ledger.build_prelude` / `build_epilogue`).
+#
+#   CHANGE 1, `derived_arrivals`: where the cell reads a different
+#   NUMBER of arrivals from the emulation, the two sides are not
+#   aligned row by row.  The cell's arrivals are SUBSTITUTED by what
+#   the emulation's own attested body leaves in them, read off the
+#   reference simulator, and the REGION that substitution names is
+#   recorded as a sentence on the run.
+#
+#   CHANGE 3, `the_identity`: an emulation whose carved body carries no
+#   instruction at all is the identity on its arrival, so the
+#   obligation is the cell's term against IN-0.  No new outcome name:
+#   the gate's own words carry the verdict and `IDENTITY` is a landing,
+#   like `LANDED`.
+#
+# A fourth thing this task changes is not a new rule but the driver's
+# OWN rule reaching a name task ap2's halving introduced: a place named
+# `flags.low` or `flags.high` is a half of the flags place, and the
+# primitive route already refuses a flags place because an operator
+# answers with the value it hands back and the flags are a second place
+# the opcode writes (`CAUSE_PRIMITIVE_FLAGS`).  See
+# `is_the_flags_place`.
+
+RETURN_ONLY = frozenset(["ret", "retq", "repz", "endbr64", "nop",
+                         "nopw", "nopl", "hlt"])
+"""the mnemonics a carved body may hold and still carry no instruction
+of its own (task ap4, change 3).
+
+THIS IS NOT `strip_chaff`, deliberately.  Task o2's narrow rule counts
+a register-to-register `mov` as chaff, so `mov %rdi,%rax; ret` strips
+to nothing -- and that body is NOT empty: it moves an arrival into the
+answer register, which is the identity in c's calling rule and is not
+the identity in go's.  The test here is the literal one: the body
+spells nothing but a return."""
+
+
+def the_body_is_empty(mnem):
+    """whether the carved body carries no instruction of its own."""
+    for line in mnem:
+        name = line.split()[0] if line.split() else ""
+        if name.startswith("nop"):
+            continue
+        if name not in RETURN_ONLY:
+            return False
+    return True
+
+
+def is_the_flags_place(writes):
+    """whether a place name names the flags place or one half of it.
+
+    Task ap2's fix 3 splits a 128-bit place into `<name>.low` and
+    `<name>.high`, and the primitive route's own refusal tested the
+    whole name against `"flags"`, so the two halves of a 64-bit
+    comparison's flags place slipped past it and were put to the gate
+    against the operator's answer.  What they then said -- `the IN rows
+    cannot be aligned` -- is true about the two row lists and false
+    about the objects: the emulation has no answer for a flags place at
+    all, which is what the refusal already says."""
+    if not writes:
+        return False
+    return writes.split(".")[0] == "flags"
+
+
+def the_identity(shared, place, params, lang, out):
+    """CHANGE 3: the emulation whose carved body carries no instruction.
+
+    The compiler emitted nothing because the value it was asked for is
+    already in the register it answers in, so the emulation IS the
+    identity on its arrival and the obligation is the cell's term
+    against IN-0.  The arrival is read off the emulation's own
+    parameter plan through the target's calling rule, exactly as every
+    other run reads it; where that plan names anything but ONE arrival
+    the place is refused with the count, because which of two arrivals
+    an empty body answers with cannot be read off nothing."""
+    import pool100_entry_equivalence as P100
+    out["route"]["body"] = ("the carved body carries no instruction, "
+                            "so the emulation is the identity on its "
+                            "arrival")
+    out["route"]["cell"] = ("the cell's own term, as the model table "
+                            "holds it")
+    out["identity"] = True
+    try:
+        body_families = expected_families(lang, params)
+    except E.Refused as refusal:
+        out["outcome"] = "UNDECIDED"
+        out["reason"] = "%s: %s" % (refusal.cause, refusal.detail)
+        return out
+    if len(body_families) != 1:
+        out["outcome"] = "UNDECIDED"
+        out["reason"] = ("the carved body carries no instruction and "
+                         "its arrival contract names %d IN rows, so "
+                         "which arrival it answers with cannot be read"
+                         % len(body_families))
+        return out
+    cell_families = place["families"]
+    cell_rows = P100.input_rows(cell_families)
+    body_rows = P100.input_rows(body_families)
+    disagreement = P100.rows_disagree(cell_rows, body_rows)
+    if disagreement is not None:
+        out["outcome"] = "UNDECIDED"
+        out["reason"] = "the IN rows cannot be aligned: %s" % disagreement
+        return out
+    body_term = z3.BitVec("seed_%s" % body_families[0],
+                          body_rows[0]["bits"])
+    out["aligned_rows"] = [{
+        "row": "IN-0",
+        "the cell reads": cell_families[0],
+        "the body reads": body_families[0],
+    }]
+    cell_aligned = P100.align_by_row(place["term"], cell_rows)
+    body_aligned = P100.align_by_row(body_term, body_rows)
+    out["cell_bits"] = cell_aligned.size()
+    out["body_bits"] = body_aligned.size()
+    out.update(decided(shared, cell_aligned, body_aligned, params))
+    return out
+
+
+SETUP_RELATIONS = ("the same value", "the sign spread of")
+"""the two relations task ap4's change 1 states a REGION with, and both
+are read from the reference simulator's own tables rather than named
+here: `reference.SPREAD_SIGN` (`cltd`, `cqto`, `cqo`, `cwtd`) and
+`reference.ACCUMULATOR_WIDEN` (`cbtw`, `cwtl`, `cltq`) are the
+zero-operand setup instructions the corpus produces a derived arrival
+with, and equality is what a `gpr_same` operand form binds."""
+
+
+def derived_arrivals(place, attested, body_families, lang):
+    """CHANGE 1: the cell's arrivals written over the EMULATION's.
+
+    THE DEFECT.  The gate aligns two arrival contracts position by
+    position and declines when they name different numbers of IN rows
+    (`the IN rows cannot be aligned: ... name 3 and 2 IN rows`).  On the
+    primitive route the two contracts are different things: the cell's
+    arrivals are the registers its own opcode reads, and the
+    emulation's are the registers its own parameters arrive in.  A
+    corpus body reaches the opcode by putting values in those registers
+    first -- `mov %rdi,%rax; cqto; idiv %rsi` -- so an arrival of the
+    cell can be a FUNCTION of an arrival of the emulation, or the same
+    one twice, or absent.
+
+    THE FIX, and the relation is READ and never named here.  The
+    reference simulator steps the emulation's own attested body, on a
+    state whose registers are free symbols, up to the line that
+    classifies to this cell; what it leaves in each register at that
+    moment is what that register holds when the opcode runs.  The
+    cell's own operand registers are matched to the body's positionally
+    -- position k of the cell's line against position k of the body's
+    -- and every other family the cell reads is matched by its own
+    name, which is what an implicit register (the accumulator and its
+    high half) is.
+
+    Returns a dict with `term` (the cell's term over the emulation's
+    arrivals), `region` (the sentence), `substitution` (what each of
+    the cell's IN rows became) and `free` (any symbol left over); or a
+    dict with `refusal`, naming the arrival it could not place."""
+    body_text = (attested or {}).get("body_text")
+    cell_line = (attested or {}).get("cell_line")
+    cell_families = list(place.get("families") or [])
+    if body_text is None:
+        return {"refusal": ("the emulation is not a matched corpus "
+                            "row, so there is no attested body to "
+                            "read the relation between the two "
+                            "arrival contracts from")}
+    lines = split_body(body_text)
+    at = the_cells_own_line(lines, attested)
+    if at is None:
+        return {"refusal": ("the cell's own instruction is not in the "
+                            "matched corpus row's body, so what the "
+                            "body leaves in the cell's arrival "
+                            "registers cannot be read")}
+    state = R.MachineState()
+    for line in lines[:at]:
+        try:
+            R.REFERENCE.step(state, line)
+        except Exception as problem:
+            return {"refusal": ("the reference stopped on %r of the "
+                                "matched corpus row's body (%s: %s), "
+                                "so what it leaves in the cell's "
+                                "arrival registers cannot be read"
+                                % (line, type(problem).__name__,
+                                   problem))}
+    by_position = operand_families(SOU.parse_insn(lines[at])[1])
+    cell_positions = operand_families(SOU.parse_insn(cell_line)[1]
+                                      if cell_line else [])
+    substitution = []
+    record = []
+    for index, family in enumerate(cell_families):
+        wanted = family
+        at_position = None
+        for position, named in enumerate(cell_positions):
+            if named == family:
+                at_position = position
+                break
+        if at_position is not None:
+            if at_position >= len(by_position) or \
+                    by_position[at_position] is None:
+                return {"refusal": ("the cell reads %s at operand "
+                                    "position %d and the matched body "
+                                    "names no register there, so the "
+                                    "two cannot be matched"
+                                    % (family, at_position))}
+            wanted = by_position[at_position]
+        term = state.registers.get(wanted)
+        if term is None:
+            term = state.family_value(wanted)
+        seed = z3.BitVec("seed_%s" % family, term.size())
+        substitution.append((seed, term))
+        record.append({"row": "IN-%d" % index,
+                       "the cell reads": family,
+                       "becomes": T.one_line(term)})
+    substituted = place["term"]
+    if substitution:
+        substituted = z3.substitute(substituted, *substitution)
+    free = []
+    for symbol in z3.z3util.get_vars(substituted):
+        name = symbol.decl().name()
+        if not name.startswith("seed_"):
+            free.append(name)
+            continue
+        if name[len("seed_"):] not in body_families:
+            free.append(name)
+    return {"term": substituted,
+            "substitution": record,
+            "free": sorted(set(free)),
+            "region": the_region(cell_families, substitution,
+                                 (attested or {}).get("key_width"))}
+
+
+def operand_families(operands):
+    """the register family each operand position names, or None where
+    the operand is not a register."""
+    out = []
+    for operand in (operands or []):
+        if not operand.startswith("%"):
+            out.append(None)
+            continue
+        out.append(canon.FAMILY_OF.get(operand[1:]))
+    return out
+
+
+def split_body(body_text):
+    if isinstance(body_text, str):
+        raw = body_text.split("; ")
+    else:
+        raw = list(body_text)
+    out = []
+    for line in raw:
+        line = line.split("!!")[0].strip()
+        if line:
+            out.append(line)
+    return out
+
+
+def the_cells_own_line(lines, attested):
+    """the index of the line of the attested body that classifies to
+    this cell, by the model table's own classifier."""
+    mnem = (attested or {}).get("mnem")
+    shape = (attested or {}).get("shape")
+    key_width = (attested or {}).get("key_width")
+    for index, line in enumerate(lines):
+        name, _operands = SOU.parse_insn(line)
+        if name is None:
+            continue
+        if name != mnem:
+            continue
+        got_shape, got_width, _cause = MTAB.classify_line(name, line, 0)
+        if got_shape == shape and got_width == key_width:
+            return index
+    return None
+
+
+def the_region(cell_families, substitution, key_width):
+    """THE REGION, as a sentence, in the CELL's own IN-row numbering.
+
+    The substitution says what each of the cell's arrivals becomes over
+    the emulation's; the region is what that makes TRUE between two of
+    the cell's own rows, and it is asked of z3 rather than asserted.
+    Two relations are tested, and both are the ones the corpus's own
+    setup produces: a row that is the SAME VALUE as another (`xor
+    %eax,%eax` and the other `gpr_same` forms bind both operands to one
+    arrival), and a row that is the SIGN SPREAD of another (`cltd` and
+    `cqto` fill the high half of the dividend with the low half's sign).
+    A row no relation holds of is named as free."""
+    became = {}
+    for index, family in enumerate(cell_families):
+        became[index] = substitution[index][1]
+    said = []
+    for index in sorted(became):
+        for other in sorted(became):
+            if other == index:
+                continue
+            if other < index:
+                if proved_equal(became[index], became[other]):
+                    said.append("IN-%d = IN-%d" % (index, other))
+                    break
+            spread = the_sign_spread(became[other], key_width)
+            if spread is None:
+                continue
+            if proved_equal(became[index], spread):
+                said.append("IN-%d = SignExt(IN-%d)" % (index, other))
+                break
+    if not said:
+        return ("no constraint: every one of the cell's IN rows is "
+                "free over the emulation's own arrivals")
+    return "on the region %s" % ", ".join(said)
+
+
+def proved_equal(left, right):
+    """z3 asked whether two terms are the same function of their free
+    symbols.  A relation this task PRINTS is a relation z3 proved."""
+    if left.size() != right.size():
+        return False
+    solver = z3.Solver()
+    solver.set("timeout", 3000)
+    solver.add(left != right)
+    return solver.check() == z3.unsat
+
+
+def the_sign_spread(term, key_width):
+    """the term one of `reference.SPREAD_SIGN`'s instructions leaves in
+    the data register: the low `key_width` bits are every bit set to the
+    sign bit of the source's low `key_width` bits, and the rest of the
+    register is untouched -- which for a fresh 32-bit `cltd` is zero.
+
+    Written once, here, and compared against the reference's own result
+    by z3 rather than trusted: `the_region` prints a relation only when
+    `proved_equal` proves it."""
+    if key_width is None:
+        return None
+    width = min(key_width, term.size())
+    if width < 1:
+        return None
+    sign = z3.Extract(width - 1, width - 1, term)
+    spread = z3.SignExt(width - 1, sign)
+    if width < term.size():
+        spread = z3.ZeroExt(term.size() - width, spread)
+    if spread.size() != term.size():
+        return None
+    return z3.simplify(spread)
+
+
+X87_STACK_SLOT = re.compile(r"^x87_0x([0-9a-f]+)_rsp_$")
+"""the reference's own symbol for an x87 value a body loads off the
+machine stack: `reference.x87_symbol` mangles the operand text, so
+`fldt 0x18(%rsp)` reads `x87_0x18_rsp_`.  The number in the middle is
+the displacement the body itself spells."""
+
+
+def x87_arrivals(families):
+    """whether every arrival of a place is a value on the x87 stack.
+
+    All or none, and the objects say why: the two x87 cell shapes are
+    `st_st` (both operands on the stack) and `mem_one` (one on the
+    stack, one a literal memory operand read at the x87 sort, which
+    `x87_as_arrivals` re-reads as an arrival of the same sort).  A place
+    that mixes an x87 arrival with a bitvector one is refused here
+    rather than half-aligned."""
+    if not families:
+        return False
+    for family in families:
+        if not E.is_an_x87_arrival(family):
+            return False
+    return True
+
+
+def x87_aligned(shared, place, params, body_term, out):
+    """CHANGE 2's DRIVER HALF: the two sides put on one set of IN rows
+    when the arrivals are values on the x87 register stack.
+
+    THE CORRESPONDENCE IS READ OFF THE OBJECTS AND NOTHING ELSE.
+      * The CELL's k-th IN row is `params[k]["family"]` -- the family
+        the renderer gave parameter k, which is the plan the rendered
+        source itself was written from.
+      * The EMULATION's k-th IN row is the x87 value its body loads
+        from the k-th `long double` argument slot.  The System V rule
+        passes such an argument IN MEMORY on the machine stack, the
+        body spells that address itself (`fldt 0x8(%rsp)`), and the
+        reference names the value it loads after that same address, so
+        the row order is the ASCENDING displacement.
+    Anything that does not line up -- a count that differs, a symbol
+    whose name carries no displacement, a sort that is not the x87
+    sort -- is a refusal by name and never a guess."""
+    wanted = []
+    for param in params:
+        family = param.get("family")
+        if not E.is_an_x87_arrival(family):
+            out["outcome"] = "UNDECIDED"
+            out["reason"] = ("the cell's arrivals are values on the "
+                             "x87 stack and the emulation's parameter "
+                             "%r is %r, so the two contracts name "
+                             "different kinds of arrival"
+                             % (param.get("name"), family))
+            return out
+        wanted.append(family)
+    slots = []
+    for symbol in z3.z3util.get_vars(body_term):
+        name = symbol.decl().name()
+        hit = X87_STACK_SLOT.match(name)
+        if hit is None:
+            out["outcome"] = "UNDECIDED"
+            out["reason"] = ("the emulation's answer reads %r, which "
+                             "is not a value loaded from an argument "
+                             "slot of the machine stack, so it cannot "
+                             "be put on an IN row" % name)
+            return out
+        if symbol.sort() != R.X87_SORT:
+            out["outcome"] = "UNDECIDED"
+            out["reason"] = ("the emulation's answer reads %r at %s, "
+                             "and an x87 arrival is %s"
+                             % (name, symbol.sort(), R.X87_SORT))
+            return out
+        slots.append((int(hit.group(1), 16), symbol))
+    # THE ORDER IS THE DESCENDING DISPLACEMENT, and it is a MEASURED
+    # fact of this toolchain rather than a reading of the System V
+    # document: lane `ap4_l9` compiled `a - b` and `b - a` at the
+    # corpus's own ship flags and read the two bodies.  `a - b` carves
+    # to `fldt 0x18(%rsp); fldt 0x8(%rsp); fsubp %st,%st(1)` and
+    # `b - a` to the same two loads in the other order, so under the
+    # reference's own model of `fsubp` the FIRST `long double`
+    # argument is the one at the HIGHER displacement.  Both sides of
+    # this comparison are read by that same reference, so the
+    # correspondence is the one the two objects share.
+    slots.sort(reverse=True)
+    if len(slots) != len(wanted):
+        out["outcome"] = "UNDECIDED"
+        out["reason"] = ("the cell reads %d arrival(s) on the x87 "
+                         "stack and the emulation's answer reads %d "
+                         "argument slot(s), so the IN rows cannot be "
+                         "aligned" % (len(wanted), len(slots)))
+        return out
+    out["aligned_rows"] = []
+    cell_substitution = []
+    body_substitution = []
+    for index, family in enumerate(wanted):
+        common = z3.Const("IN_%d" % index, R.X87_SORT)
+        cell_substitution.append(
+            (z3.Const("seed_%s" % family, R.X87_SORT), common))
+        body_substitution.append((slots[index][1], common))
+        out["aligned_rows"].append({
+            "row": "IN-%d" % index,
+            "the cell reads": family,
+            "the body reads": "%s, the argument slot at 0x%x(%%rsp)"
+                              % (slots[index][1].decl().name(),
+                                 slots[index][0]),
+        })
+    cell_aligned = z3.substitute(place["term"], *cell_substitution)
+    body_aligned = z3.substitute(body_term, *body_substitution)
+    out["cell_bits"] = cell_aligned.size()
+    out["body_bits"] = body_aligned.size()
+    out["x87_rows"] = ("the arrival contract is stated by the argument "
+                       "slots the body itself spells, and not by a "
+                       "register family, which is the ruling of "
+                       "2026-09-09")
+    out.update(decided(shared, cell_aligned, body_aligned, params))
+    return out
+
+
 def check_one_place(shared, place, params, raw_bytes, mnem, label,
-                    lang):
+                    lang, attested=None):
     """z3 asked whether the carved body answers as the cell's term says,
     for every input, at the gate's own 3,000 ms ceiling.
 
@@ -2076,6 +2634,14 @@ def check_one_place(shared, place, params, raw_bytes, mnem, label,
     rule fills."""
     import pool100_entry_equivalence as P100
     out = {"route": {}}
+    if the_body_is_empty(mnem):
+        # CHANGE 3 (task ap4).  Asked BEFORE the canonical form, because
+        # a body with no instruction has nothing for the form to wrap
+        # and the reference says so by name ("this unit's body has no
+        # instruction line").  What the compiler did is not a failure:
+        # it emitted nothing because the value asked for is already in
+        # the register it answers in.
+        return the_identity(shared, place, params, lang, out)
     canon = wrapped_body(shared, raw_bytes, mnem, label, lang)
     out["canon40_outcome"] = canon.get("outcome")
     out["arrival_families_read_off_the_body"] = canon.get(
@@ -2096,6 +2662,17 @@ def check_one_place(shared, place, params, raw_bytes, mnem, label,
     out["route"]["cell"] = "the cell's own term, as the model table holds it"
     cell_term = place["term"]
     cell_families = place["families"]
+    if x87_arrivals(cell_families):
+        # CHANGE 2's DRIVER HALF (task ap4): an arrival that is a value
+        # on the x87 stack is an FP value at `reference.X87_SORT`, and
+        # `P100.align_by_row` substitutes a BITVECTOR for each IN row,
+        # so the shared aligner has nothing to substitute.  The rows are
+        # built in `x87_aligned` instead, off the emulation's own
+        # parameter plan and its own stack displacements.  It is asked
+        # BEFORE `expected_families`, whose own refusal is that an
+        # 80-bit float argument arrives in memory and names no register
+        # family -- which is exactly what this branch answers.
+        return x87_aligned(shared, place, params, body_term, out)
     try:
         body_families = expected_families(lang, params)
     except E.Refused as refusal:
@@ -2106,9 +2683,25 @@ def check_one_place(shared, place, params, raw_bytes, mnem, label,
     body_rows = P100.input_rows(body_families)
     disagreement = P100.rows_disagree(cell_rows, body_rows)
     if disagreement is not None:
-        out["outcome"] = "UNDECIDED"
-        out["reason"] = "the IN rows cannot be aligned: %s" % disagreement
-        return out
+        # CHANGE 1 (task ap4): the two contracts name different numbers
+        # of IN rows, so they are not aligned row by row -- the cell's
+        # arrivals are substituted by what the emulation's own attested
+        # body leaves in them, and the REGION that names is recorded.
+        derived = derived_arrivals(place, attested, body_families, lang)
+        if derived.get("refusal") is not None:
+            out["outcome"] = "UNDECIDED"
+            out["reason"] = ("the IN rows cannot be aligned: %s; and "
+                             "%s" % (disagreement, derived["refusal"]))
+            return out
+        out["region"] = derived["region"]
+        out["substitution"] = derived["substitution"]
+        out["substituted_because"] = ("the IN rows cannot be aligned: "
+                                      "%s" % disagreement)
+        if derived["free"]:
+            out["cell_side_free_state"] = derived["free"]
+        cell_term = derived["term"]
+        cell_families = list(body_families)
+        cell_rows = P100.input_rows(cell_families)
     out["aligned_rows"] = []
     for index in range(len(cell_families)):
         out["aligned_rows"].append({
@@ -2143,7 +2736,9 @@ def wrapped_body(shared, raw_bytes, mnem, label, lang):
     """the carved body on the canonical form, the pipeline's own way."""
     import canonical_form as CF
     unit = "%s/%s" % (lang, label)
-    if lang == "rust":
+    if lang == "cpp":
+        recorded = CPR.recorded_facts(unit, label, raw_bytes, mnem)
+    elif lang == "rust":
         recorded = RR.recorded_facts(unit, label, raw_bytes, mnem)
     elif lang == "go":
         recorded = GR.recorded_facts(unit, label, raw_bytes, mnem)
@@ -2331,7 +2926,7 @@ def the_normalised_term(term):
     return ordered
 
 
-TARGETS_WITH_AN_80_BIT_HOLDER = ("c",)
+TARGETS_WITH_AN_80_BIT_HOLDER = ("c", "cpp")
 """the targets whose own type system has a holder for the x87 extended
 format (task ap3, fix 2).
 
@@ -3084,7 +3679,15 @@ def one_place_primitive(shared, held, place, lang, label, built, got,
         out["refusal_cause"] = place["not_rendered"]
         out["refusal_detail"] = place.get("not_rendered_detail")
         return out
-    if place["writes"] == "flags":
+    if is_the_flags_place(place["writes"]):
+        # TASK ap4: `is_the_flags_place` and not `== "flags"`, so a HALF
+        # of the flags place is refused by this rule too.  Task ap2's
+        # fix 3 splits a 128-bit place into `.low` and `.high`, and the
+        # two halves of a 64-bit comparison's flags place slipped past
+        # the old test and were put to the gate against the operator's
+        # answer -- where they said `the IN rows cannot be aligned`,
+        # which is true about the two row lists and false about the
+        # objects.
         out["rendered"] = False
         out["refusal_cause"] = CAUSE_PRIMITIVE_FLAGS
         out["refusal_detail"] = ("the operator's own answer is the "
@@ -3123,7 +3726,8 @@ def one_place_primitive(shared, held, place, lang, label, built, got,
     out["body_text"] = "; ".join(mnem)
     out["landing"] = landing_of(mnem, held["mnem"])
     out["check"] = check_one_place(shared, working, built["params"],
-                                   raw_bytes, mnem, label, lang)
+                                   raw_bytes, mnem, label, lang,
+                                   attested=attested_of(held, found_row))
     return out
 
 
@@ -3837,8 +4441,14 @@ def composition_of_run(run, in_table):
     body = place.get("body_text")
     if not body:
         return []
+    lines = body.split("; ")
+    if the_body_is_empty(lines):
+        # TASK ap4, CHANGE 3: an emulation whose carved body carries no
+        # instruction of its own composes the cell out of NOTHING, and
+        # the brief's own words for that record are `composition = []`.
+        return []
     out = []
-    for line in body.split("; "):
+    for line in lines:
         out.append(classify_instruction(line, in_table))
     return out
 

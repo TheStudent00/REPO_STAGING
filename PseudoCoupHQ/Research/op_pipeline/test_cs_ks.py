@@ -2,7 +2,7 @@ import json
 from fold_interp_cs import parse_ryujit
 import os
 
-HERE = "~/Programming/PseudoCoupHQ/Research/op_pipeline"
+HERE = "PseudoCoupHQ/Research/op_pipeline"
 IN_FILE = os.path.join(HERE, "jit_out_csharp", "all_opt.txt")
 with open(IN_FILE) as f:
     txt = f.read()

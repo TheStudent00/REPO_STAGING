@@ -10,8 +10,8 @@ Layer named, per the three-layer anchor: this audit serves **layer 3
 not touch layer 1 (the data forms) or layer 2 (the per-language
 holders).
 
-Scope: `~/Programming/PseudoCoupHQ/Research/op_pipeline/`, its upstream
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`, and the
+Scope: `PseudoCoupHQ/Research/op_pipeline/`, its upstream
+`PseudoCoupHQ/Research/kind_fuzz_clustering/`, and the
 Airlock lane. Log 076 answered the same question for the census and
 shape layers; this log does not repeat that work and does not restate
 its numbers except where they are needed to read a number here.
@@ -24,7 +24,7 @@ stops a process is ABORT.
 cold now):
 
 - **lane** — one shell script written into
-  `~/Programming/Airlock/agent/drop/`; the file write is the run.
+  `Airlock/agent/drop/`; the file write is the run.
 - **probe** — one compiled function that applies exactly one operator
   to parameters only; constants are banned so the operation cannot be
   folded away at compile time.
@@ -186,28 +186,28 @@ answer, not merely start it.
 
 | # | stage | script, full path | inputs | outputs | time | person must touch |
 |---|---|---|---|---|---|---|
-| 0 | operator inventory | `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.py` (1,464 lines) | the pinned grammar sources in `grammar_cache/`, plus the file's own hand-typed table | `operator_arity.json` (5,859 lines; 13 languages) | not re-run today (unverified) | YES — 136 `G(rule, file, ops)` rows, 1,561 operator spellings hand-typed; rust's row set carries 97 |
-| 1 | probe generation | `~/Programming/PseudoCoupHQ/Research/op_pipeline/probe_gen.py` (502 lines) | `operator_arity.json`; its own HOLDERS, result-type rules and five emitters | `probe_manifest_{c,cpp,go,rust,swift}.json` — 4,440 candidates (c 750, cpp 1,002, go 744, rust 858, swift 1,086) | 0.10 s, all five | YES — 30 holder rows, 58 lines of result-type rule, 5 source templates, 2 operator exclusions, 3 bucket exclusions |
-| 2 | lane generation | `~/Programming/PseudoCoupHQ/Research/op_pipeline/lane_gen.py` (587 lines) | the five manifests | `op_pipeline/lanes/op_<lang>.sh`, optionally copied into `~/Programming/Airlock/agent/drop/` | 0.08 s, all five | YES, once per language — a 5-row tool check and a 5-language × 2-mode compile-flag table |
-| 3 | extraction: compile-or-refuse, ANCHOR + SHIP, objdump, DWARF | the generated lane, run by the Airlock daemon | the lane's own embedded probe table | `~/Programming/Airlock/agent/out/op_<lang>.txt` | rust 29.8 s today (24.1 s on record); c 42.4 s; go 48.5 s; cpp 74.1 s; swift 159.8 s | NO — one file write starts it; the compiler is the acceptance oracle and no acceptance table is consulted |
-| 4 | fold | `~/Programming/PseudoCoupHQ/Research/op_pipeline/fold.py` (184 lines) | the manifest and the lane output | `op_units_<lang>.json` | rust 0.05 s | NO |
+| 0 | operator inventory | `PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.py` (1,464 lines) | the pinned grammar sources in `grammar_cache/`, plus the file's own hand-typed table | `operator_arity.json` (5,859 lines; 13 languages) | not re-run today (unverified) | YES — 136 `G(rule, file, ops)` rows, 1,561 operator spellings hand-typed; rust's row set carries 97 |
+| 1 | probe generation | `PseudoCoupHQ/Research/op_pipeline/probe_gen.py` (502 lines) | `operator_arity.json`; its own HOLDERS, result-type rules and five emitters | `probe_manifest_{c,cpp,go,rust,swift}.json` — 4,440 candidates (c 750, cpp 1,002, go 744, rust 858, swift 1,086) | 0.10 s, all five | YES — 30 holder rows, 58 lines of result-type rule, 5 source templates, 2 operator exclusions, 3 bucket exclusions |
+| 2 | lane generation | `PseudoCoupHQ/Research/op_pipeline/lane_gen.py` (587 lines) | the five manifests | `op_pipeline/lanes/op_<lang>.sh`, optionally copied into `Airlock/agent/drop/` | 0.08 s, all five | YES, once per language — a 5-row tool check and a 5-language × 2-mode compile-flag table |
+| 3 | extraction: compile-or-refuse, ANCHOR + SHIP, objdump, DWARF | the generated lane, run by the Airlock daemon | the lane's own embedded probe table | `Airlock/agent/out/op_<lang>.txt` | rust 29.8 s today (24.1 s on record); c 42.4 s; go 48.5 s; cpp 74.1 s; swift 159.8 s | NO — one file write starts it; the compiler is the acceptance oracle and no acceptance table is consulted |
+| 4 | fold | `PseudoCoupHQ/Research/op_pipeline/fold.py` (184 lines) | the manifest and the lane output | `op_units_<lang>.json` | rust 0.05 s | NO |
 | 5 | lift and normalize | `canon2.py` → `canon3.py` → `canon4.py`, with `expr_to_canon.py` (1,246 lines), `condition_table.py` (379), `condition_table2.py` (218) | `op_units_<lang>.json` | `canon{2,3,4}_units_<lang>.json` | not re-run today (unverified; needs pyvex + z3, both present in the container) | YES — 37 named refusal categories, a 6-entry register map, 5 arithmetic and 20 comparison rendering rows, a 28-row condition-suffix table |
-| 6 | canonical rendering and the proof gate | `canon5.py` … `canon13.py` with `canon7_render.py` (970), `canon11_render.py` (489), `canon12_render.py` (124), `canon13_render.py` (160) | `canon4_units_<lang>.json`, `tree_units2.json` | `canon<N>_units_<lang>.json`, each unit carrying its canonical text and a gate verdict | not re-run today (unverified) | YES — every new machine shape needs a rendering rule; the file `~/Programming/PseudoCoupHQ/Research/op_pipeline/stage5_float_conditions_diagnosis.txt` is the current worked example of what that costs |
-| 7 | reading form (the second column) | `~/Programming/PseudoCoupHQ/Research/op_pipeline/reading_form.py` (716 lines) | `op_units_<lang>.json`, `canon2_units_<lang>.json` | `reading_units_<lang>.json` (rust: 237 units), `reading_sample.txt` | not re-run today (unverified) | YES — about 35 mnemonic template arms, a 15-row flag-name table, and `SPEC_reading_form.md`'s 55 template rows plus 16 function-vocabulary rows |
+| 6 | canonical rendering and the proof gate | `canon5.py` … `canon13.py` with `canon7_render.py` (970), `canon11_render.py` (489), `canon12_render.py` (124), `canon13_render.py` (160) | `canon4_units_<lang>.json`, `tree_units2.json` | `canon<N>_units_<lang>.json`, each unit carrying its canonical text and a gate verdict | not re-run today (unverified) | YES — every new machine shape needs a rendering rule; the file `PseudoCoupHQ/Research/op_pipeline/stage5_float_conditions_diagnosis.txt` is the current worked example of what that costs |
+| 7 | reading form (the second column) | `PseudoCoupHQ/Research/op_pipeline/reading_form.py` (716 lines) | `op_units_<lang>.json`, `canon2_units_<lang>.json` | `reading_units_<lang>.json` (rust: 237 units), `reading_sample.txt` | not re-run today (unverified) | YES — about 35 mnemonic template arms, a 15-row flag-name table, and `SPEC_reading_form.md`'s 55 template rows plus 16 function-vocabulary rows |
 | 8 | component mining (alphas) | `component_mine.py`, `component_mine2.py` | the erased forms of 1,731 units | `ALPHAS.md` — 275 level-0 components | not re-run today (unverified) | NO — mined, not authored |
-| 9 | class table and dominant operators | `~/Programming/PseudoCoupHQ/Research/op_pipeline/dominant_table12.py` | `canon{4,7,8,9,10,11,12,13}_units_<lang>.json`, `result_types_<lang>.json` | `dominant_table12.json` (926 classes, 1,641 members), `dom_ops10.json` (135 nodes, 26 dom_ops, 23 edgeless) | 0.20 s | NO |
+| 9 | class table and dominant operators | `PseudoCoupHQ/Research/op_pipeline/dominant_table12.py` | `canon{4,7,8,9,10,11,12,13}_units_<lang>.json`, `result_types_<lang>.json` | `dominant_table12.json` (926 classes, 1,641 members), `dom_ops10.json` (135 nodes, 26 dom_ops, 23 edgeless) | 0.20 s | NO |
 | 10 | verdicts (the solver stage) | `verdicts3.py` / the verdicts6 run | `dominant_table5.json` | `verdicts6.json` — 8,148 nominations, 4,370 distinct pairs, 4,240 fresh z3 verdicts | 15.62 s, recorded inside the file itself | NO |
 | 11 | bridges and dominance | `dominance2.py`, `dominant_table_containment.py` | the class table | `bridges6.json`, `table_digest3b.md` (1,113 classes, 322 bridges) | not re-run today (unverified) | NO |
-| 12 | the spelling guard | `~/Programming/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py` | any grouping artifact plus the manifests | PASS/FAIL naming each offending path | 0.03 s | NO — its 78-token operator inventory is derived from the manifests, not declared |
+| 12 | the spelling guard | `PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py` | any grouping artifact plus the manifests | PASS/FAIL naming each offending path | 0.03 s | NO — its 78-token operator inventory is derived from the manifests, not declared |
 
 ### the two upstreams the brief named, and what they actually feed
 
 **The acceptance and answers files do NOT feed this branch.** They are
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/acceptance_rust_A2.json`
+`PseudoCoupHQ/Research/kind_fuzz_clustering/acceptance_rust_A2.json`
 and `.../answers_rust.json`, from the layer-3 census campaign. The
 branch says so in its own words, in `probe_gen.py`'s docstring:
 
-> `~/Programming/PseudoCoupHQ/Research/op_pipeline/probe_gen.py`
+> `PseudoCoupHQ/Research/op_pipeline/probe_gen.py`
 > "This tool emits EVERY CANDIDATE. It consults no acceptance file.
 > Whether a candidate is a real operation of the language is decided
 > later, by the compiler's own type checker, in the lane
@@ -217,7 +217,7 @@ branch says so in its own words, in `probe_gen.py`'s docstring:
 The only shared upstream is `operator_arity.json`.
 
 **The compiler-graph tracing does not feed it either.**
-`~/Programming/PseudoCoupHQ/Research/compiler_graph/build_graph.py`
+`PseudoCoupHQ/Research/compiler_graph/build_graph.py`
 parses the Go compiler's own source with tree-sitter and answers a
 different question — which line of the compiler picks a physical
 register. It shares no artifact with `op_pipeline`. It is a co-node
@@ -227,23 +227,23 @@ instrument, not a stage of this chain.
 
 | what | file, full path | count |
 |---|---|---|
-| operator spellings, all 13 languages | `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.py` | 136 `G()` rows, 1,561 spellings |
+| operator spellings, all 13 languages | `PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.py` | 136 `G()` rows, 1,561 spellings |
 | operator spellings, rust alone | same | 97 (33 of them reach this branch: 8 prefix, 3 postfix, 22 binary) |
-| holder rows (which types are probed) | `~/Programming/PseudoCoupHQ/Research/op_pipeline/probe_gen.py`, lines 76–119 | 30 rows (5 languages × 6 types), 44 lines |
+| holder rows (which types are probed) | `PseudoCoupHQ/Research/op_pipeline/probe_gen.py`, lines 76–119 | 30 rows (5 languages × 6 types), 44 lines |
 | result-type rules for go, rust, swift | same, lines 157–217 | 58 lines; `RUST_TRAIT` 10 entries, `CMP` 6, `LOGIC` 2 |
 | per-language source templates | same, `emit_c` / `emit_cpp` / `emit_go` / `emit_rust` / `emit_swift` | 5 templates, `emit_rust` is 14 lines |
 | operator exclusions | same, lines 127–136 | 2 |
 | bucket exclusions | same, lines 55–67 | 3 |
-| compile-flag table and tool checks | `~/Programming/PseudoCoupHQ/Research/op_pipeline/lane_gen.py` | 5 tool checks, 10 compile commands (5 languages × ANCHOR/SHIP) |
-| named refusal categories in the lifter | `~/Programming/PseudoCoupHQ/Research/op_pipeline/expr_to_canon.py`, `REFUSAL_CATEGORY` | 37 |
+| compile-flag table and tool checks | `PseudoCoupHQ/Research/op_pipeline/lane_gen.py` | 5 tool checks, 10 compile commands (5 languages × ANCHOR/SHIP) |
+| named refusal categories in the lifter | `PseudoCoupHQ/Research/op_pipeline/expr_to_canon.py`, `REFUSAL_CATEGORY` | 37 |
 | register map for rendering | same, `REGMAP` | 6 |
 | arithmetic rendering rows | same, `ALU_OP` | 5 |
 | comparison rendering rows | same, `CMP_OP_TO_SUFFIX` + `NEGATE_SUFFIX` | 10 + 10 |
-| condition-suffix table | `~/Programming/PseudoCoupHQ/Research/op_pipeline/condition_table.py`, `SUFFIX_TO_COND` | 28 |
-| standard register names | `~/Programming/PseudoCoupHQ/Research/op_pipeline/canon.py`, `GP_NAMES` | 8 families |
-| temp register pool, ordered | `~/Programming/PseudoCoupHQ/Research/op_pipeline/canon7_render.py`, `TEMP_POOL_ORDER` | 9 |
-| reading-form templates | `~/Programming/PseudoCoupHQ/Research/op_pipeline/reading_form.py` + `SPEC_reading_form.md` | ~35 dispatch arms; 55 spec template rows + 16 vocabulary rows; `FLAG_NAME` 15 |
-| opcode glossary | `~/Programming/PseudoCoupHQ/Research/op_pipeline/GLOSSARY_arch_opcodes.md` | 93 mnemonics, 227 lines (prose authored; the occurrence counts are derived from the corpus) |
+| condition-suffix table | `PseudoCoupHQ/Research/op_pipeline/condition_table.py`, `SUFFIX_TO_COND` | 28 |
+| standard register names | `PseudoCoupHQ/Research/op_pipeline/canon.py`, `GP_NAMES` | 8 families |
+| temp register pool, ordered | `PseudoCoupHQ/Research/op_pipeline/canon7_render.py`, `TEMP_POOL_ORDER` | 9 |
+| reading-form templates | `PseudoCoupHQ/Research/op_pipeline/reading_form.py` + `SPEC_reading_form.md` | ~35 dispatch arms; 55 spec template rows + 16 vocabulary rows; `FLAG_NAME` 15 |
+| opcode glossary | `PseudoCoupHQ/Research/op_pipeline/GLOSSARY_arch_opcodes.md` | 93 mnemonics, 227 lines (prose authored; the occurrence counts are derived from the corpus) |
 
 For contrast, the derived side of the same folder: 97 python files
 totalling 39,637 lines, 181 JSON artifacts, 39 markdown artifacts,
@@ -298,8 +298,8 @@ directly, so nothing in the repository was written to:
 
 | lane | file | compiler | elapsed | output |
 |---|---|---|---|---|
-| A | `~/Programming/Airlock/agent/drop/d78_rust196.sh` | `rustc 1.96.1 (31fca3adb 2026-06-26)`, the image default | 29.8 s | `~/Programming/Airlock/agent/out/d78_rust196.txt`, 104,927 bytes |
-| B | `~/Programming/Airlock/agent/drop/d78_rust198.sh` | `rustc 1.98.0 (88d9e12ae 2026-08-18)`, from `/persist/rustup076/` | 23.8 s | `~/Programming/Airlock/agent/out/d78_rust198.txt`, 105,041 bytes |
+| A | `Airlock/agent/drop/d78_rust196.sh` | `rustc 1.96.1 (31fca3adb 2026-06-26)`, the image default | 29.8 s | `Airlock/agent/out/d78_rust196.txt`, 104,927 bytes |
+| B | `Airlock/agent/drop/d78_rust198.sh` | `rustc 1.98.0 (88d9e12ae 2026-08-18)`, from `/persist/rustup076/` | 23.8 s | `Airlock/agent/out/d78_rust198.txt`, 105,041 bytes |
 
 Lane B is lane A with one line inserted after `set -u`:
 
@@ -309,13 +309,13 @@ export PATH=/persist/rustup076/toolchains/1.98.0-x86_64-unknown-linux-gnu/bin:$P
 
 Both lanes printed their compiler's own version banner before doing
 anything, so the toolchain in force is on the record rather than
-assumed. The pin was not moved; `~/Programming/Airlock/Containerfile`
+assumed. The pin was not moved; `Airlock/Containerfile`
 line 82 still says `--default-toolchain 1.96.1`.
 
 ### the control: is the pipeline reproducible at all?
 
-`~/Programming/Airlock/agent/out/d78_rust196.txt` is **byte-identical**
-to `~/Programming/Airlock/agent/out/op_rust.txt`, the extraction
+`Airlock/agent/out/d78_rust196.txt` is **byte-identical**
+to `Airlock/agent/out/op_rust.txt`, the extraction
 recorded on 2026-08-25. Same 104,927 bytes, `diff` clean. Re-folding it
 reproduces the committed `op_units_rust.json` at every one of the 858
 probe records.
@@ -348,7 +348,7 @@ is `a / b` on two 32-bit signed integers — the division-with-guards
 shape. Its SHIP record, verbatim from the two lane outputs, with the
 identical parts elided only where marked:
 
-> `~/Programming/Airlock/agent/out/d78_rust196.txt`, record
+> `Airlock/agent/out/d78_rust196.txt`, record
 > `op_642|SHIP|OK`, last two instructions:
 >
 > ```
@@ -356,7 +356,7 @@ identical parts elided only where marked:
 > call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4
 > ```
 
-> `~/Programming/Airlock/agent/out/d78_rust198.txt`, the same record:
+> `Airlock/agent/out/d78_rust198.txt`, the same record:
 >
 > ```
 > lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e999d8e928eeaaa2810ddee94f44a439.1-0x4
@@ -379,14 +379,14 @@ of the 47 records exactly and leaves nothing over.
 The six are rust's inclusive range operator `..=` at all six holder
 types, ANCHOR build only.
 
-> `~/Programming/Airlock/agent/out/d78_rust196.txt`,
+> `Airlock/agent/out/d78_rust196.txt`,
 > `op_786|ANCHOR|OK`, the call instruction:
 >
 > ```
 > call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_ZN4core3ops5range25RangeInclusive$LT$Idx$GT$3new17h873159e1f524bd14E-0x4
 > ```
 
-> `~/Programming/Airlock/agent/out/d78_rust198.txt`, the same record:
+> `Airlock/agent/out/d78_rust198.txt`, the same record:
 >
 > ```
 > call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvMs5_NtNtCsc36rpYXAlPq_4core3ops5rangeINtB5_14RangeInclusivelE3newCs2B1nOxgNFGD_4unit-0x4
@@ -437,7 +437,7 @@ strings are identical between the two compilers, and the SHIP mnemonic
 text differs for exactly 6 units. Those 6 are
 `op_642, op_649, op_656, op_678, op_685, op_692` — the guarded integer
 divisions and remainders. Their recorded status in
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/canon13_units_rust.json`:
+`PseudoCoupHQ/Research/op_pipeline/canon13_units_rust.json`:
 
 | unit | operator | status | branch kind | converged |
 |---|---|---|---|---|
@@ -467,7 +467,7 @@ mnemonic lists were substituted into `canon4_units_rust.json` from the
 | `check_no_spelling_keys.py` on the class table | PASS | PASS | — |
 
 The 1.96.1-input run also reproduces the committed
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/dominant_table12.json`
+`PseudoCoupHQ/Research/op_pipeline/dominant_table12.json`
 exactly, so the stage is a fixed point on its own output — the property
 log 076 found MISSING in the census harness's generator.
 
@@ -487,7 +487,7 @@ would actually be wrong:
 
 | measure | count |
 |---|---|
-| files under `~/Programming/PseudoCoupHQ/Research/` naming the 1.96.1 `core` disambiguator | **41** |
+| files under `PseudoCoupHQ/Research/` naming the 1.96.1 `core` disambiguator | **41** |
 | — in `Research/op_pipeline/` | 33 |
 | — in `Research/stage_asg/` | 7 |
 | — in `Research/kind_fuzz_clustering/` (`arch_units_rust.json`) | 1 |
@@ -543,7 +543,7 @@ No. It is fed from `operator_arity.json`, which is generated from a
 python table a person typed, verified in one direction against the
 pinned grammar. The file is candid about this in its own header:
 
-> `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.py`
+> `PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.py`
 > "Every row below is read out of a tree-sitter grammar source
 > (`grammar.js`, …). … `--verify` re-reads the grammar source and
 > checks that the spelling really does occur inside that rule".
@@ -556,9 +556,9 @@ unchanged.
 ### are the five new methods anywhere in that source?
 
 Measured: `algebraic` appears **0 times** in
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.json`
+`PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.json`
 and **0 times** in
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/grammar_cache/rust.js`.
+`PseudoCoupHQ/Research/kind_fuzz_clustering/grammar_cache/rust.js`.
 
 That second zero is not a gap in the table — it is correct. A method is
 not an operator spelling, so the grammar has nothing to say about it.
@@ -566,7 +566,7 @@ The grammar's rust inventory puts method access in the structural
 bucket as `.`, and `probe_gen.py` reads three buckets only, excluding
 structural by a written reason:
 
-> `~/Programming/PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
+> `PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
 > `EXCLUDED_BUCKETS`:
 > "structural": "indexing, calls, member access and the like operate
 > on aggregates, not on the scalar core; out of scope for this first
@@ -589,7 +589,7 @@ calls returned the left operand's type with the rule name
 `f64` — but the manifest's own note says a `fallback_lhs` probe is not
 to be trusted:
 
-> `~/Programming/PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
+> `PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
 > `result_rule_note`:
 > "`fallback_lhs` means no rule was known and the left operand's type
 > was used, so a refusal there may be the fallback's and not the
@@ -607,8 +607,8 @@ and handed to `lane_gen.lane()` unmodified. Two lanes were run.
 
 | lane | compiler | elapsed | result |
 |---|---|---|---|
-| `~/Programming/Airlock/agent/drop/d78_alg196.sh` | 1.96.1 | 0.4 s | 10 of 10 algebraic probes REFUSED; 2 of 2 controls extracted |
-| `~/Programming/Airlock/agent/drop/d78_alg198.sh` | 1.98.0 | 0.6 s | 10 of 10 algebraic probes accepted, SHIP and ANCHOR units extracted, DWARF read for all |
+| `Airlock/agent/drop/d78_alg196.sh` | 1.96.1 | 0.4 s | 10 of 10 algebraic probes REFUSED; 2 of 2 controls extracted |
+| `Airlock/agent/drop/d78_alg198.sh` | 1.98.0 | 0.6 s | 10 of 10 algebraic probes accepted, SHIP and ANCHOR units extracted, DWARF read for all |
 
 The refusal, verbatim, ten identical lines:
 
@@ -623,7 +623,7 @@ found, reproduced here inside this branch's own lane rather than a
 census one.
 
 The 1.98.0 units came out clean. Two examples, verbatim from
-`~/Programming/Airlock/agent/out/d78_alg198.txt`:
+`Airlock/agent/out/d78_alg198.txt`:
 
 ```
 op_901|SHIP|OK|f2 0f 58 c1 c3|addsd %xmm1,%xmm0;ret
@@ -645,7 +645,7 @@ instructions. Now the class key, which is (operand type pair, result
 type, canonical text). The stored canonical text of rust's ordinary
 float add:
 
-> `~/Programming/PseudoCoupHQ/Research/op_pipeline/canon13_units_rust.json`,
+> `PseudoCoupHQ/Research/op_pipeline/canon13_units_rust.json`,
 > unit 562 (`+`, f64, f64), field `canon10_text`:
 >
 > ```
@@ -654,7 +654,7 @@ float add:
 
 And the class that text sits in:
 
-> `~/Programming/PseudoCoupHQ/Research/op_pipeline/dominant_table12.json`,
+> `PseudoCoupHQ/Research/op_pipeline/dominant_table12.json`,
 > class C0338, type pair `f64,f64`, result `f64`:
 > members `c/op_130`, `cpp/op_130`, `go/op_340`, `rust/op_562`,
 > `swift/op_250`
@@ -729,7 +729,7 @@ is inspectable rather than described:
 | field | rust's value today |
 |---|---|
 | language | `rust` |
-| pinned version and where the pin lives | `1.96.1`, `~/Programming/Airlock/Containerfile` line 82 |
+| pinned version and where the pin lives | `1.96.1`, `Airlock/Containerfile` line 82 |
 | how to reach an alternative toolchain | `PATH` prefix `/persist/rustup076/toolchains/<version>-x86_64-unknown-linux-gnu/bin` |
 | version banner command and expected shape | `rustc --version` → `rustc 1.98.0 (88d9e12ae 2026-08-18)` |
 | release-notes source | the project's `RELEASES.md`, section per version |
@@ -740,7 +740,7 @@ is inspectable rather than described:
 | candidate probes | 858 |
 | ANCHOR and SHIP commands | `rustc -C opt-level=0 -g` / `rustc -C opt-level=1 -C debug-assertions=off` |
 | extraction lane and its recorded time | `op_pipeline/lanes/op_rust.sh`, 24–30 s |
-| stored extraction to diff against | `~/Programming/Airlock/agent/out/op_rust.txt`, 104,927 bytes |
+| stored extraction to diff against | `Airlock/agent/out/op_rust.txt`, 104,927 bytes |
 | known version-sensitive text patterns | the crate disambiguator `Cs[A-Za-z0-9]+_`; the mangling scheme prefix `_ZN` versus `_RN` |
 | artifacts naming this language's units | 88 JSON files, 20,747 references |
 | units accepted / converged | 125 / 98 |
@@ -782,7 +782,7 @@ Four things, each with the measured place it bites.
 - **The pin was not moved and the image was not rebuilt.** rust 1.98.0
   lives at `/persist/rustup076/`, which survives a container restart
   but is not part of the image. Bumping
-  `~/Programming/Airlock/Containerfile` line 82 would REPLACE 1.96.1
+  `Airlock/Containerfile` line 82 would REPLACE 1.96.1
   rather than co-install beside it. the owner's call; unchanged from log 076.
 - **Append-only ordering is not ruled.** The 92.3% renumbering measured
   in §4 is a real hazard the moment any language gains an operator.
@@ -798,7 +798,7 @@ Four things, each with the measured place it bites.
 - **The five methods were extracted but nothing was installed.** No
   manifest, no census page, no canon artifact and no table was edited.
   The twelve probes exist only inside
-  `~/Programming/Airlock/agent/drop/d78_alg196.sh` and
+  `Airlock/agent/drop/d78_alg196.sh` and
   `d78_alg198.sh`, from which they can be lifted verbatim.
 - **The canon lineage was not re-run at 1.98.0** (unverified). It needs
   pyvex and z3, both confirmed present in the container today
@@ -811,7 +811,7 @@ Four things, each with the measured place it bites.
   `dominant_table12.py`'s own line "unknown result type (excluded from
   a scalar family) 37". Noticed while building the scratch tree;
   flagged, not chased.
-- **`bash ~/Programming/PseudoCoupHQ/hq.sh check` ends at 0 errors**
+- **`bash PseudoCoupHQ/hq.sh check` ends at 0 errors**
   (9 warnings, all pre-existing conformance gaps in PseudoCoup_v6 and
   PseudoIR that the sweep names itself). Unchanged from log 076.
 
@@ -819,7 +819,7 @@ Four things, each with the measured place it bites.
 
 ## Artifacts this log left behind
 
-Lanes, in `~/Programming/Airlock/agent/drop/` and archived by the
+Lanes, in `Airlock/agent/drop/` and archived by the
 daemon into `.done/`:
 
 | lane | what it measured | elapsed |
@@ -830,13 +830,13 @@ daemon into `.done/`:
 | `d78_alg198.sh` | the same twelve probes at 1.98.0 — extraction to arch-units | 0.6 s |
 | `d78_mods.sh` | which python modules the container carries | 0.5 s |
 
-Outputs, in `~/Programming/Airlock/agent/out/`: `d78_rust196.txt`
+Outputs, in `Airlock/agent/out/`: `d78_rust196.txt`
 (104,927 bytes), `d78_rust198.txt` (105,041 bytes),
 `d78_alg196.txt`, `d78_alg198.txt`.
 
-Logs, in `~/Programming/Airlock/agent/logs/`, stamped `20260829T21*`
+Logs, in `Airlock/agent/logs/`, stamped `20260829T21*`
 and `20260829T22*`.
 
-Nothing under `~/Programming/PseudoCoupHQ/Research/`,
-`~/Programming/PseudoCoupHQ/Planning/` or any census page was edited.
+Nothing under `PseudoCoupHQ/Research/`,
+`PseudoCoupHQ/Planning/` or any census page was edited.
 Every re-run of a repository tool was done into a scratch tree.

@@ -279,7 +279,7 @@ status: living
   the design today (recorded as SETTLED): one dendrogram per coordinate
   family, a shared threshold slider, a family toggle, and the wrap
   congruences overlaid as arcs on whichever tree shows. Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_045_extended_dendro_spectrum.md`.
+  `PseudoCoupHQ/DevComms/log_045_extended_dendro_spectrum.md`.
   Products: `Research/kind_fuzz_clustering/l3_dendro_extended.py`,
   `dendro_extended.json`, `dendrogram_extended.html` (self-contained,
   data inlined the way `dendrogram_answers.html` embeds its tree),
@@ -325,7 +325,7 @@ status: living
   design today; the governing rule: *never compare raw answers,
   compare their decompositions, and let WHICH coordinate disagrees be
   the feature.* Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_044_extended_matrix_and_conversion_spec.md`.
+  `PseudoCoupHQ/DevComms/log_044_extended_matrix_and_conversion_spec.md`.
   Products: `SUPPORT_conversion_spec.md` (this node),
   `Research/kind_fuzz_clustering/l3_matrix_extended.py`,
   `matrix_extended_base.csv`, `matrix_extended.json`. **No probe ran
@@ -350,7 +350,7 @@ status: living
   rather than papered over.
 - 2026-08-20 (log 042): **THE BOUNDARIES ARE MEASURED NUMBERS NOW, NOT
   GAPS BETWEEN SAMPLES.** Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_042_boundaries_by_bisection.md`.
+  `PseudoCoupHQ/DevComms/log_042_boundaries_by_bisection.md`.
   Products: `l3_boundary_targets.py`, `boundary_targets.json`,
   `l3_boundary_gen.py`, `bnd/` (eleven harnesses),
   `l3_boundary_lane.py`, `lanes/bs_all.sh`, `raw/bnd_<lang>.out`,
@@ -385,7 +385,7 @@ status: living
 - 2026-08-20 (log 043): **THE SIGNATURES ARE REBUILT AT THE VALUE GRAIN
   WITH ANSWER-VALUED ELEMENTS, AND THE TWO ORDERS ARE NOW ONE.**
   Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_043_value_grain_dominance.md`.
+  `PseudoCoupHQ/DevComms/log_043_value_grain_dominance.md`.
   Products: `l3_valuegrain.py`, `signatures_valuegrain.json`,
   `l3_dominance_vg.py`, `dominance_valuegrain.json`,
   `make_dominance_lattice_vg.py`, `dominance_lattice_vg.html`,
@@ -446,7 +446,7 @@ status: living
 - 2026-08-20 (log 041): **THE PRODUCT METRIC'S ALTERNATIVE READINGS ARE
   BUILT, ALL THREE, AND DEE'S DOMINANCE PARADIGM IS BUILT BESIDE
   THEM.** Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_041_alternative_readings_and_dominance.md`.
+  `PseudoCoupHQ/DevComms/log_041_alternative_readings_and_dominance.md`.
   Products: `l3_alt_readings.py`, `clusters_agreement.json`,
   `clusters_containment.json`, `clusters_domain.json`,
   `two_tree_disagreement.json`, `make_dendrogram_alt.py`,
@@ -504,7 +504,7 @@ status: living
   decision 55's bar should move.
 - 2026-08-20 (log 040): **THE CROSS-CHECK IS DONE AND 4j IS CLOSED —
   the node has no open measurement item left.** Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_040_signature_versus_behavior_crosscheck.md`.
+  `PseudoCoupHQ/DevComms/log_040_signature_versus_behavior_crosscheck.md`.
   Products: `xcheck_signature.py`, `xcheck_mapping.json`,
   `xcheck_compare.py`, `xcheck_signature.json`,
   `xcheck_sigdist_operators.json`, `xcheck_sigdist_constructs.json`.
@@ -582,7 +582,7 @@ status: living
 - 2026-08-19 (log 038): **THE NINE CHECKED LANGUAGES ARE MOVING TO THE
   VALUE GRAIN — seven are folded, three lanes are still running, and
   CHECK 5u is CLOSED.** Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_038_constructs_value_grain.md`.
+  `PseudoCoupHQ/DevComms/log_038_constructs_value_grain.md`.
   Products: `l3_construct_value.py` (the value-grain generator, reusing
   log 037's scaffolds, recorders and encoders untouched),
   `l3_value_fold.py` (merge + gate + message check + movement),
@@ -643,7 +643,7 @@ status: living
 
 - 2026-08-19 (log 037): **THE CONSTRUCT PASS IS COMPLETE FOR ALL TWELVE
   LANGUAGES, and php's twenty fatals are RECOVERED.** Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_037_constructs_all_twelve.md`.
+  `PseudoCoupHQ/DevComms/log_037_constructs_all_twelve.md`.
   Products: `l3_construct_lang.py` (the eight lanes — the trace
   recorders and the scaffold tables, the only two parts
   `HARVEST_constructs.md` said would change), `l3_php_recover.py`,
@@ -690,7 +690,7 @@ status: living
 - 2026-08-19 (log 036): **LAYER 3 EXTENDED FROM OPERATIONS TO
   CONSTRUCTS — the owner blessed access / flow / binding, and four of the
   twelve languages are measured.** Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_036_layer3_constructs.md`.
+  `PseudoCoupHQ/DevComms/log_036_layer3_constructs.md`.
   Products: `construct_design.md` (16 numbered decisions, written
   BEFORE anything was generated), `construct_catalogue.py/.json`,
   `construct_space.py`, `l3_construct.py`, `l3_construct_go.py`,
@@ -742,7 +742,7 @@ status: living
   the node and is untouched by this pass.
 - 2026-08-19 (log 035): **THE RE-FOLD — 238 leaves, both positive
   controls PASS, and swift's 1,066 exclusions are gone.** Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_035_refold_all_twelve.md`.
+  `PseudoCoupHQ/DevComms/log_035_refold_all_twelve.md`.
   Products: `l3_wordexec.py`, `l3_refold.py`, `refold_index.json`,
   a rebuilt `clusters_all12.json` and `dendrogram_all12.html`, and
   `HARVEST.md` closed to "nothing pending".
@@ -787,7 +787,7 @@ status: living
 - 2026-08-19 (log 034): **the SWIFT REDO with the real compiler, and
   DECISION 43 — a mechanical library-versus-language criterion that
   lets word-spelled operations into the vocabulary.** Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_034_swift_redo_and_word_operators.md`.
+  `PseudoCoupHQ/DevComms/log_034_swift_redo_and_word_operators.md`.
   Products: `wordop_survey.py`, `wordop_criterion.py`, `l3_wordops.py`,
   `l3_swiftfull.py`, `l3_swiftfull_read.py`, `wordop_survey.json`,
   `wordop_criterion.json`, `swiftfull_plan.json`, `raw/lr_words*.txt`,
@@ -834,7 +834,7 @@ status: living
 - 2026-08-19 (log 033): **the ANSWER GRAIN for ALL TWELVE languages —
   domains and computed values in one dendrogram.** Closes CHECK 4i.
   Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_033_answer_grain_all_twelve.md`.
+  `PseudoCoupHQ/DevComms/log_033_answer_grain_all_twelve.md`.
   Products: `clusters_all12.json`, `dendrogram_all12.html`,
   `l3_answers12.py`, `make_dendrogram_all12.py`, `domstub.js`, and the
   bridge added beside decisions 18 to 30 inside `l3_answers.py`.
@@ -882,9 +882,9 @@ status: living
 - 2026-08-19 (log 032): **the EXECUTION pass — what the accepted
   operations RETURN, for all nine statically checked languages.**
   Closes CHECK 3k. Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_032_layer3_execution_answers.md`.
+  `PseudoCoupHQ/DevComms/log_032_layer3_execution_answers.md`.
   Recording rule:
-  `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/answers_encoding.md`.
+  `PseudoCoupHQ/Research/kind_fuzz_clustering/answers_encoding.md`.
   Products: `answers_<lang>.json` for go, rust, cpp, java, csharp,
   typescript, swift, kotlin, dart, plus `answers_index.json`.
   **170,419 accepted probes, 162,853 answers, 6,020 raises, 480
@@ -940,9 +940,9 @@ status: living
   computed values, not the acceptance verdicts, over the three
   languages that have executed answers.** the owner's instruction: *"i want
   to see it cluster the actual computed values."* Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_031_answer_grain_clusters.md`.
+  `PseudoCoupHQ/DevComms/log_031_answer_grain_clusters.md`.
   Visual:
-  `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/dendrogram_answers.html`.
+  `PseudoCoupHQ/Research/kind_fuzz_clustering/dendrogram_answers.html`.
     - **the answers carry nearly the whole signal.** Clustered on
       domain overlap alone as a control, the same 69 signatures of
       python, ruby and php collapse into **one cluster of 68 with
@@ -990,9 +990,9 @@ status: living
   matrix is promoted to the primary domain, the dart fault is fixed
   rather than flagged, and the chosen cut is replaced by a threshold
   sweep on the owner's ruling.** Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_030_final_clusters_sweep.md`.
+  `PseudoCoupHQ/DevComms/log_030_final_clusters_sweep.md`.
   Visual:
-  `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/dendrogram_sweep.html`.
+  `PseudoCoupHQ/Research/kind_fuzz_clustering/dendrogram_sweep.html`.
     - **all nine value matrices COMPLETE**, 2,221,643 probes folded and
       every one passing its own gate; `vm_dart_01` and cpp's six shards
       landed. All nine load-check lanes folded, **zero unclassified**.
@@ -1083,9 +1083,9 @@ status: living
   does NOT state the owner's `break`-needs-`for` chains — seven of eleven
   grammars declare break as a legal top-level line, so grammar depth is
   a lower bound. Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_021_fuzz_phase0_probe_space.md`;
+  `PseudoCoupHQ/DevComms/log_021_fuzz_phase0_probe_space.md`;
   scripts and data:
-  `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+  `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 - 2026-08-17: phases 1 and 2 done, python only. Phase 1 is a written
   artifact — `Research/kind_fuzz_clustering/probe_design.md` — stating the
   generation rules before anything was generated, with ELEVEN numbered
@@ -1109,8 +1109,8 @@ status: living
   language; and `<>`, `print` and `exec` as statements are in the grammar
   and refuse to compile (382 of the 388 refusals), dating the grammar
   against the runtime. Report:
-  `~/Programming/PseudoCoupHQ/DevComms/log_024_layer3_python_fuzz.md`;
-  artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`
+  `PseudoCoupHQ/DevComms/log_024_layer3_python_fuzz.md`;
+  artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`
   (`probe_design.md`, `probes_python.json`, `lanes/l3_python.sh`,
   `raw/l3_python.txt`, `behavior_python.json`, `behavior_python.md`).
 - 2026-08-18: two measurement logs landed ahead of the design

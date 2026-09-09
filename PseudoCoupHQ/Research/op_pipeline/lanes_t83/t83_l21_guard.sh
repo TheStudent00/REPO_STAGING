@@ -3,7 +3,7 @@
 # artifact task 83 wrote, run as ONE process, with `grep -c exempt`
 # over the transcript pasted.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/3] the guard, one process, nothing skipped"
 python3 guard83_term_pool.py
 echo "-- exit $?"

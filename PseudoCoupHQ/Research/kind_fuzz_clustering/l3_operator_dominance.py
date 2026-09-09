@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Operator-level dominance and the mode partition.
 
-    python3 ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/l3_operator_dominance.py
+    python3 PseudoCoupHQ/Research/kind_fuzz_clustering/l3_operator_dominance.py
 
 the owner's definition, 2026-08-22: operator A DOMINATES operator B when A
 contains all the same profiles as B and more.  That is one level ABOVE

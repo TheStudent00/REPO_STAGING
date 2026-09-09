@@ -5,7 +5,7 @@
 # record alone; this lane says what IS on the record, so the next lane knows
 # where to go for the terms.
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 echo '[1/1] the shape of an UNDECIDED pair record'

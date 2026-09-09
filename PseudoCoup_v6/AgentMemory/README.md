@@ -7,7 +7,7 @@ preferences) — zero conversation scrollback required.
 
 ## Read before any of it
 
-`~/Programming/PseudoCoupHQ/plan_and_code.md` (the owner, 2026-07-31). Plan
+`PseudoCoupHQ/plan_and_code.md` (the owner, 2026-07-31). Plan
 names ARE code names; code is written top-down with logic last; every
 node carries a `designation`. Neither this project's plan nor its
 code conforms yet — bringing them into conformance is the next job,

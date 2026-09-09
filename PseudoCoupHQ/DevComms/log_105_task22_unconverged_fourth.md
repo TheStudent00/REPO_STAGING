@@ -398,7 +398,7 @@ Nothing needed to be inferred; a second field had to be read.
 tool testimony, reproducible):
 
 ```
-$ cd ~/Programming/PseudoCoupHQ/Research/op_pipeline
+$ cd PseudoCoupHQ/Research/op_pipeline
 $ python3 -c "
 import json,collections
 langs=['c','cpp','go','rust','swift']
@@ -483,4 +483,4 @@ untouched by this correction -- the error was confined to how the 50
 `no_canon4_text` units were sorted among themselves.
 
 Full record of this repair, with the rest of the round-4 audit fixes:
-`~/Programming/PseudoCoupHQ/DevComms/log_110_task25_record_repairs.md`.
+`PseudoCoupHQ/DevComms/log_110_task25_record_repairs.md`.

@@ -7,10 +7,10 @@ status: living
 
 - 2026-07-31: node founded, definition only.
 - inherited and untouched: the pre-gutting research in
-  `~/Programming/PseudoCoup_v5/Research/` and `Designing/`. what
+  `PseudoCoup_v5/Research/` and `Designing/`. what
   survives the gutting is unsettled and is the owner's call.
 - 2026-08-02 (the owner: "please modify the script to place the language
-  source in `~/Programming/Sources`. that folder is filtered out from
+  source in `Sources`. that folder is filtered out from
   Timeshift"): **upstream language sources now live outside the repo**,
   in one shared root, so multi-hundred-MB checkouts are not carried
   into system snapshots. Three scripts changed, one cause:
@@ -38,8 +38,8 @@ status: living
 - 2026-08-02 (the owner: "could you please create a single script that runs
   all three? also, i feel like PCHQ's hq.sh should be capable of doing
   that"): **one entry point for fetching upstream sources**, at
-  `~/Programming/PseudoCoup_v5/Research/fetch_all_sources.sh`, plus
-  `bash ~/Programming/PseudoCoupHQ/hq.sh sources` which calls it.
+  `PseudoCoup_v5/Research/fetch_all_sources.sh`, plus
+  `bash PseudoCoupHQ/hq.sh sources` which calls it.
   - Sequencing only, the rule hq.sh already follows: it calls the three
     fetchers, each of which still runs standalone. The order is
     load-bearing and stated in the file: `fetch_llvm.sh` adds sparse
@@ -58,7 +58,7 @@ status: living
     a routine commit must never start a multi-hundred-MB network fetch.
   - **Verified**: `--list` and the argument guard run correctly against
     the real tree (it found the existing `llvm-project` checkout under
-    `~/Programming/Sources`). hq.sh's dispatch was verified by the
+    `Sources`). hq.sh's dispatch was verified by the
     stub method the gate test already uses — a copy of hq.sh with only
     `SOURCES_SCRIPT` repointed at a stub: passthrough of `--list`,
     exit-code propagation from a failing step, and the missing-script
@@ -71,11 +71,11 @@ status: living
 
 - 2026-08-02 **standing prohibition, the owner** — a Rust code generation
   backend is BANNED from every repo in this line. The authority is
-  `~/Programming/PseudoCoupHQ/CRANELIFT_IS_BANNED.md`, which names it;
+  `PseudoCoupHQ/CRANELIFT_IS_BANNED.md`, which names it;
   nothing else should. It had already caused a massive project failure
   after the owner explicitly warned against it.
   - **How it got back in, today:** an agent read
-    `~/Programming/PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`
+    `PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`
     — a superseded plan that still describes it as an x86-64 oracle —
     quoted it approvingly, and shipped fetch scripts that downloaded
     and built it. The citation was real, which is exactly why it was

@@ -3,6 +3,6 @@
 # into a cause sentence, measured and named rather than left for a
 # reader to find.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 report97_numbers.py contamination
 echo "exit $?"

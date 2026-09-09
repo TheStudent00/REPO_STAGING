@@ -1,13 +1,13 @@
 # log 003 — how the metaprogramming model was arrived at
 
 2026-08-02. The working record behind
-`~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`,
+`PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`,
 which holds the design direction itself. This log holds the
 measurements, the demonstrations, and the wrong turns — kept because
 the wrong turns are where the reasoning is.
 
 Everything measured here was run against
-`~/Programming/Sources/rust/compiler`, in the podman sandbox's agent
+`Sources/rust/compiler`, in the podman sandbox's agent
 lane, with the grammar pinned to PCv6's manifest of record
 (`tree-sitter==0.26.0`, `tree-sitter-rust==0.24.2`).
 
@@ -78,7 +78,7 @@ bisected.
 
 Two of the six are load-bearing for the LLVM path: `llvm/ffi.rs` is the
 FFI wall named as a stage in
-`~/Programming/PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`,
+`PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`,
 and `macros.rs` defines that crate's own macros. **A 96.8% pass rate
 does not mean 96.8% of the value.**
 
@@ -88,11 +88,11 @@ does not mean 96.8% of the value.**
 
 Two runnable files, both standard library only.
 
-**`~/Programming/PseudoCoup_v5/Research/macro_demo.py`** — what a macro
+**`PseudoCoup_v5/Research/macro_demo.py`** — what a macro
 IS: tokens in, tokens out, run before parsing. Hand-written per macro,
 which is its limitation and the reason for the second file.
 
-**`~/Programming/PseudoCoup_v5/Research/macro_engine.py`** — the
+**`PseudoCoup_v5/Research/macro_engine.py`** — the
 operator itself. One engine that names no macro; each macro is a
 pattern and a template handed to it as data. Verified on three
 definitions including the shape of the real `math_builder_methods!`.
@@ -208,8 +208,8 @@ what was compared. The real "major" boundary in Rust is the EDITION
 (2015 / 2018 / 2021 / 2024), which is not measured here.
 
 Method: three paths only, fetched at three tags into sandbox scratch —
-5.6 MB total, no effect on `~/Programming/Sources`. Script kept at
-`~/Programming/SandboxDesign/agent/drop/macro_churn.sh`.
+5.6 MB total, no effect on `Sources`. Script kept at
+`SandboxDesign/agent/drop/macro_churn.sh`.
 
 | kind | path | 1.95 -> 1.96 | 1.96 -> 1.97 |
 | --- | --- | --- | --- |

@@ -2,7 +2,7 @@
 
 Date: 2026-08-12. Author: clustering agent for the owner's PseudoCoup research node (PCHQ). Plan-of-record step 4 of `CORE_0_3_0_kind_clustering.md`, on the full-ecosystem spectrum of log_014.
 
-Inputs: `~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/` — `spectrum_all.py` (`clusters_at` query API), `spectrum_all.npz`, `merge_tree_all.json`, `report_all.json`, `features_all.json`, `archetypes.json`, `grammar_inventory.json`. The vocabulary faced: `~/Programming/PseudoIR/Tools/intentions/pc_intentions.json` (`minimum_set`, 11 objects; `intent_categories` A–J; `t1_realizations`) with `minimum_intention_set.md` for definitions, plus the form tier ruled into `ur.KINDS` (`~/Programming/PseudoCoup_v5/Tools/ledgerer/ur.py`: type-form, declarative-form, proof-form). The hand-analysis this replaces: PCv5 `log_008_kinds_coarse_tagging_draft.md` (its five strain clusters and its empty buckets B/G/I, near-empty H).
+Inputs: `PseudoCoupHQ/Research/kind_signature_clustering/` — `spectrum_all.py` (`clusters_at` query API), `spectrum_all.npz`, `merge_tree_all.json`, `report_all.json`, `features_all.json`, `archetypes.json`, `grammar_inventory.json`. The vocabulary faced: `PseudoIR/Tools/intentions/pc_intentions.json` (`minimum_set`, 11 objects; `intent_categories` A–J; `t1_realizations`) with `minimum_intention_set.md` for definitions, plus the form tier ruled into `ur.KINDS` (`PseudoCoup_v5/Tools/ledgerer/ur.py`: type-form, declarative-form, proof-form). The hand-analysis this replaces: PCv5 `log_008_kinds_coarse_tagging_draft.md` (its five strain clusters and its empty buckets B/G/I, near-empty H).
 
 New artifact: `basis_xref.py` / `basis_xref_out.json` (same directory) — the mechanical cross-reference; every claim below is reproducible from it.
 

@@ -51,7 +51,7 @@
 # lane `g1b_l13_evidence2.sh` runs them.
 #
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/5] task g1b: handful.py primitive3c"
 python3 $H/handful/handful.py primitive3c
 echo "[2/5] task g1b: handful.py run3c"

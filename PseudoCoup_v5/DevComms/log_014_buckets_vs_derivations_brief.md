@@ -14,7 +14,7 @@ about three constructs.
   general, more capable one: it can hold everything the construct can
   hold, and the capability the construct does not use sits inert.
   the owner's intent-dominance, quoted from
-  `~/Programming/PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`
+  `PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`
   item 3:
 
   > "the ultimate intention of an object is the greatest amount of
@@ -41,12 +41,12 @@ about three constructs.
 
 **The three constructs in scope:** sum types, error flow, and
 aliasing/borrowing. These are exactly the three that
-`~/Programming/PseudoCoup_v5/DevComms/log_013_intentions_gap_history.md`
+`PseudoCoup_v5/DevComms/log_013_intentions_gap_history.md`
 traced to a single event — the 2026-07-28 copy-forward that took the
 conclusion of `minimum_intention_set.md` and left the argument.
 
 **Why the framing matters now.** The recovered argument at
-`~/Programming/PseudoIR/Tools/intentions/minimum_intention_set.md` IS the
+`PseudoIR/Tools/intentions/minimum_intention_set.md` IS the
 reduction reading, written down by the owner before the question was asked.
 Its governing rule, lines 21–24:
 
@@ -57,13 +57,13 @@ Its governing rule, lines 21–24:
 Characterizing: "derivable" there means exactly what "reduces to a
 dominant object" means here. The document is a reduction argument
 throughout. That is the first fact of this brief, and it puts
-`~/Programming/PseudoCoup_v5/DevComms/log_011_uncertain_families_evidence.md`
+`PseudoCoup_v5/DevComms/log_011_uncertain_families_evidence.md`
 — which recommended three new buckets, all on guard grounds — in direct
 tension with the owner's own recovered rulings on two of the three, and in
 partial tension on the third.
 
 **Provenance marking, carried over from log_011.** Claims from
-`~/Programming/PseudoIR/Tools/intentions/pc_intentions.json` are cited by
+`PseudoIR/Tools/intentions/pc_intentions.json` are cited by
 field path. Claims about how a language spells something, where the
 artifact does not say, are marked **[my language knowledge]**. Uncertain
 table rows are marked **[UNSURE]** in the row itself.
@@ -78,7 +78,7 @@ is not his concern. Section 3 of each construct applies this.
 
 ## 1.1 what the owner's recovered argument says
 
-`~/Programming/PseudoIR/Tools/intentions/minimum_intention_set.md`,
+`PseudoIR/Tools/intentions/minimum_intention_set.md`,
 §"Audit: the 12 languages' signature intentions, derived", lines 161–165:
 
 > "optionals, null safety
@@ -142,7 +142,7 @@ merge that the shared spelling invites.
 ## 1.3 what each reading implies for `ts_to_ur` and the `kinds` vocabulary
 
 The per-language mappers live at
-`~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_2_ts_to_ur/CORE_0_0_0_2_ts_to_ur.md`
+`PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_2_ts_to_ur/CORE_0_0_0_2_ts_to_ur.md`
 ("the mappers are per-language"), so both readings cost the same number
 of map entries; what differs is the vocabulary they map INTO.
 
@@ -228,7 +228,7 @@ benefits can be bought with a comment instead of a bucket.
 Where the recovered ruling and log_011 conflict, both quoted.
 
 the owner's recovered argument
-(`~/Programming/PseudoIR/Tools/intentions/minimum_intention_set.md`,
+(`PseudoIR/Tools/intentions/minimum_intention_set.md`,
 lines 161–165, 222–227):
 
 > "optionals, null safety (Swift, Kotlin, TS, Rust) = record with a tag
@@ -283,7 +283,7 @@ one real instance of the bad merge would settle it against me.
 
 ## 2.1 what the owner's recovered argument says
 
-`~/Programming/PseudoIR/Tools/intentions/minimum_intention_set.md`,
+`PseudoIR/Tools/intentions/minimum_intention_set.md`,
 §"Derived (not in the set)", lines 105–107:
 
 > "exception
@@ -400,7 +400,7 @@ is the one everything lands in.
 ## 2.5 RECOMMENDATION — error flow
 
 the owner's recovered ruling
-(`~/Programming/PseudoIR/Tools/intentions/minimum_intention_set.md`,
+(`PseudoIR/Tools/intentions/minimum_intention_set.md`,
 lines 105–107):
 
 > "exception
@@ -455,7 +455,7 @@ matter too.
 
 ## 3.1 what the owner's recovered argument says
 
-`~/Programming/PseudoIR/Tools/intentions/minimum_intention_set.md`,
+`PseudoIR/Tools/intentions/minimum_intention_set.md`,
 §"Non-object finding", lines 207–218:
 
 > "ownership / borrowing (Rust)
@@ -710,26 +710,26 @@ No comparable row exists for the other two constructs.
 
 ## sources
 
-- `~/Programming/PseudoIR/Tools/intentions/minimum_intention_set.md` —
+- `PseudoIR/Tools/intentions/minimum_intention_set.md` —
   the recovered six-section argument; §"The set", §"Derived (not in the
   set)" (lines 105–107), §"Audit" (lines 140–144, 161–165, 183–185),
   §"Non-object finding" (lines 207–218), §"Audit verdict" (lines
   222–227). All quotations verbatim.
-- `~/Programming/PseudoIR/Tools/intentions/pc_intentions.json` —
+- `PseudoIR/Tools/intentions/pc_intentions.json` —
   `languages`, `minimum_set`, `intent_categories`, `t1_realizations`,
   `row_satisfiers`, `basis_audit`, `border_lattice`, `canon`. Cited by
   field path throughout.
-- `~/Programming/PseudoCoup_v5/DevComms/log_011_uncertain_families_evidence.md`
+- `PseudoCoup_v5/DevComms/log_011_uncertain_families_evidence.md`
   — families 2, 3b and 4, and their recommendations, quoted in §1.5,
   §2.5, §3.5.
-- `~/Programming/PseudoCoup_v5/DevComms/log_013_intentions_gap_history.md`
+- `PseudoCoup_v5/DevComms/log_013_intentions_gap_history.md`
   — the recovered rulings S1, E5, A4 and their dating.
-- `~/Programming/PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md` —
+- `PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md` —
   item 3 (the owner's intent-dominance quote), item 4 (merges judged on
   grammar facts, never name resemblance), item 5 (the mechanical seed).
-- `~/Programming/PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
+- `PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
   — the 21 buckets, the two PROPOSED buckets, open question 1.
-- `~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_2_ts_to_ur/CORE_0_0_0_2_ts_to_ur.md`
+- `PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_2_ts_to_ur/CORE_0_0_0_2_ts_to_ur.md`
   — read only, for the per-language mapper shape ("the mappers are
   per-language").
 - My own knowledge of the grammars of the twelve, marked **[my language

@@ -20,14 +20,14 @@
 # The store and the walk state are cleared so this is a fresh walk of
 # the whole population and not a resume of the old rule's answers.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/3] keep lane 3's audit, clear the store and the walk state"
 cp t104_audit.json t104_audit_unchanged_rule.json
 cp t104_walk_evidence.json t104_walk_evidence_unchanged_rule.json
 rm -f t104_walk_state.json t104_walk_evidence.json
 rm -rf term104_store
 echo "[2/3] the walk, with the changed normalizer"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_walk.py 1536 60 3072 900
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_walk.py 1536 60 3072 900
 echo "walk exit $?"
 echo "[3/3] shards written"
 ls term104_store/*.json | wc -l

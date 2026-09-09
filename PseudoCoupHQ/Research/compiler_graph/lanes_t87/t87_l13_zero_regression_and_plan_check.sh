@@ -13,12 +13,12 @@
 # pairs anything; it diffs two runs of the same program.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+REPO=PseudoCoupHQ/Research/compiler_graph
+PIPE=PseudoCoupHQ/Research/op_pipeline
 cd "$REPO"
 
 say "[1/4] the baseline version, taken out of git"
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 git log --format='%h %ad %s' --date=format:'%Y-%m-%d %H:%M' -1 e2cba0db
 mkdir -p /work/baseline
 git show e2cba0db:Research/compiler_graph/graph.py > /work/baseline/graph.py
@@ -30,7 +30,7 @@ say "[2/4] Graph.coverage -- the same join, both versions, diffed"
 rm -rf /work/reg_sample && mkdir -p /work/reg_sample
 python3 - <<'PY'
 import os
-src = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/go'
+src = 'PseudoCoupHQ/Research/compiler_graph/diaries/go'
 for n in sorted(x for x in os.listdir(src) if x.endswith('.txt'))[:30]:
     os.symlink(os.path.join(src, n), os.path.join('/work/reg_sample', n))
 print("   sampled 30 go diaries")
@@ -68,7 +68,7 @@ print("   (the `cost` block carries wall time and a cache path and is "
 PY
 
 say "[4/4] the planning tree checked"
-python3 /projects/PlanPlan/framework/check_plans.py \
-    /projects/PseudoCoupHQ/Planning 2>&1 | tail -30
+python3 PlanPlan/framework/check_plans.py \
+    PseudoCoupHQ/Planning 2>&1 | tail -30
 echo "   check_plans exit=$?"
 echo "DONE t87_l13"

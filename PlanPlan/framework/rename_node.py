@@ -45,7 +45,7 @@ node's `name` (and the folder's name segment below a tree root) — so a
 folder renamed without changing its id fails that check immediately,
 and `check_plans.py` reports it as an ERROR. Framework tension recorded
 by the owner, 2026-08-14, at
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/
+`PseudoCoupHQ/Planning/node_0_3_research/
 node_0_3_0_kind_signature_clustering/PROGRESS.md`: "one of the two
 rules should give; the owner's call."
 

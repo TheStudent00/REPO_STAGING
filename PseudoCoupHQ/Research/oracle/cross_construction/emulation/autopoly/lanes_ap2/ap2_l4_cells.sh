@@ -55,15 +55,15 @@
 # parse at 290,040 kB.
 set -euo pipefail
 echo "[1/2] task ap2: the attested cells, out of model_table.json"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 python3 - <<'PY'
 import json
 import os
 import resource
 
-MODEL = ("/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
+MODEL = ("PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
          "model_table.json")
-ATTEST = ("/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
+ATTEST = ("PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
           "model_table_attest.json")
 ABORT_KB = 6 * 1024 * 1024
 

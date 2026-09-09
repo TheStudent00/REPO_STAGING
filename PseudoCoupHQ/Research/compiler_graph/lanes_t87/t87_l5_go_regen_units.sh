@@ -11,13 +11,13 @@
 # operator field.
 set -u
 say() { echo; echo "======== $* ========"; }
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 say "[1/3] the go shards of the regen store"
 ls canon39_regen_store/ | grep '_go_' | head -20
 python3 - <<'PY'
 import json, os
-store = '/projects/PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
+store = 'PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
 names = sorted(n for n in os.listdir(store) if '_go_' in n)
 total = 0
 ids = []
@@ -34,12 +34,12 @@ PY
 say "[2/3] do the 590 go diary stems all have a machine form somewhere"
 python3 - <<'PY'
 import json, os
-store = '/projects/PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
+store = 'PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
 stems = sorted(n[:-4] for n in os.listdir(
-    '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/go')
+    'PseudoCoupHQ/Research/compiler_graph/diaries/go')
     if n.endswith('.txt'))
 have = {}
-doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                      'canon39_wrapped_go.json'))
 for uid, unit in doc["units"].items():
     have[uid] = ("canon39_wrapped_go.json", bool(unit.get("body_bytes")))
@@ -60,7 +60,7 @@ PY
 say "[3/3] one regenerated go unit, shown whole in its machine-form fields"
 python3 - <<'PY'
 import json, os
-store = '/projects/PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
+store = 'PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
 name = sorted(n for n in os.listdir(store) if '_go_' in n)[0]
 doc = json.load(open(os.path.join(store, name)))
 units = doc["units"]

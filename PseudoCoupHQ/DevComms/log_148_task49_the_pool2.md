@@ -1,7 +1,7 @@
 # log 148 — TASK 49: the pool rebuilt on the wrapped form
 
 Date: 2026-09-02. Author: Claude Code (implementer), no sub-agents.
-Working directory: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+Working directory: `PseudoCoupHQ/Research/op_pipeline`.
 Python: `/tmp/reconnect_venv/bin/python3`. Assembly on the host:
 `as --64`, `objdump -d`.
 
@@ -275,7 +275,7 @@ further members that `E00033` did not.
 ## 3.2 The entry itself
 
 - The complete entry is written verbatim to
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/the_pool2_entry_E00029.json`
+  `PseudoCoupHQ/Research/op_pipeline/the_pool2_entry_E00029.json`
   (118,843 bytes: every field, all 158 member objects).
 - `acceptance49_printed.txt` §(b) prints it in the log-readable form:
   every field except `members` pretty-printed, then all 158 stored
@@ -725,7 +725,7 @@ ALL FOUR CLAIMS: PASS
 
 # 9. COMPLETE FILE INVENTORY
 
-## 9.1 New this lap, all in `~/Programming/PseudoCoupHQ/Research/op_pipeline`
+## 9.1 New this lap, all in `PseudoCoupHQ/Research/op_pipeline`
 
 | file | bytes | what it is |
 | --- | --- | --- |

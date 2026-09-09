@@ -5,10 +5,10 @@ decision, a correction, or an amendment. Nothing was edited; one file
 was written, this one.
 
 **The question.** the owner, 2026-08-05, on the three gap-questions raised in
-`~/Programming/PseudoCoup_v5/DevComms/log_011_uncertain_families_evidence.md`
+`PseudoCoup_v5/DevComms/log_011_uncertain_families_evidence.md`
 §"do the five families expose gaps in the intentions data itself?" (G1
 sum types, G2 error flow, G3 aliasing), all three absent from
-`~/Programming/PseudoIR/Tools/intentions/pc_intentions.json`:
+`PseudoIR/Tools/intentions/pc_intentions.json`:
 
 > "i think error flow was included at one point. i vaguely remember
 > something about aliasing. i dont recall sum types at all."
@@ -16,13 +16,13 @@ sum types, G2 error flow, G3 aliasing), all three absent from
 **What was searched.** The artifact's own provenance chain
 (`pc_intentions.json` `meta`, `intentions_data.py` provenance header,
 `README.md`); the full git history of the deleted
-`~/Programming/PseudoCoup_v5/Designing/` folder (four commits, all nine
+`PseudoCoup_v5/Designing/` folder (four commits, all nine
 files reconstructed and grepped); the git history of
-`~/Programming/PseudoIR/Tools/intentions` (three commits);
-`~/Programming/PseudoCoup_v5/DevComms/language_divergence_study_log.md`,
+`PseudoIR/Tools/intentions` (three commits);
+`PseudoCoup_v5/DevComms/language_divergence_study_log.md`,
 `dev_plan_log.md`, `open_issues.md`, `project_state.md`, `log_008`;
-`~/Programming/PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`;
-and `~/Programming/0_Archive/` (PseudoCoup_v1–v4, PseudoIR,
+`PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`;
+and `0_Archive/` (PseudoCoup_v1–v4, PseudoIR,
 PseudoIR_(retired), WFL_PseudoCoup_Briefing). Search terms: error,
 exception, propagat, alias, borrow, sum type, variant, enum, tagged
 union, Result, Option, Either.
@@ -39,7 +39,7 @@ All three questions turn on one event, so it is worth fixing before the
 per-gap sections. The current artifact is a copy-forward, and the
 copy-forward was PARTIAL BY DESIGN.
 
-`~/Programming/PseudoIR/Tools/intentions/intentions_data.py`, lines
+`PseudoIR/Tools/intentions/intentions_data.py`, lines
 588–591 (the comment introducing the field that carries the 11 objects):
 
 > ```
@@ -49,9 +49,9 @@ copy-forward was PARTIAL BY DESIGN.
 > ```
 
 And the same file's `README.md` provenance section
-(`~/Programming/PseudoIR/Tools/intentions/README.md`):
+(`PseudoIR/Tools/intentions/README.md`):
 
-> - minimum_set: `~/Programming/PseudoCoup_v5/Designing/minimum_intention_set.md`
+> - minimum_set: `PseudoCoup_v5/Designing/minimum_intention_set.md`
 >   (the 11 objects, post-audit).
 
 The source document has SIX sections, not one: "The set", "Why the set
@@ -66,14 +66,14 @@ Dates for the whole chain:
 
 | date | event | ref |
 | --- | --- | --- |
-| 2026-07-17 | earliest error-propagation discussion found | file mtime, `~/Programming/0_Archive/PseudoIR_(retired)/v4/.planning/GeminiDiscussions/low_level_dependencies.md` |
+| 2026-07-17 | earliest error-propagation discussion found | file mtime, `0_Archive/PseudoIR_(retired)/v4/.planning/GeminiDiscussions/low_level_dependencies.md` |
 | 2026-07-22 | divergence log lists "exception semantics" as an uninvestigated candidate class | `language_divergence_study_log.md:182`, under the `## Entry 2026-07-22` headings |
-| 2026-07-24 15:57 -0400 | `Designing/minimum_intention_set.md` first appears in PCv5 git | `git -C ~/Programming/PseudoCoup_v5 show 866ee4d` ("PCv5 initial: migrate theory docs…") |
+| 2026-07-24 15:57 -0400 | `Designing/minimum_intention_set.md` first appears in PCv5 git | `git -C PseudoCoup_v5 show 866ee4d` ("PCv5 initial: migrate theory docs…") |
 | 2026-07-24 21:15 -0400 | `pc_verdicts.json` + `build_verdicts.py` added | `git show 9eec26c` |
 | 2026-07-27 13:04 -0400 | last PCv5 commit holding `Designing/` | `git show 7efb6e6` |
-| 2026-07-28 | R1 verification; copy-forward into PseudoIR | `~/Programming/PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md` (dated in its own header); `intentions_data.py` header "Copied forward: 2026-07-28" |
-| 2026-07-31 11:44 -0400 | first PseudoIR commit containing `Tools/intentions/intentions_data.py` | `git -C ~/Programming/PseudoIR show 9abc927` |
-| 2026-08-01 07:51 -0400 | `Designing/` deleted | `git -C ~/Programming/PseudoCoup_v5 show 21cef81` ("Gutting: 550 MB -> 55 MB.") — note the commit timestamp is 08-01, not 07-31 as the gutting is usually dated |
+| 2026-07-28 | R1 verification; copy-forward into PseudoIR | `PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md` (dated in its own header); `intentions_data.py` header "Copied forward: 2026-07-28" |
+| 2026-07-31 11:44 -0400 | first PseudoIR commit containing `Tools/intentions/intentions_data.py` | `git -C PseudoIR show 9abc927` |
+| 2026-08-01 07:51 -0400 | `Designing/` deleted | `git -C PseudoCoup_v5 show 21cef81` ("Gutting: 550 MB -> 55 MB.") — note the commit timestamp is 08-01, not 07-31 as the gutting is usually dated |
 | 2026-08-05 | log_008 and log_011 raise the three as questions | file headers |
 
 `minimum_intention_set.md` is BYTE-IDENTICAL across all three PCv5
@@ -100,11 +100,11 @@ lift, which took one section of one document.
 | S6 | 2026-07-24 | `git show 866ee4d:Designing/intention_tables_gen.py:231` (DIAG["C"]) | "internal merge: sum type is the canonical; null is the legacy spelling" |
 | S7 | 2026-07-24 | `git show 866ee4d:Designing/intention_row_satisfiers.md:17` | "\| C optionals \| **Rust** \| `Option<T>` with no null in the language; every other cell is it weakened (sugar removed, enforcement removed, or null retained alongside) \|" |
 | S8 | 2026-07-24 | `git show 866ee4d:Designing/intention_row_satisfiers.md:40` | "`Option` = tagged record + choice; `match` = if-chains + field access" |
-| S9 | 2026-08-05 | `~/Programming/PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md:337` | "Sum types are not in the minimum set. the owner to rule whether `record` stretches to cover them or an object is missing." |
+| S9 | 2026-08-05 | `PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md:337` | "Sum types are not in the minimum set. the owner to rule whether `record` stretches to cover them or an object is missing." |
 | S10 | 2026-08-05 | `log_011_uncertain_families_evidence.md`, §G1 | "`minimum_set` has `record` ("values grouped under named fields") and no sum." |
 
 S3–S8 all survive verbatim into the present artifact
-(`~/Programming/PseudoIR/Tools/intentions/pc_intentions.json`:
+(`PseudoIR/Tools/intentions/pc_intentions.json`:
 `t1_realizations.C.Rust`, `t1_realizations.C.Swift`,
 `t2_compatibility` C/D, `t2_diagonal.C`, `row_satisfiers.C`).
 
@@ -146,7 +146,7 @@ No occurrence of "sum type", "tagged union", "variant", "Either" as a
 CANDIDATE OBJECT or CANDIDATE CATEGORY anywhere in: the four PCv5
 `Designing/` commits; `PCv7_policy_decisions.md`; `BEJ_expansion.md`;
 `two_layer_program.md`; `language_divergence_study_log.md`;
-`dev_plan_log.md`; the R1 REPORT; `~/Programming/0_Archive/` (all of
+`dev_plan_log.md`; the R1 REPORT; `0_Archive/` (all of
 PseudoCoup_v1–v4 and both PseudoIR trees). `enum` appears in the
 archive only as English, never as a proposed tier member.
 
@@ -170,10 +170,10 @@ of. the owner rules on whether "derived, therefore excluded" answers G1.
 
 | # | date | ref | quote |
 | --- | --- | --- | --- |
-| E1 | 2026-07-17 (file mtime 17:31) | `~/Programming/0_Archive/PseudoIR_(retired)/v4/.planning/GeminiDiscussions/low_level_dependencies.md:53` | "Now that the core pipeline strategy is clear, how do you want to handle exception and error propagation primitives? For example, if a Python dependency throws a runtime dynamic exception, should it be translated first into a Go-style dual return values primitive, or a Rust-style Result<T, E> enum lookup?" |
+| E1 | 2026-07-17 (file mtime 17:31) | `0_Archive/PseudoIR_(retired)/v4/.planning/GeminiDiscussions/low_level_dependencies.md:53` | "Now that the core pipeline strategy is clear, how do you want to handle exception and error propagation primitives? For example, if a Python dependency throws a runtime dynamic exception, should it be translated first into a Go-style dual return values primitive, or a Rust-style Result<T, E> enum lookup?" |
 | E2 | same file, line 76 (the reply, reporting the owner's answer back to him) | same path | "I was over-complicating things by treating exceptions as a special "magic" compiler feature. You corrected that by applying your core principle consistently: an exception system is just code." |
 | E3 | same file, lines 92–99 | same path | "By treating exceptions, memory allocation, and type built-ins not as "magic built-ins" but as standard graph dependencies to be translated in order, your custom IR stays incredibly lean." |
-| E4 | 2026-07-22 | `~/Programming/PseudoCoup_v5/DevComms/language_divergence_study_log.md:182` | "Are there classes not yet listed? Candidates to investigate: exception semantics (what is catchable), recursion limits, integer hashing, default float formatting in print." |
+| E4 | 2026-07-22 | `PseudoCoup_v5/DevComms/language_divergence_study_log.md:182` | "Are there classes not yet listed? Candidates to investigate: exception semantics (what is catchable), recursion limits, integer hashing, default float formatting in print." |
 | E5 | 2026-07-24 | `git show 866ee4d:Designing/minimum_intention_set.md`, §"Derived (not in the set)", lines 97–99 | "exception<br>choice + early return through<br>call layers" |
 | E6 | 2026-07-24 | same file, lines 174–176 | "defer (Go), RAII (C++), using (C#)<br>= sequence + choice, same<br>derivation as exception." |
 | E7 | 2026-07-24 | `git show 866ee4d:Designing/PCv7_policy_decisions.md`, policy 15 | "Objects outside the Ledger<br>(borrowed native packages): defined Fail — dev-time error where<br>provable, declared error at run-time otherwise. Never a raw<br>key error." |
@@ -196,12 +196,12 @@ artifact built from it.
 | | |
 | --- | --- |
 | last version containing it | `git show 7efb6e6:Designing/minimum_intention_set.md` (2026-07-27 13:04 -0400), §"Derived (not in the set)", lines 97–99: "exception / choice + early return through / call layers" — byte-identical to 866ee4d |
-| first version without it | `git show 9abc927:Tools/intentions/intentions_data.py` in `~/Programming/PseudoIR` (2026-07-31 11:44 -0400), `MINIMUM_SET`, 11 dicts, no `exception` entry; and its build product `~/Programming/PseudoIR/Tools/intentions/pc_intentions.json` `minimum_set` |
+| first version without it | `git show 9abc927:Tools/intentions/intentions_data.py` in `PseudoIR` (2026-07-31 11:44 -0400), `MINIMUM_SET`, 11 dicts, no `exception` entry; and its build product `PseudoIR/Tools/intentions/pc_intentions.json` `minimum_set` |
 | recorded reasoning for the exclusion FROM THE SET | E5's own placement: it is under the heading "Derived (not in the set)", governed by lines 12–15 "Anything derivable is listed as derived, or left out". The derivation given is "choice + early return through call layers" |
 | recorded reasoning for the exclusion FROM THE COPY-FORWARD | `intentions_data.py:588–591`: "lifted by reading minimum_intention_set.md ("The set" section, post-audit form)". The scope of the lift is stated; the reason for that scope is not |
 
 Two further points on what the copy-forward was authorized to be. The
-R1 report (`~/Programming/PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`,
+R1 report (`PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`,
 2026-07-28) names what needed lifting:
 
 > "3. **Minimum intention set membership** — the 11 objects
@@ -251,8 +251,8 @@ travelled with the 11.
 
 | # | date | ref | quote |
 | --- | --- | --- | --- |
-| A1 | 2026-07-14 (the owner decision quoted in a later file) | `~/Programming/0_Archive/PseudoIR_(retired)/pseudoir/registry/data/ops.json:688` and `~/Programming/0_Archive/PseudoIR_(retired)/v2/registry/ops.json:688` | "…NEVER an in-place mutation of `a`. This keeps user types value-like and avoids aliasing surprises. The ban stands; the rebind rule is the pre-decided answer for the day it is lifted, so no future re-litigation." |
-| A2 | 2026-07-22 | `~/Programming/PseudoCoup_v5/DevComms/language_divergence_study_log.md:287` | "\| 2 copy-model \| Discipline rule: one aliasing convention (Python's) + explicit `.copy()` at borders \|" |
+| A1 | 2026-07-14 (the owner decision quoted in a later file) | `0_Archive/PseudoIR_(retired)/pseudoir/registry/data/ops.json:688` and `0_Archive/PseudoIR_(retired)/v2/registry/ops.json:688` | "…NEVER an in-place mutation of `a`. This keeps user types value-like and avoids aliasing surprises. The ban stands; the rebind rule is the pre-decided answer for the day it is lifted, so no future re-litigation." |
+| A2 | 2026-07-22 | `PseudoCoup_v5/DevComms/language_divergence_study_log.md:287` | "\| 2 copy-model \| Discipline rule: one aliasing convention (Python's) + explicit `.copy()` at borders \|" |
 | A3 | 2026-07-22 | same file, line 340 | "Class 2 border — value-copy struct entering a reference-model frame: convertible via copy, or incompatible if aliasing is load-bearing." |
 | A4 | 2026-07-24 | `git show 866ee4d:Designing/minimum_intention_set.md`, §"Non-object finding", lines 198–210 | "ownership / borrowing (Rust)<br>NOT an object at any level.<br>a dev-time grammar restricting<br>aliasing and lifetime (classes<br>2 and 4 of the divergence study).<br>the run-time behavior it permits<br>is fully expressible in the set;<br>what Rust adds is a PROOF about<br>that behavior, checked before<br>running. lives beside the border<br>grammar of PCv7, not in this set." |
 | A5 | 2026-07-24 | same file, "Audit verdict", lines 214–218 | "One<br>non-object identified (static proof<br>grammars)." |
@@ -377,28 +377,28 @@ Two absences-of-evidence, stated plainly:
 
 ## sources
 
-- `~/Programming/PseudoIR/Tools/intentions/pc_intentions.json` —
+- `PseudoIR/Tools/intentions/pc_intentions.json` —
   `minimum_set`, `intent_categories`, `border_lattice`, `t1_realizations`,
   `t2_compatibility`, `t2_diagonal`, `row_satisfiers`, `primitives`,
   `operators`, `basis_audit`, `policy_refs`, `meta`. Read 2026-08-06.
-- `~/Programming/PseudoIR/Tools/intentions/intentions_data.py` (provenance
+- `PseudoIR/Tools/intentions/intentions_data.py` (provenance
   header lines 1–22; `MINIMUM_SET` comment lines 588–591) and
   `README.md`.
-- `git -C ~/Programming/PseudoIR log --oneline -- Tools/intentions` →
+- `git -C PseudoIR log --oneline -- Tools/intentions` →
   9abc927 (2026-07-31), 2682a16 (2026-08-01), 049a8e3 (2026-08-05); all
   three inspected.
-- `git -C ~/Programming/PseudoCoup_v5 log --oneline --all -- Designing/`
+- `git -C PseudoCoup_v5 log --oneline --all -- Designing/`
   → 866ee4d (2026-07-24 15:57), 9eec26c (2026-07-24 21:15), 7efb6e6
   (2026-07-27 13:04), 21cef81 (2026-08-01 07:51, the deletion). All nine
   files at each of the first three commits were extracted and searched.
-- `~/Programming/PseudoCoup_v5/DevComms/` —
+- `PseudoCoup_v5/DevComms/` —
   `language_divergence_study_log.md`, `dev_plan_log.md`,
   `open_issues.md`, `project_state.md`,
   `log_008_kinds_coarse_tagging_draft.md`,
   `log_011_uncertain_families_evidence.md`.
-- `~/Programming/PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`
+- `PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`
   (2026-07-28).
-- `~/Programming/0_Archive/` — PseudoCoup_v1 through v4, PseudoIR,
+- `0_Archive/` — PseudoCoup_v1 through v4, PseudoIR,
   PseudoIR_(retired), WFL_PseudoCoup_Briefing. Hits: the two `ops.json`
   copies (A1) and
   `PseudoIR_(retired)/v4/.planning/GeminiDiscussions/low_level_dependencies.md`

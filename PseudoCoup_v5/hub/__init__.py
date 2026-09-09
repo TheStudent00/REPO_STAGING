@@ -45,7 +45,7 @@ __all__ = []
 
 #: Where the real thing is defined, quoted in the error so a person
 #: hitting this does not have to go looking.
-_HUB_PLAN = "~/Programming/PseudoIR/Planning/node_0_2_hub/CORE_0_2_hub.md"
+_HUB_PLAN = "PseudoIR/Planning/node_0_2_hub/CORE_0_2_hub.md"
 
 
 class InertHubError(AttributeError, RuntimeError):

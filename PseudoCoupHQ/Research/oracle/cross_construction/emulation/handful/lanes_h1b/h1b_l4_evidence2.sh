@@ -6,7 +6,7 @@
 # transcript in h1b_l3_evidence.sh's log stands and is not re-run here.
 # MEMORY: the task's bound is 4 GB with the named abort ABORT_MEMORY_H1.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 run () { echo; printf '$'; printf ' %q' "$@"; echo; "$@"; }
 
 echo "[1/1] grep -c exempt over every file this task added"

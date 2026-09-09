@@ -9,7 +9,7 @@
 #         layer-5 text in the_pool5.json, each marked with the Render.lean
 #         constructor that covers it or the reason the subset stops short.
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 

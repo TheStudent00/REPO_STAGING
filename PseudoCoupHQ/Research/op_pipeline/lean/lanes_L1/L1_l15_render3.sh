@@ -5,7 +5,7 @@
 # a value of the shifted type; that is what makes the slice and the append
 # renderable at all. Every remaining `sorry` is counted and named.
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 echo '[1/1] Render.lean, build 3'

@@ -542,8 +542,8 @@ over the three superseded records is empty.
 
 ## 7.4 The tree check
 
-`python3 ~/Programming/PlanPlan/framework/check_plans.py
-~/Programming/PseudoCoupHQ/Planning` reports the same 5 dangling-path
+`python3 PlanPlan/framework/check_plans.py
+PseudoCoupHQ/Planning` reports the same 5 dangling-path
 errors and 3 warnings it reported before this task; none of them names
 a file this task wrote or a CORE this task edited.
 

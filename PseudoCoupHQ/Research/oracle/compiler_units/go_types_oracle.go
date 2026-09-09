@@ -572,7 +572,7 @@ func newChecker() checker {
 func main() {
 	root := flag.String("root", "/sources/golang_src/src/cmd/compile", "directory tree to walk")
 	goroot := flag.String("goroot", "/sources/golang_src", "GOROOT for the source importer")
-	out := flag.String("out", "/projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json", "output json (gzip-compressed when the name ends in .gz)")
+	out := flag.String("out", "PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json", "output json (gzip-compressed when the name ends in .gz)")
 	scratch := flag.String("scratch", os.TempDir(), "directory for the per-package site stream (one json line per site, copied into -out at the end)")
 	only := flag.String("only", "", "only directories whose path contains this substring (sampling)")
 	releaseThrough := flag.Int("release-through", 28, "extend build.Default.ReleaseTags through go1.<n>")

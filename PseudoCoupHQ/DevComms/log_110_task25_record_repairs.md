@@ -81,7 +81,7 @@ commit_message.txt` naming round 4's artifacts and decisions".
 ### what is on disk (evidence class: tool testimony, reproducible)
 
 ```
-$ cd ~/Programming/PseudoCoupHQ
+$ cd PseudoCoupHQ
 $ wc -c DevComms/next_commit_message.txt
 0 DevComms/next_commit_message.txt
 
@@ -119,7 +119,7 @@ the thing being looked for -- and here one does.
 
 **The readback DID happen.** Evidence class: the coordinating session's
 own transcript, held by that session and quoted to me verbatim -- `wc
--c` returned `4180 ~/Programming/PseudoCoupHQ/DevComms/next_
+-c` returned `4180 PseudoCoupHQ/DevComms/next_
 commit_message.txt`, and `head -5` showed the round-4 posterity text
 beginning "Round 4 banking message (Task 23, log_108)...". A direct
 transcript outranks my inference from a missing commit. So log_108's
@@ -132,16 +132,16 @@ the file is not merely read by the driver, it is EMPTIED by it, by
 explicit design, with the reason written in the script's own comment:
 
 ```
-$ cd ~/Programming/PseudoCoupHQ
+$ cd PseudoCoupHQ
 $ sed -n '10,26p' git_commit_push.sh
 # Message priority: explicit arg > DevComms/next_commit_message.txt
 # (written by the sandbox session) > "update". The file is emptied
 # after use so a stale message never labels a later commit.
 #
-# Usage:  bash ~/Programming/PseudoCoupHQ/git_commit_push.sh ["commit message"]
+# Usage:  bash PseudoCoupHQ/git_commit_push.sh ["commit message"]
 
 set +e
-REPO=~/Programming/PseudoCoupHQ
+REPO=PseudoCoupHQ
 MSGFILE="$REPO/DevComms/next_commit_message.txt"
 if [ -n "$1" ]; then
     MSG="$1"
@@ -264,7 +264,7 @@ The facts, read off disk 2026-09-01 (evidence class: tool testimony,
 reproducible):
 
 ```
-$ cd ~/Programming/PseudoCoupHQ
+$ cd PseudoCoupHQ
 $ wc -c DevComms/next_commit_message.txt
 0 DevComms/next_commit_message.txt
 $ git log --format="%h %ad %s" --date=short -- DevComms/next_commit_message.txt
@@ -300,7 +300,7 @@ participates in the grouping; `operator` is not read at all by this
 command.
 
 ```
-$ cd ~/Programming/PseudoCoupHQ/Research/op_pipeline
+$ cd PseudoCoupHQ/Research/op_pipeline
 $ python3 -c "
 import json, collections
 langs=['c','cpp','go','rust','swift']
@@ -400,7 +400,7 @@ A dated correction note appended BELOW log_105's original text. The
 original text is unmodified. Readback:
 
 ```
-$ tail -20 ~/Programming/PseudoCoupHQ/DevComms/log_105_task22_unconverged_fourth.md
+$ tail -20 PseudoCoupHQ/DevComms/log_105_task22_unconverged_fourth.md
 The 50-unit total is unchanged, and no unit's `status` changed in any
 artifact -- the JSON records always said this. Only the reading was
 wrong.
@@ -420,7 +420,7 @@ untouched by this correction -- the error was confined to how the 50
 `no_canon4_text` units were sorted among themselves.
 
 Full record of this repair, with the rest of the round-4 audit fixes:
-`~/Programming/PseudoCoupHQ/DevComms/log_110_task25_record_repairs.md`.
+`PseudoCoupHQ/DevComms/log_110_task25_record_repairs.md`.
 ```
 
 ## repair (c) -- `DevComms/scratch.py`, named
@@ -472,7 +472,7 @@ It is NOT a program. It is pseudocode written in a Python-shaped
 notation, and it does not parse:
 
 ```
-$ cd ~/Programming/PseudoCoupHQ
+$ cd PseudoCoupHQ
 $ python3 -c "import ast; ast.parse(open('DevComms/scratch.py').read())"   # tail of the traceback
     def func_0 -> int (a_0: int, b_0: int):
                ^^
@@ -538,14 +538,14 @@ as display labels on named units (`rust/op_807` and `rust/op_814`, both
 
 Written (new):
 
-- `~/Programming/PseudoCoupHQ/DevComms/log_110_task25_record_repairs.md`
+- `PseudoCoupHQ/DevComms/log_110_task25_record_repairs.md`
   -- this report.
 
 Appended to (existing text unchanged, dated note added at the foot):
 
-- `~/Programming/PseudoCoupHQ/DevComms/log_105_task22_unconverged_fourth.md`
+- `PseudoCoupHQ/DevComms/log_105_task22_unconverged_fourth.md`
   -- correction note for repair (b).
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`
   -- dated retraction for repair (a), plus this task's own dated entry,
   both under the single `# PROGRESS` heading.
 
@@ -554,8 +554,8 @@ below):
 
 - `AgentMemory.md`, `DevComms/LLM_communication_protocol.md` (the
   protocol of record, titled "Communication Protocol, v2" at line 1 --
-  the path `~/Programming/DevComms/LLM_communication_protocol_v2.md`
-  named in the brief does not exist on disk; `ls ~/Programming/DevComms`
+  the path `DevComms/LLM_communication_protocol_v2.md`
+  named in the brief does not exist on disk; `ls DevComms`
   shows only `LLM_communication_protocol.md`, which is v1, and the v2
   file lives in `PseudoCoupHQ/DevComms/`), `DevComms/log_103`,
   `log_105`, `log_108`, `log_109`, `DevComms/next_commit_message.txt`,
@@ -564,15 +564,15 @@ below):
   `canon4_units_{c,cpp,go,rust,swift}.json`.
 
 ```
-$ cd ~/Programming/PseudoCoupHQ && git status --short && date
+$ cd PseudoCoupHQ && git status --short && date
  M DevComms/log_110_task25_record_repairs.md
 ?? Research/compiler_graph/graph_cpp2.json
 ?? Research/compiler_graph/graph_cpp3.json
 Tue Sep  1 11:19:30 AM EDT 2026
 
 $ ls -la Research/compiler_graph/graph_cpp2.json Research/compiler_graph/graph_cpp3.json
--rw-rw-r-- 1 <host> <host> 19097469 Aug 31 19:16 Research/compiler_graph/graph_cpp2.json
--rw-rw-r-- 1 <host> <host> 26501104 Aug 31 21:43 Research/compiler_graph/graph_cpp3.json
+-rw-rw-r-- 1 <user> <user> 19097469 Aug 31 19:16 Research/compiler_graph/graph_cpp2.json
+-rw-rw-r-- 1 <user> <user> 26501104 Aug 31 21:43 Research/compiler_graph/graph_cpp3.json
 ```
 
 Reading that status honestly, since it is a moving target: the

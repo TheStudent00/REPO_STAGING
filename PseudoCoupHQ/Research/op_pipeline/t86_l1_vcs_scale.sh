@@ -19,7 +19,7 @@
 # Node: hq.research.compiler_graph.dashboard
 set -uo pipefail
 
-REPO=/projects/PseudoCoupHQ
+REPO=PseudoCoupHQ
 cd "$REPO" || exit 2
 
 echo "[1/6] git, inside the sandbox"
@@ -42,7 +42,7 @@ mkdir -p /out
 python3 - <<'PY'
 import json, os, resource, subprocess, time
 
-REPO = "/projects/PseudoCoupHQ"
+REPO = "PseudoCoupHQ"
 
 def git(*args):
     p = subprocess.run(["git", "-C", REPO] + list(args),

@@ -2,17 +2,17 @@
 # Fetches every upstream language source this repo's research reads,
 # in one run.
 #
-#   bash ~/Programming/PseudoCoup_v5/Research/fetch_all_sources.sh
+#   bash PseudoCoup_v5/Research/fetch_all_sources.sh
 #
 # Everything lands in ONE shared root outside the repo:
 #
-#   ~/Programming/Sources        (override with PC_SOURCES=<dir>)
+#   Sources        (override with PC_SOURCES=<dir>)
 #
 # outside because these checkouts are hundreds of MB of upstream code
 # that is not ours, and because that folder is filtered out of
 # Timeshift (the owner, 2026-08-02), so snapshots do not carry it.
 #
-#   bash ~/Programming/PseudoCoup_v5/Research/fetch_all_sources.sh --list
+#   bash PseudoCoup_v5/Research/fetch_all_sources.sh --list
 #       show what would run and what is already present; fetches
 #       nothing, needs no network.
 #
@@ -26,7 +26,7 @@
 #
 # This script holds SEQUENCING ONLY. Every step is a call into the
 # fetcher that owns that source, so each still works on its own —
-# the same rule ~/Programming/PseudoCoupHQ/hq.sh follows.
+# the same rule PseudoCoupHQ/hq.sh follows.
 
 set -uo pipefail
 
@@ -38,7 +38,7 @@ SRC="${PC_SOURCES:-$HOME/Programming/Sources}"
 # fetch_sources.sh clones, so it must run second.
 #
 # 2026-08-02: a third step was REMOVED by a standing prohibition — see
-# ~/Programming/PseudoCoupHQ/CRANELIFT_IS_BANNED.md. It fetched, built
+# PseudoCoupHQ/CRANELIFT_IS_BANNED.md. It fetched, built
 # and vendored a banned backend. No step here may fetch it again.
 STEPS=(
     "$HERE/rust_routing/fetch_sources.sh|rustc sparse checkout"

@@ -145,7 +145,7 @@ PASS super_ops2.json -- no operator token in any key, grouping, pairing or row s
 ```
 
 Sources extracted with `git show llvmorg-21.1.8:<path>` against
-`~/Programming/Sources/llvm-project`, never the working tree (which is
+`Sources/llvm-project`, never the working tree (which is
 checked out at `llvmorg-24-init` — verified again this session,
 unchanged from lap two's finding).
 

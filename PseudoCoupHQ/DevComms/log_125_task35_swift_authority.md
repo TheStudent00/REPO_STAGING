@@ -77,18 +77,18 @@ does not exist. §9 records that.
 
 ## 2.1 The pin, quoted from the repository itself
 
-The brief named `~/Programming/Sources/swift-6.0.3-RELEASE` and
-noted that `~/Programming/Sources/swift` also exists. Both were
+The brief named `Sources/swift-6.0.3-RELEASE` and
+noted that `Sources/swift` also exists. Both were
 checked. The second is the stale, unusable clone log 122 described:
 
 ```
-$ git -C ~/Programming/Sources/swift log -1 --format='%H %s'
+$ git -C Sources/swift log -1 --format='%H %s'
 fatal: your current branch 'master' does not have any commits yet
 
-$ git -C ~/Programming/Sources/swift-6.0.3-RELEASE log -1 --format='%H %s'
+$ git -C Sources/swift-6.0.3-RELEASE log -1 --format='%H %s'
 6a862d2eb7128ff1f317b07e8ad1a6da939775f3 Change version string to 'swift-6.0.3-RELEASE'
 
-$ git -C ~/Programming/Sources/swift-6.0.3-RELEASE describe --all
+$ git -C Sources/swift-6.0.3-RELEASE describe --all
 tags/swift-6.0.3-RELEASE
 ```
 
@@ -592,7 +592,7 @@ an unrelated file in a different project:
 
 ```
 $ find ~/Programming -name "*log_121*"
-~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_121_reactivity_model.md
+StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_121_reactivity_model.md
 $ podman exec sandbox-runner find / -maxdepth 6 -name "log_121*"
 (no output)
 ```
@@ -612,7 +612,7 @@ Evidence class: verified absence, both sides of the wall.
 # 10. Complete file inventory
 
 Created by this task, all of them new, all under
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/` except the last
+`PseudoCoupHQ/Research/op_pipeline/` except the last
 two:
 
 | file | bytes | what it is |

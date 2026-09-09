@@ -125,7 +125,7 @@ index 89 before: 'jmp    137474 <long_add+0x104>'
 index 87 after:  'lea 0x36f0(%rax,%rdi,1),%rax'
 index 88 after:  'jmp    137474 <long_add+0x104>'  (was index 89 before the merge)
 total instructions before: 94, after: 93
-wrote ~/Programming/PseudoCoupHQ/Research/op_pipeline/op_units_cpython_reextracted.json
+wrote PseudoCoupHQ/Research/op_pipeline/op_units_cpython_reextracted.json
 ```
 
 Same run against the sibling file:
@@ -133,7 +133,7 @@ Same run against the sibling file:
 ```
 $ /tmp/reconnect_venv/bin/python3 reextract_long_add.py op_units_cpython2.json op_units_cpython2_reextracted.json
 ... (identical diff at the same site) ...
-wrote ~/Programming/PseudoCoupHQ/Research/op_pipeline/op_units_cpython2_reextracted.json
+wrote PseudoCoupHQ/Research/op_pipeline/op_units_cpython2_reextracted.json
 ```
 
 The replacement mnemonic (`lea 0x36f0(%rax,%rdi,1),%rax`) is not
@@ -214,10 +214,10 @@ Named by grepping for consumers of `op_units_cpython.json` /
   output (93 instructions, defect-free).
 - `op_pipeline/op_units_cpython2_reextracted.json` -- re-extracted
   output (93 instructions, defect-free), sibling file.
-- `~/Programming/PseudoCoupHQ/DevComms/log_104_task20_block_cutter.md`
+- `PseudoCoupHQ/DevComms/log_104_task20_block_cutter.md`
   -- this report.
 - Dated entry appended to
-  `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`
+  `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`
   (single `# PROGRESS` heading, unchanged).
 
 No file was deleted or edited among prior artifacts; `op_units_cpython.json`

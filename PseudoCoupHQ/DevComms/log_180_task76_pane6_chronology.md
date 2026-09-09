@@ -319,7 +319,7 @@ additive only in `viewer_build.py`.
 
 ```
 /tmp/reconnect_venv/bin/python3 \
-    ~/Programming/PseudoCoupHQ/Research/op_pipeline/chronology_build.py --append
+    PseudoCoupHQ/Research/op_pipeline/chronology_build.py --append
 ```
 
 Task 74 calls it after the round's artifacts are committed and before the

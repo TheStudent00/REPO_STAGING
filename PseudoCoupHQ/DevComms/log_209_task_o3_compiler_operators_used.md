@@ -76,10 +76,10 @@ THE SPELLING BAN, pasted verbatim per the brief's law:
 
 | compiler | source tree | written in | checkout |
 |---|---|---|---|
-| clang/llvm (c, cpp) | `~/Programming/Sources/llvm-project` | cpp | SPARSE: `llvm/lib/CodeGen/SelectionDAG`, `llvm/include/llvm/{CodeGen,IR,MC,Target}` only |
-| go | `~/Programming/Sources/golang_src` | go | full checkout (`src/`); the compiler is `src/cmd/compile`, the rest is the standard library — reported as two rows |
-| rustc | `~/Programming/Sources/rust` | rust | SPARSE: `compiler/rustc_codegen_{cranelift,llvm,ssa}` only |
-| swiftc | `~/Programming/Sources/swift-6.0.3-RELEASE` | cpp (compiler), swift (stdlib) | full checkout; compiler row = `lib/` + `include/`, measured against the **cpp** inventory because swiftc's own source is C++; the swift-language stdlib row is a FLAG (no swift parser in this image, confirmed below), not measured |
+| clang/llvm (c, cpp) | `Sources/llvm-project` | cpp | SPARSE: `llvm/lib/CodeGen/SelectionDAG`, `llvm/include/llvm/{CodeGen,IR,MC,Target}` only |
+| go | `Sources/golang_src` | go | full checkout (`src/`); the compiler is `src/cmd/compile`, the rest is the standard library — reported as two rows |
+| rustc | `Sources/rust` | rust | SPARSE: `compiler/rustc_codegen_{cranelift,llvm,ssa}` only |
+| swiftc | `Sources/swift-6.0.3-RELEASE` | cpp (compiler), swift (stdlib) | full checkout; compiler row = `lib/` + `include/`, measured against the **cpp** inventory because swiftc's own source is C++; the swift-language stdlib row is a FLAG (no swift parser in this image, confirmed below), not measured |
 
 clang/llvm and swiftc are both measured against the **cpp** offered/
 lowered inventories, never a "c" or "swift" inventory, because the
@@ -101,7 +101,7 @@ fact, not adjusted to match the brief's number.
 
 ## 3. The deliverable table
 
-`~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.{py,json,md}`.
+`PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.{py,json,md}`.
 
 | compiler | written in | source files parsed | offered (grammar total) | offered, lowered by the corpus | used in own source | used ∩ lowered | in lowered, never used | used, not in lowered |
 |---|---|---|---|---|---|---|---|---|
@@ -173,23 +173,23 @@ one-operator difference is `swiftc` using the alternative spelling
 
 ## 6. Lanes, guard output, verifier tally
 
-Airlock instance `o3`, config `~/Programming/Airlock/instances/o3.conf`
+Airlock instance `o3`, config `Airlock/instances/o3.conf`
 (copied from `o2.conf`, cpus=4/memory=6g per this brief's own
 instruction, reasons in the conf's own header comment). Mounts (from
-`~/Programming/Airlock/mounts.conf`, checked before any lane was
-written): `~/Programming/Sources` is mounted read-only at `/sources`,
-`~/Programming/PseudoCoupHQ` read-write at `/projects/PseudoCoupHQ` —
+`Airlock/mounts.conf`, checked before any lane was
+written): `Sources` is mounted read-only at `/sources`,
+`PseudoCoupHQ` read-write at `PseudoCoupHQ` —
 so no mount edit was needed; had `Sources` not been mounted, that
 would have been a flag for the coordinator, not a config edit (per
 this brief's own instruction).
 
 ```
-$ bash ~/Programming/Airlock/up.sh --instance o3
+$ bash Airlock/up.sh --instance o3
 ...
   o3-runner  Up 1 second  localhost/sandbox-runner:latest
   mounts:
-    ~/Programming/PseudoCoupHQ:/projects/PseudoCoupHQ:rw
-    ~/Programming/Sources:/sources:ro
+    PseudoCoupHQ:PseudoCoupHQ:rw
+    Sources:/sources:ro
 ```
 
 Lanes run, in order (names used once, per convention):
@@ -202,7 +202,7 @@ Lanes run, in order (names used once, per convention):
 | 2b | `o3_l2b_spelling_guard.sh` | guard rerun | exit 1: 154 findings — the NEW `unit` field itself was a colon-joined spelling shape (`"clang_llvm_cpp:!"`), which is rule 1 of the guard's own violation list |
 | 1c | `o3_l1c_operators_used.sh` | deliverable, `unit` id changed to an opaque `"<row_id>#<index>"` that never joins the operator token onto anything | exit 0; same table |
 | 2c | `o3_l2c_spelling_guard.sh` | guard, final | **exit 0: PASS** |
-| 3 | `o3_l3_claims_verify.sh` | claims-verify, first pass (log referenced unreachable `~/AirlockRuns/...` paths) | exit 0 (verifier ran clean); tally 0 MATCHES / 0 DIFFERS / 4 UNVERIFIABLE / 7 REFUSED / 1 NOT_RERUNNABLE — 4 REFUSED were `log_unreachable` (host-only paths); fixed by copying the referenced lane logs into `lane_logs/` under this repo and rewriting every path to its `/projects/...` mount form |
+| 3 | `o3_l3_claims_verify.sh` | claims-verify, first pass (log referenced unreachable `<runs>/...` paths) | exit 0 (verifier ran clean); tally 0 MATCHES / 0 DIFFERS / 4 UNVERIFIABLE / 7 REFUSED / 1 NOT_RERUNNABLE — 4 REFUSED were `log_unreachable` (host-only paths); fixed by copying the referenced lane logs into `lane_logs/` under this repo and rewriting every path to its `...` mount form |
 | 3b | `o3_l3b_claims_verify.sh` | claims-verify, after the path fix | exit 0; tally 2 MATCHES / 2 DIFFERS / 4 UNVERIFIABLE / 3 REFUSED / 1 NOT_RERUNNABLE — the 2 DIFFERS were a `tail -3` paste that had drifted from the log's real trailer, and this ADDENDUM's own placeholder text; both fixed to the literal output below |
 | 3c | `o3_l3c_claims_verify.sh` | claims-verify, over the file BEFORE the ADDENDUM was written (the run whose real tally the ADDENDUM's ellipsis-elided paste below is drawn from) | exit 0; tally 3 MATCHES / 1 DIFFERS / 4 UNVERIFIABLE / 3 REFUSED / 1 NOT_RERUNNABLE — the 1 DIFFER was the ADDENDUM's own placeholder line (`[FILLED IN AFTER THE LANE RUNS]`), fixed by writing the ADDENDUM below with this run's real (ellipsis-elided) output |
 | 3d | `o3_l3d_claims_verify.sh` | claims-verify, over the file WITH the ADDENDUM appended (confirms the ellipsis-elided self-reference resolves to NOT_RERUNNABLE, not DIFFERS) | exit 0; tally 3 MATCHES / **0 DIFFERS** / 4 UNVERIFIABLE / 3 REFUSED / 2 NOT_RERUNNABLE — matches the ADDENDUM's own prediction exactly |
@@ -211,7 +211,7 @@ Peak RSS, from the script's own `resource.getrusage` line (no
 `/usr/bin/time` in the runner image, per task o2's finding):
 
 ```
-$ tail -3 /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T015830Z__o3_l1c_operators_used.sh.log
+$ tail -3 PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T015830Z__o3_l1c_operators_used.sh.log
 ------------------------------------------------------------
 # exit 0 in 27.6s
 # work free after: 2048 MB (consumed 0 MB)
@@ -230,9 +230,9 @@ single file plus the accumulating tally, not the corpus.
 ```
 (not re-run here: submits/moves the sandbox itself, by design outside
 this verifier's scope)
-$ python3 ~/Programming/Airlock/airlock submit ~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o3/o3_l2c_spelling_guard.sh --instance o3 --no-batch
+$ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lanes_o3/o3_l2c_spelling_guard.sh --instance o3 --no-batch
 
-$ cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T015906Z__o3_l2c_spelling_guard.sh.log
+$ cat PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T015906Z__o3_l2c_spelling_guard.sh.log
 # script: /drop/o3_l2c_spelling_guard.sh
 # started: 2026-09-06T01:59:06+00:00
 # timeout: 7200s
@@ -252,18 +252,18 @@ conf) — zero on all four, pasted directly:
 
 ```
 $ grep -c exempt \
-    /projects/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.json \
-    /projects/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.py \
-    /projects/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.md
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.json:0
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.py:0
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.md:0
+    PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.json \
+    PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.py \
+    PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.md
+PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.json:0
+PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.py:0
+PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.md:0
 ```
 
-(`~/Programming/Airlock/instances/o3.conf` is outside the sandbox mount
+(`Airlock/instances/o3.conf` is outside the sandbox mount
 and outside this repo, so it is checked once here, from the host, and
 not re-asserted as a re-runnable claim inside the verifier's mounted
-tree: `grep -c exempt ~/Programming/Airlock/instances/o3.conf` → `0`.)
+tree: `grep -c exempt Airlock/instances/o3.conf` → `0`.)
 
 No exempt annotation was added anywhere to route around a finding —
 both real findings (§6, lanes 2 and 2b) were fixed at their actual
@@ -271,7 +271,7 @@ cause (missing unit-identifying fields, then a colon-joined id that
 reintroduced the same shape) and reproduced with the same table.
 
 ```
-$ bash ~/Programming/Airlock/down.sh --instance o3
+$ bash Airlock/down.sh --instance o3
   removed o3-runner
 done.
 ```
@@ -279,7 +279,7 @@ done.
 **check_conventions_log_claims.py --verify, over this log:**
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 120 --json /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims_final.json /projects/PseudoCoupHQ/DevComms/log_209_task_o3_compiler_operators_used.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 120 --json PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims_final.json PseudoCoupHQ/DevComms/log_209_task_o3_compiler_operators_used.md
 ```
 
 This command verifies this very file; it cannot paste its own output
@@ -333,7 +333,7 @@ after that lane ran.
 ## ADDENDUM — o3_l3c/l3d final verifier tally (o3_l3c ran over the file without this ADDENDUM; this ADDENDUM was then written from that run's real output; o3_l3d re-ran over the file WITH this ADDENDUM present to confirm the self-reference resolves to NOT_RERUNNABLE rather than DIFFERS — its result is quoted in the lane table above. Only the lane table's own rows for l3c/l3d were added to §6 after o3_l3c ran, to record what those two runs did; no fact stated anywhere else in the log was changed.)
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 120 --json /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims_final.json /projects/PseudoCoupHQ/DevComms/log_209_task_o3_compiler_operators_used.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 120 --json PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims_final.json PseudoCoupHQ/DevComms/log_209_task_o3_compiler_operators_used.md
 ...
 log_209_task_o3_compiler_operators_used.md: 12 claims extracted
 ...
@@ -363,7 +363,7 @@ verifier exit: 0
 **TALLY: 12 claims, 3 MATCHES, 0 DIFFERS, 4 UNVERIFIABLE, 3 REFUSED, 2 NOT_RERUNNABLE. Zero DIFFERS.**
 Full untruncated verifier stdout (the run immediately before this
 ADDENDUM was written, over the file as it stood without this section):
-`~/AirlockRuns/o3/agent/logs/20260906T020430Z__o3_l3c_claims_verify.sh.log`.
+`<runs>/o3/agent/logs/20260906T020430Z__o3_l3c_claims_verify.sh.log`.
 Machine-checked claims json:
 `Research/oracle/compiler_units/log_209_claims_final.json` (itself
 passes the spelling-key guard, per its own last line above).
@@ -373,7 +373,7 @@ passes the spelling-key guard, per its own last line above).
 Task o3b, 2026-09-06. What changed since §7's flag: the Airlock runner
 image `localhost/sandbox-runner:latest` was rebuilt with
 `tree-sitter-swift==0.7.3` added to
-`~/Programming/Airlock/requirements-analysis.txt`. Verified directly,
+`Airlock/requirements-analysis.txt`. Verified directly,
 from the host, before any lane ran:
 
 ```
@@ -384,7 +384,7 @@ ok
 `compiler_operators_used.py` was EXTENDED, not forked: the swift
 standard library row (`swift_stdlib`) now runs through the exact same
 `measure_row()` function every other row uses, parsing every `.swift`
-file under `~/Programming/Sources/swift-6.0.3-RELEASE/stdlib`
+file under `Sources/swift-6.0.3-RELEASE/stdlib`
 (403 files, matching the brief's stated count) with `tree_sitter_swift`,
 measured against `operator_arity.json`'s swift inventory — the same
 inventory swiftc's own compiler row (§3/§4, cpp-measured) is not
@@ -448,11 +448,11 @@ is cpp, not swift, so those spellings are not even in its offered set).
 $ podman run --rm localhost/sandbox-runner:latest python3 -c "import tree_sitter_swift; print('ok')"
 ok
 
-$ bash ~/Programming/Airlock/up.sh --instance o3
+$ bash Airlock/up.sh --instance o3
   o3-runner  Up Less than a second  localhost/sandbox-runner:latest
 
-$ python3 ~/Programming/Airlock/airlock submit .../lanes_o3/o3_l4_operators_used_swift.sh --instance o3 --no-batch
-$ cat ~/AirlockRuns/o3/agent/logs/20260906T022015Z__o3_l4_operators_used_swift.sh.log
+$ python3 Airlock/airlock submit .../lanes_o3/o3_l4_operators_used_swift.sh --instance o3 --no-batch
+$ cat <runs>/o3/agent/logs/20260906T022015Z__o3_l4_operators_used_swift.sh.log
 # script: /drop/o3_l4_operators_used_swift.sh
 [1/1] compiler_operators_used.py (all six rows, swift stdlib now measured)
 done in 31.0s, peak RSS 260.7 MB
@@ -473,8 +473,8 @@ never fired) — one file parsed, walked and released at a time, same
 as task o3's own five-row run.
 
 ```
-$ python3 ~/Programming/Airlock/airlock submit .../lanes_o3/o3_l5_spelling_guard.sh --instance o3 --no-batch
-$ cat ~/AirlockRuns/o3/agent/logs/20260906T022118Z__o3_l5_spelling_guard.sh.log
+$ python3 Airlock/airlock submit .../lanes_o3/o3_l5_spelling_guard.sh --instance o3 --no-batch
+$ cat <runs>/o3/agent/logs/20260906T022118Z__o3_l5_spelling_guard.sh.log
 # script: /drop/o3_l5_spelling_guard.sh
 [1/1] check_no_spelling_keys.py over compiler_operators_used.json (six rows, task o3b)
 operator inventory: 91 tokens read from probe_manifest_*.json
@@ -499,7 +499,7 @@ Research/oracle/compiler_units/compiler_operators_used.py:0
 Research/oracle/compiler_units/compiler_operators_used.md:0
 Research/oracle/compiler_units/lanes_o3/o3_l4_operators_used_swift.sh:0
 Research/oracle/compiler_units/lanes_o3/o3_l5_spelling_guard.sh:0
-$ grep -c exempt ~/Programming/Airlock/instances/o3.conf
+$ grep -c exempt Airlock/instances/o3.conf
 0
 ```
 
@@ -511,12 +511,12 @@ number task o3 used):
 |---|---|---|
 | `o3_l6_claims_verify.sh` | 120s (matching task o3's own l3/l3b/l3c/l3d) | **Killed (exit 137, OOM at the container's 6g cap)** at claim 12/25 -- the ADDENDUM's own self-referential `check_conventions_log_claims.py --verify` claim (present since task o3's own ADDENDUM, unchanged by this task) is actually executed by the verifier, which re-verifies the same file, meets the same self-referential claim again, and so on; at task o3's 12-claim file this chain fit inside the memory bound before any level's own timeout tripped, but this file now carries 25 claims (§8 added 13), so each nested level does more work and the chain grows deep enough to exceed 6g before any level times out. |
 | `o3_l6b_claims_verify.sh` | 20s | exit 0; ran clean. Tally: 25 claims, 3 MATCHES, **1 DIFFERS**, 5 UNVERIFIABLE, 13 REFUSED, 3 NOT_RERUNNABLE. The lower timeout bounds each nested level's wall time, shortening the reachable self-referential chain -- that claim still resolves the same way in the end (`NOT_RERUNNABLE: timeout_20s`), just via a faster-terminating recursion, not a redesign of the log or the checker. |
-| (fix) | -- | The 1 DIFFER was this section's own `grep -c exempt` paste (line ~497 before the fix): pasted with bare filenames (`compiler_operators_used.json:0`) because the host command that produced it was run from inside the `compiler_units/` directory, while the verifier always runs from `WORKDIR=/projects/PseudoCoupHQ` and so produces the full relative path (`Research/oracle/compiler_units/compiler_operators_used.json:0`). Fixed above to the literal `WORKDIR`-relative output. |
+| (fix) | -- | The 1 DIFFER was this section's own `grep -c exempt` paste (line ~497 before the fix): pasted with bare filenames (`compiler_operators_used.json:0`) because the host command that produced it was run from inside the `compiler_units/` directory, while the verifier always runs from `WORKDIR=PseudoCoupHQ` and so produces the full relative path (`Research/oracle/compiler_units/compiler_operators_used.json:0`). Fixed above to the literal `WORKDIR`-relative output. |
 | `o3_l6c_claims_verify.sh` | 20s | re-run after the fix; result pasted below. |
 
 ```
-$ python3 ~/Programming/Airlock/airlock submit ~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o3/o3_l6c_claims_verify.sh --instance o3 --no-batch
-$ cat ~/AirlockRuns/o3/agent/logs/20260906T022659Z__o3_l6c_claims_verify.sh.log
+$ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lanes_o3/o3_l6c_claims_verify.sh --instance o3 --no-batch
+$ cat <runs>/o3/agent/logs/20260906T022659Z__o3_l6c_claims_verify.sh.log
 [1/1] check_conventions_log_claims.py --verify over log_209 (with §8, after the grep-exempt fix)
 log_209_task_o3_compiler_operators_used.md: 25 claims extracted
 ...
@@ -542,7 +542,7 @@ causes, by name:
   out_of_sandbox                   1
 
 peak RSS after the pass: 17.2 MB
-wrote /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims_o3b.json
+wrote PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims_o3b.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS log_209_claims_o3b.json -- no operator token in any key, grouping, pairing or row structure
 
@@ -560,7 +560,7 @@ other lane's own `cat .../<lane>.log` claim above it. Nothing else
 differs from the prediction typed before this lane ran.)
 
 ```
-$ bash ~/Programming/Airlock/down.sh --instance o3
+$ bash Airlock/down.sh --instance o3
   removed o3-runner
 done.
 ```
@@ -593,7 +593,7 @@ ADDENDUM already named — not a defect.)
 Task o3b, defect fix, 2026-09-06. The coordinator, running on the
 host, checked §8's "in lowered, never used" claim for `!=`, `<=`,
 `>=` against the swift standard library source directly:
-`grep -rh --include=*.swift -o " != \| <= \| >= " ~/Programming/Sources/swift-6.0.3-RELEASE/stdlib | sort | uniq -c`
+`grep -rh --include=*.swift -o " != \| <= \| >= " Sources/swift-6.0.3-RELEASE/stdlib | sort | uniq -c`
 returned 650, 416 and 448 occurrences respectively -- these three
 operators are not "never used"; §8's mapping missed the tree-sitter
 node kind that wraps them.
@@ -706,11 +706,11 @@ replacement:**
 `o3_l6c`, the last number task o3b used:**
 
 ```
-$ bash ~/Programming/Airlock/up.sh --instance o3
+$ bash Airlock/up.sh --instance o3
   o3-runner  Up Less than a second  localhost/sandbox-runner:latest
 
-$ python3 ~/Programming/Airlock/airlock submit .../lanes_o3/o3_l7_swift_node_type_probe.sh --instance o3 --no-batch
-$ cat ~/AirlockRuns/o3/agent/logs/20260906T023210Z__o3_l7_swift_node_type_probe.sh.log
+$ python3 Airlock/airlock submit .../lanes_o3/o3_l7_swift_node_type_probe.sh --instance o3 --no-batch
+$ cat <runs>/o3/agent/logs/20260906T023210Z__o3_l7_swift_node_type_probe.sh.log
 [1/1] swift_node_type_probe.py (one snippet per swift operator)
 '!=' -> infix_expression='a != b'
 '<=' -> infix_expression='a <= b'
@@ -746,8 +746,8 @@ $ cat ~/AirlockRuns/o3/agent/logs/20260906T023210Z__o3_l7_swift_node_type_probe.
 # exit 0 in 0.1s
 # work free after: 2048 MB (consumed 0 MB)
 
-$ python3 ~/Programming/Airlock/airlock submit .../lanes_o3/o3_l8_operators_used_swift_fix.sh --instance o3 --no-batch
-$ cat ~/AirlockRuns/o3/agent/logs/20260906T023232Z__o3_l8_operators_used_swift_fix.sh.log
+$ python3 Airlock/airlock submit .../lanes_o3/o3_l8_operators_used_swift_fix.sh --instance o3 --no-batch
+$ cat <runs>/o3/agent/logs/20260906T023232Z__o3_l8_operators_used_swift_fix.sh.log
 [1/1] compiler_operators_used.py (all six rows, swift comparison/equality node-type fix)
 done in 31.1s, peak RSS 260.7 MB
   clang_llvm_cpp: 561 files, offered=65 lowered=32 used=41 used_and_lowered=23 lowered_never_used=9 used_not_lowered=18 parse_failures=0
@@ -768,8 +768,8 @@ widens which node types are scanned, not how source is read (one file
 at a time, released before the next, as every prior row).
 
 ```
-$ python3 ~/Programming/Airlock/airlock submit .../lanes_o3/o3_l9_spelling_guard.sh --instance o3 --no-batch
-$ cat ~/AirlockRuns/o3/agent/logs/20260906T023313Z__o3_l9_spelling_guard.sh.log
+$ python3 Airlock/airlock submit .../lanes_o3/o3_l9_spelling_guard.sh --instance o3 --no-batch
+$ cat <runs>/o3/agent/logs/20260906T023313Z__o3_l9_spelling_guard.sh.log
 [1/1] check_no_spelling_keys.py over compiler_operators_used.json (six rows, task o3b correction)
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS compiler_operators_used.json -- no operator token in any key, grouping, pairing or row structure
@@ -804,8 +804,8 @@ from o3, `--timeout 20` as §8 did** (continuing the lane numbering
 from `o3_l9`):
 
 ```
-$ python3 ~/Programming/Airlock/airlock submit .../lanes_o3/o3_l10_claims_verify.sh --instance o3 --no-batch
-$ cat ~/AirlockRuns/o3/agent/logs/20260906T023443Z__o3_l10_claims_verify.sh.log
+$ python3 Airlock/airlock submit .../lanes_o3/o3_l10_claims_verify.sh --instance o3 --no-batch
+$ cat <runs>/o3/agent/logs/20260906T023443Z__o3_l10_claims_verify.sh.log
 [1/1] check_conventions_log_claims.py --verify over log_209 (with §9 appended)
 log_209_task_o3_compiler_operators_used.md: 36 claims extracted
 ...
@@ -833,7 +833,7 @@ causes, by name:
   redirects_into_a_path            1
 
 peak RSS after the pass: 18.9 MB
-wrote /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims_o3b_correction.json
+wrote PseudoCoupHQ/Research/oracle/compiler_units/log_209_claims_o3b_correction.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS log_209_claims_o3b_correction.json -- no operator token in any key, grouping, pairing or row structure
 
@@ -852,7 +852,7 @@ resulted from it this pass; it was REFUSED on shape grounds
 (`redirects_into_a_path`) before ever being compared to output.
 
 ```
-$ bash ~/Programming/Airlock/down.sh --instance o3
+$ bash Airlock/down.sh --instance o3
   removed o3-runner
 done.
 ```

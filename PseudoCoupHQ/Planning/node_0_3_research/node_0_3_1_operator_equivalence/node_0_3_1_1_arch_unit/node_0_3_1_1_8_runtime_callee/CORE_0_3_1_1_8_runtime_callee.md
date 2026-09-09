@@ -104,7 +104,7 @@ ArchUnit.runtime_callee
   a library call." Decision: [arch_unit](../CORE_0_3_1_1_arch_unit.md) settled rules.
 - **That ruling SUPERSEDES the "out of scope" verdict** recorded the
   same day in
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/out_of_scope_library_calls.json`.
+  `PseudoCoupHQ/Research/op_pipeline/out_of_scope_library_calls.json`.
   The file's LIST of 308 units stands as a list; its verdict does not.
   Decision: the owner, 2026-09-03; carried in [arch_unit](../CORE_0_3_1_1_arch_unit.md) and in
   [probes](../../node_0_3_1_0_probes/CORE_0_3_1_0_probes.md).
@@ -252,7 +252,7 @@ ArchUnit.runtime_callee
 
 ## realization (what exists on disk, 2026-09-03)
 
-Home: `~/Programming/PseudoCoupHQ/Research/op_pipeline/`.
+Home: `PseudoCoupHQ/Research/op_pipeline/`.
 
 | part | current file | status |
 |---|---|---|

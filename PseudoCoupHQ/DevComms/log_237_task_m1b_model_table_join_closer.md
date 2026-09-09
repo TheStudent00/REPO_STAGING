@@ -1,23 +1,23 @@
 # log 237 — task m1b: closing the model table's join, and the four populations it had missed
 
 Node: `hq.research.arch_unit_oracle`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 its "goal" section of 2026-09-07 and its ruling of 2026-09-08). This closes
-task m1 (`~/Programming/PseudoCoupHQ/DevComms/log_236_task_m1_arch_opcode_model_table.md`),
+task m1 (`PseudoCoupHQ/DevComms/log_236_task_m1_arch_opcode_model_table.md`),
 the first item of that goal and step 3 of the research master order
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md` §4.2).
+(`PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md` §4.2).
 
 Date: 2026-09-08. Instance `m1b` (its conf
-`~/Programming/Airlock/instances/m1b.conf`), brought up and down by this
+`Airlock/instances/m1b.conf`), brought up and down by this
 task. Every lane ran on the tower guest through
-`bash ~/Programming/Airlock/remote_lane.sh`, per LAW's last section; nothing
+`bash Airlock/remote_lane.sh`, per LAW's last section; nothing
 but file editing, git and those commands ran on the laptop. A lane log's host
 path on the tower is
-`~/AirlockRuns/m1b/agent/logs/<stamp>__<lane>.sh.log`;
+`<runs>/m1b/agent/logs/<stamp>__<lane>.sh.log`;
 every attribution below names its file.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `~/Programming/PseudoCoupHQ`, mounted into the
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into the
 instance. Every rendering is labelled **LITERAL** (the object, quoted) or
 **GLOSS** (a plain-words reading beside a literal), per
 `object.literal-gloss-analogy`.
@@ -114,17 +114,17 @@ under the new name.
 ## §1. The objects, one sentence each, in relation
 
 - The **model table** is
-  `~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py`
+  `PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py`
   and what it writes beside itself: every mapping the reference's
   `opcode_table` holds, one row per operand form the sweep spells, with the
   corpus's attestation joined onto it.
 - The **sweep** is `shapes_for`, `attempts_for`, `sweep`, `one_attempt` and
   `run_line` in
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`:
+  `PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`:
   it hands every builder every operand spelling it knows at every width.
   This task added three operand spellings to it and changed nothing else.
 - The **reference** is
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/reference.py`: one entry
+  `PseudoCoupHQ/Research/op_pipeline/reference.py`: one entry
   per arch mnemonic, each holding the builder that turns operand texts plus
   a machine state into the z3 term the opcode writes. This task changed one
   branch of one builder.
@@ -142,7 +142,7 @@ under the new name.
   corpus mnemonic, in exactly one of four categories, in
   `model_table.json`'s `counts.coverage`.
 - The **162** is the corpus's mnemonic vocabulary,
-  `~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json`.
+  `PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json`.
 
 ---
 
@@ -206,7 +206,7 @@ now key by:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for r in d['counts']['attestation_width_merges']:
     print('%-10s %-10s key_width %-4s classifier widths %s'
           % (r['mnem'], r['shape'], r['key_width'],
@@ -231,7 +231,7 @@ the two forms are still distinguishable in the table.
 `20260909T011704Z__m1b_l22_quotes.sh.log`:
 
 ```
-$ sed -n '838,843p' /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
+$ sed -n '838,843p' PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
 def flag_pair_rows(record):
     """every ledger row whose producer is the PAIR (flag-setting arch
     opcode, flag-reading arch opcode), except the OUT block's answer
@@ -263,7 +263,7 @@ counts one instruction twice.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for row in d['rows']:
     if row['mnem'] != 'setne' or row['shape'] != 'gpr_one':
         continue
@@ -328,7 +328,7 @@ three shapes gave the corpus:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 seen = []
 for row in d['rows']:
     if row['shape'] not in ('st_st', 'st_one', 'st_none'):
@@ -390,7 +390,7 @@ it reads the reference's own entry, never the token; lane
 `20260909T011704Z__m1b_l22_quotes.sh.log`:
 
 ```
-$ sed -n '861,866p' /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
+$ sed -n '861,866p' PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
 def writes_the_branch_condition(mnem):
     """does the reference's own entry for this mnemonic write the
     branch condition rather than a value?
@@ -407,7 +407,7 @@ command carrying a bare `>`, which bash would read as a redirection):
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 with_rows = []
 without = []
 for r in d['counts']['coverage']:
@@ -478,7 +478,7 @@ table's one-operand rows became:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 tally = {}
 example = {}
 for row in d['rows']:
@@ -527,7 +527,7 @@ mappings changed; the column now shows a condition that was always there.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 total = 0
 for r in d['counts']['coverage_totals']:
     total = total + r['mnemonics']
@@ -623,7 +623,7 @@ Reported by cause, each with a status:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 c = d['counts']
 print('table %d corpus %d both %d table_only %d corpus_only %d'
       % (c['table_mnemonics'], c['corpus_mnemonics'], c['in_both'],
@@ -679,7 +679,7 @@ corpus's 332 shards, as of 2026-09-08.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 want = [('add','gpr_gpr',32), ('imul','gpr_one',32),
         ('imul','gpr_gpr',32), ('sar','cl_gpr',32),
         ('idiv','gpr_one',32)]
@@ -756,7 +756,7 @@ model, and nothing else.
 **LITERAL**, lane `20260909T003036Z__m1b_l3_check_baseline.sh.log`:
 
 ```
-  File "/projects/PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py", line 1234, in load_rows
+  File "PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py", line 1234, in load_rows
     "mnem": row["mnemonic"],
             ~~~^^^^^^^^^^^^
 KeyError: 'mnemonic'
@@ -778,10 +778,10 @@ fix is named in §14.
 ### §10.1 o2's zero-opcode examples, FIXED
 
 **LITERAL**, the change in
-`~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py`:
+`PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py`:
 
 ```
-$ sed -n '164,166p' /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py
+$ sed -n '164,166p' PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py
                     ex.append({"lang": lang, "unit": uid,
                                "operator": operator,
                                "body_text": body_text})
@@ -832,7 +832,7 @@ FAIL per_opcode_results.json -- 57 spelling-keyed place(s)
 `20260909T011704Z__m1b_l22_quotes.sh.log`:
 
 ```
-$ sed -n '106,109p' /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+$ sed -n '106,109p' PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 PROSE_FIELDS = set(["detail", "why", "note", "notes", "text", "condition",
                     "description", "docstring", "expression", "source",
                     "refusal", "reason", "mnem", "bytes", "key", "sem_key",
@@ -853,7 +853,7 @@ shape.
 **LITERAL**, lane `20260909T010820Z__m1b_l19_guard.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_rows.json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_attest.json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_edges.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_rows.json PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_attest.json PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_edges.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS model_table.json -- no operator token in any key, grouping, pairing or row structure
 PASS model_table_rows.json -- no operator token in any key, grouping, pairing or row structure
@@ -872,11 +872,11 @@ dict keyed by one.
 changed or added, lane `20260909T011704Z__m1b_l22_quotes.sh.log`:
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.md /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py
-/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py:0
-/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.md:0
-/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py:0
+$ grep -c exempt PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.md PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py
+PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py:0
+PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.md:0
+PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py:0
 ```
 
 **GLOSS.** Lane `20260909T010820Z__m1b_l19_guard.sh.log` ran the same count
@@ -984,7 +984,7 @@ Four, each with the evidence above it and none of them worked around.
 `check_conventions_log_claims.py --verify --timeout 20` was run over this log
 from this task's own instance on the tower, as LAW's final lane. **LITERAL**,
 lane `20260909T011954Z__m1b_l25_verify2.sh.log` (host path
-`~/AirlockRuns/m1b/agent/logs/20260909T011954Z__m1b_l25_verify2.sh.log`):
+`<runs>/m1b/agent/logs/20260909T011954Z__m1b_l25_verify2.sh.log`):
 
 ```
 population: 26 claims across 1 logs

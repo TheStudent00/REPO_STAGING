@@ -21,7 +21,7 @@ Node `hq.research`. Status `draft`, settled by the owner.
 
 - [x] every sub-node of research is a project; no experiment sits at this level.
 - [x] no sub-node contradicts this CORE; where a lower node's founding text predates the plan it is kept under a dated heading, not rewritten.
-- [x] `bash ~/Programming/PseudoCoupHQ/hq.sh check` reports no error under `node_0_3_research` other than dangling paths that predate 2026-09-06.
+- [x] `bash PseudoCoupHQ/hq.sh check` reports no error under `node_0_3_research` other than dangling paths that predate 2026-09-06.
 
 ## check 3 — projects (each project's own CHECK carries its detail)
 

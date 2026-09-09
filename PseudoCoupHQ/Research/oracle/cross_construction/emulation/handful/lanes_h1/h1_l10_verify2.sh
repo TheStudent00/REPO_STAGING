@@ -6,6 +6,6 @@
 # abort ABORT_MEMORY_H1.
 set -euo pipefail
 echo "[1/1] task h1: check_conventions_log_claims.py --verify over log 238"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
     --verify --timeout 20 \
-    /projects/PseudoCoupHQ/DevComms/log_238_task_h1_handful_of_find_emulation_runs.md
+    PseudoCoupHQ/DevComms/log_238_task_h1_handful_of_find_emulation_runs.md

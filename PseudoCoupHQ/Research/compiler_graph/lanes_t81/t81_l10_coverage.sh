@@ -33,13 +33,13 @@
 # t81/run_with_peak.py, which adds no behaviour to the program it runs.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 cd "$REPO"
 
 say "[1/6] the instrumented population, from the injector's OWN report"
 python3 - <<'PY'
 import json, os
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 report = json.load(open(os.path.join(REPO, 't81', 'inject_report_cpp2.json')))
 rows = []
 for coordinate, node_id in zip(report['instrumented_coordinates'],
@@ -59,11 +59,11 @@ PY
 say "[2/6] graph_cpp.json: its recorded counts, RECOUNTED, and its load cost"
 python3 - <<'PY'
 import json, resource, sys, time
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/compiler_graph')
+sys.path.insert(0, 'PseudoCoupHQ/Research/compiler_graph')
 import graph as graph_module
 started = time.time()
 instance = graph_module.Graph.load(
-    '/projects/PseudoCoupHQ/Research/compiler_graph/graph_cpp.json')
+    'PseudoCoupHQ/Research/compiler_graph/graph_cpp.json')
 seconds = time.time() - started
 nodes = instance.static_structure['nodes']
 edges = instance.static_structure['edges']
@@ -89,7 +89,7 @@ say "[3/6] the SAMPLE join -- 50 cpp diaries, so the bound is measured"
 rm -rf /work/sample_diaries && mkdir -p /work/sample_diaries
 python3 - <<'PY'
 import os
-source = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/cpp'
+source = 'PseudoCoupHQ/Research/compiler_graph/diaries/cpp'
 names = sorted(name for name in os.listdir(source) if name.endswith('.txt'))
 for name in names[:50]:
     os.symlink(os.path.join(source, name),
@@ -117,7 +117,7 @@ if 'exit 0' not in text:
     print('   MEMORY GATE: the sample join did not exit 0, so its peak is '
           'not a measurement of the pass. REFUSED BY NAME.')
     sys.exit(9)
-source = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries'
+source = 'PseudoCoupHQ/Research/compiler_graph/diaries'
 counts = {}
 for language in ('c', 'cpp', 'c_and_cpp'):
     path = os.path.join(source, language)
@@ -158,7 +158,7 @@ done
 say "[6/6] the never-visited set BY FILE, from the joint join"
 python3 - <<'PY'
 import json
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 result = json.load(open(REPO + '/coverage_c_and_cpp.json'))
 by_file = result['never_visited_by_file']
 for name in ('population_region_nodes', 'population_defs',
@@ -196,5 +196,5 @@ out = REPO + '/coverage_cpp_summary.json'
 json.dump(summary, open(out, 'w'), indent=1)
 print('   wrote %s' % out)
 PY
-df -h /projects/PseudoCoupHQ | tail -1
+df -h PseudoCoupHQ | tail -1
 echo "DONE t81_l6"

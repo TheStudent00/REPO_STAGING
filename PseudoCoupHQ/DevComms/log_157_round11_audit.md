@@ -1,7 +1,7 @@
 # log 157 — audit of round 11's completion logs (152–156)
 
 Date: 2026-09-02. Auditor: the coordinating session, not a sub-agent.
-Figures recomputed from `~/Programming/PseudoCoupHQ/Research/op_pipeline/`
+Figures recomputed from `PseudoCoupHQ/Research/op_pipeline/`
 this session; commands and outputs pasted. Renderings labelled per
 protocol §5.1a.
 
@@ -114,7 +114,7 @@ banking commit is `9d6235d`.
 All six items done and verified on a throwaway instance `r11check`:
 `down` refuses with the running lane's name and status-file path
 (`--force` overrides); non-default agent tree at
-`~/AirlockRuns/<name>/agent`; `doctor` lists both places; `build.sh`
+`<runs>/<name>/agent`; `doctor` lists both places; `build.sh`
 ran, then `daemon_file` and both of its blocks were removed; README
 paragraph added. The existing `instances/trickle/agent` tree was left
 in place and pinned by an explicit `agent_dir` line so nothing moved.

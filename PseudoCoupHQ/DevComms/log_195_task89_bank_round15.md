@@ -67,9 +67,9 @@ prose.
 ```
 $ ls -la Research/op_pipeline/dashboard_ouro.py Research/op_pipeline/dashboard_ouro.html \
          Research/op_pipeline/check_dashboard_py_no_spelling.py
--rw-rw-r-- 1 <host> <host>  5811 Sep  3 23:17 check_dashboard_py_no_spelling.py
--rw-rw-r-- 1 <host> <host>  6560 Sep  4 18:16 dashboard_ouro.html
--rw-rw-r-- 1 <host> <host> 78953 Sep  4 18:16 dashboard_ouro.py
+-rw-rw-r-- 1 <user> <user>  5811 Sep  3 23:17 check_dashboard_py_no_spelling.py
+-rw-rw-r-- 1 <user> <user>  6560 Sep  4 18:16 dashboard_ouro.html
+-rw-rw-r-- 1 <user> <user> 78953 Sep  4 18:16 dashboard_ouro.py
 ```
 
 All three artifacts log_184 names are present. `dashboard_ouro.py`'s
@@ -113,7 +113,7 @@ $ grep -c "emit_condition\|emit_choice" Research/op_pipeline/term.py
 $ ls Research/compiler_graph/diaries/cpp | wc -l
 770
 $ ls -la Research/compiler_graph/super_ops_cpp.json
--rw-r--r-- 1 <host> <host> 112107882 Research/compiler_graph/super_ops_cpp.json
+-rw-r--r-- 1 <user> <user> 112107882 Research/compiler_graph/super_ops_cpp.json
 ```
 
 770 cpp diaries (log_190 §1.2's own count); `super_ops_cpp.json` present
@@ -123,7 +123,7 @@ artifact.
 ## 2.6 Task 82 — Airlock's cross-instance view, and the dashboard's tabs
 
 ```
-$ grep -n "def known_instances\|def other_busy_instances_line" ~/Programming/Airlock/airlock
+$ grep -n "def known_instances\|def other_busy_instances_line" Airlock/airlock
 223:def known_instances(paths):
 266:def other_busy_instances_line(paths):
 $ grep -n "retireDraftStats" Research/op_pipeline/dashboard_pane5.js | head -1
@@ -177,8 +177,8 @@ $ grep -c "variant_connections\|VARIANT_CONNECTIONS_ARE" Research/compiler_graph
 13
 $ ls -la Research/compiler_graph/variant_connections_go.json \
          Research/compiler_graph/variant_connections_c_and_cpp.json
--rw-r--r-- 1 <host> <host>  645490 variant_connections_go.json
--rw-r--r-- 1 <host> <host> 1056833 variant_connections_c_and_cpp.json
+-rw-r--r-- 1 <user> <user>  645490 variant_connections_go.json
+-rw-r--r-- 1 <user> <user> 1056833 variant_connections_c_and_cpp.json
 ```
 
 Both artifacts log_193 §11.1 lists are present at the sizes it states.
@@ -202,11 +202,11 @@ project's own repo per Airlock's "no lane scripts" rule.
 
 ```
 $ ls -la Research/op_pipeline/the_pool*.json
--rw-rw-r-- 1 <host> <host> 18648016 Sep  2 16:32 the_pool1.json
--rw-rw-r-- 1 <host> <host> 33810895 Sep  2 21:09 the_pool2.json
--rw-rw-r-- 1 <host> <host> 31225989 Sep  3 00:15 the_pool3.json
--rw-rw-r-- 1 <host> <host> 32609296 Sep  3 04:30 the_pool4.json
--rw-rw-r-- 1 <host> <host> 32648786 Sep  3 13:54 the_pool5.json
+-rw-rw-r-- 1 <user> <user> 18648016 Sep  2 16:32 the_pool1.json
+-rw-rw-r-- 1 <user> <user> 33810895 Sep  2 21:09 the_pool2.json
+-rw-rw-r-- 1 <user> <user> 31225989 Sep  3 00:15 the_pool3.json
+-rw-rw-r-- 1 <user> <user> 32609296 Sep  3 04:30 the_pool4.json
+-rw-rw-r-- 1 <user> <user> 32648786 Sep  3 13:54 the_pool5.json
 $ python3 -c "
 import json
 d = json.load(open('Research/op_pipeline/the_pool5.json'))
@@ -235,7 +235,7 @@ exists.
 # 4. `check_plans.py`, pasted
 
 ```
-$ python3 ~/Programming/PlanPlan/framework/check_plans.py ~/Programming/PseudoCoupHQ/Planning
+$ python3 PlanPlan/framework/check_plans.py PseudoCoupHQ/Planning
 ...
 [WARN] edge-register: `super_node`/`sub_nodes` missing on 14 of 69 nodes (PROTOCOL §1, 2026-08-02; brought in chain by chain, not by a sweep)
     - PseudoCoupHQ/Planning: 14 of 69

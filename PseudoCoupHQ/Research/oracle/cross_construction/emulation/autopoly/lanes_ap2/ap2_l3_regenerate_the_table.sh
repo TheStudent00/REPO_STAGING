@@ -29,7 +29,7 @@
 # reads are `model_table_rows.json` (50 MB) and `model_table.json`
 # (73 MB); task ap1 measured the latter's parse at 290,040 kB.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 
 echo "[1/4] the before state, off the files as they stand"
 cp -n model_table_rows.json model_table_rows.json.before_ap2
@@ -83,8 +83,8 @@ python3 - <<'PY'
 import json
 import resource
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import model_table as MTAB
 
 ABORT_KB = 6 * 1024 * 1024

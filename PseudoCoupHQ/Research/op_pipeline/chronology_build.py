@@ -89,7 +89,7 @@ round's artifacts are committed and before the posterity message is written,
 so the chronology grows by itself:
 
     /tmp/reconnect_venv/bin/python3 \
-        ~/Programming/PseudoCoupHQ/Research/op_pipeline/chronology_build.py --append
+        PseudoCoupHQ/Research/op_pipeline/chronology_build.py --append
 
   --append   adds only steps chronology.json does not already carry, and is
              idempotent: running it twice changes nothing.  This is the mode

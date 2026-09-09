@@ -32,8 +32,8 @@ usage:  python3 t95_compare.py <go|cpp>
 import json
 import sys
 
-GRAPHS = "/projects/PseudoCoupGraphs"
-HERE = "/projects/PseudoCoupHQ/Research/compiler_graph"
+GRAPHS = "PseudoCoupGraphs"
+HERE = "PseudoCoupHQ/Research/compiler_graph"
 
 
 def main(language):

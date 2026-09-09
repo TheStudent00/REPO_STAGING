@@ -8,9 +8,9 @@ can execute the work.
 
 ## 0. read these first, in this order
 
-1. `~/Programming/PseudoCoupHQ/AgentMemory.md` — the 12 languages,
+1. `PseudoCoupHQ/AgentMemory.md` — the 12 languages,
    the vision, standing rulings, where things are. Load-bearing.
-2. `~/Programming/DevComms/LLM_communication_protocol.md` — the owner's
+2. `DevComms/LLM_communication_protocol.md` — the owner's
    communication protocol. Non-negotiable. The sections added this
    week: §9b (cold words re-enter with one line), §11a (every claim
    names its level), §18b (walkthrough before numbers). The
@@ -18,7 +18,7 @@ can execute the work.
    super-node/sub-node/co-node) applies to EVERYTHING including
    code comments and delegated-agent output.
 3. The two research nodes' PROGRESS files:
-   `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_kind_clustering/PROGRESS.md`
+   `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_kind_clustering/PROGRESS.md`
    and `.../node_0_3_1_dominant_intentions/PROGRESS.md`.
 
 ## 1. where everything stands (the walkthrough)
@@ -39,7 +39,7 @@ both feeding PseudoCoup's `ur`/ledger design:
   the basis data-structure lists ruled (level 0 machine, level 1
   engine); the SEED-TIER CENSUS IS COMPLETE — six objects (boolean,
   float, integer, string, list, dict) across five pages in
-  `~/Programming/PseudoCoupHQ/Research/dominant_intentions/`,
+  `PseudoCoupHQ/Research/dominant_intentions/`,
   every fact UNVERIFIED by design, ZERO contradictions found.
   Standing rules accumulated on the pages: the guarantees rule,
   record-both modes, origin naming (`.java_equals`), staged
@@ -106,7 +106,7 @@ constraints already settled — do not re-open them:
 
 ### WP3 — PCv5 q1 ratification (the owner's session, Opus assists)
 
-Walk `~/Programming/PseudoCoup_v5/DevComms/log_021_rust_kind_map_proposal.md`
+Walk `PseudoCoup_v5/DevComms/log_021_rust_kind_map_proposal.md`
 with the owner: confirm the 22 strong, skim the 54 moderate, rule the 33
 disagreements (each has a drafted comment), stamp the 57 residue
 rows (most have a labeled name-evidence default). Output: the
@@ -157,7 +157,7 @@ only if the owner opens them — do not run ahead of his depth.
   worked examples beside every general claim. Keep it.
 - when a bash mount path is needed: glob it
   (`M=$(ls -d /sessions/*/mnt)`) — the session name changes.
-- checks: `bash ~/Programming/PseudoCoupHQ/hq.sh check` should
+- checks: `bash PseudoCoupHQ/hq.sh check` should
   stay at 0 errors; PCv5 `python3 Tools/ledgerer/test_ts_to_ur.py`
   should stay 17/17 (needs `pip install tree-sitter==0.26.0
   tree-sitter-rust==0.24.2 --break-system-packages` per fresh

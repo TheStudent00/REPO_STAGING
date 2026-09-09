@@ -85,7 +85,7 @@ Real run:
 
 ```
 $ /tmp/reconnect_venv/bin/python3 canon_interp_cpython.py
-wrote ~/Programming/PseudoCoupHQ/Research/op_pipeline/canon_interp_units_cpython.json
+wrote PseudoCoupHQ/Research/op_pipeline/canon_interp_units_cpython.json
 verdict: PROVED_EQUAL
 canonical_text: mov %rdi,%rax; mov %rsi,%r10; add %r10,%rax; ret
 ```
@@ -249,9 +249,9 @@ this task canonicalizes units, it does not touch membership.
 - `op_pipeline/canon_interp_units_ruby_php.py` -- generator, instance
   3 (all 8 ruby/php handlers).
 - `op_pipeline/canon_interp_units_ruby_php.json` -- output, instance 3.
-- `~/Programming/PseudoCoupHQ/DevComms/log_107_task21_interp_
+- `PseudoCoupHQ/DevComms/log_107_task21_interp_
   canonicalization.md` -- this report.
-- Dated entry appended to `~/Programming/PseudoCoupHQ/Planning/
+- Dated entry appended to `PseudoCoupHQ/Planning/
   node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md` (single
   `# PROGRESS` heading, unchanged).
 

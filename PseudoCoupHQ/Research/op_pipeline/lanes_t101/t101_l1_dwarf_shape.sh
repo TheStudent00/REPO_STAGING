@@ -4,7 +4,7 @@
 # tables. The program refuses by name and stops when no stored row
 # carries either field.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "======== [1/1] types101_join.py ========"
 python3 types101_join.py
 rc=$?

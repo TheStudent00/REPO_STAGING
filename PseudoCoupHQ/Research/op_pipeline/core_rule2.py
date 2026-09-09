@@ -83,7 +83,7 @@ the operand's type kind and gives Bool its own arm, distinct from the
 integer and float arms, in the same file `legality_rules.py` already
 reads at the same pin:
 
-    ~/Programming/Sources/rust/compiler/rustc_codegen_cranelift/src/num.rs
+    Sources/rust/compiler/rustc_codegen_cranelift/src/num.rs
     pin 7c329d6c76e11ca40c5673818ab0439c1be8962c
     line 105:  ty::Bool => crate::num::codegen_bool_binop(fx, bin_op, in_lhs, in_rhs),
 
@@ -189,7 +189,7 @@ DECLARED_ALIASES_FOR_LOOKUP_ONLY = {
 # a hard failure, the same discipline `legality_rules.py :: find_line()`
 # uses.
 RUST_KIND_SOURCE = os.path.expanduser(
-    "~/Programming/Sources/rust/compiler/rustc_codegen_cranelift/src/num.rs")
+    "Sources/rust/compiler/rustc_codegen_cranelift/src/num.rs")
 RUST_KIND_PIN = "7c329d6c76e11ca40c5673818ab0439c1be8962c"
 RUST_KIND_ANCHOR = "match in_lhs.layout().ty.kind() {"
 # kind name -> the class of the four, for the arms that name a scalar.

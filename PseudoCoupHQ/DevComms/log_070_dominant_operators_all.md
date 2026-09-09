@@ -43,7 +43,7 @@ conversion bug.
 
 ### the raw lane payload, beside the canon
 
-Source: `~/Programming/SandboxDesign/agent/out/ct_ruby_l1.txt`, the
+Source: `SandboxDesign/agent/out/ct_ruby_l1.txt`, the
 cartesian level-1 lane as it ran. Probe `A0_3_4` is
 `Rational x BigDecimal`, `A0_4_3` is `BigDecimal x Rational`.
 

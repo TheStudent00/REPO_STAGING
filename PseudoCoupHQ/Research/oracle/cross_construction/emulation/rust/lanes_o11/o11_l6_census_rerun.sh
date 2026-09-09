@@ -8,11 +8,11 @@
 # own name for an instruction's text and which the guard already reads
 # as a machine form. The guard itself is untouched.
 set -u
-R=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
+R=PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
 export PATH=/opt/cargo/bin:$PATH
 echo "[1/2] the census"
 cd "$R" && python3 rust_render.py census
 echo "[2/2] the guard over the population json"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     "$R/rust_population.json"
 echo "lane o11_l6 done"

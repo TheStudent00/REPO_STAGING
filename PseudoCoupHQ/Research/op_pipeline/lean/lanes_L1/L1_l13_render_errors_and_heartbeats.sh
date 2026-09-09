@@ -10,7 +10,7 @@
 #         entirely, because at 600 s the 16-bit run stopped on the heartbeat
 #         limit rather than on the solver
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 
@@ -40,7 +40,7 @@ python3 - <<'PY'
 import resource, subprocess, time
 t0 = time.time()
 p = subprocess.Popen(["lean", "Edges/divide_identity_16_nolimit.lean"],
-                     cwd="/projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof",
+                     cwd="PseudoCoupHQ/Research/op_pipeline/lean/archproof",
                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 out, _ = p.communicate()
 wall = time.time() - t0

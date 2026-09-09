@@ -1,9 +1,9 @@
 #!/bin/bash
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 run () { echo "\$ $1"; eval "$1" 2>&1; echo; echo "-----"; }
-P=/projects/PseudoCoupHQ/Research/op_pipeline
+P=PseudoCoupHQ/Research/op_pipeline
 
-run "sed -n '/^## the unit.s boundary/,/^\$/p' /projects/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/CORE_0_3_5_1_arch_unit.md | head -8"
+run "sed -n '/^## the unit.s boundary/,/^\$/p' PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/CORE_0_3_5_1_arch_unit.md | head -8"
 
 run "python3 -c \"
 import json

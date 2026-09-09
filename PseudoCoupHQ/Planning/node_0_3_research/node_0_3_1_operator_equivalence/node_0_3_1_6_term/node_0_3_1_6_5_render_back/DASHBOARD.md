@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_3_1_6_5_render_back
@@ -33,7 +33,7 @@ sub-node count: 0
 
 ## blocked
 
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_5_render_back/PROGRESS.md` line 18 — **planned**, and blocked on `render`. Evidence:
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_5_render_back/PROGRESS.md` line 18 — **planned**, and blocked on `render`. Evidence:
 
 ## PROGRESS bullet statuses
 

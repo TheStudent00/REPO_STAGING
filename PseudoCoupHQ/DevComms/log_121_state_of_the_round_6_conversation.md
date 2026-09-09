@@ -25,7 +25,7 @@ preserve this conversation's content for the project.
   files on disk; (b) swiftc emitting the stdlib module
   interface (tool's own testimony); (c) git clone of
   the swift repo at the tag matching `swiftc
-  --version` into ~/Programming/Sources/, read via
+  --version` into Sources/, read via
   git show at the pin like llvm-project; (d) DWARF
   from swift optimizer-off builds.
 - The DWARF witness in log_116 was refused on a FALSE

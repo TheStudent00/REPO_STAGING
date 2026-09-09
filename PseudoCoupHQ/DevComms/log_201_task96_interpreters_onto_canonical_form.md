@@ -69,9 +69,9 @@ transcript.
 $ python3 -c "
 import json
 import sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline')
 import t96_arriving_area as AREA
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
 print('AREA_SPAN  = 0x%x   (own-address OWN_SPAN, unchanged)' % AREA.AREA_SPAN)
 print('AREA_ORIGIN= 0x%x   (measured, the identity map)' % AREA.AREA_ORIGIN)
 for r in d['records']:
@@ -116,7 +116,7 @@ ruby/vm_opt_plus                                           no canonical text
 **LITERAL**, the correction in its own file:
 
 ```
-$ sed -n '/^## the form, as the owner meant it/,/^WHAT WAS MISREAD/p' /projects/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_2_canonical_form/CORE_0_3_5_2_canonical_form.md
+$ sed -n '/^## the form, as the owner meant it/,/^WHAT WAS MISREAD/p' PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_2_canonical_form/CORE_0_3_5_2_canonical_form.md
 ## the form, as the owner meant it — CORRECTION 2026-09-05
 
 **The arch-unit is essentially UNCHANGED except for the loading and
@@ -131,7 +131,7 @@ WHAT WAS MISREAD. `region36.py:10` quotes the 2026-09-02 ruling
 
 ## 1.2 The `%r15` count, re-run
 
-Lane log: `~/Programming/Airlock/agent/logs/20260905T072317Z__t96_l9_r15count.sh.log`.
+Lane log: `Airlock/agent/logs/20260905T072317Z__t96_l9_r15count.sh.log`.
 
 ```
 $ python3 -c "
@@ -140,7 +140,7 @@ total = 0
 hits = 0
 seen = 0
 for lang in ('c', 'cpp', 'go', 'rust', 'swift'):
-    units = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_%s.json' % lang))['units']
+    units = json.load(open('PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_%s.json' % lang))['units']
     total = total + len(units)
     for label in units:
         text = units[label].get('wrapped_text')
@@ -167,7 +167,7 @@ wrapped texts, out of a population of 1,779 units.
 The same count without a JSON loader in the way, same lane log:
 
 ```
-$ grep -o '"wrapped_text": "[^"]*%r15[^"]*"' /projects/PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_c.json /projects/PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_cpp.json /projects/PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_go.json /projects/PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_rust.json /projects/PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_swift.json | wc -l
+$ grep -o '"wrapped_text": "[^"]*%r15[^"]*"' PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_c.json PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_cpp.json PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_go.json PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_rust.json PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_swift.json | wc -l
 0
 ```
 
@@ -182,14 +182,14 @@ $ grep -o '"wrapped_text": "[^"]*%r15[^"]*"' /projects/PseudoCoupHQ/Research/op_
 `t94_recarve.json` and never re-run. FORM 2 is
 `canonical_form.CanonicalForm.wrap`, unmodified.
 
-Lane log: `~/Programming/Airlock/agent/logs/20260905T071648Z__t96_l5_analysis.sh.log` (the full three-way dump for all eleven is `t96_wrapped_texts.txt`).
+Lane log: `Airlock/agent/logs/20260905T071648Z__t96_l5_analysis.sh.log` (the full three-way dump for all eleven is `t96_wrapped_texts.txt`).
 
 **LITERAL**, the first eight lines and last six of each:
 
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
 r = [x for x in d['records'] if x['unit'].startswith('cpython')][0]
 for title, text in (('FORM 1, region36 + canon36_universal', r['the_superseded_form']['wrapped_text']), ('FORM 2, canonical_form.py', r['the_canonical_form']['wrapped_text'])):
     lines = text.split('; ')
@@ -263,7 +263,7 @@ and an in-unit target became `L2`.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))
 r = [x for x in d['records'] if x['unit'].startswith('php/add_function')][0]
 for c in r['form_two']['the_six_checks']:
     print('%-12s %-5s %s' % (c['check'], c['passed'], c['note'][:150]))
@@ -289,7 +289,7 @@ superseded record it is stored in:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
 for r in d['records']:
     old = r['the_superseded_form']
     if old['wrapped_text'] is not None:
@@ -324,7 +324,7 @@ says where its operands came from.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
 for r in d['records']:
     f = r['the_canonical_form']
     if f['outcome'] == 'REFUSED':
@@ -378,7 +378,7 @@ Lane log: `20260905T072242Z__t96_l8_transcripts.sh.log` §[7/8].
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
 for r in d['records']:
     f = r['the_canonical_form_with_the_seventh_block']
     areas = f.get('arriving_areas') or []
@@ -438,7 +438,7 @@ the two integers are an illustrative instantiation of a real body, said
 once. Everything else is computed by the stepper from the instruction
 text.
 
-Lane log: `~/Programming/Airlock/agent/logs/20260905T072154Z__t96_l7_step.sh.log`.
+Lane log: `Airlock/agent/logs/20260905T072154Z__t96_l7_step.sh.log`.
 
 **The instantiation**
 
@@ -458,7 +458,7 @@ therefore not available to any lineage."*
 **FORM 2 — `canonical_form.py`, Part A.**
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/t96_step.py 2>&1 | sed -n '21,35p'
+$ python3 PseudoCoupHQ/Research/op_pipeline/t96_step.py 2>&1 | sed -n '21,35p'
 step instruction                        %r15       %r14       %rcx       %rax       %rdx       %r11      
 ---------------------------------------------------------------------------------------------------------
 --   (entry)                            0x700000   0x700100   ?          ?          ?          ?         
@@ -482,7 +482,7 @@ NOTHING in FORM 2 put them there. The stepper had to be handed them.
 **FORM 3 — the same, plus the seventh block kind, Part B.**
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/t96_step.py 2>&1 | sed -n '67,84p'
+$ python3 PseudoCoupHQ/Research/op_pipeline/t96_step.py 2>&1 | sed -n '67,84p'
 step instruction                        %r15       %r14       %rcx       %rax       %rdx       %r11      
 ---------------------------------------------------------------------------------------------------------
 --   (entry)                            ?          ?          ?          ?          ?          ?         
@@ -511,7 +511,7 @@ forms leave `0x7` in `OUT-0`.
 **The memory at the end, identical under both forms**, same lane log:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/t96_step.py 2>&1 | sed -n '52,59p'
+$ python3 PseudoCoupHQ/Research/op_pipeline/t96_step.py 2>&1 | sed -n '52,59p'
   0x500000     OUT-0 (the answer) + 0x0           0x7
   0x700008     AREA-0 (the bytecode) + 0x8        0x0
   0x70000c     AREA-0 (the bytecode) + 0xc        0x10
@@ -550,7 +550,7 @@ recorded reach is a floor:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
 for r in d['records']:
     f = r['the_canonical_form_with_the_seventh_block']
     for a in (f.get('arriving_areas') or []):
@@ -594,7 +594,7 @@ php/ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER  %r14
 Baseline is log_199's, quoted from its own file:
 
 ```
-$ grep -n "9 PROVED to UNDECIDED" /projects/PseudoCoupHQ/DevComms/log_199_task94_interpreter_function_bodies.md | head -3
+$ grep -n "9 PROVED to UNDECIDED" PseudoCoupHQ/DevComms/log_199_task94_interpreter_function_bodies.md | head -3
 26:- **All eleven verdicts moved: 9 PROVED to UNDECIDED, 1
 ```
 
@@ -606,7 +606,7 @@ Lane log: `20260905T072242Z__t96_l8_transcripts.sh.log` §[2/8].
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
 for m in d['verdict_movements']:
     print('%-58s %-18s | %-22s | %s' % (m['unit'], m['from'], m['to_form_two'], m['to_form_three']))
 "
@@ -650,7 +650,7 @@ carry it"*.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))
 for r in d['records']:
     for name in ('form_two', 'form_three'):
         row = r[name]
@@ -706,7 +706,7 @@ exist. Lane log `20260905T072242Z__t96_l8_transcripts.sh.log` §[3/8].
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))
 for r in d['records']:
     one = r['form_one_under_this_instrument']
     if not one.get('asked'):
@@ -749,7 +749,7 @@ Part B it stops EARLIER, on the prelude's own shape:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))
 for r in d['records']:
     for name in ('form_two', 'form_three'):
         row = r[name]
@@ -783,7 +783,7 @@ php/add_function                               form_three  this unit's prelude i
 The refusal is `gate.py`'s own line, not a reading of it:
 
 ```
-$ grep -n "lines for" /projects/PseudoCoupHQ/Research/op_pipeline/gate.py
+$ grep -n "lines for" PseudoCoupHQ/Research/op_pipeline/gate.py
 506:                "input row (%d lines for %d loads), so the input rows "
 ```
 
@@ -818,7 +818,7 @@ Lane log: `20260905T072242Z__t96_l8_transcripts.sh.log` §[6/8].
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))
 for r in d['records']:
     s = r['the_three_shortfalls']
     a = s['the_r15_collision']
@@ -890,7 +890,7 @@ shortfall 2 gone on 10/10; shortfall 3 gone on 6, not applicable on 2
 # 6. `region36.py` and `canon36_universal.py` — one header block each, nothing else
 
 ```
-$ sed -n '4,13p' /projects/PseudoCoupHQ/Research/op_pipeline/region36.py
+$ sed -n '4,13p' PseudoCoupHQ/Research/op_pipeline/region36.py
 SUPERSEDED RECORD, 2026-09-05, by the correction "the form, as the owner
 meant it" in `Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_2_canonical_form/CORE_0_3_5_2_canonical_form.md`:
 the arch-unit is essentially UNCHANGED except for the loading and
@@ -904,7 +904,7 @@ line; task 96 (log_201) moved the eleven interpreter units off it.
 ```
 
 ```
-$ sed -n '5,12p' /projects/PseudoCoupHQ/Research/op_pipeline/canon36_universal.py
+$ sed -n '5,12p' PseudoCoupHQ/Research/op_pipeline/canon36_universal.py
 SUPERSEDED RECORD, 2026-09-05, by the correction "the form, as the owner
 meant it" in `Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_2_canonical_form/CORE_0_3_5_2_canonical_form.md`:
 this file renders `region36.py`'s form, which REWRITES a body rather
@@ -919,11 +919,11 @@ Neither file is imported by anything this lap wrote. FORM 1's texts
 were READ out of `t94_recarve.json`, never re-rendered.
 
 ```
-$ grep -c "region36\|canon36_universal" /projects/PseudoCoupHQ/Research/op_pipeline/t96_onto_canonical_form.py /projects/PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py /projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.py /projects/PseudoCoupHQ/Research/op_pipeline/t96_step.py
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_onto_canonical_form.py:5
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py:5
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.py:2
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_step.py:2
+$ grep -c "region36\|canon36_universal" PseudoCoupHQ/Research/op_pipeline/t96_onto_canonical_form.py PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py PseudoCoupHQ/Research/op_pipeline/t96_analysis.py PseudoCoupHQ/Research/op_pipeline/t96_step.py
+PseudoCoupHQ/Research/op_pipeline/t96_onto_canonical_form.py:5
+PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py:5
+PseudoCoupHQ/Research/op_pipeline/t96_analysis.py:2
+PseudoCoupHQ/Research/op_pipeline/t96_step.py:2
 ```
 
 **GLOSS, so the count is not read as an import count.** Every one of
@@ -931,7 +931,7 @@ those hits is inside a docstring or a comment naming the superseded
 form; none is an `import`. The check that decides it:
 
 ```
-$ grep -n "^import\|^ *import " /projects/PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py
+$ grep -n "^import\|^ *import " PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py
 212:import os
 213:import re
 214:import sys
@@ -948,27 +948,27 @@ $ grep -n "^import\|^ *import " /projects/PseudoCoupHQ/Research/op_pipeline/t96_
 Lane log: `20260905T071936Z__t96_l6_render2.sh.log` §[5/6].
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json /projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/op_pipeline/t96_canonical.json PseudoCoupHQ/Research/op_pipeline/t96_analysis.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS t96_canonical.json -- no operator token in any key, grouping, pairing or row structure
 PASS t96_analysis.json -- no operator token in any key, grouping, pairing or row structure
 ```
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json /projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.json /projects/PseudoCoupHQ/Research/op_pipeline/t96_wrapped_texts.txt /projects/PseudoCoupHQ/Research/op_pipeline/t96_onto_canonical_form.py /projects/PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py /projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.py
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_wrapped_texts.txt:0
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_onto_canonical_form.py:0
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py:0
-/projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.py:0
+$ grep -c exempt PseudoCoupHQ/Research/op_pipeline/t96_canonical.json PseudoCoupHQ/Research/op_pipeline/t96_analysis.json PseudoCoupHQ/Research/op_pipeline/t96_wrapped_texts.txt PseudoCoupHQ/Research/op_pipeline/t96_onto_canonical_form.py PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py PseudoCoupHQ/Research/op_pipeline/t96_analysis.py
+PseudoCoupHQ/Research/op_pipeline/t96_canonical.json:0
+PseudoCoupHQ/Research/op_pipeline/t96_analysis.json:0
+PseudoCoupHQ/Research/op_pipeline/t96_wrapped_texts.txt:0
+PseudoCoupHQ/Research/op_pipeline/t96_onto_canonical_form.py:0
+PseudoCoupHQ/Research/op_pipeline/t96_arriving_area.py:0
+PseudoCoupHQ/Research/op_pipeline/t96_analysis.py:0
 ```
 
 The checker is UNMODIFIED — its bytes, which do not move:
 
 ```
-$ sha256sum /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
-a377462b38e8610d8bb60ac668f0a5adc72ee571d15efab85e40a9afdaa511f7  /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+$ sha256sum PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+a377462b38e8610d8bb60ac668f0a5adc72ee571d15efab85e40a9afdaa511f7  PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 ```
 
 Its last commit is `fdff0b254fd7ebd8032128803146af0e3092812b`
@@ -1038,7 +1038,7 @@ because the point of a checker is its catches:**
    as a moving reference, in words.
 
 A fourth was caught on the second pass: the verifier's work directory
-is `/projects/PseudoCoupHQ`, not `Research/op_pipeline`, so §0.2's
+is `PseudoCoupHQ`, not `Research/op_pipeline`, so §0.2's
 `import t96_arriving_area` raised `ModuleNotFoundError`. The command
 now inserts the path itself.
 
@@ -1067,8 +1067,8 @@ outside every path Airlock mounts.
 ```
 $ python3 -c "
 import json
-a = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))['meta']
-b = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))['meta']
+a = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_canonical.json'))['meta']
+b = json.load(open('PseudoCoupHQ/Research/op_pipeline/t96_analysis.json'))['meta']
 print('t96_onto_canonical_form.py peak resident kB: %d' % a['peak_resident_size_kB'])
 print('t96_analysis.py            peak resident kB: %d' % b['peak_resident_size_kB'])
 print('bound kB: %d   abort names: %s / %s' % (a['memory_bound_kB'], a['memory_abort_name'], b['memory_abort_name']))
@@ -1147,7 +1147,7 @@ where FORM 1's texts were read from. None was deleted, none re-rendered.
 | `t96_l16_verify_this_log3.sh` | `20260905T073526Z__t96_l16_verify_this_log3.sh.log` |
 | `t96_l17_verify_final.sh` | `20260905T073722Z__t96_l17_verify_final.sh.log` |
 
-All in `~/Programming/Airlock/agent/logs/`. **That directory is
+All in `Airlock/agent/logs/`. **That directory is
 outside every path Airlock mounts, so no claim about a lane log's
 contents can be re-run by the verifier; the lane logs are named as
 provenance and the artifacts they wrote carry the numbers.** **Lanes 10, 11 and 12

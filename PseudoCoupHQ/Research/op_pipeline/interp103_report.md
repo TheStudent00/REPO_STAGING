@@ -2,9 +2,9 @@
 
 Date: 2026-09-06. Node: `node_0_3_1_11_interp_feeder` (the
 operator_equivalence line's interpreter feeder), master plan
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
+`PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
 §4.2. Report shape per
-`~/Programming/DevComms/LLM_communication_protocol.md` Appendix B: one
+`DevComms/LLM_communication_protocol.md` Appendix B: one
 numbered tree, §1 names the objects in relation, instances before
 mechanisms, the two lists at the end. Renderings are labelled
 **LITERAL** (the object itself, quoted, with its path) or **GLOSS** (a
@@ -13,13 +13,13 @@ plain-words reading beside it), per §5.1a. Every claim below carries a
 cannot.
 
 All computation ran through Airlock, instance `t103`
-(`~/Programming/Airlock/instances/t103.conf`, copied from `t97.conf`
+(`Airlock/instances/t103.conf`, copied from `t97.conf`
 per the brief, cpus 2 / memory 6g, `persist_volume = sandbox-persist`
 read-only so the shared ship build is reached without any instance
 being able to alter it — the same convention `t101b.conf` uses for
 swift). One lane per step; every lane prints `[i/total]`. Lane logs
-under `~/Programming/Airlock/agent/logs/` (this instance's own agent
-dir is `~/AirlockRuns/t103/agent/logs/` — Airlock's per-instance
+under `Airlock/agent/logs/` (this instance's own agent
+dir is `<runs>/t103/agent/logs/` — Airlock's per-instance
 convention; named at each transcript below).
 
 ---
@@ -33,27 +33,27 @@ convention; named at each transcript below).
   the machinery reaches today.
 - **the cpython ship build** is the compiled binary the question is
   about: `/persist/cpython_ship/python`, the same build task 94 read
-  (`~/Programming/PseudoCoupHQ/DevComms/log_199_task94_interpreter_function_bodies.md`).
+  (`PseudoCoupHQ/DevComms/log_199_task94_interpreter_function_bodies.md`).
 - **the multiply handler**, `long_mul`, is the C function inside that
   build whose compiled bytes ARE the object the question is about: the
   whole-function boundary the owner ruled 2026-09-05
-  (`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/CORE_0_3_5_1_arch_unit.md`,
+  (`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/CORE_0_3_5_1_arch_unit.md`,
   "the unit's boundary").
 - **the canonical form** is the one shape every arch-unit -- compiled
   or interpreted -- is rendered into so a gate can ask about it:
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/canonical_form.py`,
+  `PseudoCoupHQ/Research/op_pipeline/canonical_form.py`,
   task 96's form
-  (`~/Programming/PseudoCoupHQ/DevComms/log_201_task96_interpreters_onto_canonical_form.md`).
+  (`PseudoCoupHQ/DevComms/log_201_task96_interpreters_onto_canonical_form.md`).
 - **the term** is the handler's canonical-form body expressed as a z3
-  expression, built by `~/Programming/PseudoCoupHQ/Research/op_pipeline/term.py`'s
+  expression, built by `PseudoCoupHQ/Research/op_pipeline/term.py`'s
   `Term.transcribe`, the machinery `term97_walk.py` finished over the
   compiled-language population
-  (`~/Programming/PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md`)
+  (`PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md`)
   and this task is the first to ask about an interpreter handler.
 - **the c unit**, `c/op_181`, is the single-opcode reference this
   task's step 2 gates the handler's term against: `imul`, `a * b`
   on two `int64_t`, its pool entry `E00063` in
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/the_pool5.json`.
+  `PseudoCoupHQ/Research/op_pipeline/the_pool5.json`.
 - **the projection** is the input domain both sides are compared on:
   both operands `_PyLong_BothAreCompact` under cpython's own compact
   test, stated LITERAL in §4.
@@ -125,9 +125,9 @@ returns (a pointer, not the number 12).
 
 ## 3. The JIT question, literal
 
-**LITERAL**, `~/Programming/PseudoCoupHQ/Research/op_pipeline/t103_l1_inventory.sh`
+**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/t103_l1_inventory.sh`
 and `t103_l3_readsrc.sh`, run in Airlock instance `t103`, lane log
-`~/AirlockRuns/t103/agent/logs/20260906T191137Z__t103_l1_inventory.sh.log`
+`<runs>/t103/agent/logs/20260906T191137Z__t103_l1_inventory.sh.log`
 and `20260906T191256Z__t103_l2_source.sh.log`:
 
 ```
@@ -199,7 +199,7 @@ fast path is a distinct function ... carve it; where it is inlined
 into `long_mul`, carve `long_mul` and say so") **the unit is the whole
 `long_mul` function.**
 
-**LITERAL**, `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json`
+**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json`
 (`interp103_bounds.py`, reusing `t94_read_bounds.symbol_rows`,
 `.dwarf_rows`, `.objdump_range` unmodified; lane log
 `20260906T192107Z__t103_l8_bounds_run.sh.log`):
@@ -207,7 +207,7 @@ into `long_mul`, carve `long_mul` and say so") **the unit is the whole
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json'))
 r=d['record']
 print(r['new_low'], r['new_high'], r['new_byte_length'], r['new_instruction_count'], r['symbol_table_and_dwarf_agree'], r['dwarf_rows'])
 "
@@ -222,7 +222,7 @@ print(r['new_low'], r['new_high'], r['new_byte_length'], r['new_instruction_coun
 which is one of the ruling's two named sources.
 
 **LITERAL**, the arrival contract
-(`~/Programming/PseudoCoupHQ/Research/op_pipeline/interp103_canonical.py`,
+(`PseudoCoupHQ/Research/op_pipeline/interp103_canonical.py`,
 field `ARRIVAL_CONTRACT`):
 
 ```
@@ -241,7 +241,7 @@ the returned pointer on every one of `long_mul`'s three `ret`s.
 
 ## 5. The canonical form, the term, and the verdict against its own body
 
-**LITERAL**, `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json`
+**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json`
 (FORM 2, `canonical_form.py` Part A -- unmodified; lane log
 `20260906T192231Z__t103_l9_canonical_run.sh.log`), the wrapped text in
 full:
@@ -263,15 +263,15 @@ register (C5), the only text this form changed is 26 transfer targets
 form wraps the whole branchy function without collision, exactly as
 task 96 found for addition.
 
-**LITERAL**, `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp103_term.json`
+**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/interp103_term.json`
 (`interp103_term.py`, reusing `term97_walk.build` and
 `term66_run.one_unit` unmodified; lane log
-`~/AirlockRuns/t103/agent/logs/20260906T192541Z__t103_l11_term_run.sh.log`):
+`<runs>/t103/agent/logs/20260906T192541Z__t103_l11_term_run.sh.log`):
 
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/interp103_term.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/interp103_term.json'))
 f=d['form_two']
 print('term_state:', f['term_state'])
 print('outcome:', f['outcome'])
@@ -296,7 +296,7 @@ the unit's own bounds:
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json'))
 for r in d['record']['body']:
     if int(r['address'],16) in range(0x1396c0, 0x1396d4):
         print(r['address'], r['mnem'])
@@ -331,7 +331,7 @@ AREA rows carry `produced_by == "arrival"`, a plain string.
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/interp103_term.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/interp103_term.json'))
 print(d['form_three']['term_state'], '--', d['form_three']['why_not_attempted'][:180])
 "
 NOT_ATTEMPTED -- term66_run.runtime_rows_of reads row['produced_by'].get('kind') for every ledger row; row 'AREA-0' (block 'AREA') carries produced_by='arrival', which is a plain string, not the {k
@@ -367,13 +367,13 @@ digit count is 0 or 1 (`tag = 8*ndigits + 3 flag bits`); one digit is
 (`cmp $0xf,%rcx; jbe ...` in §4's disassembly).
 
 **LITERAL**, `c/op_181`'s pool entry and proved term, read rather than
-rebuilt, `~/Programming/PseudoCoupHQ/Research/op_pipeline/the_pool5.json`
+rebuilt, `PseudoCoupHQ/Research/op_pipeline/the_pool5.json`
 entry `E00063`:
 
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/the_pool5.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/the_pool5.json'))
 for e in d['entries']:
     for m in e['members']:
         if m['unit']=='c/op_181':
@@ -382,13 +382,13 @@ for e in d['entries']:
 E00063 PROVED_ON_SHIP v0*v1
 ```
 
-**LITERAL**, `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json`
-(lane log `~/AirlockRuns/t103/agent/logs/20260906T192922Z__t103_l12_gate_c181.sh.log`):
+**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json`
+(lane log `<runs>/t103/agent/logs/20260906T192922Z__t103_l12_gate_c181.sh.log`):
 
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json'))
 print('outcome:', d['outcome'])
 print('headline:', d['cause']['headline'])
 print('correction:', d['cause']['correction_to_the_briefs_own_guess'][:210])
@@ -413,9 +413,9 @@ addresses.
 value below is computed by `interp103_step.py` from these two facts
 and the real instruction text in `interp103_bounds.json`; nothing is
 asserted without the opcode above it. Full table:
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/interp103_step.json`.
+`PseudoCoupHQ/Research/op_pipeline/interp103_step.json`.
 
-**LITERAL**, lane log `~/AirlockRuns/t103/agent/logs/20260906T193330Z__t103_l14_step.sh.log`:
+**LITERAL**, lane log `<runs>/t103/agent/logs/20260906T193330Z__t103_l14_step.sh.log`:
 
 ```
 idx  address   instruction                      %rdi          %rsi          %rbx          %rax          %rdx          %rcx
@@ -493,10 +493,10 @@ shown above rather than argued:**
 ## 9. Gates
 
 **LITERAL**, the spelling guard over every JSON this task wrote, lane
-log `~/AirlockRuns/t103/agent/logs/20260906T193330Z__t103_l16_step2.sh.log`:
+log `<runs>/t103/agent/logs/20260906T193330Z__t103_l16_step2.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json /projects/PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json /projects/PseudoCoupHQ/Research/op_pipeline/interp103_term.json /projects/PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json /projects/PseudoCoupHQ/Research/op_pipeline/interp103_step.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json PseudoCoupHQ/Research/op_pipeline/interp103_term.json PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json PseudoCoupHQ/Research/op_pipeline/interp103_step.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS interp103_bounds.json -- no operator token in any key, grouping, pairing or row structure
 PASS interp103_canonical.json -- no operator token in any key, grouping, pairing or row structure
@@ -506,12 +506,12 @@ PASS interp103_step.json -- no operator token in any key, grouping, pairing or r
 ```
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json /projects/PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json /projects/PseudoCoupHQ/Research/op_pipeline/interp103_term.json /projects/PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json /projects/PseudoCoupHQ/Research/op_pipeline/interp103_step.json
-/projects/PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/interp103_term.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/interp103_step.json:0
+$ grep -c exempt PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json PseudoCoupHQ/Research/op_pipeline/interp103_term.json PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json PseudoCoupHQ/Research/op_pipeline/interp103_step.json
+PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json:0
+PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json:0
+PseudoCoupHQ/Research/op_pipeline/interp103_term.json:0
+PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json:0
+PseudoCoupHQ/Research/op_pipeline/interp103_step.json:0
 ```
 
 **It caught this task once, and it was fixed in the artifact, not by
@@ -519,14 +519,14 @@ exempting anything:** `interp103_step.json`'s entry row originally
 carried the index `"--"`, an operator token in the miner's own
 inventory, on a structure field. Renamed to `"entry"`. The failing run
 and the passing re-run are both in
-`~/AirlockRuns/t103/agent/logs/20260906T193142Z__t103_l15_guard.sh.log`
+`<runs>/t103/agent/logs/20260906T193142Z__t103_l15_guard.sh.log`
 and `20260906T193330Z__t103_l16_step2.sh.log`.
 
 The checker is unmodified:
 
 ```
-$ sha256sum /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
-a377462b38e8610d8bb60ac668f0a5adc72ee571d15efab85e40a9afdaa511f7  /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+$ sha256sum PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+a377462b38e8610d8bb60ac668f0a5adc72ee571d15efab85e40a9afdaa511f7  PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 ```
 
 (same hash log_201 §7.1 recorded -- unchanged since 2026-09-05).
@@ -567,7 +567,7 @@ keys, groups, pairs or selects on it.
 
 No file under `Research/op_pipeline/` was edited except these new
 `interp103_*` files and their own lane scripts, per the brief's stop
-rule. `~/Programming/Airlock/instances/t103.conf` is new, copied from
+rule. `Airlock/instances/t103.conf` is new, copied from
 `t97.conf`.
 
 ---
@@ -626,6 +626,6 @@ rule. `~/Programming/Airlock/instances/t103.conf` is new, copied from
 The full verification narrative (three passes, four DIFFERS caught
 and fixed, final tally 9 MATCHES / 0 DIFFERS / 10 UNVERIFIABLE /
 3 REFUSED / 1 NOT_RERUNNABLE) is in this task's DevComms log,
-`~/Programming/PseudoCoupHQ/DevComms/log_222_task103_multiply_fastpath_vs_c.md`
+`PseudoCoupHQ/DevComms/log_222_task103_multiply_fastpath_vs_c.md`
 §12, not repeated here to avoid a copy the verifier itself would have
 to check twice.

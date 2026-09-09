@@ -2,7 +2,7 @@
 
 Date: 2026-08-12. Author: clustering agent for the owner's PseudoCoup research node (PCHQ). Plan-of-record step 2 of `CORE_0_3_0_kind_clustering.md`, plus the archetype measurement the owner asked for ahead of step 3.
 
-Inputs: `~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/` — `features.py` (modified, versioned v2 output), `spectrum.py` / `validate_holdout.py` (v2 flags added), `raw_all/` (411 fetched grammars, `grammar_inventory.json`). New outputs, same directory: `features_v2.json`, `features_v2_holdout.json`, `similarity_matrix_v2.npz`, `similarity_matrix_v2_holdout.npz`, `holdout_validation_v2.json`, `features_all.py`, `features_all.json`, `archetypes.json`, `compare_v2.py`.
+Inputs: `PseudoCoupHQ/Research/kind_signature_clustering/` — `features.py` (modified, versioned v2 output), `spectrum.py` / `validate_holdout.py` (v2 flags added), `raw_all/` (411 fetched grammars, `grammar_inventory.json`). New outputs, same directory: `features_v2.json`, `features_v2_holdout.json`, `similarity_matrix_v2.npz`, `similarity_matrix_v2_holdout.npz`, `holdout_validation_v2.json`, `features_all.py`, `features_all.json`, `archetypes.json`, `compare_v2.py`.
 
 Vocabulary: super-node / sub-node / co-node / sub-tree only; tree-sitter's JSON key `children` is quoted solely as its key name for what we call the sub-node spec.
 

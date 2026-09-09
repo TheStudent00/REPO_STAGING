@@ -110,7 +110,7 @@ by a person.
 Founded 2026-08-24 (the owner: "make a research node please. im super done
 saying the same things over and over") after the conversation
 recorded in
-`~/Programming/PseudoCoupHQ/DevComms/log_072_compiler_graph_tracing.md`.
+`PseudoCoupHQ/DevComms/log_072_compiler_graph_tracing.md`.
 
 The ultimate goal stated then: use the flow graphs to map a HIGH
 LEVEL NAMED VARIABLE to its LOW LEVEL OPERAND. That target sets the
@@ -174,7 +174,7 @@ Read top to bottom: each step consumes the one above.
   itself written in Go sits in the Go region.
 - **Probes are generated, never hand-written.** The operator
   inventory with arity per language is already data
-  (`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.json`).
+  (`PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.json`).
   arity -> wrapper shape -> feed to the instrumented compiler ->
   the diary records the visited path. No per-operator hand work.
 - **Never key on spelling.** Two operators are the same only by
@@ -296,14 +296,14 @@ And the pool's: the 44 units whose layer-5 text never converges
 
 ## artifacts
 
-- The pipeline: `~/Programming/PseudoCoupHQ/Research/op_pipeline/`
+- The pipeline: `PseudoCoupHQ/Research/op_pipeline/`
   (canon40 stores, `term66_store/`, `the_pool5.json`,
   `the_families5.json`, `exception_families5.json`, `reference.py`,
   `gate.py`, `canonical_form.py`, `check_no_spelling_keys.py`,
   `check_conventions_log_claims.py`, `dashboard_ouro.py`).
-- The graph: `~/Programming/PseudoCoupHQ/Research/compiler_graph/`
+- The graph: `PseudoCoupHQ/Research/compiler_graph/`
   (`build_graph.py`, `query_path.py`, `graph_walk.html`) and the
-  graphs themselves in `~/Programming/PseudoCoupGraphs/` (no remote,
+  graphs themselves in `PseudoCoupGraphs/` (no remote,
   by design; compact form 72 MB).
 - The record: PCHQ DevComms logs 072 to 204, with the round-by-round
   state in each sub-node's PROGRESS.

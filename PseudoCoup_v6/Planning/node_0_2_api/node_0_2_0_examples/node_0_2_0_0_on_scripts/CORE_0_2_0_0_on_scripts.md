@@ -35,7 +35,7 @@ the worked example of the api: one call in, converted program out.
 
 the compiler case is not here. putting a language's semantics into
 the hub is PseudoIR's work, planned at
-`~/Programming/PseudoIR/Planning`, not a use of the finished thing.
+`PseudoIR/Planning`, not a use of the finished thing.
 
 ## support
 

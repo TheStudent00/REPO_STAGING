@@ -4,7 +4,7 @@
 # term99_reason.json, touches ZERO shard files.  Pasted in log_205
 # BEFORE the write lane runs.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "======== [1/1] term99_reason.py --dry-run ========"
 python3 term99_reason.py --dry-run
 rc=$?

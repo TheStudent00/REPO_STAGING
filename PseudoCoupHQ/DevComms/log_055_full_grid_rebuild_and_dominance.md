@@ -1,10 +1,10 @@
 # log 055 — full grids, the compatibility gate, and the dominance lattice
 
 2026-08-22. Open items 1 and 2 of
-`~/Programming/PseudoCoupHQ/DevComms/log_054_handoff_fuzz_clustering_state.md`,
+`PseudoCoupHQ/DevComms/log_054_handoff_fuzz_clustering_state.md`,
 built to the owner's rulings of 2026-08-21. No new probes were run: this is a
 re-fold of the 10,042,779 measured probes in
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/matrices_cart/`,
+`PseudoCoupHQ/Research/kind_fuzz_clustering/matrices_cart/`,
 which is unchanged on disk for audit.
 
 Everything below was re-derived from the raw CSVs by
@@ -39,7 +39,7 @@ the builder's own.
 
 ## 2. what was built
 
-| file (all under `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`) | what it is |
+| file (all under `PseudoCoupHQ/Research/kind_fuzz_clustering/`) | what it is |
 | --- | --- |
 | `l3_cart_full.py` | the re-fold: inflates every profile to the full X set of its form and level |
 | `matrices_full/` | 85 CSVs + `index.json` + `README.md` — the full-grid data |

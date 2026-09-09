@@ -12,20 +12,20 @@
 # here reads more than one source file.
 set -euo pipefail
 echo "[1/3] the spelling guard, unmodified"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_cells.json \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.json
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_cells.json \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.json
 echo "[2/3] grep -c exempt over every file this task added"
 grep -c exempt \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l1_cells.sh \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l5_run.sh || true
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l1_cells.sh \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/lanes_ap1/ap1_l5_run.sh || true
 echo "[3/3] which term the renderer is handed, per task"
 python3 - <<'PY'
 import inspect
 import sys
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/"
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/"
                    "cross_construction/emulation/handful")
 import handful as H
 

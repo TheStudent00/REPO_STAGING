@@ -1,7 +1,7 @@
 # log_133 — Task 42: bank round 8
 
 Implementer: Claude Code (Sonnet). Working dir
-`~/Programming/PseudoCoupHQ/Research/op_pipeline`. Python:
+`PseudoCoupHQ/Research/op_pipeline`. Python:
 `/tmp/reconnect_venv/bin/python3`.
 
 THE SPELLING BAN, pasted verbatim as required: "THE SPELLING BAN,
@@ -228,25 +228,25 @@ by me in this task):
   `Research/op_pipeline/legality_validation2.json`
 
 Created by me, this task:
-- `~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt`
+- `PseudoCoupHQ/DevComms/next_commit_message.txt`
   (overwritten; 3,449 bytes; see §4)
-- `~/Programming/PseudoCoupHQ/DevComms/log_133_task42_bank_round8.md`
+- `PseudoCoupHQ/DevComms/log_133_task42_bank_round8.md`
   (this file)
 - Dated entry appended to
-  `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`
+  `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`
 
 Verified untouched: `dominant_table24.json`, `dominant_table24b.json`,
 `dom_ops22.json` (§1.6).
 
 ## 4. Posterity message
 
-Written to `~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt`.
+Written to `PseudoCoupHQ/DevComms/next_commit_message.txt`.
 
 ```
-$ wc -c ~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt
-3449 ~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt
+$ wc -c PseudoCoupHQ/DevComms/next_commit_message.txt
+3449 PseudoCoupHQ/DevComms/next_commit_message.txt
 
-$ head -5 ~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt
+$ head -5 PseudoCoupHQ/DevComms/next_commit_message.txt
 round 8 banked — universal-form migration, regeneration, testimony remediation, two corrections
 
 UNIVERSAL-FORM MILESTONE (task 39, log_130): 1,744 of 1,779 admitted

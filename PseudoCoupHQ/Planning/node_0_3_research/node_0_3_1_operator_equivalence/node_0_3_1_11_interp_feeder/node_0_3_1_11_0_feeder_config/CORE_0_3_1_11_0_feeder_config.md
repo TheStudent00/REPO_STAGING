@@ -38,5 +38,5 @@ sub_nodes: []
 The configuration object of the feeder: which interpreter dump files
 are read and which directory the op_units-shaped records are written
 to. `FeederConfig(target_files, output_directory)` in
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_feeder.py`.
+`PseudoCoupHQ/Research/op_pipeline/interp_feeder.py`.
 It holds no logic; a run is one config plus the functions below.

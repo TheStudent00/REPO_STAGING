@@ -36,17 +36,17 @@ THE SPELLING BAN, pasted verbatim per the brief's law:
 
 ## Appendix B — numbered tree of everything this task touched
 
-1. `~/Programming/Airlock/instances/o2.conf` — new Airlock instance
+1. `Airlock/instances/o2.conf` — new Airlock instance
    (copied from `o1.conf`, memory dropped to the brief's stated 2g
    bound, reasons stated in its own header).
-2. `~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/`
+2. `PseudoCoupHQ/Research/oracle/arch_opcodes/`
    1. `single_opcode_units.py` — deliverable 1 script.
    2. `single_opcode_units.json` — deliverable 1 data.
    3. `single_opcode_units.md` — deliverable 1 rendering (full tables).
    4. `unique_opcodes.py` — deliverable 2 script.
    5. `unique_opcodes.json` — deliverable 2 data.
    6. `unique_opcodes.md` — deliverable 2 rendering (full tables).
-3. `~/Programming/PseudoCoupHQ/Research/op_pipeline/lanes_o2/` — lane
+3. `PseudoCoupHQ/Research/op_pipeline/lanes_o2/` — lane
    scripts (below). Nothing under `Research/op_pipeline/` outside
    this new sub-folder was touched; the population files there were
    only read.
@@ -119,7 +119,7 @@ Command run (re-runnable):
 ```
 $ python3 -c "
 import json
-d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_c.json'))
+d=json.load(open('PseudoCoupHQ/Research/op_pipeline/canon40_wrapped_c.json'))
 u=d['units']
 for k in ['c/op_103','c/op_123','c/op_101']:
     print(k, u[k]['operator'], u[k]['body_text'])
@@ -296,7 +296,7 @@ Cross-language rows (distinct mnemonics across all nine languages):
 tables). First 20 rows, sorted by mnemonic:
 
 ```
-$ head -25 /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.md | tail -3
+$ head -25 PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.md | tail -3
 | ucomiss | 844 | 828 |
 | sar | 794 | 777 |
 | movd | 1252 | 773 |
@@ -307,7 +307,7 @@ Cross-check (every ledger row's `produced_by.mnem`, where
 language's body-verbatim vocabulary):
 
 ```
-$ tail -3 /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/lane_logs/o2_l6_unique_opcodes.log
+$ tail -3 PseudoCoupHQ/Research/oracle/arch_opcodes/lane_logs/o2_l6_unique_opcodes.log
 ------------------------------------------------------------
 # exit 0 in 1.1s
 # work free after: 2048 MB (consumed 0 MB)
@@ -332,14 +332,14 @@ a language-complexity signal without the population behind it.
 
 ## §6. Lane logs, guard output, verifier tally
 
-Airlock instance `o2`, config `~/Programming/Airlock/instances/o2.conf`
+Airlock instance `o2`, config `Airlock/instances/o2.conf`
 (copied from `o1.conf`, memory dropped to 2g per this brief; reasons
 in the conf's own header comment).
 
 ```
 (not re-run here: submits/moves the sandbox itself, by design outside
 this verifier's scope)
-$ bash ~/Programming/Airlock/up.sh --instance o2
+$ bash Airlock/up.sh --instance o2
 ...
 o2-runner  Up Less than a second  localhost/sandbox-runner:latest
 ```
@@ -359,7 +359,7 @@ causes are named below, not hidden):
 | 5 | `o2_l5_single_opcode.sh` | deliverable 1, fixed a bug: branch-target label lines (`L0:`) were being parsed as arch-opcode mnemonics | exit 0 |
 | 6 | `o2_l6_unique_opcodes.sh` | deliverable 2, same label-line fix | exit 0 |
 | 7 | `o2_l7_spelling_guard_final.sh` | guard, final files | exit 1: 183 + 25 findings (unchanged by the label fix, as expected — labels were never the guard's complaint) |
-| 8 | `o2_l8_claims_verify.sh` | first claims-verify pass over this log | exit 0 (verifier ran clean); tally 0 MATCHES / 0 DIFFERS / 3 UNVERIFIABLE / 6 REFUSED / 4 NOT_RERUNNABLE — every shell claim used `cd X &&` (tool_absent in the verifier image) or pointed at `~/AirlockRuns/...` (unreachable from the sandbox) |
+| 8 | `o2_l8_claims_verify.sh` | first claims-verify pass over this log | exit 0 (verifier ran clean); tally 0 MATCHES / 0 DIFFERS / 3 UNVERIFIABLE / 6 REFUSED / 4 NOT_RERUNNABLE — every shell claim used `cd X &&` (tool_absent in the verifier image) or pointed at `<runs>/...` (unreachable from the sandbox) |
 | 9 | `o2_l9_claims_verify_final.sh` | claims-verify, after removing `cd` and relocating referenced lane logs into the mounted repo | exit 0; tally 1 MATCHES / 5 DIFFERS / 3 UNVERIFIABLE / 2 REFUSED / 2 NOT_RERUNNABLE — the 5 DIFFERS were five pasted outputs that had drifted from the real command output (an elided table, three log tails missing their trailing framing lines, one `grep` path-prefix mismatch); each fixed to the literal re-run output |
 | 10 | `o2_l10_claims_verify_final.sh` | claims-verify, final | see ADDENDUM |
 
@@ -367,12 +367,12 @@ Peak RSS, pasted from each script's own `resource.getrusage` line
 (no `/usr/bin/time` in the runner image):
 
 ```
-$ tail -3 /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/lane_logs/o2_l5_single_opcode.log
+$ tail -3 PseudoCoupHQ/Research/oracle/arch_opcodes/lane_logs/o2_l5_single_opcode.log
 ------------------------------------------------------------
 # exit 0 in 1.3s
 # work free after: 2048 MB (consumed 0 MB)
 
-$ tail -3 /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/lane_logs/o2_l6_unique_opcodes.log
+$ tail -3 PseudoCoupHQ/Research/oracle/arch_opcodes/lane_logs/o2_l6_unique_opcodes.log
 ------------------------------------------------------------
 # exit 0 in 1.1s
 # work free after: 2048 MB (consumed 0 MB)
@@ -385,8 +385,8 @@ Both well under the 2 GB bound (`ABORT_MEMORY_O2` never fired).
 ```
 (not re-run here: submits/moves the sandbox itself, by design outside
 this verifier's scope)
-$ python3 ~/Programming/Airlock/airlock submit ~/Programming/PseudoCoupHQ/Research/op_pipeline/lanes_o2/o2_l7_spelling_guard_final.sh --instance o2 --no-batch
-$ cat /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/lane_logs/o2_l7_spelling_guard_final.log
+$ python3 Airlock/airlock submit PseudoCoupHQ/Research/op_pipeline/lanes_o2/o2_l7_spelling_guard_final.sh --instance o2 --no-batch
+$ cat PseudoCoupHQ/Research/oracle/arch_opcodes/lane_logs/o2_l7_spelling_guard_final.log
 ...
 FAIL single_opcode_units.json -- 183 spelling-keyed place(s)
      $.single_opcode_groups.c.narrow[6].mnemonic
@@ -403,11 +403,11 @@ each (checked directly, pasted below) — no exempt annotation was
 added anywhere to route around a finding.
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.py
-/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json:0
-/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json:0
-/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py:0
-/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.py:0
+$ grep -c exempt PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.py
+PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json:0
+PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json:0
+PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py:0
+PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.py:0
 ```
 
 **Why 183 + 25 findings remain, and why they were not "fixed" to
@@ -436,7 +436,7 @@ them from operators that are NOT the word "and" at all — `&`, `&&`,
 **check_conventions_log_claims.py --verify, over this log:**
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 120 --json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/log_208_claims.json /projects/PseudoCoupHQ/DevComms/log_208_task_o2_single_opcode_units.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 120 --json PseudoCoupHQ/Research/oracle/arch_opcodes/log_208_claims.json PseudoCoupHQ/DevComms/log_208_task_o2_single_opcode_units.md
 ```
 
 This command's own output cannot be pasted here before it runs (it
@@ -490,7 +490,7 @@ the body above this point was not edited again after that lane ran.
 ## ADDENDUM — o2_l10 final verifier tally (appended after the lane ran; nothing above this line was touched afterward)
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 120 --json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/log_208_claims_l10.json /projects/PseudoCoupHQ/DevComms/log_208_task_o2_single_opcode_units.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 120 --json PseudoCoupHQ/Research/oracle/arch_opcodes/log_208_claims_l10.json PseudoCoupHQ/DevComms/log_208_task_o2_single_opcode_units.md
 log_208_task_o2_single_opcode_units.md: 14 claims extracted
 ...
    claims 14 | MATCHES 6 | DIFFERS 0 | UNVERIFIABLE 4 | REFUSED 2 | NOT_RERUNNABLE 2
@@ -517,5 +517,5 @@ verifier exit 0
 ```
 
 **TALLY: 14 claims, 6 MATCHES, 0 DIFFERS, 4 UNVERIFIABLE, 2 REFUSED, 2 NOT_RERUNNABLE. Zero DIFFERS.**
-Full untruncated verifier stdout: `~/AirlockRuns/o2/agent/logs/20260906T010121Z__o2_l10_claims_verify_final.sh.log`.
+Full untruncated verifier stdout: `<runs>/o2/agent/logs/20260906T010121Z__o2_l10_claims_verify_final.sh.log`.
 Machine-checked claims json: `Research/oracle/arch_opcodes/log_208_claims_l10.json` (itself passes the spelling-key guard).

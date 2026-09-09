@@ -142,4 +142,4 @@ walking the compiler.
 
 ## artifacts
 
-`~/Programming/PseudoCoupHQ/Research/oracle/hub_compiler/`.
+`PseudoCoupHQ/Research/oracle/hub_compiler/`.

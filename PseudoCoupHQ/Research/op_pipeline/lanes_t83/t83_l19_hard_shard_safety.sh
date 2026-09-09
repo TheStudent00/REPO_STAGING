@@ -18,7 +18,7 @@
 #     does, the answer had converged by 4096 and the shard stands.  If
 #     it does not, the shard must come out of the store.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "======== [1/3] WHY the records differ at 512 MB ========"
 rm -rf /work/t83_check_store /work/t83_check_state.json

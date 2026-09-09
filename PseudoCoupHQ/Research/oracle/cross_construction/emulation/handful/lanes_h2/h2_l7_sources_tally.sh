@@ -14,7 +14,7 @@
 # MEMORY BOUND: 4 GB resident, named abort ABORT_MEMORY_H2; both steps
 # read one 74 kB json file.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 echo "[1/3] task h2: handful2_sources.json, counted"
 python3 $H/handful.py sources_counts
 echo "[2/3] task h2: the idiv destination place, both ways"

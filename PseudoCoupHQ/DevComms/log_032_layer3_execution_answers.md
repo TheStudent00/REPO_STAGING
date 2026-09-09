@@ -1,8 +1,8 @@
 # log 032 — layer 3, EXECUTION: what the accepted operations return
 
 Date: 2026-08-19. Node:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 Log number: **032**. Log 031 was taken by the agent working the
 answer-grain clustering for python, ruby and php the same day; this log
@@ -247,7 +247,7 @@ quarantine
 
 `HARVEST.md`
     the file in
-        `~/Programming/PseudoCoupHQ/Research/
+        `PseudoCoupHQ/Research/
         kind_fuzz_clustering/`
     that carries what has run, what is
     running, and what is still to be built.

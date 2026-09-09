@@ -8,7 +8,7 @@ to the port, not the source.
 Run (host; sandbox was down at staging):
 
 ```bash
-bash ~/Programming/PseudoCoup_v6/Research/r3_harvest_verification/run_checks.sh
+bash PseudoCoup_v6/Research/r3_harvest_verification/run_checks.sh
 ```
 
 Logs land in `runs/` beside the script; the status table is

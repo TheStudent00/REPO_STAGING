@@ -1,8 +1,8 @@
 # log 041 — the alternative readings, and the dominance lattice
 
 Date: 2026-08-20. Node:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 Log 041 was free when this was written.
 

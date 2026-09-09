@@ -33,7 +33,7 @@ def is_projection_section(heading):
     """
     return heading.lstrip("#").strip().lower() in PROJECTION_SECTIONS
 
-PATH_RE = re.compile(r"~/Programming/[^\s`)]*")
+PATH_RE = re.compile(r"[^\s`)]*")
 
 # A line carrying this marker is exempt from the dangling-path check.
 # It exists because the project's rule is to ANNOTATE a reference to
@@ -43,7 +43,7 @@ PATH_RE = re.compile(r"~/Programming/[^\s`)]*")
 # check would push writers toward deleting the history instead.
 #
 # Put the marker anywhere on the line:
-#     `~/Programming/PseudoCoup_v6/Tools/slicer/` (historical)
+#     `PseudoCoup_v6/Tools/slicer/` (historical)
 #
 # Keep it to lines where the path is genuinely being described in the
 # past tense. A marker used to silence a real stale pointer turns the
@@ -305,7 +305,7 @@ class GrammarCheck(Check):
 
 
 class DanglingPathCheck(Check):
-    """~/Programming/... references that do not resolve on disk. Also
+    """... references that do not resolve on disk. Also
     feeds the stale-.archive reclassification: a subset of these where
     the referenced thing turns out to be archived."""
 
@@ -339,8 +339,8 @@ class DanglingPathCheck(Check):
 
     @staticmethod
     def repo_root_for(path_text, programming_root):
-        """The top-level project directory a `~/Programming/<X>/...` path
-        names, e.g. `~/Programming/PseudoCoup_v6` for anything under it."""
+        """The top-level project directory a `<X>/...` path
+        names, e.g. `PseudoCoup_v6` for anything under it."""
         rel = os.path.relpath(os.path.expanduser(path_text), programming_root)
         if rel.startswith(".."):
             return None
@@ -972,7 +972,7 @@ class EdgeRegisterCheck(Check):
     def resolve(entry_path, core_path):
         """An edge's `path`, as an absolute path. Relative entries are
         relative to the folder holding the CORE that states them;
-        `~/Programming/...` entries are absolute already. Cross-tree
+        `...` entries are absolute already. Cross-tree
         edges must use the absolute form, per §6a — the two trees move
         independently, so a relative path between them breaks the first
         time either one moves."""
@@ -1533,7 +1533,7 @@ class Checker:
               "sweep over the")
         print("  whole tree. for the older register gap, adoption is "
               "mechanical:")
-        print("      python3 ~/Programming/PlanPlan/framework/"
+        print("      python3 PlanPlan/framework/"
               "generate_nodes.py \\")
         print("          <planning root> --adopt --apply")
         print("  which writes each register FROM the folders already on "

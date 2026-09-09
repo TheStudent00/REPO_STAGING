@@ -3,7 +3,7 @@
 measured outer set.
 
 Node: hq.research.arch_unit_oracle.cross_construction.autopoly
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08).
 
 THE OBJECTS, one sentence each, in relation.
@@ -170,7 +170,7 @@ SPELLINGS = os.path.join(HERE, "autopoly2_spellings.json")
 # this loop's runs beside those, cause by cause and cell by cell.
 AP1_RUNS = os.path.join(HERE, "autopoly_runs.jsonl")
 AP1_AGGREGATE = os.path.join(HERE, "autopoly.json")
-HOST_FOLDER = ("~/Programming/PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/autopoly")
 
 # THE TWO CEILINGS THE BRIEF STATES.  The first is the pipeline's own

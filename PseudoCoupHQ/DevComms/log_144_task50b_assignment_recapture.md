@@ -1,7 +1,7 @@
 # log_144 — TASK 50(b): the assignment-run re-capture
 
 Dated 2026-09-02. TASK 50 part (b) from
-`~/Programming/PseudoCoupHQ/DevComms/log_142_claude_code_task_briefs_round10.md`:
+`PseudoCoupHQ/DevComms/log_142_claude_code_task_briefs_round10.md`:
 re-capture the 118 assignment-run testimony findings through the
 verbatim path.
 
@@ -48,7 +48,7 @@ and `run_chunk` needed no new probe-reading code — only a different
 
 `recapture_original.py` (round 8's plain-lane re-capture) drives
 `trickle.run_chunk`, which reaches the container with `podman exec`
-against a hand-copied Airlock (`~/Programming/AirlockTrickle`). That
+against a hand-copied Airlock (`AirlockTrickle`). That
 route is superseded, stated in
 `Research/op_pipeline/TRICKLE_SUPERSEDED.md` (2026-09-02): "Nothing
 on the project side runs `podman`." So the new driver
@@ -60,7 +60,7 @@ and polls the instance's own status file — never `podman exec`.
 ### 2.3 The run
 
 ```
-$ bash ~/Programming/Airlock/up.sh --instance trickle --cpus 6
+$ bash Airlock/up.sh --instance trickle --cpus 6
   trickle-runner already existed; started (bound to .../instances/trickle/agent/drop)
   trickle-runner  Up 55 seconds  localhost/sandbox-runner:latest
 
@@ -149,7 +149,7 @@ same record log 126 §3.2 walked:
 ## 4. Instance down
 
 ```
-$ bash ~/Programming/Airlock/down.sh --instance trickle
+$ bash Airlock/down.sh --instance trickle
   removed trickle-runner
 done.
 ```
@@ -183,7 +183,7 @@ line MUST paste this paragraph verbatim."
 
 ## 6. Full file inventory
 
-All paths under `~/Programming/PseudoCoupHQ/Research/op_pipeline/`
+All paths under `PseudoCoupHQ/Research/op_pipeline/`
 unless noted. All NEW files; nothing pre-existing was opened for
 writing.
 
@@ -218,4 +218,4 @@ writing.
   supersede.
 - The daemon commits; this session made no manual commit.
 
-Report path: `~/Programming/PseudoCoupHQ/DevComms/log_144_task50b_assignment_recapture.md`.
+Report path: `PseudoCoupHQ/DevComms/log_144_task50b_assignment_recapture.md`.

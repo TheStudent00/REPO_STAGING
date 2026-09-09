@@ -1,8 +1,8 @@
 # log 027 — layer 3 phase 3: the builds, proven, and the runs, launched
 
 Date: 2026-08-18. Node:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 Phase 3 of that node's plan of record, under the layer-3 design the owner
 ruled 2026-08-18.
 
@@ -1160,7 +1160,7 @@ still to be built: java, typescript, and the rust lift. And a later
 agent should know how the existing files were made.
 
 1. Poll the lane. Each script's state is at
-   `~/Programming/SandboxDesign/agent/status/<name>.sh.status`. The
+   `SandboxDesign/agent/status/<name>.sh.status`. The
    names are `ac_cpp.sh`, `ac_swift.sh`, `ac_dart.sh`, `ac_csharp.sh`,
    `ac_kotlin.sh`, `ac_rust.sh`, `lift_b.sh`, `rc_python.sh`,
    `rc_ruby.sh`, `rc_php.sh`. `state=done` plus `exit=0` is the signal.
@@ -1170,12 +1170,12 @@ agent should know how the existing files were made.
 3. Collect and fold:
 
    ```
-   cp ~/Programming/SandboxDesign/agent/out/ac_*.txt \
-      ~/Programming/SandboxDesign/agent/out/rc_*.txt \
-      ~/Programming/SandboxDesign/agent/out/lift_b.txt \
-      ~/Programming/PseudoCoupHQ/Research/\
+   cp SandboxDesign/agent/out/ac_*.txt \
+      SandboxDesign/agent/out/rc_*.txt \
+      SandboxDesign/agent/out/lift_b.txt \
+      PseudoCoupHQ/Research/\
 kind_fuzz_clustering/raw/
-   cd ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering
+   cd PseudoCoupHQ/Research/kind_fuzz_clustering
    python3 l3_read.py
    ```
 
@@ -1211,7 +1211,7 @@ the two unbuilt harnesses.
 ## record
 
 Everything is in
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`:
+`PseudoCoupHQ/Research/kind_fuzz_clustering/`:
 
 - `progress.py` — the shared instrument, python face and shell twin.
 - `l3_accept.py` -> `space_<lang>.json`, `space_summary.json`,
@@ -1228,5 +1228,5 @@ Everything is in
 - `HARVEST.md` — the state of every lane and how to collect it.
 
 The two build-step lane scripts live at
-`~/Programming/SandboxDesign/agent/drop/.done/a2_verify.sh` and
+`SandboxDesign/agent/drop/.done/a2_verify.sh` and
 `.done/bisect_race.sh`.

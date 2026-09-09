@@ -8,7 +8,7 @@
 # lane holds nothing but the reference's tables. Peak RSS printed.
 set -euo pipefail
 echo "[1/3] task m1b: model_table.py compiles"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 -m py_compile model_table.py
 echo "   ok"
 echo "[2/3] task m1b: the one width rule over real mnemonics"
@@ -16,7 +16,7 @@ python3 - <<'PY'
 import resource
 import sys
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import model_table as MB
 
 SAMPLE = [("add", 32), ("add", 64), ("addss", 32), ("addss", 64),
@@ -53,8 +53,8 @@ for mnem, line, size in LINES:
              cause or ""))
 print("")
 print("[3/3] the sweep's own shapes for those same mnemonics")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline/lean")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline/lean")
 import model_translate as MT
 for mnem in ("faddp", "fucomip", "addss", "setne"):
     seen = []

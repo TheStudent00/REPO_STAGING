@@ -9,12 +9,12 @@
 #
 # Node: hq.conventions
 set -uo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/1] re-running every command log_201 pastes"
 python3 check_conventions_log_claims.py --verify \
   --timeout 120 \
   --json /out/t96_l16_verify_this_log3.json \
-  /projects/PseudoCoupHQ/DevComms/log_201_task96_interpreters_onto_canonical_form.md
+  PseudoCoupHQ/DevComms/log_201_task96_interpreters_onto_canonical_form.md
 rc=$?
 echo "verifier exit ${rc}"
 exit ${rc}

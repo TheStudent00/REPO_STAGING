@@ -22,7 +22,7 @@
 #
 # MEMORY BOUND: 6 GB resident, named abort ABORT_MEMORY_AP3.
 set -euo pipefail
-ART=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+ART=PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 mkdir -p "$ART/src3" "$ART/src3_off"
 if [ -f "$ART/autopoly3_runs.jsonl" ]; then
   mv "$ART/autopoly3_runs.jsonl" \
@@ -32,7 +32,7 @@ fi
 
 echo ""
 echo "[1/5] GUARD 1 -- task h2's own sources measurement"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 python3 handful.py sources_counts
 
 echo ""
@@ -44,7 +44,7 @@ import os
 import resource
 import sys
 
-HERE = "/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation"
+HERE = "PseudoCoupHQ/Research/oracle/cross_construction/emulation"
 sys.path.insert(0, os.path.join(HERE, "handful"))
 sys.path.insert(0, os.path.join(HERE, "autopoly"))
 import autopoly3 as A

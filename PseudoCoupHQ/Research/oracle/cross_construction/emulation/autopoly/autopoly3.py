@@ -19,7 +19,7 @@ Two more things this file adds:
   * the change table now reads task ap2's store as the before.
 
 Node: hq.research.arch_unit_oracle.cross_construction.autopoly
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08).
 
 THE OBJECTS, one sentence each, in relation.
@@ -204,7 +204,7 @@ ap2's, which is the pass this one follows."""
 
 AP1_RUNS = os.path.join(HERE, "autopoly_runs.jsonl")
 AP1_AGGREGATE = os.path.join(HERE, "autopoly.json")
-HOST_FOLDER = ("~/Programming/PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/autopoly")
 
 # THE TWO CEILINGS THE BRIEF STATES.  The first is the pipeline's own
@@ -716,8 +716,8 @@ def fix4_command():
         % len(verdicts))
     say("")
     if sources:
-        say("| run | the place | the source with the fix OFF | the "
-            "source with the fix ON |")
+        say("| run | the place | the FIRST line that differs, with the "
+            "fix OFF | the same line with the fix ON |")
         say("|---|---|---|---|")
         for key, differing in sources:
             for writes, off_text, on_text in differing:
@@ -752,22 +752,43 @@ def sources_that_differ(on_run, off_run):
             continue
         if place.get("source") == right[writes]:
             continue
-        out.append((writes, one_cell(right[writes]),
-                    one_cell(place.get("source"))))
+        left, mine = first_line_that_differs(right[writes],
+                                             place.get("source"))
+        out.append((writes, left, mine))
     return out
 
 
+def first_line_that_differs(off_source, on_source):
+    """the first line the two rendered sources do not share, one cell
+    each.
+
+    A whole source is several hundred characters of preamble the two
+    always share -- the allow-list, the provenance comment, the
+    signature -- so pasting both in a table row hides the one line that
+    is the measurement.  Where one side did not render at all, that is
+    what the cell says."""
+    if off_source is None or on_source is None:
+        return (one_cell(off_source), one_cell(on_source))
+    left = off_source.split("\n")
+    right = on_source.split("\n")
+    for index in range(max(len(left), len(right))):
+        one = left[index].strip() if index < len(left) else "-- ends --"
+        two = right[index].strip() if index < len(right) else "-- ends --"
+        if one == two:
+            continue
+        return (one_cell(one), one_cell(two))
+    return (one_cell(off_source), one_cell(on_source))
+
+
 def one_cell(source):
-    """a rendered source as one markdown table cell: the one line of it
-    that is the function's own body, or the whole of it where there is
-    no such line."""
+    """one markdown table cell holding a piece of rendered source, cut
+    to 200 characters so a row stays readable."""
     if source is None:
         return "-- not rendered --"
-    for line in source.split("\n"):
-        stripped = line.strip()
-        if stripped.startswith("return "):
-            return "`%s`" % stripped
-    return "`%s`" % source.replace("\n", " ")
+    text = source.replace("\n", " ").strip()
+    if len(text) > 200:
+        text = text[:200] + " ..."
+    return "`%s`" % text
 
 
 CELLS_HELD = []

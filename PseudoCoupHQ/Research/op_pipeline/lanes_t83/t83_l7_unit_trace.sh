@@ -5,7 +5,7 @@
 # the body is walked.  This lane measures that, bounded at 3 GB and
 # 300 s in a forked child so it names its own abort.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/1] c/regen_1859 -- 16 body lines, 32 ledger rows"
 python3 probe83f_one_unit_trace.py canon40_regen_store/op_units2_c_c0004.json c/regen_1859
 echo "exit $?"

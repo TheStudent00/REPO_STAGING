@@ -4,7 +4,7 @@
 # requires as the final lane.
 set -euo pipefail
 echo "[1/1] task m1: check_conventions_log_claims.py --verify over log_236"
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 python3 Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 \
   DevComms/log_236_task_m1_arch_opcode_model_table.md
 echo "[1/1] done"

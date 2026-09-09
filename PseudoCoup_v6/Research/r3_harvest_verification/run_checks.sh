@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # R3: run each harvest source's own tests where it lives.
-# Usage:  bash ~/Programming/PseudoCoup_v6/Research/r3_harvest_verification/run_checks.sh
+# Usage:  bash PseudoCoup_v6/Research/r3_harvest_verification/run_checks.sh
 # Continues on failure; writes per-suite logs + runs/status.md.
 # UNVERIFIED by execution (staged while the session sandbox was
 # down); if an invocation is wrong, its log says exactly how.

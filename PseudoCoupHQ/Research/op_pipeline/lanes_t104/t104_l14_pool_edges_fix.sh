@@ -32,9 +32,9 @@
 # failure.  A brief handed to any subagent for this line MUST paste
 # this paragraph verbatim."
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/2] the pool build again, both edge populations this time"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_pool.py
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_pool.py
 echo "pool exit $?"
 echo "[2/2] the guard over the two files it wrote"
 python3 check_no_spelling_keys.py pool104_candidate.json pool104_delta.json

@@ -12,7 +12,7 @@
 # reports BY NAME rather than the operating system stopping the process
 # without a language-level error.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 step () {
   echo

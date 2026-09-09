@@ -3,13 +3,13 @@
 Task t101b (closing task t101, which stopped correctly at step 1 with
 a flag). Node:
 `hq.research.compiler_graph.probes.type_inventory`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_0_probes/node_0_3_1_0_1_type_inventory/CORE_0_3_1_0_1_type_inventory.md`).
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_0_probes/node_0_3_1_0_1_type_inventory/CORE_0_3_1_0_1_type_inventory.md`).
 Master plan step: `CORE_0_3_research` §4.2 step 3.
 
 Written 2026-09-06, superseding this file's 01:52 version, which is
 now log_213's record, not this file's. The full account, with the
 shell transcripts that reproduce every number here, is
-`~/Programming/PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md`.
+`PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md`.
 
 ---
 
@@ -44,7 +44,7 @@ shell transcripts that reproduce every number here, is
 
 ## 2. Instance and the two bugs on the way here
 
-- Instance: `~/Programming/Airlock/instances/t101b.conf` (from
+- Instance: `Airlock/instances/t101b.conf` (from
   `t97.conf`, cpus 6 / memory 8g, `ABORT_MEMORY_T101B` at 4 GB in the
   parent). Lanes: `t101b_l1_sample.sh` (sample 60, exit 0),
   `t101b_l2_all.sh` (all 31,067 accepted probes, exit 0, 532.2s),
@@ -248,7 +248,7 @@ disagreeing is listed, never adjudicated by this task.
 ## 8. Verifier tally
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md
 ```
 
 Three passes (lanes `t101b_l7_verify.sh` / `l8_verify2.sh` /

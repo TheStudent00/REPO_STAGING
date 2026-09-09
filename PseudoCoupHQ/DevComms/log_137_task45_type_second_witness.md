@@ -185,9 +185,9 @@ compile_probe`, anchor mode: c `-std=c17 -O0 -g -c`; cpp `-std=c++20
 
 ```
 HOST path check:
-<host>
+<user>
 ls: cannot access '/persist': No such file or directory
-  ~/Programming/PseudoCoupHQ exists -> HOST side
+  PseudoCoupHQ exists -> HOST side
 ```
 
 The generator, the fold and every count ran on the host. Only the 416
@@ -506,7 +506,7 @@ $ git diff --stat HEAD -- Research/op_pipeline/type_inventory2.json \
     Research/op_pipeline/core_rule2.py Research/op_pipeline/legality_rules.json
 (empty)
 $ ls -la Research/op_pipeline/type_inventory2.json
--rw-rw-r-- 1 <host> <host> 204153 Sep  1 18:22 .../type_inventory2.json
+-rw-rw-r-- 1 <user> <user> 204153 Sep  1 18:22 .../type_inventory2.json
 ```
 
 Inventory 2 still carries its 2026-09-01 18:22 timestamp. Every artifact

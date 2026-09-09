@@ -1,13 +1,13 @@
 # log_232 — task L2: the model translator — the reference's opcode semantics turned into Lean, checked against 259 single-opcode units, 19 DISCREPANCY, zero sorryAx
 
 Node: `hq.research.compiler_graph.gate.lean.model_translator`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/node_0_3_1_5_6_0_model_translator/CORE_0_3_1_5_6_0_model_translator.md`).
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/node_0_3_1_5_6_0_model_translator/CORE_0_3_1_5_6_0_model_translator.md`).
 Its super-node is the lean node
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`),
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`),
 whose task L1 built the `archproof` project this task builds inside
-(log_227). Artifacts: `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/`.
-Instance: `~/Programming/Airlock/instances/L2.conf`. Lanes: 20, all kept at
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/lanes_L2/`.
+(log_227). Artifacts: `PseudoCoupHQ/Research/op_pipeline/lean/`.
+Instance: `Airlock/instances/L2.conf`. Lanes: 20, all kept at
+`PseudoCoupHQ/Research/op_pipeline/lean/lanes_L2/`.
 
 ---
 
@@ -110,7 +110,7 @@ coordinator in §9, not silently worked around.
 ## 2. The five opcodes, end to end, LITERAL
 
 `reference.py`'s builder bodies for the five the brief named, LITERAL (host
-log `~/AirlockRuns/L2/agent/logs/20260907T040418Z__L2_l1_survey.sh.log`):
+log `<runs>/L2/agent/logs/20260907T040418Z__L2_l1_survey.sh.log`):
 
 ```
 ----- build_binary -----
@@ -199,7 +199,7 @@ def build_convert_to_float(ops):
 
 And the Lean definitions this session's re-run of `model_translate.py five`
 produced from those same builders (host log
-`~/AirlockRuns/L2/agent/logs/20260907T135419Z__L2_l20_rerunnable_claims.sh.log`,
+`<runs>/L2/agent/logs/20260907T135419Z__L2_l20_rerunnable_claims.sh.log`,
 §[1/8] — this exact block is also §10's first re-runnable command):
 
 ```
@@ -284,7 +284,7 @@ belongs to the CHECK, not the translation sweep — see §4.
 
 The brief's own estimate of the population was 243; the actual population,
 recomputed live off `single_opcode_units.json` by lane 1
-(`~/AirlockRuns/L2/agent/logs/20260907T040418Z__L2_l1_survey.sh.log`, §[5/5]),
+(`<runs>/L2/agent/logs/20260907T040418Z__L2_l1_survey.sh.log`, §[5/5]),
 is 259 — 83 c, 82 cpp, 27 go, 48 rust, 19 swift, over 26 distinct mnemonics.
 This is stated, not reconciled; nothing in this task's scope explains the
 243 estimate's origin.
@@ -331,7 +331,7 @@ there are 259 of them and the json is the object.
 
 19 rows, three mnemonics, one shape each — `bv_decide` returned a concrete
 counterexample for all 19 (host log
-`~/AirlockRuns/L2/agent/logs/20260907T135419Z__L2_l20_rerunnable_claims.sh.log`,
+`<runs>/L2/agent/logs/20260907T135419Z__L2_l20_rerunnable_claims.sh.log`,
 §[5/8]):
 
 | theorem | mnem | unit | left (the unit's own proved term) | right (the model, composed) |
@@ -378,7 +378,7 @@ either the term-walk route or the check's own step-composition order.
 ## 6. `lake build`, `#print axioms`, and the two parser bugs this session fixed
 
 `lake build` of the whole project: **exit 0**, 318 jobs (host log
-`~/AirlockRuns/L2/agent/logs/20260907T135104Z__L2_l19_final_guard.sh.log`,
+`<runs>/L2/agent/logs/20260907T135104Z__L2_l19_final_guard.sh.log`,
 §[1/5]). `grep -rn '\bsorry\b'` over every `.lean` file in the project: no
 match (same log, §[2/5]) — the only way `sorryAx` can appear in a
 `#print axioms` trace is if a `sorry` term or tactic exists somewhere in the
@@ -386,7 +386,7 @@ proof or a dependency it imports, so a clean grep over the whole project is
 what makes "no `sorryAx`" checkable without reading 153 traces by eye.
 
 All 153 proved theorems carry a `#print axioms` line (host log
-`~/AirlockRuns/L2/agent/logs/20260907T134623Z__L2_l18_axioms_refresh.sh.log`);
+`<runs>/L2/agent/logs/20260907T134623Z__L2_l18_axioms_refresh.sh.log`);
 **zero carry `sorryAx`**:
 
 | axiom set | count | closed by |
@@ -408,7 +408,7 @@ than leaving it inside a line nobody reads.
 checker's OWN parser of `#print axioms`'s output), neither in a theorem:**
 
 1. 20 proved rows (all `rfl`-closed) came back with `row["axioms"] == None`.
-   Lane 15's probe (`~/AirlockRuns/L2/agent/logs/20260907T134328Z__L2_l15_probe.sh.log`)
+   Lane 15's probe (`<runs>/L2/agent/logs/20260907T134328Z__L2_l15_probe.sh.log`)
    ran `lake env lean` directly on `ModelCheck_c_21.lean` and found:
    ```
    'Archproof.ModelCheck_c_21' does not depend on any axioms
@@ -416,12 +416,12 @@ checker's OWN parser of `#print axioms`'s output), neither in a theorem:**
    — a DIFFERENT phrasing than `axiom_line`'s only pattern, `"depends on
    axioms"`. All 20 use no axiom at all (the strongest possible outcome).
    Fixed by matching both phrasings; lane 16
-   (`~/AirlockRuns/L2/agent/logs/20260907T134416Z__L2_l16_axioms_gap2.sh.log`)
+   (`<runs>/L2/agent/logs/20260907T134416Z__L2_l16_axioms_gap2.sh.log`)
    re-ran the 20 and filled them, 0 still missing.
 2. 61 `bv_decide`-closed rows recorded a TRUNCATED axiom list, e.g.
    `"'Archproof.ModelCheck_c_9' depends on axioms: [propext,"` with no
    closing bracket. Lane 17's probe
-   (`~/AirlockRuns/L2/agent/logs/20260907T134514Z__L2_l17_probe2.sh.log`)
+   (`<runs>/L2/agent/logs/20260907T134514Z__L2_l17_probe2.sh.log`)
    found Lean wraps a long axiom list over several lines:
    ```
    'Archproof.ModelCheck_c_9' depends on axioms: [propext,
@@ -463,7 +463,7 @@ correcting only how their (already-correct) output was parsed into
 > MUST paste this paragraph verbatim.
 
 Run, unmodified, over both json files this task wrote (host log
-`~/AirlockRuns/L2/agent/logs/20260907T135104Z__L2_l19_final_guard.sh.log`,
+`<runs>/L2/agent/logs/20260907T135104Z__L2_l19_final_guard.sh.log`,
 §[3/5]):
 
 ```
@@ -556,8 +556,8 @@ reported LITERAL, unresolved, in §9.
 ## 10. The same facts as commands that re-run
 
 Run in `L2_l20_rerunnable_claims.sh` (host log
-`~/AirlockRuns/L2/agent/logs/20260907T135419Z__L2_l20_rerunnable_claims.sh.log`);
-working directory `/projects/PseudoCoupHQ/Research/op_pipeline/lean`.
+`<runs>/L2/agent/logs/20260907T135419Z__L2_l20_rerunnable_claims.sh.log`);
+working directory `PseudoCoupHQ/Research/op_pipeline/lean`.
 
 **[1/8] The five opcodes, end to end** — quoted in full in §2 (attribution,
 lane 20 §[1/8]; `model_translate.py five`'s definition-name COUNTER is local
@@ -565,14 +565,14 @@ to the invocation, so it is not pasted here a second time as a fresh MATCH
 claim).
 
 **[2/8] The translator's census over all 171 mnemonics** (lane 22, host log
-`~/AirlockRuns/L2/agent/logs/20260907T140035Z__L2_l22_rerunnable_claims2.sh.log`,
+`<runs>/L2/agent/logs/20260907T140035Z__L2_l22_rerunnable_claims2.sh.log`,
 §[1/6] — absolute path, in place of lane 20's relative path which only
 resolved from `lean/` and not from the checker's own working directory):
 
 ```
 $ python3 -c '
 import json
-d = json.load(open("/projects/PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json"))
+d = json.load(open("PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json"))
 pm = d["per_mnemonic"]
 print("mnemonics_in_the_table", d["mnemonics_in_the_table"])
 print("definitions", d["definitions"])
@@ -597,7 +597,7 @@ translated_count 160
 ```
 $ python3 -c '
 import json, collections
-d = json.load(open("/projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
+d = json.load(open("PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
 rows = d["rows"]
 print("total_rows", len(rows))
 tally = collections.Counter()
@@ -619,7 +619,7 @@ total_rows 259
 ```
 $ python3 -c '
 import json, collections
-d = json.load(open("/projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
+d = json.load(open("PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
 rows = [r for r in d["rows"] if r["outcome"] == "REFUSED"]
 pm = collections.defaultdict(collections.Counter)
 for r in rows:
@@ -645,7 +645,7 @@ of):
 ```
 $ python3 -c '
 import json, re, collections
-d = json.load(open("/projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
+d = json.load(open("PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
 proved = [r for r in d["rows"] if r.get("closed_by")]
 print("proved_total", len(proved))
 print("missing_axioms", sum(1 for r in proved if not r.get("axioms")))
@@ -670,17 +670,17 @@ sorryAx_count 0
 `check_conventions_log_claims.py`'s own `ALLOWED_HEADS`, so it can never be
 a re-runnable claim through that checker. Exit 0, 318 jobs, quoted in §6,
 host log
-`~/AirlockRuns/L2/agent/logs/20260907T135104Z__L2_l19_final_guard.sh.log`.
+`<runs>/L2/agent/logs/20260907T135104Z__L2_l19_final_guard.sh.log`.
 **The sorry keyword, whole project** (lane 22, §[5/6] — absolute paths, no
 `cd`, which the checker calls `tool_absent` because it resolves through
 `shutil.which` to nothing):
 
 ```
 $ grep -rln "sorry" \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/*.lean \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Edges/*.lean \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Main.lean \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof.lean
+    PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/*.lean \
+    PseudoCoupHQ/Research/op_pipeline/lean/archproof/Edges/*.lean \
+    PseudoCoupHQ/Research/op_pipeline/lean/archproof/Main.lean \
+    PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof.lean
 (no output, grep exit 1 -- no file matched, no sorry anywhere)
 ```
 
@@ -688,9 +688,9 @@ $ grep -rln "sorry" \
 §[6/6] — absolute paths on both arguments):
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json 2>&1 \
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+    PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json \
+    PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json 2>&1 \
     | grep -E "^(FAIL|PASS)"
 FAIL model_L2.json -- 18112 spelling-keyed place(s)
 PASS check_L2.json -- no operator token in any key, grouping, pairing or row structure
@@ -703,26 +703,26 @@ PASS check_L2.json -- no operator token in any key, grouping, pairing or row str
 Three passes, `check_conventions_log_claims.py` unmodified, run FROM the L2
 instance, each over section 10's commands (the only shell transcripts in
 this log). Pass 1 (`L2_l21_verify.sh`, host log
-`~/AirlockRuns/L2/agent/logs/20260907T135759Z__L2_l21_verify.sh.log`)
+`<runs>/L2/agent/logs/20260907T135759Z__L2_l21_verify.sh.log`)
 found 3 DIFFERS, over an EARLIER draft: two commands used a path
 (`'check_L2.json'`) that only resolves from `lean/`, not from the checker's
-own fixed working directory (`/projects/PseudoCoupHQ`, stated in its own
+own fixed working directory (`PseudoCoupHQ`, stated in its own
 banner); the third used a relative path in the guard invocation. Section 10
 above is the FIXED version — absolute paths throughout, plus two unrelated
 fixes the same pass surfaced (a bare `>` inside python source the checker's
 naive splitter read as a shell redirect; a backslash-escaped `'` its
 splitter could not find the close of). Pass 2
 (`L2_l23_verify2.sh`, host log
-`~/AirlockRuns/L2/agent/logs/20260907T140212Z__L2_l23_verify2.sh.log`)
+`<runs>/L2/agent/logs/20260907T140212Z__L2_l23_verify2.sh.log`)
 confirmed 0 DIFFERS over the fixed commands, with one NOT_RERUNNABLE — this
 section's own self-referential verifier command, which at that point still
 carried a live `$ ` line pointing at its own pasted output (a claim
 comparing itself to itself). That line was removed (see the note that
 replaced it, two paragraphs up) and pass 3, the final one, from
 `L2_l24_verify3.sh` (host log
-`~/AirlockRuns/L2/agent/logs/20260907T140327Z__L2_l24_verify3.sh.log`,
+`<runs>/L2/agent/logs/20260907T140327Z__L2_l24_verify3.sh.log`,
 command
-`python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_232_task_L2_model_translator.md`
+`python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_232_task_L2_model_translator.md`
 — not pasted as a live `$ ` transcript for the same self-reference reason):
 
 ```
@@ -759,22 +759,22 @@ already carrying its host log path per the standing convention.
 
 ## 12. See also
 
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/MODEL_README.md` —
+- `PseudoCoupHQ/Research/op_pipeline/lean/MODEL_README.md` —
   what is in the artifact folder, restated as reference documentation.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`
+- `PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`
   — the translator and the checker, six commands (`table`, `five`, `model`,
   `check`, `run`, `imports`, plus `axioms_gap`/`axioms_refresh` added this
   session).
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json` —
+- `PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json` —
   the 259-row population, every outcome, every `left`/`right` term pair,
   every proved theorem's axioms line.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json` —
+- `PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json` —
   the 171-mnemonic census, and the guard's failure (§7).
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/lanes_L2/` — all 20
+- `PseudoCoupHQ/Research/op_pipeline/lean/lanes_L2/` — all 20
   lane scripts, in submission order.
-- `~/Programming/PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md`
+- `PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md`
   — the `archproof` project and its own proof, which this task's `lake
   build` (§6) extends without touching.
-- `~/Programming/PseudoCoupHQ/DevComms/log_229_operator_mapping_proof_system_purpose.md`
+- `PseudoCoupHQ/DevComms/log_229_operator_mapping_proof_system_purpose.md`
   §4.1 — the framing this task implements: level 0 DERIVED from the
   reference, never written twice.

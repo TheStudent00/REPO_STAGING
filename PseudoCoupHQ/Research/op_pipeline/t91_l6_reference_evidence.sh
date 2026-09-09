@@ -25,7 +25,7 @@
 # Product: /out/t91_reference_evidence.json
 set -uo pipefail
 
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 mkdir -p /out
 
 echo "== A1: the header line each superseded simulator carries =="
@@ -51,7 +51,7 @@ import os
 import resource
 import sys
 
-HERE = "/projects/PseudoCoupHQ/Research/op_pipeline"
+HERE = "PseudoCoupHQ/Research/op_pipeline"
 sys.path.insert(0, HERE)
 
 import gate as GATE

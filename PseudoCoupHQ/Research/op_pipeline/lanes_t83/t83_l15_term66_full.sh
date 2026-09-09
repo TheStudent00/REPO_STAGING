@@ -31,7 +31,7 @@
 # SAMPLE FIRST, as the rule requires: lane 14, 99 records, 111 s at
 # this ceiling, peak well under it, zero records changed.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 total=$(( $(ls canon40_regen_store/*.json | wc -l) + 6 ))
 done_now=$(python3 -c "import json;print(len(json.load(open('term66_state.json'))['done']))")

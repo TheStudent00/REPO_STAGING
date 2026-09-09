@@ -36,8 +36,8 @@
 #
 # This lane moves files. It groups nothing and pairs nothing.
 set -u
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
-GR=/projects/PseudoCoupGraphs
+CG=PseudoCoupHQ/Research/compiler_graph
+GR=PseudoCoupGraphs
 cd "$CG"
 total=8; i=0
 step() { i=$((i+1)); echo; echo "======== [$i/$total] $* ========"; }
@@ -54,7 +54,7 @@ for f in graph_go.json graph_cpp.json graph_rust.json graph_swift.json \
          variant_connections_swift.json \
          graph_go_files.json graph_cpp_files.json coverage_go_files.json \
          coverage_go_summary.json coverage_cpp_summary.json ; do
-  if git -C /projects/PseudoCoupHQ ls-files --error-unmatch "Research/compiler_graph/$f" >/dev/null 2>&1; then T=TRACKED; else T="untracked"; fi
+  if git -C PseudoCoupHQ ls-files --error-unmatch "Research/compiler_graph/$f" >/dev/null 2>&1; then T=TRACKED; else T="untracked"; fi
   if [ -f "$f" ]; then S=$(stat -c%s "$f"); else S=ABSENT; fi
   printf '   %-38s %-9s %14s\n' "$f" "$T" "$S"
 done
@@ -132,6 +132,6 @@ echo "   (nothing above this line means no remote)"
 step "PseudoCoupHQ afterwards"
 du -sb "$CG" | sed 's/^/   Research\/compiler_graph now: /'
 echo "   git status of this repository, porcelain, compiler_graph only:"
-git -C /projects/PseudoCoupHQ status --porcelain Research/compiler_graph | head -30
+git -C PseudoCoupHQ status --porcelain Research/compiler_graph | head -30
 echo
 echo "======== lane 5 finished ========"

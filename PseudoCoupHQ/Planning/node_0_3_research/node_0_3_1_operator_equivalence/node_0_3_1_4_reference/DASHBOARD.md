@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_3_1_4_reference
@@ -33,10 +33,10 @@ sub-node count: 2
 
 ## blocked
 
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/PROGRESS.md` line 50 — line is **blocked on task 59**, not out of scope. Evidence:
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 24 — **blocked** on those two models; the proved population is
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 59 — - 2026-09-03: the 5,602 units blocked on the two missing blocks —
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 62 — stays **blocked on the gate**, no longer on the models. Evidence:
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/PROGRESS.md` line 50 — line is **blocked on task 59**, not out of scope. Evidence:
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 24 — **blocked** on those two models; the proved population is
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 59 — - 2026-09-03: the 5,602 units blocked on the two missing blocks —
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 62 — stays **blocked on the gate**, no longer on the models. Evidence:
 
 ## PROGRESS bullet statuses
 

@@ -3,8 +3,8 @@
 2026-08-05
 
 **Scope caveat:** this measurement covers exactly two crates —
-`~/Programming/Sources/rust/compiler/rustc_codegen_ssa` and
-`~/Programming/Sources/rust/compiler/rustc_codegen_llvm` — both of which are sparse
+`Sources/rust/compiler/rustc_codegen_ssa` and
+`Sources/rust/compiler/rustc_codegen_llvm` — both of which are sparse
 relative to the full rustc tree (111 `.rs` files, 1616 macro invocations total).
 `rustc_codegen_cranelift` was excluded per instruction. Numbers below are not a
 claim about the whole compiler; they are a direct check of the log_002 §6.3
@@ -219,7 +219,7 @@ import tree_sitter_rust as tsrust
 RLANG = Language(tsrust.language())
 parser = Parser(RLANG)
 
-ROOT = "~/Programming/Sources/rust/compiler"
+ROOT = "Sources/rust/compiler"
 DIRS = ["rustc_codegen_ssa", "rustc_codegen_llvm"]  # cranelift excluded (prohibited)
 
 files = []
@@ -317,7 +317,7 @@ print(f"{covered}/{len(invocations)} = {covered/len(invocations)*100:.2f}% cover
   10 more names covering another ~50 invocations at near-zero design cost),
   or does that undercut the point of the original "~20 entries" framing?
 - This log only used 2 sparse crates. Is a wider re-run (more of
-  `~/Programming/Sources/rust/compiler`, cranelift still excluded) warranted
+  `Sources/rust/compiler`, cranelift still excluded) warranted
   before this number is treated as durable, or is 1616 invocations/58 macro
   names enough signal for now?
 - `intrinsic_args!` could not be measured (absent from both crates in scope).

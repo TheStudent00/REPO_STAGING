@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Mass updates across every repo using the planning framework.
 
-    python3 ~/Programming/PlanPlan/framework/migrate.py <migration> <repo>...
-    python3 ~/Programming/PlanPlan/framework/migrate.py <migration> <repo>... --apply
+    python3 PlanPlan/framework/migrate.py <migration> <repo>...
+    python3 PlanPlan/framework/migrate.py <migration> <repo>... --apply
 
 Dry run is the DEFAULT. Nothing is written until --apply is given.
 

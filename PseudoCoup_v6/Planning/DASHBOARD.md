@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — Planning
@@ -48,13 +48,13 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 ## SUPPORT files in this sub-tree
 
-- `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_recording_intentions.md`
-- `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_todos.md`
-- `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`
-- `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_ur_ast.md`
-- `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_validation.md`
-- `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_egress.md`
-- `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_ingress.md`
-- `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_2_polyfill/SUPPORT_polyfill.md`
-- `~/Programming/PseudoCoup_v6/Planning/node_0_2_api/SUPPORT_converting_programs.md`
-- `~/Programming/PseudoCoup_v6/Planning/node_0_2_api/node_0_2_0_examples/node_0_2_0_0_on_scripts/SUPPORT_behavioral_oracle.md`
+- `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_recording_intentions.md`
+- `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_todos.md`
+- `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`
+- `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_ur_ast.md`
+- `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_validation.md`
+- `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_egress.md`
+- `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_ingress.md`
+- `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_2_polyfill/SUPPORT_polyfill.md`
+- `PseudoCoup_v6/Planning/node_0_2_api/SUPPORT_converting_programs.md`
+- `PseudoCoup_v6/Planning/node_0_2_api/node_0_2_0_examples/node_0_2_0_0_on_scripts/SUPPORT_behavioral_oracle.md`

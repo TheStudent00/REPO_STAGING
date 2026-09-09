@@ -32,7 +32,7 @@ carries its closing note. Read section 0 for the state; read section
 - 2b PROTOCOL §1 vs §3b — closed. §1 now says exactly-one and
   enforced.
 - 2c staleness undetected — closed for the flow that matters:
-  `bash ~/Programming/PseudoCoupHQ/hq.sh` now rebuilds BOTH generated
+  `bash PseudoCoupHQ/hq.sh` now rebuilds BOTH generated
   artifacts (projections and dashboards) before checking. A bare
   `check_plans.py` run still does not detect a stale projection
   description; that remains true by design and is noted below.
@@ -157,8 +157,8 @@ description passes clean.
 ### 2d. §6 names the wrong trees as conforming — CLOSED 2026-08-01
 
 > Conforming projects: PseudoCoup_v6
-> (`~/Programming/PseudoCoup_v6/Planning/`) and PseudoIR
-> (`~/Programming/PseudoIR/Planning/`), which were one tree until
+> (`PseudoCoup_v6/Planning/`) and PseudoIR
+> (`PseudoIR/Planning/`), which were one tree until
 > 2026-07-31.
 
 Those two are the trees with no register at all — 10 of 10 COREs and
@@ -207,7 +207,7 @@ as a candidate. Offered as a reading, not a finding.
 
 ### What was founded
 
-`~/Programming/PlanPlan/Planning/`, with three level-1 nodes
+`PlanPlan/Planning/`, with three level-1 nodes
 taken from this repo's own README: framework, analysis, instances.
 
 Two of the three have no folder on disk. There is no `analysis/` and
@@ -219,8 +219,8 @@ sitting in the framework's own repo.
 `CORE_0.md` was written by hand with its register. Everything below
 it came from
 
-    python3 ~/Programming/PlanPlan/framework/generate_nodes.py \
-        ~/Programming/PlanPlan/Planning --apply
+    python3 PlanPlan/framework/generate_nodes.py \
+        PlanPlan/Planning --apply
 
 so the founding doubles as a live test of the generator. It produced
 three node folders with skeleton CORE, PROGRESS and CHECK files, then

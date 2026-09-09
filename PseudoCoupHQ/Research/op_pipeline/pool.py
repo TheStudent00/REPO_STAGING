@@ -2,7 +2,7 @@
 """pool.py -- THE NODE `pool`, node 0_3_5_7 of the compiler graph.
 
 CORE:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_7_pool/CORE_0_3_5_7_pool.md`
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_7_pool/CORE_0_3_5_7_pool.md`
 and its sub-node COREs: `entry`, `merge_grounds`, `representative`,
 `families`, `exception_families`.
 

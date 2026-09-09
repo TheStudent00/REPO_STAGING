@@ -761,8 +761,8 @@ it never happens, and which item 1 makes cost two seconds.
 
 ## Artifacts
 
-Scripts authored, all in `~/Programming/SandboxDesign/agent/drop/`
-and executed from `~/Programming/Airlock/agent/drop/`:
+Scripts authored, all in `SandboxDesign/agent/drop/`
+and executed from `Airlock/agent/drop/`:
 
 | script | what it measured |
 |---|---|
@@ -776,5 +776,5 @@ and executed from `~/Programming/Airlock/agent/drop/`:
 | `d76_spike3_198.sh` | the spike lane, run for real. This file EMBEDS the proposed preamble verbatim, so the 193 lines of spike authorship are recoverable from it without any census file having been edited. An earlier attempt was refused by the compiler for declaring the probes' result type as `float` where the preamble returns a formatted string; the fix was one word per probe |
 | `d76_derivable.sh` | how much of "what is new" is machine-readable |
 
-Logs are under `~/Programming/Airlock/agent/logs/`, stamped
+Logs are under `Airlock/agent/logs/`, stamped
 `20260829T17*`.

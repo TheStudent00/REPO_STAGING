@@ -6,11 +6,11 @@ This is the ONE thing in task 85 that is not an Airlock lane: the browser
 IS the viewer of the deliverable, so looking at the deliverable happens
 on the host.  It computes nothing the page does not compute for itself.
 
-It imports `~/Programming/Ourobrowser/browser_engine.py` and does not
+It imports `Ourobrowser/browser_engine.py` and does not
 edit it: the engine belongs to the owner and that work is paused.
 
 usage:
-    cd ~/Programming/Ourobrowser && \
+    cd Ourobrowser && \
     LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1 \
     python3 <this file>
 """
@@ -19,11 +19,11 @@ import os
 import resource
 import sys
 
-OURO = os.path.expanduser("~/Programming/Ourobrowser")
+OURO = os.path.expanduser("Ourobrowser")
 PAGE = os.path.expanduser(
-    "~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html")
+    "PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html")
 SHOTS = os.path.expanduser(
-    "~/Programming/PseudoCoupHQ/DevComms/screens/log_191")
+    "PseudoCoupHQ/DevComms/screens/log_191")
 
 sys.path.insert(0, OURO)
 

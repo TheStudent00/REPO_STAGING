@@ -94,7 +94,7 @@ probes.type_inventory
 
 ## realization (what exists on disk, 2026-09-03)
 
-Home: `~/Programming/PseudoCoupHQ/Research/op_pipeline/`.
+Home: `PseudoCoupHQ/Research/op_pipeline/`.
 
 | part | current file | status |
 |---|---|---|

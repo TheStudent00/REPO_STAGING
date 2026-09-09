@@ -20,14 +20,14 @@
 # Node: hq.research.compiler_graph.dashboard
 set -uo pipefail
 
-REPO=/projects/PseudoCoupHQ
+REPO=PseudoCoupHQ
 cd "$REPO/Research/op_pipeline" || exit 2
 
 mkdir -p /out
 python3 - <<'PY'
 import json, os, resource, sys, time
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 import dashboard_ouro as D
 
 def peak_mb():

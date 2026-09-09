@@ -15,7 +15,7 @@ status: living
   name; `connector` was rejected because that word is reserved for
   the static graph object.
   - Same-day sharpening from the merge questions the owner raised (recorded
-    in `~/Programming/PseudoCoup_v5/DevComms/log_005_session_state_macros_and_sequencing.md`
+    in `PseudoCoup_v5/DevComms/log_005_session_state_macros_and_sequencing.md`
     §3): one DATA MODEL — `ur` is the vocabulary, `ledger` is the
     mechanics over it (keying, durability, merge), and the ledger
     defines no second vocabulary. The nodes stay separate because
@@ -30,7 +30,7 @@ status: living
 - 2026-08-02: **metaprogramming settled as a design direction**, written
   to this node's `SUPPORT_metaprogramming.md`, with the measurements and
   the wrong turns in
-  `~/Programming/PseudoCoup_v5/DevComms/log_003_metaprogramming_model.md`.
+  `PseudoCoup_v5/DevComms/log_003_metaprogramming_model.md`.
   - **The position**: meta-programming is code, held losslessly like any
     other code. REPRESENTATION is always possible; EVALUATION —
     computing what one call produces — is a separate operation the
@@ -49,8 +49,8 @@ status: living
     rust_routing work traces. A frequency ranking puts the one that
     matters at the bottom.
   - Two runnable demonstrations were written and kept:
-    `~/Programming/PseudoCoup_v5/Research/macro_demo.py` (what a macro
-    is) and `~/Programming/PseudoCoup_v5/Research/macro_engine.py` (the
+    `PseudoCoup_v5/Research/macro_demo.py` (what a macro
+    is) and `PseudoCoup_v5/Research/macro_engine.py` (the
     operator itself — one engine, macros supplied as data).
   - Four open items are recorded in the SUPPORT file's §8, the sharpest
     being that toolchain expansion is per crate while the ledgerer is
@@ -104,10 +104,10 @@ status: living
     kept verbatim in that CORE's notes, marked as awaiting the owner's
     completion. Nothing is built on it.
   - Material behind the shape: the 2026-08-02 survey addendum
-    `~/Programming/PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`
+    `PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`
     (tree-sitter enters at identity and ingestion, not storage; the
     UR-AST/ledger join exists in spec, not code) and
-    `~/Programming/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
+    `PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
     (the nine harvested parts).
 - 2026-08-01: node founded, definition only, as one of the four
   sub-nodes the owner ruled for under `pcv5.tools` (ledgerer, transpiler,
@@ -124,7 +124,7 @@ status: living
     refinement rather than contradiction, so §2's governance rule is
     not strained by changing it again later.
   - The supporting statement, found in
-    `~/Programming/PseudoCoupHQ/plan_and_code.md` §1, is an
+    `PseudoCoupHQ/plan_and_code.md` §1, is an
     ILLUSTRATION rather than a ruling: its worked example shows
     `node_0_0_0_ledgerer` as `code (module)` holding a `Ledger` class
     with a `build` method, reading as `ledgerer.Ledger.build`. It

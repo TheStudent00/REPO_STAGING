@@ -15,11 +15,11 @@ licenses — PseudoCoup lends PseudoIR its toolchain.
   `Tools/ledgerer/tree_sitter/parse_source.py`.
 
 Both resolve PseudoCoup through `PSEUDOCOUP_ROOT`, defaulting to
-`~/Programming/PseudoCoup_v6`, and refuse with a named error if it is
+`PseudoCoup_v6`, and refuse with a named error if it is
 not there. That is the same environment-variable pattern the suites
 used before their fixtures were vendored in (2026-07-31).
 
 Run:
 
-    PSEUDOCOUP_ROOT=~/Programming/PseudoCoup_v6 \
-        python3 -m pytest ~/Programming/PseudoIR/Tools -q
+    PSEUDOCOUP_ROOT=PseudoCoup_v6 \
+        python3 -m pytest PseudoIR/Tools -q

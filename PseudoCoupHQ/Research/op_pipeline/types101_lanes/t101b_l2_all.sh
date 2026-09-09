@@ -11,7 +11,7 @@ if [ -f /usr/lib/x86_64-linux-gnu/libncursesw.so.6.6 ]; then
      /usr/lib/x86_64-linux-gnu/libncurses.so.6 2>/dev/null
   ldconfig 2>/dev/null
 fi
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "======== [1/1] types101_anchor_dwarf.py (all) ========"
 python3 types101_anchor_dwarf.py --workers 6
 rc=$?

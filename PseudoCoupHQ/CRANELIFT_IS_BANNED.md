@@ -65,12 +65,12 @@ rule, and this file OVERRIDES every one of them. A citation to a
 Every repo in the line, and every session, in perpetuity until the owner
 lifts it himself:
 
-- `~/Programming/PseudoCoupHQ`
-- `~/Programming/PseudoCoup_v5`
-- `~/Programming/PseudoCoup_v6`
-- `~/Programming/PseudoIR`
+- `PseudoCoupHQ`
+- `PseudoCoup_v5`
+- `PseudoCoup_v6`
+- `PseudoIR`
 
 Removal actions taken 2026-08-02 are recorded in
-`~/Programming/PseudoCoupHQ/Planning/node_0_2_conventions/PROGRESS.md`
+`PseudoCoupHQ/Planning/node_0_2_conventions/PROGRESS.md`
 and in
-`~/Programming/PseudoCoup_v5/Planning/node_0_1_research/PROGRESS.md`.
+`PseudoCoup_v5/Planning/node_0_1_research/PROGRESS.md`.

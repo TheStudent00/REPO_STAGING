@@ -20,7 +20,7 @@ out of each binary the carve actually uses.
 
 Run (inside the sandbox container, because the binaries live there):
   podman exec -e DWARF_T27_OUT=/persist/dwarf_typed_key_t27.json \\
-    sandbox-runner bash -lc 'cd /projects/PseudoCoupHQ/Research/op_pipeline \\
+    sandbox-runner bash -lc 'cd PseudoCoupHQ/Research/op_pipeline \\
     && python3 dwarf_typed_key_t27.py'
 """
 

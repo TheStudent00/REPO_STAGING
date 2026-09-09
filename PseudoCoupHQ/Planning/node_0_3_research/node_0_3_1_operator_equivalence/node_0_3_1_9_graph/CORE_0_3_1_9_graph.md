@@ -365,8 +365,8 @@ its cause and stays **planned**.
 ## realization (what exists on disk, 2026-09-03, after task 71)
 
 Home of the PROGRAMS and the small summaries:
-`~/Programming/PseudoCoupHQ/Research/compiler_graph/`. Home of the
-ARTIFACTS since 2026-09-04 (task 93): `~/Programming/PseudoCoupGraphs`,
+`PseudoCoupHQ/Research/compiler_graph/`. Home of the
+ARTIFACTS since 2026-09-04 (task 93): `PseudoCoupGraphs`,
 a companion folder with NO REMOTE by design, holding
 `graph_<lang>.json`, `coverage_<lang>*.json`, `super_ops_<lang>.json`,
 `variant_connections_*.json` and `diaries/`. One place answers where
@@ -377,7 +377,7 @@ of graph in 72,188,201, and `graph_compact.py expand` rebuilds the old
 file BYTE FOR BYTE — proved by `cmp` on all four, md5 against md5, with
 each compact document carrying the original's own md5 so the proof is
 re-runnable. The byte counts below are the EXPANDED form each graph was
-measured in. Sources on disk: `~/Programming/Sources/{golang_src,
+measured in. Sources on disk: `Sources/{golang_src,
 llvm-project, rust, swift-6.0.3-RELEASE, jdk}`. THE CLASS NOW EXISTS UNDER THE NODE'S OWN
 NAME: `graph.py`, `class Graph`, with `build`, `query_path`, `diary`,
 `coverage`, `super_ops`. `build_graph.py`, `build_graph2.py` and

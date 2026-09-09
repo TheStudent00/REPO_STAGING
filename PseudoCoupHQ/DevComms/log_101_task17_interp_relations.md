@@ -1,7 +1,7 @@
 # log 101 -- Task 17: interpreter units into the table question (ruby/php/cpython), posed not forced
 
 Date: 2026-08-31. Answers log_097's Task 17 (round 3). Working
-directory: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+directory: `PseudoCoupHQ/Research/op_pipeline`.
 
 "THE SPELLING BAN, ABSOLUTE (the owner, restated in anger 2026-08-25 after
 a second violation). No operator token may appear in ANY key,
@@ -311,18 +311,18 @@ names either file.
 ## 7. file inventory (every file this session created)
 
 New:
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_canon_attempt.py`
+- `PseudoCoupHQ/Research/op_pipeline/interp_canon_attempt.py`
   -- route 1, canonicalization-refusal checker.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_canon_attempt.json`
+- `PseudoCoupHQ/Research/op_pipeline/interp_canon_attempt.json`
   -- its output (generator-provenance role, exempt from the spelling
   guard by declaration AND independently by full walk, see section 5).
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_relations_build.py`
+- `PseudoCoupHQ/Research/op_pipeline/interp_relations_build.py`
   -- routes 2 and 3, the relation builder.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_relations.json`
+- `PseudoCoupHQ/Research/op_pipeline/interp_relations.json`
   -- the artifact the brief names: handler -> {class, relation kind,
   proof/witness}, 9 records, `class` is `null` on every record (no
   table membership claimed anywhere).
-- `~/Programming/PseudoCoupHQ/DevComms/log_101_task17_interp_relations.md`
+- `PseudoCoupHQ/DevComms/log_101_task17_interp_relations.md`
   -- this log.
 
 No other file was created, modified, or deleted. `dominant_table24.json`,

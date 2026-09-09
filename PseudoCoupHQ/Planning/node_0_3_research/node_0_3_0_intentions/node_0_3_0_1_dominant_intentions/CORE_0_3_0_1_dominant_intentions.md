@@ -65,12 +65,12 @@ kind_clustering.
   for the far side of that boundary; kind_clustering supplies the
   syntax-side anchors.
 - **designed precedent, not from scratch**: PseudoIR's Tier-1
-  registry (`~/Programming/PseudoIR/pseudoir/registry/data/ops.json`
+  registry (`PseudoIR/pseudoir/registry/data/ops.json`
   — "id, signature, semantic test vectors, per-language columns...
   filled by the probers") is this architecture at operator level;
   this node scales it to objects.
 - **runner**: the Airlock agent lane
-  (`python3 ~/Programming/Airlock/airlock submit ...`, `airlock status`);
+  (`python3 Airlock/airlock submit ...`, `airlock status`);
   results as data.
 - **start: basic data structures**, two-level per the 2026-08-13
   discussion — the machine basis {fixed-width integer, IEEE float,

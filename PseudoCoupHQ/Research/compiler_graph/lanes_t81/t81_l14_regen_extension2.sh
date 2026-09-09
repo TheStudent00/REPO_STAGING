@@ -38,16 +38,16 @@
 # unit ids -- machine coordinates, no token anywhere in the selection.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 cd "$REPO"
 mkdir -p "$REPO/diaries/regen" /work/probe
 
 say "[1/5] the slice, and whether a probe source exists for each unit"
 python3 - <<'PY'
 import json, os
-STORE = '/projects/PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
-PIPELINE = '/projects/PseudoCoupHQ/Research/op_pipeline'
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+STORE = 'PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
+PIPELINE = 'PseudoCoupHQ/Research/op_pipeline'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 WANTED = 2600
 
 units = []
@@ -126,7 +126,7 @@ PY
 say "[2/5] the slice compiled through the instrumented clang"
 python3 - <<'PY'
 import glob, json, os, resource, subprocess, sys, time
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 STATE = os.path.join(REPO, 't81', 'diary_state_regen.json')
 CLANG = '/persist/llvmbuild/bin/clang'
 CLANGXX = '/persist/llvmbuild/bin/clang++'
@@ -205,7 +205,7 @@ PY
 say "[3/5] the extended join population, as one directory of hard links"
 python3 - <<'PY'
 import os
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 joint = os.path.join(REPO, 'diaries', 'extended')
 os.makedirs(joint, exist_ok=True)
 made = 0
@@ -225,7 +225,7 @@ for source_directory, prefix in ((os.path.join(REPO, 'diaries', 'c'), 'c__'),
 print('   hard links in diaries/extended : %d' % made)
 PY
 du -sh "$REPO/diaries/regen" "$REPO/diaries/extended" 2>/dev/null
-df -h /projects/PseudoCoupHQ | tail -1
+df -h PseudoCoupHQ | tail -1
 
 say "[4/5] the coverage join over the extended population"
 python3 t81/run_with_peak.py graph.py join \
@@ -237,7 +237,7 @@ ls -la coverage_extended.json | awk '{print "   artifact bytes:", $5}'
 say "[5/5] what the extra probes bought, against the 1,380-probe join"
 python3 - <<'PY'
 import json
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 before = json.load(open(REPO + '/coverage_c_and_cpp.json'))
 after = json.load(open(REPO + '/coverage_extended.json'))
 for name in ('population_instrumented', 'population_probes',

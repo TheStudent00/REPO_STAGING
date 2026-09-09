@@ -4,8 +4,8 @@
 # Airlock instance, which is the only place /persist/swift is mounted.
 #
 # Submitted with:
-#   python3 ~/Programming/Airlock/airlock --instance trickle submit \
-#       ~/Programming/PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane2.sh \
+#   python3 Airlock/airlock --instance trickle submit \
+#       PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane2.sh \
 #       --batch t63 --weight 1
 #
 # The path check below is what proves which side of the container wall
@@ -42,7 +42,7 @@ nm --version | head -1
 objdump --version | head -1
 python3 --version
 echo
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane.py
+python3 PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane.py
 code=$?
 echo
 echo "lane exit: $code"

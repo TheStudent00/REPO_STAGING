@@ -199,6 +199,45 @@ def is_vector_family(family):
     return family.startswith("xmm")
 
 
+# ------------------------------------------------------------------
+# TASK ap4, CHANGE 2: A PLACE ON THE x87 REGISTER STACK, AS A LOAD AND
+# A STORE AT THE EDGES.
+#
+# the owner's ruling of 2026-09-09: the contract may state a place by a
+# CONSTRAINT and not only by a register name.  An answer left on the
+# x87 register stack has no general or vector register home, so
+# `build_epilogue` refused it `no answer home` and no x87 unit could
+# be wrapped at all (log_245 section 6.3).  The canonical form is
+# exactly the place for this: the body stays VERBATIM and the wrap
+# adds a load at the front and a store at the back, which is what it
+# already does for a general register and for a vector one.
+#
+# THE SPELLING.  `X87_` and `x87_` and NOT a bare `st`, which is task
+# ap3's own finding (log_245 section 16 item 4): the bare prefix also
+# spells `push`'s `stack_-8` place and refused the corpus's
+# third-most-attested cell on all four targets.
+#
+# THE SIZE.  16 bytes, which is the size this ledger ALREADY gives an
+# x87 row in `walk_dataflow` ("X87", 16, "x87 stack value").  The
+# store itself writes TEN, which is the x86-64 extended format; the
+# row's own note says so.
+X87_PREFIXES = ("X87_", "x87_")
+X87_ROW_BYTES = 16
+X87_STORE_BYTES = 10
+X87_ROW_TYPE = "x87 stack value"
+
+
+def is_x87_family(family):
+    """whether a result or arrival family names a position on the x87
+    register stack rather than a machine register."""
+    if not isinstance(family, str):
+        return False
+    for prefix in X87_PREFIXES:
+        if family.startswith(prefix):
+            return True
+    return False
+
+
 def register_text(family, width):
     """the spelling of `family` at `width` bits."""
     if is_vector_family(family):
@@ -1525,24 +1564,44 @@ class Ledger(object):
 
     # --------------------------------------------- the two wrappers
     def build_prelude(self, arrival_families):
-        """COPIED UNCHANGED from ledger48.py, reading its rows off this
-        ledger."""
+        """COPIED from ledger48.py, reading its rows off this ledger,
+        with ONE branch added: TASK ap4, CHANGE 2, the ARRIVAL side.
+
+        A value that arrives on the x87 register stack has no register
+        to be loaded into, so its load is the one instruction that puts
+        it there: `fldt` reads the ten bytes of the extended format at
+        the row's address and pushes.  The x87 loads are emitted LAST
+        and in REVERSE family order, so that after the prelude the
+        FIRST x87 arrival is at st(0) -- which is the order
+        `model_translate.preseeded_state` seeds (`seed_X87_1` pushed,
+        then `seed_X87_0`) and the order the c calling rule leaves an
+        answer in.  The row order is unchanged: IN-i is still arrival
+        i, whichever kind it is.
+        """
         literal = []
         resolved = []
         rows = []
         general = []
         vector = []
+        x87 = []
         for family in arrival_families:
-            if is_vector_family(family):
+            if is_x87_family(family):
+                x87.append(family)
+            elif is_vector_family(family):
                 vector.append(family)
             else:
                 general.append(family)
         scratch = None
         if vector:
             scratch = pick_scratch(set(general) | set(canon.NEVER_RENAME))
-        order = vector + general
+        x87_lines = []
+        x87_resolved = []
+        order = vector + general + x87
         for family in order:
-            if is_vector_family(family):
+            if is_x87_family(family):
+                size = X87_ROW_BYTES
+                type_name = X87_ROW_TYPE
+            elif is_vector_family(family):
                 size = 16
                 type_name = "16-byte vector value"
             else:
@@ -1552,6 +1611,19 @@ class Ledger(object):
                            note="the runner fills this row before the "
                                 "unit is entered")
             rows.append(row)
+            if is_x87_family(family):
+                # THE ONE SCRATCH THE x87 LOAD NEEDS is a general
+                # register to hold the block base; it is picked against
+                # the general arrivals so no load overwrites one.
+                if scratch is None:
+                    scratch = pick_scratch(set(general)
+                                           | set(canon.NEVER_RENAME))
+                pointer = register_text(scratch, 64)
+                x87_lines.append(
+                    ["mov %s,%s" % (ledger_entry_text("IN"), pointer),
+                     "fldt 0x%x(%s)" % (row.offset, pointer)])
+                x87_resolved.append("fldt %s" % row.name())
+                continue
             if is_vector_family(family):
                 pointer = register_text(scratch, 64)
                 literal.append("mov %s,%s" % (ledger_entry_text("IN"),
@@ -1566,16 +1638,44 @@ class Ledger(object):
                 literal.append("mov 0x%x(%s),%s"
                                % (row.offset, pointer, pointer))
                 resolved.append("mov %s,%s" % (row.name(), pointer))
+        # THE x87 LOADS LAST AND IN REVERSE, so the first x87 arrival
+        # ends on top of the stack (task ap4, change 2).
+        for index in range(len(x87_lines) - 1, -1, -1):
+            literal.extend(x87_lines[index])
+            resolved.append(x87_resolved[index])
         return literal, resolved, rows, scratch
 
     def build_epilogue(self, result_family, result_width, producer,
                        operands):
-        """COPIED UNCHANGED from ledger48.py."""
+        """COPIED from ledger48.py with ONE branch added: task ap4,
+        change 2, the ANSWER side."""
         if result_family is None:
             raise Refusal(
                 "no answer home",
                 "this unit's own code names no register the answer is "
                 "left in, so there is nothing to store into OUT-0")
+        if is_x87_family(result_family):
+            # TASK ap4, CHANGE 2, the ANSWER side.  The answer is on
+            # the x87 register stack, so the store is the one
+            # instruction that takes it off: `fstpt` writes the ten
+            # bytes of the extended format at the row's address and
+            # pops.  No source operand is named because the opcode
+            # names none -- it stores st(0), which is where the c
+            # calling rule leaves a `long double` answer.
+            row = self.add(
+                "OUT", X87_ROW_BYTES, X87_ROW_TYPE, producer, operands,
+                note="the answer, taken off the x87 register stack; "
+                     "`fstpt` writes %d bytes of this %d-byte row and "
+                     "the runner reads it when the unit returns"
+                     % (X87_STORE_BYTES, X87_ROW_BYTES))
+            scratch = pick_scratch(set(canon.NEVER_RENAME))
+            pointer = register_text(scratch, 64)
+            literal = []
+            literal.append("mov %s,%s"
+                           % (ledger_entry_text("OUT"), pointer))
+            literal.append("fstpt 0x%x(%s)" % (row.offset, pointer))
+            resolved = ["fstpt %s" % row.name()]
+            return literal, resolved, row, scratch
         if is_vector_family(result_family):
             if result_width > 64:
                 size = 16

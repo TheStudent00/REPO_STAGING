@@ -32,7 +32,7 @@ log_008 §4.3 instead (its decision 11); identical list.
 (2/6 and 1/6 tails omitted here; the generator prints all rows.)
 
 ```
-cd ~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/raw && python3 - <<'PY'
+cd PseudoCoupHQ/Research/kind_signature_clustering/raw && python3 - <<'PY'
 import json, collections
 langs = ["rust","python","kotlin","dart","c","cpp"]
 roles = {L: collections.Counter(

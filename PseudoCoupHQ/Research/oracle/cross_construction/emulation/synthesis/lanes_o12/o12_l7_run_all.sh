@@ -4,7 +4,7 @@
 # the gate's 3,000 ms), then the report, then the guard over every json
 # this task writes.
 set -u
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
 echo "======== 1. the run ========"
 echo "[1/3] run, 206 targets"
 O12_GUESS_MS=30000 O12_SUB_SECONDS=900 python3 - <<'PY'
@@ -23,7 +23,7 @@ echo "-- exit $?"
 echo
 echo "======== 3. the guard over every json ========"
 echo "[3/3] guard"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
   synthesis_plan.json \
   synthesis_sample_guess3000ms.json \
   synthesis_sample_guess30000ms.json \

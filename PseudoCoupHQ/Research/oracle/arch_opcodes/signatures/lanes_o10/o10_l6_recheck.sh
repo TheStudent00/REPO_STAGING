@@ -1,9 +1,9 @@
 #!/bin/bash
 # o10_l6_recheck.sh -- task o10: re-run the two commands the log
-# pastes verbatim, from /projects/PseudoCoupHQ (the verifier's own
+# pastes verbatim, from PseudoCoupHQ (the verifier's own
 # cwd), to get their exact, re-pasteable output.
 set -euo pipefail
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 echo "[1/2] task o10: grand total, from PseudoCoupHQ root"
 python3 -c "
 import json, glob

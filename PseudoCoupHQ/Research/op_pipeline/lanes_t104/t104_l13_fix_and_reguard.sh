@@ -27,9 +27,9 @@
 # failure.  A brief handed to any subagent for this line MUST paste
 # this paragraph verbatim."
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/2] the two fixes, in place"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_fix_spelling_keys.py
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_fix_spelling_keys.py
 echo "fix exit $?"
 echo "[2/2] the guard again, over every named artifact and every shard"
 python3 check_no_spelling_keys.py t104_diagnose.json t104_premise.json t104_audit.json t104_audit_unchanged_rule.json t104_walk_evidence.json t104_walk_evidence_unchanged_rule.json t104_walk_state.json t104_order_probe.json t104_the44.json pool104_candidate.json pool104_delta.json

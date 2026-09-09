@@ -25,7 +25,7 @@
 # CEILINGS: the gate of record is the pipeline's own 3,000 ms; every
 # UNDECIDED is re-posed ONCE at 30,000 ms and both answers are kept.
 set -euo pipefail
-ART=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+ART=PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 mkdir -p "$ART/src3"
 if [ -f "$ART/autopoly3_runs.jsonl" ]; then
   mv "$ART/autopoly3_runs.jsonl" \

@@ -19,7 +19,7 @@
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
 # Shared sources root, outside the repo — see
-# ../rust_routing/fetch_sources.sh for why (~/Programming/Sources is
+# ../rust_routing/fetch_sources.sh for why (Sources is
 # filtered out of Timeshift).
 SRC="${PC_SOURCES:-$HOME/Programming/Sources}"
 mkdir -p "$SRC"

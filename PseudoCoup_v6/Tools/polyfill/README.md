@@ -2,7 +2,7 @@
 
 The wrapper layer filling target-behavior gaps so transpiled code matches
 source behavior exactly. Plan node:
-`~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_2_polyfill/`
+`PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_2_polyfill/`
 (id `pcv6.tools.t4_polyfill`). Governing law, non-negotiable: **uniform
 wrapping, no exemptions -- every operator on a polyfilled type routes
 through the wrapper, or none do.** Mixed depth is forbidden because an
@@ -39,17 +39,17 @@ it."
 Run acceptance:
 
 ```bash
-python3 -m pytest ~/Programming/PseudoCoup_v6/Tools/polyfill -q
+python3 -m pytest PseudoCoup_v6/Tools/polyfill -q
 ```
 
 Full stack (with the other three T1-T3 tools):
 
 ```bash
 python3 -m pytest \
-  ~/Programming/PseudoCoup_v6/Tools/ledgerer/tree_sitter \
-  ~/Programming/PseudoCoup_v6/Tools/ledgerer \
-  ~/Programming/PseudoCoup_v6/Tools/transpiler \
-  ~/Programming/PseudoCoup_v6/Tools/polyfill -q
+  PseudoCoup_v6/Tools/ledgerer/tree_sitter \
+  PseudoCoup_v6/Tools/ledgerer \
+  PseudoCoup_v6/Tools/transpiler \
+  PseudoCoup_v6/Tools/polyfill -q
 ```
 
 Both commands measured 2026-07-28 (sandbox): `polyfill` alone 68/68;

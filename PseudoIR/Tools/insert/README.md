@@ -18,7 +18,7 @@ present in the repo.
 Mounts machine-code bytes so hub Python can call them, crosses the
 result back through a typed border, and caches the mounted page.
 Governing settled node:
-`~/Programming/PseudoIR/Planning/node_0_0_tools/node_0_0_2_insert/SUPPORT_insertion.md`.
+`PseudoIR/Planning/node_0_0_tools/node_0_0_2_insert/SUPPORT_insertion.md`.
 This increment is the mount + border + cache + platform-assertion core
 tested against a HAND-SUPPLIED byte sequence (the known x86-64
 idiv+cqto stub); it does not perform the lowering/encoding
@@ -78,5 +78,5 @@ mount, it never executes wrong code.
 ## Run
 
 ```bash
-python3 -m pytest ~/Programming/PseudoIR/Tools/insert/ -q
+python3 -m pytest PseudoIR/Tools/insert/ -q
 ```

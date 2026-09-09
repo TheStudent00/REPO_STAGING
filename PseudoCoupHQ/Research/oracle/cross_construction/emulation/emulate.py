@@ -3,7 +3,7 @@
 go / rust / swift unit's term back to a c arch-unit?
 
 Node: hq.research.arch_unit_oracle.cross_construction
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
 FROZEN for term-level composition; this task asks a different
 question and does not unfreeze it).
 
@@ -125,9 +125,9 @@ CONTROL = os.path.join(HERE, "emulation_control.json")
 RESULTS = os.path.join(HERE, "emulation_results.json")
 REPORT = os.path.join(HERE, "emulation_report.md")
 # The same folder as seen from the host, for the report's paths:
-# inside the lane HERE is /projects/PseudoCoupHQ/..., and the owner reads
+# inside the lane HERE is PseudoCoupHQ/..., and the owner reads
 # the report on the host.
-HOST_FOLDER = ("~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation")
+HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/cross_construction/emulation")
 
 X_LANGUAGES = ["go", "rust", "swift"]
 CLANG = "/usr/bin/clang"
@@ -466,6 +466,13 @@ because an x87 value is carried as a `long double` and never as its
 bits."""
 
 X87_ARRIVAL = ("X87_", "x87_")
+
+X87_ANSWER_FAMILY = "X87_0"
+"""the answer home of a body that leaves its value on the x87 register
+stack (task ap4, change 2).  THE CONVENTION, and it is task ap3's own
+(`handful.home_of`): the c calling rule leaves a `long double` answer in
+st(0), and `model_translate.preseeded_state` spells the stack top
+`seed_X87_0`, so the top is `X87_0` on both sides."""
 
 
 def is_an_x87_arrival(family):
@@ -1439,8 +1446,26 @@ def recorded_facts(label, key, raw_bytes, mnem):
     body_text = "; ".join(mnem)
     body_bytes = " ".join(raw_bytes)
     entry_contract = G38.arrival_contract("c", body_text)
+    import ledger as L
     ship_lines = L48.split_lines(body_text)
     home, width = BC10.answer_home_from_real(ship_lines)
+    if home is None:
+        # TASK ap4, CHANGE 2, the driver's half of it.  A body that
+        # leaves its answer on the x87 register stack names no register
+        # at all, so `answer_home_from_real` answers (None, None) and
+        # this record used to fall back to the first arrival -- which
+        # for these bodies is also None, and the canonical form then
+        # refused the unit `no answer home` (log_245 section 6.3).
+        # The ledger's own reading of the body is what says so: its
+        # `x87` field is True exactly when a value is left on the stack
+        # at every return.  The family is the x87 stack top, which is
+        # where the c calling rule leaves a `long double` answer and is
+        # the same convention `handful.home_of` already states for a
+        # written x87 place.
+        reading = L.answer_registers_of_body(ship_lines)
+        if reading.get("x87") and not reading.get("families"):
+            home = X87_ANSWER_FAMILY
+            width = X87_BITS
     if home is None:
         home = entry_contract.get("a")
         width = 64
@@ -1514,10 +1539,41 @@ def expected_c_families(params):
     return out
 
 
+def x87_answer_for_unit(reference, record):
+    """the answer of a body that leaves its value on the x87 register
+    stack, read off the state the reference's own walk leaves.
+
+    TASK ap4, CHANGE 2, THE DRIVER'S HALF.  `reference.answer_of` reads
+    a REGISTER family and cuts bits out of it, and a value on the x87
+    stack is neither a register nor a bit pattern, so the reference
+    raises `Z3Exception: invalid extract application` on it.  Nothing
+    here models anything the reference does not: the walk is its own
+    `simulate`, the stack is its own `MachineState.x87`, and the bits
+    are the same `fp.to_ieee_bv` the model table's builder puts on an
+    x87 place, so the two sides are the same function of the same
+    value."""
+    import reference as R
+    state = reference.simulate(record.get("body_verbatim"),
+                               record.get("arrival_contract_bindings"),
+                               callees=reference.callees_for(record))
+    if state.x87["depth"] <= 0:
+        raise R.NotModeled(
+            "this body leaves nothing on the x87 register stack, so "
+            "there is no answer to read there")
+    top = state.x87["slots"][state.x87["top"]]
+    if top is None:
+        raise R.NotModeled(
+            "the x87 register stack's top position holds nothing "
+            "after this body, so there is no answer to read there")
+    return z3.fpToIEEEBV(top)
+
+
 def body_answer(reference, record):
     """the reference simulator's answer for a body, or (None, cause)."""
     import reference as R
     try:
+        if is_an_x87_arrival(record.get("result_family")):
+            return x87_answer_for_unit(reference, record), None
         term, _width = reference.answer_for_unit(record)
         return term, None
     except R.NotModeled as problem:

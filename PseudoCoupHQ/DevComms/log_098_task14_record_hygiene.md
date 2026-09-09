@@ -1,7 +1,7 @@
 # log 098 — Task 14: record hygiene (correction, provenance marks into JSON, stray-log naming, mtime sweep)
 
 Date: 2026-08-31. Answers log_097's Task 14 (round 3, item one). Working
-directory: `~/Programming/PseudoCoupHQ/Research/op_pipeline` (+
+directory: `PseudoCoupHQ/Research/op_pipeline` (+
 `../compiler_graph` for part (d)).
 
 "THE SPELLING BAN, ABSOLUTE (the owner, restated in anger 2026-08-25 after
@@ -160,12 +160,12 @@ All four PASS, no exemption.
 
 ## 4. (c) task10_seed_prove.log, named
 
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/task10_seed_prove.log`
+`PseudoCoupHQ/Research/op_pipeline/task10_seed_prove.log`
 — 2 lines, stray stdout capture from round 2's Task 10 run
 (`task10_seed_prove.py`):
 
 ```
-wrote ~/Programming/PseudoCoupHQ/Research/op_pipeline/task10_seed_prove_results.json (62 targets)
+wrote PseudoCoupHQ/Research/op_pipeline/task10_seed_prove_results.json (62 targets)
 resolved(1 proof)=0 proof-ambiguous=0 of 62
 ```
 
@@ -236,21 +236,21 @@ unlisted found here either.**
 ## 7. file inventory (every file this session touched or created)
 
 New:
-- `~/Programming/PseudoCoupHQ/DevComms/log_098_task14_record_hygiene.md` — this log.
+- `PseudoCoupHQ/DevComms/log_098_task14_record_hygiene.md` — this log.
 
 Modified (permitted by this task's explicit grants — (a) one pointer
 line into log_092; (b) the `provenance_is_weaker` field into the four
 named ruby/php JSON artifacts):
-- `~/Programming/PseudoCoupHQ/DevComms/log_092_task8_guards_record.md` —
+- `PseudoCoupHQ/DevComms/log_092_task8_guards_record.md` —
   one correction pointer line appended at the end; original body left
   standing.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_ruby.json` —
+- `PseudoCoupHQ/Research/op_pipeline/interp_ruby.json` —
   added top-level `provenance_is_weaker: true`.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_php.json` —
+- `PseudoCoupHQ/Research/op_pipeline/interp_php.json` —
   added top-level `provenance_is_weaker: true`.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_ruby_handlers.json` —
+- `PseudoCoupHQ/Research/op_pipeline/interp_ruby_handlers.json` —
   added top-level `provenance_is_weaker: true`.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/interp_php_handlers.json` —
+- `PseudoCoupHQ/Research/op_pipeline/interp_php_handlers.json` —
   added top-level `provenance_is_weaker: true`.
 
 No other file was created, modified, or deleted. No op_units or

@@ -1,7 +1,7 @@
 # log 138 — Airlock instances: a second sandbox is a feature, not a copy
 
-Date: 2026-09-02. Repository changed: `~/Programming/Airlock` (the
-application). Repository also touched: `~/Programming/PseudoCoupHQ` (the
+Date: 2026-09-02. Repository changed: `Airlock` (the
+application). Repository also touched: `PseudoCoupHQ` (the
 caller). Report shape: LLM_communication_protocol Appendix B.
 
 ---
@@ -30,7 +30,7 @@ asked for that, because the thing you would have to name did not exist:
   with a `doctor` check whose whole job was to notice them drifting apart.
 - There was one `mounts.conf`, one allowlist, one `agent/` tree per install.
 
-So the implementer copied Airlock to `~/Programming/AirlockTrickle` and
+So the implementer copied Airlock to `AirlockTrickle` and
 rewrote the names. **A copy was made where a feature was required.**
 
 ## 1.3 What exists now
@@ -39,7 +39,7 @@ An **instance** is one running sandbox. One install runs as many as asked
 for, side by side. A second sandbox is one settings file and one flag:
 
 ```
-$ cat ~/Programming/Airlock/instances/trickle.conf
+$ cat Airlock/instances/trickle.conf
 cpus              = 6
 memory            = 8g
 proxy             = no
@@ -47,7 +47,7 @@ persist_volume    = sandbox-persist
 persist_mode      = ro
 watch             = poll
 
-$ bash ~/Programming/Airlock/up.sh --instance trickle --cpus 6
+$ bash Airlock/up.sh --instance trickle --cpus 6
 ```
 
 Nothing about `trickle` lives in PseudoCoupHQ, and nothing project-specific
@@ -81,7 +81,7 @@ because they are what a caller actually touches.
 
 ## 2.2 The mechanism: one file decides every name
 
-`~/Programming/Airlock/instance.sh` is the only place a container name is
+`Airlock/instance.sh` is the only place a container name is
 spelled. Its whole contract:
 
 | derived thing | from the instance name |
@@ -323,7 +323,7 @@ session, and it was not this work.** At 15:27 they read `Up 47 hours`; at
 $ uptime -p
 up 45 minutes                                  <- the machine rebooted
 $ journalctl --user -u sandbox-runner
-Sep 02 15:48:09 <host> systemd[2345]: Started sandbox-runner.service …
+Sep 02 15:48:09 <user> systemd[2345]: Started sandbox-runner.service …
 $ podman ps -a --format '{{.Names}}\t{{.CreatedAt}}'
 va-proxy         2026-09-02 15:48:09.104180520 -0400 EDT
 sandbox-proxy    2026-09-02 15:48:09.104180951 -0400 EDT
@@ -431,7 +431,7 @@ The log, which is the lane's own testimony about its caps:
 
 ```
 [1/4] identity
-  hostname: 56d32ef69c2e
+  hostname: <container-id>
   /work exists: yes   cwd: /work
   cores visible: 6
 [2/4] the toolchain pins, from the toolchains themselves
@@ -504,14 +504,14 @@ SKIP, not a pass it did not earn and not a failure it could not avoid.
 
 ```
 $ hostname
-<host>
+<user>
 $ ls -d /work
 ls: cannot access '/work': No such file or directory
 ```
 
 `/work` is the container's scratch root; it is absent here. Every command in
 this log ran on the HOST. The only lines from inside a container are the
-lane log in §4.2.3 (`hostname: 56d32ef69c2e`, `/work exists: yes`) and the
+lane log in §4.2.3 (`hostname: <container-id>`, `/work exists: yes`) and the
 `podman logs` output, both labelled as such.
 
 ---
@@ -592,17 +592,17 @@ no status files and no logs at all.
 
 ## 6.1 The directory is gone, and not by this work
 
-`~/Programming/AirlockTrickle` no longer exists.
+`AirlockTrickle` no longer exists.
 
 ```
-$ ls -d ~/Programming/Airlock*
-~/Programming/Airlock
+$ ls -d Airlock*
+Airlock
 ```
 
 It was **present** early in this session and counted:
 
 ```
-$ ls -la ~/Programming/AirlockTrickle && for d in agent/*; do echo "$d: $(ls -1 $d|wc -l)"; done
+$ ls -la AirlockTrickle && for d in agent/*; do echo "$d: $(ls -1 $d|wc -l)"; done
 agent/drop: 339
 agent/logs: 0
 agent/out: 339
@@ -612,10 +612,10 @@ agent/status: 0
 and **absent** roughly an hour later, when the move was attempted:
 
 ```
-$ mv ~/Programming/AirlockTrickle/agent/drop/* instances/trickle/agent/drop/.done/
-mv: cannot stat '~/Programming/AirlockTrickle/agent/drop/*': No such file or directory
-$ ls -la ~/Programming/AirlockTrickle/
-ls: cannot access '~/Programming/AirlockTrickle/': No such file or directory
+$ mv AirlockTrickle/agent/drop/* instances/trickle/agent/drop/.done/
+mv: cannot stat 'AirlockTrickle/agent/drop/*': No such file or directory
+$ ls -la AirlockTrickle/
+ls: cannot access 'AirlockTrickle/': No such file or directory
 ```
 
 Nothing here deleted it, and nothing here could have: the only removals this
@@ -638,7 +638,7 @@ project's records belong under Airlock's contract:
 | the folded per-chunk stores | `…/trickle_store/` | 334 |
 
 Recorded, with the absence stated, in
-`~/Programming/Airlock/instances/trickle/agent/README.md`. Their `status/`
+`Airlock/instances/trickle/agent/README.md`. Their `status/`
 and `logs/` are absent because those runs predate the protocol being used at
 all on that copy — the fork started its container idle and reached in from
 outside, so the daemon wrote nothing.
@@ -652,8 +652,8 @@ for each:
 
 | superseded | replaced by |
 |---|---|
-| `bash trickle_up.sh` | `bash ~/Programming/Airlock/up.sh --instance trickle --cpus 6` |
-| `bash trickle_down.sh` | `bash ~/Programming/Airlock/down.sh --instance trickle` |
+| `bash trickle_up.sh` | `bash Airlock/up.sh --instance trickle --cpus 6` |
+| `bash trickle_down.sh` | `bash Airlock/down.sh --instance trickle` |
 | `bash trickle_doctor.sh` | `airlock doctor` — it lists every instance and its state |
 | `trickle.py --run` | `python3 trickle2.py --run` |
 
@@ -666,10 +666,10 @@ that ran the lane: render → `airlock submit` → poll the status file → read
 anything else it calls.
 
 ```
-$ AIRLOCK_ROOT=~/Programming/Airlock python3 trickle2.py --plan
+$ AIRLOCK_ROOT=Airlock python3 trickle2.py --plan
 planned 326 chunks over 129553 probes
 
-$ AIRLOCK_ROOT=~/Programming/Airlock python3 trickle2.py --run --langs go --limit 1
+$ AIRLOCK_ROOT=Airlock python3 trickle2.py --run --langs go --limit 1
 instance trickle  runner trickle-runner  cpus 6  agent …/instances/trickle/agent
 1 chunk(s) to run, one at a time (Airlock runs lanes serially)
   regen_go_c0000       400 submitted   330 accepted    70 refused    97.0s
@@ -731,7 +731,7 @@ Two of these are more than spelling and are flagged as such:
 
 - **#4 and #8 put an instance's settings *and* its agent tree inside the
   Airlock checkout.** The alternative is outside it (the fork put its tree
-  in `~/Programming/AirlockTrickle`, deliberately, so the 30-second commit
+  in `AirlockTrickle`, deliberately, so the 30-second commit
   daemon would not see it). Both are gitignored here, so the daemon does not
   see them either — but the location is a design choice, not a mechanical
   one.
@@ -775,7 +775,7 @@ Two of these are more than spelling and are flagged as such:
 
 # 10. Complete file inventory
 
-## 10.1 New, in `~/Programming/Airlock/`
+## 10.1 New, in `Airlock/`
 
 | file | what it is |
 |---|---|
@@ -796,7 +796,7 @@ Two of these are more than spelling and are flagged as such:
 `quadlet/*.container` and `quadlet/*.network` are **unchanged**: they are
 templates, rendered per instance by `install_quadlet.sh`.
 
-## 10.3 New, in `~/Programming/PseudoCoupHQ/Research/op_pipeline/`
+## 10.3 New, in `PseudoCoupHQ/Research/op_pipeline/`
 
 | file | what it is |
 |---|---|
@@ -809,10 +809,10 @@ templates, rendered per instance by `install_quadlet.sh`.
 
 ## 10.4 Edited, append-only
 
-`~/Programming/PseudoCoupHQ/DevComms/log_131_task40_regeneration_trickle.md`
+`PseudoCoupHQ/DevComms/log_131_task40_regeneration_trickle.md`
 — one dated `# CORRECTION` section appended, nothing above it edited.
 
-## 10.5 New, in `~/Programming/PseudoCoupHQ/DevComms/`
+## 10.5 New, in `PseudoCoupHQ/DevComms/`
 
 `log_138_airlock_instances_feature.md` — this log.
 
@@ -830,7 +830,7 @@ The 30-second daemon committed throughout; nothing was held back and no
 commit was made by hand.
 
 ```
-$ git -C ~/Programming/Airlock log --oneline --since="6 hours ago"
+$ git -C Airlock log --oneline --since="6 hours ago"
 5baaf98 auto: 1 file (README.md)
 5a137c7 auto: 1 file (watcher.py)
 0149425 auto: 2 files (instance.sh, up.sh)

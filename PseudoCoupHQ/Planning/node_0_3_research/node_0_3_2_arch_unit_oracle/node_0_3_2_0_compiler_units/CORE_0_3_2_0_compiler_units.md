@@ -38,7 +38,7 @@ sub_nodes:
 
 ## sub_nodes
 
-- [operators_used](node_0_3_2_0_0_operators_used/CORE_0_3_2_0_0_operators_used.md) — The census of which grammar operators OCCUR in a compiler's own source, set against the operators the language offers and the subset the corpus has lowered: `compiler_operators_used.py` under `~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/`, a tree-sitter walk over every source file counting operator nodes (strings and comments excluded), measured against the inventory of the language the compiler is WRITTEN in.
+- [operators_used](node_0_3_2_0_0_operators_used/CORE_0_3_2_0_0_operators_used.md) — The census of which grammar operators OCCUR in a compiler's own source, set against the operators the language offers and the subset the corpus has lowered: `compiler_operators_used.py` under `PseudoCoupHQ/Research/oracle/compiler_units/`, a tree-sitter walk over every source file counting operator nodes (strings and comments excluded), measured against the inventory of the language the compiler is WRITTEN in.
 - [variants_by_search](node_0_3_2_0_1_variants_by_search/CORE_0_3_2_0_1_variants_by_search.md) — The operator VARIANTS (operator × written operand types) at every lowered-operator site in a compiler's source, resolved by search alone: `operator_variants_by_search.py`, importing operators_used's walk, resolving each operand to a literal kind, a cast, an identifier whose explicitly typed declaration is found in the same file, or a nested operator whose operands resolve and agree; everything else unresolved with one named reason.
 - [lowering_route_cut](node_0_3_2_0_2_lowering_route_cut/CORE_0_3_2_0_2_lowering_route_cut.md) — Step 1 of the master order: the variant records of variants_by_search cut to the LOWERING ROUTE — the emitter definitions task 95 found (57 in go, 251 in clang, `arch-opcode-nodes`, log_200) and the functions task 81's diaries recorded per operator probe — so the operators a compiler's routing uses are counted apart from its whole source.
 
@@ -73,7 +73,7 @@ uses."
 ## how a used site becomes an arch-unit, without slicing a function
 
 - The compiler's source is already parsed: the compiler graph
-  (`~/Programming/PseudoCoupGraphs`) holds tree-sitter nodes for go
+  (`PseudoCoupGraphs`) holds tree-sitter nodes for go
   and clang's source, rust and swift structurally. An operator site
   is a tree-sitter node of an operator kind with its operand nodes;
   the operand types come from the declarations the graph's read
@@ -105,6 +105,6 @@ objective and is not started; if opened it becomes its own sub-node.
 
 ## artifacts
 
-`~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/`. Reads
-`Research/op_pipeline/` and `~/Programming/PseudoCoupGraphs/`; writes
+`PseudoCoupHQ/Research/oracle/compiler_units/`. Reads
+`Research/op_pipeline/` and `PseudoCoupGraphs/`; writes
 neither.

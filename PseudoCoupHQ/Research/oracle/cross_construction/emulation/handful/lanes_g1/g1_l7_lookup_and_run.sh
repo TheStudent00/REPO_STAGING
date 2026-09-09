@@ -25,7 +25,7 @@
 # after every run.  Lane g1_l6 measured the lookup at 81,492 kB; task
 # h2's own twenty runs peaked at 448,016 kB.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/3] task g1: handful.py primitive3"
 python3 $H/handful/handful.py primitive3
 echo "[2/3] task g1: handful.py run3"

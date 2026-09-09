@@ -1,7 +1,7 @@
 # log 185 — task 78: the runtime answer register, and the panic-path callees
 
 Date: 2026-09-03. Round 15, TASK 78 of
-`~/Programming/PseudoCoupHQ/DevComms/log_183_claude_code_task_briefs_round15.md`
+`PseudoCoupHQ/DevComms/log_183_claude_code_task_briefs_round15.md`
 (whose header says the round's briefs were written by the coordinator,
 not by the owner; nothing in them is a ruling).
 

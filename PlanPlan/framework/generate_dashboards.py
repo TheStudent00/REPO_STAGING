@@ -6,7 +6,7 @@ everything beneath it): status and designation breakdowns, anything
 blocked, PROGRESS bullet-status counts, and the SUPPORT files present.
 
 Usage:
-    python3 ~/Programming/PlanPlan/framework/generate_dashboards.py \
+    python3 PlanPlan/framework/generate_dashboards.py \
         <root>... [--check]
 
 `--check` writes nothing: exits 1 if any node's DASHBOARD.md would differ
@@ -14,7 +14,7 @@ from what is on disk (including a node that has none yet), 0 if every
 node is current.
 
 DETERMINISM is the point of this tool: no timestamps, no dates, no
-hostnames, no absolute paths outside `~/Programming/...` form. Every
+hostnames, no absolute paths outside `...` form. Every
 collection is sorted before rendering, so running this twice in a row
 produces byte-identical files.
 
@@ -51,7 +51,7 @@ BULLET_RE = re.compile(r"^\s*[-*]\s")
 
 
 def disp(path):
-    """~/Programming/... form of an absolute path — textual, not
+    """... form of an absolute path — textual, not
     resolved, so the output is identical regardless of whose machine
     generated it."""
     ap = os.path.abspath(path)
@@ -143,7 +143,7 @@ def render_dashboard(node, stats):
     lines = []
     lines.append("<!-- GENERATED FILE — do not hand-edit. -->")
     lines.append("<!-- Produced by "
-                  "~/Programming/PlanPlan/framework/generate_dashboards.py "
+                  "PlanPlan/framework/generate_dashboards.py "
                   "from this node's own sub-tree. Hand edits are lost the -->")
     lines.append("<!-- next time the tool runs; re-run it instead of "
                   "editing this file. -->")
@@ -185,7 +185,7 @@ def render_dashboard(node, stats):
     if stats["blocked"]:
         for file_disp, lineno, text in stats["blocked"]:
             # path and line number are NOT joined inside one backtick span:
-            # `path:N` would read as a single ~/Programming/... reference
+            # `path:N` would read as a single ... reference
             # to check_plans.py's dangling-path scan, which does not know
             # `:N` is a line suffix rather than part of the path.
             lines.append(f"- `{file_disp}` line {lineno} — {text}")

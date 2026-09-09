@@ -1,6 +1,6 @@
 #!/bin/bash
 # L2 lane 22 -- lane 21's verifier pass found 3 DIFFERS, all caused by the
-# checker's own fixed working directory (/projects/PseudoCoupHQ, stated in
+# checker's own fixed working directory (PseudoCoupHQ, stated in
 # its own banner) versus this task's relative paths ('check_L2.json'), one
 # REFUSED by a bare `>` inside python source that the checker's naive
 # command-splitter read as a shell redirect, one REFUSED because `lake` is
@@ -20,7 +20,7 @@ TOTAL=6
 echo "[1/$TOTAL] the translator's census (absolute path, no bare >)"
 python3 -c '
 import json
-d = json.load(open("/projects/PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json"))
+d = json.load(open("PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json"))
 pm = d["per_mnemonic"]
 print("mnemonics_in_the_table", d["mnemonics_in_the_table"])
 print("definitions", d["definitions"])
@@ -37,7 +37,7 @@ echo "--- exit $?"
 echo "[2/$TOTAL] the check's outcome tally (absolute path)"
 python3 -c '
 import json, collections
-d = json.load(open("/projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
+d = json.load(open("PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
 rows = d["rows"]
 print("total_rows", len(rows))
 tally = collections.Counter()
@@ -52,7 +52,7 @@ echo "--- exit $?"
 echo "[3/$TOTAL] REFUSED by cause and mnemonic (absolute path)"
 python3 -c '
 import json, collections
-d = json.load(open("/projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
+d = json.load(open("PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
 rows = [r for r in d["rows"] if r["outcome"] == "REFUSED"]
 pm = collections.defaultdict(collections.Counter)
 for r in rows:
@@ -65,7 +65,7 @@ echo "--- exit $?"
 echo "[4/$TOTAL] axioms-line shape distribution (absolute path, no escaped quotes)"
 python3 -c '
 import json, re, collections
-d = json.load(open("/projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
+d = json.load(open("PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
 proved = [r for r in d["rows"] if r.get("closed_by")]
 print("proved_total", len(proved))
 print("missing_axioms", sum(1 for r in proved if not r.get("axioms")))
@@ -81,15 +81,15 @@ echo "--- exit $?"
 
 echo "[5/$TOTAL] the sorry keyword, whole project (absolute paths, no cd)"
 grep -rln "sorry" \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/*.lean \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Edges/*.lean \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Main.lean \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof.lean
+    PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/*.lean \
+    PseudoCoupHQ/Research/op_pipeline/lean/archproof/Edges/*.lean \
+    PseudoCoupHQ/Research/op_pipeline/lean/archproof/Main.lean \
+    PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof.lean
 echo "--- grep exit $? (1 = no file matched = no sorry anywhere)"
 
 echo "[6/$TOTAL] the spelling-ban guard (absolute paths both arguments)"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json 2>&1 \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+    PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json \
+    PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json 2>&1 \
     | grep -E "^(FAIL|PASS)"
 echo "--- exit $?"

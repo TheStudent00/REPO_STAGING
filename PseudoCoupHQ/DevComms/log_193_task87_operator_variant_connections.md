@@ -535,7 +535,7 @@ those numbers is in `variant_connections_extended.json`.
 **LITERAL**, lane 10 §[4/5]:
 
 ```
-1d6aba67cbcdb021c3bdfd7f40fd2020  /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+1d6aba67cbcdb021c3bdfd7f40fd2020  PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
    (git reports no change to the guard)
    guard exit=0
 ```
@@ -737,8 +737,8 @@ below.
 `t87_l10_rebuild_and_ban_proof.sh`, `t87_l11_report_literals.sh`,
 `t87_l12_verify_report_claims.sh`,
 `t87_l13_zero_regression_and_plan_check.sh`. Thirteen lanes, all exit 0.
-Logs: `~/AirlockRuns/t87/agent/logs/20260904T*__t87_l*.log`.
-Instance config: `~/Programming/Airlock/instances/t87.conf`.
+Logs: `<runs>/t87/agent/logs/20260904T*__t87_l*.log`.
+Instance config: `Airlock/instances/t87.conf`.
 
 ## 11.4 Tree
 

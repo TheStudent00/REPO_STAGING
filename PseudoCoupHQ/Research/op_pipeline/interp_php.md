@@ -1,6 +1,6 @@
 # interp_php -- the php pilot of the interpreter track
 
-Folded 2026-08-31 by `fold_interp_php.py`, task 5(d), from the Airlock lane outputs under `~/Programming/Airlock/agent/out/interp_php_b/` (real gcov deltas, dated 2026-08-31: 344 lines with a positive delta across 9 files for the smallint probe -- the number log_082 named as measured-and-orphaned).  Data: `interp_php.json`.
+Folded 2026-08-31 by `fold_interp_php.py`, task 5(d), from the Airlock lane outputs under `Airlock/agent/out/interp_php_b/` (real gcov deltas, dated 2026-08-31: 344 lines with a positive delta across 9 files for the smallint probe -- the number log_082 named as measured-and-orphaned).  Data: `interp_php.json`.
 
 ## the pin -- a COMPROMISE, recorded in full
 

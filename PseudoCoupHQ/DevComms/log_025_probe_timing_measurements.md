@@ -1,8 +1,8 @@
 # log 025 — what one layer-3 probe costs, measured, and what brute force would cost
 
 Date: 2026-08-18. Node:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`
 (`timing_build.py`, `timing_read.py`, `lanes/tm_*.sh`, `raw/tm_*.txt`,
 `timing_results.json`).
 
@@ -295,7 +295,7 @@ How the counts were obtained.
 
 ## record
 
-Everything is in `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`:
+Everything is in `PseudoCoupHQ/Research/kind_fuzz_clustering/`:
 
 - `timing_build.py` -> `lanes/tm_<language>.sh` — the twelve self-contained
   timing lanes, one per language; the runner cannot see the repo, so each
@@ -310,6 +310,6 @@ Everything is in `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`:
   python counts and the scaled estimates.
 
 To reproduce: `python3 timing_build.py`, copy `lanes/tm_<lang>.sh` into
-`~/Programming/SandboxDesign/agent/drop/` one at a time, poll
+`SandboxDesign/agent/drop/` one at a time, poll
 `agent/status/tm_<lang>.sh.status`, copy `agent/out/tm_<lang>.txt` back into
 `raw/`, then `python3 timing_read.py`.

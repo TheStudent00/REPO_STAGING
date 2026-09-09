@@ -18,7 +18,7 @@ already measured problems rather than new investigations.
   fix adds a one-line header, on both the shell and the python side,
   naming any OTHER instance that has a lane queued or running. It
   reuses the exact instance-discovery Airlock's own `doctor` command
-  already had (`instances/*.conf` plus `~/AirlockRuns/*`) rather than
+  already had (`instances/*.conf` plus `<runs>/*`) rather than
   re-deriving that list a second time. Proved with a second instance
   (`t82`) brought up, a 60-second lane run in it, and both views read
   while it ran, then again after it finished.
@@ -44,7 +44,7 @@ already measured problems rather than new investigations.
 Operator, 2026-09-03: "what is running and why cant i see it in Airlock
 status?"
 
-LITERAL, `~/Programming/Airlock/progress.sh` (before this change) —
+LITERAL, `Airlock/progress.sh` (before this change) —
 the "running" section only ever reads the CURRENT instance's own
 `agent/status`:
 
@@ -66,11 +66,11 @@ never looks at `t82`'s own `agent/status`.
 **Discovery is reused, not duplicated.** `airlock doctor` already had
 the two-source scan for what instances exist:
 `instances/*.conf` (an instance's settings, inside the checkout) and
-`~/AirlockRuns/*` (an instance's run tree, outside the checkout — an
+`<runs>/*` (an instance's run tree, outside the checkout — an
 instance can exist with no conf file at all, since every key has a
 default, and then it leaves a trace only under `~/AirlockRuns`).
 
-- **Python side.** `~/Programming/Airlock/airlock` gained a module-level
+- **Python side.** `Airlock/airlock` gained a module-level
   function `known_instances(paths)`, holding exactly that two-source
   scan, pulled out of `Doctor.check_instances` (which now calls it
   instead of re-listing both sources itself — one scan, two callers).
@@ -83,15 +83,15 @@ default, and then it leaves a trace only under `~/AirlockRuns`).
   Called once, from `_render_status` — the function `status` and
   `watch` both already share — so both commands print the header
   identically.
-- **Shell side.** `~/Programming/Airlock/instance.sh`'s existing
+- **Shell side.** `Airlock/instance.sh`'s existing
   `airlock_instance_list()` (previously only `instances/*.conf` plus
-  `sandbox`) now also scans `~/AirlockRuns/*`, so it matches the
+  `sandbox`) now also scans `<runs>/*`, so it matches the
   python side's two-source discovery exactly. A new function,
   `airlock_other_busy_instances(root, current)`, walks that list; for
   each OTHER instance it runs `airlock_instance_load` in a SUBSHELL
   (so it never overwrites the caller's own `AL_*` variables), reads
   that instance's `drop` and `status`, and prints one line per busy
-  instance. `~/Programming/Airlock/progress.sh` calls it once, from a
+  instance. `Airlock/progress.sh` calls it once, from a
   new `print_other_instances()`, right after the instance banner and
   before the batch summary.
 - **The one correction made while proving it.** The daemon
@@ -116,7 +116,7 @@ persist volume, `watch = poll`, `script_timeout = 300`) brought
 views were read while it was running.
 
 LITERAL — default instance, `bash
-~/Programming/Airlock/progress.sh` (head):
+Airlock/progress.sh` (head):
 
 ```
 == instance sandbox  (runner sandbox-runner, agent <airlock>/agent) ==
@@ -129,7 +129,7 @@ LITERAL — default instance, `bash
   batch:    task27  (id batch-20260901T154117Z)
 ```
 
-LITERAL — default instance, `python3 ~/Programming/Airlock/airlock
+LITERAL — default instance, `python3 Airlock/airlock
 status` (head):
 
 ```
@@ -142,23 +142,23 @@ LITERAL — the `t82` instance's OWN view,
 `AIRLOCK_INSTANCE=t82 bash progress.sh`:
 
 ```
-== instance t82  (runner t82-runner, agent ~/AirlockRuns/t82/agent) ==
+== instance t82  (runner t82-runner, agent <runs>/t82/agent) ==
 
 == batch summary ==
-  no batch manifest present (~/AirlockRuns/t82/agent/batch.json) — showing all lanes below
+  no batch manifest present (<runs>/t82/agent/batch.json) — showing all lanes below
 
-== queued (waiting in ~/AirlockRuns/t82/agent/drop) ==
+== queued (waiting in <runs>/t82/agent/drop) ==
   t82_sleep60b.sh
 
 == running ==
   t82_sleep60b.sh   started 2026-09-04T02:56:05+00:00
-    log: ~/AirlockRuns/t82/agent/logs/20260904T025605Z__t82_sleep60b.sh.log
+    log: <runs>/t82/agent/logs/20260904T025605Z__t82_sleep60b.sh.log
     [3/6] sleeping 10s
     last: [3/6] sleeping 10s
 ```
 
 The lane finished (`state=done exit=0 elapsed_s=60.1`),
-`bash ~/Programming/Airlock/down.sh --instance t82` removed the
+`bash Airlock/down.sh --instance t82` removed the
 container (`down` did not refuse — nothing was `running` at that
 point), and the default view was read again. The header is gone
 because nothing is queued or running in `t82` any more — the
@@ -178,7 +178,7 @@ Confirmed after this session's crash and restart, `podman ps -a
 ### 2.4 Guard
 
 ```
-$ bash ~/Programming/Airlock/scrub_check.sh
+$ bash Airlock/scrub_check.sh
 === scrub_check: 7 pattern(s), 54 tracked file(s), 4 untracked-and-unignored file(s) ==="
 scrub_check: PASS - no personal or machine-identifying pattern found.
 ```
@@ -194,7 +194,7 @@ alone.
 
 ### 2.5 Recorded in Airlock's own log
 
-`~/Programming/Airlock/DevComms/log_004_cross_instance_status_header.md`
+`Airlock/DevComms/log_004_cross_instance_status_header.md`
 — Airlock's own record of this change set, independent of this file
 (§9.1 of the communication protocol: a tool's own DevComms carries the
 tool's record; a project's own log carries the caller-side report).
@@ -289,7 +289,7 @@ The live page needs a folder picked through the browser's OS-level
 dialog, which no automation here can drive (the same limitation the
 existing `dashboard_test_harness.html` and
 `dashboard_pane6_harness.html` document and work around). A new file,
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_full_harness.html`,
+`PseudoCoupHQ/Research/op_pipeline/dashboard_full_harness.html`,
 follows the SAME established pattern — `dashboard_test_shim.js`
 dresses ranged HTTP fetches as directory handles — but loads every
 script `dashboard.html` loads, in the same order, so the FULL tab bar
@@ -299,14 +299,14 @@ and header could be measured, not just one pane. Nothing in
 only, the same posture the precedent files declare of themselves.
 
 Served with the repo's own `dashboard_test_server.py` (unchanged) over
-the real artifacts in `~/Programming/PseudoCoupHQ/Research`, and
+the real artifacts in `PseudoCoupHQ/Research`, and
 captured with `google-chrome --headless` at two points controlled by
 `--virtual-time-budget` (a short one to catch the page mid-load, a
 long one to let the full background scan finish) — a genuinely
 different real-browser run each time, not the interactive session
 re-screenshotted.
 
-Screenshots, `~/Programming/PseudoCoupHQ/DevComms/screens/log_188/`:
+Screenshots, `PseudoCoupHQ/DevComms/screens/log_188/`:
 
 | file | shows |
 |---|---|
@@ -399,22 +399,22 @@ neither blocking the two fixes above:
 
 | file | change |
 |---|---|
-| `~/Programming/Airlock/airlock` | `known_instances(paths)` (new, the one discovery scan); `other_busy_instances_line(paths)` (new); `Doctor.check_instances` refactored to call `known_instances` instead of re-listing; `_render_status` prints the header |
-| `~/Programming/Airlock/instance.sh` | `airlock_instance_list()` extended to scan `~/AirlockRuns/*`; `airlock_other_busy_instances(root, current)` (new) |
-| `~/Programming/Airlock/progress.sh` | `print_other_instances()` (new), called from `snapshot()` |
-| `~/Programming/Airlock/DevComms/log_004_cross_instance_status_header.md` | new — Airlock's own record |
-| `~/Programming/Airlock/instances/t82.conf` | new, gitignored, per-machine — the proof instance's config |
+| `Airlock/airlock` | `known_instances(paths)` (new, the one discovery scan); `other_busy_instances_line(paths)` (new); `Doctor.check_instances` refactored to call `known_instances` instead of re-listing; `_render_status` prints the header |
+| `Airlock/instance.sh` | `airlock_instance_list()` extended to scan `<runs>/*`; `airlock_other_busy_instances(root, current)` (new) |
+| `Airlock/progress.sh` | `print_other_instances()` (new), called from `snapshot()` |
+| `Airlock/DevComms/log_004_cross_instance_status_header.md` | new — Airlock's own record |
+| `Airlock/instances/t82.conf` | new, gitignored, per-machine — the proof instance's config |
 
 ### 4.2 The dashboard (part b)
 
 | file | change |
 |---|---|
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_pane4.js` | retires the join's draft `coverage` tab once its own attaches |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_pane5.js` | retires the join's draft `stats` tab once its own attaches, deferred until the join's own mount promise resolves |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_loader.js` | one explicit final header/index repaint when `indexAll()`'s own promise resolves |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_full_harness.html` | new — test rig only, loads every script `dashboard.html` loads, for measuring the tab bar and header without the OS folder dialog |
-| `~/Programming/PseudoCoupHQ/DevComms/screens/log_188/*.png` | 5 screenshots, listed in §3.3 |
-| `~/Programming/PseudoCoup/.claude/launch.json` | the Browser pane's own preview config for `dashboard_test_server.py` (unrelated repo, but this is where the tool reads it from) |
+| `PseudoCoupHQ/Research/op_pipeline/dashboard_pane4.js` | retires the join's draft `coverage` tab once its own attaches |
+| `PseudoCoupHQ/Research/op_pipeline/dashboard_pane5.js` | retires the join's draft `stats` tab once its own attaches, deferred until the join's own mount promise resolves |
+| `PseudoCoupHQ/Research/op_pipeline/dashboard_loader.js` | one explicit final header/index repaint when `indexAll()`'s own promise resolves |
+| `PseudoCoupHQ/Research/op_pipeline/dashboard_full_harness.html` | new — test rig only, loads every script `dashboard.html` loads, for measuring the tab bar and header without the OS folder dialog |
+| `PseudoCoupHQ/DevComms/screens/log_188/*.png` | 5 screenshots, listed in §3.3 |
+| `PseudoCoup/.claude/launch.json` | the Browser pane's own preview config for `dashboard_test_server.py` (unrelated repo, but this is where the tool reads it from) |
 
 ### 4.3 Unchanged, confirmed by git log
 

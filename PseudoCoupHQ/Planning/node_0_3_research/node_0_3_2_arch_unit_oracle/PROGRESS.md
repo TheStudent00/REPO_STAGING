@@ -8,8 +8,8 @@ status: living
 - 2026-09-05: node founded by the owner in a forked conversation, as a
   parallel line that must not interfere with the operator-equivalence
   line. Founding thoughts and proposed order:
-  `~/Programming/PseudoCoupHQ/DevComms/log_206_arch_unit_oracle_founding.md`.
-  Artifact folder `~/Programming/PseudoCoupHQ/Research/oracle/`
+  `PseudoCoupHQ/DevComms/log_206_arch_unit_oracle_founding.md`.
+  Artifact folder `PseudoCoupHQ/Research/oracle/`
   created. Status: planned.
 - 2026-09-05: three sub-nodes registered and generated
   (compiler_units, hub_compiler, cross_construction), definitions
@@ -23,8 +23,8 @@ status: living
   started — length-one construction map over `the_pool5.json` per
   ordered language pair, and a bounded length-two feasibility probe
   at the layer-5 term level. done — report
-  `~/Programming/PseudoCoupHQ/DevComms/log_207_task_o1_cross_construction_map.md`,
-  artifacts `~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/`.
+  `PseudoCoupHQ/DevComms/log_207_task_o1_cross_construction_map.md`,
+  artifacts `PseudoCoupHQ/Research/oracle/cross_construction/`.
   Coordinator re-derived three length-one cells and the all-five count
   (60) from `the_pool5.json` directly: match. Length one: c and cpp
   build each other ~46-52%; every language builds 45-77% of rust and
@@ -37,8 +37,8 @@ status: living
   arch-units under two chaff rules (narrow / wide) grouped by distinct
   body, and the unique arch opcodes per language (162 mnemonics across
   nine languages). Report
-  `~/Programming/PseudoCoupHQ/DevComms/log_208_task_o2_single_opcode_units.md`,
-  artifacts `~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/`.
+  `PseudoCoupHQ/DevComms/log_208_task_o2_single_opcode_units.md`,
+  artifacts `PseudoCoupHQ/Research/oracle/arch_opcodes/`.
   Awaiting the owner: which chaff rule stands; the folder name; the guard
   collision (mnemonics `and`/`or`/`xor`/`not` spell cpp's alternative
   operator tokens, so the spelling guard flags the `mnemonic` field).
@@ -55,8 +55,8 @@ status: living
   corpus has lowered. Sources: llvm-project and rust are SPARSE
   checkouts (codegen dirs only); go and swift full. in-progress.
 - 2026-09-06: task o3 done —
-  `~/Programming/PseudoCoupHQ/DevComms/log_209_task_o3_compiler_operators_used.md`,
-  artifacts `~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/`.
+  `PseudoCoupHQ/DevComms/log_209_task_o3_compiler_operators_used.md`,
+  artifacts `PseudoCoupHQ/Research/oracle/compiler_units/`.
   Every compiler uses every scalar operator the corpus lowered except
   cpp's alternative spellings and `<=>` (clang, swiftc) and `^` (rustc,
   sparse). "Used but not lowered" is entirely assignment/structural
@@ -72,7 +72,7 @@ status: living
   operand types) at every lowered-operator site in each compiler's
   source, resolved by search only (declarations in the same file,
   literals, casts, nested operators), leftovers by reason.
-  `~/Programming/PseudoCoupHQ/DevComms/log_210_task_o4_operator_variants_by_search.md`
+  `PseudoCoupHQ/DevComms/log_210_task_o4_operator_variants_by_search.md`
   (§7 = nested-operand extension). Fully resolved: clang 17%, go
   compiler 22%, go stdlib 20%, rustc 6%, swiftc 11%, swift stdlib 9%.
   Leftover is dominated by call results, member access, inferred
@@ -89,7 +89,7 @@ status: living
   (SIGKILL) at 17 of 18 claims — banked in its place is log_210's OWN
   internal final tally, printed in the log itself: 18 claims, 8
   MATCHES, 0 DIFFERS. Evidence:
-  `~/Programming/PseudoCoupHQ/DevComms/log_214_task_t102_bank_rounds_16_19_and_founding.md`.
+  `PseudoCoupHQ/DevComms/log_214_task_t102_bank_rounds_16_19_and_founding.md`.
 - 2026-09-07 (the owner's reframing): the line's emulation work is labelled by
   what it emulates. o7/o11/o13 emulate POOL ENTRIES (AutoPoly, level 3);
   o8 and o11's per-opcode rows emulate ARCH OPCODES and are the only runs
@@ -101,7 +101,7 @@ status: living
   on the server.
 - 2026-09-08 (task m1, DONE, log_236): the arch-opcode MODEL TABLE, the
   first item of the CORE's "goal" and step 3 of the research master
-  order. `~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py`
+  order. `PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py`
   runs `model_translate.sweep` (imported, not re-implemented) over the
   reference's whole opcode table and keeps the z3 term of every place
   each attempt writes, printed by `term.Term.normalize`: 62,418 sweep
@@ -125,9 +125,9 @@ status: living
   `add`/`and`/`or`/`sub`/`xor` is modelled as the widening multiply; 24
   rows, 0 attested), and the sweep's shape grammar having no x87
   register operand (1,259 corpus ledger rows unplaceable). Evidence:
-  `~/Programming/PseudoCoupHQ/DevComms/log_236_task_m1_arch_opcode_model_table.md`;
+  `PseudoCoupHQ/DevComms/log_236_task_m1_arch_opcode_model_table.md`;
   artifacts and lane scripts under
-  `~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/model/`.
+  `PseudoCoupHQ/Research/oracle/arch_opcodes/model/`.
 - 2026-09-08 (task m1b, DONE, log_237): the model table's JOIN closed,
   and the three populations task m1 had not read. The join is now keyed
   by `key_width` — the operation's own lane width, read from the
@@ -163,6 +163,6 @@ status: living
   in log_237 §14, the first being that `model_translate.load_rows`
   still reads o2's artifact by the old field name and raises
   `KeyError: 'mnemonic'`. Evidence:
-  `~/Programming/PseudoCoupHQ/DevComms/log_237_task_m1b_model_table_join_closer.md`;
+  `PseudoCoupHQ/DevComms/log_237_task_m1b_model_table_join_closer.md`;
   artifacts and lane scripts under
-  `~/Programming/PseudoCoupHQ/Research/oracle/arch_opcodes/model/`.
+  `PseudoCoupHQ/Research/oracle/arch_opcodes/model/`.

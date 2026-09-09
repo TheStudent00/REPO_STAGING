@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — research queue
 
 projected 2026-07-30 from the previous plan, now archived at
-`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_1_research/CORE_0_1_research.md  (197 words)
@@ -28,7 +28,7 @@ separate measured fact from characterization.
 - **R1 — intentions-data verification: COMPLETE (2026-07-28).**
   Verdict: clean; four prose-only gaps enumerated →
   `T5's work list` (previous plan).
-  Report: `../../Research/r1_intentions_validation/REPORT.md` (`~/Programming/PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`).
+  Report: `../../Research/r1_intentions_validation/REPORT.md` (`PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`).
 - **R2 — tree-sitter census of the compiler sources: QUEUED.**
   Parse the exact files the Rust ingestor will ingest (the retired
   backend's assembler crate + support family — since removed as
@@ -42,15 +42,15 @@ separate measured fact from characterization.
   Every harvest source passed its own tests where it lives; zero
   source failures (three harness/environment causes found and
   fixed in the run script). Transplant order stands. Report:
-  `../../Research/r3_harvest_verification/REPORT.md` (`~/Programming/PseudoCoup_v6/Research/r3_harvest_verification/REPORT.md`).
+  `../../Research/r3_harvest_verification/REPORT.md` (`PseudoCoup_v6/Research/r3_harvest_verification/REPORT.md`).
 - **R4 — runtime-ledger/walker survey: COMPLETE (2026-07-28).**
   Found the WFL walker suite + the node-identity design decision;
   consequence folded into
   `T2's keying spec` (previous plan).
-  Report: `../../Research/r4_runtime_ledger_survey/REPORT.md` (`~/Programming/PseudoCoup_v6/Research/r4_runtime_ledger_survey/REPORT.md`).
+  Report: `../../Research/r4_runtime_ledger_survey/REPORT.md` (`PseudoCoup_v6/Research/r4_runtime_ledger_survey/REPORT.md`).
 
 ## where those references went
 
-- T5's work list — `~/Programming/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md`
+- T5's work list — `PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md`
 - T2's keying spec — moved to the other project with the ledgerer:
-  `~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_ur_ast.md`
+  `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_ur_ast.md`

@@ -2,7 +2,7 @@
 # TASK 96 round 19, lane 9.  The %r15 count, re-run after lane 8's own
 # format-string fault (a literal %r15 inside a python format string).
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/2] the compiled population and its %r15 count"
 python3 -c "
 import json

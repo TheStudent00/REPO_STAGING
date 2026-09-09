@@ -1,7 +1,7 @@
 # log 130 — TASK 39: the universal-form migration, every compiled unit
 
 Date: 2026-09-02. Author: Claude Code (implementer), no sub-agents.
-Working directory: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+Working directory: `PseudoCoupHQ/Research/op_pipeline`.
 Python: `/tmp/reconnect_venv/bin/python3`.
 
 THE SPELLING BAN, ABSOLUTE (the owner, restated in anger 2026-08-25 after a

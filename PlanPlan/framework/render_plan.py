@@ -7,13 +7,13 @@ node's frontmatter and definition line, and every place the folder
 grammar is broken.
 
 It knows nothing about any particular project. Anything conforming to
-`~/Programming/PlanPlan/framework/PROTOCOL.md` renders.
+`PlanPlan/framework/PROTOCOL.md` renders.
 
 Usage:
-    python3 ~/Programming/PlanPlan/framework/render_plan.py <root> [-o out.html]
+    python3 PlanPlan/framework/render_plan.py <root> [-o out.html]
 
-    python3 ~/Programming/PlanPlan/framework/render_plan.py \
-        ~/Programming/PseudoCoup_v6/Scratch -o /tmp/scratch.html
+    python3 PlanPlan/framework/render_plan.py \
+        PseudoCoup_v6/Scratch -o /tmp/scratch.html
 
 Builds its tree from `planning_model.PlanningTree` and gets the grammar
 problems it displays from `checks.GrammarCheck` — this file holds the

@@ -21,7 +21,7 @@
 # MEMORY BOUND: 4 GB resident, named abort ABORT_MEMORY_G1, checked
 # after every lookup; the program prints its own peak.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/4] task g1: the go renderer's ship flags and go's own argument sequence"
 python3 $H/go/go_render.py flags
 echo "[2/4] task g1: the swift renderer's ship flags, and what swiftc answers here"

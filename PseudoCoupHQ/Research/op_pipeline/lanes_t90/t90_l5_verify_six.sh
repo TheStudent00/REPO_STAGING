@@ -9,16 +9,16 @@
 #
 # Node: hq.conventions
 set -uo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 check_conventions_log_claims.py --verify \
   --timeout 120 \
   --json /work/t90_l5_verify_six.json \
-  /projects/PseudoCoupHQ/DevComms/log_190_task81_clang_c_cpp_diaries.md \
-  /projects/PseudoCoupHQ/DevComms/log_191_task85_chronology_outer_controller.md \
-  /projects/PseudoCoupHQ/DevComms/log_192_task86_vcs_chronology.md \
-  /projects/PseudoCoupHQ/DevComms/log_193_task87_operator_variant_connections.md \
-  /projects/PseudoCoupHQ/DevComms/log_194_task88_airlock_products_audit.md \
-  /projects/PseudoCoupHQ/DevComms/log_195_task89_bank_round15.md
+  PseudoCoupHQ/DevComms/log_190_task81_clang_c_cpp_diaries.md \
+  PseudoCoupHQ/DevComms/log_191_task85_chronology_outer_controller.md \
+  PseudoCoupHQ/DevComms/log_192_task86_vcs_chronology.md \
+  PseudoCoupHQ/DevComms/log_193_task87_operator_variant_connections.md \
+  PseudoCoupHQ/DevComms/log_194_task88_airlock_products_audit.md \
+  PseudoCoupHQ/DevComms/log_195_task89_bank_round15.md
 rc=$?
 echo "verifier exit ${rc}"
 exit ${rc}

@@ -126,11 +126,11 @@ def claim_two():
     print("CLAIM TWO -- the version control system agrees")
     relative = []
     for path in prior_paths():
-        relative.append(os.path.relpath(path, "~/Programming/"
+        relative.append(os.path.relpath(path, ""
                                               "PseudoCoupHQ"))
     command = ["git", "status", "--porcelain", "--"] + relative
     proc = subprocess.run(command, capture_output=True, text=True,
-                          cwd="~/Programming/PseudoCoupHQ")
+                          cwd="PseudoCoupHQ")
     text = proc.stdout.strip()
     print("  $ git status --porcelain -- <%d prior paths>"
           % len(relative))

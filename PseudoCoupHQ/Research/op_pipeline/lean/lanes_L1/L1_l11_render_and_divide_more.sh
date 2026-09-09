@@ -7,7 +7,7 @@
 #         from its 10 s default to 600 s, because a tool limit is a flag: the
 #         answer is reported at both ceilings, never at the first alone.
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 

@@ -9,7 +9,7 @@
 # MEMORY BOUND: 6 GB resident, named abort ABORT_MEMORY_AP3.  Task
 # ap2's aggregate lane peaked at 86,520 kB over the same-sized store.
 set -euo pipefail
-A=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+A=PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 cd "$A"
 
 echo "[1/6] the aggregate"
@@ -22,7 +22,7 @@ echo "[3/6] the store and the aggregate compared run for run"
 python3 autopoly3.py store
 
 echo "[4/6] the spelling guard, over every json this task wrote"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     "$A/autopoly3_cells.json" "$A/autopoly3.json" \
     "$A/autopoly3_check_L2_rerun.json"
 

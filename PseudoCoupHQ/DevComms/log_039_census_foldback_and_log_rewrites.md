@@ -1,11 +1,11 @@
 # log 039 — the census fold-back, and seven logs rewritten for readability
 
 Date: 2026-08-19. Nodes:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_dominant_intentions/CORE_0_3_1_dominant_intentions.md`
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_dominant_intentions/CORE_0_3_1_dominant_intentions.md`
 and
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/dominant_intentions/`
-and `~/Programming/PseudoCoupHQ/DevComms/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/dominant_intentions/`
+and `PseudoCoupHQ/DevComms/`.
 
 This log records two housekeeping jobs. Neither ran a probe and neither
 measured anything new. Both move findings that already existed into
@@ -54,7 +54,7 @@ the layer-3 campaign
 
 readable register
     the way of writing set out in
-    `~/Programming/DevComms/LLM_communication_protocol.md`
+    `DevComms/LLM_communication_protocol.md`
     — every term defined at first use, no
     sentence depending on an unread file,
     contrasts built into the structure.
@@ -98,7 +98,7 @@ Each fact this log leans on is stated in full here, so no sentence
 below depends on opening another file.
 
 - **The census pages predate the campaign that tested them.** The five
-  files in `~/Programming/PseudoCoupHQ/Research/dominant_intentions/`
+  files in `PseudoCoupHQ/Research/dominant_intentions/`
   were hand-drafted on 2026-08-13. Each one says at the top that every
   fact on it is UNVERIFIED, and that the page is the harness's work
   order. They cover six objects in five files: boolean and float share
@@ -115,7 +115,7 @@ below depends on opening another file.
 - **Section numbers in these logs are load-bearing.** Other logs, and
   the planning files
   `CHECK_0_3_2_kind_fuzz_clustering.md` and `PROGRESS.md` under
-  `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/`,
+  `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/`,
   point at these logs by section and by numbered item — "log 027
   finding 11", "log 030 §4.4", "log 031 §5.1", "log 033 decision 40".
   A rewrite that renumbered a section would break those pointers
@@ -138,7 +138,7 @@ Two jobs, both reading work that was already done.
   prior-log fact the log leans on, then the body. The facts, the
   numbers and the section numbers are unchanged.
 - **The check passes and nothing broke.** `bash
-  ~/Programming/PseudoCoupHQ/hq.sh check` reports 0 errors both before
+  PseudoCoupHQ/hq.sh check` reports 0 errors both before
   and after this session's edits. Every heading in all seven logs
   survives, verified by comparing the heading list taken before the
   rewrites against the list taken after — zero headings missing.
@@ -381,7 +381,7 @@ rebuild prose and change no content.
 
 ## §5 verification
 
-- **`bash ~/Programming/PseudoCoupHQ/hq.sh check` reports 0 errors and
+- **`bash PseudoCoupHQ/hq.sh check` reports 0 errors and
   8 warnings**, the same as before this session. *(measured)*
 - **No cross-reference broke.** The full heading list of each of the
   seven logs was taken before the rewrites and again after, and
@@ -396,7 +396,7 @@ rebuild prose and change no content.
 - **One thing worth knowing about the item labels.** Several references
   of the form "log 030 item 4k" and "log 033 item 4u" point at labels
   that do not exist inside those logs. The labels live in
-  `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CHECK_0_3_2_kind_fuzz_clustering.md`,
+  `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CHECK_0_3_2_kind_fuzz_clustering.md`,
   which numbers its own checklist items and attributes each to a log.
   So the citation names a CHECK item and its log, not a section of that
   log. Nothing was invented to satisfy those references, and the

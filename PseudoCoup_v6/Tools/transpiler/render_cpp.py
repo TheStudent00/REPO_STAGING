@@ -1,9 +1,9 @@
 # PROVENANCE: verbatim copy (2026-07-28) of
-# ~/Programming/PseudoCoup_v5/Research/cpp_ingress/transpile_cpp.py,
+# PseudoCoup_v5/Research/cpp_ingress/transpile_cpp.py,
 # whose output llvm_encoder_gen.py holds the recorded agreement with an
 # independently-derived reference encoder (modRM 256/256, REX 131,072/131,072, SIB
 # 256/256). Copied UNCHANGED so byte-equality with that artifact is
-# achievable. ~/Programming/PseudoCoup_v6/Tools/transpiler/ingest_llvm_encoder.py
+# achievable. PseudoCoup_v6/Tools/transpiler/ingest_llvm_encoder.py
 # substitutes this module's five structure extractors with tree-sitter
 # CST versions and reuses everything below (rendering + assembly).
 # The original file follows verbatim from here.

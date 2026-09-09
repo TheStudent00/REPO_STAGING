@@ -10,7 +10,7 @@
 #   cores, which can be stopped and removed without touching Airlock.
 #
 # THE NAME CONSTRAINT, which is the whole reason every name here is new
-#   ~/Programming/Airlock and ~/Programming/SandboxDesign SHARE container,
+#   Airlock and SandboxDesign SHARE container,
 #   network, image and volume names (sandbox-runner, sandbox-proxy,
 #   sandbox-internal, sandbox-egress, sandbox-persist) -- which is why
 #   those two must never run at the same time. A third participant that
@@ -19,7 +19,7 @@
 #
 #       container   trickle-runner        (vs sandbox-runner)
 #       network     trickle-internal      (vs sandbox-internal)
-#       agent tree  ~/Programming/AirlockTrickle/agent
+#       agent tree  AirlockTrickle/agent
 #
 #   It is therefore safe BESIDE a running Airlock, which is the state this
 #   was built for.

@@ -3,7 +3,7 @@
 so a trapping operator traps.
 
 Node: hq.research.arch_unit_oracle.cross_construction.autopoly
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/CORE_0_3_2_2_3_autopoly.md`),
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/CORE_0_3_2_2_3_autopoly.md`),
 its "what is next" item 1.  The ledger's guard-outcome block is
 `hq.research.compiler_graph.ledger` and its `row` / `producer`
 sub-nodes.
@@ -137,7 +137,7 @@ RUN_C = os.path.join(HERE, "mode_run_c.json")
 RUN_RUST = os.path.join(HERE, "mode_run_rust.json")
 RESULTS = os.path.join(HERE, "mode_results.json")
 REPORT = os.path.join(HERE, "mode_report.md")
-HOST_FOLDER = ("~/Programming/PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/mode")
 
 COLLECTOR_CAP_KB = 4 * 1024 * 1024

@@ -5,9 +5,9 @@ conversation before the machinery is built. Per protocol §18a: the
 chat carried the conclusions; this is the working record. The
 operand-identity question (which register holds parameter `a`) was
 the driving example throughout; the captures behind it are
-`~/Programming/Airlock/agent/out/ce_trace_walk.txt` and
+`Airlock/agent/out/ce_trace_walk.txt` and
 `ce_trace_all.txt`, and the interactive walkthrough is
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/operand_walk.html`.
+`PseudoCoupHQ/Research/kind_fuzz_clustering/operand_walk.html`.
 
 ## 1. the correction that produced this log
 
@@ -49,7 +49,7 @@ the driving example throughout; the captures behind it are
 
 ## 3. implementation languages of the 13 compilers/runtimes
 
-Measured from `~/Programming/Sources` where vendored (file-extension
+Measured from `Sources` where vendored (file-extension
 census, 2026-08-24); marked unverified otherwise.
 
 | compiler/runtime — written in |
@@ -168,7 +168,7 @@ Go first — self-hosted, so one grammar covers essentially the whole
 transformer, no codebase hand-off:
 
 - parse the argument-lowering region of
-  `~/Programming/Sources/golang_src/src/cmd/compile` with
+  `Sources/golang_src/src/cmd/compile` with
   tree-sitter-go (pin to be recorded at build time);
 - emit the def-use graph AS A FILE: nodes = declarations and
   references (file, span, kind), edges = resolves-to and

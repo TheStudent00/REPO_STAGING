@@ -2,7 +2,7 @@
 
 Date: 2026-08-29. Ratified in conversation ("yes to all of it. we
 are aligned"). Companion ruling added to
-`~/Programming/PseudoCoupHQ/AgentMemory.md` under "SEEDED GROUPING
+`PseudoCoupHQ/AgentMemory.md` under "SEEDED GROUPING
 UNDER CONDITIONS". Supersedes the narrow core definition; the core
 becomes a special case.
 

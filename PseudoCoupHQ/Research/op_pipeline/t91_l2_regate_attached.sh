@@ -27,7 +27,7 @@
 # Product: t91_regate_store_attached_callees_fix/ in the project tree.
 set -uo pipefail
 
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 
 for i in 0 1 2 3; do
   python3 t91_regate_run.py --configuration=attached_callees \

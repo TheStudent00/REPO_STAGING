@@ -105,18 +105,18 @@ load-bearing.
 
 - **F12 — Editing another repo on this project's behalf.**
   (2026-07-31: `plan_and_code.md`, which is about how THIS line maps
-  plans to code, was written into `~/Programming/DevComms` — a
+  plans to code, was written into `DevComms` — a
   deliberately light place for decisions affecting most of the owner's LLM
   work generally.) The guard is not permission, it is scope. the owner's
   framing: we are devs of PseudoCoupHQ and only USERS of
-  `~/Programming/PlanPlan`; wearing the PlanPlan hat, a change
+  `PlanPlan`; wearing the PlanPlan hat, a change
   gets made if it is abstract enough to serve every project using the
   framework. So the test before editing it is **"would this be right
   for a project that has nothing to do with PseudoCoup?"** Yes means
   make it — PlanPlan is new and changes often. No means it belongs
-  in HQ. `~/Programming/DevComms` is a third thing again and takes no
+  in HQ. `DevComms` is a third thing again and takes no
   line-specific content at all. Full statement in
-  `~/Programming/PseudoCoupHQ/Planning/node_0_2_conventions/CORE_0_2_conventions.md`.
+  `PseudoCoupHQ/Planning/node_0_2_conventions/CORE_0_2_conventions.md`.
 
 ## Check the skills before improvising (2026-07-30)
 
@@ -127,7 +127,7 @@ tested, and WHERE a given command should run) and
 `planning-framework` (the CORE/PROGRESS/SUPPORT/node grammar).
 This session spent a full dispatch cycle fighting Cowork-sandbox
 disk exhaustion while `toolchain` documented the purpose-built
-answer — `~/Programming/SandboxDesign`, which copies a project in
+answer — `SandboxDesign`, which copies a project in
 per run and cannot be wedged by one heavy build. Read the
 relevant skill BEFORE building, testing, or choosing an execution
 venue; it is cheaper than the failure it prevents.
@@ -140,7 +140,7 @@ often bigger than the owner can track 100% — there will be things the owner is
 unaware of.** Therefore:
 
 - Every reference to a file/folder carries its full path
-  (`~/Programming/...`; absolute if outside `~`), or names the
+  (`...`; absolute if outside `~`), or names the
   project (PCv6 / PseudoCoup_v6) plus the path within it. Never a
   bare fragment like `pins/MANIFEST.md`.
 - Every reference to something the owner may not have seen — a prior
@@ -148,7 +148,7 @@ unaware of.** Therefore:
   CONTEXT: what it is, mechanically, in the owner's terms. A name
   dropped as if known is a dead end.
 - Recorded in the communication protocol
-  (`~/Programming/DevComms/LLM_communication_protocol.md` §14);
+  (`DevComms/LLM_communication_protocol.md` §14);
   repeated here because forks must load it with the project, not
   discover it by being corrected.
 

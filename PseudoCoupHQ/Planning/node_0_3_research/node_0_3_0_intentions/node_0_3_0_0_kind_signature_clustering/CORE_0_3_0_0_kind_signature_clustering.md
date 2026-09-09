@@ -81,7 +81,7 @@ is scaffolding for the basis.
 
 ## record
 
-- artifacts: `~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/`
+- artifacts: `PseudoCoupHQ/Research/kind_signature_clustering/`
 - reports so far: PCHQ DevComms log_008 (landscape, 6 languages),
   log_009 (first pass, purity 0.685), log_010 (spectrum + hold-out,
   AUC 0.712/0.804). live interpretation decisions: log_010 §7

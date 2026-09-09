@@ -1,7 +1,7 @@
 # log 165 — audit of round 12's completion logs (159–164)
 
 Date: 2026-09-03. Auditor: the coordinating session. Figures
-recomputed from `~/Programming/PseudoCoupHQ/Research/op_pipeline/`;
+recomputed from `PseudoCoupHQ/Research/op_pipeline/`;
 commands and outputs pasted. §5.1a labels throughout.
 
 # 1. Verdict

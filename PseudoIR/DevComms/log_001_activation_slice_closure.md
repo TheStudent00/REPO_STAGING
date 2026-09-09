@@ -2,7 +2,7 @@
 
 2026-07-31. Written because the owner asked for the closure objection to be
 explained, after it was recorded in one line in
-`~/Programming/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`.
+`PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`.
 
 This log explains the objection and proposes a fix. Nothing here is
 settled.
@@ -54,7 +54,7 @@ hand: `i64::MIN / -1`.
    a strawman: it is the exact case that is easy to leave untested,
    which is why this project ended up ruling on it by hand rather
    than reading it off a suite. The ruling is recorded at
-   `~/Programming/PseudoCoup_v6/AgentMemory/02_decisions.md` — "T4
+   `PseudoCoup_v6/AgentMemory/02_decisions.md` — "T4
    MIN/-1 — RESOLVED (the owner, 2026-07-28): TRAP", with the note that
    PCv5's `srem(MIN,-1)=0` was a machine-level guard rather than
    Rust surface semantics. Two different systems disagreed about this
@@ -106,7 +106,7 @@ that run did.
 One recorded rule covers the acceptance half, and it was written
 before this idea existed.
 
-`~/Programming/PseudoCoup_v6/AgentMemory/02_decisions.md`,
+`PseudoCoup_v6/AgentMemory/02_decisions.md`,
 "Past-project oracles INFORM, never ANCHOR (the owner, 2026-07-28)":
 legitimate anchors are "expectations written from the compiler
 source / CPU manual, execution-based semantic results, and the live
@@ -181,7 +181,7 @@ silent.
 - **Can generated inputs drive the uncovered arms?** Naming the
   unexercised arms is less than reaching them. the owner's answer, and his
   own design for it, is in
-  `~/Programming/PseudoIR/DevComms/log_002_directed_input_generation.md`.
+  `PseudoIR/DevComms/log_002_directed_input_generation.md`.
 
 ## 8. CORRECTION, 2026-07-31
 
@@ -198,7 +198,7 @@ and never anchor an acceptance test. Today's ruling is stronger and
 governs: a past project may be checked AGAINST, and nothing may be
 BUILT ON. Naming one as a source of machinery is the error, whatever
 the wording around it. The hardened rule is recorded at
-`~/Programming/PseudoCoup_v6/AgentMemory/02_decisions.md` under
+`PseudoCoup_v6/AgentMemory/02_decisions.md` under
 Direction.
 
 The retracted text is not restored here because the point of the rule

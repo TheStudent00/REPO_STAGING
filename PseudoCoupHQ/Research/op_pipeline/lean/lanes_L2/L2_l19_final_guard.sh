@@ -16,8 +16,8 @@
 set -u
 
 TOTAL=5
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
+PIPE=PseudoCoupHQ/Research/op_pipeline
 export HOME=/work/L2home
 mkdir -p "$HOME"
 

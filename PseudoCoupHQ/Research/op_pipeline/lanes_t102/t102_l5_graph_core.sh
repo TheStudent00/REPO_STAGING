@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -u
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 echo "[1/1] graph core check"
 echo "=== full grep task93/graph_compact/graphs_home/PseudoCoupGraphs in graph CORE ==="
 grep -n -i "task 93\|graph_compact\|graphs_home\|PseudoCoupGraphs\|compact" \

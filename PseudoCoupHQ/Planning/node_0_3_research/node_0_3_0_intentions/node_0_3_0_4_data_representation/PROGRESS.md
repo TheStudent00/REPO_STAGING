@@ -19,7 +19,7 @@ status: living
   + identity-marked shapes), then the per-language representation
   enumeration and the load-audit.
 - 2026-08-15: layer-2 step 1 DONE — the shared data file written by
-  hand: `~/Programming/PseudoCoupHQ/Research/data_representation/data_layer1.json`
+  hand: `PseudoCoupHQ/Research/data_representation/data_layer1.json`
   (parses clean; ~87 leaf values across the seven forms + identity
   shapes). Conventions documented in its `__spec__`: `#special` for
   NaN/inf/-0.0 (JSON cannot hold them), `#int` for beyond-double
@@ -34,7 +34,7 @@ status: living
   with the superseded union extraction as raw reference; then the
   load-audit.
 - 2026-08-17: layer-2 steps 2 and 3 DONE, reported in
-  `~/Programming/PseudoCoupHQ/DevComms/log_023_layer2_representations.md`.
+  `PseudoCoupHQ/DevComms/log_023_layer2_representations.md`.
   ENUMERATION: 328 (form, representation) cells across the 12
   languages, one file per language
   (`Research/data_representation/representations_<language>.json`),
@@ -72,7 +72,7 @@ status: living
   the owner's prior `allow.sh sync`, so `proxy/allowlist.txt` gained a
   `.NET SDK` block (`.dot.net`, `.microsoft.com`, `.azureedge.net`,
   `.dotnetcli.blob.core.windows.net`, and two more) and the owner needs to
-  run `bash ~/Programming/SandboxDesign/allow.sh sync` again before
+  run `bash SandboxDesign/allow.sh sync` again before
   the 33 c# cells can be attempted. Coverage is still eleven of twelve
   languages; the §5 layer-1 verdict is unchanged and does not yet
   cover twelve of twelve.

@@ -13,7 +13,7 @@
 # Peak RSS is printed at the end.
 set -euo pipefail
 echo "[1/5] task m1b: the flag_pair rows, over four canon40 shards"
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 - <<'PY'
 import collections
 import json
@@ -22,9 +22,9 @@ import resource
 import sys
 import time
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline/lean")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline/lean")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import reference as R
 import term as T
 import canonical_form as CF
@@ -193,10 +193,10 @@ for key in sorted(first, key=str):
 
 print("")
 print("[5/5] the 162, against m1's attestation artifact")
-corpus = json.load(open("/projects/PseudoCoupHQ/Research/oracle/"
+corpus = json.load(open("PseudoCoupHQ/Research/oracle/"
                         "arch_opcodes/unique_opcodes.json"))
 corpus_mnems = sorted(r["mnem"] for r in corpus["cross_language_rows"])
-attest = json.load(open("/projects/PseudoCoupHQ/Research/oracle/"
+attest = json.load(open("PseudoCoupHQ/Research/oracle/"
                         "arch_opcodes/model/model_table_attest.json"))
 attested = set(c["mnem"] for c in attest["cells"])
 missing = [m for m in corpus_mnems if m not in attested]

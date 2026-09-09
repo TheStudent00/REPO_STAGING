@@ -1,8 +1,8 @@
 # log 021 — kind_fuzz_clustering phase 0: the probe space and its size
 
 date: 2026-08-15
-node: `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`
-artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`
+node: `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`
+artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`
 status: phase 0 complete — measurement only; no probe was generated and
 nothing was executed in any of the eleven languages.
 
@@ -23,12 +23,12 @@ before they are used.
   which kinds may legally stand in each slot. All 411 of them were
   downloaded on 2026-08-12 by the co-node `kind_signature_clustering`
   and sit in
-  `~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/raw_all/`.
+  `PseudoCoupHQ/Research/kind_signature_clustering/raw_all/`.
 - The **six dominants** are boolean, float, integer, string, list and
   dict. They are the data structures whose behaviour was verified by
   execution across the eleven languages on 2026-08-14 (467 confirmed, 7
   refuted, empty residue), recorded in
-  `~/Programming/PseudoCoupHQ/Research/dominant_intentions/verified/`.
+  `PseudoCoupHQ/Research/dominant_intentions/verified/`.
   They are the calibrated inputs: a probe's answer is only readable
   because what went in is known exactly.
 - A **probe** is one small generated script that puts a known input
@@ -136,7 +136,7 @@ without re-running anything but the third script.
    excluding by hand.
 3. **The dominant-to-kind map is hand-written, one entry per language,
    and lives at the top of
-   `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/probe_space.py`.**
+   `PseudoCoupHQ/Research/kind_fuzz_clustering/probe_space.py`.**
    It says which kind of each grammar IS a literal of each dominant —
    python's `dictionary` for dict, rust's `boolean_literal` for
    boolean. It names 74 kinds across the eleven languages, 70 of them
@@ -291,11 +291,11 @@ the rule could not be written without also swallowing
 `break_statement`, whose only sub-node is an optional label, so the
 contraction was removed and the raw count kept. The code carries the
 same note at `containment_edges` in
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/probe_space.py`.
+`PseudoCoupHQ/Research/kind_fuzz_clustering/probe_space.py`.
 
 **Second, and it is the one that matters: the grammar's legality is
 looser than the language's.** The contrast, with both sides quoted from
-`~/Programming/PseudoCoupHQ/Research/kind_signature_clustering/raw_all/python.node-types.json`.
+`PseudoCoupHQ/Research/kind_signature_clustering/raw_all/python.node-types.json`.
 
 The chain the grammar DOES state — `else` after `if`:
 
@@ -467,7 +467,7 @@ printed, not the value returned — a different probe shape, and a phase-1
 design question rather than a phase-0 count.
 
 Per-language counts are the last column of §3; the full lists are in
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/probe_space.json`
+`PseudoCoupHQ/Research/kind_fuzz_clustering/probe_space.json`
 under each language's `unprobeable_kinds`.
 
 ---
@@ -520,15 +520,15 @@ on so it can be answered from this page.
 ## record
 
 Scripts, all three in
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`, each
+`PseudoCoupHQ/Research/kind_fuzz_clustering/`, each
 runnable on its own:
 
-- `bash -c "cd ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering && python3 extract_kinds.py"`
+- `bash -c "cd PseudoCoupHQ/Research/kind_fuzz_clustering && python3 extract_kinds.py"`
   — writes `kinds_<language>.json` for the eleven targets and swift.
-- `bash -c "cd ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering && python3 legal_pairs.py"`
+- `bash -c "cd PseudoCoupHQ/Research/kind_fuzz_clustering && python3 legal_pairs.py"`
   — writes `legal_pairs_<language>.json`, the declared triples plus the
   expansion map for the grammar's abstract groupings.
-- `bash -c "cd ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering && python3 probe_space.py"`
+- `bash -c "cd PseudoCoupHQ/Research/kind_fuzz_clustering && python3 probe_space.py"`
   — writes `probe_space.json`, every number in §3, §4 and §5.
 
 Nothing was executed in any of the eleven languages, and no probe was

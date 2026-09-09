@@ -100,14 +100,14 @@ confirmed by reading `ct_swift_wrap_l1.txt` back rather than assumed).
 ## 3 — lanes, submission, wall times
 
 Manifest: the live batch `pygo-emitters-log061` was inspected first
-(`python3 ~/Programming/Airlock/airlock status`) and found **complete**
+(`python3 Airlock/airlock status`) and found **complete**
 (30/30 lanes, 100% by weight) — not joined. A new manifest was written,
-`bash ~/Programming/Airlock/batch.sh swift-wrap-log066
+`bash Airlock/batch.sh swift-wrap-log066
 ct_swift_wrap_l1.sh:2142`, then extended for L2 via
 `airlock submit --batch swift-wrap-log066 --weight 74163`.
 
 **Container bind check, stated as a limitation.** `python3
-~/Programming/Airlock/airlock doctor` in this session reports `podman is
+Airlock/airlock doctor` in this session reports `podman is
 not on PATH here, so every container check is skipped` — `check_binds`
 (the specific check the brief asked for) is nested inside
 `check_container` and never runs when podman is absent, so it could not

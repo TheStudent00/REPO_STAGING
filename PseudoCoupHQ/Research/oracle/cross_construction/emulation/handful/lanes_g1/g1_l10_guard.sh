@@ -21,9 +21,9 @@
 # MEMORY BOUND: 4 GB resident, named abort ABORT_MEMORY_G1; the guard
 # reads json files of a few hundred kB and reports its own peak.
 set -uo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/2] task g1: the guard over the four json this task's own programs write"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     $H/handful/handful3.json $H/handful/handful3_primitive.json \
     $H/handful/handful3_spellings.json $H/go/go_facts.json
 echo "[2/2] task g1: grep -c exempt over every file this task added or changed"

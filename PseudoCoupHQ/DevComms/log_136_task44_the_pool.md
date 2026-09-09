@@ -1,7 +1,7 @@
 # log 136 — TASK 44: THE MERGED POOL
 
 Date: 2026-09-02. Author: Claude Code (implementer), no sub-agents.
-Working directory: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+Working directory: `PseudoCoupHQ/Research/op_pipeline`.
 Python: the session's `/tmp/reconnect_venv/bin/python3` was cleared out
 from under this task by a `/tmp` reset partway through; the three
 programs written here import nothing outside the standard library, so

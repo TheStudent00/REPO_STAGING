@@ -64,7 +64,7 @@ classified before anything runs — refused if any pipeline stage's head
 program is not on a read-only allowlist or matches a named writer rule, and
 marked not-rerunnable if it names an unmounted path, an elided path, a
 moving reference like `HEAD`, or a program absent from the image — and what
-survives is executed inside Airlock with the tree at `/projects/PseudoCoupHQ`
+survives is executed inside Airlock with the tree at `PseudoCoupHQ`
 and compared byte-for-byte against what the log pasted. Everything that
 does not reproduce lands in a named bucket, the buckets are counted per log
 and in total, and the count of claims carrying nothing to re-run is on the
@@ -106,7 +106,7 @@ The causes the six logs actually produced, each with its own name:
 | cause | how many | what it means |
 |---|---:|---|
 | `moving_reference` | 8 | reads `HEAD`, the working tree, or a wall-clock `--since=` |
-| `out_of_sandbox` | 3 | names `~/Programming/Airlock` or `~/Programming/Ourobrowser`, which Airlock does not mount |
+| `out_of_sandbox` | 3 | names `Airlock` or `Ourobrowser`, which Airlock does not mount |
 | `redirects_into_a_path` | 3 | an unquoted `>` — a refusal, listed here because it is a cause too |
 | `writes_the_tree__generator` | 2 | `bash hq.sh dashboard` |
 | `host_specific_output` | 1 | an `ls -l` listing carries the owner name and the LOCAL clock of the machine it ran on; inside Airlock those are `root` and UTC. Applied ONLY when the sizes and names agree line for line; a changed count, size, name or order falls through to DIFFERS |
@@ -124,7 +124,7 @@ construction, so:
 
 - **It refuses to run outside Airlock.** `--verify` starts only when the
   lane protocol's own folders `/drop`, `/logs`, `/out` and the work
-  directory `/projects/PseudoCoupHQ` are all present. This is not an
+  directory `PseudoCoupHQ` are all present. This is not an
   assertion: lane `t90_l2` hit the refusal (the running container predated
   a `mounts.conf` change) and printed
   `REFUSING TO RUN: this is not the Airlock sandbox`, exit 4. The check was
@@ -277,9 +277,9 @@ were added at the top of the file, so `head -5` returns a different five).
      --- pasted in the log
      +++ produced now
      @@ -1,3 +1,3 @@
-     --rw-rw-r-- 1 <host> <host>  5811 Sep  3 23:17 check_dashboard_py_no_spelling.py
-     --rw-rw-r-- 1 <host> <host>  6560 Sep  4 18:16 dashboard_ouro.html
-     --rw-rw-r-- 1 <host> <host> 78953 Sep  4 18:16 dashboard_ouro.py
+     --rw-rw-r-- 1 <user> <user>  5811 Sep  3 23:17 check_dashboard_py_no_spelling.py
+     --rw-rw-r-- 1 <user> <user>  6560 Sep  4 18:16 dashboard_ouro.html
+     --rw-rw-r-- 1 <user> <user> 78953 Sep  4 18:16 dashboard_ouro.py
      +-rw-rw-r-- 1 root root  5811 Sep  4 03:17 Research/op_pipeline/check_dashboard_py_no_spelling.py
      +-rw-rw-r-- 1 root root  6560 Sep  4 22:16 Research/op_pipeline/dashboard_ouro.html
      +-rw-rw-r-- 1 root root 85763 Sep  5 03:32 Research/op_pipeline/dashboard_ouro.py
@@ -305,8 +305,8 @@ were added at the top of the file, so `head -5` returns a different five).
      --- pasted in the log
      +++ produced now
      @@ -1,2 +1,2 @@
-     --rw-r--r-- 1 <host> <host>  645490 variant_connections_go.json
-     --rw-r--r-- 1 <host> <host> 1056833 variant_connections_c_and_cpp.json
+     --rw-r--r-- 1 <user> <user>  645490 variant_connections_go.json
+     --rw-r--r-- 1 <user> <user> 1056833 variant_connections_c_and_cpp.json
      +-rw-r--r-- 1 root root 1056833 Sep  4 22:13 Research/compiler_graph/variant_connections_c_and_cpp.json
      +-rw-r--r-- 1 root root  645490 Sep  4 22:13 Research/compiler_graph/variant_connections_go.json
 
@@ -332,11 +332,11 @@ were added at the top of the file, so `head -5` returns a different five).
      --- pasted in the log
      +++ produced now
      @@ -1,5 +1,10 @@
-     --rw-rw-r-- 1 <host> <host> 18648016 Sep  2 16:32 the_pool1.json
-     --rw-rw-r-- 1 <host> <host> 33810895 Sep  2 21:09 the_pool2.json
-     --rw-rw-r-- 1 <host> <host> 31225989 Sep  3 00:15 the_pool3.json
-     --rw-rw-r-- 1 <host> <host> 32609296 Sep  3 04:30 the_pool4.json
-     --rw-rw-r-- 1 <host> <host> 32648786 Sep  3 13:54 the_pool5.json
+     --rw-rw-r-- 1 <user> <user> 18648016 Sep  2 16:32 the_pool1.json
+     --rw-rw-r-- 1 <user> <user> 33810895 Sep  2 21:09 the_pool2.json
+     --rw-rw-r-- 1 <user> <user> 31225989 Sep  3 00:15 the_pool3.json
+     --rw-rw-r-- 1 <user> <user> 32609296 Sep  3 04:30 the_pool4.json
+     --rw-rw-r-- 1 <user> <user> 32648786 Sep  3 13:54 the_pool5.json
      +-rw-rw-r-- 1 root root 18648016 Sep  2 20:32 Research/op_pipeline/the_pool1.json
      +-rw-rw-r-- 1 root root 33810895 Sep  3 01:09 Research/op_pipeline/the_pool2.json
      +-rw-rw-r-- 1 root root   453051 Sep  3 01:09 Research/op_pipeline/the_pool2_bytes.json
@@ -415,7 +415,7 @@ log_191 and log_192 do carry eight commands between them. Every one is
 `NOT_RERUNNABLE`: four read `HEAD` or the working tree (`git diff
 37d8a5db..HEAD`, `git diff | wc -l`, `git log --format=… -1`), one names a
 wall-clock instant (`--since='2026-09-04T17:33:00-04:00'`), and three name
-`~/Programming/Ourobrowser`, which Airlock does not mount.
+`Ourobrowser`, which Airlock does not mount.
 
 ## 4.4 What was REFUSED, by name
 
@@ -507,11 +507,11 @@ writes_the_tree__generator
 # 7. How the owner runs it
 
 ```
-cd ~/Programming/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 check_conventions_log_claims.py --emit-lane lanes_t90/<new_name>.sh \
   ../../DevComms/log_195_task89_bank_round15.md
-cd ~/Programming/Airlock && ./airlock submit \
-  ~/Programming/PseudoCoupHQ/Research/op_pipeline/lanes_t90/<new_name>.sh --no-batch
+cd Airlock && ./airlock submit \
+  PseudoCoupHQ/Research/op_pipeline/lanes_t90/<new_name>.sh --no-batch
 ```
 
 The lane name must be new each time — Airlock's rule, not the tool's. The
@@ -543,7 +543,7 @@ log to be present, and nothing about it needs me.
 | `agent/out/t90_l6_verify_six.json`, `t90_l8_verify_this_log.json`, `t90_l9_verify_six.json`, `t90_l11_verify_this_log.json` | lane products |
 | `DevComms/log_197_task90_report_verifier.md` | this log |
 | `Research/op_pipeline/check_no_spelling_keys.py` | READ AND RUN, UNMODIFIED |
-| `~/Programming/Airlock/mounts.conf` | READ ONLY, for the sandbox map baked into the tool |
+| `Airlock/mounts.conf` | READ ONLY, for the sandbox map baked into the tool |
 
 ---
 

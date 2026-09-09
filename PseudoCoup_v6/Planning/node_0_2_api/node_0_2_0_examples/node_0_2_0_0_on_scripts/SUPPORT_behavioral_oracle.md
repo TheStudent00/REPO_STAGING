@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — behavioral oracle
 
 projected 2026-07-30 from the previous plan, now archived at
-`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_4_application_ingress/node_0_4_2_behavioral_oracle/CORE_0_4_2_behavioral_oracle.md  (288 words)
@@ -25,7 +25,7 @@ ingressed application means the same thing. Behavior can.
 ## The harvest (the lineage's hardest, most valuable asset)
 
 v0's `oracle.py` + `fuzz.py`
-(`~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/`,
+(`StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/`,
 verified green in place by R3): transpile the source language's
 OWN TEST SUITE alongside the program, run both sides, compare
 outputs — the compiler/program authors' own intent statements

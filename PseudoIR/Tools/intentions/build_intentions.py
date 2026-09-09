@@ -1,7 +1,7 @@
 """Builds pc_intentions.json — the copied-forward verdict artifact extended with the four slicer-steering fields.
 
 Assembly of the pre-existing fields reproduces
-~/Programming/PseudoCoup_v5/Designing/build_verdicts.py exactly
+PseudoCoup_v5/Designing/build_verdicts.py exactly
 (same construction over the vendored data), so every field the
 R1-verified pc_verdicts.json already carries stays byte-stable.
 The four extension fields of CORE 0_0_4_0 are added on top:
@@ -14,7 +14,7 @@ reference each REFUSE to emit, with the failure named.
 
 Deterministic output: sorted keys, no timestamps; rebuilds are
 byte-identical. Rerun after any data change:
-    python3 ~/Programming/PseudoIR/Tools/intentions/build_intentions.py
+    python3 PseudoIR/Tools/intentions/build_intentions.py
 """
 
 import json
@@ -53,7 +53,7 @@ def assemble(d=None):
         "meta": {
             "generated_by": "build_intentions.py",
             "copied_forward_from":
-                "~/Programming/PseudoCoup_v5/Designing/pc_verdicts.json "
+                "PseudoCoup_v5/Designing/pc_verdicts.json "
                 "(R1-verified; PCv5 is archived, maintained in PCv6 "
                 "from 2026-07-28 on)",
             "sources": ["intention_tables_gen.py",

@@ -1,7 +1,7 @@
 # log_224 — task t100: solver equivalence between pool5 entries, closed on the pair lane's own budget (master plan step 2)
 
 Node: `hq.research.operator_equivalence.pool`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/CORE_0_3_1_7_pool.md`).
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/CORE_0_3_1_7_pool.md`).
 Master plan: `CORE_0_3_research` §4.2 step 2. Prior record: this task's
 pair lane ran across three windows in an earlier session
 (`t100_l4_pairs.sh`, `t100_l5_pairs_resume.sh`,
@@ -48,7 +48,7 @@ passed all 11 files it wrote.
 ## 2. The instance and its lane history
 
 ```
-$ python3 ~/Programming/Airlock/airlock status --instance t100
+$ python3 Airlock/airlock status --instance t100
 ```
 
 | lane | state | exit | elapsed | progress |
@@ -433,11 +433,11 @@ copy of the command's closing quote pasted where no output line
 belongs. Removed. Pass 3, LITERAL, in full:
 
 ```
-$ python3 ~/Programming/Airlock/airlock submit /tmp/claude-1000/-home-<user>-Programming-PseudoCoup/862ba4e5-5d7e-4363-a0d7-62a9ccce2435/scratchpad/t100_l11_verify3.sh --instance t100 --batch t100 --weight 1
+$ python3 Airlock/airlock submit <scratch>/t100_l11_verify3.sh --instance t100 --batch t100 --weight 1
 ```
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_224_task_t100_pool_entry_equivalence_closure.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_224_task_t100_pool_entry_equivalence_closure.md
 log_224_task_t100_pool_entry_equivalence_closure.md: 15 claims extracted
    claims 15 | MATCHES 3 | DIFFERS 0 | UNVERIFIABLE 10 | REFUSED 1 | NOT_RERUNNABLE 1
    VERDICT: 3 of 15 claims reproduce; 10 (67%) carry nothing to re-run
@@ -459,7 +459,7 @@ check_conventions_log_claims.py exit 0
 REFUSED 1 | NOT_RERUNNABLE 1. Zero DIFFERS.** The 3 MATCHES are §3's
 and §4's `python3 -c` snippets plus §9's `grep -c exempt`; the
 NOT_RERUNNABLE is this log's own `airlock status --instance t100`
-call in §2 (`~/Programming/Airlock` is not an Airlock-mounted path,
+call in §2 (`Airlock` is not an Airlock-mounted path,
 the same `out_of_sandbox` shape log_217 §7 recorded); the REFUSED is
 this section's own `airlock submit` call for this verifier lane itself
 (`submits_or_moves_the_sandbox`, by design — the checker never
@@ -470,14 +470,14 @@ claim of their own).
 
 ## 13. See also
 
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/pool100_entry_equivalence.py`
+- `PseudoCoupHQ/Research/op_pipeline/pool100_entry_equivalence.py`
   — the program (`close` mode used this session; unchanged).
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/pool100_report.md`
+- `PseudoCoupHQ/Research/op_pipeline/pool100_report.md`
   — the narrative deliverable, full 88-row coverage table.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/pool100_edges.json`,
+- `PseudoCoupHQ/Research/op_pipeline/pool100_edges.json`,
   `pool100_pool6_candidate.json` — the two artifacts this session
   wrote.
-- `/tmp/claude-1000/-home-<user>-Programming-PseudoCoup/862ba4e5-5d7e-4363-a0d7-62a9ccce2435/scratchpad/close_t100.md`
+- `<scratch>/close_t100.md`
   — the closing note this session worked from.
-- `~/Programming/PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md`
+- `PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md`
   — the closing-task log this one's shape follows.

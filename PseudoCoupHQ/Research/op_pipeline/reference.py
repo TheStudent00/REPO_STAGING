@@ -2,7 +2,7 @@
 """reference.py -- THE ONE SYMBOLIC SIMULATOR OF THE MACHINE.
 
 The code of node `hq.research.compiler_graph.reference`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/CORE_0_3_5_4_reference.md`).
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/CORE_0_3_5_4_reference.md`).
 Its class is `Reference`; its methods are the CORE's `methods:`
 (`simulate`, `answer_of`); its sub-nodes are its attribute
 `opcode_table` and its class `MachineState`.

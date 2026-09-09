@@ -6,7 +6,7 @@
 # (ABORT_MEMORY_O2 if exceeded -- watched via /usr/bin/time -v peak
 # RSS below, pasted into log_208).
 set -u
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes
+cd PseudoCoupHQ/Research/oracle/arch_opcodes
 echo "======== [1/1] single_opcode_units.py ========"
 echo "(peak RSS reported by the script itself via resource.getrusage; container has no /usr/bin/time)"
 python3 single_opcode_units.py

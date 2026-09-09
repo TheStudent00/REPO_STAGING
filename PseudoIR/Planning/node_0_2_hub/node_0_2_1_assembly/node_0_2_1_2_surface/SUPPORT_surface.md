@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — surface
 
 projected 2026-07-30 from the previous plan, now archived at
-`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_2_hub/node_0_2_2_surface/CORE_0_2_2_surface.md  (259 words)

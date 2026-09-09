@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -u
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 echo "[1/3] git available?"
 which git && git --version
 echo "[2/3] git log in sandbox"

@@ -14,7 +14,7 @@
 # Node: hq.research.compiler_graph.dashboard
 set -uo pipefail
 
-REPO=/projects/PseudoCoupHQ
+REPO=PseudoCoupHQ
 cd "$REPO/Research/op_pipeline" || exit 2
 git --version || exit 3
 
@@ -22,7 +22,7 @@ mkdir -p /out
 python3 - <<'PY'
 import json, os, resource, subprocess, sys, time
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 import dashboard_ouro as D
 
 def peak_mb():
@@ -36,7 +36,7 @@ def check(name, ok, detail):
 
 print("[1/3] the moment list against git's own list")
 hist = D.history()
-raw = subprocess.run(["git", "-C", "/projects/PseudoCoupHQ",
+raw = subprocess.run(["git", "-C", "PseudoCoupHQ",
                       "rev-list", "--reverse", "HEAD"],
                      capture_output=True, text=True).stdout.split()
 mine = [r["commit"] for r in hist]

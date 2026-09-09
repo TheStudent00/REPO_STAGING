@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — validation
 
 projected 2026-07-30 from the previous plan, now archived at
-`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_0_tools/node_0_0_1_ledger/node_0_0_1_2_integrity/CORE_0_0_1_2_integrity.md  (229 words)

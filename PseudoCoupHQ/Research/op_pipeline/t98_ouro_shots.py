@@ -6,7 +6,7 @@ This is the ONE thing in task 98 that is not an Airlock lane: the browser
 IS the viewer of the deliverable, so looking at the deliverable happens on
 the host.  It computes nothing the page does not compute for itself.
 
-It imports `~/Programming/Ourobrowser/browser_engine.py` and does not edit
+It imports `Ourobrowser/browser_engine.py` and does not edit
 it: the engine belongs to the owner and that work is paused.
 
 WHAT IT PHOTOGRAPHS, and why each shot exists
@@ -31,9 +31,9 @@ UNEXPLAINED, how many `<script>` tags the page carries of its own, and
 which row each opened explanation sits on.
 
 usage:
-    cd ~/Programming/Ourobrowser && \
+    cd Ourobrowser && \
     LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1 \
-    python3 ~/Programming/PseudoCoupHQ/Research/op_pipeline/t98_ouro_shots.py
+    python3 PseudoCoupHQ/Research/op_pipeline/t98_ouro_shots.py
 """
 
 import os
@@ -41,11 +41,11 @@ import resource
 import subprocess
 import sys
 
-OURO = os.path.expanduser("~/Programming/Ourobrowser")
+OURO = os.path.expanduser("Ourobrowser")
 PAGE = os.path.expanduser(
-    "~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html")
+    "PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html")
 SHOTS = os.path.expanduser(
-    "~/Programming/PseudoCoupHQ/DevComms/screens/log_203")
+    "PseudoCoupHQ/DevComms/screens/log_203")
 
 sys.path.insert(0, OURO)
 
@@ -188,7 +188,7 @@ def earlier_day():
 
 
 def every_day():
-    root = os.path.expanduser("~/Programming/PseudoCoupHQ")
+    root = os.path.expanduser("PseudoCoupHQ")
     out = subprocess.run(
         ["git", "-C", root, "log", "--format=%cI"],
         capture_output=True, text=True).stdout.splitlines()

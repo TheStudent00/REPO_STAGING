@@ -4,11 +4,11 @@
 # asserts that no earlier lane printed on its own (the `imul` gpr_gpr 32
 # attestation, and what the 83 attested cells with no table row are).
 set -euo pipefail
-M=/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+M=PseudoCoupHQ/Research/oracle/arch_opcodes/model
 cd "$M"
 echo "[1/3] task m1: check_no_spelling_keys.py over the four json"
-echo "\$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py model_table.json model_table_rows.json model_table_attest.json model_table_edges.json"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+echo "\$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py model_table.json model_table_rows.json model_table_attest.json model_table_edges.json"
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
   model_table.json model_table_rows.json model_table_attest.json \
   model_table_edges.json || true
 echo ""

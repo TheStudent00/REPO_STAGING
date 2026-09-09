@@ -14,7 +14,7 @@ R1 verified the existing artifact clean (byte-identical
 regeneration, 108/108 agreement with probe ground truth), so
 nothing existing is rewritten.
 
-## Subject artifacts (all in `~/Programming/PseudoCoup_v5/Designing/`)
+## Subject artifacts (all in `PseudoCoup_v5/Designing/`)
 
 - `pc_verdicts.json` — the built artifact (fields today: meta,
   languages, intent_categories, t1_realizations, t2_compatibility,
@@ -60,8 +60,8 @@ nothing existing is rewritten.
 - **Field names** — naming is the owner's domain; the table above is a
   working proposal.
 - Whether the extended artifact is written back into
-  `~/Programming/PseudoCoup_v5/Designing/` (PCv5 is archived
+  `PseudoCoup_v5/Designing/` (PCv5 is archived
   research) or copied forward into
-  `~/Programming/PseudoCoup_v6/Tools/intentions/` and maintained
+  `PseudoCoup_v6/Tools/intentions/` and maintained
   there. Recommendation: copy forward, since PCv6 tools should not
   write into an archived repo.

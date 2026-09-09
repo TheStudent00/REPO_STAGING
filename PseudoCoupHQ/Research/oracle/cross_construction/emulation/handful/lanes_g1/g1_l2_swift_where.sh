@@ -27,6 +27,6 @@ echo "[5/6] task g1: is libncurses.so.6 present at all"
 ls -la /usr/lib/x86_64-linux-gnu/libncurses*.so* 2>&1 | head -10 || true
 echo "[6/6] task g1: the swift branch of lane_gen.py, LITERAL"
 sed -n '/if LANG == "swift":/,/raise KeyError/p' \
-    /projects/PseudoCoupHQ/Research/op_pipeline/lane_gen.py
-grep -n "^SWIFTC" /projects/PseudoCoupHQ/Research/op_pipeline/lane_gen.py
+    PseudoCoupHQ/Research/op_pipeline/lane_gen.py
+grep -n "^SWIFTC" PseudoCoupHQ/Research/op_pipeline/lane_gen.py
 echo "done"

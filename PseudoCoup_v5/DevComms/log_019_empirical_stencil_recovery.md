@@ -91,7 +91,7 @@ Sandbox setup (each bash call is fresh; re-export the path):
 
 VERIFIED on the owner's own infrastructure the same day, via the
 SandboxDesign agent lane (script
-`~/Programming/SandboxDesign/agent/drop/stencil_probe_196.sh`, log
+`SandboxDesign/agent/drop/stencil_probe_196.sh`, log
 `20260812T055925Z` in `SandboxDesign/agent/logs/`): rustc 1.96.1
 parses `unsafe extern "C" { safe fn f(); }` and pretty-prints it
 back cleanly — the construct the pinned grammar refuses (§4) and the

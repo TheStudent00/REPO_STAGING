@@ -3,7 +3,7 @@
 # the walk that follows a base advanced by a constant (php's bytecode
 # pointer) and the shared obtained-memory count.
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "[1/6] survey, with the constant advance followed"
 python3 - <<'PY'

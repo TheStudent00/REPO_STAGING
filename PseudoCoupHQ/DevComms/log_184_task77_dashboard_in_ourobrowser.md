@@ -3,13 +3,13 @@
 Date: 2026-09-03. Task 77 of round 15 (`log_183`), the round's headline,
 and the one item in that round that is **the owner's own request, verbatim**:
 
-> have a look at `~/Programming/Ourobrowser` because the browser allows
+> have a look at `Ourobrowser` because the browser allows
 > python to be run locally natively within the browser. id like to see
 > the dashboard written to run in it.
 
-Two repos were touched: `~/Programming/Ourobrowser` (the browser gained
+Two repos were touched: `Ourobrowser` (the browser gained
 the ability for python to put HTML on the page) and
-`~/Programming/PseudoCoupHQ` (a second dashboard page that uses it).
+`PseudoCoupHQ` (a second dashboard page that uses it).
 Nothing that existed was retired.
 
 ---
@@ -58,7 +58,7 @@ That gap is what this task closed.
 ## 2.1 The wire form: what the browser sends when you click
 
 `test_page.html` carries one button. LITERAL, from
-`~/Programming/Ourobrowser/test_page.html`:
+`Ourobrowser/test_page.html`:
 
 ```html
 <button onclick="python:fetch_system_data()">Fetch System Data (Python)</button>
@@ -71,7 +71,7 @@ by python when the button is clicked.
 ## 2.2 Defect one — the rewrite wrote a page Chromium refused
 
 LITERAL, the replacement template as it stood at commit `a5d8bee`, in
-`~/Programming/Ourobrowser/browser_engine.py`:
+`Ourobrowser/browser_engine.py`:
 
 ```python
 replacement = r'onclick="if(window.pyBridge) { window.pyBridge.execute_python(\'\1\'); }"'
@@ -169,7 +169,7 @@ for the other.
 
 ## 3.2 `emit` — a block may put HTML in its own place
 
-LITERAL, from `~/Programming/Ourobrowser/browser_engine.py`:
+LITERAL, from `Ourobrowser/browser_engine.py`:
 
 ```python
 def execute_and_replace(match):
@@ -197,12 +197,12 @@ behaviour, and is why `test_page.html` is unaffected.
 ## 3.3 `page_path` — and why it is not a convenience
 
 The dashboard page lives in `Research/op_pipeline` and the browser is
-launched from `~/Programming/Ourobrowser`. Without `page_path` the
+launched from `Ourobrowser`. Without `page_path` the
 page's own text would have to name the folder it lives in — a
 machine-specific path inside a tracked file, which this line forbids.
 
 LITERAL, the whole of how the page reaches its renderer, from
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html`:
+`PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html`:
 
 ```python
 sys.path.insert(0, os.path.dirname(page_path))
@@ -217,7 +217,7 @@ SIGNAL, because QWebChannel already publishes a registered object's
 signals to the page — so the return path needs no new transport and no
 page-authored JavaScript.
 
-LITERAL, from `~/Programming/Ourobrowser/bridge.py`:
+LITERAL, from `Ourobrowser/bridge.py`:
 
 ```python
 html_pushed = pyqtSignal(str, str)
@@ -290,7 +290,7 @@ Ourobrowser native context initialized. `fetch_system_data` is ready.
 [rig] click button
 [Bridge] Executing Python command: fetch_system_data()
 \n--- System Data Fetched ---
-OS: Linux 7.0.0-30-generic, Python: 3.13.9
+OS: Linux <kernel>, Python: 3.13.9
 ---------------------------\n
 [rig] wait 2 s
 [rig] peak resident size of the python side: 237.7 MB
@@ -338,7 +338,7 @@ The brief asks which functions are CALLED rather than copied. LITERAL,
 the transcript of asking python:
 
 ```
-viewer_build file : ~/Programming/PseudoCoupHQ/Research/op_pipeline/viewer_build.py
+viewer_build file : PseudoCoupHQ/Research/op_pipeline/viewer_build.py
    dashboard_ouro -> viewer_build.units_of       <function units_of at 0x72125f656340>
    dashboard_ouro -> viewer_build.load           <function load at 0x72125f656160>
    dashboard_ouro -> viewer_build.carve          <function carve at 0x72125f6ef240>
@@ -349,7 +349,7 @@ viewer_build file : ~/Programming/PseudoCoupHQ/Research/op_pipeline/viewer_build
    dashboard_ouro -> viewer_build.trim_unit      <function trim_unit at 0x72125f6eef20>
    dashboard_ouro -> viewer_build.trim_rendered  <function trim_rendered at 0x72125f6eefc0>
    dashboard_ouro -> viewer_build.read_store     <function read_store at 0x72125f6eede0>
-manifest shortcut : ~/Programming/PseudoCoupHQ/Research/op_pipeline/pane23_manifest_regex_check.py
+manifest shortcut : PseudoCoupHQ/Research/op_pipeline/pane23_manifest_regex_check.py
    PAT is the same object: True
    unq is the same object: True
    viewer_build is the same module object: True
@@ -528,8 +528,8 @@ listed in §13.2.
 ## 8.1 The command, exactly as typed
 
 ```
-cd ~/Programming/Ourobrowser && python3 browser_engine.py \
-    /~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html
+cd Ourobrowser && python3 browser_engine.py \
+    /PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html
 ```
 
 - The argument is new: `main()` now takes the page to open, defaulting
@@ -608,20 +608,20 @@ LITERAL:
 
 ## 8.3 Screenshots, by path
 
-All in `~/Programming/PseudoCoupHQ/DevComms/screens/log_184/`:
+All in `PseudoCoupHQ/DevComms/screens/log_184/`:
 
 | file | what it shows |
 |---|---|
-| [pane1_unit_viewer.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/pane1_unit_viewer.png) | `cpp/regen_63240`, label `bitor`, signature `(a: unsigned long long, b: unsigned int) -> 64-bit`, its three instructions, its wrapped text, its ledger |
-| [pane2_selector.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/pane2_selector.png) | the nine languages with their counts |
-| [pane2_selector_drilled.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/pane2_selector_drilled.png) | rust → 21 operator groups → 22 type signatures under one group |
-| [pane3_opcode_index.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/pane3_opcode_index.png) | all 162 arch opcodes with their unit counts, `ret` at 30,432 |
-| [pane3_opcode_drilled.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/pane3_opcode_drilled.png) | one opcode's (language, operator group, signature) groups |
-| [pane4_coverage.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/pane4_coverage.png) | four compiler graphs, go's coverage populations, the never-entered files |
-| [pane5_stats.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/pane5_stats.png) | the pool summary, the term states, the disproof causes |
-| [pane6_chronology.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/pane6_chronology.png) | 39 steps, each saying how its number was got |
-| [test_page_before.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/test_page_before.png) | `test_page.html` at commit `a5d8bee` |
-| [test_page_after.png](file://~/Programming/PseudoCoupHQ/DevComms/screens/log_184/test_page_after.png) | the same page now — byte-identical |
+| [pane1_unit_viewer.png](file://PseudoCoupHQ/DevComms/screens/log_184/pane1_unit_viewer.png) | `cpp/regen_63240`, label `bitor`, signature `(a: unsigned long long, b: unsigned int) -> 64-bit`, its three instructions, its wrapped text, its ledger |
+| [pane2_selector.png](file://PseudoCoupHQ/DevComms/screens/log_184/pane2_selector.png) | the nine languages with their counts |
+| [pane2_selector_drilled.png](file://PseudoCoupHQ/DevComms/screens/log_184/pane2_selector_drilled.png) | rust → 21 operator groups → 22 type signatures under one group |
+| [pane3_opcode_index.png](file://PseudoCoupHQ/DevComms/screens/log_184/pane3_opcode_index.png) | all 162 arch opcodes with their unit counts, `ret` at 30,432 |
+| [pane3_opcode_drilled.png](file://PseudoCoupHQ/DevComms/screens/log_184/pane3_opcode_drilled.png) | one opcode's (language, operator group, signature) groups |
+| [pane4_coverage.png](file://PseudoCoupHQ/DevComms/screens/log_184/pane4_coverage.png) | four compiler graphs, go's coverage populations, the never-entered files |
+| [pane5_stats.png](file://PseudoCoupHQ/DevComms/screens/log_184/pane5_stats.png) | the pool summary, the term states, the disproof causes |
+| [pane6_chronology.png](file://PseudoCoupHQ/DevComms/screens/log_184/pane6_chronology.png) | 39 steps, each saying how its number was got |
+| [test_page_before.png](file://PseudoCoupHQ/DevComms/screens/log_184/test_page_before.png) | `test_page.html` at commit `a5d8bee` |
+| [test_page_after.png](file://PseudoCoupHQ/DevComms/screens/log_184/test_page_after.png) | the same page now — byte-identical |
 
 **How the screenshots were taken, stated plainly.** A window on a
 Wayland desktop cannot be photographed from this terminal session, so a
@@ -638,7 +638,7 @@ scratchpad, so it adds no un-ruled file to the owner's projects.
 **The command the owner runs to see it himself**, with a real window:
 
 ```
-cd ~/Programming/Ourobrowser && LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1 python3 browser_engine.py /~/Programming/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html
+cd Ourobrowser && LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1 python3 browser_engine.py /PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html
 ```
 
 ---
@@ -777,7 +777,7 @@ gained one settled rule and four realization rows. The rule, LITERAL:
 
 # 11. Complete file inventory
 
-## 11.1 `~/Programming/Ourobrowser` — new content in existing files
+## 11.1 `Ourobrowser` — new content in existing files
 
 | file | what changed |
 |---|---|
@@ -785,7 +785,7 @@ gained one settled rule and four realization rows. The rule, LITERAL:
 | `bridge.py` | `html_pushed` signal, `set_html` method, injected `rewriter`, `_identity` default. `execute_python` unchanged |
 | `test_page.html` | **not edited** — `git diff a5d8bee..HEAD` is empty |
 
-## 11.2 `~/Programming/Ourobrowser/Planning` — five COREs, six PROGRESS
+## 11.2 `Ourobrowser/Planning` — five COREs, six PROGRESS
 
 | file | what changed |
 |---|---|
@@ -801,7 +801,7 @@ gained one settled rule and four realization rows. The rule, LITERAL:
 | `node_0_4_bridge/node_0_0_web_channel/PROGRESS.md` | design entry + code-landed entry |
 | `node_0_5_test_page/PROGRESS.md` | the before/after proof |
 
-## 11.3 `~/Programming/PseudoCoupHQ` — new files
+## 11.3 `PseudoCoupHQ` — new files
 
 | file | what it is |
 |---|---|
@@ -811,7 +811,7 @@ gained one settled rule and four realization rows. The rule, LITERAL:
 | `DevComms/log_184_task77_dashboard_in_ourobrowser.md` | this log |
 | `DevComms/screens/log_184/` | ten screenshots |
 
-## 11.4 `~/Programming/PseudoCoupHQ` — edited
+## 11.4 `PseudoCoupHQ` — edited
 
 | file | the whole of the edit |
 |---|---|
@@ -946,7 +946,7 @@ this task:
 - the four level-2 COREs carry a `node.path` without its `Planning/`
   prefix, and `level: 1` where the folder is at level 2;
 - `Planning/CORE_0.md` says the remote is `Ourobrowser.git`; git says
-  `https://github.com/TheStudent00/PyBrowser.git`. The project was
+  `https://github.com/<owner>/PyBrowser.git`. The project was
   renamed in commit `74f2a1c` and the CORE was updated ahead of the
   remote, or the remote was never renamed.
 
@@ -980,5 +980,5 @@ this task:
   replacing all of it.
 - Whether `DevComms/` should stay in Ourobrowser's `.gitignore`. This
   task wrote that project's first numbered log,
-  `~/Programming/Ourobrowser/DevComms/log_001_python_renders_the_page.md`,
+  `Ourobrowser/DevComms/log_001_python_renders_the_page.md`,
   and the repo's own rule keeps it untracked.

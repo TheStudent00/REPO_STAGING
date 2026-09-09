@@ -3,7 +3,7 @@
 # corrected one-operand branch did to the table, and what the control
 # transfers look like once they are counted as guard rows.
 set -euo pipefail
-M=/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json
+M=PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json
 
 echo "[1/3] the one-operand rows of the binary family, after the fix"
 python3 -c "

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/5] bounds"
 python3 t94_read_bounds.py 2>&1 | tail -10
 echo "[2/5] re-carve + render + gate"

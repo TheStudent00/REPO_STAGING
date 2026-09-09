@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_2_0_0_on_scripts
@@ -48,4 +48,4 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 ## SUPPORT files in this sub-tree
 
-- `~/Programming/PseudoCoup_v6/Planning/node_0_2_api/node_0_2_0_examples/node_0_2_0_0_on_scripts/SUPPORT_behavioral_oracle.md`
+- `PseudoCoup_v6/Planning/node_0_2_api/node_0_2_0_examples/node_0_2_0_0_on_scripts/SUPPORT_behavioral_oracle.md`

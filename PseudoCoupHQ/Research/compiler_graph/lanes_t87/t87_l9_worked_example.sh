@@ -22,7 +22,7 @@
 # TRANSITION COUNT, a number, and by nothing else.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 cd "$REPO"
 
 say "[1/5] the four measured populations, side by side"
@@ -37,7 +37,7 @@ print("   %-20s %7s %9s %8s %8s %10s %10s"
       % ("population", "probes", "variants", "nodes", "edges",
          "edges x1", "edges xall"))
 for name, path in rows:
-    d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/' + path))
+    d = json.load(open('PseudoCoupHQ/Research/compiler_graph/' + path))
     p = d["populations"]; c = d["census"]["transitions"]
     print("   %-20s %7d %9d %8d %8d %10d %10d"
           % (name, p["diaries_on_disk"], p["operator_traced_variants"],
@@ -51,7 +51,7 @@ import json
 for path in ("variant_connections_c_and_cpp.json",
              "variant_connections_extended.json",
              "variant_connections_go.json"):
-    d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/' + path))
+    d = json.load(open('PseudoCoupHQ/Research/compiler_graph/' + path))
     rows = d["variants"]
     own = [r for r in rows if r["transitions_exclusive_to_this_variant"] > 0]
     print("   %-38s %5d variants, %4d own at least one exclusive transition, "
@@ -70,7 +70,7 @@ PY
 say "[3/5] THE WORKED EXAMPLE -- one variant, its values moving"
 python3 - <<'PY'
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+d = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                    'variant_connections_c_and_cpp.json'))
 row = d["variants"][0]
 print("   variant_id : %s" % row["variant_id"])
@@ -115,7 +115,7 @@ say "[4/5] WHAT THE UNION SAYS ABOUT THOSE SAME NODES -- coverage, streamed"
 python3 - <<'PY'
 import json, resource, time
 wanted = set(x for x in open('/work/wanted_ids.txt').read().split("\n") if x)
-path = ('/projects/PseudoCoupHQ/Research/compiler_graph/'
+path = ('PseudoCoupHQ/Research/compiler_graph/'
         'coverage_c_and_cpp.json')
 # THE FILE IS 416,754,589 BYTES AND IS NOT OPENED WHOLE. json.dumps with
 # indent=1 puts one element on a line, so `per_node_visitors` reads as a
@@ -152,7 +152,7 @@ print("   coverage_c_and_cpp.json: %d lines read, PEAK RESIDENT %.1f MB, "
       "wall %.1f s" % (lines, peak, time.time() - started))
 print("   THE CONTRAST, per node:")
 print("      %-64s %14s %16s" % ("node", "union: probes", "third kind"))
-d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+d = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                    'variant_connections_c_and_cpp.json'))
 row = d["variants"][0]
 labels = {}
@@ -170,7 +170,7 @@ PY
 say "[5/5] the same question asked of the whole population, not one variant"
 python3 - <<'PY'
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+d = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                    'variant_connections_c_and_cpp.json'))
 n = d["census"]["nodes"]; t = d["census"]["transitions"]
 p = d["populations"]

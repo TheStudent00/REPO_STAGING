@@ -1,7 +1,7 @@
 # log 156 — TASK 56: bank round 11
 
 Date: 2026-09-03. Author: Claude Code (implementer), no sub-agents.
-Working directory: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+Working directory: `PseudoCoupHQ/Research/op_pipeline`.
 Python: `/tmp/reconnect_venv/bin/python3`.
 
 Every rendering below is labelled **LITERAL**, **GLOSS** or **ANALOGY**,
@@ -43,7 +43,7 @@ I VERIFIED. Command run once per file, same process, same script,
 no edits:
 
 ```
-$ cd ~/Programming/PseudoCoupHQ/Research/op_pipeline
+$ cd PseudoCoupHQ/Research/op_pipeline
 $ for f in the_pool3.json canon38_guard.json layer4c_state.json \
     name_census4.json canon38_wrapped_c.json canon38_wrapped_cpp.json \
     canon38_wrapped_go.json canon38_wrapped_rust.json \
@@ -162,7 +162,7 @@ under the brief-strict rule, the 22,028 is a merge count.
 ### 1.3 Prior artifacts verified untouched, as superseded records
 
 I VERIFIED (md5 + `git status --porcelain` + `git log -1`, from
-`~/Programming/PseudoCoupHQ/Research/op_pipeline`):
+`PseudoCoupHQ/Research/op_pipeline`):
 
 ```
 $ md5sum the_pool2.json canon37_guard.txt layer4b_state.json name_census3.json
@@ -200,8 +200,8 @@ CONTAINER ID  IMAGE                            COMMAND               CREATED    
 ffa29c11714e  localhost/sandbox-proxy:latest   squid -N -d 1 -f ...  9 hours ago  Up 9 hours  3128/tcp    sandbox-proxy
 66eaf0524a25  localhost/sandbox-runner:latest  python3 -u /opt/d...  9 hours ago  Up 9 hours              sandbox-runner
 
-$ python3 ~/Programming/Airlock/airlock doctor
-doctor: ~/Programming/Airlock
+$ python3 Airlock/airlock doctor
+doctor: Airlock
 | severity | check | what was seen | what to do |
 |---|---|---|---|
 | WARN | agent/drop clutter | .../agent/drop/test_parse.py is not a runnable lane | rm it, on the host |
@@ -307,10 +307,10 @@ per the brief's instruction to re-run rather than assume.
 I VERIFIED:
 
 ```
-$ wc -c ~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt
-2280 ~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt
+$ wc -c PseudoCoupHQ/DevComms/next_commit_message.txt
+2280 PseudoCoupHQ/DevComms/next_commit_message.txt
 
-$ head -5 ~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt
+$ head -5 PseudoCoupHQ/DevComms/next_commit_message.txt
 Round 11 banked (TASK 56, log_156). The pool now stands at 2,247
 entries over the full 30,436-member population (original 1,763 of
 1,779; interpreter 9 of 11; regenerated 28,664 of 29,288), built over
@@ -318,7 +318,7 @@ canon38 and layer4c. Layer 4 on that same 30,436: 23,132 proved / 415
 withdrawn / 5,602 undecided / 1,287 no-term. The 13 round-5/6
 ```
 
-The daemon consumes this file by design: `~/Programming/Misc/repo_
+The daemon consumes this file by design: `Misc/repo_
 daemon/repo_daemon.py` line 159-161 names exactly this path
 (`"DevComms/next_commit_message.txt"`, plus two legacy variants) as
 one of the message sources it reads and (per `README.md` line 107)
@@ -335,11 +335,11 @@ file list, the daemon consumed it.
 
 ## 4. Files created this session
 
-- `~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt` (2,280
+- `PseudoCoupHQ/DevComms/next_commit_message.txt` (2,280
   bytes) — posterity message, §3.
-- `~/Programming/PseudoCoupHQ/DevComms/log_156_task56_bank_round11.md`
+- `PseudoCoupHQ/DevComms/log_156_task56_bank_round11.md`
   — this report.
-- Appended to `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/
+- Appended to `PseudoCoupHQ/Planning/node_0_3_research/
   node_0_3_5_compiler_graph/PROGRESS.md` under the existing `# PROGRESS`
   heading (not a new file).
 

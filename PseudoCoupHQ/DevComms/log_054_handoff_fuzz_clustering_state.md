@@ -8,11 +8,11 @@ which files and what is settled, open, and next.
 
 ## read these first, in this order
 
-1. `~/Programming/PseudoCoupHQ/CLAUDE.md` — settled vocabulary,
+1. `PseudoCoupHQ/CLAUDE.md` — settled vocabulary,
    canonical form, probe design, scoring rules, explorer requirements,
    how the owner works. Written 2026-08-21 precisely because rulings kept
    getting re-litigated.
-2. `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/SUPPORT_ontology.md`
+2. `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/SUPPORT_ontology.md`
    — the settled ontology: language → operator → profile → cell; key =
    a cell's address; contract vs group; what merging is NOT. the owner's
    verbatim ruling on contraction is quoted there.
@@ -42,9 +42,9 @@ which files and what is settled, open, and next.
 - Lane machinery: `l3_cart_values.py` (X sets), `l3_cart_gen.py`
   (lanes), `l3_cart_read.py` (fold), `l3_row_sim.py` (scoring),
   `l3_row_graph_v4.py` (graph), `verify_row_graph_v4.js` (headless).
-- Sandbox: lanes drop into `~/Programming/SandboxDesign/agent/drop`;
+- Sandbox: lanes drop into `SandboxDesign/agent/drop`;
   progress across all runs:
-  `bash ~/Programming/SandboxDesign/progress.sh` (`-w` to watch).
+  `bash SandboxDesign/progress.sh` (`-w` to watch).
   Ruby stall budget is 2 s; ALL ruby stalls so far are `**` with a
   BigDecimal operand.
 

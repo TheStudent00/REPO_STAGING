@@ -44,7 +44,7 @@ The `ts_to_ur` open questions, in weight order. Everything else in the ledgerer 
 
 * macro_engine.py is Rust specific isnt it? also does it use tree-sitter? and i want to caution the acceptance of components that exist from failed project versions -- which is almost every project in Programming due to LLM drift.
   * **answer (Claude, 2026-08-06), measured against the file
-    (`~/Programming/PseudoCoup_v5/Research/macro_engine.py`, 259
+    (`PseudoCoup_v5/Research/macro_engine.py`, 259
     lines):**
     - rust-specific: the MECHANISM is, deliberately — it implements
       macro-by-example (pattern + template + `$` metavariables),

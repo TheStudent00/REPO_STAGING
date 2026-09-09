@@ -8,13 +8,13 @@ plain words. Every figure names its population (§3.4a). Nothing here
 decides anything; the decisions are the owner's.
 
 Sources, by full path:
-- `~/Programming/PseudoCoupHQ/DevComms/log_135_task43_universal_form_redone.md`
+- `PseudoCoupHQ/DevComms/log_135_task43_universal_form_redone.md`
   (calls 1, 2, 3)
-- `~/Programming/PseudoCoupHQ/DevComms/log_137_task45_type_second_witness.md`
+- `PseudoCoupHQ/DevComms/log_137_task45_type_second_witness.md`
   (call 4)
-- `~/Programming/PseudoCoupHQ/DevComms/log_138_airlock_instances_feature.md`
+- `PseudoCoupHQ/DevComms/log_138_airlock_instances_feature.md`
   (calls 5, 6, 7)
-- `~/Programming/PseudoCoupHQ/DevComms/log_126_task37_testimony_defect.md`
+- `PseudoCoupHQ/DevComms/log_126_task37_testimony_defect.md`
   and `log_131_task40_regeneration_trickle.md` (call 8)
 
 Glossary, for the terms that carry weight below:
@@ -304,7 +304,7 @@ As built, a non-default instance's drop/status/logs/out tree is
 `agent/` at the top of the checkout, as it always was.
 
 The fork had put its tree OUTSIDE the checkout
-(`~/Programming/AirlockTrickle/agent`), deliberately, so the 30-second
+(`AirlockTrickle/agent`), deliberately, so the 30-second
 commit daemon would never see run records.
 
 ## 7.2 The mechanism

@@ -4,7 +4,7 @@
 # t86_all_panes2.json had been copied out of the sandbox's /out into the
 # tree, and refused by name on the missing file -- kept as the record.
 set -uo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 echo "the guard, unmodified: sha256 $(sha256sum check_no_spelling_keys.py | cut -d' ' -f1)"
 for f in t86_vcs_scale.json t86_sample.json t86_sample2.json \
          t86_all_panes.json t86_all_panes2.json; do

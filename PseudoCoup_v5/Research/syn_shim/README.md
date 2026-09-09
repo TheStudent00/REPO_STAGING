@@ -22,7 +22,7 @@ same pins as PCv6's manifest of record.
 ## The demonstration
 
 Input, real, from
-`~/Programming/Sources/rust/compiler/rustc_codegen_llvm/src/coverageinfo/mapgen.rs:27`:
+`Sources/rust/compiler/rustc_codegen_llvm/src/coverageinfo/mapgen.rs:27`:
 
 ```rust
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, TryFromU32)]

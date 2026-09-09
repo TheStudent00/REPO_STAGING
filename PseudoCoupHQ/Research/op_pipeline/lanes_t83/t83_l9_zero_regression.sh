@@ -5,7 +5,7 @@
 # stored.  If the bound changes a record it is not a bound and the
 # lane refuses.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/1] three stored shards re-transcribed under the bound"
 python3 term66_bounded.py 6144 100000 --check \
   canon40_wrapped_go.json \

@@ -2,7 +2,7 @@
 
 Line-wide (research master plan; theory). Written 2026-09-07 by the
 coordinator (Fable) at the owner's request after reading
-`~/Programming/PseudoCoupHQ/DevComms/log_228_lean_float_model_and_the_proof_system.md`,
+`PseudoCoupHQ/DevComms/log_228_lean_float_model_and_the_proof_system.md`,
 a branch conversation's record. the owner's own words about that log: it
 "didnt capture the grander purpose beyond the float model proofs.
 particularly how the automated study of arch opcode behavior

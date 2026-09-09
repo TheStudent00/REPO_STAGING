@@ -4,7 +4,7 @@ Date: 2026-09-03. Nodes: `node_0_3_5_6_term` (with `transcribe`,
 `normalize`, `census`, `render_back`) and `node_0_3_5_7_pool` (with
 `entry`, `merge_grounds`, `representative`, `families`,
 `exception_families`), under
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`.
 
 Population line, said once and carried on every figure below: **the
 30,432 arch-units canon39 records as `WRAPPED_TEXT_PROVED`**, split
@@ -611,7 +611,7 @@ shape the work needed in advance.
 The guard file was not edited. LITERAL:
 
 ```
-$ git -C ~/Programming/PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py
+$ git -C PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py
 (no output)
 $ md5sum check_no_spelling_keys.py
 1d6aba67cbcdb021c3bdfd7f40fd2020  check_no_spelling_keys.py
@@ -654,7 +654,7 @@ through `term65_state.json`.
 **None of the round's live modules were edited.** LITERAL:
 
 ```
-$ git -C ~/Programming/PseudoCoupHQ status --porcelain Research/op_pipeline/term.py Research/op_pipeline/pool.py Research/op_pipeline/gate.py Research/op_pipeline/reference.py
+$ git -C PseudoCoupHQ status --porcelain Research/op_pipeline/term.py Research/op_pipeline/pool.py Research/op_pipeline/gate.py Research/op_pipeline/reference.py
 (no output)
 ```
 
@@ -712,12 +712,12 @@ fields read by nothing; the check above is the mechanical proof.
 | `pool65_run.log` | the pool run transcript |
 | `guard65.json`, `guard65_transcript.txt` | the guard result and its transcript |
 
-All under `~/Programming/PseudoCoupHQ/Research/op_pipeline/`.
+All under `PseudoCoupHQ/Research/op_pipeline/`.
 
 ## 7.3 Plan files touched
 
 Under
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`:
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`:
 
 PROGRESS (all ten):
 

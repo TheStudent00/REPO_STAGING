@@ -9,7 +9,7 @@ node:
     name: hq
     path: Planning/CORE_0.md
     repo: PseudoCoupHQ
-    remote: https://github.com/TheStudent00/PseudoCoupHQ.git
+    remote: https://github.com/<owner>/PseudoCoupHQ.git
 super_node: null
 sub_nodes:
     - name: projects
@@ -58,19 +58,19 @@ into any of them.
 
 three, and these are the whole of it.
 
-- `~/Programming/PseudoCoup_v5` — being gutted and rebuilt as the
+- `PseudoCoup_v5` — being gutted and rebuilt as the
   Frankenstein transpiler and ledgerer. live for new work.
-- `~/Programming/PseudoCoup_v6` — the tool to transpile from source
+- `PseudoCoup_v6` — the tool to transpile from source
   languages into the hub. live for new work.
-- `~/Programming/PseudoIR` — the system the hub is constructed with.
+- `PseudoIR` — the system the hub is constructed with.
   live for new work.
 
 HQ reads and copies from anything in `~/Programming` it needs. only
 the three above take new work from here.
 
 *meta-note, not a repo entry: this tree conforms to the planning
-framework in `~/Programming/PlanPlan`, and the work is done under
-the communication protocol in `~/Programming/DevComms`. neither is
+framework in `PlanPlan`, and the work is done under
+the communication protocol in `DevComms`. neither is
 part of the line and neither is HQ's to change. access to both is per
 request.*
 
@@ -92,6 +92,6 @@ super-document and never contradict it.
 
 that is the point of extracting them here. before HQ existed the
 cycle text lived twice, in
-`~/Programming/PseudoCoup_v6/Planning/CORE_0.md` and
-`~/Programming/PseudoIR/Planning/CORE_0.md`, differing by a word,
+`PseudoCoup_v6/Planning/CORE_0.md` and
+`PseudoIR/Planning/CORE_0.md`, differing by a word,
 with nothing to say which was right.

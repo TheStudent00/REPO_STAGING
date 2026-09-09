@@ -1,12 +1,12 @@
 # Task ap3 — AutoPoly loop, third pass: the vector ARRIVAL as two halves, the x87 cells through c's 80-bit holder, the blocked check un-blocked, and one fix measured alone
 
-Law: `~/Programming/PseudoCoupHQ/Research/LAW.md`, ALL of it including the
+Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it including the
 tower section. Then `task_ap2_brief.md` and `task_ap1_brief.md` beside this
 file and their logs `DevComms/log_244` (ap2: the change table, §"Awaiting
 the owner"), `log_243`; the driver `.../emulation/autopoly/autopoly.py` and
 `.../emulation/handful/handful.py` as ap2 left them; the four renderers;
 `Research/op_pipeline/lean/model_translate.py` (`load_rows`). Instance
-`ap3.conf` (copy from `~/Programming/Airlock/instances/ap3.conf`; mounts
+`ap3.conf` (copy from `Airlock/instances/ap3.conf`; mounts
 `sandbox-persist` read-only). Artifact folder: `.../emulation/autopoly/`,
 writing `autopoly3_*`; lanes under `lanes_ap3/`.
 
@@ -35,7 +35,7 @@ every json; log (next free number, check right before writing); verifier
 lane; PROGRESS on the autopoly node; sync-back; instance down. Memory:
 bound 6g inside the cap, sample the first 20 runs, paste peak RSS, named
 abort `ABORT_MEMORY_AP3`. Stop rules per LAW; never delete anything under
-`~/AirlockRuns/` or `~/Programming/Airlock/` on either machine — a lane
+`<runs>/` or `Airlock/` on either machine — a lane
 name that collides gets a new name. Reply with the per-target table, the
 all-four count and share (three passes), the change table, the x87 probe
 result, the `check` tally, the fix-1 measurement, the tally, the two lists.

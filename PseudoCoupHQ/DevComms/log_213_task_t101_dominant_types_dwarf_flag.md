@@ -1,15 +1,15 @@
 # log 213 — task t101: dominant types, and the flag that stops the join at step 1
 
 Project node: `hq.research.compiler_graph.probes.type_inventory` —
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_0_probes/node_0_3_1_0_1_type_inventory/CORE_0_3_1_0_1_type_inventory.md`.
-Master plan step: `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_0_probes/node_0_3_1_0_1_type_inventory/CORE_0_3_1_0_1_type_inventory.md`.
+Master plan step: `PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
 §4.2 step 3, "dominant types: the join of language spellings to machine
 holders".
 
-Date 2026-09-06. Instance `~/Programming/Airlock/instances/t101.conf`.
+Date 2026-09-06. Instance `Airlock/instances/t101.conf`.
 Every transcript below was produced by a lane of that instance, where
-this repo is mounted at `/projects/PseudoCoupHQ`; the host path of that
-mount is `~/Programming/PseudoCoupHQ`.
+this repo is mounted at `PseudoCoupHQ`; the host path of that
+mount is `PseudoCoupHQ`.
 
 ---
 
@@ -19,16 +19,16 @@ mount is `~/Programming/PseudoCoupHQ`.
   integer, unsigned integer, float, truth) at a width — with every
   language's spellings for it hanging off it (research CORE §1).
 - **The language type inventory**,
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/type_inventory2_core2.json`,
+  `PseudoCoupHQ/Research/op_pipeline/type_inventory2_core2.json`,
   is the left side of the join: per language, per scalar-core spelling,
   a class and no width.
 - **The DWARF parameter table** is the right side: the compiler's own
   debug record of a probe function's parameters, stored on every
   accepted probe under
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/trickle_store/`.
+  `PseudoCoupHQ/Research/op_pipeline/trickle_store/`.
 - **The machine type key** is what the join was to make readable: the
   `type_key` field on every entry of
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/the_pool5.json` —
+  `PseudoCoupHQ/Research/op_pipeline/the_pool5.json` —
   arrival register families and answer width, 88 distinct over 1,831
   entries.
 
@@ -71,12 +71,12 @@ rather than a spot check, and refuses by name.
 ## 3.1 One stored DWARF parameter table, LITERAL
 
 The c probe whose operand is declared `_Bool`, from
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/trickle_store/op_units2_c_c0000.json`.
+`PseudoCoupHQ/Research/op_pipeline/trickle_store/op_units2_c_c0000.json`.
 The first printed line is the declared spelling; the second is the
 whole stored table.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/trickle_store/op_units2_c_c0000.json'));p=d['probes']['1'];print(p['meta']['lhs_type']);print(json.dumps(p['anchor']['dwarf']))"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/trickle_store/op_units2_c_c0000.json'));p=d['probes']['1'];print(p['meta']['lhs_type']);print(json.dumps(p['anchor']['dwarf']))"
 _Bool
 [{"name": "a", "location": "2 byte block: 91 7f (DW_OP_fbreg: -1)"}]
 ```
@@ -87,12 +87,12 @@ did not say it is a boolean.
 
 ## 3.2 The reader every probe lane's product passes through, LITERAL
 
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/fold.py`, the body of
+`PseudoCoupHQ/Research/op_pipeline/fold.py`, the body of
 `dwarf_rows`, lines 82–91. Both branches build a row the same way, and
 both name the same two fields.
 
 ```
-$ sed -n '82,91p' /projects/PseudoCoupHQ/Research/op_pipeline/fold.py
+$ sed -n '82,91p' PseudoCoupHQ/Research/op_pipeline/fold.py
     got = []
     for item in text.split(";"):
         if not item:
@@ -120,12 +120,12 @@ touched.
 
 ## 3.3 The lane that produced the text that reader parses, LITERAL
 
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/trickle_lanes/asgrecap_asgrecap_go_c0001.sh`,
+`PseudoCoupHQ/Research/op_pipeline/trickle_lanes/asgrecap_asgrecap_go_c0001.sh`,
 lines 255–262. It is inside the walk over `DW_TAG_formal_parameter`
 DIEs.
 
 ```
-$ sed -n '255,262p' /projects/PseudoCoupHQ/Research/op_pipeline/trickle_lanes/asgrecap_asgrecap_go_c0001.sh
+$ sed -n '255,262p' PseudoCoupHQ/Research/op_pipeline/trickle_lanes/asgrecap_asgrecap_go_c0001.sh
                 continue
             if t != "DW_TAG_formal_parameter":
                 continue
@@ -143,11 +143,11 @@ carries `DW_AT_byte_size` and `DW_AT_encoding` — is never followed.
 ## 3.4 The measurement over every store on disk
 
 Lane `t101_l1_dwarf_shape.sh` ran
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/types101_join.py`,
+`PseudoCoupHQ/Research/op_pipeline/types101_join.py`,
 which streams every store one file at a time and folds only counters.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));c=d['counts'];print('files', c['store_files_read']);print('rows', c['dwarf_rows_examined']);print('rows with a byte size or encoding', c['dwarf_rows_carrying_a_byte_size_or_encoding_field'])"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));c=d['counts'];print('files', c['store_files_read']);print('rows', c['dwarf_rows_examined']);print('rows with a byte size or encoding', c['dwarf_rows_carrying_a_byte_size_or_encoding_field'])"
 files {'op_units_<lang>': 5, 'op_units_asg_<lang>': 5, 'trickle_store': 338}
 rows 64398
 rows with a byte size or encoding 0
@@ -157,7 +157,7 @@ Every distinct row shape measured, one line per (store kind,
 language, build, field set, count):
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));[print(s['store_kind'],s['language'],s['build'],s['dwarf_row_fields'],s['rows']) for s in d['dwarf_row_shapes_measured']]"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));[print(s['store_kind'],s['language'],s['build'],s['dwarf_row_fields'],s['rows']) for s in d['dwarf_row_shapes_measured']]"
 trickle_store cpp anchor ['location', 'name'] 33820
 trickle_store c anchor ['location', 'name'] 19676
 trickle_store swift anchor ['location', 'name'] 2581
@@ -185,7 +185,7 @@ from. The list printed is every field name on one of its unit records
 containing `dwarf` or `type`.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/canon40_regen_store/op_units2_c_c0000.json'));u=d['units']['c/regen_1'];print([k for k in sorted(u) if 'dwarf' in k.lower() or 'type' in k.lower()])"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/canon40_regen_store/op_units2_c_c0000.json'));u=d['units']['c/regen_1'];print([k for k in sorted(u) if 'dwarf' in k.lower() or 'type' in k.lower()])"
 []
 ```
 
@@ -194,7 +194,7 @@ $ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_p
 One row of the language inventory, c's `_Float16`.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/type_inventory2_core2.json'));print(json.dumps(d['languages']['c']['scalar_core'][2]))"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/type_inventory2_core2.json'));print(json.dumps(d['languages']['c']['scalar_core'][2]))"
 {"language": "c", "id": "c/core_2", "spelling": "_Float16", "extracted_marking": "float", "normalised_class": "float"}
 ```
 
@@ -210,8 +210,8 @@ reason is one row.
 
 | cause | places | what they hold instead |
 |---|---|---|
-| the record shape carries no type facts | `~/Programming/PseudoCoupHQ/Research/op_pipeline/trickle_store/` (338 files), `.../op_units_<lang>.json` (5), `.../op_units_asg_<lang>.json` (5) | a `(name, location)` DWARF row per parameter — measured in §3.4 |
-| the store is downstream of the type facts and never carried them | `.../canon36_regen_store/` … `.../canon40_regen_store/`, `.../layer4*_regen_store/`, `~/Programming/Airlock/agent/out/` (288 entries, 9.1 GB) | register facts: `arrival_contract_bindings`, `entry_contract`, `ledger`; in Airlock's product folder the only DWARF-typed artifacts are `result_types_<lang>.json`, which record the probe's RESULT type NAME |
+| the record shape carries no type facts | `PseudoCoupHQ/Research/op_pipeline/trickle_store/` (338 files), `.../op_units_<lang>.json` (5), `.../op_units_asg_<lang>.json` (5) | a `(name, location)` DWARF row per parameter — measured in §3.4 |
+| the store is downstream of the type facts and never carried them | `.../canon36_regen_store/` … `.../canon40_regen_store/`, `.../layer4*_regen_store/`, `Airlock/agent/out/` (288 entries, 9.1 GB) | register facts: `arrival_contract_bindings`, `entry_contract`, `ledger`; in Airlock's product folder the only DWARF-typed artifacts are `result_types_<lang>.json`, which record the probe's RESULT type NAME |
 | the type facts exist but for another population | `.../dwarf_typed_key.json`, `.../dwarf_typed_key_t27.json`, `.../proposal_representation_dimension2.json`, `.../proposal_representation_dimension3.json`, `.../prove_interp_computation.json`, `.../op_units_php.json`, `.../op_units_ruby.json` | interpreter handler parameters (cpython, ruby, php, java), not the five compiled languages' probes |
 | the type facts exist but for the wrong side and the wrong build | `.../result_types_asg_c.json`, `.../result_types_asg_cpp.json` | the only compiled-language artifacts keyed on `DW_AT_encoding` + `DW_AT_byte_size`: c 276 and cpp 324 assignment probes, gcc-built, RESULT type only |
 | the compile that could have recorded it did not | `.../type_inventory3.json`, `.../declare_raw/decl_<lang>.txt` | an ACCEPT/REFUSE verdict per candidate type and the compiler's refusal text; no width and no encoding was read from those compiles |
@@ -222,12 +222,12 @@ reason is one row.
 Labelled so it is never read as the deliverable. Per language, per
 scalar-core spelling, how many ACCEPTED probes declared an operand
 with that spelling. The rows themselves are in
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json`
+`PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json`
 under `the_spelling_side_only`; each row's `dwarf_byte_size` and
 `dwarf_encoding` read `NOT ON DISK -- see refusal`.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));S=d['the_spelling_side_only']['by_language'];[print(l,len(r),sum(1 for x in r if x['attested'])) for l,r in sorted(S.items())]"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));S=d['the_spelling_side_only']['by_language'];[print(l,len(r),sum(1 for x in r if x['attested'])) for l,r in sorted(S.items())]"
 c 56 25
 cpp 56 28
 go 14 14
@@ -276,22 +276,22 @@ with `resource.getrusage(RUSAGE_SELF)` after every store file, one
 store file held at a time and only counters kept across files.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));print(d['memory']['peak_rss_mb'], 'MB peak against a 2048 MB bound')"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));print(d['memory']['peak_rss_mb'], 'MB peak against a 2048 MB bound')"
 24.9 MB peak against a 2048 MB bound
 ```
 
 # 7. The guard
 
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py`
+`PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py`
 is unmodified and was run from this instance over the one json this
 task wrote, and the LAW's zero-count check was run over every file
 this task added.
 
 Lane log, host path:
-`~/AirlockRuns/t101/agent/logs/20260906T055012Z__t101_l5_guard2.sh.log`.
+`<runs>/t101/agent/logs/20260906T055012Z__t101_l5_guard2.sh.log`.
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS types101_dwarf_flag.json -- no operator token in any key, grouping, pairing or row structure
 ```
@@ -307,11 +307,11 @@ exists and lane 2 was withdrawn.
 
 One compile pass, not a redesign. Recompile one probe per (language,
 spelling) at the anchor flags already pinned in
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/type_inventory3.json`,
+`PseudoCoupHQ/Research/op_pipeline/type_inventory3.json`,
 and read `DW_AT_byte_size` and `DW_AT_encoding` off the
 `DW_TAG_formal_parameter`'s `DW_AT_type` chain. The reader already
 exists in this folder:
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.py`
+`PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.py`
 walks exactly that chain with pyelftools for the interpreter handlers.
 That is a new compile run and a change to the capture path, so it is
 the coordinator's to authorize.
@@ -320,20 +320,20 @@ the coordinator's to authorize.
 
 | lane | what it did | lane log, host path |
 |---|---|---|
-| `t101_l1_dwarf_shape.sh` | ran `types101_join.py`; step 1 refused by name | `~/AirlockRuns/t101/agent/logs/20260906T054643Z__t101_l1_dwarf_shape.sh.log` |
-| `t101_l3_transcripts.sh` | ran the commands §3.1, §3.4, §3.5, §3.6 and §5 paste | `~/AirlockRuns/t101/agent/logs/20260906T054758Z__t101_l3_transcripts.sh.log` |
-| `t101_l4_transcripts2.sh` | ran the two source quotations §3.2 and §3.3 | `~/AirlockRuns/t101/agent/logs/20260906T054822Z__t101_l4_transcripts2.sh.log` |
-| `t101_l5_guard2.sh` | the spelling guard and the zero-count check | `~/AirlockRuns/t101/agent/logs/20260906T055012Z__t101_l5_guard2.sh.log` |
-| `t101_l6_transcripts3.sh` | ran the §6 memory line and the §7 guard line in their full-path form | `~/AirlockRuns/t101/agent/logs/20260906T055212Z__t101_l6_transcripts3.sh.log` |
-| `t101_l7_claims.sh` | the first `check_conventions_log_claims.py --verify` over this log: 9 of 10 matched, 0 differed, 1 NOT_RERUNNABLE with cause `output_annotated` | `~/AirlockRuns/t101/agent/logs/20260906T055250Z__t101_l7_claims.sh.log` |
-| `t101_l8_transcripts4.sh` | re-quoted `fold.py` at lines 82–91, the arrow-free lines that carry the claim | `~/AirlockRuns/t101/agent/logs/20260906T055329Z__t101_l8_transcripts4.sh.log` |
-| `t101_l9_claims2.sh` | the final verify over this log; its tally is §11 | `~/AirlockRuns/t101/agent/logs/20260906T055403Z__t101_l9_claims2.sh.log` |
+| `t101_l1_dwarf_shape.sh` | ran `types101_join.py`; step 1 refused by name | `<runs>/t101/agent/logs/20260906T054643Z__t101_l1_dwarf_shape.sh.log` |
+| `t101_l3_transcripts.sh` | ran the commands §3.1, §3.4, §3.5, §3.6 and §5 paste | `<runs>/t101/agent/logs/20260906T054758Z__t101_l3_transcripts.sh.log` |
+| `t101_l4_transcripts2.sh` | ran the two source quotations §3.2 and §3.3 | `<runs>/t101/agent/logs/20260906T054822Z__t101_l4_transcripts2.sh.log` |
+| `t101_l5_guard2.sh` | the spelling guard and the zero-count check | `<runs>/t101/agent/logs/20260906T055012Z__t101_l5_guard2.sh.log` |
+| `t101_l6_transcripts3.sh` | ran the §6 memory line and the §7 guard line in their full-path form | `<runs>/t101/agent/logs/20260906T055212Z__t101_l6_transcripts3.sh.log` |
+| `t101_l7_claims.sh` | the first `check_conventions_log_claims.py --verify` over this log: 9 of 10 matched, 0 differed, 1 NOT_RERUNNABLE with cause `output_annotated` | `<runs>/t101/agent/logs/20260906T055250Z__t101_l7_claims.sh.log` |
+| `t101_l8_transcripts4.sh` | re-quoted `fold.py` at lines 82–91, the arrow-free lines that carry the claim | `<runs>/t101/agent/logs/20260906T055329Z__t101_l8_transcripts4.sh.log` |
+| `t101_l9_claims2.sh` | the final verify over this log; its tally is §11 | `<runs>/t101/agent/logs/20260906T055403Z__t101_l9_claims2.sh.log` |
 
 Lane scripts:
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/lanes_t101/`.
+`PseudoCoupHQ/Research/op_pipeline/lanes_t101/`.
 
 Products written, all new, all under
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/`:
+`PseudoCoupHQ/Research/op_pipeline/`:
 
 | file | what it is |
 |---|---|
@@ -360,7 +360,7 @@ would have had to be invented.
   anywhere in this task.
 - The spelling side of step 1 was computed in the same pass and stored
   under a field name that says it is half of step 1.
-- The instance `~/Programming/Airlock/instances/t101.conf` was created
+- The instance `Airlock/instances/t101.conf` was created
   from `o3.conf` at cpus 2 / memory 4g with the abort
   `ABORT_MEMORY_T101` at 2 GB; measured peak 24.9 MB; the instance was
   brought down at the end of the task.
@@ -379,7 +379,7 @@ would have had to be invented.
 
 `check_conventions_log_claims.py --verify --timeout 20` over this log,
 run from the t101 instance by lane `t101_l9_claims2.sh`. Lane log, host
-path: `~/AirlockRuns/t101/agent/logs/20260906T055403Z__t101_l9_claims2.sh.log`.
+path: `<runs>/t101/agent/logs/20260906T055403Z__t101_l9_claims2.sh.log`.
 
 | outcome | count |
 |---|---|

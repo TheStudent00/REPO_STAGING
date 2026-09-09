@@ -2,7 +2,7 @@
 """swift_render.py -- task g1: AutoPoly with SWIFT as the target.
 
 Node: hq.research.arch_unit_oracle.cross_construction
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`).
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`).
 
 READ THIS FIRST -- WHAT IS AND IS NOT ATTESTED IN THIS FILE.
 There is NO swift toolchain in the image this task ran under.  Lane
@@ -112,7 +112,7 @@ import z3                                                        # noqa: E402
 import emulate as E                                              # noqa: E402
 
 SRC_DIR = os.path.join(HERE, "src")
-HOST_FOLDER = ("~/Programming/PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/swift")
 
 TARGET = "swift"

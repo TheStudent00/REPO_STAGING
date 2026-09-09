@@ -11,8 +11,8 @@ import os
 import subprocess
 import sys
 
-HQ = "/projects/PseudoCoupHQ"
-GRAPHS = "/projects/PseudoCoupGraphs"
+HQ = "PseudoCoupHQ"
+GRAPHS = "PseudoCoupGraphs"
 
 def git_log_follow(repo, relpath):
     try:

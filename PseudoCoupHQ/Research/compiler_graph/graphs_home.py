@@ -11,7 +11,7 @@ the owner: "we can have a separate companion folder for the graphs and we will
 use local git to track changes every 30 seconds.  we will update the
 graphs as we progress along."
 
-`~/Programming/PseudoCoupGraphs` is that folder.  Its own README states
+`PseudoCoupGraphs` is that folder.  Its own README states
 the two reasons: the graphs, the coverage joins and the diaries are
 gigabytes, and PseudoCoupHQ pushes to GitHub, which refuses a file past
 its own wall -- one such artifact stops the whole push.  And the folder
@@ -36,9 +36,9 @@ HOW THE FOLDER IS FOUND, in order, first hit wins
   1. the environment variable PSEUDOCOUP_GRAPHS, if it names a folder
      that exists.  This is how a lane inside Airlock points at the
      container's own mount without a host path in its text;
-  2. /projects/PseudoCoupGraphs, the Airlock mount, when it exists;
+  2. PseudoCoupGraphs, the Airlock mount, when it exists;
   3. a sibling of this repository's working tree, `../PseudoCoupGraphs`;
-  4. `~/Programming/PseudoCoupGraphs`.
+  4. `PseudoCoupGraphs`.
 
 If none exists the folder is ANSWERED ANYWAY (the fourth), and
 `exists()` says false, so a caller can refuse by name rather than

@@ -1,13 +1,13 @@
 # log_074 — forensic audit: is matching decided by THE CANONICAL RUNNABLE FORM
 
-Scope: `~/Programming/PseudoCoupHQ/Research/op_pipeline`. Method: direct
+Scope: `PseudoCoupHQ/Research/op_pipeline`. Method: direct
 reads of the pipeline's own code and JSON artifacts, plus file mtimes —
 no code was run, no artifact was regenerated, nothing was fixed.
 Every number below is either quoted from a JSON artifact's own
 recorded field, or computed by this audit directly from an artifact
 using a rule quoted from the artifact's own producing code — the two
 are labelled separately every time, per §5.1 of
-`~/Programming/DevComms/LLM_communication_protocol_v2.md`.
+`DevComms/LLM_communication_protocol_v2.md`.
 
 ## Walkthrough
 

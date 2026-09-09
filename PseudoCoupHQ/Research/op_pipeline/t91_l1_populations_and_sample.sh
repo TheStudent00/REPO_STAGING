@@ -25,11 +25,11 @@
 #       reference steps into the callee's own body (reference CORE,
 #       "A `call` WITH AN ATTACHED CALLEE IS NOT A TRANSFER").
 #
-# Products: /projects/PseudoCoupHQ/Research/op_pipeline/t91_populations.json
+# Products: PseudoCoupHQ/Research/op_pipeline/t91_populations.json
 #           /out/t91_sample.json
 set -uo pipefail
 
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 mkdir -p /out
 
 echo "[1/2] the two populations, named unit by unit"
@@ -45,7 +45,7 @@ import resource
 import sys
 import time
 
-HERE = "/projects/PseudoCoupHQ/Research/op_pipeline"
+HERE = "PseudoCoupHQ/Research/op_pipeline"
 sys.path.insert(0, HERE)
 
 import gate as GATE

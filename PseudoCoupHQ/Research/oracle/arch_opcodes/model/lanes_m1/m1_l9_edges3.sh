@@ -24,6 +24,6 @@
 # 200 cells; rebuilt z3 terms held in a 400-row cache.
 set -euo pipefail
 echo "[1/1] task m1: model_table.py edges (memoized questions)"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py edges
 echo "[1/1] done"

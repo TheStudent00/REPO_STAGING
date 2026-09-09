@@ -7,9 +7,9 @@ supersedes: null
 nodes: [tools, research, hub]
 super_node:
     name: projects
-    path: ~/Programming/PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
+    path: PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
     repo: PseudoCoupHQ
-    remote: https://github.com/TheStudent00/PseudoCoupHQ.git
+    remote: https://github.com/<owner>/PseudoCoupHQ.git
 ---
 
 # CORE 0 — PseudoIR
@@ -24,7 +24,7 @@ super_node:
 
 ## super_node
 
-- [projects](~/Programming/PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md)
+- [projects](PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md)
 
 ## sub_nodes
 
@@ -40,7 +40,7 @@ connects languages at the ir level.
 ## the other project
 
 *settled above this tree.* the exchange and the cycle are stated in
-`~/Programming/PseudoCoupHQ/Planning/node_0_1_exchange/CORE_0_1_exchange.md`.
+`PseudoCoupHQ/Planning/node_0_1_exchange/CORE_0_1_exchange.md`.
 what follows in these two sections is this project's copy, kept
 because a reader here needs it — but HQ is where it is settled, and
 if this copy ever disagrees with HQ's, this copy is the one that is

@@ -18,6 +18,6 @@
 # MEMORY BOUND: 4 GB resident, named abort ABORT_MEMORY_G1C.  One read
 # of `single_opcode_units.json` (1.6 MB) per rule list, cached.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/1] task g1b: handful.py whynot3c idiv gpr_one 32"
 python3 $H/handful/handful.py whynot3c idiv gpr_one 32

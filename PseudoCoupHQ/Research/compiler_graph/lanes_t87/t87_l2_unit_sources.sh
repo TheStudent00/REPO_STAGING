@@ -15,20 +15,20 @@
 # field for any purpose but printing one single unit whole.
 set -u
 say() { echo; echo "======== $* ========"; }
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+PIPE=PseudoCoupHQ/Research/op_pipeline
+REPO=PseudoCoupHQ/Research/compiler_graph
 cd "$PIPE"
 
 say "[1/5] the go diary stems, and the go unit artifacts on disk"
 python3 - <<'PY'
 import json, os, glob
 stems = sorted(n[:-4] for n in os.listdir(
-    '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/go')
+    'PseudoCoupHQ/Research/compiler_graph/diaries/go')
     if n.endswith('.txt'))
 print("   diaries/go stems      : %d, first five %s" % (len(stems), stems[:5]))
 for name in ("canon31_units_go.json", "canon39_wrapped_go.json",
              "canon40_wrapped_go.json"):
-    path = '/projects/PseudoCoupHQ/Research/op_pipeline/' + name
+    path = 'PseudoCoupHQ/Research/op_pipeline/' + name
     doc = json.load(open(path))
     units = doc.get("units") if isinstance(doc, dict) else None
     if not isinstance(units, dict):
@@ -47,7 +47,7 @@ say "[2/5] the same question for c and cpp, and for the outcome column"
 python3 - <<'PY'
 import json, collections
 for lang in ("go", "c", "cpp"):
-    doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+    doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                          'canon39_wrapped_%s.json' % lang))
     tally = collections.Counter(u.get("outcome") for u in doc["units"].values())
     pops = collections.Counter(u.get("population") for u in doc["units"].values())
@@ -59,7 +59,7 @@ PY
 say "[3/5] canon31_units_go.json -- does it cover all 590, and with what"
 python3 - <<'PY'
 import json, os
-doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                      'canon31_units_go.json'))
 print("   top-level: %s" % sorted(doc)[:12])
 units = doc.get("units")
@@ -76,7 +76,7 @@ PY
 say "[4/5] the regenerated population: store shape and the diary stems"
 python3 - <<'PY'
 import json, os
-store = '/projects/PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
+store = 'PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
 names = sorted(os.listdir(store))
 print("   shards: %d" % len(names))
 doc = json.load(open(os.path.join(store, names[0])))
@@ -91,7 +91,7 @@ if isinstance(units, dict):
               "population", "lang", "n"):
         print("      %-16s %s" % (f, json.dumps(one.get(f))[:180]))
 stems = sorted(n[:-4] for n in os.listdir(
-    '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/regen')
+    'PseudoCoupHQ/Research/compiler_graph/diaries/regen')
     if n.endswith('.txt'))
 print("   regen diary stems: %d, first five %s" % (len(stems), stems[:5]))
 # how many shards would have to be opened to cover them, and do the ids match
@@ -118,7 +118,7 @@ say "[5/5] extended = original + regen? check the union"
 python3 - <<'PY'
 import os
 def stems(d):
-    p = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/' + d
+    p = 'PseudoCoupHQ/Research/compiler_graph/diaries/' + d
     return set(n[:-4] for n in os.listdir(p) if n.endswith('.txt'))
 ext = stems('extended'); orig = stems('c_and_cpp'); regen = stems('regen')
 print("   extended %d  c_and_cpp %d  regen %d  union %d  extended==union %s"

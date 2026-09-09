@@ -5,7 +5,7 @@
 # reason/reason_source on NO_TERM records -- every other byte of every
 # other record must hash identically.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 hash_masked () {
 python3 - <<'PY'

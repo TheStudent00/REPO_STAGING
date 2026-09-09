@@ -13,7 +13,7 @@
 #   parents measured at ~62 MB each, inside the instance's 16 GB.
 #   NAMED ABORT: ABORT_MEMORY_T97 if a parent's own peak passes 6 GB.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 for i in 0 1 2 3 4 5; do
   python3 term97_walk.py pass1 1536 120 "$i" 6 > "/work/t97_pass1_slice$i.log" 2>&1 &
 done

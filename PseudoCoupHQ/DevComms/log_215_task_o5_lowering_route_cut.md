@@ -72,7 +72,7 @@ whole-source counts.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.json'))
 for row in d['rows']:
     print(row['row_id'])
     for k, v in row['population_at_each_filter'].items():
@@ -145,7 +145,7 @@ go_compiler
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_cpp.json'))
+d = json.load(open('PseudoCoupGraphs/arch_opcode_nodes_cpp.json'))
 print('region_directories', d['region_directories'])
 print('definitions_marked file prefixes', sorted(set('/'.join(x['file'].split('/')[:4]) for x in d['definitions_marked'])))
 "
@@ -190,7 +190,7 @@ o4's own deliverable, not this cut.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.json'))
 row = [r for r in d['rows'] if r['row_id']=='go_compiler'][0]
 for v in row['route_variants'][:15]:
     ops = v['operands']
@@ -230,7 +230,7 @@ the route
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.json'))
 row = [r for r in d['rows'] if r['row_id']=='go_compiler'][0]
 for ex in row['route_examples_sample'][:5]:
     print(ex['site'], '|', ex['operator'], '|', ex['operand_types'], '| enclosing func line', ex['enclosing_function_line'], '|', ex['route_reason'])
@@ -280,11 +280,11 @@ is expected given they are 12 of 776 (~1.5%) of the route population.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.json'))
 row = [r for r in d['rows'] if r['row_id']=='clang_llvm_cpp'][0]
 print(row['diary_extended_robustness_check'])
 "
-{'dirs': ['/projects/PseudoCoupGraphs/diaries/extended'], 'n_files': 3980, 'n_lines': 24932220, 'distinct_coords': 1482, 'distinct_coords_gained_over_base_diary': 151}
+{'dirs': ['PseudoCoupGraphs/diaries/extended'], 'n_files': 3980, 'n_lines': 24932220, 'distinct_coords': 1482, 'distinct_coords_gained_over_base_diary': 151}
 ```
 
 **GLOSS.** Reading `diaries/extended` (the 1,380 original + 2,600
@@ -302,7 +302,7 @@ section 1.3's zero.
 # 2. The instrument
 
 `lowering_route_cut.py`
-(`/projects/PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.py`),
+(`PseudoCoupHQ/Research/oracle/compiler_units/lowering_route_cut.py`),
 imports its scanning machinery from `operator_variants_by_search.py`
 (task o4) and `compiler_operators_used.py` (task o3) rather than
 forking it — `build_language_inventory`, `lowered_set_for`,
@@ -345,7 +345,7 @@ counts closely).
 **LITERAL**:
 
 ```
-$ cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T103637Z__o5_l1b_lowering_route_cut.sh.log
+$ cat PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T103637Z__o5_l1b_lowering_route_cut.sh.log
 # script: /drop/o5_l1b_lowering_route_cut.sh
 # started: 2026-09-06T10:36:37+00:00
 # timeout: 3600s
@@ -386,13 +386,13 @@ token.
 **LITERAL**:
 
 ```
-$ python3 ~/Programming/Airlock/airlock submit ~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l2b_spelling_guard.sh --instance o5 --no-batch
+$ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l2b_spelling_guard.sh --instance o5 --no-batch
 ```
 
 ```
 (not re-run here: submits/moves the sandbox itself, by design outside
 this verifier's scope)
-$ cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T103904Z__o5_l2b_spelling_guard.sh.log
+$ cat PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T103904Z__o5_l2b_spelling_guard.sh.log
 # script: /drop/o5_l2b_spelling_guard.sh
 # started: 2026-09-06T10:39:04+00:00
 # timeout: 3600s
@@ -418,23 +418,23 @@ example) — the fix in section 2.2, re-run here clean.
 **LITERAL**:
 
 ```
-$ bash ~/Programming/Airlock/up.sh --instance o5
+$ bash Airlock/up.sh --instance o5
 === airlock up ===
-  instance: o5   runner: o5-runner   agent: ~/AirlockRuns/o5/agent
-  config:   ~/Programming/Airlock/instances/o5.conf
+  instance: o5   runner: o5-runner   agent: <runs>/o5/agent
+  config:   Airlock/instances/o5.conf
   proxy: none (instance is configured 'proxy = no' — no route out at all)
-  o5-runner already existed; started (bound to ~/AirlockRuns/o5/agent/drop)
+  o5-runner already existed; started (bound to <runs>/o5/agent/drop)
 
   o5-runner  Up Less than a second  localhost/sandbox-runner:latest
 ```
 
 Mounts came from this machine's shared `mounts.conf` (`o5.conf` sets
-no `mounts_file` override): `/projects/PseudoCoupHQ:rw`, `/sources:ro`,
-`/projects/PseudoCoupGraphs:rw`, `/projects/PlanPlan:ro` — already
+no `mounts_file` override): `PseudoCoupHQ:rw`, `/sources:ro`,
+`PseudoCoupGraphs:rw`, `PlanPlan:ro` — already
 covering every path this task reads; no mount edit was needed.
 
 ```
-$ bash ~/Programming/Airlock/down.sh --instance o5
+$ bash Airlock/down.sh --instance o5
 ```
 
 (run at the close of this log, output not pasted — see the verifier
@@ -453,11 +453,11 @@ yet)
 **LITERAL**, first pass (`o5_l3_claims_verify.sh`):
 
 ```
-$ python3 ~/Programming/Airlock/airlock submit ~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l3_claims_verify.sh --instance o5 --no-batch
+$ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l3_claims_verify.sh --instance o5 --no-batch
 ```
 
 ```
-$ cat ~/AirlockRuns/o5/agent/logs/20260906T152204Z__o5_l3_claims_verify.sh.log
+$ cat <runs>/o5/agent/logs/20260906T152204Z__o5_l3_claims_verify.sh.log
 ...
 log_215_task_o5_lowering_route_cut.md: 13 claims extracted
 ...
@@ -478,11 +478,11 @@ output order (`clang_llvm_cpp` then `go_compiler`); no value changed.
 **LITERAL**, second pass (`o5_l3b_claims_verify.sh`), after that fix:
 
 ```
-$ python3 ~/Programming/Airlock/airlock submit ~/Programming/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l3b_claims_verify.sh --instance o5 --no-batch
+$ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l3b_claims_verify.sh --instance o5 --no-batch
 ```
 
 ```
-$ cat ~/AirlockRuns/o5/agent/logs/20260906T152402Z__o5_l3b_claims_verify.sh.log
+$ cat <runs>/o5/agent/logs/20260906T152402Z__o5_l3b_claims_verify.sh.log
 ...
 log_215_task_o5_lowering_route_cut.md: 13 claims extracted
 ...

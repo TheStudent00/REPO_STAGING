@@ -48,7 +48,7 @@
 # refuse its own output on failure.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
+CG=PseudoCoupHQ/Research/compiler_graph
 export HOME=/work/t95home
 mkdir -p "$HOME/Programming"
 ln -sfn /sources "$HOME/Programming/Sources"
@@ -57,7 +57,7 @@ cd "$CG"
 say "[1/5] cpp -- the opcode argument, taken from its POSITION in the call"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 
 region = G.REGIONS["cpp"]
@@ -139,7 +139,7 @@ PY
 say "[2/5] cpp -- the callees the hop would follow, and whether they are in the region"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["cpp"]
 files = [f for f in G.list_region_files(region) if not f.endswith(".td")]
@@ -183,7 +183,7 @@ PY
 say "[3/5] rust -- every inline-asm template the COMPILER ITSELF spells"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["rust"]
 files = G.list_region_files(region)
@@ -205,7 +205,7 @@ PY
 say "[4/5] swift -- every inline-asm template the COMPILER ITSELF spells"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["swift"]
 files = G.list_region_files(region)
@@ -225,8 +225,8 @@ PY
 say "[5/5] the coverage summaries -- their shape, and the entered sets"
 python3 - <<'PY'
 import json, os, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
-HERE = "/projects/PseudoCoupHQ/Research/compiler_graph"
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
+HERE = "PseudoCoupHQ/Research/compiler_graph"
 for name in ("coverage_go_files.json", "coverage_cpp_files.json",
              "coverage_go_summary.json", "coverage_cpp_summary.json"):
     p = os.path.join(HERE, name)

@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_3_1_6_4_census
@@ -33,9 +33,9 @@ sub-node count: 0
 
 ## blocked
 
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 40 — producers, 1,637 rows blocked**, against census5's 52 / 1,877.
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 54 — store — **blocked on the transcribe node, flagged for the owner**.
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 61 — blocked, 1,220 units blocked, 1,059 cascades**, keyed by the typed
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 40 — producers, 1,637 rows blocked**, against census5's 52 / 1,877.
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 54 — store — **blocked on the transcribe node, flagged for the owner**.
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 61 — blocked, 1,220 units blocked, 1,059 cascades**, keyed by the typed
 
 ## PROGRESS bullet statuses
 

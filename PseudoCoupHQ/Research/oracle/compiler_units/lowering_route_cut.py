@@ -100,7 +100,7 @@ def abort_if_over_budget():
     return peak_mb
 
 
-GRAPHS = "/projects/PseudoCoupGraphs"
+GRAPHS = "PseudoCoupGraphs"
 DIARIES = f"{GRAPHS}/diaries"
 
 # ---------------------------------------------------------------------------

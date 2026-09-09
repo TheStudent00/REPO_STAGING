@@ -19,7 +19,7 @@
 # Product: t91_lost_proofs.json, t91_lost_proofs_printed.txt.
 set -uo pipefail
 
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 
 python3 -m py_compile t91_lost_proofs.py || exit 3
 python3 t91_lost_proofs.py 2>&1 | tee t91_lost_proofs_printed.txt

@@ -16,14 +16,14 @@
 # The cap is 6 GB resident, checked after every shard inside the
 # process by `check_memory`, with the named abort ABORT_MEMORY.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 say() { echo; echo "======== $* ========"; }
 
 say "0. which side of the wall"
 echo "hostname: $(cat /etc/hostname 2>/dev/null)"
 ls -d /home/*/Programming 2>&1 || echo "  host path ABSENT (as expected inside the container)"
-for p in /projects/PseudoCoupHQ /work /out ; do
+for p in PseudoCoupHQ /work /out ; do
   printf '  %-28s ' "$p"; ls -d "$p" >/dev/null 2>&1 && echo present || echo ABSENT
 done
 python3 --version
@@ -34,7 +34,7 @@ say "1. the imports term66_run.py needs, each named"
 python3 - <<'PY'
 import importlib
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 wanted = ["z3", "canonical_form", "gate", "reference", "regate64_run",
           "term", "pool", "pool65_run", "ledger", "dom_ops",
           "normalize79_pool_prediction", "guard66"]

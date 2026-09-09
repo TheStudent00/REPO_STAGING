@@ -66,7 +66,7 @@ reconstruction oracle.
 ## harvest
 
 - **the serialization discipline** —
-  `~/Programming/PseudoCoup/pseudocoup/core/ledger.py` `dump`/`load`
+  `PseudoCoup/pseudocoup/core/ledger.py` `dump`/`load`
   (set/tuple round-trip fidelity; derived overlays deliberately not
   serialized), named best-in-class by the ledger survey §2.
 - **deterministic-regeneration precedent at every store in the

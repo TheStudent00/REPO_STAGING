@@ -10,6 +10,6 @@
 # total, so no fault region is named).
 set -euo pipefail
 echo "[1/1] task m1: model_table.py report"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py report
 echo "[1/1] done"

@@ -4,7 +4,7 @@ LEDGER rows -- signatures for the 137 mnemonics task o9's
 single-opcode population had no row for.
 
 Node: hq.research.arch_unit_oracle.cross_construction.single_opcode_units
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/
 node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/`).
 Framing: `DevComms/log_221_opcode_signature_algebra.md`. Population and
 join method: `DevComms/log_223_task_o9_opcode_signature_census.md` and

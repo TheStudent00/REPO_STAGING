@@ -1,6 +1,6 @@
 # Spanish / French bridge
 
-1847 of the owner's 2427 roots, ordered by how often he uses them. Counts are from `~/Programming/DevComms/vocabulary_dictionary.txt`.
+1847 of the owner's 2427 roots, ordered by how often he uses them. Counts are from `DevComms/vocabulary_dictionary.txt`.
 
 **Every entry is unverified** — written by hand from Claude's knowledge, not from a citable dictionary.
 

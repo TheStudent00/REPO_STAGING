@@ -11,7 +11,7 @@
 # other Counter in this file); one line changed. Same work as lane 3/4:
 # the original brief's §2 steps 2-5 over the rows lane 2 wrote.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "======== [1/1] types101_join.py ========"
 python3 types101_join.py
 rc=$?

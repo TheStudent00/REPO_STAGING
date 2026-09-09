@@ -173,14 +173,14 @@ commit list.
 
 ## 3. Posterity message
 
-Written to `~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt`. The repo-daemon
-consumes this file by design (`~/Programming/PseudoCoupHQ/AgentMemory.md`, "BANKING IS A MESSAGE
+Written to `PseudoCoupHQ/DevComms/next_commit_message.txt`. The repo-daemon
+consumes this file by design (`PseudoCoupHQ/AgentMemory.md`, "BANKING IS A MESSAGE
 NOT A COMMIT" — the daemon auto-commits every 30s regardless; this file is the human-readable
 message left for whoever reads the next commit, not a manual commit).
 
 ```
-$ wc -c ~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt
-1206 ~/Programming/PseudoCoupHQ/DevComms/next_commit_message.txt
+$ wc -c PseudoCoupHQ/DevComms/next_commit_message.txt
+1206 PseudoCoupHQ/DevComms/next_commit_message.txt
 ```
 
 ### 3.1 wc -c and first 5 lines, pasted immediately after writing

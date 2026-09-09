@@ -15,7 +15,7 @@
 set -u
 
 TOTAL=4
-OP=/projects/PseudoCoupHQ/Research/op_pipeline
+OP=PseudoCoupHQ/Research/op_pipeline
 export HOME=/work/L2home
 mkdir -p "$HOME"
 cd "$OP" || exit 1
@@ -23,13 +23,13 @@ cd "$OP" || exit 1
 echo "[1/$TOTAL] the ledger route's term for three rows, and its symbols"
 python3 - <<'PY'
 import json, sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline')
 import z3, layer5
 import term97_walk as TW
 maker, gate, attached, readings = TW.build()
-POP = ('/projects/PseudoCoupHQ/Research/oracle/cross_construction/'
+POP = ('PseudoCoupHQ/Research/oracle/cross_construction/'
        'emulation/per_opcode/per_opcode_population.json')
-HELD = ('/projects/PseudoCoupHQ/Research/oracle/cross_construction/'
+HELD = ('PseudoCoupHQ/Research/oracle/cross_construction/'
         'emulation/per_opcode/per_opcode_held.json')
 pop = json.load(open(POP))
 held = json.load(open(HELD))["held"]
@@ -59,7 +59,7 @@ PY
 echo "[2/$TOTAL] the marker fork: one builder in its generic form"
 python3 - <<'PY'
 import sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline')
 import reference as R
 import canon
 import z3
@@ -102,12 +102,12 @@ PY
 echo "[3/$TOTAL] answer_of over a whole row body"
 python3 - <<'PY'
 import json, sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline')
 import reference as R
 import z3
-HELD = ('/projects/PseudoCoupHQ/Research/oracle/cross_construction/'
+HELD = ('PseudoCoupHQ/Research/oracle/cross_construction/'
         'emulation/per_opcode/per_opcode_held.json')
-POP = ('/projects/PseudoCoupHQ/Research/oracle/cross_construction/'
+POP = ('PseudoCoupHQ/Research/oracle/cross_construction/'
        'emulation/per_opcode/per_opcode_population.json')
 held = json.load(open(HELD))["held"]
 pop = json.load(open(POP))

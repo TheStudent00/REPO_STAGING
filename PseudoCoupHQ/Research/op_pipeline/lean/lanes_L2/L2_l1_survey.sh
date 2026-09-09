@@ -9,7 +9,7 @@
 set -u
 
 TOTAL=5
-OP=/projects/PseudoCoupHQ/Research/op_pipeline
+OP=PseudoCoupHQ/Research/op_pipeline
 export HOME=/work/L2home
 mkdir -p "$HOME"
 
@@ -23,7 +23,7 @@ echo "[2/$TOTAL] the opcode table's inventory, off reference.py itself"
 cd "$OP" || exit 1
 python3 - <<'PY'
 import sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline')
 import reference as R
 t = R.REFERENCE.opcode_table
 built = [m for m in sorted(t.entries) if t.entries[m].build is not None]
@@ -36,7 +36,7 @@ PY
 echo "[3/$TOTAL] the five entries the brief names, and their builder's source"
 python3 - <<'PY'
 import inspect, sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline')
 import reference as R
 t = R.REFERENCE.opcode_table
 for m in ("add", "sar", "imul", "ucomiss", "cvtsi2sd"):
@@ -56,7 +56,7 @@ done
 echo "[4/$TOTAL] the five builders RUN: one synthetic line each, over symbolic seeds"
 python3 - <<'PY'
 import sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline')
 import reference as R
 import z3
 
@@ -88,9 +88,9 @@ PY
 echo "[5/$TOTAL] the 243-row population, recomputed"
 python3 - <<'PY'
 import json, os, sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline')
-OP = '/projects/PseudoCoupHQ/Research/op_pipeline'
-SRC = '/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json'
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline')
+OP = 'PseudoCoupHQ/Research/op_pipeline'
+SRC = 'PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json'
 LANGS = ["c", "cpp", "go", "rust", "swift"]
 doc = json.load(open(SRC))
 rows = []

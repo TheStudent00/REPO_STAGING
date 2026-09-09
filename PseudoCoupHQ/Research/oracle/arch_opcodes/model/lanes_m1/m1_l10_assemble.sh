@@ -5,7 +5,7 @@
 # (41.4 MB + 17.2 MB + small) at once, which is what the bound is for.
 set -euo pipefail
 echo "[1/2] task m1: model_table.py assemble"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py assemble
 echo "[2/2] task m1: model_table.py report"
 python3 model_table.py report

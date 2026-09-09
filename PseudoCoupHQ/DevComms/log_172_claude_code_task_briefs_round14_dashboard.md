@@ -128,7 +128,7 @@ sampler is seeded and the seed is in the URL hash.
 ## TASK 71 — the compiler graph, four compilers (node 0_3_5_9 graph; Opus; the round's centerpiece; its own Airlock instance)
 
 CONTEXT: `Research/compiler_graph/build_graph3.py` (go; the
-language-agnostic claim); `~/Programming/Sources/{llvm-project,
+language-agnostic claim); `Sources/{llvm-project,
 rust, swift-6.0.3-RELEASE, golang_src}`; the super-node's standing
 rules (graph never prose; DIARY never tally; frontier honesty).
 

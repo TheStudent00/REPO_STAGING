@@ -1,7 +1,7 @@
 """ur — Universal Rich AST definitions. THE vocabulary of the ledgerer.
 
 Plan node: pcv5.tools.ledgerer.ur
-    ~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/CORE_0_0_0_0_ur.md
+    PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/node_0_0_0_0_ur/CORE_0_0_0_0_ur.md
 Generated 2026-08-06, top-down per plan_and_code §2: THIS PASS IS
 SHAPE ONLY. Attributes and method signatures mirror the plan's
 structural overviews; logic is written in a later pass, after the
@@ -43,7 +43,7 @@ KINDS = {
         "import", "try", "pair", "interpolation",
     ),
     # ...and the 10 differentiator categories A-J
-    # (~/Programming/PseudoIR/Tools/intentions/pc_intentions.json).
+    # (PseudoIR/Tools/intentions/pc_intentions.json).
     "categories": {
         "A": "suspension", "B": "channels", "C": "optionals",
         "D": "pattern matching", "E": "dispatch", "F": "generics",

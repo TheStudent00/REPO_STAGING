@@ -34,7 +34,7 @@ decision instrument.
 Result: 211 cells LOAD, 66 PARTIAL, 18 REFUSES-behavioral, 33 NOT-RUN
 (all c#, no toolchain reachable). No REFUSES-gap: layer 1 stands
 audited. Full account in
-`~/Programming/PseudoCoupHQ/DevComms/log_023_layer2_representations.md`.
+`PseudoCoupHQ/DevComms/log_023_layer2_representations.md`.
 
 **2026-08-17 postscript 1:** php's three extension-gated cells (GMP,
 BCMath, mbstring codepoints) moved REFUSES-behavioral -> LOADS after

@@ -5,7 +5,7 @@
 # `check_conventions_log_claims.py --verify` has a command to re-run
 # for every figure.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 for section in walk flags pass2 control states pool census; do
   echo "======== report97_numbers.py $section ========"
   python3 report97_numbers.py "$section"

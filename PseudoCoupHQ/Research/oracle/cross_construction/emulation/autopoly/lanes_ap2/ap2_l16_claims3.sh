@@ -9,7 +9,7 @@
 # so the pasted command carries the `grep -v` on the line itself --
 # task ap1's own third-pass correction, kept.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 
 echo "===== tables ====="
 python3 autopoly2.py tables

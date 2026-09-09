@@ -147,9 +147,9 @@ by a switch that hands each operation to a category check. Read at
 is at `llvmorg-24-init-680-g6a33b69d8bae` and is never read.
 
 ```
-$ git -C ~/Programming/Sources/llvm-project rev-parse llvmorg-21.1.8
+$ git -C Sources/llvm-project rev-parse llvmorg-21.1.8
 42befb84c672d78de430feb4c96710e6aa4fc774
-$ git -C ~/Programming/Sources/llvm-project describe --tags | head -1
+$ git -C Sources/llvm-project describe --tags | head -1
 llvmorg-24-init-680-g6a33b69d8bae
 ```
 
@@ -330,7 +330,7 @@ claim, so first: which side of the wall this ran on.
 $ ls -d /work
 ls: cannot access '/work': No such file or directory
 $ hostname
-<host>
+<user>
 ```
 
 `/work` is the container's build root — the corpus's own refusal texts
@@ -338,8 +338,8 @@ carry it (`/work/op_cpp/u/n53/unit.cpp:9:12: error: ...`). It is absent
 here, so this is the host. On the host:
 
 ```
-$ ls ~/Programming/Sources/rust/library
-ls: cannot access '~/Programming/Sources/rust/library': No such file or directory
+$ ls Sources/rust/library
+ls: cannot access 'Sources/rust/library': No such file or directory
 $ ls ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src
 ls: cannot access '.../lib/rustlib/src': No such file or directory
 ```
@@ -421,7 +421,7 @@ Score before those two fixes: 44 misses, 98.8% in-scope agreement. After:
 ## 6.1 The spelling-key check, all three artifacts
 
 ```
-$ cd ~/Programming/PseudoCoupHQ/Research/op_pipeline
+$ cd PseudoCoupHQ/Research/op_pipeline
 $ /tmp/reconnect_venv/bin/python3 legality_rules.py
 wrote .../legality_rules.json: 55 rules, 185 operator units
 operator inventory: 91 tokens read from probe_manifest_*.json
@@ -490,7 +490,7 @@ same total for all five languages.
 # 7. Zero regressions, verified programmatically
 
 ```
-$ cd ~/Programming/PseudoCoupHQ && git status --porcelain
+$ cd PseudoCoupHQ && git status --porcelain
 ?? Research/compiler_graph/graph_cpp2.json
 ?? Research/compiler_graph/graph_cpp3.json
 ```
@@ -521,28 +521,28 @@ Created this session, all new:
 
 | path | what it is |
 |---|---|
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/legality_rules.py` | the rule extractor; searches each source for the quoted fragment and refuses to write if it is absent |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/legality_rules.json` | 55 rules with file+line+pin provenance, 185 operator units with their rule joins |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/legality_filter.py` | applies the rules; writes the reduction and the validation |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/legality_reduction.json` | per language and per operator unit: naive, legal, no-rule residue, factor |
-| `~/Programming/PseudoCoupHQ/Research/op_pipeline/legality_validation.json` | the corpus scoring, the corpus-sized compile budget, and every miss |
-| `~/Programming/PseudoCoupHQ/DevComms/log_127_task36_legality_reduction.md` | this log |
+| `PseudoCoupHQ/Research/op_pipeline/legality_rules.py` | the rule extractor; searches each source for the quoted fragment and refuses to write if it is absent |
+| `PseudoCoupHQ/Research/op_pipeline/legality_rules.json` | 55 rules with file+line+pin provenance, 185 operator units with their rule joins |
+| `PseudoCoupHQ/Research/op_pipeline/legality_filter.py` | applies the rules; writes the reduction and the validation |
+| `PseudoCoupHQ/Research/op_pipeline/legality_reduction.json` | per language and per operator unit: naive, legal, no-rule residue, factor |
+| `PseudoCoupHQ/Research/op_pipeline/legality_validation.json` | the corpus scoring, the corpus-sized compile budget, and every miss |
+| `PseudoCoupHQ/DevComms/log_127_task36_legality_reduction.md` | this log |
 
 Modified this session: one dated entry appended under the single
 `# PROGRESS` heading of
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
 
 Read but not modified: `op_units_<lang>.json` (five),
 `probe_manifest_<lang>.json` (five), `type_inventory2.json`,
 `type_inventory_validate.py`, `check_no_spelling_keys.py`,
 `swift_stdlib_x86_64-unknown-linux-gnu.swiftinterface`,
-`~/Programming/Sources/llvm-project` at `llvmorg-21.1.8` via `git show`
+`Sources/llvm-project` at `llvmorg-21.1.8` via `git show`
 (`clang/lib/Sema/SemaExpr.cpp`, `clang/include/clang/AST/OperationKinds.def`,
 `clang/include/clang/Basic/TokenKinds.def`),
-`~/Programming/Sources/golang_src/src/go/types/expr.go`,
-`~/Programming/Sources/golang_src/src/go/token/token.go`,
-`~/Programming/Sources/rust/compiler/rustc_codegen_cranelift/src/{num.rs,base.rs}`,
-`~/Programming/Sources/swift-6.0.3-RELEASE` (pin only).
+`Sources/golang_src/src/go/types/expr.go`,
+`Sources/golang_src/src/go/token/token.go`,
+`Sources/rust/compiler/rustc_codegen_cranelift/src/{num.rs,base.rs}`,
+`Sources/swift-6.0.3-RELEASE` (pin only).
 
 ---
 

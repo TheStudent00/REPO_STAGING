@@ -30,12 +30,12 @@ run() { echo; echo "\$ $*"; eval "$@" 2>&1; }
 say() { echo; echo "======== $* ========"; }
 
 say "[1/3] go -- the static emitter set against what running the compiler showed"
-run "python3 /projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_compare.py go"
+run "python3 PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_compare.py go"
 
 say "[2/3] cpp -- the same"
-run "python3 /projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_compare.py cpp"
+run "python3 PseudoCoupHQ/Research/compiler_graph/lanes_t95/t95_compare.py cpp"
 
 say "[3/3] the emitter definitions of go, by state, with the compiler's own name on each"
-run "python3 -c \"import json;d=json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_go.json'));r=[x for x in d['definitions_marked'] if x['state']!='emits_nothing'];print(len(r),'emitter definitions');[print(x['state'].ljust(22), x['label'], x['file']+':'+str(x['start_line']), len(x['opcodes']),'opcodes') for x in r]\""
+run "python3 -c \"import json;d=json.load(open('PseudoCoupGraphs/arch_opcode_nodes_go.json'));r=[x for x in d['definitions_marked'] if x['state']!='emits_nothing'];print(len(r),'emitter definitions');[print(x['state'].ljust(22), x['label'], x['file']+':'+str(x['start_line']), len(x['opcodes']),'opcodes') for x in r]\""
 
 say "lane 11 done"

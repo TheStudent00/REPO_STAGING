@@ -16,7 +16,7 @@ minutes"):
      removed) and passes the uniform original.
 
 Run:
-    python3 -m pytest ~/Programming/PseudoCoup_v6/Tools/polyfill -q
+    python3 -m pytest PseudoCoup_v6/Tools/polyfill -q
 """
 import os
 import sys

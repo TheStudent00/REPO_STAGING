@@ -1,22 +1,22 @@
 # log 244 — task ap2: AutoPoly's loop, second pass, after the mechanical causes task ap1 counted were fixed
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the ruling of
 2026-09-08 in
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
 Date: 2026-09-09. Instance `ap2`, on the tower guest.
 
 Artifact folder:
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
 writing `autopoly2_*`; task ap1's products are not overwritten.
 Lane scripts: `.../autopoly/lanes_ap2/`, sixteen of them, each kept in the
 repo as the standing rule of 2026-09-07 requires. Every lane log named
-below is on the TOWER (`<tower-user>@<tower>`), under
-`~/AirlockRuns/ap2/agent/logs/`.
+below is on the TOWER (`<user>@<tower>`), under
+`<runs>/ap2/agent/logs/`.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `~/Programming/PseudoCoupHQ`, mounted into the
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into the
 instance. Every rendering is labelled per the protocol's
 `object.literal-gloss-analogy`: **LITERAL** is the object itself, quoted;
 **GLOSS** is a plain-words reading beside a literal.
@@ -37,10 +37,10 @@ sources that carry them, and no rule was invented to fill a gap:
 
 | what the brief calls for | where it was read from |
 |---|---|
-| the standing rules, including the tower, the memory bound, the flag rule on a limit, the verifier and the spelling ban | `~/Programming/PseudoCoupHQ/DevComms/note_server_session_start_here.md` §2, whose own heading is "The standing rules. These bind every session on this line" |
-| the project's settled rules and the two-list report shape | `~/Programming/PseudoCoupHQ/CLAUDE.md` |
-| what task ap1 did, its loop, its by-cause table and its awaiting-the owner list | `~/Programming/PseudoCoupHQ/DevComms/log_243_task_ap1_autopoly_first_full_loop.md` |
-| the exact tower commands | `~/Programming/Airlock/remote_lane.sh`'s own usage block |
+| the standing rules, including the tower, the memory bound, the flag rule on a limit, the verifier and the spelling ban | `PseudoCoupHQ/DevComms/note_server_session_start_here.md` §2, whose own heading is "The standing rules. These bind every session on this line" |
+| the project's settled rules and the two-list report shape | `PseudoCoupHQ/CLAUDE.md` |
+| what task ap1 did, its loop, its by-cause table and its awaiting-the owner list | `PseudoCoupHQ/DevComms/log_243_task_ap1_autopoly_first_full_loop.md` |
+| the exact tower commands | `Airlock/remote_lane.sh`'s own usage block |
 
 The one thing that could not be reconstructed is whatever `LAW.md` says
 under "stop rules", which the brief's §4 refers to by name. Nothing in
@@ -109,7 +109,7 @@ substring, runs each again through the driver as this task leaves it, and
 prints the cause before and after. It writes nothing.
 
 **LITERAL**, lane `ap2_l10_measure_the_fixes_final.sh`, on the tower at
-`~/AirlockRuns/ap2/agent/logs/20260909T172810Z__ap2_l10_measure_the_fixes_final.sh.log`,
+`<runs>/ap2/agent/logs/20260909T172810Z__ap2_l10_measure_the_fixes_final.sh.log`,
 the summary line of each of its eight measurements:
 
 ```
@@ -172,7 +172,7 @@ grew such a symbol to an arrival's 64 bits where it was narrower. Lane
 `ap2_l9` asked the objects what they hold.
 
 **LITERAL**, lane `ap2_l9_probe_fix1.sh`, on the tower at
-`~/AirlockRuns/ap2/agent/logs/20260909T172648Z__ap2_l9_probe_fix1.sh.log`:
+`<runs>/ap2/agent/logs/20260909T172648Z__ap2_l9_probe_fix1.sh.log`:
 
 ```
 task ap1's runs with that cause: 134
@@ -213,7 +213,7 @@ positions, the memory writes, and the wide reads).
 # 5. Fix 2, and why the corpus is right to name no setter
 
 **LITERAL**, lane `ap2_l7_probe_fix2.sh`, on the tower at
-`~/AirlockRuns/ap2/agent/logs/20260909T172200Z__ap2_l7_probe_fix2.sh.log`,
+`<runs>/ap2/agent/logs/20260909T172200Z__ap2_l7_probe_fix2.sh.log`,
 its head and six of its 32 rows:
 
 ```
@@ -264,7 +264,7 @@ on the running task but the selector `sources_command` and
 `proved_the_same` pass EXPLICITLY to measure what the fix changes.
 
 **LITERAL**, lane `ap2_l11_guards_and_sample.sh`, on the tower at
-`~/AirlockRuns/ap2/agent/logs/20260909T173221Z__ap2_l11_guards_and_sample.sh.log`:
+`<runs>/ap2/agent/logs/20260909T173221Z__ap2_l11_guards_and_sample.sh.log`:
 
 ```
 [3/4] which form of the term each task's setting hands the renderer
@@ -293,7 +293,7 @@ the awaiting-the owner list.
 # 7. The guards
 
 **LITERAL**, lane `ap2_l11_guards_and_sample.sh`, on the tower at
-`~/AirlockRuns/ap2/agent/logs/20260909T173221Z__ap2_l11_guards_and_sample.sh.log`:
+`<runs>/ap2/agent/logs/20260909T173221Z__ap2_l11_guards_and_sample.sh.log`:
 
 ```
 [1/4] GUARD 1 -- task h2's own sources measurement
@@ -325,7 +325,7 @@ attestation names and the corpus census is never reached (guard 4).
 
 **THE TABLE'S OWN GUARD**, fix 4. **LITERAL**, lane
 `ap2_l3_regenerate_the_table.sh`, on the tower at
-`~/AirlockRuns/ap2/agent/logs/20260909T171450Z__ap2_l3_regenerate_the_table.sh.log`:
+`<runs>/ap2/agent/logs/20260909T171450Z__ap2_l3_regenerate_the_table.sh.log`:
 
 ```
    BEFORE, the table's own counts:
@@ -375,7 +375,7 @@ the field name task mn1 renamed to `mnem`. So the guard was taken the only
 way that is honest.
 
 **LITERAL**, lane `ap2_l2_table_and_check_L2.sh`, on the tower at
-`~/AirlockRuns/ap2/agent/logs/20260909T170518Z__ap2_l2_table_and_check_L2.sh.log`:
+`<runs>/ap2/agent/logs/20260909T170518Z__ap2_l2_table_and_check_L2.sh.log`:
 
 ```
    check_L2.json rows: 259
@@ -402,10 +402,10 @@ slot, so neither reference change can reach a row of it.
 # 8. THE table: per target, what the loop reached
 
 **LITERAL**, lane `ap2_l16_claims3.sh`, on the tower at
-`~/AirlockRuns/ap2/agent/logs/20260909T180041Z__ap2_l16_claims3.sh.log`:
+`<runs>/ap2/agent/logs/20260909T180041Z__ap2_l16_claims3.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py tables
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py tables
 ## 1. THE table: per target, what the loop reached
 
 Table 1 -- one row per target. `cells` counts runs; `rows` is the attested ledger rows those cells cover and `share` that as a percentage of 133044.
@@ -472,10 +472,10 @@ the handful's forty pairs: 32 agree character for character, 36 agree on the ver
 # 9. The change table
 
 **LITERAL**, lane `ap2_l16_claims3.sh`, on the tower at
-`~/AirlockRuns/ap2/agent/logs/20260909T180041Z__ap2_l16_claims3.sh.log`:
+`<runs>/ap2/agent/logs/20260909T180041Z__ap2_l16_claims3.sh.log`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py change | sed -n '1,24p'
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py change | sed -n '1,24p'
 runs on task ap1's store: 1012
 runs on task ap2's store: 1012
 pairs on both: 1012
@@ -506,7 +506,7 @@ The two counts tables C2 and C3 end with, the whole of each table being
 section 3 of `autopoly2.md`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py change | grep -E '^runs task ap1 proved|^pairs that moved to'
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py change | grep -E '^runs task ap1 proved|^pairs that moved to'
 runs task ap1 proved and task ap2 does not: 0
 pairs that moved to `sat`: 20
 ```
@@ -540,7 +540,7 @@ divide at 16 bits and two float subtractions on go.
 **LITERAL**, same lane:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py sat | grep -v counterexample
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py sat | grep -v counterexample
 sat at the plain comparison, every written place: 154
 sat surviving the caller-extension re-pose: 69
    c      21
@@ -556,7 +556,7 @@ the five surviving sat places with the most ledger rows:
 ```
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py repose
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py repose
 places UNDECIDED at the 3,000 ms ceiling of record and re-posed once at 30,000 ms: 109
    DISPROVED        1
    PROVED_ON_SHIP   3
@@ -584,7 +584,7 @@ halving: `ucomisd`'s flags place is 128 bits and is now two comparisons.
 **LITERAL**, same lane:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py causes
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly2.py causes
 Table 5 -- what did not work, by cause, the four targets summed. `rows` counts a cell's attested ledger rows once per run, so a cause seen on all four targets counts them four times.
 
 | cause | runs | ledger rows | targets |
@@ -654,7 +654,7 @@ rather than answers.
 
 # 12. Memory
 
-The bound stated in `~/Programming/Airlock/instances/ap2.conf`, in every
+The bound stated in `Airlock/instances/ap2.conf`, in every
 lane header and in `autopoly2.py`'s own constants is 6 GB resident on the
 one collecting process, named abort `ABORT_MEMORY_AP2`, checked after
 every run. The sample the law asks for is the first twenty runs, printed
@@ -681,7 +681,7 @@ different amounts of z3 work, and it is left as the measurement it is.
 # 13. The deliverables
 
 Under
-`~/Programming/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
+`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
 
 | file | what it is |
 |---|---|
@@ -784,7 +784,7 @@ fixed point, so the table above is the log as it stands.
 8. **`check_L2` was guarded off the stored artifact** because it cannot be
    re-derived by anyone today (§7), and the reason is task m1b's own
    log_237 §14 item 1.
-9. **One status file under `~/AirlockRuns/` was deleted by this task**,
+9. **One status file under `<runs>/` was deleted by this task**,
    `ap2/agent/status/ap2_l6_measure_the_fixes.sh.status`, while trying to
    re-submit a lane of a name that had already run. That breaks the
    standing rule "never delete anything under `<airlock>/` or

@@ -4,7 +4,7 @@ Standing project rule: every tool ships with its own acceptance test.
 The hub is not a tool, but "inert" is a claim, and an unchecked claim
 about code is worth nothing.
 
-Run:  python3 -m pytest ~/Programming/PseudoCoup_v5/hub -q
+Run:  python3 -m pytest PseudoCoup_v5/hub -q
 """
 import os
 import sys

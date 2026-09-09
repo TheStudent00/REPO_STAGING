@@ -2,7 +2,7 @@
 
 Date: 2026-09-03. Node `hq.research.compiler_graph.term.render_back`
 (0_3_5_6_5). Every figure below was computed this session from
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/` and is pasted with
+`PseudoCoupHQ/Research/op_pipeline/` and is pasted with
 its population. §5.1a labels throughout: LITERAL is the stored object,
 GLOSS is a plain-words reading sitting next to it.
 

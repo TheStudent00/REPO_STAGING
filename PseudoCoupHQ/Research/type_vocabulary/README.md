@@ -13,7 +13,7 @@ unioned. Report: `../../DevComms/log_022_type_vocabulary_union.md`.
   visible entry in its `ENTRIES` table, and it checks on every run
   that each present-cell's cited raw spelling really appears in that
   language's raw file. Run:
-  `python3 ~/Programming/PseudoCoupHQ/Research/type_vocabulary/union.py`
+  `python3 PseudoCoupHQ/Research/type_vocabulary/union.py`
 - `type_union.json` — the union, 59 entries, per-language marker plus
   the raw spelling behind each marker.
 - `type_union.md` — the same table in pipe form.

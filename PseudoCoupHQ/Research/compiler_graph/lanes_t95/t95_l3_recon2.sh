@@ -47,7 +47,7 @@
 # coordinates only.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
+CG=PseudoCoupHQ/Research/compiler_graph
 export HOME=/work/t95home
 mkdir -p "$HOME/Programming"
 ln -sfn /sources "$HOME/Programming/Sources"
@@ -56,7 +56,7 @@ cd "$CG"
 say "[1/6] go -- the seven obj.As functions, printed whole, so the hop is read not guessed"
 python3 - <<'PY'
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["go"]
 wanted = {
@@ -75,7 +75,7 @@ PY
 say "[2/6] go -- what opGen.go's opcodeTable actually holds for the amd64 ops"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["go"]
 text = G.show_file(region.repository, region.pin,
@@ -100,7 +100,7 @@ PY
 say "[3/6] cpp -- every instruction-building call site, and its opcode argument"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 
 region = G.REGIONS["cpp"]
@@ -216,7 +216,7 @@ ls -d /sources/rust/compiler/rustc_codegen_cranelift 2>&1 | sed 's/^/   /'
 grep -rl --include='*.rs' -E '\bIns\b|MachInst|emit_inst|isa::x64' /sources/rust/compiler/rustc_codegen_cranelift 2>/dev/null | head -5 | sed 's/^/   /'
 echo "   --- and is that backend inside the region? ---"
 python3 -c "
-import sys; sys.path.insert(0,'/projects/PseudoCoupHQ/Research/compiler_graph')
+import sys; sys.path.insert(0,'PseudoCoupHQ/Research/compiler_graph')
 import graph as G
 print('   region directories:', list(G.REGIONS['rust'].directories))
 "
@@ -234,7 +234,7 @@ ls -d /sources/swift /sources/swift-6.0.3-RELEASE 2>&1 | sed 's/^/   /'
 say "[6/6] the graph's own def nodes -- do they carry an end line, in every region"
 python3 - <<'PY'
 import json, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 for lang in ("go", "cpp", "rust", "swift"):
     doc = json.load(open(graphs_home.path("graph_%s.json" % lang)))

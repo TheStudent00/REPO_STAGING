@@ -17,7 +17,7 @@ no include across files. So every CORE will always contain the literal
 key text, and a rename still has to rewrite every file. That half is
 handled by a migration command rather than by a reference:
 
-    python3 ~/Programming/PlanPlan/framework/generate_nodes.py \\
+    python3 PlanPlan/framework/generate_nodes.py \\
         <root>... --rename-field <old> <new> --apply
 
 One place for the behaviour, one command for the documents. Two

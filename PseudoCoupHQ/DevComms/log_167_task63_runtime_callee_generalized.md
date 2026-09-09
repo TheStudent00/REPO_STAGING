@@ -1,9 +1,9 @@
 # log 167 — task 63: runtime_callee, generalized
 
 Date: 2026-09-03. Round 13, TASK 63 of
-`~/Programming/PseudoCoupHQ/DevComms/log_166_claude_code_task_briefs_round13.md`.
+`PseudoCoupHQ/DevComms/log_166_claude_code_task_briefs_round13.md`.
 Node: `hq.research.compiler_graph.arch_unit.runtime_callee`, at
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/`.
 Appendix-B shape; §5.1a LITERAL / GLOSS labels throughout; every
 number carries its population.
 
@@ -48,7 +48,7 @@ the symbol's address range instead of asking for it by name.
 
 ## 2.1 What was counted, and over what
 
-LITERAL — `~/Programming/PseudoCoupHQ/Research/op_pipeline/canon39_callee_printed.txt`,
+LITERAL — `PseudoCoupHQ/Research/op_pipeline/canon39_callee_printed.txt`,
 part 1:
 
 ```
@@ -373,7 +373,7 @@ from inside the `trickle` instance:
 
 ```
 --- which side of the wall ---
-uname:   Linux 4963c357a353 7.0.0-30-generic ...
+uname:   Linux <container-id> <kernel> ...
 lrwxrwxrwx 1 root root 12 Dec 11  2024 /persist/swift/usr/bin/swiftc -> swift-driver
 
 == WHICH SIDE OF THE CONTAINER WALL IS THIS? ==
@@ -411,12 +411,12 @@ forbids taking a callee from another toolchain's archive.
 The commands, exactly as run:
 
 ```
-bash ~/Programming/Airlock/up.sh --instance trickle
-python3 ~/Programming/Airlock/airlock --instance trickle submit \
-    ~/Programming/PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane2.sh \
+bash Airlock/up.sh --instance trickle
+python3 Airlock/airlock --instance trickle submit \
+    PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane2.sh \
     --batch t63 --weight 1
-AIRLOCK_INSTANCE=trickle bash ~/Programming/Airlock/progress.sh status
-bash ~/Programming/Airlock/down.sh --instance trickle
+AIRLOCK_INSTANCE=trickle bash Airlock/progress.sh status
+bash Airlock/down.sh --instance trickle
 ```
 
 The instance was brought down when the lane was done; the lane exited
@@ -428,7 +428,7 @@ The instance was brought down when the lane was done; the lane exited
 
 ## 6.1 What was missing, computed
 
-LITERAL — `~/Programming/PseudoCoupHQ/Research/op_pipeline/acceptance63_printed.txt`,
+LITERAL — `PseudoCoupHQ/Research/op_pipeline/acceptance63_printed.txt`,
 part 0:
 
 ```
@@ -522,7 +522,7 @@ GLOSS: every attached body now stops only where task 64 takes over.
 
 ## 6.4 Nothing that already answered was moved
 
-LITERAL — `~/Programming/PseudoCoupHQ/Research/op_pipeline/regression63_printed.txt`:
+LITERAL — `PseudoCoupHQ/Research/op_pipeline/regression63_printed.txt`:
 
 ```
 population: canon39's proved units; SAMPLE of 3000 drawn from 40
@@ -549,7 +549,7 @@ attached body is task 64's, not this task's.
 
 ## 7.1 The unmodified guard, one process
 
-LITERAL — `~/Programming/PseudoCoupHQ/Research/op_pipeline/guard63_transcript.txt`:
+LITERAL — `PseudoCoupHQ/Research/op_pipeline/guard63_transcript.txt`:
 
 ```
 guard63.py -- every artifact task 63 writes, unmodified guard, ONE
@@ -570,9 +570,9 @@ GUARD EXIT CODE = 0
 ```
 
 ```
-$ cd ~/Programming/PseudoCoupHQ/Research/op_pipeline && grep -c exempt guard63_transcript.txt
+$ cd PseudoCoupHQ/Research/op_pipeline && grep -c exempt guard63_transcript.txt
 0
-$ git -C ~/Programming/PseudoCoupHQ diff --stat Research/op_pipeline/check_no_spelling_keys.py
+$ git -C PseudoCoupHQ diff --stat Research/op_pipeline/check_no_spelling_keys.py
 (no output — the checker is unmodified)
 ```
 
@@ -605,14 +605,14 @@ log_158's binding rule 3:
 - `CORE_0_3_5_4_0_opcode_table.md` — one new settled rule: the corpus
   the table is built over includes the attached callee bodies.
 
-LITERAL — `python3 ~/Programming/PlanPlan/framework/check_plans.py ~/Programming/PseudoCoupHQ/Planning`:
+LITERAL — `python3 PlanPlan/framework/check_plans.py PseudoCoupHQ/Planning`:
 
 ```
 summary: 4 error(s), 3 warning(s)
-[ERROR] dangling-path: ~/Programming/PseudoCoupHQ/DevComms/log_107_task21_interp_ does not exist
-[ERROR] dangling-path: ~/Programming/PseudoCoupHQ/DevComms/log_110_task25_ does not exist
-[ERROR] dangling-path: ~/Programming/SandboxDesign/allow.sh does not exist
-[ERROR] dangling-path: ~/Programming/Sources/llvm- does not exist
+[ERROR] dangling-path: PseudoCoupHQ/DevComms/log_107_task21_interp_ does not exist
+[ERROR] dangling-path: PseudoCoupHQ/DevComms/log_110_task25_ does not exist
+[ERROR] dangling-path: SandboxDesign/allow.sh does not exist
+[ERROR] dangling-path: Sources/llvm- does not exist
 ```
 
 GLOSS: all four are truncated paths in files this task did not touch,
@@ -650,7 +650,7 @@ rather than assumed. The brief allows editing `ledger.py` and
 
 ## 8.1 Written by this task
 
-Under `~/Programming/PseudoCoupHQ/Research/op_pipeline/`:
+Under `PseudoCoupHQ/Research/op_pipeline/`:
 
 | file | what it is |
 |---|---|
@@ -674,17 +674,17 @@ Under `~/Programming/PseudoCoupHQ/Research/op_pipeline/`:
 
 ## 8.2 Edited
 
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/runtime_callee.py`
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/reference.py`
+- `PseudoCoupHQ/Research/op_pipeline/runtime_callee.py`
+- `PseudoCoupHQ/Research/op_pipeline/reference.py`
 
 ## 8.3 Plan files touched
 
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/CORE_0_3_5_1_8_runtime_callee.md`
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/PROGRESS.md`
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/node_0_3_5_4_0_opcode_table/CORE_0_3_5_4_0_opcode_table.md`
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/node_0_3_5_4_0_opcode_table/PROGRESS.md`
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/CORE_0_3_5_1_8_runtime_callee.md`
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/PROGRESS.md`
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/node_0_3_5_4_0_opcode_table/CORE_0_3_5_4_0_opcode_table.md`
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/node_0_3_5_4_0_opcode_table/PROGRESS.md`
 - 67 `DASHBOARD.md` files, regenerated by
-  `python3 ~/Programming/PlanPlan/framework/generate_dashboards.py ~/Programming/PseudoCoupHQ/Planning`
+  `python3 PlanPlan/framework/generate_dashboards.py PseudoCoupHQ/Planning`
 
 ---
 

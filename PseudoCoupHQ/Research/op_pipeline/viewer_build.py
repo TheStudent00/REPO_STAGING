@@ -24,7 +24,7 @@ no longer holds a join of its own.
     have the folder, and for browsers without the File System Access API.
 
     /tmp/reconnect_venv/bin/python3 \
-        ~/Programming/PseudoCoupHQ/Research/op_pipeline/viewer_build.py
+        PseudoCoupHQ/Research/op_pipeline/viewer_build.py
 
 POPULATIONS, stated on the page rather than implied here:
   - the stats pane counts EVERY unit of the current artifacts.

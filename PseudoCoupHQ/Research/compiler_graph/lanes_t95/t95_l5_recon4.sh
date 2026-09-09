@@ -36,12 +36,12 @@ say() { echo; echo "======== $* ========"; }
 export HOME=/work/t95home
 mkdir -p "$HOME/Programming"
 ln -sfn /sources "$HOME/Programming/Sources"
-cd /projects/PseudoCoupHQ/Research/compiler_graph
+cd PseudoCoupHQ/Research/compiler_graph
 
 say "[1/4] swift -- the five inline-asm sites, printed with their context"
 python3 - <<'PY'
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["swift"]
 for rel, a, b in (("lib/IRGen/GenObjC.cpp", 100, 150),
@@ -58,7 +58,7 @@ PY
 say "[2/4] swift -- where does GenObjC's asmString come from"
 python3 - <<'PY'
 import re, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["swift"]
 for rel in ("lib/IRGen/GenObjC.cpp",):
@@ -71,7 +71,7 @@ PY
 say "[3/4] llvm -- is the shared pseudo-opcode table readable at the region pin"
 python3 - <<'PY'
 import re, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["cpp"]
 for rel in ("llvm/include/llvm/CodeGen/TargetOpcodes.def",
@@ -90,7 +90,7 @@ PY
 say "[4/4] cpp -- the in-region opcode-returning helpers the hop must follow"
 python3 - <<'PY'
 import re, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["cpp"]
 files = [f for f in G.list_region_files(region) if not f.endswith(".td")]

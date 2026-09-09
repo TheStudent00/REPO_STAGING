@@ -1,12 +1,12 @@
 # log_227 — task L1: Lean 4 as a second discharger — install verified, eight of ten edges certified, the renderer's preservation theorem proved for the integer subset, and a scope estimate
 
 Node: `hq.research.compiler_graph.gate.lean`
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`).
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`).
 Its super-node is the gate
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/CORE_0_3_1_5_gate.md`).
-Artifacts: `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/`.
-Instance: `~/Programming/Airlock/instances/L1.conf`. Lanes: 24, all kept at
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/lanes_L1/`.
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/CORE_0_3_1_5_gate.md`).
+Artifacts: `PseudoCoupHQ/Research/op_pipeline/lean/`.
+Instance: `Airlock/instances/L1.conf`. Lanes: 24, all kept at
+`PseudoCoupHQ/Research/op_pipeline/lean/lanes_L1/`.
 
 ---
 
@@ -73,11 +73,11 @@ and that correction is in section 5.
   answer sits above a solver's answer in the evidence doctrine.
 - **`term_to_lean.py`** — the program that turns one printed layer-5 text into
   one Lean `BitVec` expression:
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py`.
+  `PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py`.
 - **`Render.lean`** — the file holding the term language, a C integer
   expression language, the rendering between them, and the preservation
   theorem:
-  `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`.
+  `PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`.
 
 ---
 
@@ -86,7 +86,7 @@ and that correction is in section 5.
 ### 2.1 The version line
 
 **LITERAL**, from `L1_l1_install_check.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T000732Z__L1_l1_install_check.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T000732Z__L1_l1_install_check.sh.log`):
 
 ```
 --- which lean; which lake
@@ -131,7 +131,7 @@ default; one import brings it in, and no package resolution and no fetch are
 involved, which is what mattered here.
 
 With that import added, **LITERAL**, from `L1_l2_survey_and_smoke.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T000940Z__L1_l2_survey_and_smoke.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T000940Z__L1_l2_survey_and_smoke.sh.log`):
 
 ```
 --- Archproof/Smoke.lean, LITERAL
@@ -164,7 +164,7 @@ Build completed successfully (10 jobs).
 both matter. `edges` holds the 12 pairs t100 APPLIED to its closure. `pairs`
 holds all 21,502 pairs it ANSWERED, with their states. Reading the union and
 counting, **LITERAL**, from `L1_l3_survey_pairs.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T001053Z__L1_l3_survey_pairs.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T001053Z__L1_l3_survey_pairs.sh.log`):
 
 ```
 states: {"DISPROVED": 19640, "PROVED": 226, "UNBUILDABLE": 537, "UNDECIDED": 1099}
@@ -183,9 +183,9 @@ is a size rule over the machine form; no operator token takes part in it.
 ### 3.2 The operator table this task translates by
 
 **LITERAL**, printed by
-`python3 /projects/PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py table`
+`python3 PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py table`
 inside `L1_l7_ten_edges.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T001937Z__L1_l7_ten_edges.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T001937Z__L1_l7_ten_edges.sh.log`):
 
 | printed layer-5 form | arity | result | Lean 4.24 form |
 |---|---|---|---|
@@ -239,7 +239,7 @@ system holds. The refusal is by cause, not a gap.
 ### 3.3 The outcomes
 
 **LITERAL**, from `L1_l9_ten_and_undecided2.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T002109Z__L1_l9_ten_and_undecided2.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T002109Z__L1_l9_ten_and_undecided2.sh.log`):
 
 | # | type_key | entries | outcome | wall s | child peak MB | cause |
 |---|---|---|---|---|---|---|
@@ -285,7 +285,7 @@ with the arrival rows' widths and the term's result width.
 
 `term_to_lean.py` rebuilds every parsed term in z3 and demands z3's own
 printer reproduce the input line. **LITERAL**, from `L1_l5_api_probe.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T001427Z__L1_l5_api_probe.sh.log`),
+(host log `<runs>/L1/agent/logs/20260907T001427Z__L1_l5_api_probe.sh.log`),
 z3 printing terms built through its own API:
 
 ```
@@ -317,7 +317,7 @@ cause `ROUNDTRIP_MISMATCH`, never a warning.
 
 The brief asked for three pairs t100 marked UNDECIDED "with wide division".
 There are none. **LITERAL**, from `L1_l4_survey_undecided.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T001145Z__L1_l4_survey_undecided.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T001145Z__L1_l4_survey_undecided.sh.log`):
 
 ```
 UNDECIDED pairs: 1099
@@ -351,7 +351,7 @@ is to say floating point; there is no division among them.
 
 And separately, over the pairs that DO carry printed texts, **LITERAL** from
 `L1_l6_select_and_divsamples.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T001528Z__L1_l6_select_and_divsamples.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T001528Z__L1_l6_select_and_divsamples.sh.log`):
 
 ```
 UNDECIDED pairs in t100: 1099; of those, carrying a division node at a free-symbol width of 64 or more: 0
@@ -373,7 +373,7 @@ One pair per UNDECIDED machine type key, so all three machine forms that hold
 UNDECIDED pairs are represented. Their terms were sought in
 `the_pool5.json`'s entries, since the pair record has none. **LITERAL**, from
 `L1_l10_divide_ladder.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T002141Z__L1_l10_divide_ladder.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T002141Z__L1_l10_divide_ladder.sh.log`):
 
 ```
   entry_a E00288: representative cpp/op_771, distinct layer-5 texts 2, member count 2
@@ -435,7 +435,7 @@ info: Archproof/Api.lean:48:0: 0x00#8      -- (128#8) >>> (200#8)
 ### 5.1 What is stated, and why it is not a restatement of itself
 
 The file is
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`,
+`PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`,
 374 lines. It holds five things: an inductive `Term` indexed by width, an
 `eval` from a term and an environment to a `BitVec w`, an inductive `CExpr`
 for the C integer expressions the renderer emits, an `evalC`, a `render`
@@ -479,7 +479,7 @@ worth stating because the brief flagged one of them as an open question:
   slot as 64 bits.
 
 **LITERAL**, the final build, from `L1_l22_render10.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T011111Z__L1_l22_render10.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T011111Z__L1_l22_render10.sh.log`):
 
 ```
 --- lean exit 0
@@ -489,7 +489,7 @@ worth stating because the brief flagged one of them as an open question:
 
 A build with no errors is not by itself the claim that there are no holes, so
 the axioms were printed. **LITERAL**, from `L1_l24_final_measurements.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T011305Z__L1_l24_final_measurements.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T011305Z__L1_l24_final_measurements.sh.log`):
 
 ```
 'Archproof.render_preserves' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -559,7 +559,7 @@ it was waiting for. All five closed:
 
 **GLOSS.** The three shipped names were read out of the toolchain's own source
 inside a lane (`L1_l14_core_lemma_names.sh`, host log
-`~/AirlockRuns/L1/agent/logs/20260907T005407Z__L1_l14_core_lemma_names.sh.log`)
+`<runs>/L1/agent/logs/20260907T005407Z__L1_l14_core_lemma_names.sh.log`)
 rather than recalled, which removed two rounds of guessing. No Mathlib was
 used, and none is installed.
 
@@ -598,7 +598,7 @@ the 16-bit case in turn, and each looked like a final answer until it was
 raised. The first was the SAT solver's own 10-second default. The second was
 Lean's elaborator heartbeat limit. The third was not a time limit at all —
 **LITERAL**, from `L1_l13_render_errors_and_heartbeats.sh`
-(host log `~/AirlockRuns/L1/agent/logs/20260907T004924Z__L1_l13_render_errors_and_heartbeats.sh.log`):
+(host log `<runs>/L1/agent/logs/20260907T004924Z__L1_l13_render_errors_and_heartbeats.sh.log`):
 
 ```
 exit 1  wall 223.3 s  child peak 6803.1 MB
@@ -627,7 +627,7 @@ more room is not known and was not measured.
 The `lean` child's peak went 6,800 MB at an 8g container and 12,462 MB at a
 12g container, on the same theorems. That is the same pattern task 83 measured
 for the term transcription (log_189 §2.6): the peak follows whatever ceiling
-it is given. `~/Programming/Airlock/instances/L1.conf` states this, states
+it is given. `Airlock/instances/L1.conf` states this, states
 that `/tmp` is RAM so raising it raises the instance's memory need by the same
 amount, and states that the per-lane named abort `ABORT_MEMORY_L1` watches
 only the lane's own parent process — the `lean` child is governed by the
@@ -640,7 +640,7 @@ container ceiling and by nothing else.
 Counted over every printed layer-5 text in `the_pool5.json` — 1,267 distinct
 texts over 1,831 entries, of which 862 print any text at all. **LITERAL**,
 from `L1_l13_render_errors_and_heartbeats.sh` (host log
-`~/AirlockRuns/L1/agent/logs/20260907T004924Z__L1_l13_render_errors_and_heartbeats.sh.log`):
+`<runs>/L1/agent/logs/20260907T004924Z__L1_l13_render_errors_and_heartbeats.sh.log`):
 
 | printed token | uses | entries carrying it | covered by Render.lean | if not, why |
 |---|---|---|---|---|
@@ -737,7 +737,7 @@ large item and is not on that path.**
 
 **The guard caught this task, and the program was fixed rather than the
 guard.** In `L1_l23_axioms_and_guard.sh` (host log
-`~/AirlockRuns/L1/agent/logs/20260907T011140Z__L1_l23_axioms_and_guard.sh.log`)
+`<runs>/L1/agent/logs/20260907T011140Z__L1_l23_axioms_and_guard.sh.log`)
 the two division-ladder files FAILED
 with 8 findings each: the ladder rows are not pairs of pool entries, and the
 program had written the string `"-"` into their `entry_a` and `entry_b`
@@ -762,15 +762,15 @@ PASS L1_three_undecided.json -- no operator token in any key, grouping, pairing 
 PASS L1_divide_ladder.json -- no operator token in any key, grouping, pairing or row structure
 PASS L1_divide_ladder_t600.json -- no operator token in any key, grouping, pairing or row structure
 --- guard exit 0
-/projects/PseudoCoupHQ/Research/op_pipeline/lean/L1_edges_selected.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/lean/L1_ten_edges.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/lean/L1_three_undecided.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/lean/L1_divide_ladder.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/lean/L1_divide_ladder_t600.json:0
-/projects/PseudoCoupHQ/Research/op_pipeline/lean/edges_L1.py:0
-/projects/PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py:0
-/projects/PseudoCoupHQ/Research/op_pipeline/lean/run_edges_L1.py:0
-/projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean:0
+PseudoCoupHQ/Research/op_pipeline/lean/L1_edges_selected.json:0
+PseudoCoupHQ/Research/op_pipeline/lean/L1_ten_edges.json:0
+PseudoCoupHQ/Research/op_pipeline/lean/L1_three_undecided.json:0
+PseudoCoupHQ/Research/op_pipeline/lean/L1_divide_ladder.json:0
+PseudoCoupHQ/Research/op_pipeline/lean/L1_divide_ladder_t600.json:0
+PseudoCoupHQ/Research/op_pipeline/lean/edges_L1.py:0
+PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py:0
+PseudoCoupHQ/Research/op_pipeline/lean/run_edges_L1.py:0
+PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean:0
 ```
 
 The last block is `grep -c exempt` over every file this task added: zero in
@@ -847,8 +847,8 @@ The verifier's first pass found 0 DIFFERS and 0 MATCHES: every claim was prose
 or an attribution with nothing beside it. These five commands state the same
 facts in a form the checker re-runs. Each was run in
 `L1_l26_rerunnable_claims.sh` (host log
-`~/AirlockRuns/L1/agent/logs/20260907T014729Z__L1_l26_rerunnable_claims.sh.log`);
-the working directory is `/projects/PseudoCoupHQ`.
+`<runs>/L1/agent/logs/20260907T014729Z__L1_l26_rerunnable_claims.sh.log`);
+the working directory is `PseudoCoupHQ`.
 
 **The ten, by outcome** — eight proved, two refused as floating point (§3.3):
 
@@ -946,15 +946,15 @@ carrying a term_a field 0
 ## 13. Verifier tally
 
 Two passes. Pass 1 (`L1_l25_verify.sh`, host log
-`~/AirlockRuns/L1/agent/logs/20260907T014651Z__L1_l25_verify.sh.log`)
+`<runs>/L1/agent/logs/20260907T014651Z__L1_l25_verify.sh.log`)
 found 0 DIFFERS but also 0 MATCHES over 29 claims: everything was prose or an
 attribution with nothing beside it. Section 12 was added in answer, stating the
 same facts as commands. Pass 2, **LITERAL**, from `L1_l27_verify2.sh` (host log
-`~/AirlockRuns/L1/agent/logs/20260907T014810Z__L1_l27_verify2.sh.log`),
+`<runs>/L1/agent/logs/20260907T014810Z__L1_l27_verify2.sh.log`),
 run FROM the L1 instance:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md
    claims 35 | MATCHES 6 | DIFFERS 0 | UNVERIFIABLE 29 | REFUSED 0 | NOT_RERUNNABLE 0
 population: 35 claims across 1 logs
   MATCHES          6
@@ -981,16 +981,16 @@ itself a command the checker can re-issue.
 
 ## 14. See also
 
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/README.md` — what is
+- `PseudoCoupHQ/Research/op_pipeline/lean/README.md` — what is
   in the artifact folder and what the first runs found.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`
+- `PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`
   — the preservation theorem and everything it rests on.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py` — the
+- `PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py` — the
   translator, with its refusal causes documented in its header.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/lean/lanes_L1/` — all 24
+- `PseudoCoupHQ/Research/op_pipeline/lean/lanes_L1/` — all 24
   lane scripts, in submission order.
-- `~/Programming/PseudoCoupHQ/DevComms/log_224_task_t100_pool_entry_equivalence_closure.md`
+- `PseudoCoupHQ/DevComms/log_224_task_t100_pool_entry_equivalence_closure.md`
   §6 — t100's own account of the 1,099 UNDECIDED pairs and the 120-second
   runner limit that produced them.
-- `~/Programming/PseudoCoupHQ/DevComms/log_221_opcode_signature_algebra.md`
+- `PseudoCoupHQ/DevComms/log_221_opcode_signature_algebra.md`
   §7 — the claim this task's §5 is the source-level half of.

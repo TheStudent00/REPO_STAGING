@@ -84,7 +84,7 @@ are this node's.
 
 settled 2026-08-06 (the owner: "hard to disagree with that design" /
 "yes proceed"; the conversation is
-`~/Programming/PseudoCoup_v5/DevComms/log_016_ledger_brainstorm.md`):
+`PseudoCoup_v5/DevComms/log_016_ledger_brainstorm.md`):
 **a deliberately dumb table surrounded by three doctrine-bearing
 operations.** every entry is a `ur.node` (the owner's correction:
 connectors ride on their nodes, never rows of their own); the
@@ -122,7 +122,7 @@ entry whose one rule fits a sentence stays in-file.
 ## harvest
 
 which Frankenstein parts land here. part numbers are
-`~/Programming/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
+`PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
 §2. placements are draft commentary, not settled. this node takes
 the most parts of the four — the survey's decomposition was
 store-heavy, and this is the store.
@@ -130,21 +130,21 @@ store-heavy, and this is the store.
 - **2.2 record shape** — the superset entry
   `{id, file, node_kind, anchor, span, ui, connectivity}` plus the
   new `semantic` slot. source: v0 `ledger_unified.build`
-  (`~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py`,
+  (`StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py`,
   323 lines). the `semantic` slot is new work, not transplant.
 - **2.3 semantic payload** — the eight emission-driving registries
   re-keyed onto positional-path ids, FQDN kept as secondary index.
-  source: `~/Programming/PseudoCoup/pseudocoup/core/ledger.py` (289
+  source: `PseudoCoup/pseudocoup/core/ledger.py` (289
   lines; WFL's copy byte-identical). the re-keying IS the repair of
   the recorded last-writer-wins collisions. carried detail: the
   dump/load serialization discipline (sets/tuples round-trip;
   derived overlays deliberately not serialized).
 - **2.4 keying rule and refusal** — three-tier FQDN scheme and
   halt-on-unresolvable. sources: the `02_ledger` schema specs
-  (`~/Programming/0_Archive/PseudoIR/DevComms/.planning/specifications/02_ledger/`,
+  (`0_Archive/PseudoIR/DevComms/.planning/specifications/02_ledger/`,
   marked more advanced than any implementation) and the 56-line
   refusing ledger at
-  `~/Programming/PseudoCoup_v5/Research/rust_routing/ledger.py` —
+  `PseudoCoup_v5/Research/rust_routing/ledger.py` —
   **the one source inside the material the gutting removes**;
   harvest before gutting or read from version control under
   `PCv5-archived-research`.

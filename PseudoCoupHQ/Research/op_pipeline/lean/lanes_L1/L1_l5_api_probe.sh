@@ -8,7 +8,7 @@
 #         signExtend, sle/ule/slt/ult, sshiftRight', sdiv/srem, udiv-by-zero,
 #         and whether `if` on a Bool condition survives bv_decide
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 

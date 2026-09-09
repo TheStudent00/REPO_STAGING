@@ -8,7 +8,7 @@
 # slash. `rustc --version` is off the verifier's read-only allowlist,
 # so the version is read out of the json the facts lane wrote instead.
 set -u
-R=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
+R=PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
 
 run() {
   echo "\$ $1"
@@ -27,7 +27,7 @@ run "grep -c '^| Z3_OP_' $R/rust_report.md"
 run "grep '^Rust cells' $R/rust_report.md"
 
 echo "[4/16] the coverage table's rows where the two targets differ"
-run 'grep -E "^\| Z3_OP_(BADD|BSUB|BMUL|BNEG|BUDIV_I|BUREM_I|BSDIV_I|BSREM_I|FPA_ABS|FPA_IS_INF|FPA_IS_NEGATIVE|FPA_IS_POSITIVE|FPA_TO_FP|FPA_TO_IEEE_BV|FPA_TO_SBV|FPA_TO_UBV) " /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/rust_report.md'
+run 'grep -E "^\| Z3_OP_(BADD|BSUB|BMUL|BNEG|BUDIV_I|BUREM_I|BSDIV_I|BSREM_I|FPA_ABS|FPA_IS_INF|FPA_IS_NEGATIVE|FPA_IS_POSITIVE|FPA_TO_FP|FPA_TO_IEEE_BV|FPA_TO_SBV|FPA_TO_UBV) " PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/rust_report.md'
 
 echo "[5/16] the sorts"
 run "sed -n '\\%^### The sorts%,\\%^## 1\\.%p' $R/rust_report.md"
@@ -66,5 +66,5 @@ echo "[15/16] bounds and memory"
 run "sed -n '\\%^## 8\\. Bounds%,\$p' $R/rust_report.md"
 
 echo "[16/16] the guard over every json this task wrote"
-run "python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py $R/rust_facts.json $R/rust_facts2.json $R/rust_facts3.json $R/rust_facts4.json $R/coverage_table.json $R/rust_population.json $R/rust_indexes.json $R/rust_held.json $R/rust_sample.json $R/rust_run.json $R/rust_control.json $R/rust_peropcode.json $R/rust_results.json"
+run "python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py $R/rust_facts.json $R/rust_facts2.json $R/rust_facts3.json $R/rust_facts4.json $R/coverage_table.json $R/rust_population.json $R/rust_indexes.json $R/rust_held.json $R/rust_sample.json $R/rust_run.json $R/rust_control.json $R/rust_peropcode.json $R/rust_results.json"
 echo "lane o11_l17 done"

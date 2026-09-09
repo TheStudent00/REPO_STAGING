@@ -3,17 +3,17 @@
 2026-08-05. EVIDENCE FOR DEE'S REVIEW.
 
 **What this is.** For each of the five clusters named at the end of
-`~/Programming/PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
+`PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
 (§"every UNCERTAIN row, gathered", items 1-5), one section that: quotes
 what the validated intentions artifact at
-`~/Programming/PseudoIR/Tools/intentions/pc_intentions.json` actually
+`PseudoIR/Tools/intentions/pc_intentions.json` actually
 says on the point, cited by field path; lays out the candidate placements
 with the strongest argument for each and how two or three of the other
 eleven languages in `languages` would classify their equivalent
 construct; states the cost asymmetry if the placement is wrong; and ends
 with one labelled RECOMMENDATION carrying an explicit confidence and what
 would raise it. It serves
-`~/Programming/PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`
+`PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`
 items 3 (what `ur_kind` classifies) and 5 (the mechanical seed at
 language one).
 
@@ -840,15 +840,15 @@ Four further questions, in the order I would ask them:
 
 ## sources
 
-- `~/Programming/PseudoIR/Tools/intentions/pc_intentions.json` —
+- `PseudoIR/Tools/intentions/pc_intentions.json` —
   `minimum_set`, `intent_categories`, `t1_realizations`,
   `t2_compatibility`, `row_satisfiers`, `border_lattice`, `canon`,
   `basis_audit`, `primitives`, `operators`, `policy_refs`, `languages`,
   `meta`. Read 2026-08-05; all quotations are verbatim from those fields.
-- `~/Programming/PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
+- `PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
   — the full table, the two PROPOSED buckets, the 37 UNCERTAIN rows and
   the five clusters this log takes as its sections.
-- `~/Programming/PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md` —
+- `PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md` —
   items 3 and 5 (what `ur_kind` classifies, and the mechanical seed),
   plus item 4's rule that merges are judged on grammar facts and meaning,
   never on name resemblance, which is the standard applied throughout.

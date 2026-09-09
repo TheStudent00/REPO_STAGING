@@ -40,7 +40,7 @@ class, the match failed, and the lane recorded its fallback word instead of
 the program's answer.
 
 Products: one lane script per language, written to `audit/lanes/l2_<lang>.sh`,
-each dropped into ~/Programming/SandboxDesign/agent/drop/ by hand and run
+each dropped into SandboxDesign/agent/drop/ by hand and run
 serially. Every line of /out/l2_<lang>.txt is FACT_ID|RESULT.
 """
 

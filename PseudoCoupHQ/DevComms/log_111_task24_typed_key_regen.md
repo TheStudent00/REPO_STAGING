@@ -244,7 +244,7 @@ pinned anchor binaries.
 
 ```
 $ podman exec -e DWARF_TYPED_KEY_OUT=/persist/dwarf_typed_key.json sandbox-runner \
-    bash -lc 'cd /projects/PseudoCoupHQ/Research/op_pipeline && timeout 900 python3 dwarf_typed_key.py'
+    bash -lc 'cd PseudoCoupHQ/Research/op_pipeline && timeout 900 python3 dwarf_typed_key.py'
 wrote /persist/dwarf_typed_key.json
 cpython  long_add                                             READ     PyLongObject*,PyLongObject*
 ruby     vm_opt_plus                                          READ     VALUE,VALUE
@@ -258,7 +258,7 @@ php      ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER REFUSED  None
 summary: {'handlers_considered': 9, 'keys_read': 6, 'refused': 3}
 ```
 
-Note on where that ran: `/projects/PseudoCoupHQ` is mounted into the
+Note on where that ran: `PseudoCoupHQ` is mounted into the
 container READ-ONLY in practice (the first run stopped with
 `OSError: [Errno 30] Read-only file system`), so the script writes to
 `/persist` when `DWARF_TYPED_KEY_OUT` says so and the result is copied
@@ -270,7 +270,7 @@ Verified: the proposal was regenerated and the tally re-run.
 
 ```
 $ /tmp/reconnect_venv/bin/python3 build_proposal_representation_dimension2.py
-wrote ~/Programming/PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension2.json
+wrote PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension2.json
 proof re-run: {'rerun_by': 'build_proposal_representation_dimension2.py (not copied from round 4 -- the checks were executed again)', 'z3_version': '5.1.0', 'bounded_domain_check': 'unsat', 'unbounded_check': 'unsat', 'verdict': 'PROVED'}
 summary: {
  "handlers_considered": 9,
@@ -348,20 +348,20 @@ any program written here — table membership stays the owner's ratification.
 
 Created this session (all new; nothing existing was edited):
 
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.py`
+- `PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.py`
   — the DWARF parameter-type reader, with its refusal policy in the
   module docstring. 16258 bytes.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.json`
+- `PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.json`
   — its output: nine per-handler records, the cross-check at the ship
   build, the tally. 12204 bytes.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/build_proposal_representation_dimension2.py`
+- `PseudoCoupHQ/Research/op_pipeline/build_proposal_representation_dimension2.py`
   — the regenerator. 15124 bytes.
-- `~/Programming/PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension2.json`
+- `PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension2.json`
   — **the artifact for the owner's ratification.** 48669 bytes.
-- `~/Programming/PseudoCoupHQ/DevComms/log_111_task24_typed_key_regen.md`
+- `PseudoCoupHQ/DevComms/log_111_task24_typed_key_regen.md`
   — this log.
 - A dated entry appended to
-  `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
+  `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
 
 Inside the sandbox container, not in any repo:
 `/persist/dwarf_typed_key.json` (the write target, copied out).

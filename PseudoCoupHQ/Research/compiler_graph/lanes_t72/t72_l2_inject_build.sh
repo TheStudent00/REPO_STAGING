@@ -3,7 +3,7 @@
 # lowering region, rebuild cmd/compile, and smoke-test ONE probe so the
 # diary's size per compile is measured before 590 of them are run.
 set -euo pipefail
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 SRC=/persist/gosrc
 export GOROOT="$SRC" PATH="$SRC/bin:$PATH"
 export GOTOOLCHAIN=local GOPROXY=off GOFLAGS=-mod=mod GOCACHE=/persist/gocache
@@ -11,7 +11,7 @@ export GOTOOLCHAIN=local GOPROXY=off GOFLAGS=-mod=mod GOCACHE=/persist/gocache
 echo "[1/6] restore every touched file from the READ-ONLY tree"
 python3 - <<'PY'
 import json, os, shutil
-targets = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/t72/diary_targets_all.json'))
+targets = json.load(open('PseudoCoupHQ/Research/compiler_graph/t72/diary_targets_all.json'))
 files = sorted({t['file'] for t in targets})
 files += ['src/cmd/compile/internal/ssagen/ssa.go',
           'src/cmd/compile/internal/gc/compile.go',

@@ -2,7 +2,7 @@
 """go_render.py -- task g1: AutoPoly with GO as the target.
 
 Node: hq.research.arch_unit_oracle.cross_construction
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
 FROZEN for term-level composition; task o7 opened the emulation route
 with c as the target and task o11 added rust.  This file adds a third
 target, which asks the same question of a third compiler and does not
@@ -182,7 +182,7 @@ import emulate as E                                              # noqa: E402
 
 FACTS = os.path.join(HERE, "go_facts.json")
 SRC_DIR = os.path.join(HERE, "src")
-HOST_FOLDER = ("~/Programming/PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/go")
 
 TARGET = "go"

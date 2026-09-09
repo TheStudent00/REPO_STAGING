@@ -325,7 +325,7 @@ LITERAL — one of the 442 units transcribed twice, with `ledger.py`,
 == modules from .../scratchpad/pre78
    out_term built? True
    layer-5 text: v0
-== modules from ~/Programming/PseudoCoupHQ/Research/op_pipeline
+== modules from PseudoCoupHQ/Research/op_pipeline
    out_term built? False
 ```
 
@@ -467,7 +467,7 @@ LITERAL — `Research/op_pipeline/guard79_transcript.txt`:
 ```
 guard79.py -- every JSON artifact task 79 writes, unmodified guard, ONE process.  Nothing was added to any field set, and no artifact was declared out of the walk.
 
-command: /tmp/reconnect_venv/bin/python3 ~/Programming/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py ... (11 paths)
+command: /tmp/reconnect_venv/bin/python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py ... (11 paths)
 
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS normalize79_walk_walk1.json -- no operator token in any key, grouping, pairing or row structure

@@ -3,7 +3,7 @@
 # claim cats a file that DOES exist inside this instance.  Must score
 # MATCHES.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "reachable fixture content, task 99" > /tmp/t99_fixture_reachable.txt
 

@@ -46,6 +46,6 @@ language demands it (the owner).
 ingest never guesses: it records `unresolvable` honestly, and the
 consumers halt on it. built by composition from the lineage's best
 parts — the harvest is mapped in
-`~/Programming/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md` and
+`PseudoCoupHQ/DevComms/log_003_harvest_reminder.md` and
 in detail in
-`~/Programming/PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`.
+`PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`.

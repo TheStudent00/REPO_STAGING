@@ -19,7 +19,7 @@ corpus mnemonic in exactly one of four categories, is the acceptance
 criterion.
 
 Node: hq.research.arch_unit_oracle
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/
+(`PseudoCoupHQ/Planning/node_0_3_research/
 node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`, the "goal"
 section of 2026-09-07 and the ruling of 2026-09-08).
 

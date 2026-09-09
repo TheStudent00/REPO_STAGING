@@ -1,9 +1,9 @@
 """Acceptance for the ingress framework: all four stages on a toy grammar; the gate refuses unknowns.
 
 The settled acceptance of
-~/Programming/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_ingress.md.
+PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/SUPPORT_ingress.md.
 Run:
-    python3 -m pytest ~/Programming/PseudoCoup_v6/Tools/transpiler/ -q
+    python3 -m pytest PseudoCoup_v6/Tools/transpiler/ -q
 """
 import json
 import os

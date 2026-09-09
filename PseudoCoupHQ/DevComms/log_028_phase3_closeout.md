@@ -1,8 +1,8 @@
 # log 028 — layer 3 phase 3: close-out, certification, and the value matrix
 
 Date: 2026-08-18 (later the same day than log 027). Node:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 This log closes the five items log 027 §6.1 left open.
 
 **Rewritten 2026-08-19 for readability at the owner's instruction. The content
@@ -1100,16 +1100,16 @@ dropped, which is cost order. ETAs are **derived** from §6.2.
 ### §8.3 harvest, exactly
 
 - Poll the value-matrix lane's own status file,
-  `~/Programming/SandboxDesign/agent/status/vm_<lang>_<nn>.sh.status`.
+  `SandboxDesign/agent/status/vm_<lang>_<nn>.sh.status`.
   `state=done` plus `exit=0` is the signal to look. It is NOT evidence
   the lane finished — read the gate for that.
 - Collect and fold:
 
 ```
-cp ~/Programming/SandboxDesign/agent/out/vm_*.txt \
-   ~/Programming/PseudoCoupHQ/Research/\
+cp SandboxDesign/agent/out/vm_*.txt \
+   PseudoCoupHQ/Research/\
 kind_fuzz_clustering/raw/
-cd ~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering
+cd PseudoCoupHQ/Research/kind_fuzz_clustering
 python3 l3_matrix_read.py
 ```
 
@@ -1125,8 +1125,8 @@ python3 l3_matrix_read.py
   classify the splits:
 
 ```
-cp ~/Programming/SandboxDesign/agent/out/ld_*.txt \
-   ~/Programming/PseudoCoupHQ/Research/\
+cp SandboxDesign/agent/out/ld_*.txt \
+   PseudoCoupHQ/Research/\
 kind_fuzz_clustering/raw/
 ```
 
@@ -1155,7 +1155,7 @@ kind_fuzz_clustering/raw/
 ## record
 
 New this session, all in
-`~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`:
+`PseudoCoupHQ/Research/kind_fuzz_clustering/`:
 
 - `l3_accept.py` — java and typescript templates added; a mechanical
   right-side type rename for java's two type-declaring holders.

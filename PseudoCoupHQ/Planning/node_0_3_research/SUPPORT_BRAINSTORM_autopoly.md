@@ -9,7 +9,7 @@ Stage: brainstorm (the `SUPPORT_BRAINSTORM_` convention: a proposed
 shape, not a ruled one). Opened 2026-09-06 from the owner's commentary on
 task o7's result; the record of the day, with the owner's words verbatim
 and the coordinator's commentary, is
-`~/Programming/PseudoCoupHQ/DevComms/log_219_autopoly_brainstorm.md`.
+`PseudoCoupHQ/DevComms/log_219_autopoly_brainstorm.md`.
 Nothing here is ruled; what is ruled is in the CORE.
 
 ## 1. The idea, in one sentence
@@ -112,7 +112,7 @@ Hub, et al.
 
 ## 9. The proof system beneath AutoPoly, as levels (added 2026-09-07)
 
-Record: `~/Programming/PseudoCoupHQ/DevComms/log_228_lean_float_model_and_the_proof_system.md`
+Record: `PseudoCoupHQ/DevComms/log_228_lean_float_model_and_the_proof_system.md`
 (a branch conversation) and `log_229_operator_mapping_proof_system_purpose.md`
 (the purpose that log_228 left out, and its corrections).
 

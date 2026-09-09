@@ -8,7 +8,7 @@
 # the instance per "ALL compute through Airlock" -- no deliverable
 # json is written here.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/1] task o10: enumerate ledger row type/block/produced_by.kind values"
 python3 - <<'PY'
 import glob

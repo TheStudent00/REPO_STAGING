@@ -16,7 +16,7 @@ echo "-- a host-only path must NOT exist in here:"
 # a glob, so no user name is ever written into a tracked artifact
 ls -d /home/*/Programming 2>&1 || echo "  ABSENT (as expected inside the container)"
 echo "-- container-only paths that must exist:"
-for p in /persist /sources /projects/PseudoCoupHQ /work /out ; do
+for p in /persist /sources PseudoCoupHQ /work /out ; do
   printf '  %-28s ' "$p"; ls -d "$p" >/dev/null 2>&1 && echo present || echo ABSENT
 done
 
@@ -65,7 +65,7 @@ find /persist/llvmsrc/clang/lib/CodeGen /persist/llvmsrc/llvm/lib/Target/X86 \
 say "5. every target file this lap will edit is present at the pin"
 python3 - <<'PY'
 import json, os
-targets = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+targets = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                          't81/diary_targets_cpp.json'))
 files = sorted({row['file'] for row in targets['targets']})
 absent = [f for f in files if not os.path.exists('/persist/llvmsrc/' + f)]

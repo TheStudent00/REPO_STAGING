@@ -19,7 +19,7 @@
 # transition count) and by nothing else.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 cd "$REPO"
 
 say "[1/6] the five measured populations, from the artifacts"
@@ -34,7 +34,7 @@ print("   | population | probes | variants | nodes entered | transitions | "
       "transitions walked by exactly one variant | transitions walked by every variant |")
 print("   |---|---|---|---|---|---|---|")
 for name, path in rows:
-    d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/' + path))
+    d = json.load(open('PseudoCoupHQ/Research/compiler_graph/' + path))
     p = d["populations"]; c = d["census"]["transitions"]
     print("   | %s | %d | %d | %d | %d | %d | %d |"
           % (name, p["diaries_on_disk"], p["operator_traced_variants"],
@@ -48,7 +48,7 @@ say "[2/6] the two UNMEASURED artifacts, quoted whole"
 python3 - <<'PY'
 import json
 for lang in ("rust", "swift"):
-    d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+    d = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                        'variant_connections_%s.json' % lang))
     print("   --- variant_connections_%s.json" % lang)
     print("   state  : %s" % d["state"])
@@ -59,7 +59,7 @@ PY
 say "[3/6] THE WORKED EXAMPLE, c and cpp -- one variant, its values moving"
 python3 - <<'PY'
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+d = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                    'variant_connections_c_and_cpp.json'))
 row = d["variants"][0]
 print("   variant_id : %s" % row["variant_id"])
@@ -126,7 +126,7 @@ def visitors(path, wanted):
     print("   %s: %d lines, PEAK RESIDENT %.1f MB, wall %.1f s"
           % (path.rsplit('/', 1)[-1], lines, peak, time.time() - started))
     return counts
-base = '/projects/PseudoCoupHQ/Research/compiler_graph/'
+base = 'PseudoCoupHQ/Research/compiler_graph/'
 wanted = [x for x in open('/work/ids_cc.txt').read().split("\n") if x]
 counts = visitors(base + 'coverage_c_and_cpp.json', set(wanted))
 d = json.load(open(base + 'variant_connections_c_and_cpp.json'))
@@ -148,7 +148,7 @@ PY
 say "[5/6] the go worked example, for the second compiler"
 python3 - <<'PY'
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+d = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                    'variant_connections_go.json'))
 row = d["variants"][0]
 print("   variant_id %s   members %d   probes %d   populations %s"
@@ -178,7 +178,7 @@ import json
 for path in ("variant_connections_c_and_cpp.json",
              "variant_connections_extended.json",
              "variant_connections_go.json"):
-    d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/' + path))
+    d = json.load(open('PseudoCoupHQ/Research/compiler_graph/' + path))
     print("   --- %s" % path)
     print("   %s" % d["census"]["how_to_read_this"])
     for what in ("nodes", "transitions"):

@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by ~/Programming/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_3_0_1_dominant_intentions
@@ -32,8 +32,8 @@ sub-node count: 0
 
 ## blocked
 
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/PROGRESS.md` line 12 — probe blocked until host-side `allow.sh sync`).
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/PROGRESS.md` line 70 — dart REMAINS BLOCKED: `storage.googleapis.com` 403s through the
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/PROGRESS.md` line 12 — probe blocked until host-side `allow.sh sync`).
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/PROGRESS.md` line 70 — dart REMAINS BLOCKED: `storage.googleapis.com` 403s through the
 
 ## PROGRESS bullet statuses
 
@@ -49,4 +49,4 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 ## SUPPORT files in this sub-tree
 
-- `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/SUPPORT_BRAINSTORM_basis_data_structures.md`
+- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/SUPPORT_BRAINSTORM_basis_data_structures.md`

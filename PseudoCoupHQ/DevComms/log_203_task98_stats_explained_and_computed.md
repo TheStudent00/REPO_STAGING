@@ -14,10 +14,10 @@
 
 **Where the evidence lives.** Thirteen Airlock lanes, on the default instance,
 in the lane-log folder the sandbox itself sees as `/logs` and the host
-sees as `~/Programming/Airlock/agent/logs`. Every attribution below names
+sees as `Airlock/agent/logs`. Every attribution below names
 its lane log file. The transcripts in §7 are pasted from
 `/logs/20260905T140949Z__t98_l9_transcript.sh.log`, which ran each
-command from `/projects/PseudoCoupHQ` — the same working directory
+command from `PseudoCoupHQ` — the same working directory
 `check_conventions_log_claims.py --verify` uses, so every one of them
 re-runs.
 
@@ -277,7 +277,7 @@ $ grep -n "does not converge for 44 of the 30,324" DevComms/log_202_task97_term_
 
 Everything in this section is pasted from lane 9,
 `/logs/20260905T140949Z__t98_l9_transcript.sh.log`. Each command runs from
-`/projects/PseudoCoupHQ`.
+`PseudoCoupHQ`.
 
 ### 7.1 The spelling guard — unmodified, ONE process, every artifact
 
@@ -356,10 +356,10 @@ $ git diff --stat -- Research/op_pipeline/dashboard.html Research/op_pipeline/da
 0
 ```
 
-**`~/Programming/Ourobrowser`, run on the host on 2026-09-05:**
-`git -C ~/Programming/Ourobrowser diff --stat` printed nothing at all —
+**`Ourobrowser`, run on the host on 2026-09-05:**
+`git -C Ourobrowser diff --stat` printed nothing at all —
 0 lines. **This claim cannot be re-run by the verifier**, and the cause is
-named rather than hidden: `~/Programming/Ourobrowser` is not a mount
+named rather than hidden: `Ourobrowser` is not a mount
 Airlock carries, so no command inside the sandbox can reach it. The
 engine was imported by the screenshot rig and never edited.
 
@@ -520,7 +520,7 @@ records                        30280
 `DevComms/screens/log_203/`, taken by
 `Research/op_pipeline/t98_ouro_shots.py` driving the real Ourobrowser on
 the host. **This claim is not re-runnable inside Airlock**: the rig needs
-`~/Programming/Ourobrowser`, which is not a mount Airlock carries.
+`Ourobrowser`, which is not a mount Airlock carries.
 
 | file | what it shows |
 |---|---|

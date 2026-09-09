@@ -35,11 +35,11 @@ set -euo pipefail
 export HOME=/work/m1bhome
 mkdir -p "$HOME" /work/m1b_check_shapes/archproof/Archproof
 echo "[1/2] task m1b: the shapes the sweep spells now"
-cd /projects/PseudoCoupHQ/Research/op_pipeline/lean
+cd PseudoCoupHQ/Research/op_pipeline/lean
 python3 -c "
 import sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline')
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline/lean')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline/lean')
 import model_translate as MT
 names = [s[0] for s in MT.shapes_for(32)]
 print('   shapes_for(32): %d -- %s' % (len(names), ' '.join(names)))
@@ -53,8 +53,8 @@ import resource
 import sys
 import time
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline/lean")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline/lean")
 import model_translate as MT
 
 ABORT_MEMORY_M1B_KB = 16 * 1024 * 1024

@@ -11,7 +11,7 @@ STATE AT HANDOFF:
   NOT a task here.
 - type inventory: extracted and validated, zero holes (log_116);
   swift's missing authority is now on disk —
-  ~/Programming/Sources/swift-6.0.3-RELEASE, cloned at the
+  Sources/swift-6.0.3-RELEASE, cloned at the
   toolchain pin, verified commit 6a862d2e... (log_122).
 - task 32 (interpreter table / join / union) was LOST MID-RUN
   when its host process exited; inputs all landed.

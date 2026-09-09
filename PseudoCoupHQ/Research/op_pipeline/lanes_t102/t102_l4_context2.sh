@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -u
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 echo "[1/1] more context"
 echo "=== dashboard PROGRESS lines 1-30 ==="
 sed -n '1,30p' Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_10_dashboard/PROGRESS.md

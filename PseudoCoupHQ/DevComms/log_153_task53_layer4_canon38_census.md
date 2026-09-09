@@ -1,6 +1,6 @@
 # log 153 — TASK 53: layer 4 read off canon38, and the census re-filtered
 
-Date: 2026-09-03. Home: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+Date: 2026-09-03. Home: `PseudoCoupHQ/Research/op_pipeline`.
 Reads: `canon38_wrapped_{c,cpp,go,rust,swift}.json`, `canon38_interp.json`,
 `canon38_regen_store/*.json` (log 152). Compares against: log 147 §13.5 and
 `name_census3.json`.

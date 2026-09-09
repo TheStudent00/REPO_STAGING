@@ -2,7 +2,7 @@
 """rust_render.py -- task o11: AutoPoly with RUST as the target.
 
 Node: hq.research.arch_unit_oracle.cross_construction
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
 FROZEN for term-level composition; task o7 opened the emulation route
 with c as the target and this task adds a second target, which asks
 the same question of a different compiler and does not unfreeze the
@@ -154,7 +154,7 @@ CONTROL = os.path.join(HERE, "rust_control.json")
 PEROPCODE = os.path.join(HERE, "rust_peropcode.json")
 RESULTS = os.path.join(HERE, "rust_results.json")
 REPORT = os.path.join(HERE, "rust_report.md")
-HOST_FOLDER = ("~/Programming/PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/rust")
 
 TARGET = "rust"

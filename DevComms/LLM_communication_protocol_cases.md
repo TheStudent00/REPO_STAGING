@@ -1,7 +1,7 @@
 # Communication Protocol — cases
 
 The account behind every rule in
-`~/Programming/DevComms/LLM_communication_protocol.md` (v3). Each
+`DevComms/LLM_communication_protocol.md` (v3). Each
 v2 section is reproduced here VERBATIM — its rule text, its dated
 failure, and every quote — under the card or cards it now feeds.
 Nothing from v2 was dropped; the rulebook carries the distilled
@@ -10,8 +10,8 @@ card, this file carries how the rule was reached. Per
 is the working record of why.
 
 Built 2026-09-06 from
-`~/Programming/DevComms/0_Archive/LLM_communication_protocol_v2.md`
-by `~/Programming/DevComms/0_Archive/build_cases_2026-09-06.py`. To add a case: append
+`DevComms/0_Archive/LLM_communication_protocol_v2.md`
+by `DevComms/0_Archive/build_cases_2026-09-06.py`. To add a case: append
 a dated entry under the card's section; do not edit the verbatim
 v2 text.
 
@@ -749,8 +749,8 @@ provisional — or not shown.
 
 → cards: `media.structural-overview, scope.code-shape (family heading)`
 → §6.1 within: `media.structural-overview`; `media.call-flow-arrows`
-→ §6.2 within: `scope.code-shape — text lives in ~/Programming/PseudoCoupHQ/plan_and_code.md §1–§2`
-→ §6.3 within: `scope.code-shape — text moved to ~/Programming/PseudoCoupHQ/plan_and_code.md §7`
+→ §6.2 within: `scope.code-shape — text lives in PseudoCoupHQ/plan_and_code.md §1–§2`
+→ §6.3 within: `scope.code-shape — text moved to PseudoCoupHQ/plan_and_code.md §7`
 
 
 #### 6.1 Structural overviews
@@ -806,7 +806,7 @@ ClassA.method_x() --> ClassB.method_y()
 
 #### 6.2 Plan and code share names; code is written top-down
 
-Full statement: `~/Programming/PseudoCoupHQ/plan_and_code.md`. In
+Full statement: `PseudoCoupHQ/plan_and_code.md`. In
 short:
 
 - A plan node describing a code object carries that object's NAME —
@@ -912,7 +912,7 @@ work.
 
 
 - **Full paths, always.** Every file or folder reference carries its
-  full path from home (`~/Programming/...`) or absolute if outside
+  full path from home (`...`) or absolute if outside
   it. Project name plus internal path is fine when the project is
   named; never a bare fragment like `pins/MANIFEST.md` — too many
   projects are in play for fragments to resolve.
@@ -925,13 +925,13 @@ work.
   can click and view.
 - **Commands appear exactly as typed, with full path** (2026-08-01).
   Wrong: `bash run_checks.sh`. Right:
-  `bash ~/Programming/PseudoCoup_v6/Research/r1_intentions_validation/run_checks.sh`.
+  `bash PseudoCoup_v6/Research/r1_intentions_validation/run_checks.sh`.
   If a run genuinely needs a working directory, one copy-pasteable
   line: `cd ~/path/to/folder && bash run_checks.sh`. If a shorter
   form is being proposed, say it does not exist yet and give the
   line that would create it. The failure: `hq.sh check` referred to
   repeatedly as though it were a command; the form that runs is
-  `bash ~/Programming/PseudoCoupHQ/hq.sh check`.
+  `bash PseudoCoupHQ/hq.sh check`.
 - Anything not local to the workspace: say so, and provide the means
   to acquire it if relevant.
 
@@ -964,14 +964,14 @@ and confirmations do NOT get logs — a log per exchange is its own
 pollution.
 
 - Location: the project's own `DevComms/`; line-wide work in
-  `~/Programming/PseudoCoupHQ/DevComms/`.
+  `PseudoCoupHQ/DevComms/`.
 - Naming: `log_<nnn>_<topic>.md`, three digits, lower case with
   underscores; numbering restarts per repo.
 - The chat still carries the conclusion, the decision it forces, and
   anything I must act on — §4.2's shape governs it. Never "I've
   explained this in log 3" and stop.
 - Referencing a log later: repo, number, section, full path —
-  "`~/Programming/PseudoIR/DevComms/log_001_activation_slice_closure.md`
+  "`PseudoIR/DevComms/log_001_activation_slice_closure.md`
   §6" — never "as discussed earlier".
 
 **Three stores, three jobs** — a plan node says what a thing IS;
@@ -1031,7 +1031,7 @@ for is inspectable instead of a matter of taste.
 
 #### The files
 
-Beside this document in `~/Programming/DevComms/`; each is a
+Beside this document in `DevComms/`; each is a
 frequency list (rank, count, root, folded surface forms):
 
 | file | contents |
@@ -1045,7 +1045,7 @@ frequency list (rank, count, root, folded surface forms):
 
 Corpus: 1,489 of my own messages from transcripts on this machine,
 quoted text and code fences removed — 69,344 words. Pipeline:
-`~/Programming/VocabularyAnalysis/`; my hand-made grouping decisions
+`VocabularyAnalysis/`; my hand-made grouping decisions
 are recorded in `analysis/families_review.txt` (345 suffix families)
 and `analysis/prefixes_review.txt` (120 prefix families) there.
 
@@ -1074,7 +1074,7 @@ and `analysis/prefixes_review.txt` (120 prefix families) there.
 #### What to do with it
 
 - Choosing between a plain word and a specialist synonym: choose the
-  one already in `~/Programming/DevComms/vocabulary_dictionary.txt`.
+  one already in `DevComms/vocabulary_dictionary.txt`.
 - A word absent from all lists is one I have never used with you —
   not banned, but define it on the spot (§1.2).
 - Do not imitate the lists mechanically or narrow your precision to

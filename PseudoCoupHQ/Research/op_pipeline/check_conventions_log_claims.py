@@ -67,8 +67,8 @@ THE OUTCOMES (five, and no sixth)
                   anything, for a stated CAUSE.  Causes seen in the real
                   logs, each with its own name:
                     out_of_sandbox        names a host path Airlock does
-                                          not mount (`~/Programming/Airlock`,
-                                          `~/Programming/Ourobrowser`)
+                                          not mount (`Airlock`,
+                                          `Ourobrowser`)
                     elided_command        the command text itself carries
                                           `...` in place of a real path
                     moving_reference      it reads a target that moves --
@@ -115,7 +115,7 @@ USAGE
 -----
   # on the host: write a lane that will do the work inside Airlock
   python3 check_conventions_log_claims.py --emit-lane <lane.sh> <log.md>...
-  cd ~/Programming/Airlock && ./airlock submit <lane.sh> --no-batch
+  cd Airlock && ./airlock submit <lane.sh> --no-batch
 
   # inside the sandbox (what the lane runs):
   python3 check_conventions_log_claims.py --verify <log.md>...
@@ -135,21 +135,21 @@ import subprocess
 import sys
 
 # ---------------------------------------------------------------------------
-# the sandbox map.  Copied from ~/Programming/Airlock/mounts.conf, which is
+# the sandbox map.  Copied from Airlock/mounts.conf, which is
 # per-machine and is NOT itself mounted into the container, so it cannot be
 # read at run time.  Every entry is verified to exist before use and the map
 # actually used is printed in the report -- so a stale copy shows up as a
 # missing root rather than as a wrong verdict.
 # ---------------------------------------------------------------------------
 SANDBOX_ROOTS = {
-    "~/Programming/PseudoCoupHQ": "/projects/PseudoCoupHQ",
-    "~/Programming/PseudoCoup_v5": "/projects/PseudoCoup_v5",
-    "~/Programming/PseudoCoup_v6": "/projects/PseudoCoup_v6",
-    "~/Programming/PlanPlan": "/projects/PlanPlan",
-    "~/Programming/PseudoCoupGraphs": "/projects/PseudoCoupGraphs",
-    "~/Programming/Sources": "/sources",
+    "PseudoCoupHQ": "PseudoCoupHQ",
+    "PseudoCoup_v5": "PseudoCoup_v5",
+    "PseudoCoup_v6": "PseudoCoup_v6",
+    "PlanPlan": "PlanPlan",
+    "PseudoCoupGraphs": "PseudoCoupGraphs",
+    "Sources": "/sources",
 }
-WORKDIR = "/projects/PseudoCoupHQ"          # what the logs' relative paths assume
+WORKDIR = "PseudoCoupHQ"          # what the logs' relative paths assume
 CAPTURE_CAP_BYTES = 256 * 1024
 MEMORY_CEILING_MB = 6144                     # abort by name at this
 DEFAULT_TIMEOUT_S = 120
@@ -558,7 +558,7 @@ def classify(cmd):
 
     host = re.search(r"(~|/home/[a-z]+)/Programming/([A-Za-z0-9_]+)", cmd)
     if host:
-        name = "~/Programming/" + host.group(2)
+        name = "" + host.group(2)
         if name not in SANDBOX_ROOTS:
             return "out_of_sandbox", "names `%s`, which Airlock does not mount" % name
         if not os.path.isdir(SANDBOX_ROOTS[name]):
@@ -989,7 +989,7 @@ LANE = """#!/usr/bin/env bash
 #
 # Node: hq.conventions
 set -uo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 check_conventions_log_claims.py %(mode)s \\
   --timeout %(timeout)d \\
   --json /out/%(stem)s.json \\
@@ -1008,7 +1008,7 @@ def emit_lane(path, logs, mode, timeout_s):
         "mode": mode,
         "timeout": timeout_s,
         "stem": stem,
-        "logs": "\n".join("  /projects/PseudoCoupHQ/DevComms/%s \\"
+        "logs": "\n".join("  PseudoCoupHQ/DevComms/%s \\"
                           % os.path.basename(l) for l in logs).rstrip(" \\"),
     }
     with open(path, "w") as fh:
@@ -1016,7 +1016,7 @@ def emit_lane(path, logs, mode, timeout_s):
     os.chmod(path, 0o755)
     print("wrote %s" % path)
     print("submit with:")
-    print("  cd ~/Programming/Airlock && ./airlock submit %s --no-batch" % path)
+    print("  cd Airlock && ./airlock submit %s --no-batch" % path)
 
 
 # ---------------------------------------------------------------------------

@@ -5,12 +5,12 @@
 # holds one shard at most. Peak RSS printed at the end.
 set -euo pipefail
 echo "[1/1] task m1: model_table.py pieces on a handful of objects"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 - <<'PY'
 import json
 import sys
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import model_table as M
 
 print("the partial region, per builder, for the five the brief names")

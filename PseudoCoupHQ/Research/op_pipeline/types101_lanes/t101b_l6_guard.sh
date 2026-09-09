@@ -5,7 +5,7 @@
 # the anchor-dwarf rows index + its sample, and every shard under
 # types101_dwarf_rows/ and types101_dwarf_rows_sample/.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 files=$(ls types101_holders.json types101_spellings.json types101_entry_holders.json \
            types101_dwarf_rows.json types101_dwarf_rows_sample.json \
            types101_dwarf_rows/*.json types101_dwarf_rows_sample/*.json 2>/dev/null)

@@ -14,17 +14,17 @@ from checked material rather than from a survey read once.
 **It is a working record, not a plan and not a ruling.** Per the
 communication protocol §18a: a fact here that turns out to be
 load-bearing graduates into
-`~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/`
+`PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/`
 or into agent memory. Nothing here settles anything.
 
 ## Sources
 
-- `~/Programming/PseudoCoup_v5/DevComms/ledger_survey_2026-07-27.md`
+- `PseudoCoup_v5/DevComms/ledger_survey_2026-07-27.md`
   — the component-level survey with line citations. The primary
   source for everything below.
-- `~/Programming/PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`
+- `PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`
   — its companion. Relevant here only where the two overlap.
-- `~/Programming/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`
+- `PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`
   — the condensed index over both, which separates what the owner said from
   what the surveys found.
 
@@ -36,7 +36,7 @@ or into agent memory. Nothing here settles anything.
 The survey's §1 verdict is that two families evolved separately and
 never met:
 
-- The **semantic family** — `~/Programming/PseudoCoup/pseudocoup/core/ledger.py`,
+- The **semantic family** — `PseudoCoup/pseudocoup/core/ledger.py`,
   289 lines, grown from a v3 seed. It is the ONLY family that drives
   emission: eight registries consumed by `egress/dart.py` for real
   decisions (import `hide` injection, await/async gating, singleton
@@ -48,7 +48,7 @@ never met:
     `memory_erasure` fields that nothing writes; no identity model;
     no integrity checking.
 - The **verification family** —
-  `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/`.
+  `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/`.
   It holds the identity model, integrity checking, divergence
   taxonomy and layout-intent schema, but records nothing any emitter
   reads. Its output is Markdown and JSON for humans, plus one
@@ -82,7 +82,7 @@ the survey chose that source, and what condition it carries.
   the root. Anchors are carried as metadata and never used as keys.
   Files and directories are themselves positioned nodes.
 - **Where.**
-  `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py`,
+  `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py`,
   294 lines.
 - **Why this source.** The survey calls it the single
   highest-value transplant in the whole harvest, on the grounds that
@@ -108,7 +108,7 @@ the survey chose that source, and what condition it carries.
   `{id, file, node_kind, anchor, span, ui, connectivity}`, plus a new
   `semantic` slot that does not exist in any current implementation.
 - **Where.** `ledger_unified.build`, in
-  `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py`,
+  `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py`,
   323 lines.
 - **Why this source.** It is already the union of the structural and
   layout records; the survey's addition is the `semantic` slot, which
@@ -123,7 +123,7 @@ the survey chose that source, and what condition it carries.
   `singletons`, `param_shapes` — moved onto positional-path ids, with
   the fully-qualified name kept as a SECONDARY index for call sites
   that only know a name.
-- **Where.** `~/Programming/PseudoCoup/pseudocoup/core/ledger.py`,
+- **Where.** `PseudoCoup/pseudocoup/core/ledger.py`,
   289 lines. WFL's copy is byte-identical.
 - **Why this source.** No competitor drives emission at all. This is
   the only place where a ledger record causes an emitter to make a
@@ -146,10 +146,10 @@ the survey chose that source, and what condition it carries.
   halt-on-unresolvable — ingest never guesses; it writes
   `unresolvable`, and consumers stop.
 - **Where.** The schema specs at
-  `~/Programming/0_Archive/PseudoIR/DevComms/.planning/specifications/02_ledger/`
+  `0_Archive/PseudoIR/DevComms/.planning/specifications/02_ledger/`
   (a directory, verified present). The refusing style has a working
   implementation at
-  `~/Programming/PseudoCoup_v5/Research/rust_routing/ledger.py`, 56 lines.
+  `PseudoCoup_v5/Research/rust_routing/ledger.py`, 56 lines.
 - **Why this source.** The survey's §2 marks these specs as **more
   advanced than any implementation**: no implementation reaches the
   three-tier scheme, none implements the wrapper injection/erasure
@@ -174,7 +174,7 @@ the survey chose that source, and what condition it carries.
   unique, every id appears exactly once, `entry_count` equals the node
   count, and a nonzero exit on failure.
 - **Where.** `ledger_unified.check()`, L243–281 of
-  `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py`.
+  `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py`.
 - **Why this source.** The survey states plainly it is the only
   `--check` anywhere in the lineage.
 - **Condition.** The survey asks for it "verbatim, extended" with two
@@ -192,10 +192,10 @@ the survey chose that source, and what condition it carries.
   sides differ", replacing three partial ones.
 - **Where, and this is the part that is split three ways.**
   - In-code kinds: `classify_methods` in
-    `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger.py`,
+    `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger.py`,
     370 lines — six kinds, counted.
   - Vocabulary breadth: the `ledger.json` sidecars under
-    `~/Programming/0_Archive/PseudoIR/archive/experiments/` — 13
+    `0_Archive/PseudoIR/archive/experiments/` — 13
     `reason` values, including `pointer-erasure`,
     `control-flow-unroll`, `type-coercion`.
   - Confidence model: the pseudoir registry's strategy ranks and
@@ -220,7 +220,7 @@ the survey chose that source, and what condition it carries.
     static leaves matched by content, dynamic bindings by type and
     order, robust to differing instance counts.
 - **Where.**
-  `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger.py`
+  `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger.py`
   (370) and `.../kit_ledger.py` (374).
 - **Why this source.** It is the whole of the verification family's
   contribution, and the survey's §1 verdict is that nothing else has
@@ -236,7 +236,7 @@ the survey chose that source, and what condition it carries.
   dropped, plus an explicit honesty boundary between what is policy
   and what is geometry.
 - **Where.** `ui_ledger._norm`, in
-  `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ui_ledger.py`,
+  `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ui_ledger.py`,
   518 lines.
 - **Why this source.** Sole holder; no competitor.
 - **Condition.** Taken unchanged, with one addition: an explicit
@@ -289,10 +289,10 @@ second thing under one name.
 
 - **The runtime tracer.** `WalkEmit` and its injector
   `inject_emitid.py` are a harvest target the owner confirmed for PCv5
-  (recorded in `~/Programming/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`
+  (recorded in `PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`
   §4), but the tracer was settled as a CO-NODE of the ledgerer on
   2026-08-01 — it is `pcv5.tools.tracer`, node `node_0_0_3_tracer`.
-  (`~/Programming/PseudoCoup_v5/Planning/node_0_0_tools/PROGRESS.md`
+  (`PseudoCoup_v5/Planning/node_0_0_tools/PROGRESS.md`
   records that ruling with the word "SIBLING", which the
   communication protocol §1 bans; the term is left alone where it
   already sits and not carried forward here.)
@@ -301,7 +301,7 @@ second thing under one name.
   - Hazards that come with the injector, which belong to the tracer
     node rather than here: it is not idempotent, and the per-instance
     counter drifts.
-- **`~/Programming/StressBot/StressBot/core/ledger.py`** — confirmed
+- **`StressBot/StressBot/core/ledger.py`** — confirmed
   out of scope by the survey. It is an application-state exploration
   graph with no transpilation content, sharing only the word "ledger".
 
@@ -315,22 +315,22 @@ rather than assumed away.
 
 | source | survey says | on disk today |
 | --- | --- | --- |
-| `~/Programming/PseudoCoup/pseudocoup/core/ledger.py` | 289 lines | 289 |
-| `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger.py` | 370 lines | 370 |
-| `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/kit_ledger.py` | 374 lines | 374 |
-| `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py` | 294 lines | 294 |
-| `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ui_ledger.py` | 518 lines | 518 |
-| `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py` | `check()` at L243–281 | present, 323 lines |
-| `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/inject_emitid.py` | 837 lines | 837 |
-| `~/Programming/PseudoCoup_v5/Research/rust_routing/ledger.py` | 57 lines | **56** |
-| `~/Programming/0_Archive/PseudoIR/DevComms/.planning/specifications/02_ledger/` | schema specs | directory present |
+| `PseudoCoup/pseudocoup/core/ledger.py` | 289 lines | 289 |
+| `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger.py` | 370 lines | 370 |
+| `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/kit_ledger.py` | 374 lines | 374 |
+| `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py` | 294 lines | 294 |
+| `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ui_ledger.py` | 518 lines | 518 |
+| `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py` | `check()` at L243–281 | present, 323 lines |
+| `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/inject_emitid.py` | 837 lines | 837 |
+| `PseudoCoup_v5/Research/rust_routing/ledger.py` | 57 lines | **56** |
+| `0_Archive/PseudoIR/DevComms/.planning/specifications/02_ledger/` | schema specs | directory present |
 
 Two facts follow from the table that are worth stating rather than
 leaving to be noticed:
 
 - **Seven of the nine sources live outside the three live repos**, under
-  `~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/`,
-  `~/Programming/PseudoCoup/`, and `~/Programming/0_Archive/`. The
+  `StressBot/RelevantProjects/PseudoCoup_v0/`,
+  `PseudoCoup/`, and `0_Archive/`. The
   gutting of PCv5 does not touch any of them.
 - **Exactly one source is inside the material the gutting removes** —
   the 56-line rust_routing ledger, §2.4. It is the only part of this
@@ -344,7 +344,7 @@ The survey's §5 records the framing as settled and one question as
 open.
 
 - **Settled framing** (survey §5, superseding the three-way seed
-  choice in `~/Programming/PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`
+  choice in `PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`
   §3): the combined ledger is id-keyed from v0's identity model,
   superset-shaped from `ledger_unified`, semantically loaded from the
   289-line ledger, spec-enforced by the `02_ledger` schemas, and
@@ -360,7 +360,7 @@ open.
 ## 7. How much of this to trust, and for how long
 
 Both surveys are dated **2026-07-27**, which predates the purge and
-the 2026-07-31 split. `~/Programming/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`
+the 2026-07-31 split. `PseudoCoupHQ/DevComms/log_003_harvest_reminder.md`
 §3 states the standing caution: treat the condensed maps as a reading
 list, not as current state.
 

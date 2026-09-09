@@ -7,7 +7,7 @@
 # with RLIMIT_AS at 6,144 MB and 600 s, by term97_walk.one_unit_forked
 # -- imported, not re-typed, so the answer is comparable to task 97's.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/1] the 44"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_the44.py 6144 600
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_the44.py 6144 600
 echo "exit $?"

@@ -27,7 +27,7 @@
 # SAMPLE FIRST, as the rule requires: the sample is lane 9's three
 # shards, 241 records, peak 440,308 kB, 7 s.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 total=$(( $(ls canon40_regen_store/*.json | wc -l) + 6 ))
 echo "total inputs to walk: $total"

@@ -8,13 +8,13 @@ surveys FOUND** — the distinction matters, because the maps are
 survey output that the owner directed rather than statements he made.
 
 Sources:
-`~/Programming/PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`
+`PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`
 (the condensed maps),
-`~/Programming/PseudoCoup_v6/AgentMemory/02_decisions.md` (the
+`PseudoCoup_v6/AgentMemory/02_decisions.md` (the
 rulings), and the two full surveys with line-cited evidence, which
 still exist at
-`~/Programming/PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`
-and `~/Programming/PseudoCoup_v5/DevComms/ledger_survey_2026-07-27.md`.
+`PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`
+and `PseudoCoup_v5/DevComms/ledger_survey_2026-07-27.md`.
 
 ---
 
@@ -115,7 +115,7 @@ divergence taxonomy; v0's tools). The combined ledger was mapped as:
 ### Where the version-states are
 
 Condensed from the version map. Deepest verification is v0
-(`~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/`) — oracle,
+(`StressBot/RelevantProjects/PseudoCoup_v0/`) — oracle,
 fuzzer, ledgers, idgen, with a Kotlin test suite passing in Python
 160/160. The only CFG/SSA middle-end is v1. The UR-AST was born in
 v3. The 289-line semantic ledger and polyfill engine are v4. The
@@ -139,15 +139,15 @@ ingress and the extraction/insertion proof are PCv5's.
 ## 4. Not in the maps, and probably should be
 
 `WalkEmit` — the global runtime tracer found 2026-07-31 at
-`~/Programming/StressBot/RelevantProjects/WFL_MixingCenter/WFL/app/src/main/java/com/sara/workoutforlife/core/debug/WalkEmit.kt`,
+`StressBot/RelevantProjects/WFL_MixingCenter/WFL/app/src/main/java/com/sara/workoutforlife/core/debug/WalkEmit.kt`,
 with its tree-sitter driven injector in
-`~/Programming/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/inject_emitid.py`.
+`StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/inject_emitid.py`.
 
 It is the working precedent for the detector idea, it is keyed on the
 same idgen ids the ledger map already selects, and it appears in
 neither survey — the surveys were written before it was looked for.
 Detail in
-`~/Programming/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`.
+`PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`.
 
 **the owner, 2026-07-31: this tooling belongs in PCv5** — "i think we do
 need that tooling in PCv5. or rather, it would be better to have that

@@ -8,5 +8,5 @@
 # that `==`, `<`, `>`, `===` land under.
 set -euo pipefail
 echo "[1/1] swift_node_type_probe.py (one snippet per swift operator)"
-python3 /projects/PseudoCoupHQ/Research/oracle/compiler_units/swift_node_type_probe.py
+python3 PseudoCoupHQ/Research/oracle/compiler_units/swift_node_type_probe.py
 echo "[1/1] done"

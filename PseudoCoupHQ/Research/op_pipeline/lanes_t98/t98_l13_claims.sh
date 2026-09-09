@@ -9,11 +9,11 @@
 #
 # Node: hq.conventions
 set -uo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 check_conventions_log_claims.py --verify \
   --timeout 120 \
   --json /out/t98_l13_claims.json \
-  /projects/PseudoCoupHQ/DevComms/log_203_task98_stats_explained_and_computed.md
+  PseudoCoupHQ/DevComms/log_203_task98_stats_explained_and_computed.md
 rc=$?
 echo "verifier exit ${rc}"
 exit ${rc}

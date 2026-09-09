@@ -2,12 +2,12 @@
 
 Schema: forms/FORM_SCHEMA.md. The root under which source_file
 paths resolve is a parameter (default:
-~/Programming/PseudoCoup_v5, the archived research tree whose
+PseudoCoup_v5, the archived research tree whose
 vendoring scripts pin the compiler sources), so the same form
 validates on host and sandbox alike.
 
 Symbol finding uses the T1 tool
-~/Programming/PseudoCoup_v6/Tools/ledgerer/tree_sitter/parse_source.py
+PseudoCoup_v6/Tools/ledgerer/tree_sitter/parse_source.py
 — the ONLY place in PCv6 that owns parsing. For generated sources
 whose seam is a cited construct rather than a named definition
 (a generated match arm, an enum variant), what IS checkable is verbatim
@@ -16,7 +16,7 @@ cited_constructs entry, and still requires a findable entry_symbol.
 
 A broken form is REFUSED with the specific failure named.
 Run:
-    python3 ~/Programming/PseudoIR/Tools/intentions/validate_form.py FORM.json --root ~/Programming/PseudoCoup_v5
+    python3 PseudoIR/Tools/intentions/validate_form.py FORM.json --root PseudoCoup_v5
 """
 
 import argparse
@@ -30,7 +30,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # toolchain; this is one of the borrow points. Same env-var pattern the
 # ledger and intentions suites used before their fixtures were vendored.
 PSEUDOCOUP = os.environ.get(
-    "PSEUDOCOUP_ROOT", os.path.expanduser("~/Programming/PseudoCoup_v6"))
+    "PSEUDOCOUP_ROOT", os.path.expanduser("PseudoCoup_v6"))
 T1_DIR = os.path.join(PSEUDOCOUP, "Tools", "ledgerer", "tree_sitter")
 if not os.path.isdir(T1_DIR):
     raise RuntimeError(
@@ -181,7 +181,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("forms", nargs="+", help="form JSON file(s)")
     ap.add_argument("--root", default=os.path.expanduser(
-        "~/Programming/PseudoCoup_v5"),
+        "PseudoCoup_v5"),
         help="root that source_file paths are relative to")
     args = ap.parse_args(argv)
     ok = True

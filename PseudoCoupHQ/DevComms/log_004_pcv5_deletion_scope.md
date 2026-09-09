@@ -6,7 +6,7 @@ below showed the premise was false for the biggest part: "worst case i
 have it in Timeshift. if its not being tracked by git and especially
 if its source from other repos. delete it."
 
-**Done. `~/Programming/PseudoCoup_v5/` went from 550 MB to 55 MB.**
+**Done. `PseudoCoup_v5/` went from 550 MB to 55 MB.**
 Sections 1 to 5 are the measurement made first, kept because it is
 what decided the scope. Section 7 is what was actually done, including
 a mistake and its fix.
@@ -15,7 +15,7 @@ a mistake and its fix.
 
 ## 1. The finding: 430 MB of it is NOT in the VCS
 
-`~/Programming/PseudoCoup_v5/` is 550 MB on disk. Its `.git` is 54 MB.
+`PseudoCoup_v5/` is 550 MB on disk. Its `.git` is 54 MB.
 The gap is vendored upstream compiler source that git never tracked.
 
 | path | on disk | files tracked by git |
@@ -43,7 +43,7 @@ it.
 **They are also not "previous version content".** They are third-party
 upstream source — rustc and llvm-project — that happens to sit under
 PCv5's tree. By the transplant-versus-dependency test recorded in
-`~/Programming/PseudoCoup_v6/AgentMemory/02_decisions.md`, PCv6
+`PseudoCoup_v6/AgentMemory/02_decisions.md`, PCv6
 depending on them is the dependency case and is already queued to fix
 by vendoring them into PCv6.
 
@@ -76,7 +76,7 @@ Unverified how much.
 
 Two of these folders are NAMED SOURCES in the harvest map for the
 rebuild PCv5 is about to undergo. From
-`~/Programming/PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`:
+`PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`:
 
 > Compiler-source ingress, oracle-checked | PCv5
 > `Research/{vocab_transpiler,cpp_ingress}`

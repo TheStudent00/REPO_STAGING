@@ -11,9 +11,9 @@ export GOTOOLCHAIN=local GOPROXY=off GOFLAGS=-mod=mod GO111MODULE=on
 export GOCACHE=/work/o6/gocache GOPATH=/work/o6/gopath HOME=/work/o6/home
 mkdir -p /work/o6/mod /work/o6/gocache /work/o6/gopath /work/o6/home /work/o6/scratch
 OVERLAY=/sources/golang_src/src/internal/buildcfg/zbootstrap.go=/usr/lib/go-1.26/src/internal/buildcfg/zbootstrap.go
-OUT=/projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json.gz
+OUT=PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json.gz
 echo "[1/3] build (same source as lane 3)"
-cp /projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go /work/o6/mod/main.go
+cp PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go /work/o6/mod/main.go
 cd /work/o6/mod
 printf 'module o6\n\ngo 1.26\n' > go.mod
 go build -o /work/o6/oracle . ; echo "build exit: $?"
@@ -24,7 +24,7 @@ echo "[3/3] output size, meta, error causes by bin"
 ls -l "$OUT"
 python3 - <<'PY'
 import gzip, json, collections
-d = json.load(gzip.open('/projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json.gz', 'rt'))
+d = json.load(gzip.open('PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json.gz', 'rt'))
 m = d['meta']
 print('meta:', json.dumps({k: v for k, v in m.items() if k != 'release_tags'}))
 causes = collections.Counter(); bins = collections.Counter(); binpk = collections.Counter(); failing = 0

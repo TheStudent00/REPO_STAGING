@@ -1,8 +1,8 @@
 # log 022 — type_vocabulary step A: the twelve compilers' type enumerations, unioned
 
 date: 2026-08-16
-node: `~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_3_type_vocabulary/CORE_0_3_3_type_vocabulary.md`
-artifacts: `~/Programming/PseudoCoupHQ/Research/type_vocabulary/`
+node: `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_3_type_vocabulary/CORE_0_3_3_type_vocabulary.md`
+artifacts: `PseudoCoupHQ/Research/type_vocabulary/`
 status: step A complete — MEASUREMENT ONLY. Nothing here rules on which
 entries become instruments; that is step B, and it is the owner's.
 
@@ -17,12 +17,12 @@ before they are used.
   a shape whose behaviour has been written down per language and then
   confirmed by execution. Six exist — boolean, float, integer, string,
   list, dict — and they live in
-  `~/Programming/PseudoCoupHQ/Research/dominant_intentions/`.
+  `PseudoCoupHQ/Research/dominant_intentions/`.
 - A **dominant** is the one version of such a structure that all twelve
   languages can be made to agree on; "the six verified dominants" and
   "the six instruments" name the same six things from two directions.
 - The **harness** is the runner in
-  `~/Programming/PseudoCoupHQ/Research/dominant_intentions/harness/`
+  `PseudoCoupHQ/Research/dominant_intentions/harness/`
   that takes a written-down claim and executes it in every language to
   confirm or refute it. It is not used in this log at all.
 - **`TyKind`** is the enum inside the Rust compiler that lists every
@@ -30,7 +30,7 @@ before they are used.
   a compiler carries its own closed list, so the list can be read
   rather than guessed at.
 - The **lane** is the unattended runner at
-  `~/Programming/SandboxDesign/agent/` — a session drops a shell script
+  `SandboxDesign/agent/` — a session drops a shell script
   into `drop/`, a daemon runs it inside the sandbox container, and the
   session reads the log and the products back out. Every language that
   was executed here was executed through it.
@@ -137,7 +137,7 @@ what a re-run would do.
 
 The raw extractions, one file per language with the verbatim names, the
 source and the confidence, are in
-`~/Programming/PseudoCoupHQ/Research/type_vocabulary/raw/`.
+`PseudoCoupHQ/Research/type_vocabulary/raw/`.
 
 ---
 
@@ -424,20 +424,20 @@ strictly required to start census work.
 ## §7 — where everything is
 
 - Raw per-language extractions, verbatim names with source and
-  confidence: `~/Programming/PseudoCoupHQ/Research/type_vocabulary/raw/`
+  confidence: `PseudoCoupHQ/Research/type_vocabulary/raw/`
   — twelve files, `<language>.types.json`.
 - The union program, with every mapping written out in one table:
-  `~/Programming/PseudoCoupHQ/Research/type_vocabulary/union.py`.
+  `PseudoCoupHQ/Research/type_vocabulary/union.py`.
   Run it with
-  `python3 ~/Programming/PseudoCoupHQ/Research/type_vocabulary/union.py`.
+  `python3 PseudoCoupHQ/Research/type_vocabulary/union.py`.
 - The union itself:
-  `~/Programming/PseudoCoupHQ/Research/type_vocabulary/type_union.json`
+  `PseudoCoupHQ/Research/type_vocabulary/type_union.json`
   (machine-readable, one entry per row with per-language marker, raw
   spelling, and note) and
-  `~/Programming/PseudoCoupHQ/Research/type_vocabulary/type_union.md`
+  `PseudoCoupHQ/Research/type_vocabulary/type_union.md`
   (the §3 table on its own).
 - The lane scripts that did the extraction, archived by the daemon:
-  `~/Programming/SandboxDesign/agent/drop/.done/` — `tv_probe.sh`,
+  `SandboxDesign/agent/drop/.done/` — `tv_probe.sh`,
   `tv_extract.sh`, `tv_extract2.sh`, `tv_extract3.sh`,
   `tv_extract4.sh`, `tv_extract5.sh`. Their raw text products are in
-  `~/Programming/SandboxDesign/agent/out/` as `tv_*.txt`.
+  `SandboxDesign/agent/out/` as `tv_*.txt`.

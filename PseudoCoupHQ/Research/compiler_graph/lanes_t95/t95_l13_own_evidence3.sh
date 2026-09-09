@@ -27,8 +27,8 @@
 set -u
 run() { echo; echo "\$ $*"; eval "$@" 2>&1; }
 say() { echo; echo "======== $* ========"; }
-G=/projects/PseudoCoupGraphs
-L=/projects/PseudoCoupHQ/Research/compiler_graph/lanes_t95
+G=PseudoCoupGraphs
+L=PseudoCoupHQ/Research/compiler_graph/lanes_t95
 
 say "[1/8] go -- the seven declarations of the arch opcode type, and each role"
 run "python3 $L/t95_show.py declarations go"

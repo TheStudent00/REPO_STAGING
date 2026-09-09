@@ -1,7 +1,7 @@
 # log 085 — TASK 4: the unbudgeted prover bucket (6,401 cross-language pairs)
 
 Date: 2026-08-31. Session: Claude Code, TASK 4 of log_083's briefs.
-Working directory: `~/Programming/PseudoCoupHQ/Research/op_pipeline`.
+Working directory: `PseudoCoupHQ/Research/op_pipeline`.
 
 ## 1. Plain-words walkthrough
 

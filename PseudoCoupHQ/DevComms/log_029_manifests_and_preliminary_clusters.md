@@ -1,8 +1,8 @@
 # log 029 — layer 3 phase 4: frozen manifests and a preliminary clustering
 
 Date: 2026-08-18 (later the same day than logs 027 and 028). Node:
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `~/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 **Rewritten 2026-08-19 for readability at the owner's instruction. The content
 is identical — same facts, same numbers, same findings, same section

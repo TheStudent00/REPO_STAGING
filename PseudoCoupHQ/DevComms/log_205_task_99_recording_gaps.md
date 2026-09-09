@@ -1,9 +1,9 @@
 # log 205 — task 99: two recording gaps closed, no decision involved
 
 Written 2026-09-05, round 20. Reports to the owner under
-`~/Programming/DevComms/LLM_communication_protocol.md`. All compute
+`DevComms/LLM_communication_protocol.md`. All compute
 ran inside Airlock instance `t99`
-(`~/Programming/Airlock/instances/t99.conf`), except item B's proof
+(`Airlock/instances/t99.conf`), except item B's proof
 (a2), which the brief itself requires to run on the DEFAULT instance
 (`sandbox`) — that contrast is the point of the proof, explained in
 §3.
@@ -46,7 +46,7 @@ lane ran, `unit c/regen_10427` (shard
 
 ### 2.2 What `term99_reason.py` does with it
 
-`~/Programming/PseudoCoupHQ/Research/op_pipeline/term99_reason.py`
+`PseudoCoupHQ/Research/op_pipeline/term99_reason.py`
 streams each of the store's 332 shards, and for every NO_TERM record
 whose `reason is None`, strips the `'...'`-quoted callee/register
 names out of each hole's `why` string (the two variable parts §2.2 of
@@ -101,12 +101,12 @@ so the unit column below sums past 485.
 ### 2.4 The lanes, in order
 
 Every lane ran on instance `t99`; its own `/logs` is
-`~/AirlockRuns/t99/agent/logs/` on the host — a DIFFERENT folder from
-the default instance's `~/Programming/Airlock/agent/logs/` (this
+`<runs>/t99/agent/logs/` on the host — a DIFFERENT folder from
+the default instance's `Airlock/agent/logs/` (this
 distinction is exactly item B's subject, §3.2).
 
 **1. Dry run** — `t99_l2_dry_run.sh`,
-`~/AirlockRuns/t99/agent/logs/20260905T150143Z__t99_l2_dry_run.sh.log`.
+`<runs>/t99/agent/logs/20260905T150143Z__t99_l2_dry_run.sh.log`.
 The cause table, re-read from the lane's own log, byte for byte:
 
 ```
@@ -125,7 +125,7 @@ Exit 0.
 
 **2. Write, with masked-hash and reason-count proof** —
 `t99_l3_write.sh`,
-`~/AirlockRuns/t99/agent/logs/20260905T150209Z__t99_l3_write.sh.log`.
+`<runs>/t99/agent/logs/20260905T150209Z__t99_l3_write.sh.log`.
 Before the write:
 ```
 $ sed -n '6,9p' /logs/20260905T150209Z__t99_l3_write.sh.log
@@ -150,7 +150,7 @@ every other byte of every record, NO_TERM or not, is unchanged.
 Exit 0.
 
 **3. Idempotence** — `t99_l4_idempotent.sh`,
-`~/AirlockRuns/t99/agent/logs/20260905T150239Z__t99_l4_idempotent.sh.log`,
+`<runs>/t99/agent/logs/20260905T150239Z__t99_l4_idempotent.sh.log`,
 `--write` run again over the now-filled store:
 ```
 $ sed -n '340,343p' /logs/20260905T150239Z__t99_l4_idempotent.sh.log
@@ -175,9 +175,9 @@ being reported as the CLAIM disagreeing.
 The fix, committed as `f2e92af4519219d060430f2de0cee08524613a4d` by
 the repo-daemon (its auto-commit convention, not a manual commit):
 ```
-$ git --git-dir=/projects/PseudoCoupHQ/.git --work-tree=/projects/PseudoCoupHQ show --stat f2e92af4519219d060430f2de0cee08524613a4d -- Research/op_pipeline/check_conventions_log_claims.py
+$ git --git-dir=PseudoCoupHQ/.git --work-tree=PseudoCoupHQ show --stat f2e92af4519219d060430f2de0cee08524613a4d -- Research/op_pipeline/check_conventions_log_claims.py
 commit f2e92af4519219d060430f2de0cee08524613a4d
-Author: TheStudent00 <<email>>
+Author: <owner> <<email>>
 Date:   Sat Sep 5 10:54:37 2026 -0400
 
     auto: 1 file (check_conventions_log_claims.py)
@@ -206,8 +206,8 @@ separate code path needed.
 ### 3.2 The mount fact this fixes, shown live
 
 `t99` has its own run directory
-(`~/AirlockRuns/t99/agent/logs`, mounted to `/logs` inside
-`t99-runner`) — separate from `~/Programming/Airlock/agent/logs`
+(`<runs>/t99/agent/logs`, mounted to `/logs` inside
+`t99-runner`) — separate from `Airlock/agent/logs`
 (mounted to `/logs` inside the DEFAULT `sandbox-runner`), which is
 where the `t98_l*` lanes `log_203` cites actually ran; so a claim in
 `log_203` that cats a `t98` lane log is reachable from the default
@@ -218,7 +218,7 @@ demonstrate.
 
 **(a1) `--verify log_203` FROM `t99`** —
 `t99_l5_claims_log203_t99.sh`,
-`~/AirlockRuns/t99/agent/logs/20260905T150241Z__t99_l5_claims_log203_t99.sh.log`:
+`<runs>/t99/agent/logs/20260905T150241Z__t99_l5_claims_log203_t99.sh.log`:
 ```
 $ sed -n '62,71p' /logs/20260905T150241Z__t99_l5_claims_log203_t99.sh.log
 SUMMARY, ALL LOGS
@@ -245,7 +245,7 @@ expectation of an unchanged 14/14 from `t99`.
 **(a2) `--verify log_203` on the DEFAULT instance** —
 `t99_l6_claims_log203_default.sh`, submitted with `--no-batch`, no
 `--instance` flag, run:
-`~/Programming/Airlock/agent/logs/20260905T150253Z__t99_l6_claims_log203_default.sh.log`.
+`Airlock/agent/logs/20260905T150253Z__t99_l6_claims_log203_default.sh.log`.
 This file sits under the DEFAULT instance's own log folder, which is
 NOT mounted into `t99` — the very fact item B fixes — so the
 re-verify below (run from `t99`, like everything else in this report)
@@ -267,11 +267,11 @@ population: 14 claims across 1 logs
 ONE LINE: 14 of 14 claims reproduce; 0 (0%) carry nothing to re-run
 ```
 Unchanged from task 98's own score, because `/logs` on the default
-instance IS `~/Programming/Airlock/agent/logs`, where the cited
+instance IS `Airlock/agent/logs`, where the cited
 `t98_l13` log actually is.
 
 **(b) fixture, unreachable path** — `t99_l7_fixture_refused.sh`,
-`~/AirlockRuns/t99/agent/logs/20260905T150318Z__t99_l7_fixture_refused.sh.log`,
+`<runs>/t99/agent/logs/20260905T150318Z__t99_l7_fixture_refused.sh.log`,
 fixture written under `/tmp` inside the lane, one claim
 `cat /logs/does_not_exist.log`:
 ```
@@ -292,7 +292,7 @@ is not reachable from this instance; re-run --verify from the
 instance whose logs the claim cites`.
 
 **(c) fixture, reachable path** — `t99_l8_fixture_matches.sh`,
-`~/AirlockRuns/t99/agent/logs/20260905T150318Z__t99_l8_fixture_matches.sh.log`,
+`<runs>/t99/agent/logs/20260905T150318Z__t99_l8_fixture_matches.sh.log`,
 same shape, one claim `cat /tmp/t99_fixture_reachable.txt` (the file
 the lane itself wrote):
 ```
@@ -321,7 +321,7 @@ verifying the log changes the log, which would change the claim,
 without end — so this is prose, stated as such, pasted from the lane
 that ran AFTER every edit above this line was made:
 `t99_l12_claims_log205.sh`,
-`~/AirlockRuns/t99/agent/logs/20260905T151231Z__t99_l12_claims_log205.sh.log`,
+`<runs>/t99/agent/logs/20260905T151231Z__t99_l12_claims_log205.sh.log`,
 exit 0:
 
 ```

@@ -12,10 +12,10 @@
 # where the bound is most likely to bite; it prints its peak per call.
 set -euo pipefail
 echo "[1/3] task h1: handful.py recheck 300000"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 python3 handful.py recheck 300000
 echo "[2/3] the report again, with the re-posed answers on it"
 python3 handful.py report
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json
 echo "[3/3] done"

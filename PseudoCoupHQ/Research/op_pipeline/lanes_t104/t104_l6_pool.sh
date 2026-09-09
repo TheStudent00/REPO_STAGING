@@ -13,10 +13,10 @@
 # the normalizer's and nothing else's, and answers the t100 edge
 # question off pool100_edges.json.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/2] pool66_run.py, unmodified, for its own refusal"
 python3 pool66_run.py
 echo "pool66_run.py exit $?"
 echo "[2/2] the before build, the after build, the candidate, the delta"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_pool.py
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_pool.py
 echo "exit $?"

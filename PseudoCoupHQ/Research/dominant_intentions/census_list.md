@@ -145,7 +145,7 @@ three camps).
 Everything above was hand-drafted 2026-08-13 and marked UNVERIFIED:
 the page was the harness's work order. The layer-3 campaign has since
 run — logs 024 through 037 in
-`~/Programming/PseudoCoupHQ/DevComms/`. This section carries what
+`PseudoCoupHQ/DevComms/`. This section carries what
 those runs PROVED that the sections above do not already say. Nothing
 stated above is repeated here.
 

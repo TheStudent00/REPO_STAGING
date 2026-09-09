@@ -31,7 +31,7 @@ checkpointed partial; the trickle finished instead.
 ## 1.2 It cost 18.4 minutes of wall clock at half the machine
 
 6,265 seconds of lane time, run six chunks at a time inside a container
-capped at 6 of this machine's 12 cores, is **18.4 minutes end to end**
+capped at 6 of this machine's <cores>, is **18.4 minutes end to end**
 (01:42:37 to 02:01:02 local, by the store files' own timestamps). The cost
 page written before the run predicted 8,522 serial seconds; the measured
 figure is 6,265, so the prediction is 1.36x the measurement — erring long,
@@ -96,8 +96,8 @@ line bans. Instead a second authority is READ AT RUN TIME — rustc's own
 code generator, at the pin `legality_rules.py` already reads:
 
 ```
-~/Programming/Sources/rust/compiler/rustc_codegen_cranelift/src/num.rs
-$ git -C ~/Programming/Sources/rust rev-parse HEAD
+Sources/rust/compiler/rustc_codegen_cranelift/src/num.rs
+$ git -C Sources/rust rev-parse HEAD
 7c329d6c76e11ca40c5673818ab0439c1be8962c
 
     match in_lhs.layout().ty.kind() {
@@ -190,7 +190,7 @@ lanes of 2026-08-25 and 2026-08-26 carry them, and `regen_cost.py` reads
 them rather than timing anything:
 
 ```
-$ tail -3 ~/Programming/Airlock/agent/logs/20260825T055219Z__op_c.sh.log
+$ tail -3 Airlock/agent/logs/20260825T055219Z__op_c.sh.log
 # exit 0 in 42.4s
 ```
 
@@ -308,7 +308,7 @@ reusing any of them would collide with both. So every name here is new:
 |---|---|---|
 | container | `trickle-runner` | `sandbox-runner`, `va-runner` |
 | network | `trickle-internal` | `sandbox-internal`, `va-internal` |
-| agent tree | `~/Programming/AirlockTrickle/agent/{drop,out,logs,status}` | `~/Programming/Airlock/agent` |
+| agent tree | `AirlockTrickle/agent/{drop,out,logs,status}` | `Airlock/agent` |
 
 `trickle_doctor.sh` checks this and prints it:
 
@@ -333,13 +333,13 @@ cannot alter a toolchain Airlock's own runs depend on:
 
 ```
   mount /persist <- .../volumes/sandbox-persist/_data rw=false
-  mount /drop    <- ~/Programming/AirlockTrickle/agent/drop rw=true
+  mount /drop    <- AirlockTrickle/agent/drop rw=true
 ```
 
 ### 5.1.3 The cap
 
 ```
-  cpu cap: 6 of 12 cores
+  cpu cap: 6 of <cores>
 ```
 
 `--cpus 6`, computed as half of `nproc`, overridable with `TRICKLE_CPUS`.
@@ -423,7 +423,7 @@ Take `rust_c0002` — regeneration manifest probes 800 through 1,199.
 1. `lane_gen_verbatim.lane_verbatim` renders the lane. Its driver ESCAPES
    the compiler's words (`|` becomes `\p`) instead of substituting them,
    and its product opens with `#verbatim-escape v1`.
-2. The lane is written to `~/Programming/AirlockTrickle/agent/drop/` and
+2. The lane is written to `AirlockTrickle/agent/drop/` and
    run with `podman exec trickle-runner sh /drop/regen_rust_c0002.sh`.
 3. The product is read back, every escaped field decoded, and folded into
    `trickle_store/op_units2_rust_c0002.json` — a NEW file of its own.
@@ -523,7 +523,7 @@ over 2,688 probes.
 | folded stores | `Research/op_pipeline/trickle_store/` | 334 files, 125 MB |
 | raw lane products + consoles | `Research/op_pipeline/trickle_raw/` | 668 files, 32 MB |
 | the exact lane scripts that ran | `Research/op_pipeline/trickle_lanes/` | 334 files, 8 MB |
-| the container's own tree | `~/Programming/AirlockTrickle/agent/` | outside every repo |
+| the container's own tree | `AirlockTrickle/agent/` | outside every repo |
 
 ---
 
@@ -788,7 +788,7 @@ that state.
 $ ls -d /work
 ls: cannot access '/work': No such file or directory
 $ hostname
-<host>
+<user>
 ```
 
 `/work` is the container's build root — the residue's own refusal texts
@@ -819,7 +819,7 @@ written as a `podman exec`.
 
 # 11. Complete file inventory
 
-## 11.1 New programs, in `~/Programming/PseudoCoupHQ/Research/op_pipeline/`
+## 11.1 New programs, in `PseudoCoupHQ/Research/op_pipeline/`
 
 | file | what it is |
 |---|---|
@@ -866,11 +866,11 @@ written as a `podman exec`.
 
 ## 11.4 New, outside every repository
 
-`~/Programming/AirlockTrickle/agent/{drop,out,logs,status}` — the capped
+`AirlockTrickle/agent/{drop,out,logs,status}` — the capped
 copy's own tree, deliberately outside the repositories so the 30-second
 daemon is not asked to commit the container's scratch.
 
-## 11.5 New in `~/Programming/PseudoCoupHQ/DevComms/`
+## 11.5 New in `PseudoCoupHQ/DevComms/`
 
 `log_131_task40_regeneration_trickle.md` — this log.
 
@@ -931,7 +931,7 @@ Appended after the fact. Nothing above is edited; this states plainly what
 
 ## C.1 The copy
 
-§5.1 describes `~/Programming/AirlockTrickle` as "the capped copy" and
+§5.1 describes `AirlockTrickle` as "the capped copy" and
 treats making it as a mechanical decision (§12.1: "the copy is
 `trickle-runner` on `trickle-internal`, capped at half the cores"). It was
 not. It was a **fork of Airlock**, made because Airlock could not be asked
@@ -951,8 +951,8 @@ in `DevComms/log_138_airlock_instances_feature.md`. A second sandbox is now
 one settings file and one flag:
 
 ```
-~/Programming/Airlock/instances/trickle.conf
-bash ~/Programming/Airlock/up.sh --instance trickle --cpus 6
+Airlock/instances/trickle.conf
+bash Airlock/up.sh --instance trickle --cpus 6
 ```
 
 `trickle_up.sh`, `trickle_down.sh` and `trickle_doctor.sh` are superseded
@@ -960,14 +960,14 @@ bash ~/Programming/Airlock/up.sh --instance trickle --cpus 6
 `podman exec` path is replaced by `trickle2.py`, which submits through
 `airlock submit`. Nothing on the project side runs podman any more.
 
-`~/Programming/AirlockTrickle` no longer exists on disk. It was **not**
+`AirlockTrickle` no longer exists on disk. It was **not**
 removed by the instances work: it was present with its 339 lanes and 339
 products early in that session and absent an hour later, removed by
 something else. Its material survives in this repository as
 `Research/op_pipeline/trickle_lanes/` (334 lane scripts),
 `trickle_raw/` (668 raw products and consoles) and `trickle_store/`
 (334 folded stores). This is recorded in
-`~/Programming/Airlock/instances/trickle/agent/README.md`.
+`Airlock/instances/trickle/agent/README.md`.
 
 ## C.2 The inotify diagnosis was the right conclusion from the wrong number
 

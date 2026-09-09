@@ -4,9 +4,9 @@
 # own verdict for every file rather than stopping at the first failure;
 # the verdict lines are the record.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 echo "[1/2] task m1: check_no_spelling_keys.py over the four json"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
   model_table.json model_table_rows.json model_table_attest.json \
   model_table_edges.json || true
 echo "[2/2] task m1: grep -c exempt over the files this task added"

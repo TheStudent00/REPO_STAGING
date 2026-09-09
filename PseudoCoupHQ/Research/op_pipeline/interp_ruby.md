@@ -1,6 +1,6 @@
 # interp_ruby -- the ruby pilot of the interpreter track
 
-Folded 2026-08-31 by `fold_interp_ruby.py`, task 5(d), from the Airlock lane outputs under `~/Programming/Airlock/agent/out/interp_ruby_b/` (real gcov deltas, dated 2026-08-31: 1,050 lines with a positive delta across 27 files for the smallint probe -- the number log_082 named as measured-and-orphaned).  Data: `interp_ruby.json`.
+Folded 2026-08-31 by `fold_interp_ruby.py`, task 5(d), from the Airlock lane outputs under `Airlock/agent/out/interp_ruby_b/` (real gcov deltas, dated 2026-08-31: 1,050 lines with a positive delta across 27 files for the smallint probe -- the number log_082 named as measured-and-orphaned).  Data: `interp_ruby.json`.
 
 ## the pin
 

@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — intentions data shape
 
 projected 2026-07-30 from the previous plan, now archived at
-`~/Programming/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_0_tools/node_0_0_4_intentions/CORE_0_0_4_intentions.md  (203 words)
@@ -39,7 +39,7 @@ here is ADDITIVE, closing R1's four prose-only gaps:
 - Sources (provenance: PCv5 `Designing/`): `pc_verdicts.json`,
   `build_verdicts.py`, `intention_tables_gen.py`, the
   intention/basis markdowns. Evidence:
-  `R1 report` (`~/Programming/PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`).
+  `R1 report` (`PseudoCoup_v6/Research/r1_intentions_validation/REPORT.md`).
 - Acceptance: regeneration byte-identical; schema check that every
   field T6's steering needs is present (defined jointly with T6).
 - Depends on: R1 (done). Feeds: T6.
@@ -62,10 +62,10 @@ nothing existing is rewritten.
 
 ### Subject artifacts
 
-*(These were in `~/Programming/PseudoCoup_v5/Designing/` (historical),
+*(These were in `PseudoCoup_v5/Designing/` (historical),
 which was deleted in the 2026-07-31 gutting — recoverable from that
 repo's git history. `pc_verdicts.json` itself was copied forward and
-now lives in `~/Programming/PseudoIR/Tools/intentions/`; the
+now lives in `PseudoIR/Tools/intentions/`; the
 generators that built it did not come with it.)*
 
 - `pc_verdicts.json` — the built artifact (fields today: meta,
@@ -112,11 +112,11 @@ generators that built it did not come with it.)*
 - **Field names** — naming is the owner's domain; the table above is a
   working proposal.
 - Whether the extended artifact is written back into
-  `~/Programming/PseudoCoup_v5/Designing/` (historical) or copied
+  `PseudoCoup_v5/Designing/` (historical) or copied
   forward and maintained in a live tools folder. RESOLVED by events,
   twice over — that folder no longer exists. it was
   copied forward, and the intentions tool then moved to
-  `~/Programming/PseudoIR/Tools/intentions/` (2026-07-31), which is
+  `PseudoIR/Tools/intentions/` (2026-07-31), which is
   where `pc_intentions.json` is maintained now. Note the original
   reasoning — "PCv6 tools should not write into an archived repo" —
   no longer applies as stated: PCv5 is being gutted and rebuilt as
@@ -127,4 +127,4 @@ generators that built it did not come with it.)*
 - schema_extension — carried in this file, above.
 - seam_declarations — NOT carried. it was written in the retired
   backend's vocabulary. the record of why is
-  `~/Programming/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md`
+  `PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md`

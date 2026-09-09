@@ -28,14 +28,14 @@
 # ABORT_MEMORY_AP2.  The heavy read is the 73 MB `model_table.json`
 # (task ap1 measured its parse at 290,040 kB).
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "[1/4] the reference: the two mnemonics and the lea form"
 python3 - <<'PY'
 import os
 import resource
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 import reference as R
 
 ABORT_KB = 6 * 1024 * 1024
@@ -78,7 +78,7 @@ print("   peak resident: %d kB" % check("after the reference"))
 PY
 
 echo "[2/4] check_L2, the regression guard on the reference"
-cd /projects/PseudoCoupHQ/Research/op_pipeline/lean
+cd PseudoCoupHQ/Research/op_pipeline/lean
 sha256sum check_L2.json
 python3 model_translate.py check
 sha256sum check_L2.json
@@ -87,8 +87,8 @@ echo "[3/4] model_table.key_width: the rule, on the mnemonics it moves"
 python3 - <<'PY'
 import resource
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import reference as R
 import model_table as MTAB
 
@@ -115,12 +115,12 @@ python3 - <<'PY'
 import json
 import resource
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import model_table as MTAB
 
 ABORT_KB = 6 * 1024 * 1024
-MODEL = ("/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
+MODEL = ("PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
          "model_table.json")
 
 

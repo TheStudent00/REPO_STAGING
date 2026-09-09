@@ -6,19 +6,19 @@ status: living
 # PROGRESS — research
 
 - 2026-08-12: node founded (the owner's ruling, PCv5 session — state
-  record `~/Programming/PseudoCoup_v5/DevComms/log_020_session_state_2026_08_12.md`).
-  `~/Programming/PseudoCoupHQ/Research/` created beside it.
+  record `PseudoCoup_v5/DevComms/log_020_session_state_2026_08_12.md`).
+  `PseudoCoupHQ/Research/` created beside it.
 - 2026-08-12: kind-signature-clustering landscape survey launched — fetch and
   compare `node-types.json` across rust, python, kotlin, dart, c,
   cpp; measure feature uniformity; report what clustering machinery
   would consume. done — report at
-  `~/Programming/PseudoCoupHQ/DevComms/log_008_kind_clustering_landscape.md`
+  `PseudoCoupHQ/DevComms/log_008_kind_clustering_landscape.md`
   (log_007 was already taken).
 - 2026-08-12: kind-signature-clustering first pass built and validated — features.py /
   cluster.py / validate.py over five languages (kotlin held out); known
   overlap re-emerged partially (purity 0.685, 1 fully + 14 partially of 15
   ground-truth rows). Report at
-  `~/Programming/PseudoCoupHQ/DevComms/log_009_clustering_first_pass.md`.
+  `PseudoCoupHQ/DevComms/log_009_clustering_first_pass.md`.
 - 2026-08-12: kind-signature-clustering second pass per the owner's three rulings — merge-tree
   spectrum replaces the single cut (spectrum.py + similarity_matrix.npz,
   clusters as queries), full-population hold-out validation against
@@ -26,7 +26,7 @@ status: living
   hand key demoted to secondary check, AUC 0.804), cluster_by_language.md +
   best_counterparts.json over all 800 kinds. Interpretation decisions 9 and
   10 dissolved, 9 remain. Report at
-  `~/Programming/PseudoCoupHQ/DevComms/log_010_clustering_spectrum.md`.
+  `PseudoCoupHQ/DevComms/log_010_clustering_spectrum.md`.
 
 - 2026-08-12: dendrogram_explorer.html shipped (Research/kind_signature_clustering/): interactive icicle of the full merge tree, draggable threshold slice with live cluster count, entropy-colored cross-language merges, search+zoom. Export via export_tree.py -> merge_tree.json. See DevComms/log_012_dendrogram_explorer.md.
 - 2026-08-12: kind-signature-clustering enumeration survey (plan-of-record step 1) —
@@ -35,7 +35,7 @@ status: living
   quality signals and provisional category tags in
   `Research/kind_signature_clustering/grammar_inventory.json`; 31,858 named kinds total;
   25.3% of grammars are kotlin-like zero-role. Report at
-  `~/Programming/PseudoCoupHQ/DevComms/log_011_grammar_enumeration.md`.
+  `PseudoCoupHQ/DevComms/log_011_grammar_enumeration.md`.
 - 2026-08-12: kind-signature-clustering plan-of-record step 2 (decision-6 counts fix)
   + archetype measurement — features v2 (log2-bucketed distinct-host counts
   on derived output positions; versioned `features_v2.json`): 711 of the
@@ -46,7 +46,7 @@ status: living
   dedup; matrix 487.1M -> 34.7M pairs, 14x); dense-over-archetypes with
   multiplicity weights recommended for step 3, sparse demoted to optional.
   Artifacts: `Research/kind_signature_clustering/{features_all.json,archetypes.json}`.
-  Report at `~/Programming/PseudoCoupHQ/DevComms/log_013_counts_and_archetypes.md`.
+  Report at `PseudoCoupHQ/DevComms/log_013_counts_and_archetypes.md`.
 - 2026-08-12: kind-signature-clustering plan-of-record step 3 (full-ecosystem spectrum)
   — multiplicity-weighted average linkage over the 8,329 archetypes (exactly
   full-population UPGMA over 31,212 kinds; 34.7M-pair dense matrix, whole
@@ -58,7 +58,7 @@ status: living
   headlessly). Artifacts: `Research/kind_signature_clustering/{spectrum_all.npz,
   merge_tree_all.json,top_counterparts_all.json,holdout_validation_all.json,
   report_all.json,dendrogram_explorer_all.html}`. Report at
-  `~/Programming/PseudoCoupHQ/DevComms/log_014_ecosystem_spectrum.md`.
+  `PseudoCoupHQ/DevComms/log_014_ecosystem_spectrum.md`.
 - 2026-08-12: kind-signature-clustering plan-of-record step 4 (basis report) — the
   spectrum cross-referenced against the intentions vocabulary (11 objects +
   A–J + form tier): all objects but `service call` empirically realized
@@ -69,7 +69,7 @@ status: living
   coverage incl. the kotlin zero-role evaluation (0.640 in ≥10-lang
   clusters, via shape-poverty affinity). Artifacts:
   `Research/kind_signature_clustering/{basis_xref.py,basis_xref_out.json}`. Report at
-  `~/Programming/PseudoCoupHQ/DevComms/log_015_basis_report.md`.
+  `PseudoCoupHQ/DevComms/log_015_basis_report.md`.
 - 2026-08-17: kind_fuzz_clustering phases 1 and 2 — layer 3, python only.
   Probe design written down first as
   `Research/kind_fuzz_clustering/probe_design.md`, eleven numbered judgment
@@ -86,7 +86,7 @@ status: living
   operator NESTS over its plain form inside one language; `<>`/`print`/
   `exec` as statements survive in the grammar and refuse to compile.
   Phase 3 (the other ten) is gated on the owner's review. Report at
-  `~/Programming/PseudoCoupHQ/DevComms/log_024_layer3_python_fuzz.md`.
+  `PseudoCoupHQ/DevComms/log_024_layer3_python_fuzz.md`.
 
 - 2026-08-18: the owner's note on egress polyfill, recorded verbatim
   for the record (design remark, not a ruling): "polyfill could
@@ -104,7 +104,7 @@ status: living
   census fold-back, and seven logs rewritten into the readable
   register.** Neither ran a probe; neither changed a number.
   - **Fold-back.** The five census pages in
-    `~/Programming/PseudoCoupHQ/Research/dominant_intentions/` were
+    `PseudoCoupHQ/Research/dominant_intentions/` were
     hand-drafted 2026-08-13 and say on their face that every fact is
     UNVERIFIED — they were the harness's work order. Logs 024 to 037
     then answered them and the pages were never updated. Each page now
@@ -129,7 +129,7 @@ status: living
     missing**, and log 027's finding 11, log 029's decisions 1 to 11,
     log 031's decisions 18 to 30, log 032's eight numbered surprises
     and log 033's decisions 31 to 42 all survive at their numbers.
-    `bash ~/Programming/PseudoCoupHQ/hq.sh check` reports 0 errors,
+    `bash PseudoCoupHQ/hq.sh check` reports 0 errors,
     unchanged.
   - **Two things left open by choice.** Small internal
     inconsistencies were found in five of the seven logs and were
@@ -141,12 +141,12 @@ status: living
     fourteen cells against twelve columns and would not render; the
     two duplicated cells were dropped and no value changed.
   - Record:
-    `~/Programming/PseudoCoupHQ/DevComms/log_039_census_foldback_and_log_rewrites.md`.
+    `PseudoCoupHQ/DevComms/log_039_census_foldback_and_log_rewrites.md`.
 - 2026-09-05: sub-node `arch_unit_oracle` (node_0_3_8) founded by the owner
   as a parallel line — compilers as unit subjects, our own Hub-like
   compiler as oracle, cross-language construction of units. Isolated
   from compiler_graph by folder, instance prefix and node. Founding
-  log `~/Programming/PseudoCoupHQ/DevComms/log_206_arch_unit_oracle_founding.md`. planned.
+  log `PseudoCoupHQ/DevComms/log_206_arch_unit_oracle_founding.md`. planned.
 - 2026-09-06: RESTRUCTURED on the owner's ruling — each research project is
   its own realized sub-node holding its own sub-nodes, and this node
   becomes the master plan. Three projects: `intentions` (the five
@@ -160,7 +160,7 @@ status: living
   objective (dominant operators and types for the Hub), each
   project's contribution, the state table, the dependency table, the
   agreed order of work, the shared rulings and the open rulings.
-  Record: `~/Programming/PseudoCoupHQ/DevComms/log_212_research_restructure_and_master_plan.md`.
+  Record: `PseudoCoupHQ/DevComms/log_212_research_restructure_and_master_plan.md`.
   done.
 - 2026-09-06: steps 1–3 of the master order opened in parallel on
   four Airlock instances, one implementer each, coordinator reviewing:
@@ -528,6 +528,51 @@ status: living
   `DevComms/note_server_session_start_here.md` and CLAUDE.md and reached no
   stop rule; the law and all nine briefs of this round are now in the repo
   at `Research/LAW.md` and `Research/briefs/`. And one breach, self-reported:
-  ap2 deleted one status file under `~/AirlockRuns/ap2/` while renaming a
+  ap2 deleted one status file under `<runs>/ap2/` while renaming a
   lane (its log and `.done` entry survive); the LAW now states the
   never-delete rule with status files named. Verifier 20 claims, 0 differ.
+- 2026-09-09 (task ap3, log_245, on the tower): AutoPoly loop, THIRD PASS.
+  Proved on all four: 144 → 151 cells, 64.2% → 64.3% of attested rows; on
+  none: 66 → 56 (11.4%); runs carrying a cause 324 → 293 of 1,012; zero
+  regressions. What moved: a whole 128-bit VECTOR ARRIVAL now has a holder
+  (two 64-bit parameters): 31 of 40 proved, the other 9 are
+  register-to-register copies whose compiled body is EMPTY (`movaps`,
+  `movapd`, `movdqa`: the identity, a pre-existing cause). The x87 cells:
+  c's `long double` PROBED and LANDS (`faddp %st,%st(1)`), the 30 x87
+  arithmetic cells now render, compile and carve to the x87 opcode on c —
+  and prove nothing, because the canonical form names no ANSWER HOME for a
+  value in st(0) and no ARRIVAL for a value on the stack: "this unit's own
+  code names no register the answer is left in". That is the same question
+  as the arrival-contract group (38 places, 12 cells, unchanged), now
+  measured on the answer side: THE CANONICAL FORM'S CONTRACT KNOWS ONLY
+  REGISTER FAMILIES. `model_translate.py check` un-blocked (one line;
+  259 / 172 STATED / 87 REFUSED exactly as stored; the lane restored the
+  check's overwritten files byte-identical). h2's fix 1 measured alone on
+  1,012 runs: 15 sources differ, 9 verdicts differ, NO proof moves either
+  way; kept on. One new `sat`: `idiv` gpr_one 16 on rust at IN_0 = 0x8000,
+  the signed-division overflow edge, reached by the solver inside the same
+  ceiling. Verifier 32 claims, 0 differ. Awaiting the owner: (1) the contract for
+  values not in a register (derived arrivals; the x87 stack; the empty-body
+  identity copies), one ruling covering 38 + 92 + 23 runs; (2) whether cpp
+  becomes a fifth target (structural: changes what "all four" counts).
+- 2026-09-09 (task ap4, log_246, on the tower): AutoPoly loop, FOURTH PASS,
+  carrying the owner's ruling "a place may be stated by a constraint": derived
+  arrivals as a REGION in the driver's check (`IN-0 = SignExt(IN-1)` for
+  the divides; `gpr_same` binds one arrival; an immediate is a constant),
+  the empty compiled body as the IDENTITY (33 of 34 places proved), and the
+  x87 stack read in the driver over the reference's own state (the ledger's
+  `fstpt`/`fldt` edges written; `answer_of` and `align_by_row` cannot read
+  an x87 value and were not named by the brief, so the x87 population,
+  114 runs / 6,284 rows, is UNCHANGED and remains the next closer's).
+  Proved on ALL FOUR: 151 → 162 cells, 64.3% → 79.7% of attested ledger
+  rows; on none: 56 → 20 cells (9.4%); runs with a cause 293 → 237; zero
+  regressions; the arrival-contract group 38 → 0 (7 real derived-arrival
+  places, 4 DISPROVED with the region printed, 3 PROVED; the other 31 were
+  halves of a flags place the driver already refused unhalved). Per target
+  proved: c 204, rust 170, go 177, swift 163 of 253. Three guards unchanged
+  (check 259/172/87; o8 243/197/155/216; h2 handful 24/24). Verifier 34
+  claims, 0 differ. New for the coordinator: an `imm_*` cell's key carries
+  no immediate, so `mov` imm_gpr disproves against corpus rows with a
+  different constant — the immediate is an INPUT of the mapping and the
+  sweep bakes `$0x3` in; the next closer makes it symbolic. cpp as a fifth
+  target: task ex1 (starting).

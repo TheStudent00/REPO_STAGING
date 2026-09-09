@@ -3,10 +3,10 @@
 # and push the initial state. Run by the owner on the host machine
 # (requires the `gh` CLI, authenticated: `gh auth status`).
 #
-# Usage:  bash ~/Programming/PlanPlan/create_github_repo.sh
+# Usage:  bash PlanPlan/create_github_repo.sh
 
 set -e
-REPO=~/Programming/PlanPlan
+REPO=PlanPlan
 cd "$REPO"
 
 if [ ! -d .git ]; then

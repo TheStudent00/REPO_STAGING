@@ -88,7 +88,7 @@ and raised nothing.
 ### 4. raw lane output — still on disk, contrary to log_052's worry
 
 `log_052` flagged the 482 MB ruby level-2 lane output as living in the
-gitignored `~/Programming/SandboxDesign/agent/out/`, implicitly at risk
+gitignored `SandboxDesign/agent/out/`, implicitly at risk
 of being gone. **It is not gone.** Found in both `agent/out/` and
 `Research/kind_fuzz_clustering/raw/`:
 
@@ -254,11 +254,11 @@ Batch manifest written BEFORE dropping, per the new machinery
 `DevComms/log_001_cpu_cap_and_batch_progress.md`, both added today):
 
 ```
-bash ~/Programming/SandboxDesign/batch.sh rust-release-column \
+bash SandboxDesign/batch.sh rust-release-column \
     ct_rust_release_l1.sh:20531 ct_rust_release_l2.sh:626128
 ```
 
-Both scripts then written into `~/Programming/SandboxDesign/agent/drop/`.
+Both scripts then written into `SandboxDesign/agent/drop/`.
 
 ### 3. the container WAS running — it picked the lanes up immediately
 
@@ -266,7 +266,7 @@ The task briefed me to expect the container might be stopped. It was
 not: within seconds of the drop, `agent/status/ct_rust_release_l1.sh.status`
 showed `state=running` with a live log
 (`[progress] rust L1 chunk 1/14 build 2.15s`). `bash
-~/Programming/SandboxDesign/progress.sh` tracked the batch to completion:
+SandboxDesign/progress.sh` tracked the batch to completion:
 
 ```
 == batch summary ==
@@ -280,7 +280,7 @@ showed `state=running` with a live log
 ```
 
 **If the owner finds the container stopped on some other occasion**, the
-start command is `bash ~/Programming/SandboxDesign/up.sh` — not run
+start command is `bash SandboxDesign/up.sh` — not run
 here, since it was not needed and I was told not to start podman
 myself.
 
@@ -325,7 +325,7 @@ ready for that fold when wanted.
 
 ### 5. the stray file
 
-`~/Programming/SandboxDesign/agent/drop/.probe_write_test` (0 bytes,
+`SandboxDesign/agent/drop/.probe_write_test` (0 bytes,
 from an earlier write test) still exists and could not be removed from
 this sandbox:
 
@@ -388,7 +388,7 @@ it needs a human `rm` since this sandbox's mount forbids the unlink.
    operator node, how it interacts with the compatibility gate,
    containment, and the §4 mode partition (a 4th part per family) is
    structural.
-2. **Delete `~/Programming/SandboxDesign/agent/drop/.probe_write_test`**
+2. **Delete `SandboxDesign/agent/drop/.probe_write_test`**
    — harmless, but this sandbox cannot unlink it.
 3. Still open from log_055/log_056, untouched by this session: which
    scoring is THE weight (§7 log_055), and whether the other ten

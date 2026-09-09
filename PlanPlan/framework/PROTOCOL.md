@@ -83,7 +83,7 @@ ONE core file describing that branch at that level.
         name: pcv5
         path: Planning/CORE_0.md
         repo: PseudoCoup_v5
-        remote: https://github.com/TheStudent00/PseudoCoup_v5.git
+        remote: https://github.com/<owner>/PseudoCoup_v5.git
     ```
   - **`sub_nodes` is a sequence of mappings**, in address order — the
     i-th entry IS sub-node `<address>_<i>`. A leaf carries the
@@ -142,7 +142,7 @@ ONE core file describing that branch at that level.
 
   - **An edge that leaves the repo carries `repo` and `remote`
     alongside `path`** (the owner, 2026-08-02: "oh okay yeah that works!").
-    A `~/Programming/...` path assumes that layout exists on the
+    A `...` path assumes that layout exists on the
     machine reading it, and cloning one repo alone already produces
     references that resolve nowhere. The repo name and its remote make
     the edge followable without that assumption.
@@ -150,9 +150,9 @@ ONE core file describing that branch at that level.
     ```yaml
     super_node:
         name: projects
-        path: ~/Programming/PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
+        path: PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
         repo: PseudoCoupHQ
-        remote: https://github.com/TheStudent00/PseudoCoupHQ.git
+        remote: https://github.com/<owner>/PseudoCoupHQ.git
     ```
 
     Entries that stay inside the repo carry `path` only. Adding `repo`
@@ -356,7 +356,7 @@ ONE core file describing that branch at that level.
   2026-07-28), named with the index path + description.
 - **DASHBOARD.md** — zero or one per node folder. GENERATED, not
   hand-written, by
-  `~/Programming/PlanPlan/framework/generate_dashboards.py`: a
+  `PlanPlan/framework/generate_dashboards.py`: a
   rollup over that node's own sub-tree (status and designation
   breakdowns, anything blocked, PROGRESS bullet-status counts, the
   SUPPORT files present). It is regenerated, never edited — a hand
@@ -499,7 +499,7 @@ sub_nodes:                    # address order; [] for a leaf — see §1
 ```
 
 **The field names live in one file** —
-`~/Programming/PlanPlan/framework/schema.py`, added 2026-08-02 at
+`PlanPlan/framework/schema.py`, added 2026-08-02 at
 the owner's request. Every tool asks it rather than carrying its own string
 literals, so renaming a field is one edit instead of four.
 
@@ -509,7 +509,7 @@ literals, so renaming a field is one edit instead of four.
 - **The documents are handled by a migration command instead of a
   reference**:
 
-      python3 ~/Programming/PlanPlan/framework/generate_nodes.py \
+      python3 PlanPlan/framework/generate_nodes.py \
           <root>... --rename-field <old> <new> --apply
 
   It enumerates and prints every site before writing, and writes
@@ -554,7 +554,7 @@ and stage 1 produces the measurement that unblocks stage 2."
 ## 3a. `designation`: what kind of thing a node is
 
 Added 2026-07-31. **The reasoning is not repeated here** — it is in
-`~/Programming/PseudoCoupHQ/plan_and_code.md`, which is the source. This
+`PseudoCoupHQ/plan_and_code.md`, which is the source. This
 section is the field's definition and what the grammar owes it.
 
 Required on **every** node, so a missing designation is a defect the
@@ -812,15 +812,15 @@ deepening. Sequencing to be discussed.
   - "Mechanical (2026-08-01)" below means the older bar: the inline
     `nodes` register, a `## nodes` section in first position, and a
     CHECK and DASHBOARD in every node folder.
-  - `~/Programming/PseudoCoupHQ/Planning/` — mechanical (2026-08-01).
-  - `~/Programming/PseudoCoup_v5/Planning/` — mechanical (2026-08-01).
-  - `~/Programming/PlanPlan/Planning/` — mechanical (2026-08-01). This
+  - `PseudoCoupHQ/Planning/` — mechanical (2026-08-01).
+  - `PseudoCoup_v5/Planning/` — mechanical (2026-08-01).
+  - `PlanPlan/Planning/` — mechanical (2026-08-01). This
     repo's own tree, founded 2026-08-01.
-  - `~/Programming/PseudoCoup_v6/Planning/` — mechanical (2026-08-01)
+  - `PseudoCoup_v6/Planning/` — mechanical (2026-08-01)
     since the register was adopted into all 10 of its COREs. *(This
     entry read "not yet; no register on any of its 10 COREs" until
     2026-08-02; the adoption had been run and the wording lagged it.)*
-  - `~/Programming/PseudoIR/Planning/` — mechanical (2026-08-01) since
+  - `PseudoIR/Planning/` — mechanical (2026-08-01) since
     the register was adopted into all 18 of its COREs. *(Same
     correction as the entry above.)* It and PseudoCoup_v6 were one
     tree until 2026-07-31.
@@ -898,7 +898,7 @@ suite revealed.
   each node's definition line and sections, and every place the
   grammar in §1 and §3 is broken. Standard library only.
 
-      python3 ~/Programming/PlanPlan/framework/render_plan.py \
+      python3 PlanPlan/framework/render_plan.py \
           <planning root> -o out.html
 
   It checks, per node: exactly one CORE, a PROGRESS, no strays,

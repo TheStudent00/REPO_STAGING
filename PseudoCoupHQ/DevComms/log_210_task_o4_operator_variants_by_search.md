@@ -524,15 +524,15 @@ only" stop rule's boundary.
 
 ## 5. Lanes, guard, tally
 
-Airlock instance `o4`, config `~/Programming/Airlock/instances/o4.conf`
+Airlock instance `o4`, config `Airlock/instances/o4.conf`
 (copied from `o3.conf` per this task's own brief instruction; header
 comment states each size's reason, `ABORT_MEMORY_O4` in place of
 `ABORT_MEMORY_O3`). Mounts unchanged from o3 (`Sources` read-only at
-`/sources`, `PseudoCoupHQ` read-write at `/projects/PseudoCoupHQ`); no
+`/sources`, `PseudoCoupHQ` read-write at `PseudoCoupHQ`); no
 mount edit needed.
 
 ```
-$ python3 ~/Programming/Airlock/airlock up --instance o4
+$ python3 Airlock/airlock up --instance o4
 ...
   o4-runner  Up Less than a second  localhost/sandbox-runner:latest
 ```
@@ -553,7 +553,7 @@ Peak RSS, from the script's own `resource.getrusage` line (`/usr/bin/time`
 absent from the runner image, per task o2's finding, reused by o3):
 
 ```
-$ tail -6 /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T031410Z__o4_l1b_operator_variants.sh.log
+$ tail -6 PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T031410Z__o4_l1b_operator_variants.sh.log
   swift_stdlib: 403 files, sites=12257 full=1061 partial=2821 unresolved=8375 variants=241
 done in 91.3s, peak RSS 443.3 MB
 [1/1] done
@@ -571,7 +571,7 @@ shape o3's own script has).
 **Spelling guard, final run, full output:**
 
 ```
-$ cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T031549Z__o4_l2b_spelling_guard.sh.log
+$ cat PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T031549Z__o4_l2b_spelling_guard.sh.log
 # script: /drop/o4_l2b_spelling_guard.sh
 # started: 2026-09-06T03:15:49+00:00
 # timeout: 7200s
@@ -591,17 +591,17 @@ conf) — zero on all four:
 
 ```
 $ grep -c exempt \
-    /projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.json \
-    /projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.py \
-    /projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.md
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.json:0
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.py:0
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.md:0
+    PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.json \
+    PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.py \
+    PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.md
+PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.json:0
+PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.py:0
+PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.md:0
 ```
 
-(`~/Programming/Airlock/instances/o4.conf` is outside the sandbox
+(`Airlock/instances/o4.conf` is outside the sandbox
 mount and outside this repo, checked once from the host:
-`grep -c exempt ~/Programming/Airlock/instances/o4.conf` → `0`.)
+`grep -c exempt Airlock/instances/o4.conf` → `0`.)
 
 No exempt annotation was added anywhere to route around a finding —
 the one real finding (lane 2) was fixed at its actual cause (a type
@@ -611,7 +611,7 @@ type spelling a genuine per-unit label object, not by renaming a field
 to slip past the check.
 
 ```
-$ python3 ~/Programming/Airlock/airlock down --instance o4
+$ python3 Airlock/airlock down --instance o4
   removed o4-runner
 done.
 ```
@@ -621,7 +621,7 @@ done.
 ## ADDENDUM — o4_l3b/l3c verifier tally (o4_l3 ran first, found two real DIFFERS -- a stale `tail -6` paste one line short of the log's real trailer, and the .py file's own comment using the literal word "exempt" in prose, which `grep -c exempt` then counted -- both fixed at the cause; o4_l3b re-ran over the fixed file. This ADDENDUM was then written from o4_l3b's real output; o4_l3c re-ran over the file WITH this ADDENDUM present to confirm the self-reference resolves to NOT_RERUNNABLE rather than DIFFERS.)
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 --json /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_210_claims_final.json /projects/PseudoCoupHQ/DevComms/log_210_task_o4_operator_variants_by_search.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 --json PseudoCoupHQ/Research/oracle/compiler_units/log_210_claims_final.json PseudoCoupHQ/DevComms/log_210_task_o4_operator_variants_by_search.md
 ...
 log_210_task_o4_operator_variants_by_search.md: 6 claims extracted
 ...
@@ -1027,7 +1027,7 @@ touched here).
 
 ### Three literal sites that moved from unresolved to resolved
 
-1. **`~/Programming/Sources/golang_src/src/syscall/exec_plan9.go:313`**
+1. **`Sources/golang_src/src/syscall/exec_plan9.go:313`**
    — `n == fd1 || n == fd2`, inside
    `func closeFdExcept(n int, fd1 int, fd2 int, fds []int)`
    (declared at `exec_plan9.go:312`). Before: the outer `||` site had
@@ -1045,7 +1045,7 @@ touched here).
    live parser and scope collector (not read off the aggregate json
    alone): `unwrap_and_resolve` on the outer node returns
    `(('typed','bool'), None)` for both operands.
-2. **`~/Programming/Sources/golang_src/src/cmd/compile/internal/abi/abiutils.go:416`**
+2. **`Sources/golang_src/src/cmd/compile/internal/abi/abiutils.go:416`**
    — `!isResult`, inside
    `func (config *ABIConfig) updateOffset(result *ABIParamResultInfo, f *types.Field, a ABIParamAssignment, isResult, setNname bool)`
    (declared at `abiutils.go:410`, `isResult` sharing the combined
@@ -1058,7 +1058,7 @@ touched here).
    the site is now fully RESOLVED, variant `(!, bool)`, direct call
    confirmed: `unwrap_and_resolve` returns
    `(('typed','bool'), ('.../abiutils.go', 410))`.
-3. **`~/Programming/Sources/golang_src/src/net/netip/netip.go:1322`**
+3. **`Sources/golang_src/src/net/netip/netip.go:1322`**
    — `p == Prefix{}`, inside `func (p Prefix) isZero() bool`. Before:
    the right operand `Prefix{}` was a `composite_literal` — unresolved,
    reason `other (composite_literal)`; the left operand `p` was
@@ -1087,7 +1087,7 @@ per this log's own §5). Lane numbers continue from §5's own `o4_l3c`,
 used once each, per convention.
 
 ```
-$ python3 ~/Programming/Airlock/airlock up --instance o4
+$ python3 Airlock/airlock up --instance o4
 ...
   o4-runner  Up Less than a second  localhost/sandbox-runner:latest
 ```
@@ -1097,7 +1097,7 @@ $ python3 ~/Programming/Airlock/airlock up --instance o4
 | 4 | `o4_l4_nested_operands_regen.sh` | regenerate the deliverable after extending `unwrap_and_resolve` with the four rules above | exit 0 in 107.4s; peak RSS 443.3 MB (see below) |
 | 5 | `o4_l5_spelling_guard.sh` | spelling guard, over the regenerated json | exit 0: PASS |
 | 6 | `o4_l6_claims_verify_s7.sh` | claims-verify, first pass, run over this section's own draft text | exit 0 (verifier ran clean); tally 3 MATCHES / 3 DIFFERS / 2 UNVERIFIABLE / 4 REFUSED / 2 NOT_RERUNNABLE — the 3 DIFFERS were the two `cat .../lane_logs/...` pastes above missing the runner's own `# script:`/`# started:`/`# exit 0...` header-and-footer lines (trimmed by hand when first drafted), and the `grep -c exempt` paste using a bare `0` per line instead of the real `path:0` grep prints multi-file `-c` always produces — all three fixed at the cause (the two `cat` blocks above now paste the FULL lane-log file; the `grep -c exempt` figure below was re-run as its own lane, not retyped by hand) |
-| 7 | `o4_l7_grep_exempt_s7.sh` | `grep -c exempt`, re-run as its own lane from inside the sandbox (over `/projects/...`) so the file order is the real, deterministic order `grep` itself produces, not a hand-typed guess | exit 0; output pasted above |
+| 7 | `o4_l7_grep_exempt_s7.sh` | `grep -c exempt`, re-run as its own lane from inside the sandbox (over `...`) so the file order is the real, deterministic order `grep` itself produces, not a hand-typed guess | exit 0; output pasted above |
 | 8 | `o4_l8_claims_verify_s7b.sh` | claims-verify, over this section after the lane-6/7 fixes (BEFORE the tuple/dictionary_literal correction below was found) | exit 0; tally in the ADDENDUM above, 0 DIFFERS at that point in the file's own history |
 | 9 | `o4_l9_nested_operands_regen_fixed.sh` | regenerate again, after excluding `tuple_expression`/`dictionary_literal` from rule (2)'s field lookup (see the correction subsection below) | exit 0 in 94.8s; peak RSS 443.7 MB |
 | 10 | `o4_l10_spelling_guard_fixed.sh` | spelling guard, over the corrected json | exit 0: PASS |
@@ -1107,7 +1107,7 @@ Peak RSS, from the script's own `resource.getrusage` line (same
 convention as §5 above, `/usr/bin/time` absent from the runner image):
 
 ```
-$ cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T032634Z__o4_l4_nested_operands_regen.sh.log
+$ cat PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T032634Z__o4_l4_nested_operands_regen.sh.log
 # script: /drop/o4_l4_nested_operands_regen.sh
 # started: 2026-09-06T03:26:34+00:00
 # timeout: 7200s
@@ -1135,7 +1135,7 @@ dicts are still released before the next file opens.
 **Spelling guard, this section's run, full output:**
 
 ```
-$ cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T032918Z__o4_l5_spelling_guard.sh.log
+$ cat PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T032918Z__o4_l5_spelling_guard.sh.log
 # script: /drop/o4_l5_spelling_guard.sh
 # started: 2026-09-06T03:29:18+00:00
 # timeout: 7200s
@@ -1153,22 +1153,22 @@ guard exit: 0
 `grep -c exempt` on the regenerated json/py/md, and on the two new
 lane scripts — zero on all five, run as its own lane
 (`o4_l7_grep_exempt_s7.sh`, from inside the sandbox, over the
-`/projects/...` mount path, so the printed order matches the
+`...` mount path, so the printed order matches the
 argument order given to `grep` deterministically):
 
 ```
-$ cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T033912Z__o4_l7_grep_exempt_s7.sh.log
+$ cat PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T033912Z__o4_l7_grep_exempt_s7.sh.log
 # script: /drop/o4_l7_grep_exempt_s7.sh
 # started: 2026-09-06T03:39:12+00:00
 # timeout: 7200s
 # work free before: 2048 MB
 ------------------------------------------------------------
 [1/1] grep -c exempt over the §7 regenerated/added files
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.json:0
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.py:0
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.md:0
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o4/o4_l4_nested_operands_regen.sh:0
-/projects/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o4/o4_l5_spelling_guard.sh:0
+PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.json:0
+PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.py:0
+PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.md:0
+PseudoCoupHQ/Research/oracle/compiler_units/lanes_o4/o4_l4_nested_operands_regen.sh:0
+PseudoCoupHQ/Research/oracle/compiler_units/lanes_o4/o4_l5_spelling_guard.sh:0
 [1/1] done
 ------------------------------------------------------------
 # exit 0 in 0.0s
@@ -1200,7 +1200,7 @@ claim to NOT_RERUNNABLE / REFUSED, the same shape §5's own o4_l3c
 already confirmed once for this same file, not to DIFFERS.
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 --json /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_210_claims_s7_final.json /projects/PseudoCoupHQ/DevComms/log_210_task_o4_operator_variants_by_search.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 --json PseudoCoupHQ/Research/oracle/compiler_units/log_210_claims_s7_final.json PseudoCoupHQ/DevComms/log_210_task_o4_operator_variants_by_search.md
 ...
 log_210_task_o4_operator_variants_by_search.md: 14 claims extracted
 ...
@@ -1266,7 +1266,7 @@ grammar-fact exclusion on an existing rule, not a fifth rule.
 Re-run, same two-lane shape as lanes 4/5 above, numbers continuing:
 
 ```
-$ cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T034426Z__o4_l9_nested_operands_regen_fixed.sh.log
+$ cat PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T034426Z__o4_l9_nested_operands_regen_fixed.sh.log
 # script: /drop/o4_l9_nested_operands_regen_fixed.sh
 # started: 2026-09-06T03:44:26+00:00
 # timeout: 7200s
@@ -1293,7 +1293,7 @@ touches two swift-grammar node types that no other language's rows
 ever contain. Peak RSS 443.7 MB, still well under the 2048 MB bound.
 
 ```
-$ cat /projects/PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T034628Z__o4_l10_spelling_guard_fixed.sh.log
+$ cat PseudoCoupHQ/Research/oracle/compiler_units/lane_logs/20260906T034628Z__o4_l10_spelling_guard_fixed.sh.log
 # script: /drop/o4_l10_spelling_guard_fixed.sh
 # started: 2026-09-06T03:46:28+00:00
 # timeout: 7200s
@@ -1328,7 +1328,7 @@ to DIFFERS; this is the same non-regressing shape lane 3c already
 confirmed once for this file.
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 --json /projects/PseudoCoupHQ/Research/oracle/compiler_units/log_210_claims_final_final.json /projects/PseudoCoupHQ/DevComms/log_210_task_o4_operator_variants_by_search.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 --json PseudoCoupHQ/Research/oracle/compiler_units/log_210_claims_final_final.json PseudoCoupHQ/DevComms/log_210_task_o4_operator_variants_by_search.md
 ...
 log_210_task_o4_operator_variants_by_search.md: 18 claims extracted
 ...
@@ -1361,7 +1361,7 @@ Machine-checked claims json:
 (itself passes the spelling-key guard, per its own last line above).
 
 ```
-$ python3 ~/Programming/Airlock/airlock down --instance o4
+$ python3 Airlock/airlock down --instance o4
 time="2026-09-05T23:52:37-04:00" level=warning msg="StopSignal SIGTERM failed to stop container o4-runner in 10 seconds, resorting to SIGKILL"
   removed o4-runner
 done.

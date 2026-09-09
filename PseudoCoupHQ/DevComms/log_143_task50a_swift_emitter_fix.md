@@ -73,7 +73,7 @@ a function carrying one cannot be exported.
 
 ## 2.2 The literal defect
 
-**LITERAL** — `~/Programming/PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
+**LITERAL** — `PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
 lines 361 and 364–377, unchanged on disk (md5 `a5cb8a36…`, §6.2):
 
 ```python
@@ -204,8 +204,8 @@ refused by name rather than guessed at.
 ```
 $ /tmp/reconnect_venv/bin/python3 swift_cdecl_witness1.py --run
 swift   34 compilations (17 types x 2 forms) -> .../task50a_lanes/cdecl_swift.sh
-instance trickle  runner trickle-runner  cpus 6  agent ~/Programming/Airlock/instances/trickle/agent
-dropped ~/Programming/Airlock/instances/trickle/agent/drop/cdecl_swift.sh
+instance trickle  runner trickle-runner  cpus 6  agent Airlock/instances/trickle/agent
+dropped Airlock/instances/trickle/agent/drop/cdecl_swift.sh
 status: {"script": "cdecl_swift.sh", "state": "done", "exit": "0", "started": "2026-09-02T23:37:59+00:00", "finished": "2026-09-02T23:38:07+00:00", "elapsed_s": "7.2", "verdict": "exit 0"}
 wrote .../swift_cdecl_witness1.json
 tally: {"cdecl_parameter_accept": 15, "cdecl_parameter_refuse": 2, "cdecl_result_accept": 15, "cdecl_result_refuse": 2}
@@ -423,7 +423,7 @@ regeneration was NOT re-run: 1,407 compiles, not 129,553.
 $ /tmp/reconnect_venv/bin/python3 task50a_recompile1.py --run
 swift  1407 compilations -> .../task50a_lanes/recompile_swift.sh
   by direction of the text change: {'attribute_added': 891, 'attribute_removed': 516}
-instance trickle  runner trickle-runner  cpus 6  agent ~/Programming/Airlock/instances/trickle/agent
+instance trickle  runner trickle-runner  cpus 6  agent Airlock/instances/trickle/agent
 status: {"script": "recompile_swift.sh", "state": "done", "exit": "0", "started": "2026-09-02T23:54:16+00:00", "finished": "2026-09-02T23:58:41+00:00", "elapsed_s": "264.6", "work_consumed_mb": "1", "verdict": "exit 0"}
 tally: {
  "attribute_added_refuse": 630,
@@ -541,7 +541,7 @@ ac36c1a56a5f6718df84c174b6c4bad6  probe_manifest_swift.json
 d586d72869c38e1e6c3a494a75f1dc15  regen_witness_validation1.json
 e4680dc422fa837b6733db040cd3c15e  type_inventory3.json
 
-$ git -C ~/Programming/PseudoCoupHQ status --porcelain Research/op_pipeline/probe_gen.py Research/op_pipeline/trickle_store
+$ git -C PseudoCoupHQ status --porcelain Research/op_pipeline/probe_gen.py Research/op_pipeline/trickle_store
 (no output)
 ```
 
@@ -555,7 +555,7 @@ New files only.
 Generation, the two diffs and every count ran on the host. Only the 34
 witness compilations and the 1,407 recompilations ran inside
 `trickle-runner`. Every submission went through
-`python3 ~/Programming/Airlock/airlock --instance trickle submit …`
+`python3 Airlock/airlock --instance trickle submit …`
 (the `Instance` class in `trickle2.py`). **Nothing on the project side
 ran podman**, per `TRICKLE_SUPERSEDED.md`.
 

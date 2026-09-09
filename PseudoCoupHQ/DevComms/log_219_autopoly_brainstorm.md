@@ -4,7 +4,7 @@ Line-wide (research master plan). Written 2026-09-06 by the coordinator
 (Fable) at the owner's request, after task o7 (log_218). the owner's words are
 verbatim; the coordinator's are marked as opinion where they are
 opinion. The standing shape of the idea lives in
-`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/SUPPORT_BRAINSTORM_autopoly.md`;
+`PseudoCoupHQ/Planning/node_0_3_research/SUPPORT_BRAINSTORM_autopoly.md`;
 this log is the record of the day.
 
 ## 1. the owner's commentary, verbatim

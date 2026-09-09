@@ -7,7 +7,7 @@ set -euo pipefail
 echo "[1/4] task m1b: the mnemonics attested at a form the sweep does not spell"
 python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for r in d['counts']['coverage']:
     if r['category'] != 'attested at a form the sweep does not spell':
         continue
@@ -17,7 +17,7 @@ for r in d['counts']['coverage']:
 echo "[2/4] task m1b: the mnemonics never placed"
 python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for r in d['counts']['coverage']:
     if r['category'] != 'never placed':
         continue
@@ -27,7 +27,7 @@ for r in d['counts']['coverage']:
 echo "[3/4] task m1b: the attested cells with no TRANSLATED row"
 python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for c in d['counts']['attested_cells_with_no_translated_row']:
     print('   %-10s %-10s width %-5s key_width %-5s rows %d units %d'
           % (c['mnem'], c['shape'], c['width'], c['key_width'], c['ledger_rows'], c['units']))
@@ -35,7 +35,7 @@ for c in d['counts']['attested_cells_with_no_translated_row']:
 echo "[4/4] task m1b: the control transfers, with their guard rows"
 python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 with_rows = 0
 without = []
 for r in d['counts']['coverage']:

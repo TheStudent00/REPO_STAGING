@@ -2,7 +2,7 @@
 """opcode_signatures.py -- task o9: the opcode signature census.
 
 Node: hq.research.arch_unit_oracle.cross_construction.single_opcode_units
-(`~/Programming/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/
+(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/
 node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/`).
 Framing: `DevComms/log_221_opcode_signature_algebra.md` (this census is
 its own §5). This task is a JOIN over existing json -- counting only,

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/8] bounds"
 python3 t94_read_bounds.py 2>&1 | tail -10
 echo "[2/8] re-carve + render + gate"
@@ -25,5 +25,5 @@ echo "spelling guard exit=$?"
 echo "[7/8] grep -c exempt over this task's own artifacts"
 grep -c exempt t94_bounds.json t94_recarve.json t94_analysis.json t94_read_bounds.py t94_recarve.py t94_analysis.py
 echo "[8/8] the checker is unmodified"
-cd /projects/PseudoCoupHQ && git diff --stat -- Research/op_pipeline/check_no_spelling_keys.py && git log -1 --format=%H -- Research/op_pipeline/check_no_spelling_keys.py
+cd PseudoCoupHQ && git diff --stat -- Research/op_pipeline/check_no_spelling_keys.py && git log -1 --format=%H -- Research/op_pipeline/check_no_spelling_keys.py
 echo done

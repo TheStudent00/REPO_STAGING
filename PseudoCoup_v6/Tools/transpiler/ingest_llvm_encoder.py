@@ -2,7 +2,7 @@
 
 The C++ half of the T3 ingestor work, and the first LLVM-facing
 tool in PCv6 (plan node:
-~/Programming/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_0_transpile/,
+PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_0_transpile/,
 whose scope covers the C++ ingestor as its co-node increment).
 
 Division of labor, same as the Rust vocabulary ingestor:

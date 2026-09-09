@@ -132,7 +132,7 @@ that cost in advance.
 
 ## record
 
-- artifacts: `~/Programming/PseudoCoupHQ/Research/type_vocabulary/`
+- artifacts: `PseudoCoupHQ/Research/type_vocabulary/`
 - co-nodes: `dominant_intentions` owns the census and holds the
   verified instruments; `kind_fuzz_clustering` is the consumer —
   every instrument added widens the slice of each compiler's

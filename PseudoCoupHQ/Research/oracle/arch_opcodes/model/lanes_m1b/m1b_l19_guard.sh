@@ -4,15 +4,15 @@
 # it added.
 set -euo pipefail
 echo "[1/2] task m1b: check_no_spelling_keys.py over the four json"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-  /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json \
-  /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_rows.json \
-  /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_attest.json \
-  /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_edges.json
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+  PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json \
+  PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_rows.json \
+  PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_attest.json \
+  PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_edges.json
 echo "[2/2] task m1b: grep -c exempt over the files this task added"
-for f in /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py \
-         /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.md \
-         /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/lanes_m1b/*.sh; do
+for f in PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py \
+         PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.md \
+         PseudoCoupHQ/Research/oracle/arch_opcodes/model/lanes_m1b/*.sh; do
   echo "   $(grep -c exempt "$f") $f"
 done
 echo "[2/2] done"

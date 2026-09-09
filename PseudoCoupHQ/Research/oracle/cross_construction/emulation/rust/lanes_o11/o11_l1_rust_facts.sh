@@ -4,7 +4,7 @@
 # coverage table's rust column asks, compiled at the rust corpus's own
 # ship flags and carved with the pipeline's objdump reader.
 set -u
-R=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
+R=PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
 export PATH=/opt/cargo/bin:$PATH
 echo "[1/4] where the toolchain is"
 command -v rustc || echo "rustc NOT on PATH"
@@ -18,6 +18,6 @@ python3 -c 'import z3; print("z3", z3.get_version_string())'
 echo "[3/4] the probes"
 cd "$R" && python3 rust_facts.py probe
 echo "[4/4] the guard over the json this lane wrote"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     "$R/rust_facts.json"
 echo "lane o11_l1 done"

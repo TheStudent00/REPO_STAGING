@@ -64,14 +64,14 @@ and pasted in §5.
 
 ## 1. what I read first
 
-`~/Programming/PseudoCoupHQ/AgentMemory.md` in full;
-`~/Programming/DevComms/LLM_communication_protocol.md` (this is the
+`PseudoCoupHQ/AgentMemory.md` in full;
+`DevComms/LLM_communication_protocol.md` (this is the
 v2 refactor — its own first line reads "# Communication Protocol, v2";
 **named honestly: the path `LLM_communication_protocol_v2.md` that the
 brief and AgentMemory both give DOES NOT EXIST on disk**, verified:
 
 ```
-$ ls ~/Programming/DevComms/ | grep -i protocol
+$ ls DevComms/ | grep -i protocol
 LLM_communication_protocol.md
 proposal_2026-08-01_communication_protocol.md
 ```

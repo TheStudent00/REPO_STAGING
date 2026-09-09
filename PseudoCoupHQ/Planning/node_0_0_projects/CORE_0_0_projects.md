@@ -15,15 +15,15 @@ sub_nodes:
     - name: pcv5
       path: PseudoCoup_v5/Planning/CORE_0.md
       repo: PseudoCoup_v5
-      remote: https://github.com/TheStudent00/PseudoCoup_v5.git
+      remote: https://github.com/<owner>/PseudoCoup_v5.git
     - name: pcv6
       path: PseudoCoup_v6/Planning/CORE_0.md
       repo: PseudoCoup_v6
-      remote: https://github.com/TheStudent00/PseudoCoup_v6.git
+      remote: https://github.com/<owner>/PseudoCoup_v6.git
     - name: pseudoir
       path: PseudoIR/Planning/CORE_0.md
       repo: PseudoIR
-      remote: https://github.com/TheStudent00/PseudoIR.git
+      remote: https://github.com/<owner>/PseudoIR.git
 ---
 
 # CORE 0_0 — projects

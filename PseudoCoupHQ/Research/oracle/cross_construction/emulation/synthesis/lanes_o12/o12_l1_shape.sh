@@ -5,12 +5,12 @@
 # whether the holder table carries a row for every unit involved.
 # Nothing is written; this lane only measures.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "======== 1. toolchain and imports ========"
 python3 - <<'PY'
 import importlib, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/cross_construction")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline/lean")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/cross_construction")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline/lean")
 names = ["z3", "gate", "reference", "pool100_entry_equivalence",
          "term_to_lean", "cross2_length_two", "check_no_spelling_keys"]
 for name in names:
@@ -27,9 +27,9 @@ echo "======== 2. the shapes ========"
 echo "[1/1] shape census"
 python3 - <<'PY'
 import json, os, re, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-OP = "/projects/PseudoCoupHQ/Research/op_pipeline"
-EMU = "/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation"
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+OP = "PseudoCoupHQ/Research/op_pipeline"
+EMU = "PseudoCoupHQ/Research/oracle/cross_construction/emulation"
 pool = json.load(open(os.path.join(OP, "the_pool5.json")))
 holders = json.load(open(os.path.join(OP, "types101_entry_holders.json")))
 population = json.load(open(os.path.join(EMU, "emulation_population.json")))

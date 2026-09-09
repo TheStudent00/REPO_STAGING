@@ -248,7 +248,7 @@ disagreeing is listed, never adjudicated by this task.
 ## 8. Verifier tally
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md
 ```
 
 Three passes (lanes `t101b_l7_verify.sh` / `l8_verify2.sh` /

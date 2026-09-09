@@ -22,13 +22,13 @@
 # before the full pass is allowed to start.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 cd "$REPO"
 
 say "[1/6] the go lap's parameters, QUOTED FROM ITS OWN ARTIFACT"
 python3 - <<'PY'
 import json
-payload = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+payload = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                          'super_ops_go.json'))
 print(json.dumps(payload['parameters'], indent=1))
 print('   go populations, for the comparison of scale:')
@@ -44,7 +44,7 @@ say "[3/6] the SAMPLE mine -- 100 cpp diaries, same parameters"
 rm -rf /work/ops_sample && mkdir -p /work/ops_sample
 python3 - <<'PY'
 import os
-source = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/cpp'
+source = 'PseudoCoupHQ/Research/compiler_graph/diaries/cpp'
 names = sorted(n for n in os.listdir(source) if n.endswith('.txt'))
 for name in names[:100]:
     os.symlink(os.path.join(source, name),
@@ -78,7 +78,7 @@ ls -la super_ops_cpp.json | awk '{print "   artifact bytes:", $5}'
 say "[5/6] the both-ways comparison against the output-side miner"
 python3 t81/run_with_peak.py report_super_ops.py compare \
     --candidates super_ops_cpp.json \
-    --output-side /projects/PseudoCoupHQ/Research/op_pipeline/super_ops3.json \
+    --output-side PseudoCoupHQ/Research/op_pipeline/super_ops3.json \
     --language cpp \
     --out super_ops_comparison_cpp.json 2>&1 | tail -30
 
@@ -89,7 +89,7 @@ say "[6/6] the go artifact is unchanged by the language argument"
 cp -f super_ops_comparison_go.json /work/super_ops_comparison_go_before.json
 python3 t81/run_with_peak.py report_super_ops.py compare \
     --candidates super_ops_go.json \
-    --output-side /projects/PseudoCoupHQ/Research/op_pipeline/super_ops3.json \
+    --output-side PseudoCoupHQ/Research/op_pipeline/super_ops3.json \
     --out /work/super_ops_comparison_go_again.json 2>&1 | tail -12
 echo "   diff against task 75's artifact (no output means identical):"
 diff /work/super_ops_comparison_go_before.json \

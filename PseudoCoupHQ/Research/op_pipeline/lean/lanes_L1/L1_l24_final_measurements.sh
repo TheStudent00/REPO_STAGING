@@ -10,8 +10,8 @@
 #         which is where the certificate size showed up
 #   [5/5] the spelling guard again, over every json this task wrote
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
+PIPE=PseudoCoupHQ/Research/op_pipeline
 export HOME=/work/L1home
 mkdir -p "$HOME"
 
@@ -40,7 +40,7 @@ python3 - <<'PY'
 import resource, subprocess, time
 t0 = time.time()
 p = subprocess.Popen(["lean", "Edges/divide_identity_16_nolimit.lean"],
-                     cwd="/projects/PseudoCoupHQ/Research/op_pipeline/lean/archproof",
+                     cwd="PseudoCoupHQ/Research/op_pipeline/lean/archproof",
                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 out, _ = p.communicate()
 print("exit %s  wall %.1f s  child peak %.1f MB"

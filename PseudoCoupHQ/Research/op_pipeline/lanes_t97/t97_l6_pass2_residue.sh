@@ -12,6 +12,6 @@
 #   has to hold at once.
 #   NAMED ABORT: ABORT_MEMORY_T97 if the parent passes 6 GB.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 term97_walk.py pass2 18432 3600 b 0 1 "term97_pass2_a_slice*.json"
 echo "exit $?"

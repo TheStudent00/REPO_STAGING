@@ -3,7 +3,7 @@
 # duplicated lemma block from a bad patch, and its case proofs named the
 # theorem's outer width where they meant the case's own; both are corrected.
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 echo '[1/1] Render.lean, build 4'

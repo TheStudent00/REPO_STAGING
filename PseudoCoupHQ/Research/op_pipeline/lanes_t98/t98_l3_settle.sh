@@ -6,7 +6,7 @@
 # THE MEMORY BOUND: `ulimit -v 6291456` (6 GB of address space) around
 # each step; an allocation past it raises MemoryError, reported BY NAME.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 step () {
   echo

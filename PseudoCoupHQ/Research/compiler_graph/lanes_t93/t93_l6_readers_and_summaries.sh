@@ -32,11 +32,11 @@
 # units must run op_pipeline/check_no_spelling_keys.py and refuse its own
 # output on failure.
 set -u
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
-GR=/projects/PseudoCoupGraphs
+CG=PseudoCoupHQ/Research/compiler_graph
+GR=PseudoCoupGraphs
 cd "$CG"
-git config --global --add safe.directory /projects/PseudoCoupHQ 2>/dev/null
-git config --global --add safe.directory /projects/PseudoCoupGraphs 2>/dev/null
+git config --global --add safe.directory PseudoCoupHQ 2>/dev/null
+git config --global --add safe.directory PseudoCoupGraphs 2>/dev/null
 total=7; i=0
 step() { i=$((i+1)); echo; echo "======== [$i/$total] $* ========"; }
 
@@ -59,7 +59,7 @@ done
 step "a reader that reads a graph WHOLE, and passes"
 python3 - <<'PY'
 import resource, sys, time
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G, graphs_home
 def peak(): return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024.0
 t = time.time()
@@ -80,7 +80,7 @@ python3 report_graph.py 2>&1 | head -40 || true
 step "the per-file coverage summary: go REBUILT, and clang BUILT for the first time"
 python3 - <<'PY'
 import json, os
-p = "/projects/PseudoCoupHQ/Research/compiler_graph/coverage_go_files.json"
+p = "PseudoCoupHQ/Research/compiler_graph/coverage_go_files.json"
 was = json.load(open(p))
 print("   go, as tracked before this lane:")
 print("     files_never_entered %s   files_with_a_row %s"
@@ -91,7 +91,7 @@ python3 coverage_files_build.py go cpp
 python3 - <<'PY'
 import json
 for lang, name in (("go", "coverage_go_files.json"), ("cpp", "coverage_cpp_files.json")):
-    d = json.load(open("/projects/PseudoCoupHQ/Research/compiler_graph/" + name))
+    d = json.load(open("PseudoCoupHQ/Research/compiler_graph/" + name))
     p = d["populations"]
     print("   %s -> %s" % (lang, name))
     print("     %s" % json.dumps(p))
@@ -100,10 +100,10 @@ for lang, name in (("go", "coverage_go_files.json"), ("cpp", "coverage_cpp_files
 PY
 
 step "PANE 4 RENDERED, headless, for every compiler, at the present moment"
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 - <<'PY'
 import re, resource, sys, time
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 import dashboard_ouro as D
 def peak(): return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024.0
 for lang in ("go", "cpp", "rust", "swift"):
@@ -127,21 +127,21 @@ print("   peak resident of the whole render pass %.1f MB (page cap %d MB)"
 PY
 
 step "the guards, UNMODIFIED, over every artifact this task wrote"
-md5sum /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
-git -C /projects/PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py
+md5sum PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+git -C PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py
 echo "   -- one process, over the four moved compact graphs and every summary:"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-    /projects/PseudoCoupGraphs/graph_go.json \
-    /projects/PseudoCoupGraphs/graph_cpp.json \
-    /projects/PseudoCoupGraphs/graph_rust.json \
-    /projects/PseudoCoupGraphs/graph_swift.json \
-    /projects/PseudoCoupGraphs/variant_connections_go.json \
-    /projects/PseudoCoupGraphs/variant_connections_c.json \
-    /projects/PseudoCoupGraphs/variant_connections_cpp.json \
-    /projects/PseudoCoupGraphs/variant_connections_c_and_cpp.json \
-    /projects/PseudoCoupGraphs/variant_connections_extended.json \
-    /projects/PseudoCoupGraphs/variant_connections_rust.json \
-    /projects/PseudoCoupGraphs/variant_connections_swift.json \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+    PseudoCoupGraphs/graph_go.json \
+    PseudoCoupGraphs/graph_cpp.json \
+    PseudoCoupGraphs/graph_rust.json \
+    PseudoCoupGraphs/graph_swift.json \
+    PseudoCoupGraphs/variant_connections_go.json \
+    PseudoCoupGraphs/variant_connections_c.json \
+    PseudoCoupGraphs/variant_connections_cpp.json \
+    PseudoCoupGraphs/variant_connections_c_and_cpp.json \
+    PseudoCoupGraphs/variant_connections_extended.json \
+    PseudoCoupGraphs/variant_connections_rust.json \
+    PseudoCoupGraphs/variant_connections_swift.json \
     "$CG/graph_go_files.json" "$CG/graph_cpp_files.json" \
     "$CG/graph_rust_files.json" "$CG/graph_swift_files.json" \
     "$CG/graph_go_defs.json" "$CG/graph_cpp_defs.json" \
@@ -151,11 +151,11 @@ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
 echo "   guard exit: ${PIPESTATUS[0]}"
 echo "   grep -c exempt over the guard's own output: $(grep -c exempt "$CG/guard_task93.txt")"
 echo "   -- the python page's own code guard, over the two files this task touched:"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_dashboard_py_no_spelling.py \
-    /projects/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.py \
-    /projects/PseudoCoupHQ/Research/op_pipeline/dashboard_graph_draw.py \
-    /projects/PseudoCoupHQ/Research/compiler_graph/graph_compact.py \
-    /projects/PseudoCoupHQ/Research/compiler_graph/graphs_home.py
+python3 PseudoCoupHQ/Research/op_pipeline/check_dashboard_py_no_spelling.py \
+    PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.py \
+    PseudoCoupHQ/Research/op_pipeline/dashboard_graph_draw.py \
+    PseudoCoupHQ/Research/compiler_graph/graph_compact.py \
+    PseudoCoupHQ/Research/compiler_graph/graphs_home.py
 echo "   py-guard exit: $?"
 
 echo

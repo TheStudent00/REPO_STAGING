@@ -160,7 +160,7 @@ two share container names and **must not run at the same time** — see
   script is written under the task's artifact folder as
   `lanes_<task>/<lane>.sh` and submitted from there; Airlock's `.done/`
   archive is not the record. Never delete under `Airlock/`
-  or `~/AirlockRuns/`.
+  or `<runs>/`.
 - "work free" in a lane footer is DISK SPACE in the work directory, not
   a worker state.
 - A lane the operating system stops on the wall-clock ceiling is

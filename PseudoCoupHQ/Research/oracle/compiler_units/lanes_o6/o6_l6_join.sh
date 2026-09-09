@@ -5,7 +5,7 @@
 # go_types_report.md. Bound 3 GB (ABORT_MEMORY_O6), peak RSS printed.
 set -uo pipefail
 echo "[1/1] go_types_join.py"
-python3 /projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_join.py
+python3 PseudoCoupHQ/Research/oracle/compiler_units/go_types_join.py
 echo "join exit: $?"
-ls -l /projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_join.json /projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_report.md
+ls -l PseudoCoupHQ/Research/oracle/compiler_units/go_types_join.json PseudoCoupHQ/Research/oracle/compiler_units/go_types_report.md
 echo "[1/1] done"

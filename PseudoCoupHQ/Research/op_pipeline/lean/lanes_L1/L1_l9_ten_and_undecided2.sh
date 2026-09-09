@@ -4,7 +4,7 @@
 #   a pool5 entry's field is `layer5_normalized_texts`, a LIST of the distinct
 #   printed texts among its members, not a single `layer5_normalized_text`.
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 echo '[1/2] the ten theorems'

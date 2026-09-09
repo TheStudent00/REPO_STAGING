@@ -17,7 +17,7 @@
 # h1b measured at 253,716 kB).
 set -euo pipefail
 echo "[1/3] task h2: the rule's own tables, the classifier's answers"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/classifier_probe.py
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/classifier_probe.py
 echo "[2/3] task h2: task h1b's composition re-derived over task h1's own twenty bodies"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py reclassify
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py reclassify
 echo "[3/3] done"

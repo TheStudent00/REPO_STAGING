@@ -323,7 +323,7 @@ session, and it was not this work.** At 15:27 they read `Up 47 hours`; at
 $ uptime -p
 up 45 minutes                                  <- the machine rebooted
 $ journalctl --user -u sandbox-runner
-Sep 02 15:48:09 <host> systemd[2345]: Started sandbox-runner.service …
+Sep 02 15:48:09 <user> systemd[2345]: Started sandbox-runner.service …
 $ podman ps -a --format '{{.Names}}\t{{.CreatedAt}}'
 va-proxy         2026-09-02 15:48:09.104180520 -0400 EDT
 sandbox-proxy    2026-09-02 15:48:09.104180951 -0400 EDT
@@ -504,7 +504,7 @@ SKIP, not a pass it did not earn and not a failure it could not avoid.
 
 ```
 $ hostname
-<host>
+<user>
 $ ls -d /work
 ls: cannot access '/work': No such file or directory
 ```

@@ -7,15 +7,15 @@
 # re-read from inside a lane -- everything here reads only mounted
 # repo files).  Guard re-run at the end, unmodified checker.
 set -u
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
 TOTAL=9
 
 echo "[1/$TOTAL] the fix commit, in the file's own history"
-git -C /projects/PseudoCoupHQ log --format="COMMIT %H %ad" --date=iso \
+git -C PseudoCoupHQ log --format="COMMIT %H %ad" --date=iso \
   -- Research/oracle/cross_construction/emulation/synthesis/synthesize.py \
   | grep -A0 -B0 "^COMMIT b7abda67" || echo "NOT FOUND"
 echo "-- the last commit to touch the file before the full run (o12_l7, 2026-09-07T04:21:32Z / 00:21:32 -0400)"
-git -C /projects/PseudoCoupHQ log --format="COMMIT %H %ad" --date=iso \
+git -C PseudoCoupHQ log --format="COMMIT %H %ad" --date=iso \
   -- Research/oracle/cross_construction/emulation/synthesis/synthesize.py | head -1
 
 echo "[2/$TOTAL] the corrected admissibility functions, as they stand now"
@@ -61,7 +61,7 @@ for r in d['agreement']:
 
 echo "[9/$TOTAL] the memory bound, stated in synthesize.py, and the guard re-run"
 sed -n '/named abort ABORT_MEMORY_O12/,+1p' synthesize.py
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
   synthesis_plan.json \
   synthesis_sample_guess3000ms.json \
   synthesis_sample_guess30000ms.json \

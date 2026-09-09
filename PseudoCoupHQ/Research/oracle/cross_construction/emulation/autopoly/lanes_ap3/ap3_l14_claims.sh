@@ -8,7 +8,7 @@
 # line, a real measurement that moves by a few kB, so the pasted
 # command carries the `grep -v` on the line itself.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 
 echo "===== tables ====="
 python3 autopoly3.py tables

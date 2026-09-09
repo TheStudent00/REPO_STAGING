@@ -9,7 +9,7 @@
 # Node: hq.research.compiler_graph.dashboard
 set -uo pipefail
 
-REPO=/projects/PseudoCoupHQ
+REPO=PseudoCoupHQ
 cd "$REPO" || exit 2
 
 echo "== git, inside the sandbox"
@@ -22,7 +22,7 @@ mkdir -p /out
 python3 - <<'PY'
 import json, os, subprocess, sys
 
-REPO = "/projects/PseudoCoupHQ"
+REPO = "PseudoCoupHQ"
 CHRON = os.path.join(REPO, "Research/op_pipeline/chronology.json")
 
 with open(CHRON) as fh:

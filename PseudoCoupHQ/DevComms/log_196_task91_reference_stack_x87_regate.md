@@ -104,7 +104,7 @@ held at `layer4c`, only the reference moved:
 
 Eleven lanes, each name used once, each dropped through
 `airlock submit … --instance t91 --batch t91`. Logs in
-`~/AirlockRuns/t91/agent/logs/`; the elapsed column is each lane's own
+`<runs>/t91/agent/logs/`; the elapsed column is each lane's own
 `agent/status/<lane>.status` file.
 
 | lane | what it ran | elapsed |

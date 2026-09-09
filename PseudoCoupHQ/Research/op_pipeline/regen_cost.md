@@ -42,5 +42,5 @@ The two lanes are not only two mixes: the assignment lane compiles a DIFFERENT P
 
 - serial, one probe at a time: **8522 s = 2.37 hours**
 - CPU time: the same 8522 s -- the work does not change when it is spread.
-- at the cap (6 of 12 cores, 6 workers, 0.8 efficiency assumed): **0.49 hours** wall clock.
+- at the cap (6 of <cores>, 6 workers, 0.8 efficiency assumed): **0.49 hours** wall clock.
 

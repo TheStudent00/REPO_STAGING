@@ -114,7 +114,7 @@ banking commit is `9d6235d`.
 All six items done and verified on a throwaway instance `r11check`:
 `down` refuses with the running lane's name and status-file path
 (`--force` overrides); non-default agent tree at
-`~/AirlockRuns/<name>/agent`; `doctor` lists both places; `build.sh`
+`<runs>/<name>/agent`; `doctor` lists both places; `build.sh`
 ran, then `daemon_file` and both of its blocks were removed; README
 paragraph added. The existing `instances/trickle/agent` tree was left
 in place and pinned by an explicit `agent_dir` line so nothing moved.

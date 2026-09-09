@@ -21,6 +21,6 @@
 # MEMORY BOUND: 6 GB resident, named abort ABORT_MEMORY_AP3, checked
 # after every run.
 set -euo pipefail
-mkdir -p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/src3_off
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+mkdir -p PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/src3_off
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 python3 autopoly3.py off_run

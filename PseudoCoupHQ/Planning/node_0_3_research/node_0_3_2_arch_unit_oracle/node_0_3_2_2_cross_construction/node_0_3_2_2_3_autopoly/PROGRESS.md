@@ -202,6 +202,101 @@ status: living
   (26 claims: 13 MATCHES, 0 DIFFERS, 9 UNVERIFIABLE, 1 REFUSED, 3
   NOT_RERUNNABLE, each non-matching outcome named with its cause in its
   section 11). Status: closed, instance `g1` down.
+- 2026-09-09: task ap4 closed — CLOSING THE FOUR LANGUAGES: the contract
+  for a value that is not in a register, and AutoPoly's loop, FOURTH
+  PASS. the owner's ruling of 2026-09-09 — "the contract may state a place by a
+  CONSTRAINT, not only by a register name; one extension, in the layer
+  that owns each half" — carried out as three changes. CHANGE 1, in the
+  DRIVER: where the cell reads a different NUMBER of arrivals from the
+  emulation the two sides are no longer aligned row by row; the cell's
+  arrivals are SUBSTITUTED by what the reference simulator leaves in them
+  when it steps the emulation's own attested body up to the cell's
+  instruction, and the REGION that names is recorded as a sentence and
+  printed only where z3 proved it. CHANGE 2, in the LEDGER
+  (`build_epilogue`: `fstpt OUT-0`; `build_prelude`: `fldt IN-k`) and in
+  the driver: an answer left on the x87 register stack is now an answer,
+  and because `reference.answer_of` cannot read one and
+  `pool100_entry_equivalence.align_by_row` cannot align an FP arrival —
+  neither file named by the brief — both readings are done in the driver
+  over the reference's own state. CHANGE 3, in the DRIVER: an emulation
+  whose carved body carries no instruction is the IDENTITY on its
+  arrival, `composition = []`, landing `IDENTITY`. THE ANSWER: 162 of 253
+  cells proved on ALL FOUR targets, 106,032 attested ledger rows, 79.7%
+  (ap1 120 / 57.6% → ap2 144 / 64.17% → ap3 151 / 64.29% → ap4 162 /
+  79.7%); cells proved on NO target 56 → 20; runs carrying a cause 293 →
+  237 of 1,012; runs task ap3 proved that this loop does not: 0. THE
+  ARRIVAL-CONTRACT GROUP, 38 places open since task g1b, is 0 — and the
+  probes found it was TWO populations, 7 derived arrivals and 31 halves
+  of a flags place on the primitive route, which the driver's own rule
+  already refused when the place was not halved. The three guards the
+  brief names all hold: `check_L2` 259 / 172 STATED / 87 REFUSED with all
+  178 files restored byte for byte, task o8's 243 / 197 / 155 / 216, and
+  the h2 handful 24 of 24. Six pairs moved to `sat`, each with its
+  counterexample, and the largest finding among them is that the cell key
+  carries no immediate, so `mov` imm_gpr is not one mapping — the single
+  awaiting-the owner item. Report:
+  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly4.md`.
+  Log:
+  `PseudoCoupHQ/DevComms/log_246_task_ap4_autopoly_fourth_pass.md`.
+  Status: closed, guard PASS on all three json products, instance `ap4`
+  down.
+- 2026-09-09: task ap3 closed — AutoPoly's loop, THIRD PASS. Two more of
+  the causes task ap2 counted fixed in the layer that owns each, each
+  measured on its own cells before the loop, plus two measurements the
+  brief asked for on their own. THE ANSWER: the polyfill-complete set —
+  cells proved on all four compiled targets — is **151 of 253, covering
+  85,530 of the outer set's 133,044 attested ledger rows (64.29%)**,
+  against task ap2's 144 / 85,368 / 64.17% and task ap1's 120 / 76,634 /
+  57.6%; proved on none fell from 66 cells / 16,534 rows / 12.43% to 56 /
+  15,134 / 11.38%; runs carrying a cause from 324 of 1,012 to 293; **runs
+  task ap2 proved that this loop does not: 0**. FIX 1, the ARRIVAL side
+  of task ap2's fix 3: a 128-bit arriving vector register is rewritten as
+  two 64-bit arriving values, `Concat(seed_<family>_high,
+  seed_<family>_low)`, so the place is rendered from two parameters a
+  target can receive and the gate aligns them on two IN rows — 31 of its
+  40 pairs now prove, and the 9 that do not are an EMPTY compiled body (a
+  vector register copy the compiler elides), not this fix's cause. The
+  guard is per PLACE and not per cell: a place task h2's fix 2 projects a
+  lane out of does read its arrival above bit 63, and the guard lane is
+  what caught the first form of the fix rewriting the handful's own two
+  vector cells. FIX 2, the 32 x87 cells at `key_width` 80: task ap2's
+  cause for them (`no setter row to compose the flag pair from`) is false
+  about the objects — **0 of the 32 rows reads the arriving flag state**,
+  so they were never flag consumers; a preseeded row is now composed with
+  a setter only where one of its terms actually reads that state. The
+  PROBE the brief puts first LANDS: `long double emu(long double a, long
+  double b) { return a + b; }` at the corpus's own ship flags carves to
+  `fldt 0x18(%rsp); fldt 0x8(%rsp); faddp %st,%st(1); ret`, so c's
+  `long double` is the 80-bit holder and the 30 x87 arithmetic cells now
+  render, compile and carve to the x87 opcode on c; rust, go and swift
+  have no 80-bit holder and are refused BY NATURE, which is the brief's
+  own rule. THEY STILL PROVE NOTHING, and the reason is a STOP rather
+  than a result: the CANONICAL FORM refuses the c body `no answer home`
+  — "this unit's own code names no register the answer is left in" —
+  because a `long double` answer is left in st(0) and its arguments
+  arrive on the stack, and neither is a register family. That is the
+  arrival-contract question, now measured on the ANSWER side as well;
+  flagged, not worked around. FIX 3: `model_translate.py check` runs
+  again after the one authorised line in `load_rows` (`row["mnem"]`, the
+  name task mn1 renamed the field to) — 259 rows, 172 STATED, 87 REFUSED,
+  exactly the brief's expectation and exactly 153 + 19 of the stored
+  artifact, which was snapshotted and RESTORED byte for byte. FIX 4: task
+  h2's normalise-before-render measured ALONE, the whole loop run twice
+  with one switch moved — it is **not a no-op at scale**: 15 of 1,012
+  runs render a different source and 9 differ in verdict, but no proof
+  moves either way (nine float cells differ only in a commutative operand
+  order; `setp`/`setnp` render a body of 19 instructions instead of 26 on
+  c and rust; three divide runs shuffle DISPROVED against UNDECIDED at
+  the solver's ceiling), so it stays ON. The arrival-contract group and
+  every `sat` were NOT touched: 38 places over the same 12 cells, `sat`
+  152 places at the plain comparison and 67 surviving the caller-extension
+  re-pose. Report:
+  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly3.md`.
+  Log:
+  `PseudoCoupHQ/DevComms/log_245_task_ap3_autopoly_third_pass.md`
+  (32 claims: 8 MATCHES, 0 DIFFERS, 24 UNVERIFIABLE, 0 REFUSED, 0
+  NOT_RERUNNABLE). Status: closed, guard PASS on all three json products,
+  instance `ap3` down.
 - 2026-09-09: task ap2 closed — AutoPoly's loop, SECOND PASS, after the
   six mechanical causes task ap1 counted were fixed, one cause = one fix
   in the layer that owns it and each measured on exactly the pairs it

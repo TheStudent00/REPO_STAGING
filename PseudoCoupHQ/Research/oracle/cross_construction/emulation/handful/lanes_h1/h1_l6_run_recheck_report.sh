@@ -16,13 +16,13 @@
 # h1_l5 at 437,560 kB.
 set -euo pipefail
 echo "[1/4] task h1: handful.py run"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 python3 handful.py run
 echo "[2/4] task h1: handful.py recheck 300000"
 python3 handful.py recheck 300000
 echo "[3/4] task h1: handful.py report, and the unmodified spelling guard"
 python3 handful.py report
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful_cells.json \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful_cells.json \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json
 echo "[4/4] done"

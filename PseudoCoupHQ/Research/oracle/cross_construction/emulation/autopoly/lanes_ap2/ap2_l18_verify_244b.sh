@@ -10,6 +10,6 @@
 # UNVERIFIABLE by nature and is counted as such.  The log or the claim
 # is fixed, never the verifier.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 check_conventions_log_claims.py --verify --timeout 20 \
-    /projects/PseudoCoupHQ/DevComms/log_244_task_ap2_autopoly_second_pass.md
+    PseudoCoupHQ/DevComms/log_244_task_ap2_autopoly_second_pass.md

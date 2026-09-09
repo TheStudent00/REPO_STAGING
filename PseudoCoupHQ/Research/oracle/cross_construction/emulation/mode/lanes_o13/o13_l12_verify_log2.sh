@@ -4,7 +4,7 @@
 # every reproducing command log_231 pastes.
 set -u
 echo "[1/1] verify log_231, pass 2"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
   --verify --timeout 20 \
-  /projects/PseudoCoupHQ/DevComms/log_231_task_o13_mode_rendered_guard.md
+  PseudoCoupHQ/DevComms/log_231_task_o13_mode_rendered_guard.md
 echo "lane o13_l12 done"

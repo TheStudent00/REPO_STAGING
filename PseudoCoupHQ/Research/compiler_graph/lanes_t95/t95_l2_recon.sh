@@ -36,8 +36,8 @@
 # lines and prints them.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
-GR=/projects/PseudoCoupGraphs
+CG=PseudoCoupHQ/Research/compiler_graph
+GR=PseudoCoupGraphs
 GO=/sources/golang_src
 LLVM=/sources/llvm-project
 RUST=/sources/rust
@@ -66,7 +66,7 @@ done
 say "[2/9] MEMORY SAMPLE -- holding each compact graph whole"
 python3 - <<'PY'
 import json, os, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 CEILING_MB = 6144
 for name in ("graph_go.json", "graph_cpp.json", "graph_rust.json",
@@ -88,7 +88,7 @@ PY
 say "[3/9] go -- every function in the region with a parameter of the ARCH OPCODE TYPE obj.As"
 python3 - <<'PY'
 import re, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["go"]
 files = G.list_region_files(region)
@@ -108,7 +108,7 @@ PY
 say "[4/9] go -- call sites of the emitter, and the shape of the first argument"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["go"]
 files = [f for f in G.list_region_files(region) if f.endswith(".go")]
@@ -157,7 +157,7 @@ git -C "$GO" show 9f1012d9a1aa0831ff44ac9c767e96f9943d13fe:src/cmd/compile/inter
 say "[6/9] cpp -- where the X86 backend actually builds a machine instruction"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["cpp"]
 files = G.list_region_files(region)
@@ -193,7 +193,7 @@ PY
 say "[7/9] cpp -- the instruction table the region already keeps (.td)"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["cpp"]
 files = [f for f in G.list_region_files(region) if f.endswith(".td")]
@@ -212,7 +212,7 @@ PY
 say "[8/9] rust -- LOCATE the emitter, or report there is none in the region"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["rust"]
 files = G.list_region_files(region)
@@ -240,7 +240,7 @@ PY
 say "[9/9] swift -- LOCATE the emitter, or report there is none in the region"
 python3 - <<'PY'
 import re, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["swift"]
 files = G.list_region_files(region)

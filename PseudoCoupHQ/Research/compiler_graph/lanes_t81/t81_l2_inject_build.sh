@@ -9,7 +9,7 @@
 # — clang's CodeGen and llvm's X86 backend — are proved, not one.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 
 say "[1/6] the injection"
 if grep -q "t81diary::note(" /persist/llvmsrc/clang/lib/CodeGen/CGExpr.cpp 2>/dev/null; then
@@ -73,7 +73,7 @@ say "[6/6] the emission hook proved on one probe"
 mkdir -p /work/probe /persist/probecfg
 python3 - <<'PY'
 import json
-probes = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+probes = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                         't81/probes_cpp.json'))['probes']
 open('/work/probe/unit.c', 'w').write(probes['c/op_0']['source'])
 open('/work/probe/unit.cpp', 'w').write(probes['cpp/op_0']['source'])

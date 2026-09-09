@@ -15,7 +15,7 @@
 #
 # MEMORY BOUND: 6 GB resident, named abort ABORT_MEMORY_AP1.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 echo "[1/5] the report, written again"
 python3 autopoly.py report
 echo "[2/5] the store and the aggregate hold the same runs"
@@ -23,9 +23,9 @@ python3 - <<'PY'
 import json
 import resource
 
-RUNS = ("/projects/PseudoCoupHQ/Research/oracle/cross_construction/"
+RUNS = ("PseudoCoupHQ/Research/oracle/cross_construction/"
         "emulation/autopoly/autopoly_runs.jsonl")
-AGG = ("/projects/PseudoCoupHQ/Research/oracle/cross_construction/"
+AGG = ("PseudoCoupHQ/Research/oracle/cross_construction/"
        "emulation/autopoly/autopoly.json")
 
 lines = []
@@ -54,7 +54,7 @@ python3 - <<'PY'
 import json
 import resource
 
-AGG = ("/projects/PseudoCoupHQ/Research/oracle/cross_construction/"
+AGG = ("PseudoCoupHQ/Research/oracle/cross_construction/"
        "emulation/autopoly/autopoly.json")
 document = json.load(open(AGG))
 held = document["sat_verdicts"]
@@ -85,7 +85,7 @@ python3 - <<'PY'
 import json
 import resource
 
-ATTEST = ("/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
+ATTEST = ("PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
           "model_table_attest.json")
 document = json.load(open(ATTEST))
 for cell in document["cells"]:
@@ -102,7 +102,7 @@ python3 - <<'PY'
 import json
 import resource
 
-AGG = ("/projects/PseudoCoupHQ/Research/oracle/cross_construction/"
+AGG = ("PseudoCoupHQ/Research/oracle/cross_construction/"
        "emulation/autopoly/autopoly.json")
 document = json.load(open(AGG))
 print("| route | c | rust | go | swift |")

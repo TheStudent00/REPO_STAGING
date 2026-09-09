@@ -2557,7 +2557,7 @@ Full report:
   29,288 accepted, 100,265 refused, and every accepted probe fully
   extracted (29,288 ship units, 29,288 anchor units, 29,288 DWARF
   parameter tables, no gaps), in 326 checkpointed chunks of 400,
-  0 pending. Wall clock 18.4 minutes at 6 of 12 cores.
+  0 pending. Wall clock 18.4 minutes at 6 of <cores>.
   Two supplement fixes landed first and moved the counts: F35-1 —
   `core_rule2.py` replaces the v1 NUMERIC_MARKS tuple (which had no
   truth-value entry) with a normalised-class test, so rust's `bool`
@@ -3256,10 +3256,10 @@ verdict from; `--force` is the deliberate override and says which lane it is
 overriding. `airlock down` delegates, so it inherits both. This closes the
 open question left by the shared-instance incident of log_143 §7.4.
 
-A non-default instance's agent tree now defaults to `~/AirlockRuns/<name>/
+A non-default instance's agent tree now defaults to `<runs>/<name>/
 agent`, outside the checkout — a drop/status/logs/out tree is a run record,
 not a tool file. The `sandbox` instance keeps `<root>/agent`. `airlock
-doctor` lists `~/AirlockRuns/*` beside `instances/*.conf` and says which of
+doctor` lists `<runs>/*` beside `instances/*.conf` and says which of
 the two each instance was found in. The existing `trickle` tree was NOT
 moved: its conf pins it, and it is byte-identical before and after (38
 files, 1,188,427 bytes).

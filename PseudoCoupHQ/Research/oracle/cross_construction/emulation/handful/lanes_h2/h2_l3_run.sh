@@ -17,11 +17,11 @@
 # twenty peaked at 405,812 kB.
 set -euo pipefail
 echo "[1/5] task h2: handful.py run2"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py run2
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py run2
 echo "[2/5] task h2: handful.py recheck2 300000"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py recheck2 300000
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py recheck2 300000
 echo "[3/5] task h2: handful.py compose2"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py compose2
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py compose2
 echo "[4/5] task h2: handful.py report2"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py report2
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py report2
 echo "[5/5] done"

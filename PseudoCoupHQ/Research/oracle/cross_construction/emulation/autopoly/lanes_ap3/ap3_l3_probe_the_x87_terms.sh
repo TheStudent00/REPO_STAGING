@@ -14,13 +14,13 @@
 # MEMORY BOUND: 6 GB resident, named abort ABORT_MEMORY_AP3; this lane
 # runs no gate call and reads only the cells file.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 python3 - <<'PY'
 import os
 import resource
 import sys
 
-HERE = "/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation"
+HERE = "PseudoCoupHQ/Research/oracle/cross_construction/emulation"
 sys.path.insert(0, os.path.join(HERE, "handful"))
 sys.path.insert(0, os.path.join(HERE, "autopoly"))
 sys.path.insert(0, HERE)

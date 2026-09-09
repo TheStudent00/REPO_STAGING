@@ -34,20 +34,20 @@
 #
 # MEMORY BOUND: 6 GB resident, named abort ABORT_MEMORY_AP2.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 
 echo "[1/4] GUARD 1 -- task h2's own sources measurement"
 python3 handful.py sources_counts
 
 echo "[2/4] GUARD 2, 3 and 4 -- the handful's ten cells through the ap2 driver"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 python3 - <<'PY'
 import json
 import os
 import resource
 import sys
 
-HERE = "/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation"
+HERE = "PseudoCoupHQ/Research/oracle/cross_construction/emulation"
 sys.path.insert(0, os.path.join(HERE, "handful"))
 sys.path.insert(0, os.path.join(HERE, "autopoly"))
 import autopoly2 as A
@@ -156,6 +156,6 @@ python3 autopoly2.py preflight | grep -v 'peak resident'
 echo "done"
 
 echo "[5/5] THE SAMPLE: the first twenty runs, with the peak after each"
-mkdir -p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/src2
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+mkdir -p PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/src2
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 python3 autopoly2.py run 20

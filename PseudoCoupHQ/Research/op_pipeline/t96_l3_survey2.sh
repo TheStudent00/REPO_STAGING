@@ -2,7 +2,7 @@
 # TASK 96 round 19, lane 3.  The survey re-run with `lea` excluded and
 # copies of a base followed.  Nothing is written.
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "[1/1] the arriving areas each body evidences"
 python3 - <<'PY'

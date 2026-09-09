@@ -3,13 +3,13 @@
 # FINAL code.  Lanes 5 and 6 ran before the window shifts were added and
 # stand as the record of that; this is the run of record.
 set -uo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 
 BASE=b86366cd38c72e557064e44d8d062d83f7610e5d
 
 echo "[1/6] the data guard is UNMODIFIED"
 echo "  sha256: $(sha256sum check_no_spelling_keys.py | cut -d' ' -f1)"
-git -C /projects/PseudoCoupHQ diff --stat "$BASE"..HEAD -- \
+git -C PseudoCoupHQ diff --stat "$BASE"..HEAD -- \
     Research/op_pipeline/check_no_spelling_keys.py
 echo "  (no diff line above = byte-identical since the task-85 commit)"
 echo
@@ -39,7 +39,7 @@ echo "  exit ${PIPESTATUS[0]}"
 echo
 echo "[6/6] the JavaScript route untouched, and the vocabulary grep"
 echo "-- git diff (working tree), lines:"
-git -C /projects/PseudoCoupHQ diff -- \
+git -C PseudoCoupHQ diff -- \
     Research/op_pipeline/dashboard.html \
     Research/op_pipeline/dashboard_pane1.js \
     Research/op_pipeline/dashboard_pane23.js \
@@ -48,7 +48,7 @@ git -C /projects/PseudoCoupHQ diff -- \
     Research/op_pipeline/dashboard_pane6.js | wc -l
 echo "-- git diff $BASE..HEAD, lines (the daemon commits every 30 s, so"
 echo "   this is the diff that proves it):"
-git -C /projects/PseudoCoupHQ diff "$BASE"..HEAD -- \
+git -C PseudoCoupHQ diff "$BASE"..HEAD -- \
     Research/op_pipeline/dashboard.html \
     Research/op_pipeline/dashboard_pane1.js \
     Research/op_pipeline/dashboard_pane23.js \

@@ -7,7 +7,7 @@
 set -u
 
 TOTAL=3
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 
 # elan and lake both want a writable HOME. /work is the instance's own
 # tmpfs; nothing here is a deliverable.

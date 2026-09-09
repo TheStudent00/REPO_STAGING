@@ -2,7 +2,7 @@
 """edges_L1.py -- read t100's answered pairs and pick the terms task L1 hands to Lean.
 
 WHAT THIS READS (an inherited artifact, named with its assumptions):
-  /projects/PseudoCoupHQ/Research/op_pipeline/pool100_edges.json, written by
+  PseudoCoupHQ/Research/op_pipeline/pool100_edges.json, written by
   task t100 (`pool100_entry_equivalence.py close`, log_224).  Each record in
   its `edges` list is one PAIR of pool5 entries of one `type_key` (arrival
   register families | answer width) -- the candidate set was fixed from that
@@ -37,8 +37,8 @@ import re
 import resource
 import sys
 
-EDGES_PATH = "/projects/PseudoCoupHQ/Research/op_pipeline/pool100_edges.json"
-OUT_DIR = "/projects/PseudoCoupHQ/Research/op_pipeline/lean"
+EDGES_PATH = "PseudoCoupHQ/Research/op_pipeline/pool100_edges.json"
+OUT_DIR = "PseudoCoupHQ/Research/op_pipeline/lean"
 ABORT_MEMORY_L1_KB = 6 * 1024 * 1024
 
 
@@ -374,7 +374,7 @@ def divsamples(doc):
 
 
 
-POOL5 = "/projects/PseudoCoupHQ/Research/op_pipeline/the_pool5.json"
+POOL5 = "PseudoCoupHQ/Research/op_pipeline/the_pool5.json"
 
 # What Render.lean's `Term` covers, by the printed token that stands for it.
 # The right column is the constructor, or the reason the subset stops short.

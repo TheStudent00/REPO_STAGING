@@ -8,6 +8,6 @@
 # The probe lane (h1_l2) measured the same program's step 1 at 69,544 kB.
 set -euo pipefail
 echo "[1/2] task h1: handful.py run"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 python3 handful.py run
 echo "[2/2] done"

@@ -22,7 +22,7 @@
 #   5 guard83_term_pool.py  the UNMODIFIED spelling guard over every
 #                           JSON artifact task 83 writes, ONE process
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 # PRECONDITION: this lane must never run on a partial store.  A
 # partial store would make audit66.py overwrite audit66.json with a

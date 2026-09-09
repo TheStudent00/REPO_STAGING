@@ -18,8 +18,8 @@
 # verifier runs each command as its own process and holds only the log's
 # text; `tally3` is the heaviest thing it starts.
 set -euo pipefail
-D=/projects/PseudoCoupHQ/DevComms
+D=PseudoCoupHQ/DevComms
 echo "[1/1] task g1b: the conventions verifier over log 242, fourth pass"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
     --verify --timeout 20 \
     $D/log_242_task_g1b_swift_and_the_widened_lookup.md

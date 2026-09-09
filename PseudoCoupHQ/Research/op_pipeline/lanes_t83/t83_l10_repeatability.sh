@@ -9,7 +9,7 @@
 # in different places, the variation is the solver's and not the
 # bound's.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 for pass in 1 2; do
   echo "======== [$pass/2] the same bounded check, run again ========"
   rm -rf /work/t83_check_store /work/t83_check_state.json

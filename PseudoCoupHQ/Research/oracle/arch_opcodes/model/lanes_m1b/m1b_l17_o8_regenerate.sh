@@ -11,15 +11,15 @@
 # named abort ABORT_MEMORY_M1B.
 set -euo pipefail
 echo "[1/4] task m1b: per_opcode.py population"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode
 python3 per_opcode.py population
 echo "[2/4] task m1b: per_opcode.py run"
 python3 per_opcode.py run
 echo "[3/4] task m1b: per_opcode.py report"
 python3 per_opcode.py report
 echo "[4/4] task m1b: the unmodified spelling guard over o8's three json"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-  /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_population.json \
-  /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_held.json \
-  /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_results.json || true
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+  PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_population.json \
+  PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_held.json \
+  PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_results.json || true
 echo "[4/4] done"

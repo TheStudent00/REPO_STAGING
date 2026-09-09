@@ -437,7 +437,7 @@ $ python3 Airlock/airlock submit <scratch>/t100_l11_verify3.sh --instance t100 -
 ```
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_224_task_t100_pool_entry_equivalence_closure.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_224_task_t100_pool_entry_equivalence_closure.md
 log_224_task_t100_pool_entry_equivalence_closure.md: 15 claims extracted
    claims 15 | MATCHES 3 | DIFFERS 0 | UNVERIFIABLE 10 | REFUSED 1 | NOT_RERUNNABLE 1
    VERDICT: 3 of 15 claims reproduce; 10 (67%) carry nothing to re-run

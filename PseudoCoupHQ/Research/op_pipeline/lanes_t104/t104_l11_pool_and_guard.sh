@@ -35,12 +35,12 @@
 # failure.  A brief handed to any subagent for this line MUST paste
 # this paragraph verbatim."
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/4] pool66_run.py, unmodified, for its own refusal"
 python3 pool66_run.py
 echo "pool66_run.py exit $?"
 echo "[2/4] the before build, the after build, the candidate, the delta"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_pool.py
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_pool.py
 echo "pool exit $?"
 echo "[3/4] the guard over the named artifacts"
 python3 check_no_spelling_keys.py t104_diagnose.json t104_premise.json t104_audit.json t104_audit_unchanged_rule.json t104_walk_evidence.json t104_walk_evidence_unchanged_rule.json t104_walk_state.json t104_order_probe.json t104_the44.json pool104_candidate.json pool104_delta.json

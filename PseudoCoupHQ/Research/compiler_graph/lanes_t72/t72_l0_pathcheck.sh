@@ -10,7 +10,7 @@ echo "-- a host-only path must NOT exist in here:"
 # a glob, so no user name is ever written into a tracked artifact
 ls -d /home/*/Programming 2>&1 || echo "  ABSENT (as expected inside the container)"
 echo "-- container-only paths that must exist:"
-for p in /persist /sources /projects/PseudoCoupHQ /work /out ; do
+for p in /persist /sources PseudoCoupHQ /work /out ; do
   printf '  %-28s ' "$p"; ls -d "$p" >/dev/null 2>&1 && echo present || echo ABSENT
 done
 echo

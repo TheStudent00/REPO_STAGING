@@ -12,8 +12,8 @@
 # MEMORY: one shard at a time; task 79's comparable walk peaked at
 # 83 MB resident.  Hard cap 6 GB, named abort ABORT_MEMORY_T104.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[0/1] term66_store shard count and record count before the walk"
 ls term66_store/*.json | wc -l
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_walk.py
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_walk.py
 echo "exit $?"

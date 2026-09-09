@@ -51,7 +51,7 @@ Lane scripts live at
 `PseudoCoupHQ/Research/airlock_audit/t88_l{1,2,3,4}_*.sh` (in
 the project's own repo, per Airlock's own README: "no lane scripts" belong
 in Airlock itself). All four write only to stdout (captured into
-`agent/logs/`) or read-only reads of `/out` and `/projects/PseudoCoupHQ`;
+`agent/logs/`) or read-only reads of `/out` and `PseudoCoupHQ`;
 none writes into `/out` or `/projects`.
 
 | lane | did | log | result |
@@ -59,7 +59,7 @@ none writes into `/out` or `/projects`.
 | `t88_l1_inventory.sh` | recounted `agent/out`: top-level entries, `du -sb`, recursive file count, per-product size/mtime | `20260904T220000Z__t88_l1_inventory.sh.log` | 268 top-level products, 9,734,518,662 bytes (9.73 GB / 9.07 GiB — matches `doctor`'s "9.1 GB"), 6,004 files, 0.2s |
 | `t88_l2_hash_out.sh` | sha256 (streaming) every file under `/out` | `20260904T220217Z__t88_l2_hash_out.sh.log` | 6,004 `HASHOUT` rows, 49.9s, `work_consumed_mb=0` |
 | `t88_l3_rss_sample.sh` | re-measured peak RSS in-process (see Memory below) | `20260904T220347Z__t88_l3_rss_sample.sh.log` | 20,612 KB peak, cross-checked digest matches lane 2's shell-tool digest for the same (largest, 1.85 GB) file |
-| `t88_l4_hash_hq_matches.sh` | for every product name, `find`-matched it under `/projects/PseudoCoupHQ` and sha256-compared file-by-file | `20260904T220401Z__t88_l4_hash_hq_matches.sh.log` | 269 products searched (see drift note), 5,691 file-level `CMP` rows, 14.4s |
+| `t88_l4_hash_hq_matches.sh` | for every product name, `find`-matched it under `PseudoCoupHQ` and sha256-compared file-by-file | `20260904T220401Z__t88_l4_hash_hq_matches.sh.log` | 269 products searched (see drift note), 5,691 file-level `CMP` rows, 14.4s |
 
 Recount commands, run **inside** lane 1, pasted verbatim from its log:
 

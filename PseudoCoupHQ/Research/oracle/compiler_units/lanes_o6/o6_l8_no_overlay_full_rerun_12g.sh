@@ -45,7 +45,7 @@ for c, n in causes.most_common(): print('  cause: %s: %d' % (c, n))
 for b, n in binpk.most_common(): print('  bin: %s: packages=%d sites=%d' % (b, n, bins[b]))
 print('packages whose first messages name defaultGOARCH (the missing generated file): %d' % buildcfg)
 ref = {}
-for sec, r in stream('/projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json.gz'):
+for sec, r in stream('PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json.gz'):
     if sec == 'sites':
         k = (r['file'], r['line'], r['col'], r['end_line'], r['end_col'], r['kind'], r['operator'], tuple(o['spelling'] for o in r['operands']), r['result'])
         h = hashlib.sha1(repr(k).encode()).hexdigest(); ref[h] = ref.get(h, 0) + 1

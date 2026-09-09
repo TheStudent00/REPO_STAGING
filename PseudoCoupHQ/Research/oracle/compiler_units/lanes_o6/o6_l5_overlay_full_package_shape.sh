@@ -11,9 +11,9 @@ export GOTOOLCHAIN=local GOPROXY=off GOFLAGS=-mod=mod GO111MODULE=on
 export GOCACHE=/work/o6/gocache GOPATH=/work/o6/gopath HOME=/work/o6/home
 mkdir -p /work/o6/mod /work/o6/gocache /work/o6/gopath /work/o6/home /work/o6/scratch
 OVERLAY=/sources/golang_src/src/internal/buildcfg/zbootstrap.go=/usr/lib/go-1.26/src/internal/buildcfg/zbootstrap.go
-TREE=/projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json.gz
+TREE=PseudoCoupHQ/Research/oracle/compiler_units/go_types_sites.json.gz
 PKG=/work/o6/sites_package_shape.json.gz
-COST=/projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_package_shape_cost.json
+COST=PseudoCoupHQ/Research/oracle/compiler_units/go_types_package_shape_cost.json
 echo "[1/3] full pass, shape=package, overlay on, GOROOT = source tree (binary from lane 4)"
 ls -l /work/o6/oracle
 GO111MODULE=off /work/o6/oracle -shape package -root /sources/golang_src/src/cmd/compile -goroot /sources/golang_src \

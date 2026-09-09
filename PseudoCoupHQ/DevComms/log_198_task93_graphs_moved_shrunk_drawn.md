@@ -116,7 +116,7 @@ are earlier laps and stay where they are as records.
 **Where the graphs live is answered in ONE place**, so no reader carries
 a path: `Research/compiler_graph/graphs_home.py` — the environment
 variable `PSEUDOCOUP_GRAPHS`, then the Airlock mount
-`/projects/PseudoCoupGraphs`, then a sibling of the repository, then
+`PseudoCoupGraphs`, then a sibling of the repository, then
 `PseudoCoupGraphs`.
 
 ### the readers, updated and PROVED by running
@@ -468,7 +468,7 @@ engine and not editing it. Peak resident of the python side **465 MB**.
 `t93_l1_sample.sh`, `t93_l2_compact_go_rust.sh` (ABORTED, kept as the
 record), `t93_l3_compact_go_rust.sh`, `t93_l4_compact_all_four.sh`,
 `t93_l5_move.sh`, `t93_l6_readers_and_summaries.sh`.
-Logs: `~/AirlockRuns/t93/agent/logs/`.
+Logs: `<runs>/t93/agent/logs/`.
 
 **Artifacts written or rebuilt in PseudoCoupHQ**
 `Research/compiler_graph/guard_task93.txt`,

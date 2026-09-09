@@ -9,7 +9,7 @@ node:
     name: hq
     path: Planning/CORE_0.md
     repo: PseudoCoupHQ
-    remote: https://github.com/TheStudent00/PseudoCoupHQ.git
+    remote: https://github.com/<owner>/PseudoCoupHQ.git
 super_node: null
 sub_nodes:
     - name: projects

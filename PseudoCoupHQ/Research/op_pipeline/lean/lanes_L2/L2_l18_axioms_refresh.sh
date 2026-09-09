@@ -12,7 +12,7 @@
 set -u
 
 TOTAL=1
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L2home
 mkdir -p "$HOME"
 cd "$LEANDIR" || exit 1

@@ -62,5 +62,5 @@ status: living
   producer object of each unit's own body and never by an operator
   token — **done**. Evidence: `name_census7.json`,
   `name_census7_printed.txt`,
-  `~/AirlockRuns/t97/agent/logs/20260905T095120Z__t97_l10_downstream_partial.sh.log`;
+  `<runs>/t97/agent/logs/20260905T095120Z__t97_l10_downstream_partial.sh.log`;
   `PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md` §7.1.

@@ -12,7 +12,7 @@
 # writing; term104_store/ only gains records for units that converge
 # this time.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/1] pass 2 retry, 7168 MB / 100 s, 1 worker"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_pass2_retry.py 7168 100
+python3 PseudoCoupHQ/Research/op_pipeline/lanes_t104/t104_pass2_retry.py 7168 100
 echo "exit $?"

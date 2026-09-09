@@ -3,7 +3,7 @@
 # printed by the command the report pastes beside it, so the verifier
 # lane re-runs the same commands.
 set -euo pipefail
-M=/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json
+M=PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json
 
 echo "[1/7] the coverage table's four totals"
 python3 -c "

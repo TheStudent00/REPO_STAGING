@@ -6,9 +6,9 @@
 # hand-written gloss. The lines that actually carry the claim -- the two
 # `dict(...)` calls that build a row -- are 82 to 91 and carry no arrow.
 set -u
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 echo "======== [1/1] fold.py lines 82-91, the row constructor ========"
-echo "\$ sed -n '82,91p' /projects/PseudoCoupHQ/Research/op_pipeline/fold.py"
-sed -n '82,91p' /projects/PseudoCoupHQ/Research/op_pipeline/fold.py
+echo "\$ sed -n '82,91p' PseudoCoupHQ/Research/op_pipeline/fold.py"
+sed -n '82,91p' PseudoCoupHQ/Research/op_pipeline/fold.py
 echo "--------8<--------"
 exit 0

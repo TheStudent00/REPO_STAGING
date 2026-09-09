@@ -25,7 +25,7 @@
 # after every run and every re-pose.  Lane g1_l9 peaked at 257,240 kB on
 # the composition step and 459,092 kB on the runs.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/6] task g1: handful.py primitive3"
 python3 $H/handful/handful.py primitive3
 echo "[2/6] task g1: handful.py run3"

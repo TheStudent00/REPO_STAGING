@@ -249,13 +249,13 @@ checked by `git blame` on the exact line, this session:
 
 ```
 $ git blame -L 1553,1553 .../node_0_3_5_compiler_graph/PROGRESS.md
-9842d19f (TheStudent00 2026-09-01 10:30:40 -0400 1553) `.../log_107_task21_interp_
+9842d19f (<owner> 2026-09-01 10:30:40 -0400 1553) `.../log_107_task21_interp_
 $ git blame -L 1695,1695 .../node_0_3_5_compiler_graph/PROGRESS.md
-78581903 (TheStudent00 2026-09-01 11:18:40 -0400 1695) Full record: `.../log_110_task25_
+78581903 (<owner> 2026-09-01 11:18:40 -0400 1695) Full record: `.../log_110_task25_
 $ git blame -L 79,79 .../node_0_3_5_compiler_graph/PROGRESS.md
-92b50c2b (TheStudent00 2026-08-31 17:16:50 -0400 79)   c/op_501). Source was on disk (Sources/llvm-
+92b50c2b (<owner> 2026-08-31 17:16:50 -0400 79)   c/op_501). Source was on disk (Sources/llvm-
 $ git blame -L 73,73 .../node_0_3_1_dominant_intentions/PROGRESS.md
-ab2326b2 (TheStudent00 2026-08-14 14:00:05 -0400 73)   awaiting the owner's `bash SandboxDesign/allow.sh sync`
+ab2326b2 (<owner> 2026-08-14 14:00:05 -0400 73)   awaiting the owner's `bash SandboxDesign/allow.sh sync`
 ```
 
 | dangling path | blamed date |

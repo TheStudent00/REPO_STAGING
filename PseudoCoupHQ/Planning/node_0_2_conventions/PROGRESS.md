@@ -121,7 +121,7 @@ status: living
     as is.
   - 2026-08-01 **done**: the owner ruled for its own repo and pushed it.
     Verified on disk: `DevComms/` is a git repo with
-    remote `github.com/TheStudent00/DevComms_root`, working tree
+    remote `github.com/<owner>/DevComms_root`, working tree
     clean, commit "DevComms founding: communication protocol,
     plan_and_code, vocabulary analysis." — so the authority the
     symlinks point at is now version controlled. `plan_and_code.md`

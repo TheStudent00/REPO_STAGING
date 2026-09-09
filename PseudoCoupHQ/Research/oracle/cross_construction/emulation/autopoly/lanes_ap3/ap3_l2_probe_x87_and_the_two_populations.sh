@@ -22,13 +22,13 @@
 # reads `autopoly2_cells.json` (2 MB) and task ap2's store (5 MB) and
 # runs no gate call; the peak is printed at the end.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 python3 - <<'PY'
 import os
 import resource
 import sys
 
-HERE = "/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation"
+HERE = "PseudoCoupHQ/Research/oracle/cross_construction/emulation"
 sys.path.insert(0, os.path.join(HERE, "handful"))
 sys.path.insert(0, os.path.join(HERE, "autopoly"))
 sys.path.insert(0, HERE)

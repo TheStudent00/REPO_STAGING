@@ -9,7 +9,7 @@
 # in the pasted command rather than in the verifier, which the law
 # forbids touching.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 run () { echo; printf '$'; printf ' %q' "$@"; echo; "$@"; }
 
 echo "[1/1] every LANDED run's composition, isolated: one cell, the target"

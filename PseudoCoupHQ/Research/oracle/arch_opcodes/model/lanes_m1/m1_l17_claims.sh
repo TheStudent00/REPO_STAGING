@@ -4,7 +4,7 @@
 # in the `$ command` / output shape the log uses, so the log's
 # transcripts are copied from a run and never typed.
 set -euo pipefail
-M=/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+M=PseudoCoupHQ/Research/oracle/arch_opcodes/model
 
 run () {
     echo "\$ $1"

@@ -300,7 +300,7 @@ Covered in §5, after the two fixes it required.
    stays inside the instance's declared 8g). All 184 converged.
    `term104_store/` now matches `term66_store/`'s population exactly
    (0 short either direction). Log:
-   `~/AirlockRuns/t104/agent/logs/20260907T141508Z__t104_l12_pass2_retry.sh.log`.
+   `<runs>/t104/agent/logs/20260907T141508Z__t104_l12_pass2_retry.sh.log`.
 2. **The spelling-ban guard found two pre-existing violations.**
    `kind_census()` in `t104_walk.py` keyed `declaration_kind_census`
    by `"%s|%d" % (name, kind)` -- an operator token in a dict key,
@@ -310,7 +310,7 @@ Covered in §5, after the two fixes it required.
    not unit objects, in `t104_diagnose.json`. **Fixed**: both re-keyed/
    stripped in place (counts unchanged, only the key/field shape),
    both sources corrected so a re-run does not reintroduce either.
-   Log: `~/AirlockRuns/t104/agent/logs/20260907T170102Z__t104_l13_fix_and_reguard.sh.log`.
+   Log: `<runs>/t104/agent/logs/20260907T170102Z__t104_l13_fix_and_reguard.sh.log`.
 3. **The pool-rebuild script never read 214 of the 226 t100 edges.**
    `edge_answer()` in `t104_pool.py` read only
    `pool100_edges.json`'s `edges` array (12 rows); `proved_but_not_applied`
@@ -319,7 +319,7 @@ Covered in §5, after the two fixes it required.
    of the data. **Fixed**: both arrays are now walked, distinguished by
    their own `edge_applies` field. Re-run; deliverable (d)'s 214-count
    above is the corrected answer. Log:
-   `~/AirlockRuns/t104/agent/logs/20260907T170320Z__t104_l14_pool_edges_fix.sh.log`.
+   `<runs>/t104/agent/logs/20260907T170320Z__t104_l14_pool_edges_fix.sh.log`.
 
 ## 5. The guard, final state
 
@@ -381,12 +381,12 @@ plus its pasted output was added beside each quantitative claim in
 §§3-5 above. Pass 2 (`t104_l16_verify_log2.sh`) then found 1 DIFFERS:
 §5's `check_no_spelling_keys.py` command was missing its
 `Research/op_pipeline/` prefix (the verifier's working directory is
-`/projects/PseudoCoupHQ`, one level higher) -- fixed, no logic
+`PseudoCoupHQ`, one level higher) -- fixed, no logic
 changed, output unchanged. Pass 3 (`t104_l17_verify_log3.sh`),
 LITERAL, in full:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_233_task_t104_normalize_commutative_order_close.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_233_task_t104_normalize_commutative_order_close.md
 log_233_task_t104_normalize_commutative_order_close.md: 14 claims extracted
    claims 14 | MATCHES 6 | DIFFERS 0 | UNVERIFIABLE 7 | REFUSED 0 | NOT_RERUNNABLE 1
    VERDICT: 6 of 14 claims reproduce; 7 (50%) carry nothing to re-run
@@ -453,5 +453,5 @@ used.
 - Audit: [`PseudoCoupHQ/Research/op_pipeline/t104_audit.json`](file://PseudoCoupHQ/Research/op_pipeline/t104_audit.json)
 - Pool candidate/delta: [`pool104_candidate.json`](file://PseudoCoupHQ/Research/op_pipeline/pool104_candidate.json), [`pool104_delta.json`](file://PseudoCoupHQ/Research/op_pipeline/pool104_delta.json)
 - Lane scripts: [`PseudoCoupHQ/Research/op_pipeline/lanes_t104/`](file://PseudoCoupHQ/Research/op_pipeline/lanes_t104/) (l1-l14, this session's new ones l12-l14)
-- Lane logs: `~/AirlockRuns/t104/agent/logs/`
+- Lane logs: `<runs>/t104/agent/logs/`
 - PROGRESS entry: [`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_3_normalize/PROGRESS.md`](file://PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_3_normalize/PROGRESS.md)

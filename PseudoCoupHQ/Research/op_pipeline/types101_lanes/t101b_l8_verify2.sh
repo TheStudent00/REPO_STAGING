@@ -4,7 +4,7 @@
 # found in log_217.
 set -u
 echo "[1/1] check_conventions_log_claims.py"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md
+python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md
 rc=$?
 echo "check_conventions_log_claims.py exit ${rc}"
 exit ${rc}

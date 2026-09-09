@@ -244,7 +244,7 @@ pinned anchor binaries.
 
 ```
 $ podman exec -e DWARF_TYPED_KEY_OUT=/persist/dwarf_typed_key.json sandbox-runner \
-    bash -lc 'cd /projects/PseudoCoupHQ/Research/op_pipeline && timeout 900 python3 dwarf_typed_key.py'
+    bash -lc 'cd PseudoCoupHQ/Research/op_pipeline && timeout 900 python3 dwarf_typed_key.py'
 wrote /persist/dwarf_typed_key.json
 cpython  long_add                                             READ     PyLongObject*,PyLongObject*
 ruby     vm_opt_plus                                          READ     VALUE,VALUE
@@ -258,7 +258,7 @@ php      ZEND_ADD_LONG_NO_OVERFLOW_SPEC_TMPVARCV_TMPVARCV_HANDLER REFUSED  None
 summary: {'handlers_considered': 9, 'keys_read': 6, 'refused': 3}
 ```
 
-Note on where that ran: `/projects/PseudoCoupHQ` is mounted into the
+Note on where that ran: `PseudoCoupHQ` is mounted into the
 container READ-ONLY in practice (the first run stopped with
 `OSError: [Errno 30] Read-only file system`), so the script writes to
 `/persist` when `DWARF_TYPED_KEY_OUT` says so and the result is copied

@@ -31,8 +31,8 @@
 # own output on failure.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+REPO=PseudoCoupHQ/Research/compiler_graph
+PIPE=PseudoCoupHQ/Research/op_pipeline
 cd "$REPO"
 
 say "[1/5] rebuild the five measured artifacts"
@@ -67,7 +67,7 @@ import json
 for path in ("variant_connections_go.json",
              "variant_connections_c_and_cpp.json",
              "variant_connections_extended.json"):
-    d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/' + path))
+    d = json.load(open('PseudoCoupHQ/Research/compiler_graph/' + path))
     rows = d["variants"]
     mixed = []
     label_to_variants = {}
@@ -98,7 +98,7 @@ PY
 say "[3/5] the census note is on every artifact"
 python3 - <<'PY'
 import json, os
-base = '/projects/PseudoCoupHQ/Research/compiler_graph/'
+base = 'PseudoCoupHQ/Research/compiler_graph/'
 for name in sorted(os.listdir(base)):
     if not name.startswith('variant_connections_'):
         continue
@@ -110,7 +110,7 @@ PY
 
 say "[4/5] the guard, UNMODIFIED, ONE PROCESS, over every artifact of task 87"
 md5sum "$PIPE/check_no_spelling_keys.py"
-cd /projects/PseudoCoupHQ && git status --porcelain Research/op_pipeline/check_no_spelling_keys.py && echo "   (git reports no change to the guard)"
+cd PseudoCoupHQ && git status --porcelain Research/op_pipeline/check_no_spelling_keys.py && echo "   (git reports no change to the guard)"
 cd "$REPO"
 python3 "$PIPE/check_no_spelling_keys.py" \
     variant_connections_go.json \

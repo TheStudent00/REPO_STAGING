@@ -57,7 +57,7 @@ status: living
   gate PROVES it first: `term_state TERM`, `PROVED_ON_SHIP`, 0 holes,
   at every ceiling — **done** (the location; the consequence is the
   blocker below). Evidence:
-  `~/AirlockRuns/t97/agent/logs/20260905T070634Z__t97_l2_flag_reason.sh.log`;
+  `<runs>/t97/agent/logs/20260905T070634Z__t97_l2_flag_reason.sh.log`;
   `PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md` §2.3.
 - 2026-09-05: the population is BIMODAL, measured. Of the 228 units
   whose normalization refused at 1,536 MB, **184 converge given about
@@ -68,7 +68,7 @@ status: living
   and 18,432 MB (1,469,000 to 4,082,072 to 17,014,600 kB) and the wall
   time grows with it (0.6 to 2.0 to 6.5 s) — **done** (the
   measurement). Evidence: `term97_pass2_b_slice0.json`,
-  `~/AirlockRuns/t97/agent/logs/20260905T094242Z__t97_l6_pass2_residue.sh.log`;
+  `<runs>/t97/agent/logs/20260905T094242Z__t97_l6_pass2_residue.sh.log`;
   `PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md` §2.4, §4.3.
 - 2026-09-05: **BLOCKER, for the owner.** `Term.normalize` does not converge
   for **44 of the 30,324 units canon40 proves (0.145%)**. A peak that

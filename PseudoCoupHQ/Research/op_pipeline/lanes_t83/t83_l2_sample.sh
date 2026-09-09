@@ -11,7 +11,7 @@
 # The cap is 6 GB resident, checked after every shard INSIDE the
 # process by `check_memory`, with the named abort ABORT_MEMORY.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "======== THE SAMPLE -- term66_run.py with a 240 s budget ========"
 total=$(( $(ls canon40_regen_store/*.json | wc -l) + 6 ))

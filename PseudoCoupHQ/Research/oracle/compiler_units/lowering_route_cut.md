@@ -18,8 +18,8 @@ Elapsed 83.8s, peak RSS 515.5 MB (bound 2048 MB).
 | sites_on_route_unresolved_or_partial | 0 |
 | distinct_route_variants | 0 |
 
-Diary source: `/projects/PseudoCoupGraphs/diaries/c_and_cpp` -- 1380 files, 8214918 lines, 1380 unparsed.
-Robustness check, `/projects/PseudoCoupGraphs/diaries/extended`: 3980 files, 1482 distinct coordinates (151 beyond the base diary).
+Diary source: `PseudoCoupGraphs/diaries/c_and_cpp` -- 1380 files, 8214918 lines, 1380 unparsed.
+Robustness check, `PseudoCoupGraphs/diaries/extended`: 3980 files, 1482 distinct coordinates (151 beyond the base diary).
 
 | operator | lhs | rhs | sites |
 |---|---|---|---|
@@ -38,7 +38,7 @@ Robustness check, `/projects/PseudoCoupGraphs/diaries/extended`: 3980 files, 148
 | sites_on_route_unresolved_or_partial | 5163 |
 | distinct_route_variants | 104 |
 
-Diary source: `/projects/PseudoCoupGraphs/diaries/go` -- 590 files, 10015022 lines, 3540 unparsed.
+Diary source: `PseudoCoupGraphs/diaries/go` -- 590 files, 10015022 lines, 3540 unparsed.
 
 | operator | lhs | rhs | sites |
 |---|---|---|---|

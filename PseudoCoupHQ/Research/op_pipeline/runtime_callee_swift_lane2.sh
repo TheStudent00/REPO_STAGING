@@ -42,7 +42,7 @@ nm --version | head -1
 objdump --version | head -1
 python3 --version
 echo
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane.py
+python3 PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane.py
 code=$?
 echo
 echo "lane exit: $code"

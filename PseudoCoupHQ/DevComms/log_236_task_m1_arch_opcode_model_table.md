@@ -13,11 +13,11 @@ task. Every lane ran on the tower guest through
 `bash Airlock/remote_lane.sh`, per LAW's last section;
 nothing but file editing, git and those commands ran on the laptop.
 A lane log's host path on the tower is
-`~/AirlockRuns/m1/agent/logs/<stamp>__<lane>.sh.log`;
+`<runs>/m1/agent/logs/<stamp>__<lane>.sh.log`;
 every attribution below names its file.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
 the instance. Every rendering is labelled **LITERAL** (the object,
 quoted) or **GLOSS** (a plain-words reading beside a literal), per
 `object.literal-gloss-analogy`.
@@ -163,7 +163,7 @@ fails. The consequences, all mechanical:
 unmodified over the four json this task wrote:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_rows.json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_attest.json /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_edges.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_rows.json PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_attest.json PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table_edges.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS model_table.json -- no operator token in any key, grouping, pairing or row structure
 PASS model_table_rows.json -- no operator token in any key, grouping, pairing or row structure
@@ -175,9 +175,9 @@ PASS model_table_edges.json -- no operator token in any key, grouping, pairing o
 added:
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
+$ grep -c exempt PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
 0
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.md
+$ grep -c exempt PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.md
 0
 ```
 
@@ -190,7 +190,7 @@ $ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 c = d['counts']
 print('table', c['table_mnemonics'], 'corpus', c['corpus_mnemonics'], 'both', c['in_both'])
 print('table only', ' '.join(r['mnem'] for r in c['table_only']))
@@ -216,7 +216,7 @@ fld xchg`, `reference.ARCHIVE_MNEMONICS`), which the corpus's own
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 c = d['counts']
 print('attempts', c['sweep_attempts'], 'translated', c['rows_translated'])
 print('triples', c['translated_triples'], 'distinct mappings', c['distinct_mappings_after_identical_text'])
@@ -268,7 +268,7 @@ re-runs, **LITERAL**, lane `20260908T235712Z__m1_l17_claims.sh.log`:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for row in d['rows']:
     if row['mnem'] != 'add':
         continue
@@ -322,7 +322,7 @@ criterion applied to the five mnemonics where it is most visible:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for r in d['counts']['mnemonics_with_several_mappings']:
     if r['mnem'] not in ('imul', 'div', 'idiv', 'mul', 'xchg'):
         continue
@@ -352,7 +352,7 @@ than trusted; the 86 splits are the first.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for g in d['counts']['alias_groups']:
     if not g['is_an_alias_group']:
         continue
@@ -383,7 +383,7 @@ twenty-four with their cell counts is `model_table.md` Table 3.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 seen = {}
 for cell in d['named_pair_cells']:
     key = (cell.get('destination_verdict'), cell.get('flags_verdict'), cell.get('flags_refusal'))
@@ -426,7 +426,7 @@ does not key.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for outcome in sorted(d['causes']):
     total = sum(r['count'] for r in d['causes'][outcome])
     print(outcome, total, 'rows over', len(d['causes'][outcome]), 'causes')
@@ -456,7 +456,7 @@ its row count.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 u = d['attestation_unclassified']
 for cause in sorted(u, key=lambda c: -u[c]):
     print(u[cause], cause[:60])
@@ -502,7 +502,7 @@ The three causes, by cause and with a status:
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 cells = d['counts']['attested_cells_with_no_translated_row']
 print('attested cells with no translated row:', len(cells))
 by_width = {}
@@ -638,7 +638,7 @@ Two ceilings were hit and both were reported rather than worked around:
   were moved out of the instance's `drop` into its `drop/.done/`**, the
   same folder and the same stamped name shape the daemon itself uses,
   so that a restart of the instance did not re-run them. Nothing under
-  `Airlock/` or `~/AirlockRuns/` was deleted; both scripts
+  `Airlock/` or `<runs>/` was deleted; both scripts
   are in the repo under `lanes_m1/`, and both lanes' logs are on the
   tower.
 
@@ -663,7 +663,7 @@ Two ceilings were hit and both were reported rather than worked around:
 this log from this task's own instance on the tower, as LAW's final
 lane. **LITERAL**, lane `20260909T001139Z__m1_l21_verify2.sh.log`
 (host path
-`~/AirlockRuns/m1/agent/logs/20260909T001139Z__m1_l21_verify2.sh.log`):
+`<runs>/m1/agent/logs/20260909T001139Z__m1_l21_verify2.sh.log`):
 
 ```
 population: 12 claims across 1 logs

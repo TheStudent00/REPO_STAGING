@@ -34,7 +34,7 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
 the instance. Prose names host paths.
 
 THE SPELLING BAN, pasted verbatim as required:
@@ -384,7 +384,7 @@ than left implicit.
 ## §7. The spelling guard, run and pasted in full
 
 **LITERAL**, lane `o9_l3_guard.sh`
-(`~/AirlockRuns/o9/agent/logs/20260906T195614Z__o9_l3_guard.sh.log`),
+(`<runs>/o9/agent/logs/20260906T195614Z__o9_l3_guard.sh.log`),
 in full:
 
 ```
@@ -531,13 +531,13 @@ signature/reading-kind/guard-partition logic itself is this task's
 own, since no prior task computed this join.
 
 **Memory.** Collector peak, both runs, pasted directly from the
-lane log (this path is under `~/AirlockRuns/`, not a
+lane log (this path is under `<runs>/`, not a
 sandbox mount, so it is pasted from the host shell that ran the lane
 rather than re-run inside this log's own verifier pass — the same
 situation log 217 §6 named for its own lane-log paths):
 
 ```
-$ grep 'collector peak' ~/AirlockRuns/o9/agent/logs/20260906T195501Z__o9_l4_census2.sh.log
+$ grep 'collector peak' <runs>/o9/agent/logs/20260906T195501Z__o9_l4_census2.sh.log
    collector peak 138588 kB
 ```
 
@@ -589,7 +589,7 @@ that needs no address syntax, no logic changed. Pass 2
 
 ```
 $ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/arch_opcodes/signatures/lanes/o9_l6_verify2.sh --instance o9 --batch o9 --weight 1
-$ cat ~/AirlockRuns/o9/agent/logs/20260906T200244Z__o9_l6_verify2.sh.log
+$ cat <runs>/o9/agent/logs/20260906T200244Z__o9_l6_verify2.sh.log
 ...
 log_223_task_o9_opcode_signature_census.md: 22 claims extracted
    claims 22 | MATCHES 4 | DIFFERS 0 | UNVERIFIABLE 15 | REFUSED 2 | NOT_RERUNNABLE 1
@@ -614,7 +614,7 @@ Zero DIFFERS. The REFUSED/NOT_RERUNNABLE/UNVERIFIABLE causes are the
 same shapes log 217's own pass 3 accepted: prose-only readings
 beside a literal (10), a citation naming a json field with no bare
 command (4, `attribution_only`), one lane log under
-`~/AirlockRuns/` (not a sandbox mount, `log_unreachable`,
+`<runs>/` (not a sandbox mount, `log_unreachable`,
 handled the way log 217 §6 handled its own lane-log paths), one
 `airlock submit` line (`submits_or_moves_the_sandbox`, by design
 outside this verifier's scope), one PROGRESS.md excerpt with no

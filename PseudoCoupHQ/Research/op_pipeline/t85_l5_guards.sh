@@ -9,12 +9,12 @@
 # rather than assumed.
 set -uo pipefail
 
-OP=/projects/PseudoCoupHQ/Research/op_pipeline
+OP=PseudoCoupHQ/Research/op_pipeline
 cd "$OP" || exit 2
 total=6
 
 echo "[1/$total] the data guard is UNMODIFIED"
-git -C /projects/PseudoCoupHQ status --porcelain -- \
+git -C PseudoCoupHQ status --porcelain -- \
     Research/op_pipeline/check_no_spelling_keys.py
 echo "  (no line above means git sees no change to it)"
 echo "  sha256: $(sha256sum check_no_spelling_keys.py | cut -d' ' -f1)"
@@ -54,13 +54,13 @@ echo "  exit $?"
 
 echo
 echo "[6/$total] git diff over the JavaScript route -- must be empty"
-git -C /projects/PseudoCoupHQ diff --stat -- \
+git -C PseudoCoupHQ diff --stat -- \
     Research/op_pipeline/dashboard.html \
     Research/op_pipeline/dashboard_pane1.js \
     Research/op_pipeline/dashboard_pane23.js \
     Research/op_pipeline/dashboard_pane4.js \
     Research/op_pipeline/dashboard_pane5.js \
     Research/op_pipeline/dashboard_pane6.js
-echo "  lines of diff: $(git -C /projects/PseudoCoupHQ diff -- \
+echo "  lines of diff: $(git -C PseudoCoupHQ diff -- \
     Research/op_pipeline/dashboard.html \
     Research/op_pipeline/dashboard_pane*.js | wc -l)"

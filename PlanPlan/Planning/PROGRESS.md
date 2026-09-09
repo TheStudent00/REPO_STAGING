@@ -37,7 +37,7 @@ status: living
     trees and 0 errors over this one, `hq.sh check` runs end to end,
     and all four framework Python files parse.
   - **Still the owner's, and not done here: the GitHub side.** The local
-    remote now points at `https://github.com/TheStudent00/PlanPlan.git`;
+    remote now points at `https://github.com/<owner>/PlanPlan.git`;
     the repo itself has not been renamed on GitHub.
 - 2026-08-01: tree founded, at the owner's instruction, after he asked why
   the framework's own repo did not use the framework. no exemption

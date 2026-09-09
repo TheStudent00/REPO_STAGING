@@ -29,12 +29,12 @@ import os
 import re
 import resource
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 import reference as R
 
 ABORT_KB = 6 * 1024 * 1024
-LEAN = "/projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"
-UNITS = ("/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/"
+LEAN = "PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"
+UNITS = ("PseudoCoupHQ/Research/oracle/arch_opcodes/"
          "single_opcode_units.json")
 
 
@@ -92,8 +92,8 @@ PY
 echo "[2/3] model_table.key_width: the rule, on the mnemonics it moves"
 python3 - <<'PY'
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import reference as R
 import model_table as MTAB
 
@@ -120,12 +120,12 @@ python3 - <<'PY'
 import json
 import resource
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import model_table as MTAB
 
 ABORT_KB = 6 * 1024 * 1024
-MODEL = ("/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
+MODEL = ("PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
          "model_table.json")
 
 

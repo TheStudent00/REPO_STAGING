@@ -6,7 +6,7 @@
 # the command.
 set -u
 export PATH=/opt/cargo/bin:$PATH
-R=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
+R=PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
 
 run() {
   echo "\$ $1"
@@ -50,5 +50,5 @@ echo "[11/12] bounds and memory"
 run "sed -n '/^## 8\\. Bounds/,\$p' $R/rust_report.md"
 
 echo "[12/12] the guard over every json this task wrote"
-run "python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py $R/rust_facts.json $R/rust_facts2.json $R/rust_facts3.json $R/rust_facts4.json $R/coverage_table.json $R/rust_population.json $R/rust_indexes.json $R/rust_held.json $R/rust_sample.json $R/rust_run.json $R/rust_control.json $R/rust_peropcode.json $R/rust_results.json"
+run "python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py $R/rust_facts.json $R/rust_facts2.json $R/rust_facts3.json $R/rust_facts4.json $R/coverage_table.json $R/rust_population.json $R/rust_indexes.json $R/rust_held.json $R/rust_sample.json $R/rust_run.json $R/rust_control.json $R/rust_peropcode.json $R/rust_results.json"
 echo "lane o11_l13 done"

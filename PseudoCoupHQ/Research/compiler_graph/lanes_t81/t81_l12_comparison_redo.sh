@@ -12,20 +12,20 @@
 # corrected program and diffs the go one against task 75's file.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 cd "$REPO"
 
 say "[1/3] the cpp comparison, re-run on the corrected program"
 python3 t81/run_with_peak.py report_super_ops.py compare \
     --candidates super_ops_cpp.json \
-    --output-side /projects/PseudoCoupHQ/Research/op_pipeline/super_ops3.json \
+    --output-side PseudoCoupHQ/Research/op_pipeline/super_ops3.json \
     --language cpp \
     --out super_ops_comparison_cpp.json 2>&1 | tail -20
 
 say "[2/3] the go comparison, re-run with the DEFAULT language"
 python3 t81/run_with_peak.py report_super_ops.py compare \
     --candidates super_ops_go.json \
-    --output-side /projects/PseudoCoupHQ/Research/op_pipeline/super_ops3.json \
+    --output-side PseudoCoupHQ/Research/op_pipeline/super_ops3.json \
     --out /work/super_ops_comparison_go_again2.json 2>&1 | tail -10
 
 say "[3/3] byte for byte against task 75's artifact"

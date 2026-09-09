@@ -70,7 +70,7 @@ def abort_if_over_budget():
 #    on disk.
 # ---------------------------------------------------------------------------
 
-HQ = "/projects/PseudoCoupHQ"
+HQ = "PseudoCoupHQ"
 SOURCES = "/sources"
 
 OPERATOR_ARITY_PATH = f"{HQ}/Research/kind_fuzz_clustering/operator_arity.json"

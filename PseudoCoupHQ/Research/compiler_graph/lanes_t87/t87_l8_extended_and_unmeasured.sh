@@ -30,21 +30,21 @@
 # own output on failure.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+REPO=PseudoCoupHQ/Research/compiler_graph
+PIPE=PseudoCoupHQ/Research/op_pipeline
 cd "$REPO"
 
 say "[1/4] the extended population, RECOUNTED here"
 python3 - <<'PY'
 import os
-base = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/'
+base = 'PseudoCoupHQ/Research/compiler_graph/diaries/'
 def stems(d):
     return set(n[:-4] for n in os.listdir(base + d) if n.endswith('.txt'))
 ext, orig, regen = stems('extended'), stems('c_and_cpp'), stems('regen')
 print("   diaries/extended  : %d" % len(ext))
 print("   of which original : %d" % len(ext & orig))
 print("   of which regenerated: %d" % len(ext & regen))
-store = '/projects/PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
+store = 'PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
 print("   regen store shards: %d" % len(os.listdir(store)))
 PY
 
@@ -78,7 +78,7 @@ python3 t81/run_with_peak.py graph.py variant-connections \
 python3 - <<'PY'
 import json
 for lang in ("rust", "swift"):
-    doc = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+    doc = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                          'variant_connections_%s.json' % lang))
     print("   %-6s state=%s  variants=%d  probes=%d"
           % (lang, doc["state"], len(doc["variants"]),

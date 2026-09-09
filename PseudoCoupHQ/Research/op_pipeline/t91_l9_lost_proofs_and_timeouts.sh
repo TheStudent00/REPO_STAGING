@@ -21,7 +21,7 @@
 #           and the three printed transcripts beside them.
 set -uo pipefail
 
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 
 echo "[1/3] the 245 lost proofs"
 python3 t91_lost_proofs.py 2>&1 | tee t91_lost_proofs_printed.txt

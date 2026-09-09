@@ -5,8 +5,8 @@
 # own model, with the caller-extension rule applied -- the values in
 # motion at the input the solver picked.
 set -u
-M=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
-G=/projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+M=PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
+G=PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 export PATH=/opt/cargo/bin:$PATH
 echo "[1/2] the two c rows the guarded posing still disproves"
 cd "$M" && python3 mode.py diagnose c E01589 E01596

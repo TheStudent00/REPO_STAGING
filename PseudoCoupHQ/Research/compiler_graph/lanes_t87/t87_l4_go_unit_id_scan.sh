@@ -9,7 +9,7 @@
 # operator field; the scan is over unit ids only.
 set -u
 say() { echo; echo "======== $* ========"; }
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 say "[1/3] files that mention a go unit id"
 grep -l '"go/op_' *.json 2>/dev/null | head -40
@@ -23,12 +23,12 @@ done
 say "[3/3] and how many go probes the manifest declares"
 python3 - <<'PY'
 import json
-doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                      'probe_manifest2_go.json'))
 print("   probe_manifest2_go.json count : %s" % doc.get("count"))
 probes = doc.get("probes")
 print("   probes entries                : %s" % (len(probes) if hasattr(probes, '__len__') else '-'))
-doc1 = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+doc1 = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                       'probe_manifest_go.json'))
 p1 = doc1.get("probes")
 print("   probe_manifest_go.json probes : %s" % (len(p1) if hasattr(p1, '__len__') else '-'))

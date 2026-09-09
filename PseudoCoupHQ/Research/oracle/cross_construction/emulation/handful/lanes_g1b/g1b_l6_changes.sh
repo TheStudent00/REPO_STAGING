@@ -20,6 +20,6 @@
 # task o2's rule lists, plus one `probe_manifest_<lang>.json` per
 # target; task g1's own lookup step peaked at 82,744 kB.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/1] task g1b: handful.py changes3c"
 python3 $H/handful/handful.py changes3c

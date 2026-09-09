@@ -385,7 +385,7 @@ which task 24 read).
 
 ```
 $ podman exec -e DWARF_T27_OUT=/persist/dwarf_typed_key_t27.json sandbox-runner \
-    bash -lc 'cd /projects/PseudoCoupHQ/Research/op_pipeline && timeout 900 python3 dwarf_typed_key_t27.py'
+    bash -lc 'cd PseudoCoupHQ/Research/op_pipeline && timeout 900 python3 dwarf_typed_key_t27.py'
 wrote /persist/dwarf_typed_key_t27.json
 php    add_function                                             READ     zval*,zval*
 php    ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER                  REFUSED  None

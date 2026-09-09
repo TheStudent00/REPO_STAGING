@@ -2,7 +2,7 @@
 # TASK 96 round 19, lane 8.  The transcripts the log pastes, each one a
 # command the log verifier can re-run.
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "[1/8] the compiled population and its %r15 count"
 python3 -c "

@@ -11,14 +11,14 @@
 # after the parse. The task's whole bound is the same 4 GB.
 set -euo pipefail
 echo "[1/2] task h1: the ten cells, out of model_table.json"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 python3 - <<'PY'
 import json
 import os
 import resource
 import sys
 
-MODEL = ("/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
+MODEL = ("PseudoCoupHQ/Research/oracle/arch_opcodes/model/"
          "model_table.json")
 ABORT_KB = 4 * 1024 * 1024
 

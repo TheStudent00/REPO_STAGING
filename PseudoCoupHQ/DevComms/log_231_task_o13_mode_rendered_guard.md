@@ -30,7 +30,7 @@ a plain-words reading beside a literal. No gloss appears without its
 literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
 the instance. Prose names host paths.
 
 ---
@@ -438,7 +438,7 @@ Nine lanes, all `done`, all exit 0. **LITERAL**, `airlock --instance
 o13 status`: `batch complete`, `9/9 lanes done   weight 29/29`. Lane
 scripts under
 `PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode/lanes_o13/`,
-logs under `~/AirlockRuns/o13/agent/logs/`:
+logs under `<runs>/o13/agent/logs/`:
 
 | lane | log file | what it did |
 |---|---|---|
@@ -583,12 +583,12 @@ no` — copied from `o7.conf` per the brief.
 (two passes: `o13_l10_verify_log.sh` found one DIFFERS — the `grep -c
 exempt` command in section 9 used bare filenames, which do not
 resolve from the verifier's own working directory,
-`/projects/PseudoCoupHQ`; section 9 was fixed to full paths from that
+`PseudoCoupHQ`; section 9 was fixed to full paths from that
 directory and re-verified by `o13_l12_verify_log2.sh`, below, run over
 this file as it stood through section 11.)
 
 **LITERAL**,
-`~/AirlockRuns/o13/agent/logs/20260907T133720Z__o13_l12_verify_log2.sh.log`:
+`<runs>/o13/agent/logs/20260907T133720Z__o13_l12_verify_log2.sh.log`:
 
 ```
 log_231_task_o13_mode_rendered_guard.md: 22 claims extracted

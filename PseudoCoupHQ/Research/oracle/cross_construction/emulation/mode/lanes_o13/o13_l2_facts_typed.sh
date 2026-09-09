@@ -8,8 +8,8 @@
 # This lane also adds the no-guard BASELINE probe, so the cost of each
 # spelling is measured rather than judged.
 set -u
-M=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
-G=/projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+M=PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
+G=PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 export PATH=/opt/cargo/bin:$PATH
 echo "[1/2] the outcome spellings, measured, with the baseline"
 cd "$M" && python3 mode.py facts

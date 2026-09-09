@@ -14,8 +14,8 @@ OVERLAY=/sources/golang_src/src/internal/buildcfg/zbootstrap.go=/usr/lib/go-1.26
 echo "[1/5] the other two generated files the tree lacks in cmd/compile's closure are empty package clauses (not overlaid):"
 cat /usr/lib/go-1.26/src/cmd/internal/objabi/zbootstrap.go; echo; cat /usr/lib/go-1.26/src/internal/runtime/sys/zversion.go; echo
 echo "[2/5] build"
-gofmt -l /projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go && echo "gofmt: listed files above need formatting (none = clean)"
-cp /projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go /work/o6/mod/main.go
+gofmt -l PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go && echo "gofmt: listed files above need formatting (none = clean)"
+cp PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go /work/o6/mod/main.go
 cd /work/o6/mod
 printf 'module o6\n\ngo 1.26\n' > go.mod
 go build -o /work/o6/oracle . ; echo "build exit: $?"

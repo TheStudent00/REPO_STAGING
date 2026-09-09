@@ -12,7 +12,7 @@
 #
 # THE BUDGET: 4096 MB and 1800 s per unit, one slice.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "======== [1/2] finalize -- term66_state.json written from the store ========"
 python3 term97_walk.py finalize
 echo "exit $?"

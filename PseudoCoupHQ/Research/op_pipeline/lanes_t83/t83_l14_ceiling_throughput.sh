@@ -13,7 +13,7 @@
 # the stored shard, so this lane also re-tests that the ceiling
 # changes no record, on a c shard this time rather than a go one.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 for mb in 4096 1024 512; do
   echo
   echo "======== [$mb MB] op_units2_c_c0002.json ========"

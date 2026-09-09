@@ -329,7 +329,7 @@ a sandbox run — no shell needed, no waiting on the owner.**
   the script name; the LOG name embeds a timestamp and cannot be
   predicted, which is why the status file exists.
 - Read products from `agent/out/`, logs from `agent/logs/`.
-- Scripts see `/projects/PseudoCoup_v6` and `/projects/PseudoCoup_v5`
+- Scripts see `PseudoCoup_v6` and `PseudoCoup_v5`
   READ-ONLY (no copy step, originals unalterable). Products go to
   `/out` and THE SESSION places them into the real tree — the
   session is the write path, which is why read-only suffices even

@@ -3,8 +3,8 @@
 # Every block below is one command and its output, printed here so the
 # log's transcripts are the lane's own and not hand-tidied.
 set -u
-R=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
-OP=/projects/PseudoCoupHQ/Research/op_pipeline
+R=PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust
+OP=PseudoCoupHQ/Research/op_pipeline
 export PATH=/opt/cargo/bin:$PATH
 
 run() {

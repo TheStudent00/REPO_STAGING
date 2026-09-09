@@ -18,8 +18,8 @@ sed -n 20,30p /sources/golang_src/src/internal/buildcfg/cfg.go
 echo "  --- image's zbootstrap.go ---"
 cat /usr/lib/go-1.26/src/internal/buildcfg/zbootstrap.go
 echo "[2/4] gofmt the artifact in place, then build"
-gofmt -w /projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go
-cp /projects/PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go /work/o6/mod/main.go
+gofmt -w PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go
+cp PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go /work/o6/mod/main.go
 cd /work/o6/mod
 printf 'module o6\n\ngo 1.26\n' > go.mod
 go build -o /work/o6/oracle . ; echo "build exit: $?"

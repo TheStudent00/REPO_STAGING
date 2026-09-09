@@ -10,12 +10,12 @@
 # name, so this is a flag for the coordinator.
 set -euo pipefail
 echo "[1/1] task m1: the one-operand BINARY rows"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 - <<'PY'
 import json
 import sys
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import model_table as M
 
 table = M.R.REFERENCE.opcode_table

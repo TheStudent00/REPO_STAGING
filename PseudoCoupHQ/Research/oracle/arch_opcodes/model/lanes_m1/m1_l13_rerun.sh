@@ -19,7 +19,7 @@
 # MEMORY BOUND: 16g resident, named abort ABORT_MEMORY_M1.
 set -euo pipefail
 echo "[1/4] task m1: model_table.py sweep"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py sweep
 echo "[2/4] task m1: model_table.py edges"
 python3 model_table.py edges

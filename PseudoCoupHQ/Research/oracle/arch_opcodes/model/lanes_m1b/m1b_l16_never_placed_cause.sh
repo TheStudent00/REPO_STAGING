@@ -14,7 +14,7 @@
 # and dropped. Peak RSS printed.
 set -euo pipefail
 echo "[1/2] task m1b: the never-placed eight, measured over 332 shards"
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 - <<'PY'
 import collections
 import json
@@ -22,9 +22,9 @@ import resource
 import sys
 import time
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline/lean")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline/lean")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes")
 import term as T
 import canonical_form as CF
 import term66_run as TR
@@ -37,7 +37,7 @@ def peak_kb():
     return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
 
 
-document = json.load(open("/projects/PseudoCoupHQ/Research/oracle/"
+document = json.load(open("PseudoCoupHQ/Research/oracle/"
                           "arch_opcodes/model/model_table.json"))
 wanted = []
 for record in document["counts"]["coverage"]:

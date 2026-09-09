@@ -783,7 +783,7 @@ ls: cannot access '/home/<user>/Programming': No such file or directory
 -- container-only paths that must exist:
   /persist                     present
   /sources                     present
-  /projects/PseudoCoupHQ       present
+  PseudoCoupHQ       present
 === /persist/gosrc ===
 /persist/gosrc
 PRESENT
@@ -845,7 +845,7 @@ and anything under `Airlock` except the gitignored
 
 All lanes ran in the `t72` instance except `t72_l0_pathcheck.sh`, which
 ran in the default instance because that is where `sandbox-persist` is
-mounted. Logs: `~/AirlockRuns/t72/agent/logs/`, and
+mounted. Logs: `<runs>/t72/agent/logs/`, and
 `Airlock/agent/logs/` for lane 0.
 
 | lane | exit | wall clock |

@@ -23,13 +23,13 @@
 # MEMORY BOUND: 4 GB resident, named abort ABORT_MEMORY_H2; the guard
 # reads json files of a few hundred kB and reports its own peak.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
-P=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+P=PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode
 echo "[1/3] task h2: the guard over the three json this task's own programs write"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     $H/handful2.json $H/handful2_sources.json $H/handful2_classifier.json
 echo "[2/3] task h2: the guard over task o8's own results beside this task's scratch copy"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     $P/per_opcode_results.json $H/o8_regression/per_opcode_results.json \
     2>&1 | grep -E "^(operator inventory|PASS|FAIL)" || true
 echo "[3/3] task h2: grep -c exempt over every file this task added"
@@ -37,5 +37,5 @@ grep -c exempt $H/o8_regression.py $H/classifier_probe.py $H/handful.py \
     $H/handful2.md $H/lanes_h2/h2_l1_classifier.sh \
     $H/lanes_h2/h2_l2_sources.sh $H/lanes_h2/h2_l3_run.sh \
     $H/lanes_h2/h2_l4_o8_regression.sh \
-    /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
+    PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py
 echo "done"

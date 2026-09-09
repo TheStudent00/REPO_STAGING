@@ -17,7 +17,7 @@ in the lane-log folder the sandbox itself sees as `/logs` and the host
 sees as `Airlock/agent/logs`. Every attribution below names
 its lane log file. The transcripts in §7 are pasted from
 `/logs/20260905T140949Z__t98_l9_transcript.sh.log`, which ran each
-command from `/projects/PseudoCoupHQ` — the same working directory
+command from `PseudoCoupHQ` — the same working directory
 `check_conventions_log_claims.py --verify` uses, so every one of them
 re-runs.
 
@@ -277,7 +277,7 @@ $ grep -n "does not converge for 44 of the 30,324" DevComms/log_202_task97_term_
 
 Everything in this section is pasted from lane 9,
 `/logs/20260905T140949Z__t98_l9_transcript.sh.log`. Each command runs from
-`/projects/PseudoCoupHQ`.
+`PseudoCoupHQ`.
 
 ### 7.1 The spelling guard — unmodified, ONE process, every artifact
 

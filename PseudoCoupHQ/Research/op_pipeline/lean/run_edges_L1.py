@@ -32,9 +32,9 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import term_to_lean  # noqa: E402
 
-LEANDIR = "/projects/PseudoCoupHQ/Research/op_pipeline/lean"
+LEANDIR = "PseudoCoupHQ/Research/op_pipeline/lean"
 PROJ = os.path.join(LEANDIR, "archproof")
-POOL5 = "/projects/PseudoCoupHQ/Research/op_pipeline/the_pool5.json"
+POOL5 = "PseudoCoupHQ/Research/op_pipeline/the_pool5.json"
 SELECTED = os.path.join(LEANDIR, "L1_edges_selected.json")
 ABORT_MEMORY_L1_KB = 6 * 1024 * 1024
 PER_THEOREM_SECONDS = 900

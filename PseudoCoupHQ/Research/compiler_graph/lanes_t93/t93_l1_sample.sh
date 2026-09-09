@@ -36,8 +36,8 @@
 # This lane groups nothing and pairs nothing.  It counts bytes.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
-GR=/projects/PseudoCoupGraphs
+CG=PseudoCoupHQ/Research/compiler_graph
+GR=PseudoCoupGraphs
 cd "$CG"
 
 say "[1/6] the instance, and that the graphs mount is present and writable"
@@ -143,7 +143,7 @@ done
 
 say "[6/6] who names a graph path in live code (lane scripts are records, not live)"
 grep -rn "graph_go\.json\|graph_cpp\.json\|graph_rust\.json\|graph_swift\.json\|coverage_go2\.json\|coverage_c_and_cpp\.json\|coverage_extended\.json\|super_ops_go\.json\|super_ops_cpp\.json\|variant_connections_\|\"diaries\|/diaries" \
-  --include=*.py /projects/PseudoCoupHQ/Research/compiler_graph /projects/PseudoCoupHQ/Research/op_pipeline \
+  --include=*.py PseudoCoupHQ/Research/compiler_graph PseudoCoupHQ/Research/op_pipeline \
   | grep -v "^.*lanes" | sed 's/^/   /' | head -60
 echo
 echo "======== lane 1 finished ========"

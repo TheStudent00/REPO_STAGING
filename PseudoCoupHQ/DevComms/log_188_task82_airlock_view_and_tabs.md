@@ -18,7 +18,7 @@ already measured problems rather than new investigations.
   fix adds a one-line header, on both the shell and the python side,
   naming any OTHER instance that has a lane queued or running. It
   reuses the exact instance-discovery Airlock's own `doctor` command
-  already had (`instances/*.conf` plus `~/AirlockRuns/*`) rather than
+  already had (`instances/*.conf` plus `<runs>/*`) rather than
   re-deriving that list a second time. Proved with a second instance
   (`t82`) brought up, a 60-second lane run in it, and both views read
   while it ran, then again after it finished.
@@ -66,7 +66,7 @@ never looks at `t82`'s own `agent/status`.
 **Discovery is reused, not duplicated.** `airlock doctor` already had
 the two-source scan for what instances exist:
 `instances/*.conf` (an instance's settings, inside the checkout) and
-`~/AirlockRuns/*` (an instance's run tree, outside the checkout — an
+`<runs>/*` (an instance's run tree, outside the checkout — an
 instance can exist with no conf file at all, since every key has a
 default, and then it leaves a trace only under `~/AirlockRuns`).
 
@@ -85,7 +85,7 @@ default, and then it leaves a trace only under `~/AirlockRuns`).
   identically.
 - **Shell side.** `Airlock/instance.sh`'s existing
   `airlock_instance_list()` (previously only `instances/*.conf` plus
-  `sandbox`) now also scans `~/AirlockRuns/*`, so it matches the
+  `sandbox`) now also scans `<runs>/*`, so it matches the
   python side's two-source discovery exactly. A new function,
   `airlock_other_busy_instances(root, current)`, walks that list; for
   each OTHER instance it runs `airlock_instance_load` in a SUBSHELL
@@ -142,17 +142,17 @@ LITERAL — the `t82` instance's OWN view,
 `AIRLOCK_INSTANCE=t82 bash progress.sh`:
 
 ```
-== instance t82  (runner t82-runner, agent ~/AirlockRuns/t82/agent) ==
+== instance t82  (runner t82-runner, agent <runs>/t82/agent) ==
 
 == batch summary ==
-  no batch manifest present (~/AirlockRuns/t82/agent/batch.json) — showing all lanes below
+  no batch manifest present (<runs>/t82/agent/batch.json) — showing all lanes below
 
-== queued (waiting in ~/AirlockRuns/t82/agent/drop) ==
+== queued (waiting in <runs>/t82/agent/drop) ==
   t82_sleep60b.sh
 
 == running ==
   t82_sleep60b.sh   started 2026-09-04T02:56:05+00:00
-    log: ~/AirlockRuns/t82/agent/logs/20260904T025605Z__t82_sleep60b.sh.log
+    log: <runs>/t82/agent/logs/20260904T025605Z__t82_sleep60b.sh.log
     [3/6] sleeping 10s
     last: [3/6] sleeping 10s
 ```
@@ -400,7 +400,7 @@ neither blocking the two fixes above:
 | file | change |
 |---|---|
 | `Airlock/airlock` | `known_instances(paths)` (new, the one discovery scan); `other_busy_instances_line(paths)` (new); `Doctor.check_instances` refactored to call `known_instances` instead of re-listing; `_render_status` prints the header |
-| `Airlock/instance.sh` | `airlock_instance_list()` extended to scan `~/AirlockRuns/*`; `airlock_other_busy_instances(root, current)` (new) |
+| `Airlock/instance.sh` | `airlock_instance_list()` extended to scan `<runs>/*`; `airlock_other_busy_instances(root, current)` (new) |
 | `Airlock/progress.sh` | `print_other_instances()` (new), called from `snapshot()` |
 | `Airlock/DevComms/log_004_cross_instance_status_header.md` | new — Airlock's own record |
 | `Airlock/instances/t82.conf` | new, gitignored, per-machine — the proof instance's config |

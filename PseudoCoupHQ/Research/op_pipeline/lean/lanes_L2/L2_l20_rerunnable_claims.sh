@@ -8,8 +8,8 @@
 set -u
 
 TOTAL=8
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
+PIPE=PseudoCoupHQ/Research/op_pipeline
 export HOME=/work/L2home
 cd "$LEANDIR" || exit 1
 

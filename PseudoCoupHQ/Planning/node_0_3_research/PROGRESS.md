@@ -528,6 +528,51 @@ status: living
   `DevComms/note_server_session_start_here.md` and CLAUDE.md and reached no
   stop rule; the law and all nine briefs of this round are now in the repo
   at `Research/LAW.md` and `Research/briefs/`. And one breach, self-reported:
-  ap2 deleted one status file under `~/AirlockRuns/ap2/` while renaming a
+  ap2 deleted one status file under `<runs>/ap2/` while renaming a
   lane (its log and `.done` entry survive); the LAW now states the
   never-delete rule with status files named. Verifier 20 claims, 0 differ.
+- 2026-09-09 (task ap3, log_245, on the tower): AutoPoly loop, THIRD PASS.
+  Proved on all four: 144 → 151 cells, 64.2% → 64.3% of attested rows; on
+  none: 66 → 56 (11.4%); runs carrying a cause 324 → 293 of 1,012; zero
+  regressions. What moved: a whole 128-bit VECTOR ARRIVAL now has a holder
+  (two 64-bit parameters): 31 of 40 proved, the other 9 are
+  register-to-register copies whose compiled body is EMPTY (`movaps`,
+  `movapd`, `movdqa`: the identity, a pre-existing cause). The x87 cells:
+  c's `long double` PROBED and LANDS (`faddp %st,%st(1)`), the 30 x87
+  arithmetic cells now render, compile and carve to the x87 opcode on c —
+  and prove nothing, because the canonical form names no ANSWER HOME for a
+  value in st(0) and no ARRIVAL for a value on the stack: "this unit's own
+  code names no register the answer is left in". That is the same question
+  as the arrival-contract group (38 places, 12 cells, unchanged), now
+  measured on the answer side: THE CANONICAL FORM'S CONTRACT KNOWS ONLY
+  REGISTER FAMILIES. `model_translate.py check` un-blocked (one line;
+  259 / 172 STATED / 87 REFUSED exactly as stored; the lane restored the
+  check's overwritten files byte-identical). h2's fix 1 measured alone on
+  1,012 runs: 15 sources differ, 9 verdicts differ, NO proof moves either
+  way; kept on. One new `sat`: `idiv` gpr_one 16 on rust at IN_0 = 0x8000,
+  the signed-division overflow edge, reached by the solver inside the same
+  ceiling. Verifier 32 claims, 0 differ. Awaiting the owner: (1) the contract for
+  values not in a register (derived arrivals; the x87 stack; the empty-body
+  identity copies), one ruling covering 38 + 92 + 23 runs; (2) whether cpp
+  becomes a fifth target (structural: changes what "all four" counts).
+- 2026-09-09 (task ap4, log_246, on the tower): AutoPoly loop, FOURTH PASS,
+  carrying the owner's ruling "a place may be stated by a constraint": derived
+  arrivals as a REGION in the driver's check (`IN-0 = SignExt(IN-1)` for
+  the divides; `gpr_same` binds one arrival; an immediate is a constant),
+  the empty compiled body as the IDENTITY (33 of 34 places proved), and the
+  x87 stack read in the driver over the reference's own state (the ledger's
+  `fstpt`/`fldt` edges written; `answer_of` and `align_by_row` cannot read
+  an x87 value and were not named by the brief, so the x87 population,
+  114 runs / 6,284 rows, is UNCHANGED and remains the next closer's).
+  Proved on ALL FOUR: 151 → 162 cells, 64.3% → 79.7% of attested ledger
+  rows; on none: 56 → 20 cells (9.4%); runs with a cause 293 → 237; zero
+  regressions; the arrival-contract group 38 → 0 (7 real derived-arrival
+  places, 4 DISPROVED with the region printed, 3 PROVED; the other 31 were
+  halves of a flags place the driver already refused unhalved). Per target
+  proved: c 204, rust 170, go 177, swift 163 of 253. Three guards unchanged
+  (check 259/172/87; o8 243/197/155/216; h2 handful 24/24). Verifier 34
+  claims, 0 differ. New for the coordinator: an `imm_*` cell's key carries
+  no immediate, so `mov` imm_gpr disproves against corpus rows with a
+  different constant — the immediate is an INPUT of the mapping and the
+  sweep bakes `$0x3` in; the next closer makes it symbolic. cpp as a fifth
+  target: task ex1 (starting).

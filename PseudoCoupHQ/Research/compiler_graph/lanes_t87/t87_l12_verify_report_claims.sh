@@ -10,14 +10,14 @@
 # COUNTED, to prove the grouping did not use them.
 set -u
 say() { echo; echo "======== $* ========"; }
-cd /projects/PseudoCoupHQ/Research/compiler_graph
+cd PseudoCoupHQ/Research/compiler_graph
 
 say "[1/3] variants spanning both source languages of the one compiler"
 python3 - <<'PY'
 import json
 for path in ("variant_connections_c_and_cpp.json",
              "variant_connections_extended.json"):
-    d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/' + path))
+    d = json.load(open('PseudoCoupHQ/Research/compiler_graph/' + path))
     rows = d["variants"]
     both = [r for r in rows if len(r["languages"]) > 1]
     print("   %-40s %5d variants, %4d span more than one language"
@@ -30,7 +30,7 @@ import json
 for path in ("variant_connections_go.json",
              "variant_connections_c_and_cpp.json",
              "variant_connections_extended.json"):
-    d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/' + path))
+    d = json.load(open('PseudoCoupHQ/Research/compiler_graph/' + path))
     rows = d["variants"]
     sizes = sorted((r["member_count"] for r in rows), reverse=True)
     ones = sum(1 for s in sizes if s == 1)
@@ -41,7 +41,7 @@ PY
 say "[3/3] the eight exclusive transitions of the worked example, backing recounted"
 python3 - <<'PY'
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+d = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                    'variant_connections_c_and_cpp.json'))
 row = d["variants"][0]
 ex = row["exclusive_transition_examples"]
@@ -51,7 +51,7 @@ print("   variant %s: %d examples printed, %d of them backed by a static "
 labels = set(m["operator"] for m in row["members"])
 print("   distinct display labels among its members: %d" % len(labels))
 print("   go: mixed-label variants and the widest-spread label, recounted")
-g = json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+g = json.load(open('PseudoCoupHQ/Research/compiler_graph/'
                    'variant_connections_go.json'))
 mixed = 0
 spread = {}

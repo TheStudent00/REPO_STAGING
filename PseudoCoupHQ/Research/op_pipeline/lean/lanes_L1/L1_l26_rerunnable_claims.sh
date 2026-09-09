@@ -4,7 +4,7 @@
 # claim was prose or an attribution with nothing beside it. These are the
 # same facts, stated as commands that reproduce them.
 set -u
-cd /projects/PseudoCoupHQ || exit 1
+cd PseudoCoupHQ || exit 1
 echo '[1/5] the ten, by outcome'
 python3 -c "
 import json

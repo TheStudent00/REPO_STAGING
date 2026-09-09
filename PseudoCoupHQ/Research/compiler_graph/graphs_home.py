@@ -36,7 +36,7 @@ HOW THE FOLDER IS FOUND, in order, first hit wins
   1. the environment variable PSEUDOCOUP_GRAPHS, if it names a folder
      that exists.  This is how a lane inside Airlock points at the
      container's own mount without a host path in its text;
-  2. /projects/PseudoCoupGraphs, the Airlock mount, when it exists;
+  2. PseudoCoupGraphs, the Airlock mount, when it exists;
   3. a sibling of this repository's working tree, `../PseudoCoupGraphs`;
   4. `PseudoCoupGraphs`.
 

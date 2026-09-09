@@ -8,7 +8,7 @@
 # 251 MB, on smaller documents). Peak RSS printed by the script.
 set -euo pipefail
 echo "[1/2] task m1b: model_table.py assemble"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py assemble
 echo "[2/2] task m1b: model_table.py report"
 python3 model_table.py report

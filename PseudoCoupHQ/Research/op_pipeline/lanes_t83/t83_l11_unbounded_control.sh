@@ -14,7 +14,7 @@
 # The three shards peaked at 440,308 kB under the bound, so running
 # them unbounded risks nothing.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 rm -rf /work/t83_check_store /work/t83_check_state.json
 echo "[1/1] the same three shards, ceiling 30000 MB (above the 8 GB cgroup: no bound bites)"
 python3 term66_bounded.py 30000 100000 --check \

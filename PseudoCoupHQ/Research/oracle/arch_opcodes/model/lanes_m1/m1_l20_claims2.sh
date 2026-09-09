@@ -7,12 +7,12 @@
 # This lane runs the same guard with absolute paths, and turns the
 # 83-cell attribution block into a command with output.
 set -euo pipefail
-M=/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
-cd /projects/PseudoCoupHQ
+M=PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ
 echo "[1/1] task m1: the two commands, from the repo root"
 
-echo "\$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py $M/model_table.json $M/model_table_rows.json $M/model_table_attest.json $M/model_table_edges.json"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+echo "\$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py $M/model_table.json $M/model_table_rows.json $M/model_table_attest.json $M/model_table_edges.json"
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
   "$M/model_table.json" "$M/model_table_rows.json" \
   "$M/model_table_attest.json" "$M/model_table_edges.json" || true
 echo ""

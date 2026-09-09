@@ -6,7 +6,7 @@
 # only in the order of a commutative operator's arguments is now
 # rebuilt rather than refused.
 set -u
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
 echo "[1/1] smoke again, three targets"
 python3 - <<'PY'
 import resource, subprocess, sys

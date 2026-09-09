@@ -4,8 +4,8 @@
 # flags, carve, and gate against the x unit -- twice: task o7's own
 # first posing, unchanged, and the guarded posing.
 set -u
-M=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
-G=/projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+M=PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
+G=PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 export PATH=/opt/cargo/bin:$PATH
 echo "[1/2] the c re-run"
 cd "$M" && python3 mode.py run c

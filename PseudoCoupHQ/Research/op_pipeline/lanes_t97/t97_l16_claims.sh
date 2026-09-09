@@ -5,8 +5,8 @@
 # unverifiable.  Task 94 scored 19 matched of 32, with 28%
 # unverifiable; the gate for this round is to beat that.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 check_conventions_log_claims.py --verify \
-  --json /projects/PseudoCoupHQ/Research/op_pipeline/claims97b.json \
-  /projects/PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md
+  --json PseudoCoupHQ/Research/op_pipeline/claims97b.json \
+  PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md
 echo "exit $?"

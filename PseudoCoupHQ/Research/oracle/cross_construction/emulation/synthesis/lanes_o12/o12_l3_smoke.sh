@@ -2,7 +2,7 @@
 # o12 lane 3 -- three targets only, to see the search work end to end
 # before the sample of thirty is spent on it.
 set -u
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
 echo "[1/1] smoke, three targets"
 python3 - <<'PY'
 import resource, subprocess, sys

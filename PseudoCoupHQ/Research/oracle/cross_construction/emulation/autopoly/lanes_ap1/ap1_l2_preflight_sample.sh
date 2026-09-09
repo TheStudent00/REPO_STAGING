@@ -20,7 +20,7 @@
 # THE STORE IS INCREMENTAL: the twenty runs this lane writes stay on
 # `autopoly_runs.jsonl` and the run lane resumes from run twenty-one.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 echo "[1/3] the toolchains this loop compiles with"
 clang --version | head -1
 rustc --version

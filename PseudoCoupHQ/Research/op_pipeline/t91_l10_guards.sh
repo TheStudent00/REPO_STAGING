@@ -14,7 +14,7 @@
 # Product: t91_guard_printed.txt in the project tree.
 set -uo pipefail
 
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 
 files=$(ls t91_populations.json t91_audit.json t91_sample.json \
            t91_reference_evidence.json t91_lost_proofs.json t91_timeouts.json 2>/dev/null)

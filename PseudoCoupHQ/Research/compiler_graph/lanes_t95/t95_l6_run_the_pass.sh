@@ -40,8 +40,8 @@
 # inventory word never sits in a row-structure position.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
-GR=/projects/PseudoCoupGraphs
+CG=PseudoCoupHQ/Research/compiler_graph
+GR=PseudoCoupGraphs
 export HOME=/work/t95home
 mkdir -p "$HOME/Programming"
 ln -sfn /sources "$HOME/Programming/Sources"
@@ -49,14 +49,14 @@ cd "$CG"
 
 say "[1/8] the program compiles, and the guard is UNMODIFIED"
 python3 -m py_compile graph.py && echo "   graph.py compiles"
-md5sum /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
-git -C /projects/PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py | sed 's/^/   git says: /'
+md5sum PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+git -C PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py | sed 's/^/   git says: /'
 echo "   (no line above means git reports no change to the guard)"
 
 say "[2/8] rust -- the string literals its inline-assembly path actually carries"
 python3 - <<'PY'
 import re, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph as G
 region = G.REGIONS["rust"]
 shown = 0
@@ -98,7 +98,7 @@ python3 graph.py arch-opcode-nodes --graph "$GR/graph_swift.json" \
 say "[7/8] the four-state marking, per region, every count with its population"
 python3 - <<'PY'
 import json, os, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 ORDER = ("names_its_opcode", "one_static_hop", "emits_opcode_dynamic",
          "emits_nothing")
@@ -137,7 +137,7 @@ PY
 say "[8/8] the sites whose hop did NOT resolve, named one by one"
 python3 - <<'PY'
 import json, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 for lang in ("go", "cpp", "rust", "swift"):
     doc = json.load(open(graphs_home.path("arch_opcode_nodes_%s.json" % lang)))

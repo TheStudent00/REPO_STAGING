@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 # Run the anchor step (step 4+5) for java
 python3 sem_anchored.py --anchor-report

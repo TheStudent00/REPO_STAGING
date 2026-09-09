@@ -10,14 +10,14 @@
 # MEMORY BOUND: 16 GB resident, named abort ABORT_MEMORY_M1B.
 set -euo pipefail
 echo "[1/3] task m1b: model_table.py assemble"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py assemble
 echo "[2/3] task m1b: model_table.py report"
 python3 model_table.py report
 echo "[3/3] task m1b: the three, with the cause now quoted"
 python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 for r in d['counts']['coverage']:
     if r['category'] != 'attested at a form the sweep does not spell':
         continue

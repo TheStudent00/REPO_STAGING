@@ -27,8 +27,8 @@
 # reads `single_opcode_units.json` (1.6 MB) and the canon40 term store
 # through `stream_store`; peak resident is printed at the end.
 set -euo pipefail
-LEAN=/projects/PseudoCoupHQ/Research/op_pipeline/lean
-ART=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+LEAN=PseudoCoupHQ/Research/op_pipeline/lean
+ART=PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 BACK=/work/ap3_l1_before
 mkdir -p "$BACK/archproof/Archproof"
 
@@ -45,7 +45,7 @@ echo ""
 echo "[3/6] the stored tally, off the artifact as it stands"
 python3 - <<'PY'
 import json
-d = json.load(open("/projects/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
+d = json.load(open("PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json"))
 tally = {}
 for row in d["rows"]:
     tally[row["outcome"]] = tally.get(row["outcome"], 0) + 1

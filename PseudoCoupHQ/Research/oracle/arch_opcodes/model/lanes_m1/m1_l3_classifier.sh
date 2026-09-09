@@ -6,12 +6,12 @@
 # 16g, named abort ABORT_MEMORY_M1; one shard held at a time.
 set -euo pipefail
 echo "[1/1] task m1: classify_line over three shards"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 - <<'PY'
 import json
 import sys
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model")
+sys.path.insert(0, "PseudoCoupHQ/Research/oracle/arch_opcodes/model")
 import model_table as M
 
 M._install_gpr_widths()

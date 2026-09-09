@@ -9,6 +9,6 @@
 # 8g. Peak RSS is printed by the script itself.
 set -euo pipefail
 echo "[1/1] task m1: model_table.py sweep"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py sweep
 echo "[1/1] done"

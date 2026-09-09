@@ -6,7 +6,7 @@
 # skipped, and the state file records what has been done. Re-submitting
 # this lane after any stop continues where it left off.
 set -euo pipefail
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 OUT="$REPO/diaries/go"
 mkdir -p "$OUT" /work/probe /work/out
 printf 'module probe\n\ngo 1.28\n' > /work/probe/go.mod
@@ -14,7 +14,7 @@ printf 'module probe\n\ngo 1.28\n' > /work/probe/go.mod
 python3 - <<'PY'
 import json, os, shlex, subprocess, sys, time
 
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 OUT = os.path.join(REPO, 'diaries', 'go')
 STATE = os.path.join(REPO, 't72', 'diary_state.json')
 
@@ -78,5 +78,5 @@ echo "--- inventory ---"
 echo "diary files : $(ls "$OUT" | wc -l)"
 echo "total bytes : $(du -sb "$OUT" | cut -f1)"
 du -sh "$OUT"
-df -h /projects/PseudoCoupHQ | tail -1
+df -h PseudoCoupHQ | tail -1
 echo "DONE t72_l4"

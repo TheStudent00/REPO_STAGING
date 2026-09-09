@@ -2,7 +2,7 @@
 # t98 lane 9 -- THE TRANSCRIPT (lane 8 again, with the varying lines filtered) THE LOG PASTES.
 #
 # Every claim log_203 makes that can be reproduced has its command here,
-# run from `/projects/PseudoCoupHQ` (the working directory
+# run from `PseudoCoupHQ` (the working directory
 # `check_conventions_log_claims.py --verify` uses), with its output
 # printed underneath.  The log carries these blocks verbatim, so the
 # verifier re-runs exactly what is written down.
@@ -13,7 +13,7 @@
 # memory figures are claimed separately, from the lane logs that measured
 # them, and those claims are attributions rather than transcripts.
 set -u
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 
 show () {
   echo

@@ -16,5 +16,5 @@
 # after every cell.
 set -euo pipefail
 echo "[1/2] task h2: handful.py sources2"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py sources2
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py sources2
 echo "[2/2] done"

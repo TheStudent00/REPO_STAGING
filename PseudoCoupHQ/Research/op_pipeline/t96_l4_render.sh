@@ -3,7 +3,7 @@
 # the canonical form, and again with the seventh block kind, and gate
 # each against the unit's OWN ship body.
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "[1/3] render and gate"
 python3 t96_onto_canonical_form.py 2>&1 | tail -40

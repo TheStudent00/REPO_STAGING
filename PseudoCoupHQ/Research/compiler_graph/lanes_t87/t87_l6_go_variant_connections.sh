@@ -35,8 +35,8 @@
 # own output on failure.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+REPO=PseudoCoupHQ/Research/compiler_graph
+PIPE=PseudoCoupHQ/Research/op_pipeline
 cd "$REPO"
 
 say "[1/5] the tools parse (nothing of this has been run on the host)"
@@ -45,7 +45,7 @@ python3 -m py_compile graph.py t81/run_with_peak.py && echo "   py_compile exit=
 say "[2/5] the identity this lap groups by, printed from the code itself"
 python3 - <<'PY'
 import sys
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/compiler_graph')
+sys.path.insert(0, 'PseudoCoupHQ/Research/compiler_graph')
 import graph
 print("   VARIANT_IDENTITY_STATED:")
 print("     " + graph.VARIANT_IDENTITY_STATED)
@@ -61,7 +61,7 @@ say "[3/5] the SAMPLE -- 50 go diaries, every bound the full pass will use"
 rm -rf /work/var_sample && mkdir -p /work/var_sample
 python3 - <<'PY'
 import os
-source = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/go'
+source = 'PseudoCoupHQ/Research/compiler_graph/diaries/go'
 names = sorted(n for n in os.listdir(source) if n.endswith('.txt'))
 for name in names[:50]:
     os.symlink(os.path.join(source, name), os.path.join('/work/var_sample', name))

@@ -33,8 +33,8 @@
 # once, per single unit, only where a unit is shown whole.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+REPO=PseudoCoupHQ/Research/compiler_graph
+PIPE=PseudoCoupHQ/Research/op_pipeline
 cd "$REPO"
 
 say "[1/7] the image, and that the analysis packages import"
@@ -58,7 +58,7 @@ say "[3/7] one unit record whole, per language -- what fields exist"
 python3 - <<'PY'
 import json
 for lang in ("go", "c", "cpp"):
-    doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+    doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                          'canon39_wrapped_%s.json' % lang))
     units = doc["units"]
     print("   %-4s units in canon39_wrapped_%s.json : %d" % (lang, lang, len(units)))
@@ -69,7 +69,7 @@ PY
 say "[4/7] the machine-form fields of ONE unit, shown whole"
 python3 - <<'PY'
 import json
-doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                      'canon39_wrapped_cpp.json'))
 unit = doc["units"]["cpp/op_0"]
 for field in ("lang", "n", "operator", "population", "outcome",
@@ -106,7 +106,7 @@ IDS = {
                   for r in (u.get("ledger") or [])]],
 }
 for lang in ("go", "c", "cpp"):
-    doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+    doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                          'canon39_wrapped_%s.json' % lang))
     units = doc["units"]
     print("   --- %s, population %d units" % (lang, len(units)))
@@ -121,7 +121,7 @@ for lang in ("go", "c", "cpp"):
 # and the two clang languages together, since they share one compiler
 docs = {}
 for lang in ("c", "cpp"):
-    docs.update(json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+    docs.update(json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                               'canon39_wrapped_%s.json' % lang))["units"])
 print("   --- c and cpp jointly, population %d units" % len(docs))
 for name in sorted(IDS):
@@ -139,10 +139,10 @@ say "[6/7] do the diary probe names join to unit ids, and what about regen"
 python3 - <<'PY'
 import json, os
 def stems(d):
-    p = '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/' + d
+    p = 'PseudoCoupHQ/Research/compiler_graph/diaries/' + d
     return sorted(n[:-4] for n in os.listdir(p) if n.endswith('.txt'))
 for lang, folder in (("go", "go"), ("c", "c"), ("cpp", "cpp")):
-    doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+    doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                          'canon39_wrapped_%s.json' % lang))
     units = doc["units"]
     names = stems(folder)
@@ -151,11 +151,11 @@ for lang, folder in (("go", "go"), ("c", "c"), ("cpp", "cpp")):
           % (folder, len(names), hit, lang))
 regen = stems('regen')
 print("   diaries/regen %d files; first five stems: %s" % (len(regen), regen[:5]))
-store = '/projects/PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
+store = 'PseudoCoupHQ/Research/op_pipeline/canon39_regen_store'
 listing = sorted(os.listdir(store))
 print("   canon39_regen_store: %d entries; first five: %s"
       % (len(listing), listing[:5]))
-state = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+state = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                        'canon39_regen_state.json'))
 print("   canon39_regen_state.json top-level: %s" % sorted(state)[:20])
 PY
@@ -166,7 +166,7 @@ for g in graph_go.json graph_cpp.json; do
 import json, resource, sys, time
 path = sys.argv[1]
 started = time.time()
-payload = json.loads(open('/projects/PseudoCoupHQ/Research/compiler_graph/'
+payload = json.loads(open('PseudoCoupHQ/Research/compiler_graph/'
                           + path).read())
 defs = sum(1 for r in payload["nodes"] if r.get("kind") == "def")
 peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024.0

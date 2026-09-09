@@ -457,7 +457,7 @@ ones a rebuild would NOT restore.
 
 Everything below is the output of `d77_inventory.sh` and
 `d77_ts_and_pins.sh`, run 2026-08-29 through the Airlock lane. Container
-base is Ubuntu 26.04 LTS, kernel <kernel>.
+base is <os>, kernel <kernel>.
 
 Container `PATH` as the daemon sets it:
 `/opt/cargo/bin:/opt/venv/bin:/usr/lib/go-1.26/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`

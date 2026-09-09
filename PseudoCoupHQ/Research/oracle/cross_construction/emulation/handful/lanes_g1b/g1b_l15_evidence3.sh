@@ -25,8 +25,8 @@
 # heaviest step is `tally3b` over a 392 kB json; `bodies3c` reads one
 # 4.9 MB corpus file at a time and task g1b measured it at 81,636 kB.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
-E=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+E=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 run () { echo; printf '$'; printf ' %q' "$@"; echo; "$@"; }
 # A COMMAND WITH A PIPE IN IT, printed verbatim and run by `eval`, so the
 # line printed above the transcript IS the line that produced it.  Two
@@ -75,7 +75,7 @@ run python3 $H/handful.py rechecked3b
 run python3 $H/handful.py rechecked3c
 
 echo "[12/13] the spelling guard, unmodified, over every json this task's own programs write"
-run python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py $H/handful3b.json $H/handful3b_primitive.json $H/handful3b_spellings.json $H/handful3c.json $H/handful3c_primitive.json
+run python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py $H/handful3b.json $H/handful3b_primitive.json $H/handful3b_spellings.json $H/handful3c.json $H/handful3c_primitive.json
 
 echo "[13/13] grep -c exempt over every file this task added or changed"
 run grep -c exempt $H/handful.py $H/handful3b.md $H/handful3c.md $H/lanes_g1b/g1b_l8_run_of_record_b.sh $H/lanes_g1b/g1b_l11_run_of_record_c2.sh || true

@@ -14,7 +14,7 @@
 # shard; one shard is held at a time and dropped. Peak RSS printed.
 set -euo pipefail
 echo "[1/5] task m1b: the reference, handed the three x87 shapes"
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 - <<'PY'
 import collections
 import json
@@ -23,8 +23,8 @@ import resource
 import sys
 import time
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline/lean")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline/lean")
 import reference as R
 import ledger48 as L48
 import term as T

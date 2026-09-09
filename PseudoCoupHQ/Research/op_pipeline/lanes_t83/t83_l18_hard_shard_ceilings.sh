@@ -21,7 +21,7 @@
 # time AND whether it reproduced the stored shard record for record.
 # A ceiling that is faster but changes an answer is not a ceiling.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 i=0
 for mb in 512 1024 2048; do
   i=$(( i + 1 ))

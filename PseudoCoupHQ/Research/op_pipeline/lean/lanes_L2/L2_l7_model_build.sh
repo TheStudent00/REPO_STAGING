@@ -5,7 +5,7 @@
 set -u
 
 TOTAL=3
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L2home
 mkdir -p "$HOME"
 cd "$LEANDIR" || exit 1
@@ -13,7 +13,7 @@ cd "$LEANDIR" || exit 1
 echo "[1/$TOTAL] the sweep"
 python3 -c "
 import resource, sys, time
-sys.path.insert(0, '/projects/PseudoCoupHQ/Research/op_pipeline/lean')
+sys.path.insert(0, 'PseudoCoupHQ/Research/op_pipeline/lean')
 import model_translate as M
 start = time.time()
 M.model_command(M.HERE, M.os.path.join(M.HERE, 'archproof', 'Archproof'))
@@ -37,7 +37,7 @@ cd "$LEANDIR" || exit 1
 echo "[3/$TOTAL] the census: mnemonics modelled / translated / refused by cause"
 python3 - <<'PY'
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/lean/'
+d = json.load(open('PseudoCoupHQ/Research/op_pipeline/lean/'
                    'model_L2.json'))
 per = d["per_mnemonic"]
 translated = sorted(m for m in per if per[m]["translated"])

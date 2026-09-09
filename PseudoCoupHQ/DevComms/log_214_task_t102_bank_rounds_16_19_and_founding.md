@@ -183,7 +183,7 @@ as that lane's own transcript.
 `t102`, over each of the six most recent logs this bank did not itself
 write. `t102` mounts only `PseudoCoupHQ`, `PseudoCoupGraphs`,
 `PlanPlan`, `PseudoCoup_v5/v6` and `Sources` — it does NOT mount
-`~/AirlockRuns/<other-instance>/agent/logs/`, so any pasted command
+`<runs>/<other-instance>/agent/logs/`, so any pasted command
 that reads another instance's OWN lane log, or that submits/starts/
 stops a sandbox, is REFUSED by the verifier's own safety rules
 (`log_unreachable`, `submits_or_moves_the_sandbox`,
@@ -198,7 +198,7 @@ WOULD verify it, if brought up and asked directly.
 | log_206 | founding | 5 | 0 | 0 | 5 | 0 | 0 | n/a — a narrative note, no shell commands, nothing to refuse |
 | log_207 | o1 | 8 | 5 | 0 | 3 | 0 | 0 | n/a — fully self-contained, every command re-ran inside `t102` itself |
 | log_208 | o2 | 15 | 6 | 0 | 4 | 2 | 3 | `o2` — both REFUSED are `up.sh --instance o2` / `airlock submit …--instance o2`, safety-refused rather than log-unreachable (this verifier will not start or feed another instance's sandbox from inside `t102`) |
-| log_209 | o3 | 37 | 5 | 0 | 6 | 23 | 3 | `o3` — 23 REFUSED split between `up.sh`/`down.sh`/`airlock submit --instance o3` (submits_or_moves_the_sandbox) and `cat ~/AirlockRuns/o3/agent/logs/…` (log_unreachable); 2 more `touches_the_container_host` (a bare `podman run` re-run, refused on the same "no sandbox control from inside a sandbox" ground) |
+| log_209 | o3 | 37 | 5 | 0 | 6 | 23 | 3 | `o3` — 23 REFUSED split between `up.sh`/`down.sh`/`airlock submit --instance o3` (submits_or_moves_the_sandbox) and `cat <runs>/o3/agent/logs/…` (log_unreachable); 2 more `touches_the_container_host` (a bare `podman run` re-run, refused on the same "no sandbox control from inside a sandbox" ground) |
 | log_210 | o4 | 18 (17 processed) | — | — | — | — | — | `o4` — see below, this pass did not finish |
 
 **Zero DIFFERS across every log actually completed.** The REFUSED

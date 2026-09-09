@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 run () { echo "\$ $1"; eval "$1" 2>&1; echo; }
 echo "======== [1/8] the symbol table row for each handler function ========"
 run "readelf -sW /persist/cpython_ship/python | grep -w long_add"

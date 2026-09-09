@@ -4,7 +4,7 @@
 # exist.  Must score REFUSED with reason log_unreachable, never
 # DIFFERS.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 cat > /tmp/t99_fixture_b.md <<'FIXTURE'
 # fixture log -- item B proof (b), unreachable log path

@@ -6,7 +6,7 @@
 # and a time limit is a flag to re-run with more room -- never a
 # reason to change what is measured.
 set -u
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
 echo "======== 1. guess ceiling 3,000 ms ========"
 echo "[1/3] sample at 3000 ms"
 O12_GUESS_MS=3000 O12_SUB_SECONDS=300 python3 - <<'PY'
@@ -31,6 +31,6 @@ echo "-- exit $?"
 echo
 echo "======== 3. the guard ========"
 echo "[3/3] guard"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
   synthesis_sample_guess3000ms.json synthesis_sample_guess30000ms.json
 echo "-- guard exit $?"

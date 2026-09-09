@@ -20,7 +20,7 @@
 #   * The ten host-written shards are NOT touched.
 #   * Nothing else in the tree is touched.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 KEEP='canon40_wrapped_c.json canon40_wrapped_cpp.json canon40_wrapped_go.json canon40_wrapped_rust.json canon40_wrapped_swift.json canon40_interp.json canon40_regen_store/op_units2_c_c0000.json canon40_regen_store/op_units2_c_c0001.json canon40_regen_store/op_units2_c_c0002.json canon40_regen_store/op_units2_c_c0003.json'
 

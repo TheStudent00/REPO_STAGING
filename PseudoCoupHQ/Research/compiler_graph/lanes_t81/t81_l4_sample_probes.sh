@@ -10,7 +10,7 @@
 # This lane prints how many pid files each compile produced.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 CLANG=/persist/llvmbuild/bin/clang
 CLANGXX=/persist/llvmbuild/bin/clang++
 mkdir -p /work/probe /work/sample
@@ -25,7 +25,7 @@ say "[2/3] 20 c and 20 cpp probes, timed"
 python3 - <<'PY'
 import json, os, resource, subprocess, time, glob
 
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 CLANG = '/persist/llvmbuild/bin/clang'
 CLANGXX = '/persist/llvmbuild/bin/clang++'
 probes = json.load(open(os.path.join(REPO, 't81', 'probes_cpp.json')))['probes']
@@ -118,5 +118,5 @@ cut -f2 "$LARGEST" | sort -u | head -10
 echo "   subject_enter markers:"
 grep -c 'subject_enter' "$LARGEST" || true
 cp -f "$LARGEST" "$REPO/t81/sample_one.diary"
-df -h /projects/PseudoCoupHQ | tail -1
+df -h PseudoCoupHQ | tail -1
 echo "DONE t81_l4"

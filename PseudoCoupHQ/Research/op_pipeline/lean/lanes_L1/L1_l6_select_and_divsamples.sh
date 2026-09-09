@@ -8,7 +8,7 @@
 #         node, with their t100 states, so the translator is written against
 #         the shape on disk rather than a remembered one
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 echo '[1/2] select the ten'

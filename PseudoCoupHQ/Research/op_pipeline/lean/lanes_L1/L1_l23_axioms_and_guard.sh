@@ -7,8 +7,8 @@
 #   [2/3] the whole lake project builds, so nothing in it is stale
 #   [3/3] the spelling guard, unmodified, over every json this task wrote
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
-PIPE=/projects/PseudoCoupHQ/Research/op_pipeline
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
+PIPE=PseudoCoupHQ/Research/op_pipeline
 export HOME=/work/L1home
 mkdir -p "$HOME"
 

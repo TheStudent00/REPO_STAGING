@@ -5,7 +5,7 @@
 # which is where the 226 PROVED and the 1,099 UNDECIDED live.
 set -u
 
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 

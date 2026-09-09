@@ -8,6 +8,6 @@
 # the end; this lane reads only the ten-row handful_cells.json.
 set -euo pipefail
 echo "[1/2] task h1: handful.py probe"
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 python3 handful.py probe
 echo "[2/2] done"

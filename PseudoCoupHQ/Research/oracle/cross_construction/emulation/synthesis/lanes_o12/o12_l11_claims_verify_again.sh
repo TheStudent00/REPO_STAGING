@@ -4,8 +4,8 @@
 # commands (lane 8's first pass found 0 MATCHES because every block
 # was a bare citation, not a command).
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/1] claims verify"
 python3 check_conventions_log_claims.py --verify --timeout 20 \
-  /projects/PseudoCoupHQ/DevComms/log_230_task_o12_synthesis_route.md
+  PseudoCoupHQ/DevComms/log_230_task_o12_synthesis_route.md
 echo "-- exit $?"

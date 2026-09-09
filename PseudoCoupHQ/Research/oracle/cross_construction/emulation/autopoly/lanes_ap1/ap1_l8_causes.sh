@@ -11,12 +11,12 @@
 #
 # MEMORY BOUND: 6 GB resident, named abort ABORT_MEMORY_AP1.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 python3 - <<'PY'
 import json
 import resource
 
-AGG = ("/projects/PseudoCoupHQ/Research/oracle/cross_construction/"
+AGG = ("PseudoCoupHQ/Research/oracle/cross_construction/"
        "emulation/autopoly/autopoly.json")
 document = json.load(open(AGG))
 

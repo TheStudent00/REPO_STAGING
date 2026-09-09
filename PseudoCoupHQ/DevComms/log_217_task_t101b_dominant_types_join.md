@@ -51,13 +51,13 @@ guard over every json this task wrote.
 
 ## 2. Bug 1 — found by the earlier session, fixed before this one started
 
-`t101b_l3_join.sh`'s log (`~/AirlockRuns/t101b/agent/logs/*__t101b_l3_join.sh.log`)
+`t101b_l3_join.sh`'s log (`<runs>/t101b/agent/logs/*__t101b_l3_join.sh.log`)
 ends:
 
 ```
 Traceback (most recent call last):
   ...
-  File "/projects/PseudoCoupHQ/Research/op_pipeline/types101_join.py", line 293, in holders_table
+  File "PseudoCoupHQ/Research/op_pipeline/types101_join.py", line 293, in holders_table
     for hid, n in c.most_common():
 AttributeError: 'collections.defaultdict' object has no attribute 'most_common'
 types101_join.py exit 1
@@ -69,7 +69,7 @@ tree when this session started, committed at 06:36:00, one line:
 ```
 $ git show 2ee75f6d -- Research/op_pipeline/types101_join.py
 commit 2ee75f6d9e36bc2f6e32270ed71514fe60e25cc8
-Author: TheStudent00 <<email>>
+Author: <owner> <<email>>
 Date:   Sun Sep 6 06:36:00 2026 -0400
 
     auto: 6 files (types101_join.py, lowering_route_cut.py, o6_l4b_overlay_full_tree_v2.sh, +3)
@@ -108,7 +108,7 @@ always assumed: a `Counter` at `(lang, role, kind)`, holder as the
 ## 3. Bug 2 — found and fixed this session
 
 `t101b_l4_join.sh`'s log
-(`~/AirlockRuns/t101b/agent/logs/20260906T152215Z__t101b_l4_join.sh.log`),
+(`<runs>/t101b/agent/logs/20260906T152215Z__t101b_l4_join.sh.log`),
 LITERAL, in full:
 
 ```
@@ -120,9 +120,9 @@ bound: ABORT_MEMORY_T101B at 4294967296 bytes
 [200/294] shards read, 59134 rows, 19960 units
 [250/294] shards read, 75289 rows, 25345 units
 [294/294] shards read, 92127 rows, 31067 units
-wrote /projects/PseudoCoupHQ/Research/op_pipeline/types101_holders.json
-wrote /projects/PseudoCoupHQ/Research/op_pipeline/types101_spellings.json
-wrote /projects/PseudoCoupHQ/Research/op_pipeline/types101_entry_holders.json
+wrote PseudoCoupHQ/Research/op_pipeline/types101_holders.json
+wrote PseudoCoupHQ/Research/op_pipeline/types101_spellings.json
+wrote PseudoCoupHQ/Research/op_pipeline/types101_entry_holders.json
 
 holders: 32  (DW_AT_encoding_absent 12, float 4, signed integer 6, truth 1, unicode character (none of the four holder classes) 3, unsigned integer 6)
 lang     core attested  agree disagree undecidable unattested
@@ -132,10 +132,10 @@ go         14       14     14        0           0          0
 rust       15       15     15        0           0          0
 swift      17       17      0        0          17          0
 Traceback (most recent call last):
-  File "/projects/PseudoCoupHQ/Research/op_pipeline/types101_join.py", line 604, in <module>
+  File "PseudoCoupHQ/Research/op_pipeline/types101_join.py", line 604, in <module>
     sys.exit(main())
              ~~~~^^
-  File "/projects/PseudoCoupHQ/Research/op_pipeline/types101_join.py", line 586, in main
+  File "PseudoCoupHQ/Research/op_pipeline/types101_join.py", line 586, in main
     ptot["members_compiled_without_rows"]))
     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 KeyError: 'members_compiled_without_rows'
@@ -168,7 +168,7 @@ because it was never incremented. `main()`'s summary print then reads
 ```
 $ git show ea856a8c -- Research/op_pipeline/types101_join.py
 commit ea856a8cebc1ecfb2f1d8212b1c850914a96484b
-Author: TheStudent00 <<email>>
+Author: <owner> <<email>>
 Date:   Sun Sep 6 11:24:01 2026 -0400
 
     auto: 6 files (log_215_task_o5_lowering_route_cut.md, types101_entry_holders.json, types101_holders.json, +3)
@@ -202,7 +202,7 @@ $ python3 Airlock/airlock --instance t101b submit PseudoCoupHQ/Research/op_pipel
 ```
 
 `t101b_l5_join.sh`'s log
-(`~/AirlockRuns/t101b/agent/logs/20260906T152357Z__t101b_l5_join.sh.log`),
+(`<runs>/t101b/agent/logs/20260906T152357Z__t101b_l5_join.sh.log`),
 LITERAL, in full:
 
 ```
@@ -214,9 +214,9 @@ bound: ABORT_MEMORY_T101B at 4294967296 bytes
 [200/294] shards read, 59134 rows, 19960 units
 [250/294] shards read, 75289 rows, 25345 units
 [294/294] shards read, 92127 rows, 31067 units
-wrote /projects/PseudoCoupHQ/Research/op_pipeline/types101_holders.json
-wrote /projects/PseudoCoupHQ/Research/op_pipeline/types101_spellings.json
-wrote /projects/PseudoCoupHQ/Research/op_pipeline/types101_entry_holders.json
+wrote PseudoCoupHQ/Research/op_pipeline/types101_holders.json
+wrote PseudoCoupHQ/Research/op_pipeline/types101_spellings.json
+wrote PseudoCoupHQ/Research/op_pipeline/types101_entry_holders.json
 
 holders: 32  (DW_AT_encoding_absent 12, float 4, signed integer 6, truth 1, unicode character (none of the four holder classes) 3, unsigned integer 6)
 lang     core attested  agree disagree undecidable unattested
@@ -319,7 +319,7 @@ $ python3 Airlock/airlock --instance t101b submit PseudoCoupHQ/Research/op_pipel
 ```
 
 `t101b_l6_guard.sh`'s log tail
-(`~/AirlockRuns/t101b/agent/logs/20260906T152654Z__t101b_l6_guard.sh.log`):
+(`<runs>/t101b/agent/logs/20260906T152654Z__t101b_l6_guard.sh.log`):
 
 ```
 PASS types101_entry_holders.json -- no operator token in any key, grouping, pairing or row structure
@@ -332,14 +332,14 @@ check_no_spelling_keys.py exit 0
 its 294 shards + `types101_dwarf_rows_sample.json` and its 38
 shards), 337 PASS, 0 FAIL:
 
-This lane's own log is not under a sandbox mount (`~/AirlockRuns/...`),
+This lane's own log is not under a sandbox mount (`<runs>/...`),
 so the two `grep -c` counts over it are pasted from the host shell
 that ran the lane, not re-run inside this log's own verifier pass:
 
 ```
-$ grep -c '^PASS' ~/AirlockRuns/t101b/agent/logs/20260906T152654Z__t101b_l6_guard.sh.log
+$ grep -c '^PASS' <runs>/t101b/agent/logs/20260906T152654Z__t101b_l6_guard.sh.log
 337
-$ grep -c '^FAIL' ~/AirlockRuns/t101b/agent/logs/20260906T152654Z__t101b_l6_guard.sh.log
+$ grep -c '^FAIL' <runs>/t101b/agent/logs/20260906T152654Z__t101b_l6_guard.sh.log
 0
 ```
 
@@ -367,7 +367,7 @@ a `-C` flag that made the checker misread the diff's own subcommand:
 opened their json by the HOST path
 (`PseudoCoupHQ/...`), which does not resolve
 inside the sandbox this checker runs in (mounted at
-`/projects/PseudoCoupHQ`); fixed to the path relative to the lane's
+`PseudoCoupHQ`); fixed to the path relative to the lane's
 own work directory (`Research/op_pipeline/...`). One of those three
 also tripped `redirects_into_a_path` on `> 0` inside
 `if e['members_with_rows'] > 0:` — the checker's redirect scanner
@@ -378,7 +378,7 @@ named `0:`; changed to the equivalent `if e['members_with_rows']:`
 changed. Pass 3, LITERAL, in full:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 /projects/PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 PseudoCoupHQ/DevComms/log_217_task_t101b_dominant_types_join.md
 log_217_task_t101b_dominant_types_join.md: 20 claims extracted
    claims 20 | MATCHES 6 | DIFFERS 0 | UNVERIFIABLE 7 | REFUSED 2 | NOT_RERUNNABLE 5
    VERDICT: 6 of 20 claims reproduce; 7 (35%) carry nothing to re-run

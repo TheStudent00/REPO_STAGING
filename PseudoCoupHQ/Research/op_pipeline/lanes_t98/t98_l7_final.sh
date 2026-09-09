@@ -5,7 +5,7 @@
 # named at each.  Lane 5 found nine at two commits of 2026-09-03; this
 # says whether any is left.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 step () {
   echo

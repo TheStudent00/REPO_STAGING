@@ -23,5 +23,5 @@
 # CEILINGS: the gate of record is the pipeline's own 3,000 ms; every
 # UNDECIDED is re-posed ONCE at 30,000 ms and both answers are kept.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 python3 autopoly.py run

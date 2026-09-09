@@ -31,7 +31,7 @@ checkpointed partial; the trickle finished instead.
 ## 1.2 It cost 18.4 minutes of wall clock at half the machine
 
 6,265 seconds of lane time, run six chunks at a time inside a container
-capped at 6 of this machine's 12 cores, is **18.4 minutes end to end**
+capped at 6 of this machine's <cores>, is **18.4 minutes end to end**
 (01:42:37 to 02:01:02 local, by the store files' own timestamps). The cost
 page written before the run predicted 8,522 serial seconds; the measured
 figure is 6,265, so the prediction is 1.36x the measurement — erring long,
@@ -339,7 +339,7 @@ cannot alter a toolchain Airlock's own runs depend on:
 ### 5.1.3 The cap
 
 ```
-  cpu cap: 6 of 12 cores
+  cpu cap: 6 of <cores>
 ```
 
 `--cpus 6`, computed as half of `nproc`, overridable with `TRICKLE_CPUS`.
@@ -788,7 +788,7 @@ that state.
 $ ls -d /work
 ls: cannot access '/work': No such file or directory
 $ hostname
-<host>
+<user>
 ```
 
 `/work` is the container's build root — the residue's own refusal texts

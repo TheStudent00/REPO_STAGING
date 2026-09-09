@@ -13,7 +13,7 @@
 # composition step reads `model_table_rows.json` (50 MB), measured at
 # 253,716 kB by task h1b.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/4] task g1: handful.py compose3"
 python3 $H/handful/handful.py compose3
 echo "[2/4] task g1: handful.py report3"

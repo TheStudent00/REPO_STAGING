@@ -20,7 +20,7 @@
 #   THE SLICE IS CUT BY SHARD so every store shard has one writer.
 #   NAMED ABORT: ABORT_MEMORY_T97 if a slice's parent passes 6 GB.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 for i in 0 1 2 3; do
   python3 term97_walk.py pass2 4096 1800 a "$i" 4 pass1 \
     > "/work/t97_pass2_a_slice$i.log" 2>&1 &

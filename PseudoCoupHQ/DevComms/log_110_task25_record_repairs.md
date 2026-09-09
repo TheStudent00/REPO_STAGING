@@ -571,8 +571,8 @@ $ cd PseudoCoupHQ && git status --short && date
 Tue Sep  1 11:19:30 AM EDT 2026
 
 $ ls -la Research/compiler_graph/graph_cpp2.json Research/compiler_graph/graph_cpp3.json
--rw-rw-r-- 1 <host> <host> 19097469 Aug 31 19:16 Research/compiler_graph/graph_cpp2.json
--rw-rw-r-- 1 <host> <host> 26501104 Aug 31 21:43 Research/compiler_graph/graph_cpp3.json
+-rw-rw-r-- 1 <user> <user> 19097469 Aug 31 19:16 Research/compiler_graph/graph_cpp2.json
+-rw-rw-r-- 1 <user> <user> 26501104 Aug 31 21:43 Research/compiler_graph/graph_cpp3.json
 ```
 
 Reading that status honestly, since it is a moving target: the

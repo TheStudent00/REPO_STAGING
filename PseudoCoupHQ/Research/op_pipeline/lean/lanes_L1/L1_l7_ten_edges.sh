@@ -6,7 +6,7 @@
 #   [3/3] one Lean theorem per pair, each in its own `lean` process, with that
 #         process's wall clock and peak RSS
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 echo '[1/3] re-select'

@@ -44,9 +44,9 @@
 # refuse its own output on failure.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
-GR=/projects/PseudoCoupGraphs
-OP=/projects/PseudoCoupHQ/Research/op_pipeline
+CG=PseudoCoupHQ/Research/compiler_graph
+GR=PseudoCoupGraphs
+OP=PseudoCoupHQ/Research/op_pipeline
 export HOME=/work/t95home
 mkdir -p "$HOME/Programming"
 ln -sfn /sources "$HOME/Programming/Sources"
@@ -55,7 +55,7 @@ cd "$CG"
 say "[1/7] the program compiles, and the guard is UNMODIFIED"
 python3 -m py_compile graph.py && echo "   graph.py compiles"
 md5sum "$OP/check_no_spelling_keys.py"
-git -C /projects/PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py \
+git -C PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py \
   | sed 's/^/   git reports a change: /'
 echo "   (nothing above means git reports no change to the guard)"
 
@@ -72,7 +72,7 @@ done
 say "[3/7] the four-state marking, per region, every count with its population"
 python3 - <<'PY'
 import json, os, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 ORDER = ("names_its_opcode", "one_static_hop", "emits_opcode_dynamic",
          "emits_nothing")
@@ -114,9 +114,9 @@ PY
 say "[4/7] the three-way split against what RUNNING the compiler showed"
 python3 - <<'PY'
 import json, os, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
-HERE = "/projects/PseudoCoupHQ/Research/compiler_graph"
+HERE = "PseudoCoupHQ/Research/compiler_graph"
 for lang, name in (("go", "coverage_go_files.json"),
                    ("cpp", "coverage_cpp_files.json")):
     arch = json.load(open(graphs_home.path("arch_opcode_nodes_%s.json" % lang)))
@@ -159,7 +159,7 @@ PY
 say "[5/7] the shrink, stated as a percentage of each graph"
 python3 - <<'PY'
 import json, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 print("   | region | definitions | emitters | +direct callers | +all callers | "
       "emits nothing | dropped |")

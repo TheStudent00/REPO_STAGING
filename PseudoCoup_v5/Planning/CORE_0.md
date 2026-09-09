@@ -9,12 +9,12 @@ node:
     name: pcv5
     path: Planning/CORE_0.md
     repo: PseudoCoup_v5
-    remote: https://github.com/TheStudent00/PseudoCoup_v5.git
+    remote: https://github.com/<owner>/PseudoCoup_v5.git
 super_node:
     name: projects
     path: PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
     repo: PseudoCoupHQ
-    remote: https://github.com/TheStudent00/PseudoCoupHQ.git
+    remote: https://github.com/<owner>/PseudoCoupHQ.git
 sub_nodes:
     - name: tools
       path: node_0_0_tools/CORE_0_0_tools.md

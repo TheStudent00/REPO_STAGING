@@ -15,5 +15,5 @@
 # temporary directory and deletes it.
 set -euo pipefail
 echo "[1/2] task g1: go_facts.py probe"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py probe
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py probe
 echo "[2/2] done"

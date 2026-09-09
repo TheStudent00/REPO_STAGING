@@ -11,13 +11,13 @@
 # script and reads one more file (`model_table_rows.json`, 50 MB,
 # sampled first and its peak RSS printed).
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 echo "[1/3] task h1b: handful.py compose"
 python3 handful.py compose
 echo "[2/3] task h1b: handful.py report"
 python3 handful.py report
 echo "[3/3] the spelling guard, unmodified, over every json this task touched"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful_cells.json \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful_cells.json \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json
 echo "done"

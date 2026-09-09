@@ -18,13 +18,13 @@
 # Product: /out/t85_sample.json
 set -uo pipefail
 
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 mkdir -p /out
 
 python3 - <<'PY'
 import json, os, resource, sys, time
 
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 import dashboard_ouro as dash
 
 LANE_CAP_MB = 6000

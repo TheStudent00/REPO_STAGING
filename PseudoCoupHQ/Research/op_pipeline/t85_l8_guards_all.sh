@@ -2,9 +2,9 @@
 # t85_l8_guards_all.sh -- TASK 85, lane 8: the data guard over ALL SEVEN
 # artifacts this task produced, in ONE process, unmodified.
 set -uo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 echo "[1/3] the guard is unmodified"
-git -C /projects/PseudoCoupHQ status --porcelain -- \
+git -C PseudoCoupHQ status --porcelain -- \
     Research/op_pipeline/check_no_spelling_keys.py
 echo "  sha256: $(sha256sum check_no_spelling_keys.py | cut -d' ' -f1)"
 echo

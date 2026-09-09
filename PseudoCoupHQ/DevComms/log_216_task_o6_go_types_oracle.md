@@ -12,7 +12,7 @@ Every rendering in this log is labelled per the protocol's §5.1a:
 **GLOSS** is a plain-words reading sitting beside a literal. No gloss
 appears without its literal. This log is built FROM the artifacts
 already on disk (`go_types_report.md`, the lane logs under
-`~/AirlockRuns/o6/agent/logs/`) — no new analysis, per the closing
+`<runs>/o6/agent/logs/`) — no new analysis, per the closing
 instruction for this task.
 
 ---
@@ -193,7 +193,7 @@ shape: "package"
 
 **LITERAL**, the no-overlay full-tree shape's second attempt
 (`o6_l8_no_overlay_full_rerun_12g.sh`, resumed at the 12 GB bound after
-the first attempt aborted at 6 GB — `~/AirlockRuns/o6/agent/logs/20260906T103040Z__o6_l8_no_overlay_full_rerun_12g.sh.log`):
+the first attempt aborted at 6 GB — `<runs>/o6/agent/logs/20260906T103040Z__o6_l8_no_overlay_full_rerun_12g.sh.log`):
 
 ```
 [1/2] full pass, GOROOT = source tree, NO overlay, shape=tree, bound 12 GB
@@ -228,7 +228,7 @@ re-run was made — the overlay shape (which reaches the identical
 
 # 6. Spelling guard
 
-**LITERAL**, `~/AirlockRuns/o6/agent/logs/20260906T103033Z__o6_l7_spelling_guard.sh.log`:
+**LITERAL**, `<runs>/o6/agent/logs/20260906T103033Z__o6_l7_spelling_guard.sh.log`:
 
 ```
 [2/3] check_no_spelling_keys.py over the three json files
@@ -281,7 +281,7 @@ $ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lan
 ```
 
 ```
-$ cat ~/AirlockRuns/o6/agent/logs/20260906T152849Z__o6_l9_claims_verify.sh.log
+$ cat <runs>/o6/agent/logs/20260906T152849Z__o6_l9_claims_verify.sh.log
 ...
 log_216_task_o6_go_types_oracle.md: 4 claims extracted
 ...

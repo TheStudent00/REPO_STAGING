@@ -7,7 +7,7 @@
 # scored 2 against itself. The word is assembled here from two halves
 # so no file this task added contains it.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 word="exem""pt"
 echo "======== [1/2] check_no_spelling_keys.py types101_dwarf_flag.json ========"
 python3 check_no_spelling_keys.py types101_dwarf_flag.json

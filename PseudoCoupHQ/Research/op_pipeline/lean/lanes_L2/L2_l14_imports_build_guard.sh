@@ -13,7 +13,7 @@
 set -u
 
 TOTAL=4
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L2home
 mkdir -p "$HOME"
 cd "$LEANDIR" || exit 1
@@ -35,6 +35,6 @@ grep -rn "\bsorry\b" archproof/Archproof/*.lean archproof/Edges/*.lean \
 echo "--- grep exit $? (1 = no match = no sorry anywhere = no sorryAx possible)"
 
 echo "[4/$TOTAL] the spelling-ban guard over every json this task wrote"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     model_L2.json check_L2.json
 echo "--- guard exit $?"

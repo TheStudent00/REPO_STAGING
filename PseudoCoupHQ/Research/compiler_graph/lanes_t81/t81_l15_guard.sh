@@ -18,8 +18,8 @@
 # not dropped from the list to make the run pass.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
-PIPELINE=/projects/PseudoCoupHQ/Research/op_pipeline
+REPO=PseudoCoupHQ/Research/compiler_graph
+PIPELINE=PseudoCoupHQ/Research/op_pipeline
 cd "$PIPELINE"
 
 ARTIFACTS="
@@ -72,7 +72,7 @@ else
 fi
 
 say "[4/4] the guard file is unmodified"
-git -C /projects/PseudoCoupHQ status --porcelain \
+git -C PseudoCoupHQ status --porcelain \
     Research/op_pipeline/check_no_spelling_keys.py
 echo "   (no line above means the guard file is untouched)"
 md5sum "$PIPELINE/check_no_spelling_keys.py"

@@ -66,7 +66,7 @@ status: living
   have been read against is confirmed on disk: **1,831 entries / 30,432
   members / 490 spanning more than one language / 3 spanning compiled
   and interpreted / 34 families**. Evidence:
-  `~/AirlockRuns/t97/agent/logs/20260905T095120Z__t97_l10_downstream_partial.sh.log`;
+  `<runs>/t97/agent/logs/20260905T095120Z__t97_l10_downstream_partial.sh.log`;
   `PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md` §6, §9.1.
 - 2026-09-06: task 100, the MISSING merge ground (a proved edge
   between two entries whose layer-5 texts differ but whose terms are

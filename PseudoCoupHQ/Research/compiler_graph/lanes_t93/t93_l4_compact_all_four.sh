@@ -37,7 +37,7 @@
 # refuse its own output on failure.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
+CG=PseudoCoupHQ/Research/compiler_graph
 cd "$CG"
 rm -rf /work/t93; mkdir -p /work/t93
 total=6; i=0
@@ -62,7 +62,7 @@ for LANG in go rust swift cpp; do
   echo "   the 256 KB head read, which every existing reader does:"
   python3 - <<PY
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 import viewer_build
 head = open("/work/t93/graph_$LANG.compact.json").read(262144)
 counts = viewer_build.carve(head, "counts"); pins = viewer_build.carve(head, "pins")
@@ -75,7 +75,7 @@ PY
   echo "   every record of every section, old form against compact:"
   python3 - <<PY
 import resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph_compact, graph_files_build
 def peak(): return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024.0
 for section in ("nodes", "edges", "frontier"):
@@ -92,7 +92,7 @@ done
 step "the frontier is COMPLETE in every compact graph -- counted both ways"
 python3 - <<'PY'
 import collections, json, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph_compact, graph_files_build
 for lang in ("go", "rust", "swift", "cpp"):
     a = collections.Counter(); b = collections.Counter()
@@ -106,13 +106,13 @@ for lang in ("go", "rust", "swift", "cpp"):
 PY
 
 step "the guard, UNMODIFIED, over all four compact graphs, ONE process"
-md5sum /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
-git -C /projects/PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+md5sum PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+git -C PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     /work/t93/graph_go.compact.json /work/t93/graph_rust.compact.json \
     /work/t93/graph_swift.compact.json /work/t93/graph_cpp.compact.json
 echo "   guard exit: $?"
-echo "   grep -c exempt over the guard: $(grep -c exempt /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py)"
+echo "   grep -c exempt over the guard: $(grep -c exempt PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py)"
 
 echo
 echo "======== lane 4 finished ========"

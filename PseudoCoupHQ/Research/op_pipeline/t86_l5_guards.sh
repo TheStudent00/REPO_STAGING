@@ -14,18 +14,18 @@
 #
 # Node: hq.research.compiler_graph.dashboard
 set -uo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline || exit 2
+cd PseudoCoupHQ/Research/op_pipeline || exit 2
 
 #: the commit that landed task 85 -- everything after it on these paths
 #: is task 86.
 BASE=b86366cd38c72e557064e44d8d062d83f7610e5d
 
 echo "[1/5] the data guard, unmodified, ONE process, every artifact"
-git -C /projects/PseudoCoupHQ status --porcelain -- \
+git -C PseudoCoupHQ status --porcelain -- \
     Research/op_pipeline/check_no_spelling_keys.py
 echo "  sha256: $(sha256sum check_no_spelling_keys.py | cut -d' ' -f1)"
 echo "  git diff over the guard itself, from the task-85 commit to HEAD:"
-git -C /projects/PseudoCoupHQ diff --stat "$BASE"..HEAD -- \
+git -C PseudoCoupHQ diff --stat "$BASE"..HEAD -- \
     Research/op_pipeline/check_no_spelling_keys.py
 echo "  (nothing above means the guard is byte-identical)"
 echo
@@ -52,7 +52,7 @@ echo
 
 echo "[4/5] the JavaScript route, untouched"
 echo "-- git diff (working tree) over dashboard.html and every dashboard_pane*.js"
-git -C /projects/PseudoCoupHQ diff -- \
+git -C PseudoCoupHQ diff -- \
     Research/op_pipeline/dashboard.html \
     Research/op_pipeline/dashboard_pane1.js \
     Research/op_pipeline/dashboard_pane23.js \
@@ -63,7 +63,7 @@ git -C /projects/PseudoCoupHQ diff -- \
     Research/op_pipeline/dashboard_loader.js | tee /tmp/jsdiff.txt | wc -l
 echo "-- git diff $BASE..HEAD over the same paths (the daemon commits every 30 s,"
 echo "   so this is the diff that actually proves it)"
-git -C /projects/PseudoCoupHQ diff "$BASE"..HEAD -- \
+git -C PseudoCoupHQ diff "$BASE"..HEAD -- \
     Research/op_pipeline/dashboard.html \
     Research/op_pipeline/dashboard_pane1.js \
     Research/op_pipeline/dashboard_pane23.js \

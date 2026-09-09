@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # o12 lane 12 -- closing evidence, corrected: every command uses an
 # absolute path (the checker's own working directory is
-# /projects/PseudoCoupHQ, not this folder) and sed uses the \%...%
+# PseudoCoupHQ, not this folder) and sed uses the \%...%
 # address form (a leading / in a /pattern/ address reads to the
 # conventions checker as a file path -- task o7 hit the same thing,
 # lane o7_l9, and fixed it the same way in o7_l11).  git is pinned to
 # a single SHA per invocation (a plain `git log` with no revision is
 # refused by the checker as a moving reference).
 set -u
-SYN=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
+SYN=PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis
 TOTAL=9
 echo "[1/$TOTAL] the fix commit, pinned"
 git log -1 --format="COMMIT %H %ad" --date=iso b7abda67768b3833878d1a20dc306d97dd93e1ae
@@ -58,7 +58,7 @@ for r in d['agreement']:
 
 echo "[9/$TOTAL] the memory bound, the guard re-run, grep -c exempt"
 sed -n '\%named abort ABORT_MEMORY_O12%,+1p' "$SYN/synthesize.py"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
   "$SYN/synthesis_plan.json" \
   "$SYN/synthesis_sample_guess3000ms.json" \
   "$SYN/synthesis_sample_guess30000ms.json" \

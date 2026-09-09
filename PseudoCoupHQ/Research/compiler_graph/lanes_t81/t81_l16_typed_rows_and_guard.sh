@@ -24,8 +24,8 @@
 # clang these targets describe and is not rebuilt.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
-PIPELINE=/projects/PseudoCoupHQ/Research/op_pipeline
+REPO=PseudoCoupHQ/Research/compiler_graph
+PIPELINE=PseudoCoupHQ/Research/op_pipeline
 cd "$REPO"
 
 say "[1/5] the two inputs rebuilt, and the difference measured"
@@ -65,7 +65,7 @@ mv -f /work/keep_name_check coverage_c_and_cpp.json 2>/dev/null || true
 say "[3/5] the two summaries rebuilt"
 python3 - <<'PY'
 import json
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 result = json.load(open(REPO + '/coverage_c_and_cpp.json'))
 by_file = result['never_visited_by_file']
 for name in ('population_region_nodes', 'population_defs',
@@ -159,7 +159,7 @@ echo "   grep -c exempt on that output:"
 grep -c exempt "$REPO/guard_task81.txt" || true
 
 say "[5/5] the guard file is unmodified"
-git -C /projects/PseudoCoupHQ status --porcelain \
+git -C PseudoCoupHQ status --porcelain \
     Research/op_pipeline/check_no_spelling_keys.py
 echo "   (no line above means the guard file is untouched)"
 md5sum "$PIPELINE/check_no_spelling_keys.py"

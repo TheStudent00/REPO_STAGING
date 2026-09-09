@@ -41,7 +41,7 @@ THE SPELLING BAN, pasted verbatim as required:
 Every rendering below is labelled per `object.literal-gloss-analogy`:
 **LITERAL** is the object itself, quoted; **GLOSS** is a plain-words
 reading beside a literal. Paths inside a pasted command are the ones
-the lane sees: `/projects/PseudoCoupHQ` IS `PseudoCoupHQ`,
+the lane sees: `PseudoCoupHQ` IS `PseudoCoupHQ`,
 mounted into the instance on the tower guest.
 
 ---
@@ -471,7 +471,7 @@ then o10 (both read o2's `unique_opcodes.json`), then o8 (reads o2's
 
 | lane script | generator command it runs | tower log |
 |---|---|---|
-| `mn1_l1_o2_single_opcode.sh` | `cd Research/oracle/arch_opcodes && python3 single_opcode_units.py` | `~/AirlockRuns/mn1/agent/logs/20260908T215807Z__mn1_l1_o2_single_opcode.sh.log` |
+| `mn1_l1_o2_single_opcode.sh` | `cd Research/oracle/arch_opcodes && python3 single_opcode_units.py` | `<runs>/mn1/agent/logs/20260908T215807Z__mn1_l1_o2_single_opcode.sh.log` |
 | `mn1_l2_o2_unique_opcodes.sh` | `cd Research/oracle/arch_opcodes && python3 unique_opcodes.py` | `.../20260908T215819Z__mn1_l2_o2_unique_opcodes.sh.log` |
 | `mn1_l4_o9_census.sh` | `cd Research/oracle/arch_opcodes/signatures && python3 opcode_signatures.py census` | `.../20260908T215935Z__mn1_l4_o9_census.sh.log` |
 | `mn1_l5_o9_report.sh` | `... python3 opcode_signatures.py report` | `.../20260908T215957Z__mn1_l5_o9_report.sh.log` |
@@ -547,7 +547,7 @@ brief states the original o10 run held to. The abort never fired.
 ## §5. The guard, over every regenerated json, LITERAL
 
 Guard command, run from `Research/op_pipeline` inside the instance
-(`/projects/PseudoCoupHQ` mounted there):
+(`PseudoCoupHQ` mounted there):
 `python3 check_no_spelling_keys.py <path>`. Lane
 `mn1_l3_o2_guard.sh`, `mn1_l6_o9_guard.sh`, `mn1_l9_o10_guard.sh` and
 `mn1_l13_o8_guard.sh` under
@@ -556,17 +556,17 @@ Guard command, run from `Research/op_pipeline` inside the instance
 **PASS, three files that had never passed before this rename:**
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS unique_opcodes.json -- no operator token in any key, grouping, pairing or row structure
 ```
 (tower log `.../20260908T215841Z__mn1_l3_o2_guard.sh.log`, step [2/2])
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_population.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_population.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS per_opcode_population.json -- no operator token in any key, grouping, pairing or row structure
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_held.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_held.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS per_opcode_held.json -- no operator token in any key, grouping, pairing or row structure
 ```
@@ -589,7 +589,7 @@ touching the guard, no further rename beyond the scope §1 fixed).**
   (log 225 recorded 58).
 
   ```
-  $ python3 check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/signatures/opcode_signatures.json
+  $ python3 check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/arch_opcodes/signatures/opcode_signatures.json
   operator inventory: 91 tokens read from probe_manifest_*.json
   FAIL opcode_signatures.json -- 33 spelling-keyed place(s)
        $.guard_partition.all_mnemonics[4]
@@ -616,7 +616,7 @@ touching the guard, no further rename beyond the scope §1 fixed).**
   o10 found far more sign-sensitive pairs (88 vs o9's 5):
 
   ```
-  $ python3 check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/signatures/ledger_signatures.json
+  $ python3 check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/arch_opcodes/signatures/ledger_signatures.json
   operator inventory: 91 tokens read from probe_manifest_*.json
   FAIL ledger_signatures.json -- 58 spelling-keyed place(s)
        $.o9_pairings_reexamined[4].mnemonic_b
@@ -642,7 +642,7 @@ touching the guard, no further rename beyond the scope §1 fixed).**
   by a bare mnemonic:
 
   ```
-  $ python3 check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_results.json
+  $ python3 check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_results.json
   operator inventory: 91 tokens read from probe_manifest_*.json
   FAIL per_opcode_results.json -- 57 spelling-keyed place(s)
        $.results[6].landed_mnemonic
@@ -671,7 +671,7 @@ touching the guard, no further rename beyond the scope §1 fixed).**
   walk):
 
   ```
-  $ python3 check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json
+  $ python3 check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json
   operator inventory: 91 tokens read from probe_manifest_*.json
   FAIL single_opcode_units.json -- 30 spelling-keyed place(s)
        $.zero_opcode_examples.c.narrow[0].operator
@@ -774,7 +774,7 @@ in §3 were each missing git's own `diff --git`/`index`/`---`/`+++`
 header lines (fixed by re-pasting the diff in full); the five count
 commands and the three guard commands in §4/§5 used paths relative to
 `Research/oracle` or `Research/op_pipeline` rather than
-`/projects/PseudoCoupHQ`, the verifier's own working directory for
+`PseudoCoupHQ`, the verifier's own working directory for
 every command (fixed by writing every path from that root); the
 `grep -c exempt` paste in §5 described its own output in prose
 (`every line: :0`) instead of pasting it (fixed by pasting the real
@@ -789,7 +789,7 @@ pass found — an unconverging self-reference — fixed by naming the
 eighteen files explicitly (the thirteen non-verify lanes plus the
 five generators) instead of globbing `lanes_mn1/`. Pass 4
 (`mn1_l17_verify4.sh`), LITERAL, in full (tower log
-`~/AirlockRuns/mn1/agent/logs/20260908T221351Z__mn1_l17_verify4.sh.log`):
+`<runs>/mn1/agent/logs/20260908T221351Z__mn1_l17_verify4.sh.log`):
 
 ```
 $ python3 Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 DevComms/log_235_task_mn1_mnem_field_rename.md

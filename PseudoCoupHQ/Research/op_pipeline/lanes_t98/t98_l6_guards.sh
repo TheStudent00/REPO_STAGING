@@ -13,10 +13,10 @@
 #
 # THE MEMORY BOUND: `ulimit -v 6291456` (6 GB of address space).
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "======== [1/4] the guards themselves, unmodified ========"
-git -C /projects/PseudoCoupHQ diff --stat -- \
+git -C PseudoCoupHQ diff --stat -- \
   Research/op_pipeline/check_no_spelling_keys.py \
   Research/op_pipeline/check_dashboard_py_no_spelling.py \
   Research/op_pipeline/check_dashboard_js_no_spelling.py
@@ -51,7 +51,7 @@ echo "-- exit $?"
 
 echo
 echo "======== [4/4] the javascript route is untouched ========"
-git -C /projects/PseudoCoupHQ diff --stat -- \
+git -C PseudoCoupHQ diff --stat -- \
   Research/op_pipeline/dashboard.html \
   Research/op_pipeline/dashboard_pane1.js \
   Research/op_pipeline/dashboard_pane23.js \

@@ -946,7 +946,7 @@ this task:
 - the four level-2 COREs carry a `node.path` without its `Planning/`
   prefix, and `level: 1` where the folder is at level 2;
 - `Planning/CORE_0.md` says the remote is `Ourobrowser.git`; git says
-  `https://github.com/TheStudent00/PyBrowser.git`. The project was
+  `https://github.com/<owner>/PyBrowser.git`. The project was
   renamed in commit `74f2a1c` and the CORE was updated ahead of the
   remote, or the remote was never renamed.
 

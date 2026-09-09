@@ -142,14 +142,14 @@ import sys
 # missing root rather than as a wrong verdict.
 # ---------------------------------------------------------------------------
 SANDBOX_ROOTS = {
-    "PseudoCoupHQ": "/projects/PseudoCoupHQ",
-    "PseudoCoup_v5": "/projects/PseudoCoup_v5",
-    "PseudoCoup_v6": "/projects/PseudoCoup_v6",
-    "PlanPlan": "/projects/PlanPlan",
-    "PseudoCoupGraphs": "/projects/PseudoCoupGraphs",
+    "PseudoCoupHQ": "PseudoCoupHQ",
+    "PseudoCoup_v5": "PseudoCoup_v5",
+    "PseudoCoup_v6": "PseudoCoup_v6",
+    "PlanPlan": "PlanPlan",
+    "PseudoCoupGraphs": "PseudoCoupGraphs",
     "Sources": "/sources",
 }
-WORKDIR = "/projects/PseudoCoupHQ"          # what the logs' relative paths assume
+WORKDIR = "PseudoCoupHQ"          # what the logs' relative paths assume
 CAPTURE_CAP_BYTES = 256 * 1024
 MEMORY_CEILING_MB = 6144                     # abort by name at this
 DEFAULT_TIMEOUT_S = 120
@@ -989,7 +989,7 @@ LANE = """#!/usr/bin/env bash
 #
 # Node: hq.conventions
 set -uo pipefail
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 python3 check_conventions_log_claims.py %(mode)s \\
   --timeout %(timeout)d \\
   --json /out/%(stem)s.json \\
@@ -1008,7 +1008,7 @@ def emit_lane(path, logs, mode, timeout_s):
         "mode": mode,
         "timeout": timeout_s,
         "stem": stem,
-        "logs": "\n".join("  /projects/PseudoCoupHQ/DevComms/%s \\"
+        "logs": "\n".join("  PseudoCoupHQ/DevComms/%s \\"
                           % os.path.basename(l) for l in logs).rstrip(" \\"),
     }
     with open(path, "w") as fh:

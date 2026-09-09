@@ -83,7 +83,7 @@ ONE core file describing that branch at that level.
         name: pcv5
         path: Planning/CORE_0.md
         repo: PseudoCoup_v5
-        remote: https://github.com/TheStudent00/PseudoCoup_v5.git
+        remote: https://github.com/<owner>/PseudoCoup_v5.git
     ```
   - **`sub_nodes` is a sequence of mappings**, in address order — the
     i-th entry IS sub-node `<address>_<i>`. A leaf carries the
@@ -152,7 +152,7 @@ ONE core file describing that branch at that level.
         name: projects
         path: PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
         repo: PseudoCoupHQ
-        remote: https://github.com/TheStudent00/PseudoCoupHQ.git
+        remote: https://github.com/<owner>/PseudoCoupHQ.git
     ```
 
     Entries that stay inside the repo carry `path` only. Adding `repo`

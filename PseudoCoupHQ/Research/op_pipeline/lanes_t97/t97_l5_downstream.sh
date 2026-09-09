@@ -11,7 +11,7 @@
 # raises MemoryError, which python reports BY NAME with a traceback --
 # a named abort, not a cgroup ABORT.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 total=$(( $(ls canon40_regen_store/*.json | wc -l) + 6 ))
 done_now=$(python3 -c "import json;print(len(json.load(open('term66_state.json'))['done']))")

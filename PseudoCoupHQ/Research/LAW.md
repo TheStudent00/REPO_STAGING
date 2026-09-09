@@ -72,7 +72,7 @@ never a reading of names.
   before writing and never overwrite). First line names the project
   node. Every claim carries its reproducing command or says it can't;
   every attribution names its lane log file (host path stated). Final
-  lane: `python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 <log>`
+  lane: `python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 <log>`
   FROM YOUR INSTANCE; paste the tally; zero DIFFERS (fix the log or
   the claim, never the verifier). No hand-tidied transcripts.
 - Writes go ONLY under the artifact folder the brief names, plus the
@@ -93,7 +93,7 @@ Every lane script you submit is FIRST written under the task's artifact
 folder as `lanes_<task>/<lane name>.sh` (the repo-daemon commits it),
 and submitted from there. Airlock's own `.done/` archive is not the
 record and may be cleared. Never delete anything under
-`Airlock/` or `~/AirlockRuns/`, on either machine — not a
+`Airlock/` or `<runs>/`, on either machine — not a
 status file, not a lane, not a log. A lane name that collides gets a new
 name; nothing is removed to make room.
 
@@ -109,7 +109,7 @@ The sandbox is a virtual machine on the owner's tower server, reached over ssh b
 key from this laptop. Nothing about the lane protocol changes; only where it
 runs. The one tool for it, kept in the Airlock repo:
 
-    export AIRLOCK_REMOTE=<tower-user>@<tower> AIRLOCK_REMOTE_ROOT=Programming/Airlock
+    export AIRLOCK_REMOTE=<user>@<tower> AIRLOCK_REMOTE_ROOT=Programming/Airlock
     R="bash Airlock/remote_lane.sh"
 
 | step | command |
@@ -129,7 +129,7 @@ Rules that follow from this:
   sync in the right direction.
 - The verifier lane runs on the tower like any other lane. A lane-log
   attribution in your report names the TOWER path
-  (`~/AirlockRuns/<task>/agent/logs/...`) and says so.
+  (`<runs>/<task>/agent/logs/...`) and says so.
 - The tower guest has <ram> and runs one heavy lane at a time. Your instance
   is capped at 8 cpus / 20g; the memory bound you state in your script still
   governs, and `work_size` is memory-backed and counts inside the 20g.

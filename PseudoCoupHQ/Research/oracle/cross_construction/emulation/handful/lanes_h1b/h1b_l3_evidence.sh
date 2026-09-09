@@ -10,7 +10,7 @@
 # MEMORY: reads handful.json (about 160 kB) and handful.md; the
 # task's bound is 4 GB with the named abort ABORT_MEMORY_H1.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful
 run () { echo; printf '$'; printf ' %q' "$@"; echo; "$@"; }
 
 echo "[1/5] the twenty-row table, with the composition column"
@@ -22,7 +22,7 @@ run python3 $H/handful.py tally
 
 echo "[3/5] the spelling guard, unmodified, over every json this task "
 echo "      touched"
-run python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+run python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     $H/handful_cells.json $H/handful.json
 
 echo "[4/5] grep -c exempt over every file this task added or touched"

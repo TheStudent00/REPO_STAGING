@@ -39,7 +39,7 @@ that one.
    your lean"): keep all ten names from log_138; serial execution
    stays, no `workers` key; `down` refuses while any lane's status
    is `running` unless `--force`; the default agent tree for a
-   non-default instance is `~/AirlockRuns/<name>/agent` (outside the
+   non-default instance is `<runs>/<name>/agent` (outside the
    checkout); `daemon_file` dropped after the next `build.sh`.
 
 STATE AT HANDOFF (verified in log_150 from artifacts):
@@ -159,7 +159,7 @@ with the running lane's name when any status is `running`;
 `$HOME/AirlockRuns/$AL_INSTANCE/agent` (created on `up`); the
 `sandbox` instance keeps `<root>/agent`; README and
 `sandbox.conf.example` updated; `airlock doctor` lists
-`~/AirlockRuns/*` as well as `instances/`. (c) run `build.sh`, then
+`<runs>/*` as well as `instances/`. (c) run `build.sh`, then
 remove the `daemon_file` key and its `up.sh` block. (d) README
 gains one paragraph: serial execution is deliberate; one instance
 per task; a trickle jams only its own instance. (e) Verify: bring

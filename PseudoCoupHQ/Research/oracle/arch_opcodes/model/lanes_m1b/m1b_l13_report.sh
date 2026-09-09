@@ -9,12 +9,12 @@
 # with the named abort ABORT_MEMORY_M1B.
 set -euo pipefail
 echo "[1/2] task m1b: model_table.py report"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py report
 echo "[2/2] task m1b: the counts the closer is judged on"
 python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json'))
 c = d['counts']
 print('   sweep attempts %d, TRANSLATED %d' % (c['sweep_attempts'], c['rows_translated']))
 print('   attested cells %d, placed %d, unplaced %d'

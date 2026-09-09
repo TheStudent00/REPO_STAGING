@@ -132,7 +132,7 @@ status: living
   gate.py` reads **0** — the gate reaches exactly one simulator.
   Evidence: `PseudoCoupHQ/Research/op_pipeline/t91_reference_evidence.json`
   (sections A1, A2, A2b) and the lane log
-  `~/AirlockRuns/t91/agent/logs/20260905T033051Z__t91_l6_reference_evidence.sh.log`.
+  `<runs>/t91/agent/logs/20260905T033051Z__t91_l6_reference_evidence.sh.log`.
 - 2026-09-05 (task 91): the x87 CONTROL WORD ruled out by census rather
   than by silence — **done**. Over the 62,156 bodies canon38 and
   canon40 hold together, 2,810 spell an x87 arch opcode and **0** spell

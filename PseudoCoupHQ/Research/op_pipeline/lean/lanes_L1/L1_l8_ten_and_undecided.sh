@@ -5,7 +5,7 @@
 # pairs t100 left UNDECIDED, whose terms are read from the_pool5.json because
 # the pair record carries none.
 set -u
-LEANDIR=/projects/PseudoCoupHQ/Research/op_pipeline/lean
+LEANDIR=PseudoCoupHQ/Research/op_pipeline/lean
 export HOME=/work/L1home
 mkdir -p "$HOME"
 echo '[1/2] the ten theorems'

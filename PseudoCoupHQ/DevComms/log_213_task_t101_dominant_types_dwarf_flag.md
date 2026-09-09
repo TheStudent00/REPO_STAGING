@@ -8,7 +8,7 @@ holders".
 
 Date 2026-09-06. Instance `Airlock/instances/t101.conf`.
 Every transcript below was produced by a lane of that instance, where
-this repo is mounted at `/projects/PseudoCoupHQ`; the host path of that
+this repo is mounted at `PseudoCoupHQ`; the host path of that
 mount is `PseudoCoupHQ`.
 
 ---
@@ -76,7 +76,7 @@ The first printed line is the declared spelling; the second is the
 whole stored table.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/trickle_store/op_units2_c_c0000.json'));p=d['probes']['1'];print(p['meta']['lhs_type']);print(json.dumps(p['anchor']['dwarf']))"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/trickle_store/op_units2_c_c0000.json'));p=d['probes']['1'];print(p['meta']['lhs_type']);print(json.dumps(p['anchor']['dwarf']))"
 _Bool
 [{"name": "a", "location": "2 byte block: 91 7f (DW_OP_fbreg: -1)"}]
 ```
@@ -92,7 +92,7 @@ did not say it is a boolean.
 both name the same two fields.
 
 ```
-$ sed -n '82,91p' /projects/PseudoCoupHQ/Research/op_pipeline/fold.py
+$ sed -n '82,91p' PseudoCoupHQ/Research/op_pipeline/fold.py
     got = []
     for item in text.split(";"):
         if not item:
@@ -125,7 +125,7 @@ lines 255–262. It is inside the walk over `DW_TAG_formal_parameter`
 DIEs.
 
 ```
-$ sed -n '255,262p' /projects/PseudoCoupHQ/Research/op_pipeline/trickle_lanes/asgrecap_asgrecap_go_c0001.sh
+$ sed -n '255,262p' PseudoCoupHQ/Research/op_pipeline/trickle_lanes/asgrecap_asgrecap_go_c0001.sh
                 continue
             if t != "DW_TAG_formal_parameter":
                 continue
@@ -147,7 +147,7 @@ Lane `t101_l1_dwarf_shape.sh` ran
 which streams every store one file at a time and folds only counters.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));c=d['counts'];print('files', c['store_files_read']);print('rows', c['dwarf_rows_examined']);print('rows with a byte size or encoding', c['dwarf_rows_carrying_a_byte_size_or_encoding_field'])"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));c=d['counts'];print('files', c['store_files_read']);print('rows', c['dwarf_rows_examined']);print('rows with a byte size or encoding', c['dwarf_rows_carrying_a_byte_size_or_encoding_field'])"
 files {'op_units_<lang>': 5, 'op_units_asg_<lang>': 5, 'trickle_store': 338}
 rows 64398
 rows with a byte size or encoding 0
@@ -157,7 +157,7 @@ Every distinct row shape measured, one line per (store kind,
 language, build, field set, count):
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));[print(s['store_kind'],s['language'],s['build'],s['dwarf_row_fields'],s['rows']) for s in d['dwarf_row_shapes_measured']]"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));[print(s['store_kind'],s['language'],s['build'],s['dwarf_row_fields'],s['rows']) for s in d['dwarf_row_shapes_measured']]"
 trickle_store cpp anchor ['location', 'name'] 33820
 trickle_store c anchor ['location', 'name'] 19676
 trickle_store swift anchor ['location', 'name'] 2581
@@ -185,7 +185,7 @@ from. The list printed is every field name on one of its unit records
 containing `dwarf` or `type`.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/canon40_regen_store/op_units2_c_c0000.json'));u=d['units']['c/regen_1'];print([k for k in sorted(u) if 'dwarf' in k.lower() or 'type' in k.lower()])"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/canon40_regen_store/op_units2_c_c0000.json'));u=d['units']['c/regen_1'];print([k for k in sorted(u) if 'dwarf' in k.lower() or 'type' in k.lower()])"
 []
 ```
 
@@ -194,7 +194,7 @@ $ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_p
 One row of the language inventory, c's `_Float16`.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/type_inventory2_core2.json'));print(json.dumps(d['languages']['c']['scalar_core'][2]))"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/type_inventory2_core2.json'));print(json.dumps(d['languages']['c']['scalar_core'][2]))"
 {"language": "c", "id": "c/core_2", "spelling": "_Float16", "extracted_marking": "float", "normalised_class": "float"}
 ```
 
@@ -227,7 +227,7 @@ under `the_spelling_side_only`; each row's `dwarf_byte_size` and
 `dwarf_encoding` read `NOT ON DISK -- see refusal`.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));S=d['the_spelling_side_only']['by_language'];[print(l,len(r),sum(1 for x in r if x['attested'])) for l,r in sorted(S.items())]"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));S=d['the_spelling_side_only']['by_language'];[print(l,len(r),sum(1 for x in r if x['attested'])) for l,r in sorted(S.items())]"
 c 56 25
 cpp 56 28
 go 14 14
@@ -276,7 +276,7 @@ with `resource.getrusage(RUSAGE_SELF)` after every store file, one
 store file held at a time and only counters kept across files.
 
 ```
-$ python3 -c "import json;d=json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));print(d['memory']['peak_rss_mb'], 'MB peak against a 2048 MB bound')"
+$ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json'));print(d['memory']['peak_rss_mb'], 'MB peak against a 2048 MB bound')"
 24.9 MB peak against a 2048 MB bound
 ```
 
@@ -288,10 +288,10 @@ task wrote, and the LAW's zero-count check was run over every file
 this task added.
 
 Lane log, host path:
-`~/AirlockRuns/t101/agent/logs/20260906T055012Z__t101_l5_guard2.sh.log`.
+`<runs>/t101/agent/logs/20260906T055012Z__t101_l5_guard2.sh.log`.
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS types101_dwarf_flag.json -- no operator token in any key, grouping, pairing or row structure
 ```
@@ -320,14 +320,14 @@ the coordinator's to authorize.
 
 | lane | what it did | lane log, host path |
 |---|---|---|
-| `t101_l1_dwarf_shape.sh` | ran `types101_join.py`; step 1 refused by name | `~/AirlockRuns/t101/agent/logs/20260906T054643Z__t101_l1_dwarf_shape.sh.log` |
-| `t101_l3_transcripts.sh` | ran the commands §3.1, §3.4, §3.5, §3.6 and §5 paste | `~/AirlockRuns/t101/agent/logs/20260906T054758Z__t101_l3_transcripts.sh.log` |
-| `t101_l4_transcripts2.sh` | ran the two source quotations §3.2 and §3.3 | `~/AirlockRuns/t101/agent/logs/20260906T054822Z__t101_l4_transcripts2.sh.log` |
-| `t101_l5_guard2.sh` | the spelling guard and the zero-count check | `~/AirlockRuns/t101/agent/logs/20260906T055012Z__t101_l5_guard2.sh.log` |
-| `t101_l6_transcripts3.sh` | ran the §6 memory line and the §7 guard line in their full-path form | `~/AirlockRuns/t101/agent/logs/20260906T055212Z__t101_l6_transcripts3.sh.log` |
-| `t101_l7_claims.sh` | the first `check_conventions_log_claims.py --verify` over this log: 9 of 10 matched, 0 differed, 1 NOT_RERUNNABLE with cause `output_annotated` | `~/AirlockRuns/t101/agent/logs/20260906T055250Z__t101_l7_claims.sh.log` |
-| `t101_l8_transcripts4.sh` | re-quoted `fold.py` at lines 82–91, the arrow-free lines that carry the claim | `~/AirlockRuns/t101/agent/logs/20260906T055329Z__t101_l8_transcripts4.sh.log` |
-| `t101_l9_claims2.sh` | the final verify over this log; its tally is §11 | `~/AirlockRuns/t101/agent/logs/20260906T055403Z__t101_l9_claims2.sh.log` |
+| `t101_l1_dwarf_shape.sh` | ran `types101_join.py`; step 1 refused by name | `<runs>/t101/agent/logs/20260906T054643Z__t101_l1_dwarf_shape.sh.log` |
+| `t101_l3_transcripts.sh` | ran the commands §3.1, §3.4, §3.5, §3.6 and §5 paste | `<runs>/t101/agent/logs/20260906T054758Z__t101_l3_transcripts.sh.log` |
+| `t101_l4_transcripts2.sh` | ran the two source quotations §3.2 and §3.3 | `<runs>/t101/agent/logs/20260906T054822Z__t101_l4_transcripts2.sh.log` |
+| `t101_l5_guard2.sh` | the spelling guard and the zero-count check | `<runs>/t101/agent/logs/20260906T055012Z__t101_l5_guard2.sh.log` |
+| `t101_l6_transcripts3.sh` | ran the §6 memory line and the §7 guard line in their full-path form | `<runs>/t101/agent/logs/20260906T055212Z__t101_l6_transcripts3.sh.log` |
+| `t101_l7_claims.sh` | the first `check_conventions_log_claims.py --verify` over this log: 9 of 10 matched, 0 differed, 1 NOT_RERUNNABLE with cause `output_annotated` | `<runs>/t101/agent/logs/20260906T055250Z__t101_l7_claims.sh.log` |
+| `t101_l8_transcripts4.sh` | re-quoted `fold.py` at lines 82–91, the arrow-free lines that carry the claim | `<runs>/t101/agent/logs/20260906T055329Z__t101_l8_transcripts4.sh.log` |
+| `t101_l9_claims2.sh` | the final verify over this log; its tally is §11 | `<runs>/t101/agent/logs/20260906T055403Z__t101_l9_claims2.sh.log` |
 
 Lane scripts:
 `PseudoCoupHQ/Research/op_pipeline/lanes_t101/`.
@@ -379,7 +379,7 @@ would have had to be invented.
 
 `check_conventions_log_claims.py --verify --timeout 20` over this log,
 run from the t101 instance by lane `t101_l9_claims2.sh`. Lane log, host
-path: `~/AirlockRuns/t101/agent/logs/20260906T055403Z__t101_l9_claims2.sh.log`.
+path: `<runs>/t101/agent/logs/20260906T055403Z__t101_l9_claims2.sh.log`.
 
 | outcome | count |
 |---|---|

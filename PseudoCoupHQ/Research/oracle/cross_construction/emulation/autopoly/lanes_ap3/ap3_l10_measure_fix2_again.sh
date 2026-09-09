@@ -21,6 +21,6 @@
 # neither is a register family, which is the arrival-contract question
 # already awaiting the owner.  Flagged, not worked around.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 python3 autopoly3.py measure 'no setter row to compose'
 echo "done"

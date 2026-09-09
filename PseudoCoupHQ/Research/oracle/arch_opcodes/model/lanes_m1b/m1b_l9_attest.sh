@@ -12,6 +12,6 @@
 # this command peaked at 83 MB. Peak RSS printed by the script.
 set -euo pipefail
 echo "[1/1] task m1b: model_table.py attest"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py attest
 echo "[1/1] done"

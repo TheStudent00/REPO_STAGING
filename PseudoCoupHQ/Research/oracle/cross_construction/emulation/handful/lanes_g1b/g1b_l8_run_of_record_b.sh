@@ -30,7 +30,7 @@
 # 466,868 kB on the forty runs, 439,916 kB on the re-poses and
 # 257,372 kB on the composition step.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/6] task g1b: handful.py primitive3b"
 python3 $H/handful/handful.py primitive3b
 echo "[2/6] task g1b: handful.py run3b"

@@ -35,7 +35,7 @@ every json; log (next free number, check right before writing); verifier
 lane; PROGRESS on the autopoly node; sync-back; instance down. Memory:
 bound 6g inside the cap, sample the first 20 runs, paste peak RSS, named
 abort `ABORT_MEMORY_AP3`. Stop rules per LAW; never delete anything under
-`~/AirlockRuns/` or `Airlock/` on either machine — a lane
+`<runs>/` or `Airlock/` on either machine — a lane
 name that collides gets a new name. Reply with the per-target table, the
 all-four count and share (three passes), the change table, the x87 probe
 result, the `check` tally, the fix-1 measurement, the tally, the two lists.

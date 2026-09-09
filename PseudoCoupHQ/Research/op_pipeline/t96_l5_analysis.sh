@@ -2,7 +2,7 @@
 # TASK 96 round 19, lane 5.  Separate the form change from the
 # instrument change, and dump the three wrapped texts per unit.
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "[1/5] the analysis"
 python3 t96_analysis.py 2>&1 | tail -20

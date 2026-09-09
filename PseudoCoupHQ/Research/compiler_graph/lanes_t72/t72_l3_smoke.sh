@@ -2,7 +2,7 @@
 # t72 lane 3 — smoke ONE probe through the widened diary compiler, with
 # $WORK expanded. Measures diary size per compile before 590 are run.
 set -euo pipefail
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 rm -rf /work/probe && mkdir -p /work/probe /work/out
 cd /work/probe
 printf 'module probe\n\ngo 1.28\n' > go.mod

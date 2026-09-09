@@ -11,5 +11,5 @@
 # Regenerates compiler_operators_used.json / .md (all six rows).
 set -euo pipefail
 echo "[1/1] compiler_operators_used.py (all six rows, swift comparison/equality node-type fix)"
-python3 /projects/PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.py
+python3 PseudoCoupHQ/Research/oracle/compiler_units/compiler_operators_used.py
 echo "[1/1] done"

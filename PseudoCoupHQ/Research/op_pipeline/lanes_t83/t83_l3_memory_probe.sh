@@ -6,7 +6,7 @@
 # resume state owes, with a hard 5 GB address-space bound that names
 # the unit that asks for more.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "======== [1/2] the next shard the resume owes ========"
 python3 -c "

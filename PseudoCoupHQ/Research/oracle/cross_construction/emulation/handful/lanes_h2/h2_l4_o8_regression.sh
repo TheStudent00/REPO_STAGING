@@ -19,11 +19,11 @@
 # 83,096 kB when task o8 ran it.
 set -euo pipefail
 echo "[1/5] task h2: task o8's population, into the scratch copy"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py population
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py population
 echo "[2/5] task h2: task o8's 243 rows, into the scratch copy"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py run
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py run
 echo "[3/5] task h2: task o8's report, into the scratch copy"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py report
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py report
 echo "[4/5] task h2: the four totals, counted off the scratch results"
-python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py totals
+python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py totals
 echo "[5/5] done"

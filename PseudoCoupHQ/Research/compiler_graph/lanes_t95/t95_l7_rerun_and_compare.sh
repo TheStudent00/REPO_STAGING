@@ -49,8 +49,8 @@
 # No token takes part in the pairing.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
-GR=/projects/PseudoCoupGraphs
+CG=PseudoCoupHQ/Research/compiler_graph
+GR=PseudoCoupGraphs
 export HOME=/work/t95home
 mkdir -p "$HOME/Programming"
 ln -sfn /sources "$HOME/Programming/Sources"
@@ -72,7 +72,7 @@ done
 say "[3/6] the four-state marking, per region, every count with its population"
 python3 - <<'PY'
 import json, os, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 ORDER = ("names_its_opcode", "one_static_hop", "emits_opcode_dynamic",
          "emits_nothing")
@@ -116,7 +116,7 @@ PY
 say "[4/6] go and swift -- the emitter declarations, with the role read off each"
 python3 - <<'PY'
 import json, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 for lang in ("go", "cpp", "rust", "swift"):
     doc = json.load(open(graphs_home.path("arch_opcode_nodes_%s.json" % lang)))
@@ -133,7 +133,7 @@ PY
 say "[5/6] swift and rust -- every call site, printed whole; these are small"
 python3 - <<'PY'
 import json, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 for lang in ("rust", "swift"):
     doc = json.load(open(graphs_home.path("arch_opcode_nodes_%s.json" % lang)))
@@ -153,9 +153,9 @@ PY
 say "[6/6] the static emitter set against what RUNNING the compiler showed"
 python3 - <<'PY'
 import json, os, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
-HERE = "/projects/PseudoCoupHQ/Research/compiler_graph"
+HERE = "PseudoCoupHQ/Research/compiler_graph"
 
 for lang, coverage_name in (("go", "coverage_go_files.json"),
                             ("cpp", "coverage_cpp_files.json")):

@@ -330,7 +330,7 @@ claim, so first: which side of the wall this ran on.
 $ ls -d /work
 ls: cannot access '/work': No such file or directory
 $ hostname
-<host>
+<user>
 ```
 
 `/work` is the container's build root — the corpus's own refusal texts

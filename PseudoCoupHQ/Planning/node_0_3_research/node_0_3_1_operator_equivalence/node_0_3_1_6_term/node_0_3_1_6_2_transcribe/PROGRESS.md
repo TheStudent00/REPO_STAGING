@@ -65,7 +65,7 @@ status: living
   identical over three shards, with the same four go records differing
   under the bound TWICE and unbounded ONCE, so the difference is the
   machine and not the bound — **done**. Evidence: `term66_bounded.py`,
-  `~/AirlockRuns/t83/agent/logs/20260904T184356Z__t83_l9_zero_regression.sh.log`,
+  `<runs>/t83/agent/logs/20260904T184356Z__t83_l9_zero_regression.sh.log`,
   `...T184519Z__t83_l11_unbounded_control.sh.log`,
   `...T185115Z__t83_l14_ceiling_throughput.sh.log`;
   `PseudoCoupHQ/DevComms/log_189_task83_term_pool_canon40.md` §2.7–§2.10.
@@ -88,7 +88,7 @@ status: living
   `Term.transcribe` records an exception raised while building a row as
   a hole. **term66 over canon40 is NOT COMPLETE and does not fit the
   round's stated 6 GB cap** — **blocked, flagged for the owner**. Evidence:
-  `~/AirlockRuns/t83/agent/logs/20260904T193541Z__t83_l18_hard_shard_ceilings.sh.log`,
+  `<runs>/t83/agent/logs/20260904T193541Z__t83_l18_hard_shard_ceilings.sh.log`,
   `...T194034Z__t83_l19_hard_shard_safety.sh.log`;
   `PseudoCoupHQ/DevComms/log_189_task83_term_pool_canon40.md` §3, §7.2.
 - 2026-09-04: the cost located and priced with its population: **3,927
@@ -102,7 +102,7 @@ status: living
   3,927** — the other 3,895 are in the 322 inputs still to walk —
   **done** (the measurement; the consequence is the blocker above).
   Evidence: `probe83d_callee_population.json`,
-  `~/AirlockRuns/t83/agent/logs/20260904T185651Z__t83_l15_term66_full.sh.log`;
+  `<runs>/t83/agent/logs/20260904T185651Z__t83_l15_term66_full.sh.log`;
   `PseudoCoupHQ/DevComms/log_189_task83_term_pool_canon40.md` §3.1, §3.4.
 - 2026-09-04: the store rolled back to the handoff state. The eight
   shards this session wrote (569 records) are preserved byte for byte
@@ -110,13 +110,13 @@ status: living
   removed from `term66_store` and `term66_state.json`;
   `term66_store` is again 10 shards / 2,132 records / 0 records naming
   a memory failure — **done**. Evidence:
-  `~/AirlockRuns/t83/agent/logs/20260904T195958Z__t83_l20_rollback.sh.log`;
+  `<runs>/t83/agent/logs/20260904T195958Z__t83_l20_rollback.sh.log`;
   `PseudoCoupHQ/DevComms/log_189_task83_term_pool_canon40.md` §3.5, §9.
 - 2026-09-04: the unmodified `check_no_spelling_keys.py` over every
   JSON artifact task 83 wrote, ONE process: **27 paths, 27 PASS, 0
   FAIL, exit 0, `grep -c exempt` over the guard's own output 0** —
   **done**. Evidence: `guard83_term_pool_transcript.txt`,
-  `~/AirlockRuns/t83/agent/logs/20260904T200124Z__t83_l22_guard.sh.log`;
+  `<runs>/t83/agent/logs/20260904T200124Z__t83_l22_guard.sh.log`;
   `PseudoCoupHQ/DevComms/log_189_task83_term_pool_canon40.md` §5.
 - 2026-09-05: the cost task 83 priced RE-ATTRIBUTED, and the walk
   finished. Task 83 measured `op_units2_c_c0004` at **1,112 s for 24
@@ -128,7 +128,7 @@ status: living
   **`term66_run.one_unit` unedited** from a pristine parent that forks
   one sub-process per unit; the same 24 records took **13.4 s**, a
   factor of 83 — **done**. Evidence: `probe97a_unit_cost.json`,
-  `~/AirlockRuns/t97/agent/logs/20260905T070502Z__t97_l1_sample.sh.log`;
+  `<runs>/t97/agent/logs/20260905T070502Z__t97_l1_sample.sh.log`;
   `PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md` §2.
 - 2026-09-05: PASS 1 over the 322 inputs task 83 left, at the ordinary
   budget (per-unit ceiling 1,536 MB, per-unit wall clock 120 s enforced
@@ -137,7 +137,7 @@ status: living
   in 581.7 s**; the six slice parents peaked at 69,520 to 75,764 kB
   against a stated 6 GB bound, and `ABORT_MEMORY_T97` never fired —
   **done**. Evidence: `term97_flagged_slice0..5.json`,
-  `~/AirlockRuns/t97/agent/logs/20260905T071105Z__t97_l3_pass1.sh.log`;
+  `<runs>/t97/agent/logs/20260905T071105Z__t97_l3_pass1.sh.log`;
   `PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md` §3.
 - 2026-09-05: PASS 2 over everything pass 1 flagged, per the owner's rule of
   2026-09-04. Leg a at 4,096 MB / 1,800 s, leg b at 18,432 MB / 3,600
@@ -147,8 +147,8 @@ status: living
   larger budget bought the layer-5 key, not a different answer —
   **done**. Evidence: `term97_pass2_a_slice0..3.json`,
   `term97_pass2_b_slice0.json`,
-  `~/AirlockRuns/t97/agent/logs/20260905T072358Z__t97_l4_pass2.sh.log`,
-  `~/AirlockRuns/t97/agent/logs/20260905T094242Z__t97_l6_pass2_residue.sh.log`;
+  `<runs>/t97/agent/logs/20260905T072358Z__t97_l4_pass2.sh.log`,
+  `<runs>/t97/agent/logs/20260905T094242Z__t97_l6_pass2_residue.sh.log`;
   `PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md` §4.
 - 2026-09-05: THE CONTROL — does the larger budget change an answer the
   ordinary budget already produced? Every 100th stored record re-run at
@@ -157,7 +157,7 @@ status: living
   host and the 322 walked here, so task 83's flag that the store was
   not homogeneous (4 of 241 differing, 1 of 241 changing state) does
   not reproduce — **done**. Evidence: `term97_control.json`,
-  `~/AirlockRuns/t97/agent/logs/20260905T094744Z__t97_l7_finalize_and_control.sh.log`;
+  `<runs>/t97/agent/logs/20260905T094744Z__t97_l7_finalize_and_control.sh.log`;
   `PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md` §4.4, §9.3.
 - 2026-09-05: the store as this round leaves it: **332 shards, 30,280
   records of the 30,324 units canon40 proves (99.855%)**, and
@@ -178,5 +178,5 @@ status: living
   runtime-callee row in canon40** — task 78's corrected destination
   rule landing. The consistency line is **0** — **done**. Evidence:
   `audit66.json`,
-  `~/AirlockRuns/t97/agent/logs/20260905T095120Z__t97_l10_downstream_partial.sh.log`;
+  `<runs>/t97/agent/logs/20260905T095120Z__t97_l10_downstream_partial.sh.log`;
   `PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md` §5.

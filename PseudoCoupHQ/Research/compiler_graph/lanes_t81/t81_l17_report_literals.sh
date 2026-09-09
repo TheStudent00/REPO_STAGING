@@ -3,7 +3,7 @@
 # artifacts themselves so no figure in log_190 is retyped from notes.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 cd "$REPO"
 
 say "[1/6] one instrumented body, LITERAL, in the built tree"
@@ -23,7 +23,7 @@ cut -f2 diaries/cpp/op_0.txt | grep -c '^op_0$'
 say "[4/6] the ten files with the most never-visited bodies, joint join"
 python3 - <<'PY'
 import json
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 s = json.load(open(REPO + '/coverage_cpp_summary.json'))
 rows = list(s['never_visited_by_file'].items())
 print('   never-visited bodies : %d over %d files, from a population of '
@@ -40,7 +40,7 @@ PY
 say "[5/6] one super_ops candidate, LITERAL, from super_ops_cpp.json"
 python3 - <<'PY'
 import json
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 payload = json.load(open(REPO + '/super_ops_cpp.json'))
 print('   parameters : %s' % json.dumps(payload['parameters']))
 print('   populations: %s' % json.dumps(payload['populations']))
@@ -67,7 +67,7 @@ PY
 say "[6/6] one STRICT match, LITERAL, from super_ops_comparison_cpp.json"
 python3 - <<'PY'
 import json
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 payload = json.load(open(REPO + '/super_ops_comparison_cpp.json'))
 print('   what_this_join_is : %s' % payload['what_this_join_is'])
 print('   populations       : %s' % json.dumps(payload['populations']))

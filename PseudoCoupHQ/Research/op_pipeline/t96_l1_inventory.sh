@@ -1,7 +1,7 @@
 #!/bin/bash
 # TASK 96 round 19, lane 1.  Inventory only: nothing is written.
 set -x
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 echo "[1/6] the compiled population, per language, under canon40"
 python3 - <<'PY'

@@ -33,9 +33,9 @@
 # refuse its own output on failure.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
-GR=/projects/PseudoCoupGraphs
-OP=/projects/PseudoCoupHQ/Research/op_pipeline
+CG=PseudoCoupHQ/Research/compiler_graph
+GR=PseudoCoupGraphs
+OP=PseudoCoupHQ/Research/op_pipeline
 export HOME=/work/t95home
 mkdir -p "$HOME/Programming"
 ln -sfn /sources "$HOME/Programming/Sources"
@@ -44,9 +44,9 @@ cd "$CG"
 say "[1/5] the three-way split, go and cpp"
 python3 - <<'PY'
 import json, os, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
-HERE = "/projects/PseudoCoupHQ/Research/compiler_graph"
+HERE = "PseudoCoupHQ/Research/compiler_graph"
 for lang, name in (("go", "coverage_go_files.json"),
                    ("cpp", "coverage_cpp_files.json")):
     arch = json.load(open(graphs_home.path("arch_opcode_nodes_%s.json" % lang)))
@@ -100,7 +100,7 @@ PY
 say "[2/5] go -- all 57 emitter definitions, by file, with state and label"
 python3 - <<'PY'
 import json, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 doc = json.load(open(graphs_home.path("arch_opcode_nodes_go.json")))
 rows = [r for r in doc["definitions_marked"] if r["state"] != "emits_nothing"]
@@ -117,7 +117,7 @@ PY
 say "[3/5] cpp -- the emitter definitions by file, and the state-1 opcode list"
 python3 - <<'PY'
 import json, sys, collections
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graphs_home
 doc = json.load(open(graphs_home.path("arch_opcode_nodes_cpp.json")))
 rows = [r for r in doc["definitions_marked"] if r["state"] != "emits_nothing"]
@@ -139,7 +139,7 @@ md5sum "$GR"/arch_opcode_nodes_*.json "$CG"/arch_opcode_nodes_*_summary.json
 
 say "[5/5] THE GUARD -- unmodified, ONE process, over every artifact"
 md5sum "$OP/check_no_spelling_keys.py"
-git -C /projects/PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py \
+git -C PseudoCoupHQ status --porcelain Research/op_pipeline/check_no_spelling_keys.py \
   | sed 's/^/   git reports a change: /'
 echo "   (nothing above means git reports no change)"
 python3 "$OP/check_no_spelling_keys.py" \

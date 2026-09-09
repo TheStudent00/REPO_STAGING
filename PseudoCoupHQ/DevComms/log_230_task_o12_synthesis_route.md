@@ -27,7 +27,7 @@ a plain-words reading beside a literal. No gloss appears without its
 literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
 the instance. Prose names host paths.
 
 ---
@@ -137,13 +137,13 @@ fresh (`o12_l7_run_all.sh`, LITERAL: `python3 synthesize.py run`, no
 embedded copy of the admissibility logic in the lane script itself),
 and the current file on disk carries the corrected functions,
 **LITERAL**, run inside the instance
-(`~/AirlockRuns/o12/agent/logs/20260907T134106Z__o12_l12_evidence_fixed.sh.log`,
-block `[2/9]`; the lane sets `SYN=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis`
+(`<runs>/o12/agent/logs/20260907T134106Z__o12_l12_evidence_fixed.sh.log`,
+block `[2/9]`; the lane sets `SYN=PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis`
 and every command below is quoted with that path expanded, exactly as
 the shell ran it):
 
 ```
-$ sed -n '394,413p' /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesize.py
+$ sed -n '394,413p' PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesize.py
 def leaf_admissible():
     """a target's input may enter any component slot of the bucket: one
     bucket is one arrival register width.  See
@@ -180,7 +180,7 @@ lines 394–413) and matches what the lanes ran.
 `sed`, run inside the instance (same evidence lane, block `[3/9]`):
 
 ```
-$ sed -n '\%^## 1\. The population%,\%^## 3a\.%p' /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md | sed '\%^## 3a\.%d'
+$ sed -n '\%^## 1\. The population%,\%^## 3a\.%p' PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md | sed '\%^## 3a\.%d'
 ## 1. The population, counted at each setup filter
 
 | setup | targets |
@@ -241,7 +241,7 @@ about the pool's c coverage, not a CEGIS failure.
 `[4/9]`):
 
 ```
-$ sed -n '\%^## 5\. The compositions found%,$p' /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md
+$ sed -n '\%^## 5\. The compositions found%,$p' PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md
 ## 5. The compositions found
 
 | entry | x | x unit | length | composition | rounds | counterexamples | wall s |
@@ -280,7 +280,7 @@ ran after the sample.
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess30000ms.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess30000ms.json'))
 tks = {}
 for r in d['results']:
     tk = r.get('type_key')
@@ -299,7 +299,7 @@ total 30
 `[6/9]`):
 
 ```
-$ sed -n '\%^## 3a\.%,\%^## 4\.%p' /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md | sed '\%^## 4\.%d'
+$ sed -n '\%^## 3a\.%,\%^## 4\.%p' PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md | sed '\%^## 4\.%d'
 ## 3a. What raising the guess ceiling changed
 
 The CHECK is at the gate's 3000 ms throughout.  Only the GUESS ceiling moved.  Each column is one sample run over the same thirty targets.
@@ -356,7 +356,7 @@ reason to distrust.
 `[7/9]`):
 
 ```
-$ sed -n '\%^## 4\. Agreement%,\%^## 5\.%p' /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md | sed '\%^## 5\.%d'
+$ sed -n '\%^## 4\. Agreement%,\%^## 5\.%p' PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md | sed '\%^## 5\.%d'
 ## 4. Agreement with the compiler route (task o7)
 
 | measure | count |
@@ -373,7 +373,7 @@ $ sed -n '\%^## 4\. Agreement%,\%^## 5\.%p' /projects/PseudoCoupHQ/Research/orac
 ```
 $ python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_results.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_results.json'))
 for r in d['agreement']:
     if r['both_proved']:
         print(r['entry_id'], r['x_lang'], r['x_unit'],
@@ -414,7 +414,7 @@ comparison, and this log does not extend it.
 **LITERAL** (attribution — the `AirlockRuns` log tree is not mounted
 into the sandbox, so this is cited by path rather than re-run),
 `o12_l7_run_all.sh`'s own log,
-`~/AirlockRuns/o12/agent/logs/20260907T042132Z__o12_l7_run_all.sh.log`:
+`<runs>/o12/agent/logs/20260907T042132Z__o12_l7_run_all.sh.log`:
 
 ```
    run: 206 done in 466 s; collector peak 32100 kB
@@ -425,7 +425,7 @@ PEAK_RSS_KB(children)=305060
 `[9/9]`), the stated bound, unchanged by this session:
 
 ```
-$ sed -n '\%named abort ABORT_MEMORY_O12%,+1p' /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesize.py
+$ sed -n '\%named abort ABORT_MEMORY_O12%,+1p' PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesize.py
 checked after every target, named abort ABORT_MEMORY_O12 at 6 GB
 resident; one forked sub-process per target under RLIMIT_AS 2,048 MB
 ```
@@ -451,7 +451,7 @@ than a command; superseded), `o12_l9_probe.sh` (a throwaway
 reachability check), `o12_l10_evidence.sh` (a first attempt at real
 re-run commands — 5 DIFFERS, because it read files by bare relative
 name while the checker's own working directory is
-`/projects/PseudoCoupHQ`, not this folder; superseded),
+`PseudoCoupHQ`, not this folder; superseded),
 `o12_l11_claims_verify_again.sh` (checker pass 2, over the log as
 `o12_l10_evidence.sh` left it — the 5 DIFFERS and 7 REFUSED that drove
 the fix), `o12_l12_evidence_fixed.sh` (`o12_l10_evidence.sh`'s
@@ -470,7 +470,7 @@ trailing `echo`, not the guard's own output), and
 12 pastes: 10 MATCHES, 0 DIFFERS). **LITERAL** (attribution — the log
 tree is not mounted, so this table is cited by path), lane scripts
 under `.../synthesis/lanes_o12/`, logs under
-`~/AirlockRuns/o12/agent/logs/`:
+`<runs>/o12/agent/logs/`:
 
 | lane | log file | what it did |
 |---|---|---|
@@ -497,7 +497,7 @@ by this closing session inside `o12_l12_evidence_fixed.sh`.
 **LITERAL**, run inside the instance (block `[9/9]`):
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_plan.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess3000ms.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess30000ms.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_run_guess30000ms.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_results.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_plan.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess3000ms.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess30000ms.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_run_guess30000ms.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_results.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS synthesis_plan.json -- no operator token in any key, grouping, pairing or row structure
 PASS synthesis_sample_guess3000ms.json -- no operator token in any key, grouping, pairing or row structure
@@ -515,14 +515,14 @@ and `synthesis_report.md`, **LITERAL**, run inside the instance (tail
 of block `[9/9]`):
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesize.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_plan.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess3000ms.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess30000ms.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_run_guess30000ms.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_results.json
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesize.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_plan.json:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess3000ms.json:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess30000ms.json:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_run_guess30000ms.json:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_results.json:0
+$ grep -c exempt PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesize.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_plan.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess3000ms.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess30000ms.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_run_guess30000ms.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_results.json
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesize.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_plan.json:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess3000ms.json:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_sample_guess30000ms.json:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_run_guess30000ms.json:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_results.json:0
 ```
 
 **GLOSS.** Zero everywhere, `synthesize.py` and `synthesis_report.md`
@@ -626,7 +626,7 @@ not check section 12's own text** — the same bootstrapping gap o7's
 log recorded in its own section 13: nothing in sections 1–11 changed
 after pass 4, only this section was added.
 
-**LITERAL**, `~/AirlockRuns/o12/agent/logs/20260907T134532Z__o12_l14_claims_verify_fourth.sh.log`:
+**LITERAL**, `<runs>/o12/agent/logs/20260907T134532Z__o12_l14_claims_verify_fourth.sh.log`:
 
 ```
 ## log_230_task_o12_synthesis_route.md

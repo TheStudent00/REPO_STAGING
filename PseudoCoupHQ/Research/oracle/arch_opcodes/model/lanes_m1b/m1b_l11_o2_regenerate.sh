@@ -16,7 +16,7 @@ set -euo pipefail
 echo "[1/3] task m1b: single_opcode_groups before the regeneration"
 python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json'))
 total = 0
 for lang in sorted(d['single_opcode_groups']):
     n = len(d['single_opcode_groups'][lang]['narrow'])
@@ -25,12 +25,12 @@ for lang in sorted(d['single_opcode_groups']):
 print('   narrow groups in all: %d' % total)
 "
 echo "[2/3] task m1b: regenerate single_opcode_units.json/.md"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes
+cd PseudoCoupHQ/Research/oracle/arch_opcodes
 python3 single_opcode_units.py
 echo "[3/3] task m1b: the unmodified spelling guard, and the groups after"
 python3 -c "
 import json
-d = json.load(open('/projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json'))
+d = json.load(open('PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json'))
 total = 0
 for lang in sorted(d['single_opcode_groups']):
     total = total + len(d['single_opcode_groups'][lang]['narrow'])
@@ -44,7 +44,7 @@ for lang in d['zero_opcode_examples']:
                 raise SystemExit('a zero-opcode example with no lang field')
 print('   zero-opcode example records, all carrying lang: %d' % n)
 "
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-  /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json \
-  /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json || true
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+  PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json \
+  PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json || true
 echo "[3/3] done"

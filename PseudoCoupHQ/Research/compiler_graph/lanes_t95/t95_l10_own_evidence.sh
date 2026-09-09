@@ -27,33 +27,33 @@ run() { echo; echo "\$ $*"; eval "$@" 2>&1; }
 say() { echo; echo "======== $* ========"; }
 
 say "[1/8] the four-state marking, and that the four states partition"
-run "python3 -c \"import json;d={l:json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l)) for l in ('go','cpp','rust','swift')};[print(l, d[l]['by_state'], 'sum', sum(d[l]['by_state'].values()), 'population', d[l]['populations']['definitions']) for l in d]\""
+run "python3 -c \"import json;d={l:json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l)) for l in ('go','cpp','rust','swift')};[print(l, d[l]['by_state'], 'sum', sum(d[l]['by_state'].values()), 'population', d[l]['populations']['definitions']) for l in d]\""
 
 say "[2/8] the emitter census and the call sites, per region"
-run "python3 -c \"import json;[print(l, json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['emitter_census']) for l in ('go','cpp','rust','swift')]\""
-run "python3 -c \"import json;[print(l, json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['by_state_of_call_sites']) for l in ('go','cpp','rust','swift')]\""
+run "python3 -c \"import json;[print(l, json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['emitter_census']) for l in ('go','cpp','rust','swift')]\""
+run "python3 -c \"import json;[print(l, json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['by_state_of_call_sites']) for l in ('go','cpp','rust','swift')]\""
 
 say "[3/8] the shrink"
-run "python3 -c \"import json;[print(l, json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['shrink']) for l in ('go','cpp','rust','swift')]\""
+run "python3 -c \"import json;[print(l, json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['shrink']) for l in ('go','cpp','rust','swift')]\""
 
 say "[4/8] the inverse index, and go's 24 x86 constants recounted from the artifact"
-run "python3 -c \"import json;[print(l, json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['distinct_arch_opcodes'], json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['distinct_pseudo_opcodes']) for l in ('go','cpp','rust','swift')]\""
-run "python3 -c \"import json;d=json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_go.json'));s=[c for c in d['call_sites'] if c['emitter']=='Prog' and c['state']=='names_its_opcode' and c['opcodes']];o=sorted({k['text'] for c in s for k in c['opcodes']});print(len(s),'Prog sites name an arch constant;',len(o),'distinct:');print(' '.join(o))\""
+run "python3 -c \"import json;[print(l, json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['distinct_arch_opcodes'], json.load(open('PseudoCoupGraphs/arch_opcode_nodes_%s.json'%l))['distinct_pseudo_opcodes']) for l in ('go','cpp','rust','swift')]\""
+run "python3 -c \"import json;d=json.load(open('PseudoCoupGraphs/arch_opcode_nodes_go.json'));s=[c for c in d['call_sites'] if c['emitter']=='Prog' and c['state']=='names_its_opcode' and c['opcodes']];o=sorted({k['text'] for c in s for k in c['opcodes']});print(len(s),'Prog sites name an arch constant;',len(o),'distinct:');print(' '.join(o))\""
 
 say "[5/8] swift -- the one call site where the compiler spells an instruction"
-run "python3 -c \"import json;d=json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_swift.json'));[print(c['file']+':'+str(c['line']), c['state'], c['argument']['text'], [k['text'] for k in c['opcodes']]) for c in d['call_sites']]\""
+run "python3 -c \"import json;d=json.load(open('PseudoCoupGraphs/arch_opcode_nodes_swift.json'));[print(c['file']+':'+str(c['line']), c['state'], c['argument']['text'], [k['text'] for k in c['opcodes']]) for c in d['call_sites']]\""
 
 say "[6/8] rust -- the named frontier, quoted from the artifact"
-run "python3 -c \"import json;d=json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_rust.json'));print(d['unmeasured_by_absence_of_an_emitter'])\""
+run "python3 -c \"import json;d=json.load(open('PseudoCoupGraphs/arch_opcode_nodes_rust.json'));print(d['unmeasured_by_absence_of_an_emitter'])\""
 
 say "[7/8] the static emitter set against what running the compiler showed"
-run "python3 -c \"import json;a=json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_go.json'));c=json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/coverage_go_files.json'));e={r['id'] for r in a['definitions_marked'] if r['state']!='emits_nothing'};v=set(c['per_def_visitors']);n={r['id'] for r in c['never_visited_rows']};print('go emitters',len(e),'entered',len(v),'both',len(e\\&v),'emitters instrumented but entered by none',len(e\\&n),'emitters never instrumented',len(e-v-n),'entered emitting nothing',len(v-e))\""
-run "python3 -c \"import json;a=json.load(open('/projects/PseudoCoupGraphs/arch_opcode_nodes_cpp.json'));c=json.load(open('/projects/PseudoCoupHQ/Research/compiler_graph/coverage_cpp_files.json'));e={r['id'] for r in a['definitions_marked'] if r['state']!='emits_nothing'};v=set(c['per_def_visitors']);n={r['id'] for r in c['never_visited_rows']};print('cpp emitters',len(e),'entered',len(v),'both',len(e\\&v),'emitters instrumented but entered by none',len(e\\&n),'emitters never instrumented',len(e-v-n),'entered emitting nothing',len(v-e))\""
+run "python3 -c \"import json;a=json.load(open('PseudoCoupGraphs/arch_opcode_nodes_go.json'));c=json.load(open('PseudoCoupHQ/Research/compiler_graph/coverage_go_files.json'));e={r['id'] for r in a['definitions_marked'] if r['state']!='emits_nothing'};v=set(c['per_def_visitors']);n={r['id'] for r in c['never_visited_rows']};print('go emitters',len(e),'entered',len(v),'both',len(e\\&v),'emitters instrumented but entered by none',len(e\\&n),'emitters never instrumented',len(e-v-n),'entered emitting nothing',len(v-e))\""
+run "python3 -c \"import json;a=json.load(open('PseudoCoupGraphs/arch_opcode_nodes_cpp.json'));c=json.load(open('PseudoCoupHQ/Research/compiler_graph/coverage_cpp_files.json'));e={r['id'] for r in a['definitions_marked'] if r['state']!='emits_nothing'};v=set(c['per_def_visitors']);n={r['id'] for r in c['never_visited_rows']};print('cpp emitters',len(e),'entered',len(v),'both',len(e\\&v),'emitters instrumented but entered by none',len(e\\&n),'emitters never instrumented',len(e-v-n),'entered emitting nothing',len(v-e))\""
 
 say "[8/8] the guard transcript, and the guard's own md5"
-run "md5sum /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py"
-run "cat /projects/PseudoCoupHQ/Research/compiler_graph/guard_task95.txt"
-run "grep -c exempt /projects/PseudoCoupHQ/Research/compiler_graph/guard_task95.txt"
-run "md5sum /projects/PseudoCoupGraphs/arch_opcode_nodes_go.json /projects/PseudoCoupGraphs/arch_opcode_nodes_cpp.json /projects/PseudoCoupGraphs/arch_opcode_nodes_rust.json /projects/PseudoCoupGraphs/arch_opcode_nodes_swift.json"
+run "md5sum PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py"
+run "cat PseudoCoupHQ/Research/compiler_graph/guard_task95.txt"
+run "grep -c exempt PseudoCoupHQ/Research/compiler_graph/guard_task95.txt"
+run "md5sum PseudoCoupGraphs/arch_opcode_nodes_go.json PseudoCoupGraphs/arch_opcode_nodes_cpp.json PseudoCoupGraphs/arch_opcode_nodes_rust.json PseudoCoupGraphs/arch_opcode_nodes_swift.json"
 
 say "lane 10 done"

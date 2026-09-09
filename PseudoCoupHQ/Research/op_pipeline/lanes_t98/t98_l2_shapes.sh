@@ -12,7 +12,7 @@
 # each step, so an allocation past it raises MemoryError, reported BY
 # NAME, rather than the operating system stopping the process.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 step () {
   echo

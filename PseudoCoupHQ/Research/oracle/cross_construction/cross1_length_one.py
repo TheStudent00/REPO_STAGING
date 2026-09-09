@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """cross1_length_one.py -- task o1, deliverable A.
 
-Reads /projects/PseudoCoupHQ/Research/op_pipeline/the_pool5.json and
+Reads PseudoCoupHQ/Research/op_pipeline/the_pool5.json and
 computes, for every ORDERED pair of languages (x, y) among the
 languages the pool actually holds: over all pool entries carrying a
 y member, which are BUILT (the same entry also carries an x member,
@@ -19,8 +19,8 @@ Writes cross1_length_one.json beside this script.
 import json
 import sys
 
-POOL_PATH = "/projects/PseudoCoupHQ/Research/op_pipeline/the_pool5.json"
-OUT_PATH = "/projects/PseudoCoupHQ/Research/oracle/cross_construction/cross1_length_one.json"
+POOL_PATH = "PseudoCoupHQ/Research/op_pipeline/the_pool5.json"
+OUT_PATH = "PseudoCoupHQ/Research/oracle/cross_construction/cross1_length_one.json"
 
 
 def load_pool():

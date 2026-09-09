@@ -17,7 +17,7 @@ node:
     name: pp
     path: Planning/CORE_0.md
     repo: PlanPlan
-    remote: https://github.com/TheStudent00/PlanPlan.git
+    remote: https://github.com/<owner>/PlanPlan.git
 ---
 
 # CORE 0 — PlanPlan

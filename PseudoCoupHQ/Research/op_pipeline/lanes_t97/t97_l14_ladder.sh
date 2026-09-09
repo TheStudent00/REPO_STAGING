@@ -7,11 +7,11 @@ python3 -c "
 import json, glob
 want = 'c/regen_1859'
 rows = []
-for p in sorted(glob.glob('/projects/PseudoCoupHQ/Research/op_pipeline/term97_flagged_slice*.json')):
+for p in sorted(glob.glob('PseudoCoupHQ/Research/op_pipeline/term97_flagged_slice*.json')):
     for r in json.load(open(p))['flagged']:
         if r['unit'] == want:
             rows.append(('pass 1', r['pass1_ceiling_mb'], r['pass1_child_peak_kb'], r['pass1_wall_seconds'], r['pass1_word']))
-for p in sorted(glob.glob('/projects/PseudoCoupHQ/Research/op_pipeline/term97_pass2_*.json')):
+for p in sorted(glob.glob('PseudoCoupHQ/Research/op_pipeline/term97_pass2_*.json')):
     for r in json.load(open(p))['rows']:
         if r['unit'] == want:
             rows.append(('pass 2', r['pass2_ceiling_mb'], r['pass2_child_peak_kb'], r['pass2_wall_seconds'], r['pass2_word']))

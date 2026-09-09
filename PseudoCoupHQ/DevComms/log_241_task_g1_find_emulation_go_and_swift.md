@@ -54,10 +54,10 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
 the instance. Prose names host paths. **The lane logs are on the
-TOWER** (`<tower-user>@<tower>`), under
-`~/AirlockRuns/g1/agent/logs/`, and every attribution
+TOWER** (`<user>@<tower>`), under
+`<runs>/g1/agent/logs/`, and every attribution
 below names one of them.
 
 | lane | what it did | log, on the tower |
@@ -205,7 +205,7 @@ in the record as a display label on a unit object (`lang`, `unit`, `n`,
 `handful3.json`:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py tally3
+$ python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py tally3
 add gpr_gpr 32               flags      SAME BYTES       c, rust
 add gpr_gpr 32               reg_rdi    DIFFERENT BYTES  c, go, rust
 addss xmm_xmm 32             reg_xmm0   DIFFERENT BYTES  c, go, rust
@@ -268,7 +268,7 @@ is a GLOSS of the raw carved body; `gate` carries the verdict and where
 it holds.
 
 ```
-$ sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ rendered%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
+$ sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ rendered%\,\\%\^\$%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
 | cell | lang | route | rendered (GLOSS) | landed | composition (GLOSS) | gate (verdict, and where it holds) | cause if refused |
 |---|---|---|---|---|---|---|---|
 | `add` gpr_gpr 32 | c | term | `((((UINT32_C(0x0)) << 32) \| (((a) + (b)))))` | LANDED_ELSEWHERE on `lea` | `lea` (+1 chaff) | PROVED_ON_SHIP -- holds on every input of every aligned row |  |
@@ -326,7 +326,7 @@ the primitive route reaches the same answer through a body that is one
 instruction instead of a term spelled out.
 
 ```
-$ sed -n \\%\^.\ cell\ .\ lang\ .\ h2\ route%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
+$ sed -n \\%\^.\ cell\ .\ lang\ .\ h2\ route%\,\\%\^\$%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
 | cell | lang | h2 route | h2 verdict | g1 route | g1 verdict |
 |---|---|---|---|---|---|
 | `add` gpr_gpr 32 | c | term | PROVED_ON_SHIP | term | PROVED_ON_SHIP |
@@ -362,7 +362,7 @@ instead. The `idiv`/c row is the one that carries the wide-rule
 evidence.
 
 ```
-$ sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ single-opcode\ rows%\,\\%\^\$%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
+$ sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ single-opcode\ rows%\,\\%\^\$%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
 | cell | lang | route | single-opcode rows at this cell | chosen row's body, LITERAL | the operator and operand types the manifest records | cause if no primitive |
 |---|---|---|---|---|---|---|
 | `add` gpr_gpr 32 | c | term | 0 |  |  | no single-opcode row of this language's own corpus classifies to this cell |
@@ -410,7 +410,7 @@ $ sed -n \\%\^.\ cell\ .\ lang\ .\ route\ .\ single-opcode\ rows%\,\\%\^\$%p /pr
 The two counts, off `handful3_primitive.json` itself:
 
 ```
-$ grep -A 2 \"counted\" /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_primitive.json
+$ grep -A 2 \"counted\" PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_primitive.json
   "counted": {
    "primitive": 8,
    "term": 32
@@ -428,7 +428,7 @@ the landings that were not LANDED.
 ## 7.1 Refusals and gate calls that did not prove
 
 ```
-$ sed -n \\%\^###\ 3.1\ Refusals%\,\\%\^###\ 3.2%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
+$ sed -n \\%\^###\ 3.1\ Refusals%\,\\%\^###\ 3.2%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
 ### 3.1 Refusals and gate calls that did not prove
 
 - `a width c has no holder for`: 2 -- sub imm_gpr 64/go [flags], sub imm_gpr 64/swift [flags]
@@ -461,7 +461,7 @@ Read as five causes, with status:
 ## 7.2 The landings that were not LANDED, by cause
 
 ```
-$ sed -n \\%\^###\ 3.2\ The\ landings%\,\\%\^##\ 5%p /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
+$ sed -n \\%\^###\ 3.2\ The\ landings%\,\\%\^##\ 5%p PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
 ### 3.2 The landings that were not LANDED, by cause
 
 - the cell's own arch opcode IS among the ones that remain; what sits beside it is what the term carries beyond the operation (2 remain): 2 -- sar cl_gpr 32/go [reg_rdi], shr cl_gpr 64/go [reg_rdi]
@@ -503,7 +503,7 @@ Read as four causes, with status:
 
 **LITERAL**, printed by lane `g1_l12_run_of_record2.sh` step [6/6], on
 the tower at
-`~/AirlockRuns/g1/agent/logs/20260909T080038Z__g1_l12_run_of_record2.sh.log`:
+`<runs>/g1/agent/logs/20260909T080038Z__g1_l12_run_of_record2.sh.log`:
 
 ```
 go: 26 spelling rows, 26 measured by a probe of this task
@@ -553,7 +553,7 @@ unable to load `libncurses.so.6`. That is not what the machine said.
 
 **LITERAL**, printed by lane `g1_l1_toolchains.sh` step [4/5], on the
 tower at
-`~/AirlockRuns/g1/agent/logs/20260909T065344Z__g1_l1_toolchains.sh.log`:
+`<runs>/g1/agent/logs/20260909T065344Z__g1_l1_toolchains.sh.log`:
 
 ```
 [4/5] task g1: swiftc at the path lane_gen.py names
@@ -616,7 +616,7 @@ write, plus `go_facts.json`, and `grep -c exempt` over every file task
 g1 added or changed.
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_primitive.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_spellings.json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.json
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_primitive.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_spellings.json PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.json
 operator inventory: 91 tokens read from probe_manifest_*.json
 PASS handful3.json -- no operator token in any key, grouping, pairing or row structure
 PASS handful3_primitive.json -- no operator token in any key, grouping, pairing or row structure
@@ -625,12 +625,12 @@ PASS go_facts.json -- no operator token in any key, grouping, pairing or row str
 ```
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_render.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/swift/swift_render.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_render.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/swift/swift_render.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md:0
+$ grep -c exempt PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_render.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/swift/swift_render.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_render.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/swift/swift_render.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md:0
 ```
 
 `grep -c` exits 1 when a count it prints is zero, which is why the lane

@@ -6,6 +6,6 @@
 # NOT_RERUNNABLE for carrying "...".
 set -euo pipefail
 echo "[1/1] the verifier over log_239, corrected"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
     --verify --timeout 20 \
-    /projects/PseudoCoupHQ/DevComms/log_239_task_h1b_composition_column.md
+    PseudoCoupHQ/DevComms/log_239_task_h1b_composition_column.md

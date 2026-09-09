@@ -12,7 +12,7 @@
 #
 # MEMORY BOUND: 6 GB resident, named abort ABORT_MEMORY_AP1.
 set -euo pipefail
-A=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py
+A=PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py
 echo "===== preflight ====="
 python3 $A preflight
 echo "===== store ====="

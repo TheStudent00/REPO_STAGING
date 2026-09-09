@@ -8,7 +8,7 @@
 # the tables are computed; the sample lane measured the same read at
 # 68,000 kB over twenty runs.
 set -euo pipefail
-cd /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
+cd PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly
 echo "[1/6] the store"
 wc -l autopoly_runs.jsonl
 echo "[2/6] the aggregate"
@@ -20,6 +20,6 @@ python3 autopoly.py tally
 echo "[5/6] the handful, reproduced"
 python3 autopoly.py reproduce
 echo "[6/6] the spelling guard, unmodified"
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_cells.json \
-    /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.json
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly_cells.json \
+    PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.json

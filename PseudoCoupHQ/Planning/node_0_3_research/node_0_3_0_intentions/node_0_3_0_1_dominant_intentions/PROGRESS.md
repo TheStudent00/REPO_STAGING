@@ -63,7 +63,7 @@ status: living
   2.3.21 zip from GitHub, unzipped to `/persist/kotlinc`) installed
   clean. swift's libncurses block resolved by symlink
   (`libncursesw.so.6.6` -> `libncurses.so.6`) since no plain
-  `libncurses6` apt package exists on the container's ubuntu 26.04
+  `libncurses6` apt package exists on the container's <os>
   (only the wide-char `libncursesw6`/`libtinfo6` variants ship) —
   this symlink is NOT persisted across container restarts and must
   be reapplied per-session until folded into the image build.

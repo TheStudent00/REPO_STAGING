@@ -19,6 +19,6 @@
 # after every language.  The four files are 4.9 MB (c), 0.9 MB (go),
 # 0.8 MB (rust) and 1.2 MB (swift), read ONE AT A TIME and dropped.
 set -euo pipefail
-H=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation
+H=PseudoCoupHQ/Research/oracle/cross_construction/emulation
 echo "[1/1] task g1b: handful.py bodies3c idiv"
 python3 $H/handful/handful.py bodies3c idiv

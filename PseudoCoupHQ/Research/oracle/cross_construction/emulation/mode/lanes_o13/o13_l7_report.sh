@@ -4,8 +4,8 @@
 # mode_run_rust.json (the 3,000 ms verdict of record) and writes
 # mode_results.json and mode_report.md.
 set -u
-M=/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
-G=/projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+M=PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode
+G=PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
 export PATH=/opt/cargo/bin:$PATH
 echo "[1/2] the report"
 cd "$M" && python3 mode.py report

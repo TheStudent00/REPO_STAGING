@@ -13,8 +13,8 @@
 # refuse its own output on failure.
 set -u
 echo "======== [1/1] check_plans.py over PseudoCoupHQ ========"
-cd /projects/PseudoCoupHQ
-python3 /projects/PlanPlan/framework/check_plans.py 2>&1 | tail -30
+cd PseudoCoupHQ
+python3 PlanPlan/framework/check_plans.py 2>&1 | tail -30
 echo "   exit: $?"
 echo
 echo "======== lane 8 finished ========"

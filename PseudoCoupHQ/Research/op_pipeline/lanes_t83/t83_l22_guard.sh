@@ -5,7 +5,7 @@
 # word inside "exemption".  The heading now says "carve-out", nothing
 # else changed, and the count is pasted again.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 echo "[1/4] the guard, one process, nothing skipped"
 python3 guard83_term_pool.py
 echo "-- exit $?"

@@ -11,6 +11,6 @@
 # TIME: the 400-cell sample ran 400 cells in 59 s (0.15 s/cell).
 set -euo pipefail
 echo "[1/1] task m1: model_table.py edges"
-cd /projects/PseudoCoupHQ/Research/oracle/arch_opcodes/model
+cd PseudoCoupHQ/Research/oracle/arch_opcodes/model
 python3 model_table.py edges
 echo "[1/1] done"

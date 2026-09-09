@@ -22,7 +22,7 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`/projects/PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
 the instance. Prose names host paths.
 
 ---
@@ -109,11 +109,11 @@ same caller-extension rescue o7's own Q3 used.
 # 3. The population, counted at each filter
 
 **LITERAL**, run in the instance
-(`~/AirlockRuns/o8/agent/logs/20260906T192555Z__o8_l7_evidence.sh.log`,
+(`<runs>/o8/agent/logs/20260906T192555Z__o8_l7_evidence.sh.log`,
 block `[1/6]`):
 
 ```
-$ sed -n '\%^## 0\. Population%,\%^## 1\.%p' /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md
+$ sed -n '\%^## 0\. Population%,\%^## 1\.%p' PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md
 ## 0. Population, at each filter
 
 | language | rows (narrow) | no proved term, skipped | valid |
@@ -157,7 +157,7 @@ population rule. All 243 remaining rows were run; the brief's ceiling
 was never approached, so no sampling was needed.
 
 The census also recorded what it held, **LITERAL**,
-`~/AirlockRuns/o8/agent/logs/20260906T191912Z__o8_l1b_population.sh.log`:
+`<runs>/o8/agent/logs/20260906T191912Z__o8_l1b_population.sh.log`:
 
 > `distinct example unit ids needed: 259`
 > `canon40 records held: 259; term66 records held: 259`
@@ -168,7 +168,7 @@ The census also recorded what it held, **LITERAL**,
 # 4. The per-x, per-mnemonic table, and its collapse (sums)
 
 **LITERAL**, block `[2/6]` of
-`~/AirlockRuns/o8/agent/logs/20260906T192555Z__o8_l7_evidence.sh.log`
+`<runs>/o8/agent/logs/20260906T192555Z__o8_l7_evidence.sh.log`
 (the full 95-row table is in `per_opcode_report.md` §1; not repeated
 here in full — its sums, §2, are):
 
@@ -199,7 +199,7 @@ The mnemonics never LANDED from any language's polyfill, **LITERAL**,
 block `[3/6]`:
 
 ```
-$ sed -n '\%^## 3\. Mnemonics%,\%^## 4\.%p' /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md
+$ sed -n '\%^## 3\. Mnemonics%,\%^## 4\.%p' PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md
 ## 3. Mnemonics never LANDED, from any language's polyfill
 
 `movb`, `mul`, `pxor`, `xorps`
@@ -349,7 +349,7 @@ from the term's more literal four-instruction statement of it.
 **LITERAL**, block `[4/6]`:
 
 ```
-$ sed -n '\%^## 5\. Renderer refusals%,\%^## 6\.%p' /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md
+$ sed -n '\%^## 5\. Renderer refusals%,\%^## 6\.%p' PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md
 ## 5. Renderer refusals, by cause
 
 - `term reads state that is not an arrival register`: 26 (c/op_40, c/op_39, c/op_30, c/op_31, c/op_33, ...)
@@ -374,10 +374,10 @@ the renderer cannot write.
 # 8. Bounds
 
 **LITERAL**, the run lane's own printed lines,
-`~/AirlockRuns/o8/agent/logs/20260906T192102Z__o8_l3_run.sh.log`:
+`<runs>/o8/agent/logs/20260906T192102Z__o8_l3_run.sh.log`:
 
 > `shared objects built; collector peak 63372 kB`
-> `wrote /projects/PseudoCoupHQ/.../per_opcode_results.json`
+> `wrote PseudoCoupHQ/.../per_opcode_results.json`
 > `collector peak 80504 kB`
 
 **GLOSS.** The stated bound: one collecting process, SEQUENTIAL (no
@@ -395,7 +395,7 @@ in 10.3 s wall clock (the lane's own `elapsed`).
 # 9. The lanes, the guard, and `grep -c exempt`
 
 Eight lanes, all `done`. **LITERAL**, the lane logs under
-`~/AirlockRuns/o8/agent/logs/`:
+`<runs>/o8/agent/logs/`:
 
 | lane | log file | what it did | exit |
 |---|---|---|---|
@@ -426,14 +426,14 @@ not modified. This is flagged again in §11 rather than re-argued.
 `[5/6]`:
 
 ```
-$ grep -c exempt /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l1b_population.sh /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l3_run.sh /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l5_report_fixed.sh /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l6_guard_results.sh /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l7_evidence.sh
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l1b_population.sh:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l3_run.sh:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l5_report_fixed.sh:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l6_guard_results.sh:0
-/projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l7_evidence.sh:2
+$ grep -c exempt PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l1b_population.sh PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l3_run.sh PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l5_report_fixed.sh PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l6_guard_results.sh PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l7_evidence.sh
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode_report.md:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l1b_population.sh:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l3_run.sh:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l5_report_fixed.sh:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l6_guard_results.sh:0
+PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/lanes/o8_l7_evidence.sh:2
 ```
 
 **GLOSS.** Zero in every produced file. The two hits in
@@ -547,7 +547,7 @@ risk of the two copies drifting apart again.
 `o8_l9_claims_verify_final.sh`, run after those fixes, **LITERAL**:
 
 ```
-$ python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 --json /projects/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/log_220_claims_final.json /projects/PseudoCoupHQ/DevComms/log_220_task_o8_per_opcode_polyfill.md
+$ python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 --json PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/log_220_claims_final.json PseudoCoupHQ/DevComms/log_220_task_o8_per_opcode_polyfill.md
 log_220_task_o8_per_opcode_polyfill.md: 15 claims extracted
 ...
    claims 15 | MATCHES 4 | DIFFERS 0 | UNVERIFIABLE 9 | REFUSED 2 | NOT_RERUNNABLE 0
@@ -573,7 +573,7 @@ verifier exit 0
 
 **TALLY: 15 claims, 4 MATCHES, 0 DIFFERS, 9 UNVERIFIABLE, 2 REFUSED,
 0 NOT_RERUNNABLE. Zero DIFFERS.** Full untruncated verifier stdout:
-`~/AirlockRuns/o8/agent/logs/20260906T193113Z__o8_l9_claims_verify_final.sh.log`.
+`<runs>/o8/agent/logs/20260906T193113Z__o8_l9_claims_verify_final.sh.log`.
 Machine-checked claims json: `Research/oracle/cross_construction/emulation/per_opcode/log_220_claims_final.json`
 (itself passes the spelling-key guard). Nothing above this ADDENDUM
 was edited after `o8_l9` ran.

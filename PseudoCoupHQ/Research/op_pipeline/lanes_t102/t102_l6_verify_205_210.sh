@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -u
-cd /projects/PseudoCoupHQ
+cd PseudoCoupHQ
 total=6
 i=0
 for log in DevComms/log_205_task_99_recording_gaps.md \
@@ -11,6 +11,6 @@ for log in DevComms/log_205_task_99_recording_gaps.md \
            DevComms/log_210_task_o4_operator_variants_by_search.md; do
   i=$((i+1))
   echo "======== [$i/$total] $log ========"
-  python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 "$log"
+  python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py --verify --timeout 20 "$log"
   echo "---- exit $? ----"
 done

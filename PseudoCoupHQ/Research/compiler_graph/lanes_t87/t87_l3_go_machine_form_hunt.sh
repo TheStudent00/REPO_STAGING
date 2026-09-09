@@ -11,17 +11,17 @@
 # comparison scope. Nothing here reads an operator field.
 set -u
 say() { echo; echo "======== $* ========"; }
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 
 say "[1/3] every artifact that might carry a go unit body, counted"
 python3 - <<'PY'
 import json, os
 stems = sorted(n[:-4] for n in os.listdir(
-    '/projects/PseudoCoupHQ/Research/compiler_graph/diaries/go')
+    'PseudoCoupHQ/Research/compiler_graph/diaries/go')
     if n.endswith('.txt'))
 want = set("go/%s" % s for s in stems)
 want_bare = set(s.replace("op_", "") for s in stems)
-HERE = '/projects/PseudoCoupHQ/Research/op_pipeline/'
+HERE = 'PseudoCoupHQ/Research/op_pipeline/'
 for name in ("canon23_units_go.json", "canon4_units_go.json",
              "tree_units3.json", "tree_units4.json",
              "tree_units_extended.json", "probe_manifest2_go.json"):
@@ -58,7 +58,7 @@ PY
 say "[2/3] tree_units3.json, the output-side miner's own input, examined"
 python3 - <<'PY'
 import json, os
-path = '/projects/PseudoCoupHQ/Research/op_pipeline/tree_units3.json'
+path = 'PseudoCoupHQ/Research/op_pipeline/tree_units3.json'
 doc = json.load(open(path))
 print("   top-level: %s" % sorted(doc)[:12])
 for key in sorted(doc):
@@ -75,7 +75,7 @@ PY
 say "[3/3] the honest denominator: how many go units exist in the corpus at all"
 python3 - <<'PY'
 import json
-doc = json.load(open('/projects/PseudoCoupHQ/Research/op_pipeline/'
+doc = json.load(open('PseudoCoupHQ/Research/op_pipeline/'
                      'canon39_wrapped_go.json'))
 print("   canon39_wrapped_go.json meta.note: %s"
       % json.dumps(doc.get("meta", {}).get("note"))[:600])

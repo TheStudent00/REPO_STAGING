@@ -11,6 +11,6 @@
 # verifier runs the log's own commands, each of which reads at most the
 # 5 MB aggregate.
 set -euo pipefail
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
+python3 PseudoCoupHQ/Research/op_pipeline/check_conventions_log_claims.py \
     --verify --timeout 20 \
-    /projects/PseudoCoupHQ/DevComms/log_243_task_ap1_autopoly_first_full_loop.md
+    PseudoCoupHQ/DevComms/log_243_task_ap1_autopoly_first_full_loop.md

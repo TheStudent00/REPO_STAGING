@@ -25,7 +25,7 @@ usage:  python3 t95_show.py <declarations <lang> | shrink | reasons
 import json
 import sys
 
-GRAPHS = "/projects/PseudoCoupGraphs"
+GRAPHS = "PseudoCoupGraphs"
 LANGUAGES = ("go", "cpp", "rust", "swift")
 
 

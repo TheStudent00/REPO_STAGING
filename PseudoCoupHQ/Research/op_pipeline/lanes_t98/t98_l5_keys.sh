@@ -5,6 +5,6 @@
 # summary field can be given its own record rather than left showing the
 # marker.
 set -u
-cd /projects/PseudoCoupHQ/Research/op_pipeline
+cd PseudoCoupHQ/Research/op_pipeline
 ( ulimit -v 6291456 ; python3 t98_render_check.py keys 14 )
 echo "-- exit $?"

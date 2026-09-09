@@ -300,7 +300,7 @@ log_138; serial execution stays (no `workers` key) — a trickle
 jams only its own instance, so the convention is ONE INSTANCE PER
 TASK, and `down` REFUSES while a lane's status is `running`
 (`--force` overrides); the default agent tree for a non-default
-instance moves OUTSIDE the checkout to `~/AirlockRuns/<name>/agent`;
+instance moves OUTSIDE the checkout to `<runs>/<name>/agent`;
 `daemon_file` is dropped after the next image build. the owner: "idc as
 long as it works for you … if its a problem we can revisit."
 Briefs: log_151.

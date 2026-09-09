@@ -19,7 +19,7 @@
 # concatenated.
 set -u
 say() { echo; echo "======== $* ========"; }
-REPO=/projects/PseudoCoupHQ/Research/compiler_graph
+REPO=PseudoCoupHQ/Research/compiler_graph
 mkdir -p "$REPO/diaries/c" "$REPO/diaries/cpp" /work/probe
 
 say "the binary under test"
@@ -35,7 +35,7 @@ say "the two inputs REPRODUCED inside the sandbox"
 # difference would mean the tracked inputs are not what the sandbox
 # produces, which is a finding, not a detail.
 rm -rf /work/repro && mkdir -p /work/repro/t81
-ln -sfn /projects/PseudoCoupHQ/Research/op_pipeline /work/op_pipeline
+ln -sfn PseudoCoupHQ/Research/op_pipeline /work/op_pipeline
 for F in graph_cpp_defs.json graph_cpp_files.json ; do
   ln -sfn "$REPO/$F" "/work/repro/$F"
 done
@@ -57,8 +57,8 @@ say "the population, RECOUNTED from the canon itself"
 # those unit ids and no others.
 python3 - <<'PY'
 import json, os
-PIPELINE = '/projects/PseudoCoupHQ/Research/op_pipeline'
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+PIPELINE = 'PseudoCoupHQ/Research/op_pipeline'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 canon = {}
 for language in ('c', 'cpp'):
     payload = json.load(open(os.path.join(
@@ -103,7 +103,7 @@ PY
 python3 - <<'PY'
 import glob, json, os, resource, subprocess, sys, time
 
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 STATE = os.path.join(REPO, 't81', 'diary_state_cpp.json')
 CLANG = '/persist/llvmbuild/bin/clang'
 CLANGXX = '/persist/llvmbuild/bin/clang++'
@@ -198,7 +198,7 @@ say "the REGENERATED c and cpp population, counted but not yet run"
 # step counts the population and prints the arithmetic; it runs nothing.
 python3 - <<'PY'
 import json, os
-STORE = ('/projects/PseudoCoupHQ/Research/op_pipeline/canon39_regen_store')
+STORE = ('PseudoCoupHQ/Research/op_pipeline/canon39_regen_store')
 counts = {}
 for name in sorted(os.listdir(STORE)):
     if not name.startswith('op_units2_'):
@@ -227,7 +227,7 @@ say "the joint directory, for the c-AND-cpp coverage join"
 # second gigabyte on disk. `Graph.diary` keys a probe by the file stem.
 python3 - <<'PY'
 import os
-REPO = '/projects/PseudoCoupHQ/Research/compiler_graph'
+REPO = 'PseudoCoupHQ/Research/compiler_graph'
 joint = os.path.join(REPO, 'diaries', 'c_and_cpp')
 os.makedirs(joint, exist_ok=True)
 made = 0
@@ -250,5 +250,5 @@ for D in c cpp c_and_cpp; do
 done
 echo "   stray pid files left behind (must be 0):"
 find "$REPO/diaries" -name '*.txt.*' | wc -l
-df -h /projects/PseudoCoupHQ | tail -1
+df -h PseudoCoupHQ | tail -1
 echo "DONE t81_l5"

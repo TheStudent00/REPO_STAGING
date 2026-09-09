@@ -24,8 +24,8 @@ import re
 
 LABEL_LINE_RE = re.compile(r'^[A-Za-z_.$][\w.$]*:$')
 
-OP_PIPELINE = "/projects/PseudoCoupHQ/Research/op_pipeline"
-OUT_DIR = "/projects/PseudoCoupHQ/Research/oracle/arch_opcodes"
+OP_PIPELINE = "PseudoCoupHQ/Research/op_pipeline"
+OUT_DIR = "PseudoCoupHQ/Research/oracle/arch_opcodes"
 
 
 def parse_mnem(insn):

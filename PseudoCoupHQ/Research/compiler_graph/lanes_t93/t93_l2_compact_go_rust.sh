@@ -24,7 +24,7 @@
 # machine-form evidence, and it is a list with no keys at all.
 set -u
 say() { echo; echo "======== $* ========"; }
-CG=/projects/PseudoCoupHQ/Research/compiler_graph
+CG=PseudoCoupHQ/Research/compiler_graph
 cd "$CG"
 mkdir -p /work/t93
 
@@ -50,7 +50,7 @@ for LANG in go rust; do
   say "[$LANG] the head read still works -- pins and counts in the first 256 KB"
   python3 - <<PY
 import sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
 import viewer_build
 head = open("/work/t93/graph_$LANG.compact.json").read(262144)
 counts = viewer_build.carve(head, "counts")
@@ -64,7 +64,7 @@ PY
   say "[$LANG] streaming the compact form back, a record at a time"
   python3 - <<PY
 import json, resource, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph_compact, graph_files_build
 def peak(): return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024.0
 for section in ("nodes", "edges", "frontier"):
@@ -86,7 +86,7 @@ done
 say "the frontier, complete, counted BOTH WAYS"
 python3 - <<'PY'
 import collections, json, sys
-sys.path.insert(0, "/projects/PseudoCoupHQ/Research/compiler_graph")
+sys.path.insert(0, "PseudoCoupHQ/Research/compiler_graph")
 import graph_compact, graph_files_build
 for lang in ("go", "rust"):
     a = collections.Counter()
@@ -102,8 +102,8 @@ for lang in ("go", "rust"):
 PY
 
 say "the guard, UNMODIFIED, over the two compact graphs, ONE process"
-md5sum /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
-python3 /projects/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
+md5sum PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py
+python3 PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py \
     /work/t93/graph_go.compact.json /work/t93/graph_rust.compact.json
 echo "   guard exit: $?"
 

@@ -599,36 +599,36 @@ process.stdout.write(out.join("\\n") + "\\n");
 
 PHP_PRELUDE = '''<?php
 
-function m($x, $w) {
+function ex_m($x, $w) {
     if ($w >= 64) { return $x; }
     return $x & ((1 << $w) - 1);
 }
 
-function s($x, $w) {
+function ex_s($x, $w) {
     if ($w >= 64) { return $x; }
     $x = $x & ((1 << $w) - 1);
     if (($x >> ($w - 1)) != 0) { return $x - (1 << $w); }
     return $x;
 }
 
-function add($a, $b, $w) {
-    if ($w < 64) { return m($a + $b, $w); }
+function ex_add($a, $b, $w) {
+    if ($w < 64) { return ex_m($a + $b, $w); }
     $lo = ($a & 0xFFFFFFFF) + ($b & 0xFFFFFFFF);
     $hi = (($a >> 32) & 0xFFFFFFFF) + (($b >> 32) & 0xFFFFFFFF)
           + (($lo >> 32) & 1);
     return (($hi & 0xFFFFFFFF) << 32) | ($lo & 0xFFFFFFFF);
 }
 
-function bneg($a, $w) {
-    return add(bnot($a, $w), 1, $w);
+function ex_bneg($a, $w) {
+    return ex_add(ex_bnot($a, $w), 1, $w);
 }
 
-function sub($a, $b, $w) {
-    return add($a, bneg($b, $w), $w);
+function ex_sub($a, $b, $w) {
+    return ex_add($a, ex_bneg($b, $w), $w);
 }
 
-function mul($a, $b, $w) {
-    if ($w < 32) { return m($a * $b, $w); }
+function ex_mul($a, $b, $w) {
+    if ($w < 32) { return ex_m($a * $b, $w); }
     $al = $a & 0xFFFFFFFF;
     $ah = ($a >> 32) & 0xFFFFFFFF;
     $bl = $b & 0xFFFFFFFF;
@@ -638,120 +638,140 @@ function mul($a, $b, $w) {
     $carry = ($ll >> 32) & 0xFFFFFFFF;
     $hi = ($al * $bh + $ah * $bl + $carry) & 0xFFFFFFFF;
     $whole = (($hi & 0xFFFFFFFF) << 32) | $lo;
-    return m($whole, $w);
+    return ex_m($whole, $w);
 }
 
-function band($a, $b, $w) { return m($a & $b, $w); }
-function bor($a, $b, $w) { return m($a | $b, $w); }
-function bxor($a, $b, $w) { return m($a ^ $b, $w); }
-function bnot($a, $w) { return m(~$a, $w); }
+function ex_band($a, $b, $w) { return ex_m($a & $b, $w); }
+function ex_bor($a, $b, $w) { return ex_m($a | $b, $w); }
+function ex_bxor($a, $b, $w) { return ex_m($a ^ $b, $w); }
+function ex_bnot($a, $w) { return ex_m(~$a, $w); }
 
-function shl($a, $n, $w) {
+function ex_shl($a, $n, $w) {
     if ($n >= $w) { return 0; }
     if ($w >= 64) { return ($a << $n); }
-    return m($a << $n, $w);
+    return ex_m($a << $n, $w);
 }
 
-function lshr($a, $n, $w) {
+function ex_lshr($a, $n, $w) {
     if ($n >= $w) { return 0; }
     if ($w >= 64) {
         if ($n == 0) { return $a; }
         return ($a >> $n) & ((1 << (64 - $n)) - 1);
     }
-    return m($a, $w) >> $n;
+    return ex_m($a, $w) >> $n;
 }
 
-function ashr($a, $n, $w) {
-    $v = s($a, $w);
+function ex_ashr($a, $n, $w) {
+    $v = ex_s($a, $w);
     $k = $n;
     if ($k >= $w) { $k = $w - 1; }
-    return m($v >> $k, $w);
+    return ex_m($v >> $k, $w);
 }
 
-function udiv($a, $b, $w) {
-    if ($w < 64) { return m(intdiv(m($a, $w), m($b, $w)), $w); }
+function ex_udiv($a, $b, $w) {
+    if ($w < 64) { return ex_m(intdiv(ex_m($a, $w), ex_m($b, $w)), $w); }
     $x = $a; $y = $b;
-    if ($y < 0) { if (uge_raw($x, $y)) { return 1; } return 0; }
+    if ($y < 0) { if (ex_uge_raw($x, $y)) { return 1; } return 0; }
     if ($x >= 0) { return intdiv($x, $y); }
-    $q = (intdiv($x >> 1, $y) << 1);
-    $r = $x - $q * $y;
-    if (uge_raw($r, $y)) { $q = $q + 1; }
+    $q = intdiv(ex_lshr($x, 1, 64), $y) << 1;
+    $r = ex_sub($x, ex_mul($q, $y, 64), 64);
+    if (ex_uge_raw($r, $y)) { $q = ex_add($q, 1, 64); }
     return $q;
 }
 
-function uge_raw($x, $y) {
+function ex_uge_raw($x, $y) {
     if (($x < 0) == ($y < 0)) { return $x >= $y; }
     return $x < 0;
 }
 
-function urem($a, $b, $w) {
-    if ($w < 64) { return m(m($a, $w) % m($b, $w), $w); }
-    $q = udiv($a, $b, 64);
-    return sub($a, mul($q, $b, 64), 64);
+function ex_urem($a, $b, $w) {
+    if ($w < 64) { return ex_m(ex_m($a, $w) % ex_m($b, $w), $w); }
+    $q = ex_udiv($a, $b, 64);
+    return ex_sub($a, ex_mul($q, $b, 64), 64);
 }
 
-function sdiv($a, $b, $w) {
-    $x = s($a, $w);
-    $y = s($b, $w);
+function ex_sdiv($a, $b, $w) {
+    $x = ex_s($a, $w);
+    $y = ex_s($b, $w);
     $q = intdiv(abs($x), abs($y));
     if (($x < 0) != ($y < 0)) { $q = -$q; }
-    return m($q, $w);
+    return ex_m($q, $w);
 }
 
-function srem($a, $b, $w) {
-    $x = s($a, $w);
-    $y = s($b, $w);
+function ex_srem($a, $b, $w) {
+    $x = ex_s($a, $w);
+    $y = ex_s($b, $w);
     $r = abs($x) % abs($y);
     if ($x < 0) { $r = -$r; }
-    return m($r, $w);
+    return ex_m($r, $w);
 }
 
-function ult($a, $b, $w) {
-    if ($w < 64) { return m($a, $w) < m($b, $w); }
-    return !uge_raw($a, $b);
+function ex_ult($a, $b, $w) {
+    if ($w < 64) { return ex_m($a, $w) < ex_m($b, $w); }
+    return !ex_uge_raw($a, $b);
 }
-function ule($a, $b, $w) {
-    if ($w < 64) { return m($a, $w) <= m($b, $w); }
-    return !uge_raw($a, $b) || $a == $b;
+function ex_ule($a, $b, $w) {
+    if ($w < 64) { return ex_m($a, $w) <= ex_m($b, $w); }
+    return !ex_uge_raw($a, $b) || $a == $b;
 }
-function ugt($a, $b, $w) { return !ule($a, $b, $w); }
-function uge($a, $b, $w) { return !ult($a, $b, $w); }
-function slt($a, $b, $w) { return s($a, $w) < s($b, $w); }
-function sle($a, $b, $w) { return s($a, $w) <= s($b, $w); }
-function sgt($a, $b, $w) { return s($a, $w) > s($b, $w); }
-function sge($a, $b, $w) { return s($a, $w) >= s($b, $w); }
-function eq($a, $b, $w) { return m($a, $w) == m($b, $w); }
-function ne($a, $b, $w) { return m($a, $w) != m($b, $w); }
+function ex_ugt($a, $b, $w) { return !ex_ule($a, $b, $w); }
+function ex_uge($a, $b, $w) { return !ex_ult($a, $b, $w); }
+function ex_slt($a, $b, $w) { return ex_s($a, $w) < ex_s($b, $w); }
+function ex_sle($a, $b, $w) { return ex_s($a, $w) <= ex_s($b, $w); }
+function ex_sgt($a, $b, $w) { return ex_s($a, $w) > ex_s($b, $w); }
+function ex_sge($a, $b, $w) { return ex_s($a, $w) >= ex_s($b, $w); }
+function ex_eq($a, $b, $w) { return ex_m($a, $w) == ex_m($b, $w); }
+function ex_ne($a, $b, $w) { return ex_m($a, $w) != ex_m($b, $w); }
 
-function cat($hi, $lo, $lw) {
-    return shl($hi, $lw, 64) | m($lo, $lw);
-}
-
-function ext($x, $hi, $lo) {
-    return m(lshr($x, $lo, 64), $hi - $lo + 1);
+function ex_cat($hi, $lo, $lw) {
+    return ex_shl($hi, $lw, 64) | ex_m($lo, $lw);
 }
 
-function sext($x, $fromw, $tow) {
-    return m(s($x, $fromw), $tow);
+function ex_ext($x, $hi, $lo) {
+    return ex_m(ex_lshr($x, $lo, 64), $hi - $lo + 1);
 }
 
-function b2f($x, $w) {
-    if ($w == 32) { return unpack("g", pack("V", m($x, 32)))[1]; }
+function ex_sext($x, $fromw, $tow) {
+    return ex_m(ex_s($x, $fromw), $tow);
+}
+
+function ex_b2f($x, $w) {
+    if ($w == 32) { return unpack("g", pack("V", ex_m($x, 32)))[1]; }
     return unpack("e", pack("P", $x))[1];
 }
 
-function f2b($f, $w) {
+function ex_f2b($f, $w) {
     if ($w == 32) { return unpack("V", pack("g", $f))[1]; }
     return unpack("P", pack("e", $f))[1];
 }
 
-function fadd($a, $b, $w) { return f2b(b2f($a, $w) + b2f($b, $w), $w); }
-function fsub($a, $b, $w) { return f2b(b2f($a, $w) - b2f($b, $w), $w); }
-function fmul($a, $b, $w) { return f2b(b2f($a, $w) * b2f($b, $w), $w); }
-function fdiv($a, $b, $w) { return f2b(b2f($a, $w) / b2f($b, $w), $w); }
-function i2f($x, $fromw, $w) { return f2b((float)s($x, $fromw), $w); }
-function u2f($x, $fromw, $w) { return f2b((float)m($x, $fromw), $w); }
-function fwiden($x, $fromw, $w) { return f2b(b2f($x, $fromw), $w); }
+function ex_fadd($a, $b, $w) { return ex_f2b(ex_b2f($a, $w) + ex_b2f($b, $w), $w); }
+function ex_fsub($a, $b, $w) { return ex_f2b(ex_b2f($a, $w) - ex_b2f($b, $w), $w); }
+function ex_fmul($a, $b, $w) { return ex_f2b(ex_b2f($a, $w) * ex_b2f($b, $w), $w); }
+function ex_fdiv($a, $b, $w) { return ex_f2b(ex_b2f($a, $w) / ex_b2f($b, $w), $w); }
+function ex_i2f($x, $fromw, $w) { return ex_f2b((float)ex_s($x, $fromw), $w); }
+function ex_u2f($x, $fromw, $w) { return ex_f2b((float)ex_m($x, $fromw), $w); }
+function ex_fwiden($x, $fromw, $w) { return ex_f2b(ex_b2f($x, $fromw), $w); }
+
+function ex_parse($text) {
+    // A DECIMAL STRING TO THE 64-BIT PATTERN IT NAMES.  php's own
+    // `intval` SATURATES at PHP_INT_MAX rather than wrapping, so a
+    // sample point at or above 2^63 would arrive as the wrong value;
+    // this builds it with the exact 64-bit helpers above instead.
+    $negative = false;
+    if (strlen($text) > 0 && $text[0] === "-") {
+        $negative = true;
+        $text = substr($text, 1);
+    }
+    $value = 0;
+    $length = strlen($text);
+    for ($i = 0; $i < $length; $i++) {
+        $digit = ord($text[$i]) - 48;
+        $value = ex_add(ex_mul($value, 10, 64), $digit, 64);
+    }
+    if ($negative) { return ex_bneg($value, 64); }
+    return $value;
+}
 '''
 
 PHP_MAIN = '''
@@ -762,7 +782,7 @@ while (($line = fgets($handle)) !== false) {
     if ($text === "") { continue; }
     $values = preg_split("/\\\\s+/", $text);
     $ints = array();
-    foreach ($values as $one) { $ints[] = intval($one); }
+    foreach ($values as $one) { $ints[] = ex_parse($one); }
     try {
         $answer = %(symbol)s(...$ints);
         if ($answer < 0) {

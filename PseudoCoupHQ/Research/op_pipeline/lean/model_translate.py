@@ -1246,7 +1246,11 @@ def load_rows():
         group = document["single_opcode_groups"][language]["narrow"]
         for index, row in enumerate(group):
             rows.append({"lang": language, "row_index": index,
-                         "mnem": row["mnemonic"],
+                         # task mn1 renamed this field to `mnem`;
+                         # `mnemonic` is task o2's older artifact,
+                         # accepted as a fallback (task ap3).
+                         "mnem": row.get("mnem",
+                                         row.get("mnemonic")),
                          "row_body_text": row["body_text"],
                          "unit": row["example_unit_id"],
                          "member_count": row["member_count"]})

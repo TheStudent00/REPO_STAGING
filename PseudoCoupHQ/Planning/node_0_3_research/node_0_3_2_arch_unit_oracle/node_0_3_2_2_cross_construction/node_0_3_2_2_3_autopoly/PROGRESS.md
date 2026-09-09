@@ -202,6 +202,64 @@ status: living
   (26 claims: 13 MATCHES, 0 DIFFERS, 9 UNVERIFIABLE, 1 REFUSED, 3
   NOT_RERUNNABLE, each non-matching outcome named with its cause in its
   section 11). Status: closed, instance `g1` down.
+- 2026-09-09: task ap2 closed — AutoPoly's loop, SECOND PASS, after the
+  six mechanical causes task ap1 counted were fixed, one cause = one fix
+  in the layer that owns it and each measured on exactly the pairs it
+  targets BEFORE the loop. THE ANSWER: the polyfill-complete set — cells
+  proved on all four compiled targets — is **144 of 253, covering 85,368
+  of the outer set's 133,044 attested ledger rows (64.17%)**, against
+  task ap1's 120 / 76,634 / 57.6%; proved on none fell from 96 cells /
+  27,011 rows / 20.3% to 66 / 16,534 / 12.43%; runs carrying a cause from
+  445 of 1,012 to 324; **runs task ap1 proved that this loop does not: 0**.
+  Per target at the destination place: rendered and compiled 199 c / 199
+  rust / 190 go / 190 swift (was 167/167/153/153); PROVED at the 3,000 ms
+  ceiling of record 156 / 159 / 160 / 152 plus 20 / 21 / 0 / 17 under the
+  caller-extension re-pose; `sat` 15 / 14 / 16 / 5; undecided 8 / 5 / 14 /
+  16; refused 54 / 54 / 63 / 63. THE SIX FIXES and what each moved of the
+  pairs it targets: (1) a literal memory operand is an arriving value —
+  the reference gives one 128-bit symbol per operand text and a load into
+  a lane reads only its low bits, so where every use lies inside 64 bits
+  it becomes a 64-bit arrival — 72 of 134 now proved (driver); (2) a flag
+  consumer's setter taken from the corpus's own flag-pair ledger rows
+  where its own cell names none — 0 of 128, AND THAT IS THE FINDING: all
+  32 cells are x87 mnemonics at `key_width` 80, and the corpus records 25
+  flag consumers, every one a `set*` or a `cmov*`, so the census answers
+  None and the cause stands unchanged (driver); (3) a 128-bit place is
+  rendered as TWO 64-bit places, low and high, each its own written place
+  for the gate, in every target — 13 of 56 and 5 of 30 now proved, the
+  rest carrying two honest new causes (the HIGH half of a whole-register
+  vector place reads an arriving xmm above bit 63, which no target can
+  receive: 40 runs) (driver); (4) a widening move's `key_width` is its
+  DESTINATION width, read from `reference.SIGN_EXTEND` / `ZERO_EXTEND` —
+  16 of 24 now proved, the eight cells that carried a null key now carry
+  one and none does (table); (5) three additive registrations in
+  `reference.py` — `cmovg` and `movswq` kept by a SEPARATE
+  `EMULATION_MNEMONICS` list (the corpus census `CORPUS_MNEMONICS` is
+  untouched at 162), and `lea`'s base slot made optional, an absent base
+  read as zero — 14 of 15 now proved; (6) task h2's normalise-before-
+  render ungated, which had silently fallen out from under `g1b`, `g1c`
+  and task ap1 (driver). GUARDS, all passing: task h2's 24 sources
+  identical; the handful's 14 places identical to task g1b's own product
+  in name, width, layer-5 text and arrival families; the four vector
+  cells untouched by fix 3; `cmovne` / `setne` composing with the setter
+  their own attestation names. The table's own counts are unchanged
+  through the regeneration except the three this task's changes make
+  (`table_mnemonics` 171→173, `translated_triples` 6,218→5,912, attested
+  rows 1,215→1,218), and the outer set is the same 253 cells over the
+  same 133,044 ledger rows. `check_L2` guarded off the stored artifact
+  (259 rows, 87 REFUSED, 153 STATED + 19 DISCREPANCY) because
+  `model_translate.py check` cannot run — log_237 §14 item 1, still open.
+  Products: `.../emulation/autopoly/autopoly2.{py,json,md}`,
+  `autopoly2_cells.json`, `autopoly2_runs.jsonl`, `src2/`, `lanes_ap2/`
+  (twenty lanes). Log:
+  `~/Programming/PseudoCoupHQ/DevComms/log_244_task_ap2_autopoly_second_pass.md`
+  (20 claims: 6 MATCHES, 0 DIFFERS, 14 UNVERIFIABLE, 0 REFUSED, 0
+  NOT_RERUNNABLE, at its fixed point over four passes). FLAGGED: the
+  brief's `LAW.md` and `task_ap1_brief.md` were never staged, so the
+  standing rules were read from `note_server_session_start_here.md` §2,
+  `CLAUDE.md` and log_243, and whatever the law says under "stop rules"
+  was not read. Status: closed, verifier zero DIFFERS, instance `ap2`
+  down.
 - 2026-09-09: task ap1 closed — AutoPoly's FIRST FULL LOOP. the owner's loop
   (`for arch_opcode_i in set_of_unique_arch_opcodes: for lang_i in {c,
   rust, go, swift}: find_emulation(arch_opcode_i)`) run over its whole

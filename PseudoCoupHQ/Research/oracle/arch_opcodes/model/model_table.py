@@ -194,6 +194,8 @@ def write_json(path, document):
 #       `FLOAT_SORT[64]` of reference.build_convert_widen
 #   reference.PACKED_FLOAT, BITWISE_128, WHOLE_MOVE    -> 128
 #   the further whole-register vector mnemonics below  -> 128
+#   reference.SIGN_EXTEND, ZERO_EXTEND (task ap2)      -> the pair's
+#       DESTINATION width, the register the widening move writes
 #   anything else                                      -> the width the
 #       row already carries (the general-register rule, unchanged)
 #
@@ -286,6 +288,42 @@ def zero_operand_widths():
 ZERO_OPERAND_WIDTH = zero_operand_widths()
 
 
+def widening_move_widths():
+    """every mnemonic that WIDENS one register into another, with the
+    width of the register it WRITES, in bits.
+
+    ADDED 2026-09-09 by task ap2, one more case of this same rule and
+    nothing else in this file.  `movslq %eax,%rdx` names two operands
+    of two different widths, so there is no single width the operand
+    text gives and `classify_line` leaves the row's `width` null: task
+    ap1's loop found eight such cells, six of them attested, and the
+    driver could not so much as format a label for them (log_243
+    section 6, 24 runs, and item 2 of its awaiting-the owner list).
+
+    THE WIDTH OF A WIDENING MOVE IS ITS DESTINATION WIDTH, which is
+    what the operation's own lane is: `movslq` reads 32 bits and the
+    thing it does -- the sign extension -- happens in 64.  It is the
+    same reading `ACCUMULATOR_WIDEN` above already gets (`cltq` is
+    `movslq` on fixed registers, and `zero_operand_widths` takes its
+    DESTINATION), so the two widening families now answer alike.
+
+    Read from `reference.SIGN_EXTEND` and `reference.ZERO_EXTEND`, the
+    builder's own tables, never typed.  An entry whose pair is None
+    (`movsx`, `movzx`, whose widths are in the operand text) is left
+    out, so such a row passes through to the general rule unchanged."""
+    out = {}
+    for table in (R.SIGN_EXTEND, R.ZERO_EXTEND):
+        for mnem in table:
+            pair = table[mnem]
+            if pair is None:
+                continue
+            out[mnem] = pair[1]
+    return out
+
+
+WIDENING_MOVE_WIDTH = widening_move_widths()
+
+
 def key_width(mnem, width):
     """THE ONE WIDTH RULE. Called on both sides of the join: on every
     sweep row and on every attested cell.
@@ -300,6 +338,8 @@ def key_width(mnem, width):
         return SCALAR_LANE_WIDTH[mnem]
     if mnem in WHOLE_REGISTER:
         return WHOLE_REGISTER_KEY_WIDTH
+    if mnem in WIDENING_MOVE_WIDTH:
+        return WIDENING_MOVE_WIDTH[mnem]
     return width
 
 

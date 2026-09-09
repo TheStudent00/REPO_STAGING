@@ -165,7 +165,16 @@ def x87_symbol(text):
     return z3.FP("x87_%s" % mangle(text), X87_SORT)
 
 
-LEA_RE = re.compile(r"^(-?0x[0-9a-f]+)?\((%\w+)(?:,(%\w+),(\d+))?\)$")
+# THE BASE REGISTER IS OPTIONAL, task ap2, 2026-09-09.  `0x0(,%rdi,8)`
+# is the same (displacement, base, index, scale) shape with the base
+# slot EMPTY, which the machine reads as a base of zero: the address is
+# displacement + index * scale.  Task ap1's loop met it 6 times, in
+# bodies a compiler emitted for a shift-by-a-constant emulation, and
+# `build_lea` refused the whole form because this expression required
+# the base (log_243 section 6).  Nothing else about the shape changed:
+# a form with neither a base nor an index is still not this shape.
+LEA_RE = re.compile(
+    r"^(-?0x[0-9a-f]+)?\((%\w+)?(?:,(%\w+),(\d+))?\)$")
 
 
 def split_operands(rest):
@@ -722,6 +731,11 @@ def build_lea(ops):
             "lea addressing form %r is not the (displacement, base, "
             "index, scale) shape this file models" % text)
     displacement, base, index, scale = hit.groups()
+    if base is None and index is None:
+        raise NotModeled(
+            "lea addressing form %r names neither a base register nor "
+            "an index register, so there is no address to compute"
+            % text)
     if base == "%rip":
         # A RIP-RELATIVE ADDRESS COMPUTATION IS THE BODY'S NEXT
         # `ripconst_<k>` (machine_state CORE, 2026-09-03, task 64).
@@ -733,14 +747,20 @@ def build_lea(ops):
         ops.write(1, cut(ops.state.rip_constant(64),
                          ops.destination_width()))
         return
-    base_family = canon.FAMILY_OF.get(base[1:])
-    if base_family is None:
-        raise NotModeled(
-            "an address computation over base register %r: this "
-            "reference has no model for the address that register "
-            "holds, only for the value a read through it returns"
-            % base)
-    address = ops.state.family_value(base_family)
+    if base is None:
+        # THE EMPTY BASE SLOT IS A BASE OF ZERO (task ap2): the form
+        # `0x0(,%rdi,8)` computes displacement + index * scale, and
+        # this is the one line that says so.
+        address = z3.BitVecVal(0, 64)
+    else:
+        base_family = canon.FAMILY_OF.get(base[1:])
+        if base_family is None:
+            raise NotModeled(
+                "an address computation over base register %r: this "
+                "reference has no model for the address that register "
+                "holds, only for the value a read through it returns"
+                % base)
+        address = ops.state.family_value(base_family)
     if index is not None:
         index_value = ops.state.family_value(
             canon.FAMILY_OF[index[1:]])
@@ -2128,6 +2148,37 @@ ARCHIVE_MNEMONICS = (
 CORPUS_MNEMONICS = CORPUS_MNEMONICS + ARCHIVE_MNEMONICS
 
 
+# THE THIRD HALF OF THE INVENTORY, added 2026-09-09 by task ap2.  The
+# bodies this reference is asked to walk are no longer only the
+# corpus's own: task h1's route COMPILES an emulation of a cell at the
+# corpus's ship flags and hands the carved body back to this file, and
+# a compiler emits, in that body, mnemonics no corpus body happens to
+# spell.  Task ap1's loop met three of them over 1,012 runs and
+# recorded each as a cause (log_243 section 6): `cmovg` 7 runs,
+# `movswq` 2 runs, and the `lea` form with no base register 6 runs.
+#
+# These two mnemonics ARE ALREADY BUILT ABOVE and are then removed by
+# `_prune`: `cmovg` by the `for suffix in CT.SUFFIX_TO_COND` loop with
+# `build_move_condition`, `movswq` by the `for mnemonic in SIGN_EXTEND`
+# loop with `build_extension` -- the same builder, the same table, the
+# condition and the two widths read from the mnemonic, exactly as their
+# siblings `cmovl` and `movslq` are.  So this list REGISTERS them; it
+# invents no meaning.
+#
+# It is a SEPARATE list and is never folded into `CORPUS_MNEMONICS`,
+# which is the corpus's own census (`acceptance57` reads its length as
+# `arch_opcodes_the_corpus_spells`) and must keep saying what the
+# corpus spells.  The opcode_table CORE's rule -- no entry is invented
+# for an opcode no body contains -- is unchanged and is what this list
+# satisfies: a body DOES contain them, and it is a compiled body of
+# this line's own emulation route.
+EMULATION_MNEMONICS = (
+    "cmovg movswq"
+).split()
+
+KEPT_MNEMONICS = CORPUS_MNEMONICS + EMULATION_MNEMONICS
+
+
 class OpcodeTable(object):
     """THE one table from mnemonic to meaning.  `Reference.simulate`
     reads it, and `term.transcribe` is meant to read the SAME object,
@@ -2245,8 +2296,10 @@ class OpcodeTable(object):
 
     def _prune(self):
         """no entry is kept for an opcode no body in the corpus
-        spells -- the opcode_table CORE's own rule."""
-        allowed = set(CORPUS_MNEMONICS)
+        spells -- the opcode_table CORE's own rule.  `KEPT_MNEMONICS`
+        is that list plus the two mnemonics a COMPILED body of this
+        line's own emulation route spells (task ap2, section above)."""
+        allowed = set(KEPT_MNEMONICS)
         for mnemonic in list(self.entries):
             if mnemonic not in allowed:
                 del self.entries[mnemonic]

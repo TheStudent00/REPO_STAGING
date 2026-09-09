@@ -437,6 +437,43 @@ def use_task_g1c():
     ABORT_NAME = "ABORT_MEMORY_G1C"
 
 
+def use_task_ap2():
+    """task ap2's entry: task g1c's route, with the six mechanical
+    causes task ap1 counted fixed.
+
+    THE FIVE THAT ARE IN THIS FILE ARE NOT GATED ON THIS NAME, and that
+    is deliberate.  A memory operand IS an arriving value, a flag
+    consumer's setter IS in the attestation, a 128-bit place IS two
+    64-bit places and the normalised term IS what the table prints --
+    for every task, not for this one.  Gating them would be the
+    half-inheritance `fixes_are_on` was written as one function to
+    prevent, and it is what let task h2's fix 1 fall out from under
+    tasks g1b, g1c and ap1 in the first place.  What the guards
+    measure is exactly that: task h2's 24 sources and task h1's
+    `cmovne` / `setne` runs come out unchanged."""
+    global TASK, ABORT_NAME
+    TASK = "ap2"
+    ABORT_NAME = "ABORT_MEMORY_AP2"
+
+
+def use_task_ap3():
+    """task ap3's entry: task ap2's route, with the two mechanical
+    causes ap2 left fixed in the layer that owns each.
+
+    THE FIXES ARE NOT GATED ON THIS NAME either, for the reason
+    `use_task_ap2`'s docstring gives: a 128-bit vector arrival IS two
+    64-bit arriving values, a preseeded row that reads no flag state is
+    NOT a flag consumer, and an x87 place IS a `long double` in c --
+    for every task, not for this one.  What is task-scoped is where the
+    products are written and the named abort.  The one switch this task
+    adds, `NORMALISE_BEFORE_RENDER`, is a module-level flag and not a
+    task gate: `autopoly3.py` moves it for one measurement lane and
+    moves it back."""
+    global TASK, ABORT_NAME
+    TASK = "ap3"
+    ABORT_NAME = "ABORT_MEMORY_AP3"
+
+
 def fixes_are_on():
     """whether the two printing fixes of task h2 apply.
 
@@ -445,7 +482,7 @@ def fixes_are_on():
     all, and the normalised term is what the model table prints.
     Written as one function rather than `TASK == "h2"` in three places,
     so a later task cannot half-inherit them."""
-    return TASK in ("h2", "g1", "g1b", "g1c")
+    return TASK in ("h2", "g1", "g1b", "g1c", "ap2", "ap3")
 
 
 def primitive_first():
@@ -456,7 +493,7 @@ def primitive_first():
     lookup widened by one step (section 2e).  One function rather than
     `TASK == "g1"` in five places, for the same reason
     `fixes_are_on` is one function."""
-    return TASK in ("g1", "g1b", "g1c")
+    return TASK in ("g1", "g1b", "g1c", "ap2", "ap3")
 
 
 def setup_is_allowed():
@@ -465,7 +502,7 @@ def setup_is_allowed():
 
     Task g1c's one change, and the only thing that separates it from
     task g1b."""
-    return TASK == "g1c"
+    return TASK in ("g1c", "ap2", "ap3")
 
 
 def targets():
@@ -908,14 +945,20 @@ def one_place(shared, held, place, lang):
         "families": place.get("families"),
         "home": place.get("home"),
     }
+    if place.get("halved") is not None:
+        out["halved"] = place["halved"]
     if place.get("not_rendered") is not None:
         out["rendered"] = False
         out["refusal_cause"] = place["not_rendered"]
         out["refusal_detail"] = place.get("not_rendered_detail")
         return out
+    # THE LABEL BECOMES A c FUNCTION NAME (`emu_<label>`), so the place
+    # name's own dot -- which task ap2's halves carry, `reg_xmm0.low` --
+    # is spelled `_` here and nowhere else: the PLACE keeps its name on
+    # the record and in the report, and only the symbol is sanitised.
     label = E.sanitize("%s_%s_%d__%s__%s"
                        % (held["mnem"], held["shape"], held["key_width"],
-                          place["writes"], lang))
+                          place["writes"].replace(".", "_"), lang))
     out["label"] = label
     # FIX 2 (task h2), in the DRIVER: a vector cell's place carries the
     # whole 128-bit register, so the lane the operation writes is
@@ -924,7 +967,13 @@ def one_place(shared, held, place, lang):
     # the projected lane for a vector place under task h2, and the
     # place itself in every other case.
     working = place
-    if fixes_are_on():
+    if fixes_are_on() and place.get("halved") is None:
+        # A HALF IS NOT A LANE (task ap2, fix 3).  `in_halves_where_it_
+        # must_be` has already decided that this place has no narrower
+        # lane to project and has split it into its two 64-bit halves;
+        # asking `projected_lane` about a half would ask task h2's fix 2
+        # the same question again, over a place whose whole point is
+        # that the answer was no.
         projected = projected_lane(shared, place, held["key_width"])
         if projected is not None:
             out["lane"] = projected["lane"]
@@ -978,7 +1027,8 @@ def cell_input(cells, asked):
         held["refusal_detail"] = flags
         return held
     substitution = []
-    if row.get("preseeded"):
+    if row.get("preseeded") and a_place_reads_the_arriving_flags(places,
+                                                                flags):
         composed = compose_the_pair(cells, row, places)
         if composed.get("refusal_cause") is not None:
             held["refusal_cause"] = composed["refusal_cause"]
@@ -986,8 +1036,129 @@ def cell_input(cells, asked):
             return held
         held["setter"] = composed["setter"]
         substitution = composed["substitution"]
-    held["places"] = places_as_records(row, places, flags, substitution)
+    held["places"] = vector_arrivals_in_halves(
+        in_halves_where_it_must_be(
+            places_as_records(row, places, flags, substitution),
+            held["key_width"]),
+        held["key_width"])
     return held
+
+
+HALF_BITS = 64
+
+
+def in_halves_where_it_must_be(records, key_width):
+    """FIX 3 (task ap2), in the DRIVER: A 128-BIT PLACE IS TWO 64-BIT
+    PLACES.
+
+    THE TWO DEFECTS THIS ONE CHANGE ANSWERS, both task ap1's
+    (log_243 section 6).
+      * `the cell's own key_width is not narrower than the place, so
+        there is no lane to project` -- 56 runs, 19,324 attested ledger
+        rows, all four targets.  Task h2's fix 2 projects a vector
+        cell's LANE out of its 128-bit place, and a whole-register cell
+        (`xorps` xmm_same 128, `movaps` xmm_xmm 128) has no narrower
+        lane to project, so the driver said so and stopped.
+      * `a width c has no holder for` -- 30 runs, 25,130 attested
+        ledger rows, go and swift only.  The flags place of a 64-bit
+        comparison is the two operands CONCATENATED, 128 bits wide, and
+        neither the go nor the swift renderer has a 128-bit integer
+        holder to answer in.  c and rust do (`unsigned __int128`,
+        `i128`), which is why the same cells stopped on two targets and
+        not the other two.
+
+    THE FIX, one sentence: a written place wider than the widest thing
+    a target can answer in is rendered as TWO places -- its low 64 bits
+    and its high 64 bits -- each its OWN written place, each rendered,
+    compiled, carved and put to the gate on its own, so nothing about
+    what is compared changes and only the number of comparisons does.
+
+    WHY THAT IS NOT A WEAKENING.  The obligation over a 128-bit place
+    is that every one of its bits equals the cell's, and the
+    conjunction of the two halves' obligations is exactly that -- the
+    same bits, in two questions instead of one.  What it costs is that
+    a cell is proved on a target only when BOTH halves prove, and the
+    loop's own report is what has to say so rather than count the first
+    half; `autopoly2.outcome_of` is where that is written down.
+
+    WHY IT IS DONE IN EVERY TARGET AND NOT ONLY IN go AND swift.  A
+    place that c answers in one `unsigned __int128` and go answers in
+    two `uint64` would be two different comparisons carrying one
+    verdict column, and the four targets' rows would stop being
+    comparable row for row -- which is the whole point of the table.
+    So the spelling is the same everywhere.
+
+    WHAT IS NOT TOUCHED.  A vector place with a lane NARROWER than
+    itself is task h2's fix 2 and is left to it: `one_place` projects
+    the lane and this function passes the place through untouched, so
+    the handful's four vector cells (`addss` 32, `cvtsi2sd` 64 and
+    their like) run exactly as task g1b ran them."""
+    out = []
+    for record in records:
+        if record.get("bits") is None or record["bits"] <= HALF_BITS:
+            out.append(record)
+            continue
+        if is_a_lane_to_project(record, key_width):
+            out.append(record)
+            continue
+        if E.is_an_x87_arrival((record.get("home") or {}).get("family")):
+            # AN x87 PLACE IS NOT HALVED (task ap3, fix 2).  The reason
+            # this function halves is that no target can ANSWER more
+            # than 64 bits; c can answer an x87 place whole, in a
+            # `long double`, so halving it would cut a value in two
+            # that the target holds in one -- and its high half is 15
+            # bits, which is not a holder anywhere.  The targets with
+            # no 80-bit holder refuse the place by nature
+            # (`render_one_place`), which is the brief's own rule and
+            # is why these rows are NOT comparable target for target.
+            out.append(record)
+            continue
+        out.extend(halves_of(record))
+    return out
+
+
+def is_a_lane_to_project(record, key_width):
+    """whether task h2's fix 2 will project a narrower lane out of this
+    place, which is the one case this fix leaves alone.  The test is
+    `projected_lane`'s own, restated over the record alone so no gate
+    call is made to answer it."""
+    home = record.get("home") or {}
+    if home.get("family") not in R.XMM_NAMES:
+        return False
+    if key_width is None:
+        return False
+    return key_width < record["bits"]
+
+
+def halves_of(record):
+    """the place as its low half and its high half, each a written
+    place in its own right.
+
+    The name each half writes is the place's own name with `.low` or
+    `.high` after it.  That name is a PLACE name, not a key over a
+    spelling: the place's own `writes` field is what the report,
+    `destination_place` and `one_recheck` already read, and the two
+    halves are two of them."""
+    out = []
+    term = record["term"]
+    bits = term.size()
+    for name, high, low in (("low", HALF_BITS - 1, 0),
+                            ("high", bits - 1, HALF_BITS)):
+        piece = z3.simplify(z3.Extract(high, low, term))
+        half = place_record("%s.%s" % (record["writes"], name), piece)
+        half["home"] = dict(record["home"])
+        half["halved"] = {
+            "of_place": record["writes"],
+            "of_bits": bits,
+            "half": name,
+            "projection": "Extract(%d, %d, the cell's own term for "
+                          "this place)" % (high, low),
+        }
+        if record.get("not_rendered") is not None:
+            half["not_rendered"] = record["not_rendered"]
+            half["not_rendered_detail"] = record.get("not_rendered_detail")
+        out.append(half)
+    return out
 
 
 def chosen_row(cells, asked, held):
@@ -1021,6 +1192,8 @@ def chosen_row(cells, asked, held):
         held["chosen_by"] = "the one TRANSLATED row at this cell"
         return translated[0]
     wanted = best_setter(translated)
+    if wanted is None:
+        wanted = setter_from_the_corpus(cells, mnem, held)
     if wanted is not None:
         for row in translated:
             if (row.get("flags_in") or {}).get("mnem") != wanted:
@@ -1061,6 +1234,57 @@ def best_setter(rows):
     return best
 
 
+def setter_from_the_corpus(cells, mnem, held):
+    """FIX 2 (task ap2), in the DRIVER: THE SETTER A FLAG CONSUMER'S
+    OWN CELL DOES NOT NAME, TAKEN FROM THE ATTESTATION.
+
+    THE DEFECT.  A flag-reading cell's mapping is a function of the
+    flags a SETTER wrote, so `compose_the_pair` composes the two into
+    one function; where the chosen row names no setter it answers the
+    cause `no setter row to compose the flag pair from: None at width
+    8`, which was task ap1's second largest -- 128 runs over 6,284
+    attested ledger rows, 32 cells, on all four targets (log_243
+    section 6).  `best_setter` reads the setter off THIS CELL's own
+    attestation, and where the corpus attested the consumer without
+    ever recording which setter preceded it, that list is empty and the
+    row chosen is one the sweep seeded with a generic flag state.
+
+    THE FIX, and it invents nothing.  The corpus DOES record the pair.
+    A ledger row whose producer is a flag pair carries a two-element
+    `mnem` list -- the setter, then the consumer -- and task m1b's
+    attestation pass walked 22,741 of them
+    (`attestation_flag_pair_rows_seen`).  So where this cell names no
+    setter, the setter is the one the corpus records most often before
+    THIS CONSUMER anywhere: the census `cells["setter_census"]`, which
+    the task's own cells lane sums straight off
+    `model_table_attest.json` over every attested cell of the
+    consumer's mnemonic.  It is the same quantity `best_setter` reads,
+    read over the consumer instead of over the one cell.
+
+    IF THE CORPUS RECORDS NONE EITHER, this returns None and the cause
+    stands unchanged -- the brief's own rule."""
+    census = (cells.get("setter_census") or {}).get(mnem)
+    if not census:
+        return None
+    best = None
+    counted = {}
+    for entry in census:
+        counted[entry["mnem"]] = entry.get("ledger_rows") or 0
+    for name in sorted(counted):
+        if best is None or counted[name] > counted[best]:
+            best = name
+    if best is not None:
+        held["setter_from_the_corpus"] = {
+            "mnem": best,
+            "ledger_rows": counted[best],
+            "why": "this cell's own attestation records no setter, so "
+                   "the setter is the one the corpus's flag-pair "
+                   "ledger rows record most often before this "
+                   "consumer",
+        }
+    return best
+
+
 def terms_of_row(row):
     """the row's own z3 terms, per written place, and the flag triple:
     `model_table.places_of_attempt`, called on the row's own fields."""
@@ -1072,6 +1296,63 @@ def terms_of_row(row):
         "width": row.get("width"),
     }
     return MTAB.places_of_attempt(attempt)
+
+
+def a_place_reads_the_arriving_flags(places, flags):
+    """whether ANY term of this row reads the flag state the sweep
+    seeded -- which is what makes a row a flag CONSUMER and obliges the
+    driver to compose it with a setter.
+
+    FIX 2 (task ap3), in the DRIVER, and it is one condition.
+
+    THE DEFECT.  `cell_input` composed the pair for every row the sweep
+    marked `preseeded`, and `preseeded` says only that the sweep HANDED
+    the builder a flag state, not that the opcode read it.  Task ap1's
+    second largest cause -- `no setter row to compose the flag pair
+    from: None at width 8`, 128 runs over 6,284 attested ledger rows --
+    is 32 x87 cells (`faddl`, `fdivp`, `fucomi` and their like) at
+    `key_width` 80, and task ap2 measured the corpus's own answer for
+    them: not one of the 25 flag consumers the corpus records is an x87
+    mnemonic, so no setter exists to compose with (log_244 section 5).
+    Task ap3's lane `ap3_l2` asked the other side of it and the answer
+    is the same in the objects: **0 of the 32 rows has any place that
+    reads `seed_FLAG_L` or `seed_FLAG_R`**.  They are not flag
+    consumers; the driver was demanding a composition for a row with
+    nothing to compose.
+
+    THE FIX, one sentence: a preseeded row is composed with a setter
+    only where one of its own terms actually reads the arriving flag
+    state, and a row that reads neither symbol goes on to the render
+    with the places it has.
+
+    WHAT IS NOT TOUCHED.  A row that DOES read the pair takes exactly
+    the path it took before -- `cmovne` gpr_gpr 32 and `setne` gpr_one
+    8 are the guard, and both still compose with `test`.  The flags
+    place of a preseeded row that writes nothing there is still marked
+    `CAUSE_PASS_THROUGH` by `places_as_records`, which is a different
+    question and is answered where it was."""
+    for name in sorted(places or {}):
+        if reads_the_arriving_flags(places[name]):
+            return True
+    if flags is None:
+        return False
+    pair = z3.Concat(MT.as_bits(flags[1]), MT.as_bits(flags[2]))
+    if is_the_arriving_flag_state(pair):
+        # the opcode wrote nothing to the flags, so this place IS the
+        # arriving state and `places_as_records` records it as such;
+        # composing a setter for it would answer a question about the
+        # setter and not about this opcode.
+        return False
+    return reads_the_arriving_flags(pair)
+
+
+def reads_the_arriving_flags(term):
+    """whether a term reads either half of the flag state the sweep
+    seeded."""
+    for symbol in T.free_symbols_in_order(term):
+        if symbol.decl().name() in ("seed_FLAG_L", "seed_FLAG_R"):
+            return True
+    return False
 
 
 def compose_the_pair(cells, row, places):
@@ -1089,6 +1370,17 @@ def compose_the_pair(cells, row, places):
     inputs are the two values compared and the values selected
     between."""
     setter_mnem = (row.get("flags_in") or {}).get("mnem")
+    from_the_corpus = None
+    if setter_mnem is None:
+        # FIX 2 (task ap2): the chosen row is preseeded but names no
+        # setter, so the setter is the one the corpus's own flag-pair
+        # ledger rows record most often before this consumer.  See
+        # `setter_from_the_corpus`.  Where `chosen_row` could pick a
+        # row that names one it already has; this is the case where the
+        # cell carries no such row at all.
+        held = {}
+        setter_mnem = setter_from_the_corpus(cells, row["mnem"], held)
+        from_the_corpus = held.get("setter_from_the_corpus")
     setter_row = setter_row_for(cells, row, setter_mnem)
     if setter_row is None:
         return {"refusal_cause": CAUSE_NO_SETTER,
@@ -1118,6 +1410,9 @@ def compose_the_pair(cells, row, places):
         "composition": ("seed_FLAG_L := %s ; seed_FLAG_R := %s"
                         % (left, right)),
     }
+    if from_the_corpus is not None:
+        setter["why"] = from_the_corpus["why"]
+        setter["from_the_corpus"] = from_the_corpus
     return {"setter": setter,
             "substitution": [(arrival_left, left),
                              (arrival_right, right)]}
@@ -1191,18 +1486,273 @@ def places_as_records(row, places, flags, substitution):
         term = places[name]
         if substitution:
             term = z3.substitute(term, *substitution)
-        out.append(place_record(name, term))
+        out.append(place_record(
+            name, x87_as_arrivals(memory_as_arrivals(term))))
     if flags is None:
         return out
     pair = z3.Concat(MT.as_bits(flags[1]), MT.as_bits(flags[2]))
     arriving = row.get("preseeded") and is_the_arriving_flag_state(pair)
     if substitution:
         pair = z3.substitute(pair, *substitution)
-    record = place_record("flags", pair)
+    record = place_record(
+        "flags", x87_as_arrivals(memory_as_arrivals(pair)))
     if arriving:
         record["not_rendered"] = CAUSE_PASS_THROUGH
     out.append(record)
     return out
+
+
+MEMORY_PREFIX = "seed_MEM_"
+
+MEMORY_ARRIVAL_BITS = 64
+
+
+def memory_as_arrivals(term):
+    """FIX 1 (task ap2), in the DRIVER: A MEMORY OPERAND IS ONE MORE
+    ARRIVING VALUE.
+
+    THE DEFECT.  `families_of` refuses any free symbol that is not a
+    register family, and the cause it raises --
+    `emulate.CAUSE_STATE`, "term reads state that is not an arrival
+    register" -- was task ap1's largest, 134 runs over 37,874 attested
+    ledger rows (log_243 section 6).  Part of that population is not
+    machine state at all: it is a LITERAL MEMORY OPERAND, the cell's
+    own `mem_*` and `widen_mem_*` shapes, which
+    `reference.memory_symbol_name` gives the symbol `seed_MEM_<the
+    mangled operand text>`.  The mapping reads that cell's CONTENTS and
+    nothing else about memory -- no address arithmetic, no aliasing --
+    so the contents are an arriving value like any other, and task o8's
+    own memory rows passed them the same way.
+
+    WHAT THIS FUNCTION DOES, one sentence: every `seed_MEM_*` symbol
+    narrower than an arriving value is re-read as the low bits of a
+    64-bit arrival of the same name, so the memory cell arrives BY
+    VALUE in an argument register exactly as a general register family
+    does.
+
+    WHY 64 AND NOT THE OPERAND'S OWN WIDTH.  An arrival is what
+    `pool100_entry_equivalence.family_bits` says it is -- 128 bits for
+    a vector family and 64 for every other -- and the IN-row alignment
+    compares the two sides at that width.  A general register works the
+    same way today: `seed_rax` is 64 bits and a 32-bit read of it is
+    `Extract(31, 0, seed_rax)`, from which `Renderer.plan_parameters`
+    plans a 32-bit holder.  Writing the memory arrival the same way is
+    what makes the alignment layer need no change at all: this fix is
+    entirely in the driver.
+
+    A symbol already 64 bits is left exactly as it is.
+
+    THE WIDE CASE, and it is 104 of the 134 runs.  The reference gives
+    a memory operand ONE symbol per operand text, and it is as wide as
+    the widest thing that operand could hold -- 128 bits, so that a
+    vector load and a general load name the same cell.  A cell that
+    LOADS FROM MEMORY INTO A LANE reads only the low bits of it:
+    `cmp mem_gpr 64` reads bits 63..0, `addss mem_xmm 32` reads bits
+    31..0.  Where every use of the symbol lies inside the low 64 bits,
+    the arrival is those 64 bits and the bits above them are never
+    read, so the symbol is replaced by that arrival grown back to its
+    own width -- and `z3.simplify` cuts the growth away again at each
+    use, leaving a term that reads a 64-bit arriving value and nothing
+    else.
+
+    WHERE A USE REACHES ABOVE BIT 63 the symbol is left exactly as it
+    is and `families_of` refuses it as before: a whole 128-bit memory
+    cell is not an arriving value, for the same reason a whole 128-bit
+    vector register is not, and inventing one would be inventing an
+    arrival contract.  `Renderer.collect_uses` is the walker that
+    answers which it is, called here rather than restated."""
+    substitution = []
+    for symbol in MT.free_symbols_ordered(term):
+        name = symbol.decl().name()
+        if not name.startswith(MEMORY_PREFIX):
+            continue
+        if symbol.sort().kind() != z3.Z3_BV_SORT:
+            continue
+        if symbol.size() == MEMORY_ARRIVAL_BITS:
+            continue
+        if symbol.size() < MEMORY_ARRIVAL_BITS:
+            arrival = z3.BitVec(name, MEMORY_ARRIVAL_BITS)
+            substitution.append(
+                (symbol, z3.Extract(symbol.size() - 1, 0, arrival)))
+            continue
+        if not read_inside_the_low_bits(term, name,
+                                        MEMORY_ARRIVAL_BITS):
+            continue
+        arrival = z3.BitVec(name, MEMORY_ARRIVAL_BITS)
+        substitution.append(
+            (symbol,
+             z3.ZeroExt(symbol.size() - MEMORY_ARRIVAL_BITS, arrival)))
+    if not substitution:
+        return term
+    return z3.simplify(z3.substitute(term, *substitution))
+
+
+def x87_as_arrivals(term):
+    """FIX 2 (task ap3), in the DRIVER: A LITERAL MEMORY OPERAND READ AT
+    THE x87 SORT IS ONE MORE ARRIVING VALUE, on the same rule task ap2
+    wrote for a memory operand read at a bit-vector sort.
+
+    `reference.x87_symbol` names it `x87_<the mangled operand text>` --
+    `faddl (%rsi)` reads `x87__rsi_` at `reference.X87_SORT` -- and
+    `families_of` refuses any free symbol that does not begin
+    `seed_`.  The mapping reads that memory cell's CONTENTS and nothing
+    else about memory, so the contents are an arriving value, and the
+    symbol is re-read under the `seed_` spelling every other arrival
+    carries.  Nothing about its sort or its width changes: an x87
+    arrival is 79 bits as z3 spells it, at every step.
+
+    An x87 STACK POSITION the model table preseeded is already
+    `seed_X87_0` / `seed_X87_1` and is left exactly as it is."""
+    substitution = []
+    for symbol in MT.free_symbols_ordered(term):
+        name = symbol.decl().name()
+        if name.startswith("seed_"):
+            continue
+        if symbol.sort() != R.X87_SORT:
+            continue
+        substitution.append((symbol, z3.FP("seed_%s" % name,
+                                           R.X87_SORT)))
+    if not substitution:
+        return term
+    return z3.substitute(term, *substitution)
+
+
+VECTOR_ARRIVAL_BITS = 128
+"""the width of a vector arrival, `pool100_entry_equivalence.
+family_bits`'s own number for a family in `reference.XMM_NAMES`."""
+
+VECTOR_HALF_BITS = 64
+
+
+def vector_arrivals_in_halves(records, key_width):
+    """FIX 1 (task ap3), in the DRIVER: A 128-BIT ARRIVING VECTOR
+    REGISTER IS TWO 64-BIT ARRIVING VALUES.
+
+    THE DEFECT, and it is the ARRIVAL side of task ap2's fix 3.  That
+    fix answered the ANSWER side -- a 128-bit written place is two
+    64-bit written places -- and left behind the cause `vector arrival
+    used beyond its low lane`, 40 runs over 5,600 attested ledger rows
+    on all four targets (log_244 section 11), which is
+    `emulate.Renderer.plan_parameters` refusing a vector family whose
+    uses reach above bit 63: no target can receive a whole 128-bit
+    register as a parameter.  Task ap3's lane `ap3_l2` names the
+    population exactly -- ten cells (`andps`, `movaps`, `pxor`,
+    `unpckhpd` and their like), every one of them reading
+    `Extract(127, 64, seed_xmm<n>)`.
+
+    THE FIX, one sentence: where a place's term reads a 128-bit vector
+    arrival above bit 63, that arrival is rewritten as
+    `Concat(seed_<family>_high, seed_<family>_low)` -- two 64-bit
+    arriving values -- so the place is rendered from two parameters the
+    target CAN receive, and the gate aligns them against the arrival's
+    own two 64-bit slices, because `pool100_entry_equivalence.
+    family_bits` gives a family that is not a vector register 64 bits
+    and `align_by_row` puts each half on its own IN row.
+
+    WHY IT IS PER PLACE AND NOT PER CELL, which is the whole of the
+    guard.  A vector cell whose place reads only the low lane -- the
+    handful's `addss` xmm_xmm 32 and `cvtsi2sd` gpr_xmm 64, and the LOW
+    half of every whole-register vector cell task ap2 proved -- is
+    rendered from a `float` or `double` parameter arriving in an xmm
+    register, and rewriting its arrival would change a contract that
+    already proves.  So the test is `emulate.Renderer.collect_uses`, the
+    same walker `plan_parameters` refuses on, asked of THIS place's own
+    term: a place none of whose uses reaches above bit 63 is passed
+    through untouched.
+
+    WHAT THE TWO HALVES ARE NOT.  They are not a new arrival contract
+    for the OPCODE: the opcode still receives one 128-bit register, and
+    the two halves are how the TARGET's own function receives the same
+    128 bits.  Where the body reads them from two general argument
+    registers and the cell reads them from one vector register, the two
+    sides carry the same values on the same IN rows and that is what
+    the gate compares."""
+    out = []
+    for record in records:
+        if is_a_lane_to_project(record, key_width):
+            # TASK h2's FIX 2 GETS THIS PLACE, and it is the guard the
+            # brief names.  A vector cell with a lane narrower than its
+            # place -- the handful's `addss` xmm_xmm 32 and `cvtsi2sd`
+            # gpr_xmm 64 -- carries the arrival bits ABOVE the lane in
+            # its place's term, joined under the answer, so the place
+            # does read `seed_xmm0` above bit 63; but `one_place`
+            # projects the lane out of it before anything is rendered
+            # and the projected term reads only the lane.  Splitting
+            # the arrival here would rewrite a contract that already
+            # proves, and the guard of lane `ap3_l5` is what caught it.
+            out.append(record)
+            continue
+        rewritten = in_two_halves(record)
+        if rewritten is None:
+            out.append(record)
+            continue
+        out.append(rewritten)
+    return out
+
+
+def in_two_halves(record):
+    """the record with every wide-read vector arrival rewritten, or None
+    when this place reads none."""
+    term = record.get("term")
+    if term is None:
+        return None
+    holder = E.Renderer([], None, 0, "vector_arrival")
+    holder.collect_uses(term, None)
+    substitution = []
+    for name in sorted(holder.uses):
+        if not name.startswith("seed_"):
+            continue
+        family = name[len("seed_"):]
+        if family not in R.XMM_NAMES:
+            continue
+        wide = False
+        for use in holder.uses[name]:
+            if use is None:
+                wide = True
+            elif use[0] > VECTOR_HALF_BITS - 1:
+                wide = True
+        if not wide:
+            continue
+        whole = z3.BitVec(name, VECTOR_ARRIVAL_BITS)
+        low = z3.BitVec("seed_%s_low" % family, VECTOR_HALF_BITS)
+        high = z3.BitVec("seed_%s_high" % family,
+                         VECTOR_ARRIVAL_BITS - VECTOR_HALF_BITS)
+        substitution.append((whole, z3.Concat(high, low)))
+    if not substitution:
+        return None
+    rebuilt = place_record(record["writes"],
+                           z3.simplify(z3.substitute(term,
+                                                     *substitution)))
+    rebuilt["home"] = dict(record["home"])
+    for carried in ("halved", "not_rendered", "not_rendered_detail"):
+        if record.get(carried) is not None:
+            rebuilt[carried] = record[carried]
+    rebuilt["arrivals_in_halves"] = []
+    for whole, _pair in substitution:
+        rebuilt["arrivals_in_halves"].append(whole.decl().name())
+    return rebuilt
+
+
+def read_inside_the_low_bits(term, name, bits):
+    """whether every use of the free symbol `name` in `term` lies
+    inside its low `bits` bits.
+
+    `emulate.Renderer.collect_uses` is the walker -- the same one
+    `plan_parameters` uses to decide a holder's width -- and it records
+    `None` for a use of the whole symbol and `(high, low)` for a use
+    through an `Extract`.  A `None` is a whole read, which is not
+    inside anything."""
+    holder = E.Renderer([], None, 0, "memory_arrival")
+    holder.collect_uses(term, None)
+    uses = holder.uses.get(name)
+    if not uses:
+        return False
+    for use in uses:
+        if use is None:
+            return False
+        if use[0] > bits - 1:
+            return False
+    return True
 
 
 def is_the_arriving_flag_state(pair):
@@ -1255,6 +1805,7 @@ def families_of(term):
     the IN-row alignment needs."""
     general = []
     vector = []
+    x87 = []
     for symbol in MT.free_symbols_ordered(term):
         name = symbol.decl().name()
         if not name.startswith("seed_"):
@@ -1264,11 +1815,71 @@ def families_of(term):
             if family not in vector:
                 vector.append(family)
             continue
+        # THE TWO HALVES OF A VECTOR ARRIVAL (task ap3, fix 1).
+        # `vector_arrivals_in_halves` has already rewritten the term, so
+        # what is left to say is that each half takes a general
+        # argument register like any other 64-bit value.  Admitted here
+        # and NOT added to `GENERAL_FAMILIES`, which is
+        # `canon.FAMILY_OF`'s own set of register families and stays
+        # exactly that.
+        if is_a_vector_half(family):
+            if symbol.size() != VECTOR_HALF_BITS:
+                raise E.Refused(E.CAUSE_STATE,
+                                "%s is %d bits, and half a vector "
+                                "arrival is %d"
+                                % (name, symbol.size(),
+                                   VECTOR_HALF_BITS))
+            if family not in general:
+                general.append(family)
+            continue
+        # AN x87 ARRIVAL (task ap3, fix 2): a position on the x87
+        # register stack the model table preseeded, or a literal memory
+        # operand read at the x87 sort and re-read under the `seed_`
+        # spelling by `x87_as_arrivals`.  It is neither general nor
+        # vector -- c holds it in a `long double` -- so it is kept in
+        # its own list and appended after both, and nothing about the
+        # existing two groups' positions moves.
+        if E.is_an_x87_arrival(family):
+            if symbol.sort() != R.X87_SORT:
+                raise E.Refused(E.CAUSE_X87,
+                                "%s is %s, and an x87 arrival is %s"
+                                % (name, symbol.sort(), R.X87_SORT))
+            if family not in x87:
+                x87.append(family)
+            continue
+        # A MEMORY OPERAND IS AN ARRIVING VALUE (task ap2, fix 1).
+        # `memory_as_arrivals` has already put the symbol at an
+        # arrival's own width, so the only thing left to say is that it
+        # takes a general argument register like any other value: it is
+        # an integer the caller passes, not a register the machine
+        # names.  It is admitted here and NOT added to
+        # `GENERAL_FAMILIES`, which is `canon.FAMILY_OF`'s own set of
+        # register families and stays exactly that.
+        if name.startswith(MEMORY_PREFIX):
+            if symbol.size() != MEMORY_ARRIVAL_BITS:
+                raise E.Refused(E.CAUSE_STATE,
+                                "%s is %d bits, and an arriving value "
+                                "is %d" % (name, symbol.size(),
+                                           MEMORY_ARRIVAL_BITS))
+            if family not in general:
+                general.append(family)
+            continue
         if family not in GENERAL_FAMILIES:
             raise E.Refused(E.CAUSE_STATE, name)
         if family not in general:
             general.append(family)
-    return general + vector
+    return general + vector + x87
+
+
+def is_a_vector_half(family):
+    """whether a family names one half of a vector arrival, which is a
+    name `vector_arrivals_in_halves` writes and nothing else does."""
+    for half in ("_low", "_high"):
+        if not family.endswith(half):
+            continue
+        if family[:-len(half)] in R.XMM_NAMES:
+            return True
+    return False
 
 
 def home_of(name):
@@ -1277,6 +1888,14 @@ def home_of(name):
     if name.startswith("reg_"):
         return {"family": name[len("reg_"):],
                 "source": "the place the reference's own builder wrote"}
+    if E.is_an_x87_arrival(name):
+        return {"family": "X87_0",
+                "source": "THE CONVENTION (task ap3): a place on the "
+                          "x87 register stack has no general register "
+                          "home, and the c calling rule leaves a "
+                          "`long double` answer in st(0), so the "
+                          "rendered function answers there and the "
+                          "return type is the 80-bit holder"}
     if name == "flags":
         return {"family": "rax",
                 "source": "THE CONVENTION: the flags place has no "
@@ -1306,6 +1925,12 @@ def render_one_place(place, lang, label, how=None, write=True):
     ordered = renderer_input(place["term"], how)
     families = place["families"]
     home = place["home"]
+    if E.is_an_x87_arrival(home.get("family")):
+        if lang not in TARGETS_WITH_AN_80_BIT_HOLDER:
+            return {"rendered": False,
+                    "refusal_cause": E.CAUSE_X87,
+                    "refusal_detail": NO_80_BIT_HOLDER % lang}
+        ordered = the_x87_value(ordered)
     renderer = renderer_for(lang, families, home["family"],
                             place["bits"], label)
     try:
@@ -1381,6 +2006,25 @@ def expected_families(lang, params):
     language except go, whose own sequence is `rax rbx rcx rdi rsi r8`
     -- measured on this toolchain by task g1's probe
     `arrival_registers_six`."""
+    for param in params:
+        if param["bits"] != E.X87_BITS:
+            continue
+        # THE ARRIVAL CONTRACT, and it is the group awaiting the owner (task
+        # ap3, fix 2).  The System V rule classes a `long double`
+        # argument X87 and passes it IN MEMORY, on the stack -- the
+        # carved body reads it with `fldt 0x8(%rsp)` -- so there is no
+        # register family to put on an IN row, and
+        # `pool100_entry_equivalence.input_rows` names families.  The
+        # cell's own arrival is a position on the x87 register stack.
+        # Naming either one a register would be INVENTING an arrival
+        # contract, which is exactly the ruling task g1b asked for and
+        # log_244's second awaiting-the owner item; so the gate declines and
+        # says why.
+        raise E.Refused(E.CAUSE_X87,
+                        "the %s calling rule passes an 80-bit float "
+                        "argument in memory, not in a register, so "
+                        "this arrival has no register family to align "
+                        "an IN row on" % lang)
     if lang == "go":
         return GR.expected_go_families(params)
     return E.expected_c_families(params)
@@ -1452,7 +2096,12 @@ def check_one_place(shared, place, params, raw_bytes, mnem, label,
     out["route"]["cell"] = "the cell's own term, as the model table holds it"
     cell_term = place["term"]
     cell_families = place["families"]
-    body_families = expected_families(lang, params)
+    try:
+        body_families = expected_families(lang, params)
+    except E.Refused as refusal:
+        out["outcome"] = "UNDECIDED"
+        out["reason"] = "%s: %s" % (refusal.cause, refusal.detail)
+        return out
     cell_rows = P100.input_rows(cell_families)
     body_rows = P100.input_rows(body_families)
     disagreement = P100.rows_disagree(cell_rows, body_rows)
@@ -1587,21 +2236,55 @@ def decided(shared, cell_aligned, body_aligned, params):
 # Neither renderer is touched by either fix: both are changes to what
 # the driver hands the existing renderer.
 
+NORMALISE_BEFORE_RENDER = True
+"""whether the renderer is handed the term the pipeline's own
+normaliser leaves (task h2's fix 1) or the form task h1 handed it.
+
+ON, which is where task ap2 left it; task ap3 turns it off for ONE
+measurement lane and turns it back on.  It is a module-level switch and
+NOT a gate on a task name, because a task-name gate is what let this
+fix fall out from under three tasks in the first place."""
+
 CAUSE_LANE_IS_THE_PLACE = "the cell's own key_width is not narrower " \
                           "than the place, so there is no lane to " \
                           "project"
 
 
 def renderer_input(term, how):
-    """the term the renderer is handed, by task.
+    """the term the renderer is handed.
 
-    `h1`: `order_commutative(z3.simplify(term))`, which is what task h1
-    handed it and what task h1's own products are a rendering of.
-    `h2` and `g1`: the normalised term, task h2's fix 1, which task g1
-    inherits rather than re-deciding."""
-    if how in ("h2", "g1"):
-        return the_normalised_term(term)
-    return T.order_commutative(z3.simplify(term))
+    TASK h2's FIX 1 IS NO LONGER GATED ON A TASK NAME (task ap2,
+    2026-09-09).  It was written as `how in ("h2", "g1")`, so every
+    task after `g1` -- `g1b`, `g1c` and task ap1's whole 1,012-run loop
+    -- silently fell through to task h1's form of the term, which task
+    ap1 found while reading this file and reported rather than changed
+    (log_243 section 11, item 3 of its awaiting-the owner list).  The
+    normalised term is what the model table PRINTS, so it is what the
+    renderer should walk, and there is no task for which that is not
+    so.
+
+    THE ONE NAME LEFT IS `h1`, and it is not a gate on the running
+    task: `sources_command` and `proved_the_same` pass "h1" and "h2"
+    EXPLICITLY, over the same places, to MEASURE what the fix changes,
+    and task h1's own products are a rendering of that form.  Every
+    call that does not name a form -- which is every call the route
+    makes, `how` defaulting to `TASK` -- now gets the normalised
+    term."""
+    if how == "h1":
+        return T.order_commutative(z3.simplify(term))
+    if not NORMALISE_BEFORE_RENDER:
+        # THE SWITCH, and it is the ONLY thing it does (task ap3, fix
+        # 4).  Task h2's fix 1 was measured on 24 places and then moved
+        # into task ap2 alongside five other fixes, so what it does at
+        # the scale of a thousand runs has never been measured on its
+        # own (log_244 section 6, item 4 of its awaiting-the owner list).
+        # `autopoly3.py` runs the whole loop once with this False and
+        # once True, all else as task ap2 left it, and reports the runs
+        # whose rendered source differs and whose verdict differs.  The
+        # form it falls back to is task h1's own, which is what every
+        # task from `g1b` to task ap1 silently ran.
+        return T.order_commutative(z3.simplify(term))
+    return the_normalised_term(term)
 
 
 def the_normalised_term(term):
@@ -1646,6 +2329,54 @@ def the_normalised_term(term):
     if backward:
         ordered = z3.substitute(ordered, *backward)
     return ordered
+
+
+TARGETS_WITH_AN_80_BIT_HOLDER = ("c",)
+"""the targets whose own type system has a holder for the x87 extended
+format (task ap3, fix 2).
+
+c has `long double`, and the probe of lane `ap3_l2` is what says so
+rather than a reading of a manual: a `long double` add at the corpus's
+own ship flags carves to `fldt 0x18(%rsp); fldt 0x8(%rsp);
+faddp %st,%st(1); ret`.  rust, go and swift have no 80-bit floating
+holder at all -- `f64` / `float64` / `Double` are the widest each
+spells -- so their rows are refused BY NATURE and not by a defect.
+
+cpp is the other target the brief names and it is NOT in this loop's
+four; adding a fifth target changes what `proved on all four` counts,
+which is a structural change and not this task's to make.  It is on the
+awaiting-the owner list of log 245."""
+
+NO_80_BIT_HOLDER = ("%s has no 80-bit holder, so an x87 place cannot "
+                    "be answered in it")
+
+
+def the_x87_value(term):
+    """the FLOAT under a place's own `fp.to_ieee_bv`, which is what the
+    renderer walks for an x87 place (task ap3, fix 2).
+
+    THE SEAM THIS AVOIDS CROSSING, and it is why this is one line in the
+    driver rather than a helper in the renderer.  An x87 place's term
+    is `fp.to_ieee_bv(<the float the opcode computed>)`, 79 bits as z3
+    spells it; the same value in memory is 80 bits, the extra one being
+    the explicit integer bit x87 stores and z3 does not.  A renderer
+    reaching `fp.to_ieee_bv` writes a `memcpy` helper, and at this
+    width that helper would be a DIFFERENT FUNCTION from the node it
+    stands for.  So the driver hands the renderer the float itself, and
+    the rendered function answers a `long double` in st(0) -- which is
+    where the c calling rule leaves it, and where the carved body's own
+    answer is read from, so the gate still compares the place's own
+    79-bit term against the body's.
+
+    This is the x87 counterpart of task h2's `projected_lane`: the
+    driver chooses which term the existing renderer walks and no
+    renderer is taught anything new.  A term that is not that shape is
+    returned untouched, and the renderer refuses it by cause."""
+    if not z3.is_app(term):
+        return term
+    if term.decl().kind() != z3.Z3_OP_FPA_TO_IEEE_BV:
+        return term
+    return term.arg(0)
 
 
 def projected_lane(shared, place, key_width):

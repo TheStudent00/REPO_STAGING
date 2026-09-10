@@ -150,7 +150,7 @@ then get stripped project-relative by the existing rules below it.
 
 ```
 \bDee\b	the owner
-\b<host>\b	<user>
+\b<user>\b	<user>
 \b<tower-user>\b	<user>
 [Uu]buntu [0-9]{2}\.[0-9]{2}( LTS)?	<os>
 [0-9]+\.[0-9]+\.[0-9]+-[0-9]+-generic	<kernel>

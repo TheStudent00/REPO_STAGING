@@ -23,6 +23,11 @@ cd "$(dirname "$0")"
 PUSH=1; [ "${1:-}" = "--no-push" ] && PUSH=0
 SOURCES=(PlanPlan PseudoCoupHQ PseudoCoup_v5 PseudoCoup_v6 PseudoIR DevComms SandboxDesign)
 TMP=.stage_tmp
+# the scrub patterns and the plain tokens live OUTSIDE the public space (the owner, 2026-09-10:
+# "why wouldnt it be at least git-ignored or exist OUTSIDE of the public repo space?")
+PATTERNS="$HOME/Programming/PRIVATE/Misc/scrub/scrub_patterns.tsv"
+TOKENS="$HOME/Programming/PRIVATE/Misc/scrub/scrub_tokens.txt"
+[ -f "$PATTERNS" ] && [ -f "$TOKENS" ] || { echo "refusing: $PATTERNS or $TOKENS is missing; nothing is staged without them"; exit 1; }
 STAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "== staging at $STAMP =="
 
@@ -59,7 +64,7 @@ while IFS=$'\t' read -r pat rep; do
     while IFS= read -r f; do
         if [ -f "$f" ] && is_text "$f"; then sed -i -E "s|$pat|$rep|g" "$f"; scrubbed=$((scrubbed+1)); fi
     done < <(grep -rlE -- "$pat" "$TMP" 2>/dev/null || true)
-done < scrub_patterns.tsv
+done < "$PATTERNS"
 echo "  $scrubbed file-pattern replacements"
 left=0
 while IFS=$'\t' read -r pat rep; do
@@ -70,9 +75,21 @@ while IFS=$'\t' read -r pat rep; do
     survivors=$( (grep -rlE -- "$pat" "$TMP" 2>/dev/null || true) | while IFS= read -r f; do if is_text "$f"; then echo "$f"; fi; done | sed "s|^$TMP/||" | (git check-ignore -v -n --stdin 2>/dev/null || true) | awk -F'\t' '$1 == "::" {print $2}' )
     n=$( [ -n "$survivors" ] && printf '%s\n' "$survivors" | wc -l || echo 0 )
     if [ "$n" -gt 0 ]; then echo "  STILL PRESENT after scrub (would be tracked): $pat in $n file(s):"; printf '%s\n' "$survivors" | head -5 | sed 's/^/      /'; left=$((left+n)); fi
-done < scrub_patterns.tsv
+done < "$PATTERNS"
 if [ "$left" -gt 0 ]; then echo "  refusing: a pattern survived the scrub (a binary file, or a spelling the pattern misses). Nothing was placed in the tree."; exit 1; fi
 echo "  clean: no pattern remains in the private area"
+# ---- 2b. the plain-token gate: every byte of every file (binaries too) and every
+# file NAME, case-insensitive, no regex, no word boundary — the gate the pattern
+# file itself slipped through (a pattern quoting the name inside \b...\b)
+tok_hits=0
+while IFS= read -r tok; do
+    case "$tok" in ''|'#'*) continue ;; esac
+    hits=$( (grep -rIali --fixed-strings -- "$tok" "$TMP" 2>/dev/null; grep -rali --fixed-strings --binary-files=text -- "$tok" "$TMP" 2>/dev/null; find "$TMP" -iname "*${tok}*" 2>/dev/null) | sort -u | sed "s|^$TMP/||" | (git check-ignore -v -n --stdin 2>/dev/null || true) | awk -F'\t' '$1 == "::" {print $2}' )
+    n=$( [ -n "$hits" ] && printf '%s\n' "$hits" | wc -l || echo 0 )
+    if [ "$n" -gt 0 ]; then echo "  TOKEN PRESENT (would be tracked): a plain token in $n file(s):"; printf '%s\n' "$hits" | head -5 | sed 's/^/      /'; tok_hits=$((tok_hits+n)); fi
+done < "$TOKENS"
+if [ "$tok_hits" -gt 0 ]; then echo "  refusing: a plain token survived. Nothing was placed in the tree."; exit 1; fi
+echo "  clean: no plain token anywhere in the private area (bytes and names)"
 
 # ---- 3. mirror the scrubbed copy into the tree, then commit and push --------
 for s in "${refreshed[@]}"; do

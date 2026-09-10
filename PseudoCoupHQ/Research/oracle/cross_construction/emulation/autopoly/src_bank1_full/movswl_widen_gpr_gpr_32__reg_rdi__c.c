@@ -1,0 +1,9 @@
+/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of movswl_widen_gpr_gpr_32__reg_rdi__c.  The term's layer-5 text, LITERAL:
+   Concat(0, Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 15, v0), Extract(15, 0, v0)) */
+#include <stdint.h>
+
+uint64_t
+emu_movswl_widen_gpr_gpr_32__reg_rdi__c(uint16_t a)
+{
+    return (uint64_t)((uint64_t)(((uint64_t)(UINT32_C(0x0)) << 32) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 31) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 30) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 29) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 28) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 27) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 26) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 25) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 24) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 23) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 22) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 21) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 20) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 19) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 18) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 17) | ((uint64_t)(((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1))) << 16) | (uint64_t)((uint32_t)a)));
+}

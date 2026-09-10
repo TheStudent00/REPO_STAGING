@@ -105,7 +105,13 @@ sys.path.insert(0, HANDFUL)
 sys.path.insert(0, INTERP)
 sys.path.insert(0, CPP)
 
-import handful as H                                             # noqa: E402
+# THE FROZEN DRIVER (task ap6, 2026-09-10).  This closed pass's driver
+# reads `handful_frozen.py`, which is `handful.py` copied byte for byte
+# on 2026-09-10, before the nine task-name gates were stripped out of
+# it, so this pass answers exactly as its own log records.  The ONE
+# driver is `handful.py`, which carries no task gate and is entered
+# through `autopoly.py`.
+import handful_frozen as H                                      # noqa: E402
 import autopoly4 as AP4                                         # noqa: E402
 import cpp_render as CPR                                        # noqa: E402
 

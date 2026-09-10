@@ -9,3 +9,33 @@ status: living
   `PlanPlan/framework/generate_nodes.py` from the
   `nodes` register of `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/CORE_0_3_2_1_hub_compiler.md`. Skeleton only — definition,
   designation, and content pending.
+- 2026-09-10: **task hub1 — the join at SOURCE level, first form.** The
+  2026-09-07 ruling replaced the memory-row join at egress with source
+  composition, and what the joiner now emits is the ARGUMENT PLAN: which
+  of the emulation's parameters each operand of the node is passed as.
+  It is read off three machine-form objects and nothing else — the
+  corpus go unit's own arrival families, its own body line's operand
+  slots, and the cell's own line beside the emulation's parameter
+  families (`hub.py argument_plan`). It is not always the identity: on c
+  the float64 `+` node is emitted `emu_addsd_xmm_xmm_64__reg_xmm0__c(b, a)`
+  because the renderer ordered that emulation's parameters by first use
+  in the term. Two refusals by cause were added where the plan cannot be
+  honoured: a parameter narrower than the operand, and a parameter
+  declared in the target's truth holder.
+  Report: `PseudoCoupHQ/DevComms/log_252_task_hub1_hub_v1_first_form.md` §4.
+
+- 2026-09-10: **task hub2 — two more argument plans, each read off
+  machine-form objects.** `hub2.py pair_argument_plan`: operand position
+  → the unit's parameter index → its arrival family → the slot that
+  family sits in on the unit's own SETTER line → the loop setter's own
+  family in the same slot → the emulation's parameter.
+  `hub2.py body_argument_plan`: the pool entry's type key IS its arrival
+  families, so the emulation's parameters carry the family names the
+  unit's own canon40 record carries and the plan is read straight off
+  them. Two refusals by cause were added beside task hub1's: a node
+  operand in go's truth holder whose entry parameter is not in a truth
+  holder, on a target with no conversion from its truth holder into an
+  integer holder (go); and the composed go file now carries the
+  emulation file's own helper functions, because a go emulation may call
+  one (`sel32`) and a composed file without it does not build.
+  Report: `PseudoCoupHQ/DevComms/log_254_task_hub2_the_dictionary_at_two_levels.md` §9.

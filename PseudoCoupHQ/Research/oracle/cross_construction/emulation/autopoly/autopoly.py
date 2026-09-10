@@ -1,91 +1,97 @@
 #!/usr/bin/env python3
-"""autopoly.py -- task ap1: the owner's loop, run for the first time over its
-measured outer set.
+"""autopoly.py -- THE LOOP DRIVER, and from task bank1 on it runs in
+--bank mode: DELTA PLUS AUDIT.
 
-Node: hq.research.arch_unit_oracle.cross_construction.autopoly
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
-the "goal" section of 2026-09-07 and the ruling of 2026-09-08).
+WHAT CHANGED, one sentence: the loop no longer re-derives every
+emulation from the cell's term on every pass -- it attempts only the
+(cell, target, written place) triples the bank holds no proof for, and
+re-derives a 5% AUDIT SAMPLE of the ones it does, so the count is
+monotone by construction and a pass costs a few hundred runs instead of
+a thousand.
+
+THE FINDING THIS CARRIES OUT (the owner, 2026-09-10).  Re-deriving everything
+every time meant a renderer change made the same cell yield a different
+artifact, and the old proof no longer described what had just been
+built: nineteen (cell, target) pairs proved by some pass are not proved
+by the last, and passes 2 to 5 spent 75% to 98% of their runs re-doing
+known results.  A proof is a certificate about ONE artifact and a
+certificate cannot regress; only the machinery can fail to reproduce
+it.
 
 THE OBJECTS, one sentence each, in relation.
   * A CELL is one (`mnem`, operand shape, `key_width`) row of the
-    arch-opcode model table
-    (`Research/oracle/arch_opcodes/model/model_table.json`, tasks
-    m1/m1b), which holds, per place the opcode writes, the z3 term the
-    reference simulator's own builder puts there.
-  * THE OUTER SET is every cell of that table which the canon40 corpus
-    actually attests -- a distinct triple with a TRANSLATED row whose
-    `attestation.ledger_rows` is greater than zero.  Task m1b measured
-    it at 253 and lane `ap1_l1_cells.sh` counts it again.
-  * A RUN is `find_emulation(cell, lang)` for one of the four compiled
-    targets: the target's own operator where it has one whose whole
-    lowered body IS the cell, the cell's term written in the target's
-    operators where it has not, then compiled at the corpus's ship
-    flags, carved, and put back to z3 against the cell's own term.
-  * THIS PROGRAM is the loop around that run and nothing else.  The run
-    itself is `handful.py` as task g1b left it, imported and called.
+    arch-opcode model table, holding, per place the opcode writes, the
+    z3 term the reference simulator's own builder puts there.
+  * A CERTIFICATE is one record about one (cell, target, written
+    place): the term, the rendered source and its sha256, the compiler
+    and its flags, the carved body, and the gate's own verdict.
+    `bank.py` writes them; `certificates.jsonl` holds them.
+  * THE DELTA is every (cell, target, written place) the bank holds no
+    certificate of kind `proved` or `agreed` for.
+  * THE AUDIT SAMPLE is 5% of the certified triples, chosen by
+    `random.Random("2026-09-10")`, re-derived from the term.
+  * AN ALARM is an audited triple whose re-derived verdict differs from
+    its certificate ON IDENTICAL INPUTS -- the same term text, the same
+    source sha256, the same compiler and flags.  An alarm STOPS the
+    pass and names the pair.
+  * A CHANGED ARTIFACT is an audited triple whose re-derived source
+    hashes differently: the renderer moved, so this is a NEW
+    certificate beside the old one and never a replacement of it.
+
+THE TWO MODES, and why the unflagged commands are task ap1's.
+  * `autopoly.py --bank <command>` is the mode above, and it is THE WAY
+    THE LOOP RUNS FROM NOW ON.
+  * `autopoly.py <command>` with no flag is TASK ap1'S OWN DRIVER,
+    delegated verbatim to `autopoly1.py`, which is task ap1's file
+    copied unchanged.  It is kept because `DevComms/log_243` cites
+    seven of its commands as reproducing commands and
+    `lanes_ap1/ap1_l5_run.sh` calls its `run`; a driver that answered
+    differently under those names would make a closed task's log
+    unreproducible.  Nothing about task ap1's answers moves.
+  * `autopoly.py --full run` is the whole re-derivation over the five
+    compiled targets -- the shape passes ap1 to ap5 ran -- kept so the
+    cost of a full pass can be measured against the delta's.
 
 WHAT IS REUSED RATHER THAN COPIED, said out loud.  Everything that
-decides an answer:
-  `handful.cell_input` reads the cell and rebuilds its terms,
-  `handful.find_emulation` runs the four steps (primitive lookup,
-  render, compile-and-carve, gate), `handful.one_recheck` re-poses an
-  UNDECIDED obligation with more room, `handful.composition_of_run`
-  classifies the carved body instruction by instruction, and
-  `handful.load_in_table` reads the table's own TRANSLATED triples.
-  The two renderers task g1 added (`go/go_render.py`,
-  `swift/swift_render.py`), the two task o7/o11 already had
-  (`emulation/emulate.py`, `emulation/rust/rust_render.py`), the carve,
-  the canonical form, the reference simulator and `gate.Gate.decide`
-  are reached through that file and never through this one.
+decides an answer is task ap5's driver and the file beneath it:
+  `autopoly5.one_run` runs one (cell, target) through the four steps
+  and its re-pose, `autopoly5.the_pairs` orders the outer set by
+  attested ledger rows descending, `handful.build_shared` builds the
+  reference and the gate, `handful.load_in_table` reads the table's
+  TRANSLATED triples for the composition step, and `bank.py` supplies
+  the kinds, the certificate key and the ship-flag sentences.  This
+  file adds the DELTA SELECTION, the AUDIT, and the bookkeeping around
+  them, and nothing else.
 
-WHAT THIS FILE ADDS, and it is only bookkeeping -- the brief's own
-words, "the driver as g1b left it, unchanged except for (a) taking its
-cells from the table instead of a list of ten and (b) the bookkeeping
-below":
-  (a) THE OUTER SET.  `autopoly_cells.json`, written by lane
-      `ap1_l1_cells.sh`, in the same shape `handful_cells.json` has, so
-      `handful.cell_input` reads it unchanged.
-  (b) FIVE PIECES OF BOOKKEEPING.
-      1. THE ORDER: most attested ledger rows first, so a stopped lane
-         has already finished the cells that carry most of the corpus.
-      2. THE INCREMENTAL STORE: one json object per line on
-         `autopoly_runs.jsonl`, written and flushed as each run
-         finishes, so a stopped lane loses nothing and resumes by
-         skipping the (cell, target) pairs already on the file.
-      3. THE RE-POSE: every gate call the 3,000 ms ceiling left
-         UNDECIDED is re-posed ONCE at 30,000 ms, inside the run rather
-         than in a second pass over the file, so a line on the store is
-         a finished run.
-      4. THE CAUSE OF A RUN THE ROUTE CANNOT HANDLE: every run is
-         wrapped, and an exception out of the driver is recorded as
-         that run's `refusal_cause` with the exception LITERAL.  the owner's
-         rule for this task, in the brief's own words: "a cell the
-         route cannot handle is a RESULT BY CAUSE, never a reason to
-         touch the method mid-run."
-      5. THE AGGREGATE AND THE REPORT: `autopoly.json` and
-         `autopoly.md`.
+THE ROUTE IS THE DRIVER'S, AND THERE IS ONLY ONE (2026-09-10).
+`handful.py` carried nine `use_task_*` gates, so which contract rules
+applied was decided by the NAME of the task asking; they are gone, every
+rule applies to every run, and what a certificate records instead is
+`code_version` -- the sha256 of the driver's own source and of the
+renderer that wrote the target's source.  This file sets
+`handful.TARGETS` and the product paths, which are configuration, and
+decides nothing about the route.
 
-WHAT IS NOT CHANGED, said out loud because it would be the easy thing
-to change.  `handful.TASK` is set to `g1c`, which is the task g1b
-closer's own setting: the two printing fixes of task h2 on, the
-primitive route tried before the term route, and the primitive lookup
-widened by one step (a single-opcode row is accepted when its
-narrow-stripped body is the cell's own instruction plus zero or more
-zero-operand setup instructions from `reference.SPREAD_SIGN` /
-`reference.ACCUMULATOR_WIDEN` and nothing else).  Not one line of
-`handful.py` is edited by this task, and its own products
-(`handful*.json`, `handful*.md`, `src*/`) are never written: every path
-`handful.py` writes through is repointed into this folder by
-`use_task_ap1` below.
+WHICH PASS'S PRODUCTS, and it is a parameter rather than a name in the
+code: `--pass <label>` selects the store, the aggregate and the source
+folder mechanically (`<label>_runs.jsonl`, `<label>.json`,
+`src_<label>/`).  Its default is the pass that introduced bank mode, so
+`DevComms/log_253`'s own reproducing commands answer exactly as they
+did.
+
+THE RE-ATTEMPT RULE, which is what replaced the task label.  A key whose
+certificate is `refused`, `undecided`, `sat` or `proved_under_caller_
+extension` is attempted again only when the code version recorded on
+that certificate DIFFERS from the version running now for that target;
+a key with no code version on record (every certificate banked before
+2026-09-10) differs by definition and is attempted.  A CERTIFIED key --
+`proved` or `agreed` -- is only ever re-derived through the audit
+sample, which `--audit-share` sets.
 
 MEMORY BOUND, stated as the law requires: one collecting process, no
-forked workers; peak resident checked after every run; named abort
-ABORT_MEMORY_AP1 at 6 GB, which is inside the instance's 20g cap.  The
-reads are `autopoly_cells.json` (2 MB), `model_table_rows.json` (50 MB,
-once, for the composition step), `single_opcode_units.json` (1.6 MB,
-twice, cached) and one probe manifest per target (a few MB each,
-cached).  The 73 MB `model_table.json` is not read by this program at
-all -- lane `ap1_l1_cells.sh` read it once and wrote the small file.
+forked workers; the bank is STREAMED and never held whole; peak
+resident checked after every run; named abort ABORT_MEMORY_BANK1 at
+6 GB, inside the instance's 20g cap.
 
 THE SPELLING BAN, pasted verbatim as required:
 
@@ -106,44 +112,45 @@ spelling-key check (op_pipeline/check_no_spelling_keys.py) and refuse
 its own output on failure.  A brief handed to any subagent for this
 line MUST paste this paragraph verbatim."
 
-The population is MACHINE-FORM EVIDENCE and nothing else: the cells are
-every triple the corpus attests, read off the table's own
-`attestation.ledger_rows`, and the order is that count descending.  No
-operator token enters the selection, the order, the pairing (there is
-one run per (cell, target), fixed in advance), or any key of any file
-this program writes.  Every field carrying a mnemonic is named `mnem`,
-which the guard reads as a machine form.
+HOW THE DELTA OBEYS IT.  What a pass attempts is decided by the BANK --
+which keys carry a certificate of kind `proved` or `agreed` -- and by
+`random.Random("2026-09-10")` for the audit.  Neither reads a token.
+The cells are the outer set the corpus attests, in attested-ledger-row
+order, exactly as tasks ap1 to ap5 walked them.
 
 Coding discipline: no compound one-liner statements.
 
 usage:
-  autopoly.py preflight        the outer set as the loop will walk it,
-                               and nothing run
-  autopoly.py run [<n>]        the runs, appended one line at a time to
-                               autopoly_runs.jsonl; `<n>` stops after n
-                               runs actually performed (the sample)
-  autopoly.py aggregate        autopoly_runs.jsonl -> autopoly.json
-  autopoly.py report           autopoly.json       -> autopoly.md
-  autopoly.py tally            the counts, printed
-  autopoly.py reproduce        the handful's forty (cell, target) pairs
-                               as they came out of this loop, beside
-                               task g1b's own answers
-  autopoly.py tables           the report's tables 1, 2 and 3 and the
-                               two `sat` counts, printed and nothing
-                               that moves between runs
-  autopoly.py causes           the by-cause table summed over the four
-                               targets, and the arrival-contract group
-  autopoly.py repose           what the one re-pose at 30,000 ms moved
-  autopoly.py store            the store and the aggregate compared run
-                               for run
-  autopoly.py sat              the two `sat` counts and the five largest
-  autopoly.py branch           which form of a cell's term the renderer
-                               is handed, per task, with the driver's
-                               own source LITERAL
+  autopoly.py --bank preflight   what the delta pass would attempt and
+                                 audit, and nothing run
+  autopoly.py --bank run [<n>]   the delta pass; `<n>` stops after n runs
+  autopoly.py --bank report      the cost line: certified before /
+                                 attempted / newly certified / audited /
+                                 alarms, against a full pass
+  autopoly.py --bank audit       every audited triple and its answer
+  autopoly.py --bank cost        the delta pass beside a full pass over
+                                 the same five targets, both measured
+  autopoly.py --bank changed     every audited triple whose ARTIFACT
+                                 changed, with the line that differs
+  autopoly.py --bank tally       the counts, printed
+  autopoly.py --full run [<n>]   the whole re-derivation over the five
+                                 compiled targets, for the cost
+                                 comparison
+  autopoly.py <command>          the first loop driver's own commands,
+                                 delegated verbatim to `autopoly1.py`
+  the three options, which may precede any mode and change no rule:
+  --pass <label>                 which pass's products to read and write
+  --audit-share <fraction>       how much of the certified population is
+                                 re-derived; `1` is every certificate
+  --attempts off                 audit only: attempt no uncertified key,
+                                 so what the pass measures is
+                                 re-derivation alone
 """
 
+import hashlib
 import json
 import os
+import random
 import resource
 import sys
 import time
@@ -153,77 +160,85 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 EMULATION = os.path.normpath(os.path.join(HERE, ".."))
 HANDFUL = os.path.join(EMULATION, "handful")
 sys.path.insert(0, HANDFUL)
+sys.path.insert(0, HERE)
 
 import handful as H                                             # noqa: E402
 import model_table as MTAB                                      # noqa: E402
 import gate as G                                                # noqa: E402
+import autopoly5 as LOOP                                        # noqa: E402
+import bank as BK                                               # noqa: E402
 
-CELLS = os.path.join(HERE, "autopoly_cells.json")
-RUNS = os.path.join(HERE, "autopoly_runs.jsonl")
-AGGREGATE = os.path.join(HERE, "autopoly.json")
-REPORT = os.path.join(HERE, "autopoly.md")
-SRC_DIR = os.path.join(HERE, "src")
-PRIMITIVE = os.path.join(HERE, "autopoly_primitive.json")
-SPELLINGS = os.path.join(HERE, "autopoly_spellings.json")
-HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
-               "cross_construction/emulation/autopoly")
+CELLS = os.path.join(HERE, "autopoly5_cells.json")
+"""the outer set as task ap5 left it: 253 cells, the current one."""
 
-# THE TWO CEILINGS THE BRIEF STATES.  The first is the pipeline's own
-# and is the verdict of record; the second is the ONE re-pose a time
-# limit obliges, and 30,000 ms rather than the handful's 300,000 ms
-# because this loop poses a thousand runs rather than forty.
-SOLVER_MS = 3000
-REPOSE_MS = 30000
+PASS_LABEL = "bank1_delta"
+"""WHICH PASS'S PRODUCTS, as a parameter.  `--pass <label>` moves it.
+The default is the pass that introduced bank mode so that log_253's own
+reproducing commands answer as they did; a new pass states its own
+label on the command line and writes beside every earlier pass, never
+over one."""
+
+FULL_LABEL = "bank1_full"
+
+
+def paths_of(label):
+    """one pass's products, derived from its label mechanically."""
+    return {
+        "runs": os.path.join(HERE, "%s_runs.jsonl" % label),
+        "aggregate": os.path.join(HERE, "%s.json" % label),
+        "src": os.path.join(HERE, "src_%s" % label),
+        "primitive": os.path.join(HERE, "%s_primitive.json" % label),
+        "spellings": os.path.join(HERE, "%s_spellings.json" % label),
+        "report": os.path.join(HERE, "%s.md" % label),
+    }
+
+
+HELD = paths_of(PASS_LABEL)
+RUNS = HELD["runs"]
+AGGREGATE = HELD["aggregate"]
+SRC_DIR = HELD["src"]
+PRIMITIVE = HELD["primitive"]
+SPELLINGS = HELD["spellings"]
+REPORT = HELD["report"]
+
+FULL_RUNS = os.path.join(HERE, "%s_runs.jsonl" % FULL_LABEL)
+FULL_SRC_DIR = os.path.join(HERE, "src_%s" % FULL_LABEL)
 
 ABORT_KB = 6 * 1024 * 1024
-ABORT_NAME = "ABORT_MEMORY_AP1"
+ABORT_NAME = "ABORT_MEMORY_BANK1"
 
-# The four compiled targets, in the brief's own order.
-TARGETS = ["c", "rust", "go", "swift"]
+SOLVER_MS = 3000
+REPOSE_MS = 30000
+"""task ap1's two ceilings, unchanged: the gate of record at 3,000 ms
+per place and ONE re-pose at 30,000 ms for an UNDECIDED."""
+
+AUDIT_SHARE = 0.05
+"""how much of the certified population one pass re-derives.
+`--audit-share 1` is EVERY certificate, which is the audit the gates'
+removal is guarded by: a re-derived verdict that differs from its
+certificate on identical inputs is an alarm and the pass stops."""
+
+ATTEMPTS_ARE_ON = True
+"""whether the pass also attempts the keys no certificate certifies.
+`--attempts off` leaves only the audit, so what a pass measures is
+re-derivation alone and nothing else."""
+
+AUDIT_DATE = "2026-09-10"
+"""the seed the brief names, `random.Random(<date>)`, written out so a
+later pass can reproduce this pass's own sample exactly and a NEW pass
+takes a new date and therefore a new sample."""
+
+TARGETS = ["c", "cpp", "rust", "go", "swift"]
 
 CAUSE_DRIVER = "the driver raised on this (cell, target) pair"
+"""the loop's own refusal cause, in the words every pass since the first
+has written it (`autopoly1.CAUSE_DRIVER`, `autopoly5.CAUSE_DRIVER`), so
+a refusal of this kind reads the same on every store.  No new outcome
+name is coined here."""
 
-# The handful's ten cells, so this loop's answers for them can be put
-# beside task g1b's own.  Ratified intention, in task h1's brief order;
-# nothing here selects, groups or pairs by them.
-HANDFUL_CELLS = [
-    ("add", "gpr_gpr", 32),
-    ("sub", "imm_gpr", 64),
-    ("imul", "gpr_gpr", 32),
-    ("sar", "cl_gpr", 32),
-    ("shr", "cl_gpr", 64),
-    ("idiv", "gpr_one", 32),
-    ("cmovne", "gpr_gpr", 32),
-    ("setne", "gpr_one", 8),
-    ("addss", "xmm_xmm", 32),
-    ("cvtsi2sd", "gpr_xmm", 64),
-]
-HANDFUL_G1B = os.path.join(HANDFUL, "handful3b.json")
-HANDFUL_G1C = os.path.join(HANDFUL, "handful3c.json")
-
-
-def use_task_ap1():
-    """the imported driver pointed at THIS task's paths and this task's
-    memory bound, and at task g1c's route.
-
-    `handful.TASK` decides three things and this task re-decides none of
-    them: `fixes_are_on` (task h2's two printing fixes), `primitive_first`
-    (task g1's route order) and `setup_is_allowed` (task g1c's widened
-    lookup).  `g1c` is the setting under which task g1b's closer ran, so
-    the method here is that one, unchanged.
-
-    Every path `handful.py` writes through is repointed into this
-    folder, so no lane of this task can write task g1b's products."""
-    H.TASK = "g1c"
-    H.RESULTS = AGGREGATE
-    H.REPORT = REPORT
-    H.SRC_DIR = SRC_DIR
-    H.PRIMITIVE = PRIMITIVE
-    H.SPELLINGS = SPELLINGS
-    H.CELLS = CELLS
-    H.HOST_FOLDER = HOST_FOLDER
-    H.ABORT_KB = ABORT_KB
-    H.ABORT_NAME = ABORT_NAME
+AP1_COMMANDS = ["preflight", "run", "aggregate", "report", "tally",
+                "reproduce", "tables", "causes", "repose", "store",
+                "sat", "branch"]
 
 
 def say(text):
@@ -256,94 +271,812 @@ def write_json(path, document):
     handle.close()
 
 
+def configure(store, src):
+    """the driver pointed at THIS pass's paths, this pass's memory bound
+    and the five compiled targets.
+
+    THERE IS NO TASK ENTRY TO CALL ANY MORE.  `handful.py` used to carry
+    nine of them and the route a run went through depended on which one
+    a driver called; every rule is now unconditional, so what is set
+    here is what a configuration is: where the products go, what the
+    named abort is called, and which targets the pass walks.
+
+    Every path `handful.py` writes through is repointed into this pass's
+    own files, so no lane of this pass can write an earlier pass's
+    products."""
+    H.TARGETS = list(TARGETS)
+    H.RESULTS = AGGREGATE
+    H.REPORT = REPORT
+    H.SRC_DIR = src
+    H.PRIMITIVE = PRIMITIVE
+    H.SPELLINGS = SPELLINGS
+    H.CELLS = CELLS
+    H.HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
+                     "cross_construction/emulation/autopoly")
+    H.ABORT_KB = ABORT_KB
+    H.ABORT_NAME = ABORT_NAME
+    LOOP.TARGETS = list(TARGETS)
+    return
+
+
+def sha256_of_file(path):
+    """the sha256 of one source file's bytes."""
+    handle = open(path, "rb")
+    digest = hashlib.sha256(handle.read()).hexdigest()
+    handle.close()
+    return digest
+
+
+LOOP_VERSION = None
+
+
+def code_version_of(lang):
+    """THE VERSION OF THE MACHINERY ONE RUN WAS PRODUCED BY: the
+    driver's own source, this loop's own source, and the source of the
+    renderer that wrote the target -- each by the sha256 of its bytes.
+
+    It is the object that replaced the nine task gates.  A task label
+    said WHO ran; this says WHAT ran, and a later pass compares it
+    against the version it is running to decide whether an answer is
+    worth deriving again."""
+    global LOOP_VERSION
+    if LOOP_VERSION is None:
+        LOOP_VERSION = sha256_of_file(os.path.abspath(__file__))
+    out = dict(H.code_version(lang))
+    out["loop"] = LOOP_VERSION
+    out["loop_source"] = os.path.basename(os.path.abspath(__file__))
+    return out
+
+
+def version_key(version):
+    """the three shas of one code version, as a tuple, so two versions
+    compare as objects rather than as text.  A certificate banked before
+    2026-09-10 carries none and answers `None` here, which differs from
+    every real version -- so it is attempted again, which is the
+    intended reading."""
+    if not version:
+        return None
+    return (version.get("driver"), version.get("loop"),
+            version.get("renderer"))
+
+
 # ==================================================================
 # section 1: THE COMMANDS
 # ==================================================================
 
 def main(argv):
-    use_task_ap1()
+    """the three options first, then the mode.
+
+    AN OPTION IS A CONFIGURATION and never a rule: which pass's products
+    to read, how much of the certified population to re-derive, and
+    whether uncertified keys are attempted at all.  Nothing any of them
+    sets is asked about inside a run."""
+    global PASS_LABEL, HELD, RUNS, AGGREGATE, SRC_DIR, PRIMITIVE
+    global SPELLINGS, REPORT, AUDIT_SHARE, ATTEMPTS_ARE_ON
+    while argv and argv[0] in ("--pass", "--audit-share", "--attempts"):
+        if argv[0] == "--pass":
+            PASS_LABEL = argv[1]
+            HELD = paths_of(PASS_LABEL)
+            RUNS = HELD["runs"]
+            AGGREGATE = HELD["aggregate"]
+            SRC_DIR = HELD["src"]
+            PRIMITIVE = HELD["primitive"]
+            SPELLINGS = HELD["spellings"]
+            REPORT = HELD["report"]
+        if argv[0] == "--audit-share":
+            AUDIT_SHARE = float(argv[1])
+        if argv[0] == "--attempts":
+            ATTEMPTS_ARE_ON = argv[1] == "on"
+        argv = argv[2:]
     if not argv:
         say(__doc__)
         return 2
-    if argv[0] == "preflight":
-        return preflight_command()
-    if argv[0] == "run":
-        limit = None
-        if len(argv) > 1:
-            limit = int(argv[1])
-        return run_command(limit)
-    if argv[0] == "aggregate":
-        return aggregate_command()
-    if argv[0] == "report":
-        return report_command()
-    if argv[0] == "tally":
-        return tally_command()
-    if argv[0] == "reproduce":
-        return reproduce_command()
-    if argv[0] == "tables":
-        return tables_command()
-    if argv[0] == "causes":
-        return causes_command()
-    if argv[0] == "repose":
-        return repose_command()
-    if argv[0] == "store":
-        return store_command()
-    if argv[0] == "sat":
-        return sat_command()
-    if argv[0] == "branch":
-        return branch_command()
+    if argv[0] == "--bank":
+        return bank_main(argv[1:])
+    if argv[0] == "--full":
+        return full_main(argv[1:])
+    if argv[0] in AP1_COMMANDS:
+        return task_ap1(argv)
     say("unknown command %r" % argv[0])
     return 2
 
 
-def preflight_command():
-    """the outer set as the loop will walk it, and nothing run: how many
-    cells, how many pairs, what the order is, and which cells carry a
-    field the driver cannot format."""
-    cells = read_json(CELLS)
-    asked = cells["asked"]
-    say("cells on %s: %d" % (CELLS, len(asked)))
-    say("targets: %s" % ", ".join(TARGETS))
-    say("pairs: %d" % (len(asked) * len(TARGETS)))
-    total = 0
-    for record in asked:
-        total = total + record["attested_ledger_rows"]
-    say("attested ledger rows over the whole outer set: %d" % total)
+def task_ap1(argv):
+    """the first loop driver's own commands, delegated verbatim.
+
+    `autopoly1.py` is task ap1's file, copied unchanged when this file
+    became the bank-mode driver.  It reads and writes task ap1's own
+    paths, so `DevComms/log_243`'s seven reproducing commands and
+    `lanes_ap1/ap1_l5_run.sh` answer exactly as they did."""
+    import autopoly1 as AP1
+    return AP1.main(argv)
+
+
+def bank_main(argv):
+    if not argv:
+        say(__doc__)
+        return 2
+    if argv[0] == "preflight":
+        return bank_preflight_command()
+    if argv[0] == "run":
+        limit = None
+        if len(argv) > 1:
+            limit = int(argv[1])
+        return bank_run_command(limit)
+    if argv[0] == "report":
+        return bank_report_command()
+    if argv[0] == "audit":
+        return bank_audit_command()
+    if argv[0] == "cost":
+        return bank_cost_command()
+    if argv[0] == "changed":
+        return bank_changed_command()
+    if argv[0] == "tally":
+        return bank_tally_command()
+    say("unknown --bank command %r" % argv[0])
+    return 2
+
+
+def full_main(argv):
+    if not argv:
+        say(__doc__)
+        return 2
+    if argv[0] == "run":
+        limit = None
+        if len(argv) > 1:
+            limit = int(argv[1])
+        return full_run_command(limit)
+    say("unknown --full command %r" % argv[0])
+    return 2
+
+
+def bank_preflight_command():
+    """what the delta pass would attempt and audit, and nothing run."""
+    configure(RUNS, SRC_DIR)
+    plan = the_delta()
+    say("the bank: %s" % BK.BANK)
+    say("the outer set: %s" % CELLS)
+    say("the targets: %s" % ", ".join(TARGETS))
     say("")
-    say("the first ten cells of the order, most attested first:")
-    for record in asked[:10]:
-        say("   %-10s %-14s %-6s ledger_rows %d"
-            % (record["asked"]["mnem"], record["asked"]["shape"],
-               record["asked"]["key_width"],
-               record["attested_ledger_rows"]))
+    say("Table D1 -- what a delta pass costs against a full one.  A "
+        "PLACE-TRIPLE is one (cell, target, written place); a RUN is "
+        "one (cell, target), which is the unit the loop actually "
+        "executes because the four steps render, compile and carve "
+        "every place of a pair together.")
     say("")
-    without = []
-    for record in asked:
-        if record["asked"]["key_width"] is not None:
-            continue
-        without.append(record["asked"])
-    say("cells whose key_width is null: %d" % len(without))
-    for one in without:
-        say("   %s %s %s" % (one["mnem"], one["shape"], one["key_width"]))
+    say("| step | place-triples | runs |")
+    say("|---|---|---|")
+    say("| a full pass over these five targets | %d | %d |"
+        % (plan["known_triples"], plan["pairs_total"]))
+    say("| certified before this pass (kind `proved` or `agreed`) | %d "
+        "| -- |" % plan["certified_before"])
+    say("| the delta: no certificate of kind `proved` or `agreed` | %d "
+        "| %d |" % (plan["attempt_triples"], plan["attempt_pairs"]))
+    say("| the audit sample: %s%% of the certified, seed `%s` | %d | %d |"
+        % (round(AUDIT_SHARE * 100), AUDIT_DATE, plan["audit_triples"],
+           plan["audit_pairs"]))
+    say("| held by the code version: the machinery that answered it "
+        "has not moved | %d | -- |" % plan["held_by_version"])
+    say("| the runs this pass executes | -- | **%d** |"
+        % plan["runs_to_execute"])
     say("")
-    done = already_recorded()
-    say("runs already on %s: %d" % (RUNS, len(done)))
+    say("pairs never attempted by any pass on this store: %d"
+        % plan["pairs_never_attempted"])
     say("peak resident: %d kB" % check_memory("preflight"))
     return 0
 
 
-def run_command(limit):
-    """the loop.  One line on `autopoly_runs.jsonl` per finished run."""
+def bank_run_command(limit):
+    """THE DELTA PASS.  One line on `bank1_delta_runs.jsonl` per
+    finished run, and the audit's answers beside it."""
+    configure(RUNS, SRC_DIR)
     if not os.path.isdir(SRC_DIR):
         os.makedirs(SRC_DIR)
+    plan = the_delta()
+    certificates = certificates_for(plan["audit_triples_list"])
+    say("certified before: %d place-triple(s)" % plan["certified_before"])
+    say("attempted: %d place-triple(s) over %d run(s)"
+        % (plan["attempt_triples"], plan["attempt_pairs"]))
+    say("audited: %d place-triple(s), seed %r"
+        % (plan["audit_triples"], AUDIT_DATE))
+    say("runs to execute: %d" % plan["runs_to_execute"])
+    say("")
+    done = already_recorded(RUNS)
+    say("runs already on %s: %d" % (RUNS, len(done)))
+    outcome = walk(plan["runs_list"], RUNS, done, limit, certificates,
+                   plan)
+    return outcome
+
+
+def full_run_command(limit):
+    """the whole re-derivation over the five compiled targets, so the
+    delta's cost has something measured to stand against."""
+    configure(FULL_RUNS, FULL_SRC_DIR)
+    if not os.path.isdir(FULL_SRC_DIR):
+        os.makedirs(FULL_SRC_DIR)
     cells = read_json(CELLS)
-    pairs = the_pairs(cells)
-    moved = normalize_store()
-    if moved:
-        say("%d line(s) of the store were rewritten onto the "
-            "machine-form cell key" % moved)
-    done = already_recorded()
-    say("pairs to run: %d; already recorded: %d" % (len(pairs), len(done)))
+    pairs = LOOP.the_pairs(cells)
+    held = []
+    for asked, lang, ledger in pairs:
+        held.append((asked, lang, ledger))
+        continue
+    say("a FULL pass: %d run(s)" % len(held))
+    done = already_recorded(FULL_RUNS)
+    return walk(held, FULL_RUNS, done, limit, {}, None)
+
+
+def bank_report_command():
+    """the cost line."""
+    document = read_json(AGGREGATE)
+    held = document["cost"]
+    say("Table D2 -- the delta pass's own cost line, in the five counts "
+        "the brief names.  `certified before` counts (cell, target, "
+        "written place) triples the bank certified before this pass; "
+        "`attempted` counts the triples with no such certificate; "
+        "`newly certified` counts the triples this pass certified; "
+        "`audited` counts the certified triples re-derived from the "
+        "term; `alarms` counts the audited triples whose re-derived "
+        "verdict differs from its certificate on identical inputs.")
+    say("")
+    say("| pass | certified before | attempted | newly certified | "
+        "audited | alarms |")
+    say("|---|---|---|---|---|---|")
+    say("| `bank1_delta` | %d | %d | %d | %d | %d |"
+        % (held["certified_before"], held["attempted"],
+           held["newly_certified"], held["audited"], held["alarms"]))
+    say("")
+    say("Table D3 -- what the pass cost against a full pass over the "
+        "same five targets.")
+    say("")
+    say("| | runs | seconds |")
+    say("|---|---|---|")
+    say("| a full pass over these five targets | %d | %s |"
+        % (held["full_pass_runs"], held["full_pass_seconds"]))
+    say("| this delta pass | %d | %s |"
+        % (held["runs_executed"], held["seconds"]))
+    say("")
+    say("the delta pass ran %s%% of a full pass's runs."
+        % round(100.0 * held["runs_executed"]
+                / max(1, held["full_pass_runs"]), 1))
+    say("peak resident: %d kB" % peak_kb())
+    return 0
+
+
+def bank_changed_command():
+    """every audited triple whose ARTIFACT changed, one by one.
+
+    THE CERTIFICATE'S SOURCE AGAINST THE RE-DERIVATION'S, and the first
+    line on which they differ, which is the measurement.  A changed
+    artifact is not an alarm: the renderer moved, so the same cell now
+    yields something else, and the new record is a certificate BESIDE
+    the old one rather than in place of it."""
+    document = read_json(AGGREGATE)
+    changed = []
+    for row in document["audit"]:
+        if row["reading"] != "the artifact changed":
+            continue
+        changed.append(row)
+        continue
+    wanted = set()
+    for row in changed:
+        wanted.add(key_of_audit_row(row))
+        continue
+    certificate = {}
+    for cert in BK.stream(BK.BANK):
+        key = BK.key_tuple(cert)
+        if key not in wanted:
+            continue
+        if not cert["preferred"]:
+            continue
+        certificate[key] = cert
+        continue
+    rederived = {}
+    handle = open(RUNS)
+    for line in handle:
+        text = line.strip()
+        if not text:
+            continue
+        run = json.loads(text)
+        for place in run.get("places") or []:
+            key = (run["mnem"], run["shape"], run["key_width"],
+                   run["lang"], place.get("writes"),
+                   setter_key(run.get("setter")))
+            if key not in wanted:
+                continue
+            rederived[key] = place
+            continue
+        continue
+    handle.close()
+    say("Table D7 -- the audited triples whose artifact changed.  The "
+        "two source columns hold the FIRST line on which the two "
+        "rendered sources differ, which is the measurement; the several "
+        "hundred characters of preamble they share are not shown.")
+    say("")
+    say("| `mnem` | shape | `key_width` | target | place | "
+        "certificate's pass | certificate | re-derived | the "
+        "certificate's source | the re-derivation's source |")
+    say("|---|---|---|---|---|---|---|---|---|---|")
+    for row in changed:
+        key = key_of_audit_row(row)
+        cert = certificate.get(key)
+        place = rederived.get(key)
+        new_source = None
+        if place is not None:
+            new_source = place.get("source")
+        path = None
+        if cert is not None:
+            path = (cert["source"] or {}).get("path")
+        left, right = first_difference(source_text(path), new_source)
+        say("| `%s` | %s | %s | %s | `%s` | `%s` | %s | %s | `%s` | "
+            "`%s` |"
+            % (key[0], key[1], key[2], key[3], key[4],
+               row["certificate_pass"], row["certificate_kind"],
+               row["rederived_kind"], escaped(left[:170]),
+               escaped(right[:170])))
+        continue
+    say("")
+    for row in changed:
+        key = key_of_audit_row(row)
+        cert = certificate.get(key)
+        place = rederived.get(key)
+        say("%s %s %s on %s at %s" % (key[0], key[1], key[2], key[3],
+                                      key[4]))
+        path = "--"
+        if cert is not None:
+            path = (cert["source"] or {}).get("path")
+        say("   the certificate: pass %s, kind %s, source %s, sha256 %s"
+            % (row["certificate_pass"], row["certificate_kind"], path,
+               row["certificate_sha256"]))
+        say("   the re-derivation: kind %s, sha256 %s"
+            % (row["rederived_kind"], row["rederived_sha256"]))
+        if place is not None:
+            check = place.get("check") or {}
+            say("   the re-derivation's verdict: %s -- %s"
+                % (check.get("outcome"), check.get("reason")))
+            if place.get("refusal_cause"):
+                say("   the re-derivation's refusal cause: %s"
+                    % place["refusal_cause"])
+            if place.get("refusal_detail"):
+                say("   the re-derivation's refusal detail: %s"
+                    % place["refusal_detail"])
+        say("")
+        continue
+    say("audited triples whose artifact changed: %d" % len(changed))
+    return 0
+
+
+def key_of_audit_row(row):
+    """one audited row's key, the same six-part key the bank uses."""
+    setter = row.get("setter")
+    held = None
+    if setter is not None:
+        held = (setter.get("mnem"), setter.get("shape"),
+                setter.get("key_width"))
+    return (row["cell"]["mnem"], row["cell"]["shape"],
+            row["cell"]["key_width"], row["target"], row["place"],
+            held)
+
+
+def source_text(path):
+    """the rendered source a certificate names, looked for where the
+    passes actually wrote: this folder first, the folder above second,
+    which is the order `bank.resolve_source` reads it in."""
+    if path is None:
+        return None
+    for root in [HERE, EMULATION]:
+        candidate = os.path.join(root, path)
+        if os.path.exists(candidate):
+            handle = open(candidate)
+            body = handle.read()
+            handle.close()
+            return body
+        continue
+    return None
+
+
+def first_difference(left, right):
+    """the first line two rendered sources do not share, one cell each.
+
+    A whole source is several hundred characters of preamble the two
+    always share -- the allow-list, the provenance comment, the
+    signature -- so showing both whole would hide the one line that is
+    the measurement."""
+    if left is None:
+        return ("-- the certificate's source is not on disk --", "--")
+    if right is None:
+        return ("--", "-- the re-derivation rendered nothing --")
+    one = left.split("\n")
+    two = right.split("\n")
+    for index in range(max(len(one), len(two))):
+        a = "-- ends --"
+        if index < len(one):
+            a = one[index].strip()
+        b = "-- ends --"
+        if index < len(two):
+            b = two[index].strip()
+        if a == b:
+            continue
+        return (a, b)
+    return ("-- identical text --", "-- identical text --")
+
+
+def escaped(text):
+    """a markdown table cell cannot carry a bare pipe."""
+    return text.replace("|", "\\|")
+
+
+def bank_cost_command():
+    """THE MEASURED COST: the delta pass beside the full pass over the
+    same five targets, both run in this instance, in this image, in the
+    same hour, at the same two ceilings.
+
+    The seconds are the runs' OWN recorded seconds summed, not a lane's
+    wall clock, so the two figures count the same thing and neither
+    carries the reading of the bank around it."""
+    say("Table D5 -- the delta pass beside a full pass over the same "
+        "five compiled targets.  Both were run in this instance, in "
+        "this image, at the same two ceilings; the only difference is "
+        "which runs were attempted.  `seconds` sums each store's own "
+        "recorded per-run seconds.")
+    say("")
+    say("| pass | runs | seconds | seconds per run |")
+    say("|---|---|---|---|")
+    held = {}
+    for name, store in [("a full pass", FULL_RUNS),
+                        ("this delta pass", RUNS)]:
+        runs = 0
+        seconds = 0.0
+        if os.path.exists(store):
+            handle = open(store)
+            for line in handle:
+                text = line.strip()
+                if not text:
+                    continue
+                run = json.loads(text)
+                runs = runs + 1
+                seconds = seconds + (run.get("seconds") or 0)
+                continue
+            handle.close()
+        held[name] = (runs, seconds)
+        each = 0.0
+        if runs:
+            each = round(seconds / runs, 2)
+        say("| %s | %d | %s | %s |" % (name, runs, round(seconds), each))
+        continue
+    full = held["a full pass"]
+    delta = held["this delta pass"]
+    if full[0] and full[1]:
+        say("")
+        say("the delta pass ran %s%% of the full pass's runs and cost "
+            "%s%% of its seconds."
+            % (round(100.0 * delta[0] / full[0], 1),
+               round(100.0 * delta[1] / full[1], 1)))
+    say("")
+    say("Table D6 -- what the full pass answered, so the delta's own "
+        "answers can be read against a pass that attempted everything.")
+    say("")
+    document = read_json(AGGREGATE)
+    say("| | delta | full |")
+    say("|---|---|---|")
+    say("| runs | %d | %d |" % (delta[0], full[0]))
+    say("| place-triples proved | %d | %d |"
+        % (proved_places(RUNS), proved_places(FULL_RUNS)))
+    say("| pairs proved, STRICT | %d | %d |"
+        % (strict_pairs(RUNS), strict_pairs(FULL_RUNS)))
+    say("| newly certified against the bank as it stood | %d | -- |"
+        % document["cost"]["newly_certified"])
+    say("")
+    say("peak resident: %d kB" % peak_kb())
+    return 0
+
+
+def proved_places(store):
+    """how many written places one store proved."""
+    if not os.path.exists(store):
+        return 0
+    total = 0
+    handle = open(store)
+    for line in handle:
+        text = line.strip()
+        if not text:
+            continue
+        run = json.loads(text)
+        for place in run.get("places") or []:
+            if BK.kind_of_place(place) == "proved":
+                total = total + 1
+            continue
+        continue
+    handle.close()
+    return total
+
+
+def strict_pairs(store):
+    """how many (cell, target) pairs one store proved on the STRICT
+    reading -- every written place proved."""
+    if not os.path.exists(store):
+        return 0
+    total = 0
+    handle = open(store)
+    for line in handle:
+        text = line.strip()
+        if not text:
+            continue
+        run = json.loads(text)
+        places = run.get("places") or []
+        if not places:
+            continue
+        if BK.every_place_proved(places):
+            total = total + 1
+        continue
+    handle.close()
+    return total
+
+
+def bank_audit_command():
+    """every audited triple and its answer."""
+    document = read_json(AGGREGATE)
+    say("Table D4 -- every audited (cell, target, written place), its "
+        "certificate's kind and the kind the re-derivation answered, "
+        "and whether the inputs were identical.  A row whose inputs "
+        "were identical and whose kinds differ is an ALARM; a row whose "
+        "source sha256 moved is a CHANGED ARTIFACT and is banked as a "
+        "new certificate beside the old one, never in place of it.")
+    say("")
+    say("| `mnem` | shape | `key_width` | target | place | the "
+        "certificate's pass | certificate | re-derived | inputs "
+        "identical | reading |")
+    say("|---|---|---|---|---|---|---|---|---|---|")
+    for row in document["audit"]:
+        say("| `%s` | %s | %s | %s | `%s` | `%s` | %s | %s | %s | %s |"
+            % (row["cell"]["mnem"], row["cell"]["shape"],
+               row["cell"]["key_width"], row["target"], row["place"],
+               row["certificate_pass"], row["certificate_kind"],
+               row["rederived_kind"],
+               yes_or_no(row["inputs_identical"]), row["reading"]))
+        continue
+    say("")
+    counted = {}
+    for row in document["audit"]:
+        counted[row["reading"]] = counted.get(row["reading"], 0) + 1
+        continue
+    say("| reading | rows |")
+    say("|---|---|")
+    for reading in sorted(counted):
+        say("| %s | %d |" % (reading, counted[reading]))
+        continue
+    say("")
+    say("peak resident: %d kB" % peak_kb())
+    return 0
+
+
+def bank_tally_command():
+    """the counts, printed."""
+    say("lines on %s: %d" % (RUNS, count_lines(RUNS)))
+    if os.path.exists(FULL_RUNS):
+        say("lines on %s: %d" % (FULL_RUNS, count_lines(FULL_RUNS)))
+    if os.path.exists(SRC_DIR):
+        say("rendered sources under %s: %d"
+            % (SRC_DIR, len(os.listdir(SRC_DIR))))
+    document = read_json(AGGREGATE)
+    say("runs executed: %d" % document["cost"]["runs_executed"])
+    say("alarms: %d" % document["cost"]["alarms"])
+    say("peak resident: %d kB" % peak_kb())
+    return 0
+
+
+def yes_or_no(value):
+    if value is True:
+        return "yes"
+    if value is False:
+        return "no"
+    return "--"
+
+
+def count_lines(path):
+    if not os.path.exists(path):
+        return 0
+    total = 0
+    handle = open(path)
+    for _line in handle:
+        total = total + 1
+        continue
+    handle.close()
+    return total
+
+
+# ==================================================================
+# section 2: THE DELTA AND THE AUDIT SAMPLE
+# ==================================================================
+
+def the_delta():
+    """what this pass attempts and what it audits, read off the bank.
+
+    THREE SETS AND ONE SAMPLE.
+      * CERTIFIED is every key the bank holds a certificate of kind
+        `proved` or `agreed` for.  A certified key is only ever
+        re-derived through the audit.
+      * KNOWN is every (cell, target) with the keys any pass ever
+        recorded for it, which is how the delta knows what a pair's
+        places and setters ARE without running it.
+      * The delta is KNOWN minus CERTIFIED, FILTERED BY CODE VERSION:
+        an uncertified key is attempted again only when the code
+        version on its certificate differs from the version running now
+        for that target.  That is what replaced the task label -- a
+        refusal or a `sat` is re-derived because the machinery MOVED,
+        not because a new task asked.  A key no pass ever reached is
+        attempted whatever the version, and a pair no pass ever ran is
+        attempted whole.
+      * The audit is `AUDIT_SHARE` of CERTIFIED, chosen by
+        `random.Random(AUDIT_DATE)` over the sorted list, so the sample
+        is the same every time this pass is re-run and different on the
+        next date.  At `--audit-share 1` it is every certificate, which
+        is the guard the removal of the task gates is measured by.
+
+    A KEY IS (cell, target, written place, SETTER CELL).  The setter is
+    part of it because a flag consumer rendered over another setter cell
+    is another artifact: the pair is the node, so the pair is the key."""
+    certified = set()
+    known = {}
+    version_on_record = {}
+    for cert in BK.stream(BK.BANK):
+        target = cert["target"]
+        if target not in TARGETS:
+            continue
+        pair = BK.pair_tuple(cert)
+        key = BK.key_tuple(cert)
+        known.setdefault(pair, set())
+        if cert["place"] is not None:
+            known[pair].add((cert["place"], BK.setter_tuple(cert)))
+        if cert["kind"] in ("proved", "agreed"):
+            certified.add(key)
+        if cert["preferred"]:
+            version_on_record[key] = version_key(cert.get("code_version"))
+        continue
+    current = {}
+    for lang in TARGETS:
+        current[lang] = version_key(code_version_of(lang))
+    cells = read_json(CELLS)
+    pairs = []
+    for record in cells["asked"]:
+        asked = (record["asked"]["mnem"], record["asked"]["shape"],
+                 record["asked"]["key_width"])
+        for lang in TARGETS:
+            pairs.append((asked, lang, record["attested_ledger_rows"]))
+            continue
+        continue
+    attempt = []
+    held_by_version = 0
+    never = 0
+    for asked, lang, ledger in pairs:
+        pair = (asked[0], asked[1], asked[2], lang)
+        places = known.get(pair)
+        if places is None:
+            never = never + 1
+            attempt.append((pair, None, None))
+            continue
+        if not places:
+            attempt.append((pair, None, None))
+            continue
+        for place, setter in sorted(places,
+                                    key=lambda p: ("%s" % (p[0],),
+                                                   "%s" % (p[1],))):
+            key = (pair[0], pair[1], pair[2], pair[3], place, setter)
+            if key in certified:
+                continue
+            if version_on_record.get(key) == current[lang]:
+                # THE RE-ATTEMPT RULE.  The machinery that answered this
+                # key is the machinery running now, so deriving it again
+                # would produce the same artifact and the same verdict.
+                held_by_version = held_by_version + 1
+                continue
+            attempt.append((pair, place, setter))
+            continue
+        continue
+    if not ATTEMPTS_ARE_ON:
+        attempt = []
+    audit = the_audit_sample(certified)
+    attempt_pairs = set()
+    for pair, _place, _setter in attempt:
+        attempt_pairs.add(pair)
+        continue
+    audit_pairs = set()
+    for key in audit:
+        audit_pairs.add((key[0], key[1], key[2], key[3]))
+        continue
+    execute = attempt_pairs | audit_pairs
+    order = []
+    for asked, lang, ledger in pairs:
+        pair = (asked[0], asked[1], asked[2], lang)
+        if pair not in execute:
+            continue
+        order.append((asked, lang, ledger))
+        continue
+    known_triples = 0
+    for pair in known:
+        known_triples = known_triples + max(1, len(known[pair]))
+        continue
+    return {
+        "certified_before": len(certified),
+        "attempt_triples": len(attempt),
+        "attempt_pairs": len(attempt_pairs),
+        "attempt_list": attempt,
+        "held_by_version": held_by_version,
+        "audit_triples": len(audit),
+        "audit_triples_list": audit,
+        "audit_pairs": len(audit_pairs),
+        "runs_to_execute": len(order),
+        "runs_list": order,
+        "pairs_total": len(pairs),
+        "pairs_never_attempted": never,
+        "known_triples": known_triples,
+        "code_version": current,
+    }
+
+
+def the_audit_sample(certified):
+    """5% of the certified triples, chosen by `random.Random(<date>)`.
+
+    THE SORT IS THE POINT.  A set has no order, so a sample drawn over
+    a set is not reproducible; the list is sorted into one fixed order
+    first and the seeded generator draws over that, so this pass's
+    sample can be re-derived by anyone with the same bank and the same
+    date."""
+    held = sorted(certified, key=lambda k: tuple("%s" % p for p in k))
+    if not held:
+        return []
+    many = int(round(len(held) * AUDIT_SHARE))
+    if many < 1:
+        many = 1
+    if many > len(held):
+        many = len(held)
+    chooser = random.Random(AUDIT_DATE)
+    return sorted(chooser.sample(held, many),
+                  key=lambda k: tuple("%s" % p for p in k))
+
+
+def certificates_for(keys):
+    """the certificate the bank prefers for each audited key, with the
+    four fields an alarm is decided on."""
+    wanted = set(keys)
+    out = {}
+    for cert in BK.stream(BK.BANK):
+        key = BK.key_tuple(cert)
+        if key not in wanted:
+            continue
+        if not cert["preferred"]:
+            continue
+        out[key] = {
+            "kind": cert["kind"],
+            "term_text": cert["term_text"],
+            "sha256": (cert["source"] or {}).get("sha256"),
+            "flags": (cert["compiler"] or {}).get("flags"),
+            "version": (cert["compiler"] or {}).get("version"),
+            "pass": cert["produced_by"]["pass"],
+        }
+        continue
+    return out
+
+
+# ==================================================================
+# section 3: THE WALK
+# ==================================================================
+
+def walk(order, store, done, limit, certificates, plan):
+    """the runs, one line per finished run, with the audit checked as
+    each run comes back.
+
+    ONE PAIR IS SEVERAL RUNS WHERE THE CORPUS ATTESTS SEVERAL SETTERS.
+    `handful.cell_inputs` answers one held cell per setter cell the
+    corpus attests before this consumer, and each is rendered, compiled,
+    carved and gated on its own, because the pair IS the node and a
+    consumer over another setter is another artifact.  A cell that reads
+    no flag state answers exactly one held cell, which is every cell the
+    loop ran before 2026-09-10.
+
+    AN ALARM STOPS THE PASS, which is the brief's own rule: a re-derived
+    verdict that differs from its certificate on identical inputs means
+    the machinery and the record disagree, and running on would bank
+    more records from machinery already known to disagree."""
     shared = H.build_shared()
     say("the gate of record: %d ms; the one re-pose: %d ms"
         % (shared["gate"].solver_timeout_ms, REPOSE_MS))
@@ -355,68 +1088,106 @@ def run_command(limit):
         % len(in_table))
     say("peak resident after the two reads: %d kB"
         % check_memory("after load_in_table"))
-    total = len(pairs)
+    cells = read_json(CELLS)
+    audit_rows = []
+    alarms = []
+    total = len(order)
     index = 0
     ran = 0
     started = time.time()
-    for asked, lang, ledger in pairs:
+    for asked, lang, ledger in order:
         index = index + 1
-        if key_of(asked, lang) in done:
-            continue
         say("[%d/%d] %s %s %s -> %s (ledger_rows %d)"
             % (index, total, asked[0], asked[1], asked[2], lang,
                ledger))
-        record = one_run(shared, reposer, cells, asked, lang, ledger,
-                         in_table)
-        append_run(record)
-        ran = ran + 1
-        say("   %s | %s | %d s | peak resident: %d kB"
-            % (record.get("route") or "-", one_line_verdict(record),
-               round(record["seconds"]), check_memory("run %d" % index)))
+        for record in one_pair(shared, reposer, cells, asked, lang,
+                               ledger, in_table, done):
+            if record is None:
+                continue
+            append_run(store, record)
+            ran = ran + 1
+            say("   %s | %s | %s | %d s | peak resident: %d kB"
+                % (record.get("route") or "-",
+                   setter_label(record), one_line_verdict(record),
+                   round(record["seconds"]),
+                   check_memory("run %d" % index)))
+            for row in audited_rows_of(record, asked, lang,
+                                       certificates):
+                audit_rows.append(row)
+                if row["reading"] == "ALARM":
+                    alarms.append(row)
+                continue
+            continue
+        if alarms:
+            say("")
+            say("ALARM: the re-derived verdict differs from the "
+                "certificate on IDENTICAL inputs.  The pass stops here, "
+                "as the brief requires.")
+            for row in alarms:
+                say("   %s %s %s on %s at %s: the certificate says %s, "
+                    "the re-derivation says %s"
+                    % (row["cell"]["mnem"], row["cell"]["shape"],
+                       row["cell"]["key_width"], row["target"],
+                       row["place"], row["certificate_kind"],
+                       row["rederived_kind"]))
+                continue
+            break
         if limit is not None and ran >= limit:
             say("")
             say("the sample's own stop: %d run(s) performed" % ran)
             break
+        continue
+    seconds = round(time.time() - started)
     say("")
-    say("runs performed this lane: %d in %d s" % (ran,
-                                                  round(time.time()
-                                                        - started)))
-    say("lines on %s: %d" % (RUNS, len(already_recorded())))
+    say("runs performed this lane: %d in %d s" % (ran, seconds))
+    say("lines on %s: %d" % (store, count_lines(store)))
+    say("audited place-triples this lane: %d" % len(audit_rows))
+    say("alarms: %d" % len(alarms))
     say("peak resident: %d kB" % peak_kb())
+    if plan is not None:
+        write_cost(plan, store, ran, seconds, audit_rows, alarms)
+    if alarms:
+        return 1
     return 0
 
 
-# ==================================================================
-# section 2: ONE RUN, and the four pieces of bookkeeping around it
-# ==================================================================
-
-def the_pairs(cells):
-    """every (cell, target) pair, in the order the loop walks them: the
-    cells by attested ledger rows descending (the order the cells file
-    already holds), and the four targets in the brief's order inside
-    each cell."""
+def one_pair(shared, reposer, cells, asked, lang, ledger, in_table,
+             done):
+    """every run of one (cell, target): one per held cell the driver
+    answers, which is one per attested setter where the cell reads a
+    flag state and exactly one where it does not."""
+    started = time.time()
+    try:
+        held_cells = H.cell_inputs(cells, asked)
+    except Exception as problem:                              # noqa: BLE001
+        record = {
+            "mnem": asked[0], "shape": asked[1], "key_width": asked[2],
+            "lang": lang, "attested_ledger_rows": ledger, "places": [],
+            "refusal_cause": CAUSE_DRIVER,
+            "refusal_detail": named(problem),
+            "refusal_traceback": last_frame(problem),
+            "composition": [],
+            "code_version": code_version_of(lang),
+            "seconds": round(time.time() - started, 3),
+        }
+        return [record]
     out = []
-    for record in cells["asked"]:
-        asked = (record["asked"]["mnem"], record["asked"]["shape"],
-                 record["asked"]["key_width"])
-        for lang in TARGETS:
-            out.append((asked, lang, record["attested_ledger_rows"]))
+    for held in held_cells:
+        if key_of(asked, lang, held.get("setter")) in done:
+            continue
+        out.append(one_run(shared, reposer, held, asked, lang, ledger,
+                           in_table))
+        continue
     return out
 
 
-def key_of(asked, lang):
-    """the identity of one run on the incremental store."""
-    return "%s|%s|%s|%s" % (asked[0], asked[1], asked[2], lang)
+def one_run(shared, reposer, held, asked, lang, ledger, in_table):
+    """one held cell of one (cell, target), wrapped.
 
-
-def one_run(shared, reposer, cells, asked, lang, ledger, in_table):
-    """one (cell, target), wrapped.
-
-    THE WRAP IS THE BRIEF'S OWN RULE, and it is the fourth piece of
-    bookkeeping: a cell the route cannot handle is a RESULT BY CAUSE.
-    An exception out of the driver is recorded as this run's
-    `refusal_cause` with the exception LITERAL and the line it came
-    from, and the loop goes on to the next pair."""
+    THE WRAP IS THE LOOP'S OWN RULE: a cell the route cannot handle is a
+    RESULT BY CAUSE.  An exception out of the driver is recorded as this
+    run's `refusal_cause` with the exception LITERAL and the line it came
+    from, and the loop goes on."""
     started = time.time()
     record = {
         "mnem": asked[0],
@@ -426,53 +1197,35 @@ def one_run(shared, reposer, cells, asked, lang, ledger, in_table):
         "attested_ledger_rows": ledger,
         "places": [],
     }
-    held = None
     try:
-        held = H.cell_input(cells, asked)
         record = H.find_emulation(shared, held, lang)
         record["attested_ledger_rows"] = ledger
-    except Exception as problem:
+    except Exception as problem:                              # noqa: BLE001
         record["refusal_cause"] = CAUSE_DRIVER
         record["refusal_detail"] = named(problem)
         record["refusal_traceback"] = last_frame(problem)
         record["composition"] = []
+        record["setter"] = held.get("setter")
+        record["code_version"] = code_version_of(lang)
         record["seconds"] = round(time.time() - started, 3)
         return record
     # THE TWO STEPS AFTER THE RUN are wrapped separately, so a failure
     # in either is recorded as its own field and never as a refusal of
-    # the run itself -- a run whose places all answered is not a refused
-    # run because its composition could not be classified.
+    # the run itself.
     try:
         reposed(shared, reposer, held, record)
-    except Exception as problem:
+    except Exception as problem:                              # noqa: BLE001
         record["repose_refusal"] = named(problem)
         record["repose_refusal_traceback"] = last_frame(problem)
     try:
         record["composition"] = H.composition_of_run(record, in_table)
-    except Exception as problem:
+    except Exception as problem:                              # noqa: BLE001
         record["composition"] = []
         record["composition_refusal"] = named(problem)
         record["composition_refusal_traceback"] = last_frame(problem)
+    record["code_version"] = code_version_of(lang)
     record["seconds"] = round(time.time() - started, 3)
     return record
-
-
-def named(problem):
-    """an exception as the record carries it: its own class and its own
-    message, LITERAL."""
-    return "%s: %s" % (type(problem).__name__, problem)
-
-
-def last_frame(problem):
-    """the one line of the traceback that names where the driver
-    stopped, LITERAL, so a refusal by this cause is a fact about a
-    place in the code rather than a message."""
-    frames = traceback.extract_tb(problem.__traceback__)
-    if not frames:
-        return ""
-    frame = frames[-1]
-    return "%s:%d in %s -- %s" % (os.path.basename(frame.filename),
-                                  frame.lineno, frame.name, frame.line)
 
 
 def reposed(shared, reposer, held, record):
@@ -482,11 +1235,7 @@ def reposed(shared, reposer, held, record):
     THE LAW'S RULE, followed literally: a time limit is a FLAG, so the
     obligation is re-run with a larger ceiling and whether the answer
     changed is reported.  The verdict OF RECORD stays the one the
-    pipeline's own ceiling gave and this answer sits beside it.
-
-    `handful.one_recheck` is the step, called rather than restated, and
-    the cell it needs is handed to it in a one-entry cache so it never
-    re-reads the cells file."""
+    pipeline's own ceiling gave and this answer sits beside it."""
     if record.get("refusal_cause") is not None:
         return
     cache = {(held["mnem"], held["shape"], held["key_width"]): held}
@@ -504,666 +1253,51 @@ def reposed(shared, reposer, held, record):
             shared["gate"] = of_record
         again["ceiling_ms"] = REPOSE_MS
         check["recheck"] = again
+        continue
+    return
 
 
-def append_run(record):
-    """one finished run, appended to the incremental store and flushed
-    to the operating system before the next run begins, so a lane the
-    wall clock stops loses nothing."""
-    handle = open(RUNS, "a")
-    handle.write(json.dumps(as_machine_form(record), sort_keys=True))
-    handle.write("\n")
-    handle.flush()
-    os.fsync(handle.fileno())
-    handle.close()
+def named(problem):
+    """an exception as the record carries it: its own class and its own
+    message, LITERAL."""
+    return "%s: %s" % (type(problem).__name__, problem)
 
 
-def as_machine_form(node):
-    """the record with every cell triple written as three fields, the
-    mnemonic in `mnem`, before anything of it reaches a file.
-
-    WHAT THIS IS FOR, and it is not a style choice.  The driver records
-    a matched primitive row's cell as a LIST -- `["xor", "gpr_same",
-    32]` -- and the spelling guard refuses a list whose element is a
-    bare operator token, which is what a mnemonic spelled `and`, `or`,
-    `xor` or `not` is.  The handful's ten cells carried no such
-    mnemonic, so the shape never met the guard before; this loop's 253
-    do.  The MATCH is untouched -- the driver still compares triple with
-    triple in memory, and this task changes nothing about how a
-    primitive row is found -- and what changes is only how the store
-    SPELLS the key it writes down: `{"mnem": "xor", "shape":
-    "gpr_same", "key_width": 32}`, which is the machine form the ruling
-    of 2026-09-08 states and the guard already reads as one.
-
-    Applied to the whole record, once, at the one place a record
-    becomes a line on a file."""
-    if isinstance(node, dict):
-        out = {}
-        for name in node:
-            value = node[name]
-            if name == "cell" and is_a_triple(value):
-                out[name] = cell_of(value)
-                continue
-            out[name] = as_machine_form(value)
-        return out
-    if isinstance(node, list):
-        held = []
-        for value in node:
-            held.append(as_machine_form(value))
-        return held
-    return node
-
-
-def is_a_triple(value):
-    """whether a `cell` field holds the (mnem, shape, key_width) triple
-    as a list.  The composition column's own `cell` field is a boolean
-    and a setup instruction that did not classify carries None; neither
-    is a triple and neither is touched."""
-    if not isinstance(value, list):
-        return False
-    if len(value) != 3:
-        return False
-    return isinstance(value[0], str)
-
-
-def already_recorded():
-    """the runs the store already holds, by (cell, target).
-
-    A line that does not parse can only be the last one, written while
-    the lane was stopped; it is dropped and the file rewritten without
-    it, and the drop is said out loud."""
-    if not os.path.exists(RUNS):
-        return set()
-    handle = open(RUNS)
-    lines = handle.read().splitlines()
-    handle.close()
-    kept = []
-    done = set()
-    dropped = 0
-    for line in lines:
-        if not line.strip():
-            continue
-        try:
-            record = json.loads(line)
-        except ValueError:
-            dropped = dropped + 1
-            continue
-        asked = (record["mnem"], record["shape"], record["key_width"])
-        key = key_of(asked, record["lang"])
-        if key in done:
-            dropped = dropped + 1
-            continue
-        done.add(key)
-        kept.append(line)
-    if dropped:
-        say("   %d line(s) of %s did not parse or repeated a pair; "
-            "the file is rewritten without them" % (dropped, RUNS))
-        handle = open(RUNS, "w")
-        for line in kept:
-            handle.write(line + "\n")
-        handle.close()
-    return done
-
-
-def read_runs():
-    """every run on the incremental store, in the order it was run, each
-    through `as_machine_form` so a line written before that rewrite
-    existed reads the same way as one written after it."""
-    out = []
-    if not os.path.exists(RUNS):
-        return out
-    handle = open(RUNS)
-    for line in handle:
-        if not line.strip():
-            continue
-        out.append(as_machine_form(json.loads(line)))
-    handle.close()
-    return out
-
-
-def normalize_store():
-    """the store rewritten through `as_machine_form` where any line is
-    not already in it, said out loud when it happens.
-
-    The first twenty runs -- the sample the law asks for -- were written
-    before the rewrite existed, and this is what brings them onto the
-    same shape as the rest rather than leaving the file half in one
-    spelling and half in the other."""
-    if not os.path.exists(RUNS):
-        return 0
-    handle = open(RUNS)
-    lines = handle.read().splitlines()
-    handle.close()
-    moved = 0
-    kept = []
-    for line in lines:
-        if not line.strip():
-            continue
-        record = json.loads(line)
-        again = json.dumps(as_machine_form(record), sort_keys=True)
-        if again != json.dumps(record, sort_keys=True):
-            moved = moved + 1
-        kept.append(again)
-    if moved:
-        handle = open(RUNS, "w")
-        for line in kept:
-            handle.write(line + "\n")
-        handle.close()
-    return moved
-
-
-# ==================================================================
-# section 3: THE AGGREGATE -- what the thousand runs say
-# ==================================================================
-#
-# EVERY COUNT BELOW IS OF THE RUN'S OWN DESTINATION PLACE, which is
-# `handful.destination_place`: the first place the cell writes that is
-# not the flags, or the flags place when that is all the cell writes.
-# That is the place task h1's, h2's and g1's own tables already
-# summarize, so a row here and a row there count the same thing.  The
-# per-place counts sit beside them and are named as such.
-
-OUTCOMES = ["proved", "proved under caller extension", "sat",
-            "undecided", "refused"]
-LANDINGS = ["LANDED", "LANDED_ELSEWHERE", "NOT_COLLAPSED"]
-ROUTES = ["primitive", "primitive+setup", "term", "no route reached"]
-
-
-def aggregate_command():
-    """the incremental store read once, and every table the brief asks
-    for computed off it."""
-    runs = read_runs()
-    say("runs on %s: %d" % (RUNS, len(runs)))
-    cells = read_json(CELLS)
-    document = {
-        "meta": {
-            "task": "ap1",
-            "what": "the owner's loop over every attested cell of the "
-                    "arch-opcode model table, on the four compiled "
-                    "targets, primitive-first",
-            "cells_source": CELLS,
-            "runs_source": RUNS,
-            "cells": len(cells["asked"]),
-            "targets": TARGETS,
-            "runs": len(runs),
-            "solver_ceiling_ms": SOLVER_MS,
-            "repose_ceiling_ms": REPOSE_MS,
-            "route": "handful.py as task g1b left it, TASK g1c: the "
-                     "two printing fixes of task h2, the primitive "
-                     "route before the term route, and the primitive "
-                     "lookup widened by one zero-operand setup step",
-            "memory_bound_kb": ABORT_KB,
-            "memory_abort": ABORT_NAME,
-            "peak_kb": peak_kb(),
-            "host_folder": HOST_FOLDER,
-        },
-        "ledger_rows_total": ledger_total(cells),
-        "per_language": per_language(runs, cells),
-        "routes": routes_reached(runs, cells),
-        "causes": causes_by_language(runs),
-        "across_targets": across_targets(runs, cells),
-        "sat_verdicts": sat_verdicts(runs),
-        "handful": handful_reproduction(runs),
-        "seconds": seconds_summary(runs),
-        "runs": runs,
-    }
-    write_json(AGGREGATE, document)
-    say("wrote %s" % AGGREGATE)
-    say("peak resident: %d kB" % check_memory("aggregate"))
-    return 0
-
-
-def ledger_total(cells):
-    """the attested ledger rows of the whole outer set, which is the
-    denominator of every share this report prints."""
-    total = 0
-    for record in cells["asked"]:
-        total = total + record["attested_ledger_rows"]
-    return total
-
-
-def outcome_of(run):
-    """one run's gate answer at its destination place, in the five names
-    the brief's table 1 uses.
-
-    `proved` is z3's `unsat` at the 3,000 ms ceiling of record.  `proved
-    under caller extension` is task o7's own re-pose: `sat` on the plain
-    comparison, `unsat` once every narrow-holder input row is
-    zero-extended to its register.  `sat` is a counterexample that
-    survives that re-pose.  `undecided` is the solver not answering, at
-    either ceiling.  `refused` is a run that never reached the gate at
-    all."""
-    place = the_place(run)
-    if place is None:
-        return "refused"
-    check = place.get("check")
-    if check is None:
-        return "refused"
-    outcome = check.get("outcome")
-    if outcome == "PROVED_ON_SHIP":
-        return "proved"
-    if outcome == "DISPROVED":
-        again = check.get("under_caller_extension") or {}
-        if again.get("outcome") == "PROVED_ON_SHIP":
-            return "proved under caller extension"
-        return "sat"
-    return "undecided"
-
-
-def the_place(run):
-    """the run's destination place, or None where it has none.
-
-    `handful.destination_place` is the function; this wrapper is here
-    because a refused run carries no `places` key at all on the store
-    and that function reads one."""
-    if run.get("refusal_cause") is not None:
-        return None
-    if not run.get("places"):
-        return None
-    return H.destination_place(run)
-
-
-def reached(run, step):
-    """whether the run's destination place reached one of the three
-    steps before the gate."""
-    place = the_place(run)
-    if place is None:
-        return False
-    if step == "rendered":
-        return place.get("rendered") is True
-    if step == "compiled":
-        return place.get("compiled") is True
-    return False
-
-
-def landing_of(run):
-    """the run's landing at its destination place, or None."""
-    place = the_place(run)
-    if place is None:
-        return None
-    landing = place.get("landing")
-    if landing is None:
-        return None
-    return landing["verdict"]
-
-
-def per_language(runs, cells):
-    """THE table the brief asks for first: per target, how many cells
-    reached each step and each verdict, and the share of the corpus's
-    attested ledger rows those cells cover."""
-    whole = ledger_total(cells)
-    out = {}
-    for lang in TARGETS:
-        held = []
-        for run in runs:
-            if run["lang"] != lang:
-                continue
-            held.append(run)
-        counted = {"attempted": bucket(held, whole)}
-        counted["rendered"] = bucket(
-            [r for r in held if reached(r, "rendered")], whole)
-        counted["compiled"] = bucket(
-            [r for r in held if reached(r, "compiled")], whole)
-        for name in LANDINGS:
-            counted[name] = bucket(
-                [r for r in held if landing_of(r) == name], whole)
-        for name in OUTCOMES:
-            counted[name] = bucket(
-                [r for r in held if outcome_of(r) == name], whole)
-        out[lang] = counted
-    return out
-
-
-def bucket(runs, whole):
-    """one cell of the table: how many runs, how many ledger rows they
-    cover, and that as a share of the whole outer set."""
-    rows = 0
-    for run in runs:
-        rows = rows + (run.get("attested_ledger_rows") or 0)
-    share = 0.0
-    if whole:
-        share = round(100.0 * rows / whole, 2)
-    return {"runs": len(runs), "ledger_rows": rows,
-            "share_percent": share}
-
-
-def route_of(run):
-    """which of the three routes ran, or that none did."""
-    if run.get("route") is not None:
-        return run["route"]
-    return "no route reached"
-
-
-def routes_reached(runs, cells):
-    """the second table: per target, how far the primitive route
-    reached."""
-    whole = ledger_total(cells)
-    out = {}
-    for lang in TARGETS:
-        counted = {}
-        for name in ROUTES:
-            held = []
-            for run in runs:
-                if run["lang"] != lang:
-                    continue
-                if route_of(run) != name:
-                    continue
-                held.append(run)
-            counted[name] = bucket(held, whole)
-        out[lang] = counted
-    return out
-
-
-def causes_by_language(runs):
-    """the third table: what did not work, by cause, per target, each
-    cause with three example cells and the ledger rows they cover.
-
-    The cause is the driver's own word -- the run's `refusal_cause`, the
-    place's `refusal_cause`, the compiler's own first line, or the
-    gate's own verdict -- never a reading of it."""
-    out = {}
-    for lang in TARGETS:
-        causes = {}
-        for run in runs:
-            if run["lang"] != lang:
-                continue
-            name = cause_of(run)
-            if name is None:
-                continue
-            entry = causes.setdefault(name, {"runs": 0,
-                                             "ledger_rows": 0,
-                                             "examples": []})
-            entry["runs"] = entry["runs"] + 1
-            entry["ledger_rows"] = (entry["ledger_rows"]
-                                    + (run.get("attested_ledger_rows")
-                                       or 0))
-            if len(entry["examples"]) < 3:
-                entry["examples"].append({
-                    "mnem": run["mnem"],
-                    "shape": run["shape"],
-                    "key_width": run["key_width"],
-                    "ledger_rows": run.get("attested_ledger_rows"),
-                })
-        out[lang] = causes
-    return out
-
-
-def cause_of(run):
-    """the one cause of a run that did not end PROVED at its destination
-    place, or None where it did."""
-    if run.get("refusal_cause") is not None:
-        return "%s: %s" % (run["refusal_cause"],
-                           run.get("refusal_detail"))
-    place = the_place(run)
-    if place is None:
-        return "the cell writes no place this route could render"
-    if place.get("rendered") is False:
-        return "%s" % place.get("refusal_cause")
-    if not place.get("compiled"):
-        return "the compiler refused: %s" % first_line(
-            place.get("compile_refusal"))
-    check = place.get("check") or {}
-    outcome = outcome_of(run)
-    if outcome == "proved":
-        return None
-    if outcome == "proved under caller extension":
-        return None
-    if outcome == "sat":
-        return "the gate answered sat: the body holds on a region, " \
-               "not on every input"
-    again = check.get("recheck") or {}
-    if again.get("outcome") == "PROVED_ON_SHIP":
-        return None
-    return "the gate did not answer: %s" % check.get("reason")
-
-
-def first_line(text):
-    """the compiler's own first error line, which is what the brief asks
-    a compile refusal to be recorded as."""
-    if text is None:
+def last_frame(problem):
+    """the one line of the traceback that names where the driver
+    stopped, LITERAL."""
+    frames = traceback.extract_tb(problem.__traceback__)
+    if not frames:
         return ""
-    held = "%s" % text
-    return held.split("\n")[0].strip()
+    frame = frames[-1]
+    return "%s:%d in %s -- %s" % (os.path.basename(frame.filename),
+                                  frame.lineno, frame.name, frame.line)
 
 
-def cell_of(record):
-    """one cell as the machine-form key the ruling of 2026-09-08 states:
-    the triple, its three parts in three fields, the mnemonic in the
-    field `mnem`.
-
-    NOT A JOINED STRING, and this is not a style choice.  The spelling
-    guard refused an earlier draft of this file for exactly that: a
-    field `cell` holding `and|gpr_gpr|32` is a row key carrying an
-    operator token, whatever the token happens to be a mnemonic of.
-    The guard was right and the record is written the guard's way."""
-    return {"mnem": record[0], "shape": record[1],
-            "key_width": record[2]}
+def key_of(asked, lang, setter):
+    """the identity of one run on the incremental store, so a stopped
+    lane resumes by skipping what it already wrote.  The setter is part
+    of it because a consumer over another setter is another run."""
+    return (asked[0], asked[1], asked[2], lang, setter_key(setter))
 
 
-def across_targets(runs, cells):
-    """the fourth table: per cell, on how many of the four targets it is
-    proved, and the whole list of the cells proved on none."""
-    proved = {}
-    ledger = {}
-    for record in cells["asked"]:
-        key = (record["asked"]["mnem"], record["asked"]["shape"],
-               record["asked"]["key_width"])
-        proved[key] = []
-        ledger[key] = record["attested_ledger_rows"]
-    for run in runs:
-        key = (run["mnem"], run["shape"], run["key_width"])
-        if key not in proved:
-            continue
-        outcome = outcome_of(run)
-        if outcome not in ("proved", "proved under caller extension"):
-            continue
-        proved[key].append(run["lang"])
-    whole = ledger_total(cells)
-    counted = {}
-    for many in range(0, 5):
-        held = []
-        for key in sorted(proved, key=readable):
-            if len(proved[key]) != many:
-                continue
-            held.append(key)
-        rows = 0
-        for key in held:
-            rows = rows + ledger[key]
-        share = 0.0
-        if whole:
-            share = round(100.0 * rows / whole, 2)
-        listed = []
-        for key in held:
-            entry = cell_of(key)
-            entry["ledger_rows"] = ledger[key]
-            entry["proved_on"] = sorted(proved[key])
-            listed.append(entry)
-        counted["%d" % many] = {"cells": len(held), "ledger_rows": rows,
-                                "share_percent": share,
-                                "cell_list": listed}
-    counted["on_all_four_list"] = counted["4"]["cell_list"]
-    counted["on_none_with_causes"] = none_list(runs, proved, ledger)
-    return counted
-
-
-def readable(key):
-    """a sort key over a cell triple that never compares None with an
-    integer."""
-    return (key[0], key[1], "%s" % key[2])
-
-
-def none_list(runs, proved, ledger):
-    """every cell proved on no target at all, with the cause on each of
-    the four, in full -- the brief asks for this list entire."""
-    out = []
-    for key in sorted(proved, key=readable):
-        if proved[key]:
-            continue
-        causes = {}
-        for run in runs:
-            held = (run["mnem"], run["shape"], run["key_width"])
-            if held != key:
-                continue
-            causes[run["lang"]] = cause_of(run)
-        entry = cell_of(key)
-        entry["ledger_rows"] = ledger[key]
-        entry["causes"] = causes
-        out.append(entry)
-    out.sort(key=lambda entry: (-entry["ledger_rows"], entry["mnem"],
-                                entry["shape"],
-                                "%s" % entry["key_width"]))
-    return out
-
-
-def sat_verdicts(runs):
-    """every `sat` the loop produced, with z3's counterexample LITERAL
-    and the region the gate's own words name.
-
-    A `sat` is where the target's edge region differs from the opcode's,
-    so this list is the owner's edge-region model in machine form.  Every
-    written place is walked, not only the destination place, because a
-    counterexample on the flags place is as much a difference as one on
-    the answer."""
-    out = []
-    for run in runs:
-        for place in (run.get("places") or []):
-            check = place.get("check") or {}
-            if check.get("outcome") != "DISPROVED":
-                continue
-            again = check.get("under_caller_extension") or {}
-            out.append({
-                "mnem": run["mnem"],
-                "shape": run["shape"],
-                "key_width": run["key_width"],
-                "lang": run["lang"],
-                "writes": place["writes"],
-                "route": route_of(run),
-                "ledger_rows": run.get("attested_ledger_rows"),
-                "counterexample": check.get("counterexample"),
-                "region": H.region_of(check),
-                "under_caller_extension": again.get("outcome"),
-                "body_text": place.get("body_text"),
-            })
-    out.sort(key=lambda entry: (-(entry["ledger_rows"] or 0),
-                                entry["mnem"], entry["lang"]))
-    return out
-
-
-def seconds_summary(runs):
-    """how long the loop took, per target, so the pace is a measurement
-    rather than an estimate."""
-    out = {}
-    for lang in TARGETS:
-        held = []
-        for run in runs:
-            if run["lang"] != lang:
-                continue
-            held.append(run.get("seconds") or 0)
-        if not held:
-            continue
-        out[lang] = {"runs": len(held),
-                     "total_s": round(sum(held), 1),
-                     "slowest_s": round(max(held), 1),
-                     "median_s": round(sorted(held)[len(held) // 2], 2)}
-    return out
-
-
-# ==================================================================
-# section 4: THE HANDFUL, REPRODUCED
-# ==================================================================
-#
-# The brief's sixth deliverable: the handful's own rows shown again as
-# they came out of this loop, so that the loop reproducing the handful
-# is a measurement rather than a claim.  Task g1b's second run of
-# record (`handful3b.json`) holds thirty-nine of the forty; the one the
-# widened lookup changes is on `handful3c.json`, and this comparison
-# takes each pair from whichever of the two files ran it under the route
-# this loop runs.
-
-def handful_reproduction(runs):
-    """the forty (cell, target) pairs of the handful, this loop's answer
-    beside task g1b's own."""
-    earlier = {}
-    for path in (HANDFUL_G1B, HANDFUL_G1C):
-        if not os.path.exists(path):
-            continue
-        document = read_json(path)
-        for run in document["runs"]:
-            key = key_of((run["mnem"], run["shape"], run["key_width"]),
-                         run["lang"])
-            earlier[key] = {"run": run, "file": os.path.basename(path)}
-    out = []
-    for asked in HANDFUL_CELLS:
-        for lang in TARGETS:
-            key = key_of(asked, lang)
-            mine = None
-            for run in runs:
-                held = key_of((run["mnem"], run["shape"],
-                               run["key_width"]), run["lang"])
-                if held != key:
-                    continue
-                mine = run
-            out.append(one_comparison(asked, lang, mine,
-                                      earlier.get(key)))
-    return out
-
-
-def one_comparison(asked, lang, mine, theirs):
-    """one row of the reproduction table: the route, the landing and the
-    gate answer on both sides, and whether they agree."""
-    row = {
-        "mnem": asked[0],
-        "shape": asked[1],
-        "key_width": asked[2],
-        "lang": lang,
-    }
-    if mine is None:
-        row["this_loop"] = None
-        row["agrees"] = False
-        row["why"] = "this loop has no run for this pair"
-    else:
-        row["this_loop"] = summary_of(mine)
-    if theirs is None:
-        row["the_handful"] = None
-        row["agrees"] = False
-        row["why"] = "no run of the handful holds this pair"
-        return row
-    row["the_handful"] = summary_of(theirs["run"])
-    row["the_handful_file"] = theirs["file"]
-    if mine is None:
-        return row
-    row["agrees"] = (row["this_loop"] == row["the_handful"])
-    # THE TWO COMPARISONS, and the second is the one that says whether
-    # the loop reproduces the handful.  `agrees` is character for
-    # character, so a pair whose only difference is the ceiling the
-    # re-pose used -- 30,000 ms here against the handful's 300,000 ms,
-    # which is this brief's own instruction -- reads as a disagreement.
-    # `agrees_on_the_verdict` drops that number and nothing else.
-    row["agrees_on_the_verdict"] = (
-        without_ceiling(row["this_loop"])
-        == without_ceiling(row["the_handful"]))
-    return row
-
-
-def summary_of(run):
-    """one run as three cells: the route, the landing, and the gate's
-    answer at the destination place."""
-    verdict = H.verdict_of_run(run)
-    return {"route": route_of(run), "landed": verdict["landed"],
-            "gate": verdict["gate"], "cause": verdict["cause"]}
-
-
-def without_ceiling(summary):
-    """the same three cells with the re-pose's own millisecond number
-    taken out of the gate cell, so two runs that answered the same way
-    at two different ceilings compare equal."""
-    import re
-    if summary is None:
+def setter_key(setter):
+    """the setter's own cell, as a tuple, or None where the cell reads
+    no flag state."""
+    if not setter:
         return None
-    held = dict(summary)
-    held["gate"] = re.sub(r" at \d+ ms", " on the one re-pose",
-                          held["gate"])
-    return held
+    return (setter.get("mnem"), setter.get("shape"),
+            setter.get("key_width"))
+
+
+def setter_label(record):
+    """the setter this run was rendered over, for the lane's progress
+    line."""
+    setter = record.get("setter")
+    if not setter:
+        return "-"
+    return "%s %s %s" % (setter.get("mnem"), setter.get("shape"),
+                         setter.get("key_width"))
 
 
 def one_line_verdict(run):
@@ -1175,617 +1309,213 @@ def one_line_verdict(run):
     return "%s / %s" % (verdict["landed"], verdict["gate"])
 
 
-def reproduce_command():
-    """the reproduction table alone, printed, and nothing run."""
-    runs = read_runs()
-    rows = handful_reproduction(runs)
-    agreed = 0
-    on_verdict = 0
-    missing = 0
-    for row in rows:
-        if row.get("this_loop") is None:
-            missing = missing + 1
-            continue
-        if row.get("agrees"):
-            agreed = agreed + 1
-        if row.get("agrees_on_the_verdict"):
-            on_verdict = on_verdict + 1
-    say("the handful's forty pairs, this loop beside task g1b's own")
-    say("")
-    say("| cell | lang | this loop: route / landed / gate | the "
-        "handful: route / landed / gate | agrees | agrees on the "
-        "verdict |")
-    say("|---|---|---|---|---|---|")
-    for row in rows:
-        say("| `%s` %s %s | %s | %s | %s | %s | %s |"
-            % (row["mnem"], row["shape"], row["key_width"], row["lang"],
-               three_cells(row.get("this_loop")),
-               three_cells(row.get("the_handful")),
-               yes_or_no(row.get("agrees")),
-               yes_or_no(row.get("agrees_on_the_verdict"))))
-    say("")
-    say("agree character for character: %d of %d; agree on the "
-        "verdict, the re-pose's own ceiling aside: %d; pairs this loop "
-        "has not run: %d" % (agreed, len(rows), on_verdict, missing))
-    say("peak resident: %d kB" % check_memory("reproduce"))
-    return 0
+def append_run(store, record):
+    """one finished run, appended and flushed to the operating system
+    before the next run begins, so a lane the wall clock stops loses
+    nothing."""
+    handle = open(store, "a")
+    handle.write(json.dumps(LOOP.as_machine_form(record),
+                            sort_keys=True))
+    handle.write("\n")
+    handle.flush()
+    os.fsync(handle.fileno())
+    handle.close()
+    return
 
 
-def three_cells(summary):
-    if summary is None:
-        return "--"
-    if summary["cause"]:
-        return "%s / REFUSED: %s" % (summary["route"], summary["cause"])
-    return "%s / %s / %s" % (summary["route"], summary["landed"],
-                             summary["gate"])
-
-
-def yes_or_no(value):
-    if value:
-        return "yes"
-    return "**no**"
-
-
-# ==================================================================
-# section 5: THE REPORT
-# ==================================================================
-
-def tally_command():
-    """the counts, printed, over whatever the store already holds."""
-    runs = read_runs()
-    cells = read_json(CELLS)
-    say("runs recorded: %d of %d" % (len(runs),
-                                     len(cells["asked"]) * len(TARGETS)))
-    counted = per_language(runs, cells)
-    say("")
-    say("| target | attempted | rendered | compiled | LANDED | proved | "
-        "sat | undecided | refused |")
-    say("|---|---|---|---|---|---|---|---|---|")
-    for lang in TARGETS:
-        held = counted[lang]
-        say("| %s | %d | %d | %d | %d | %d | %d | %d | %d |"
-            % (lang, held["attempted"]["runs"], held["rendered"]["runs"],
-               held["compiled"]["runs"], held["LANDED"]["runs"],
-               held["proved"]["runs"], held["sat"]["runs"],
-               held["undecided"]["runs"], held["refused"]["runs"]))
-    say("")
-    say("peak resident: %d kB" % check_memory("tally"))
-    return 0
-
-
-def tables_command():
-    """the report's four tables, printed and nothing else, so a claim
-    about them in a DevComms log carries a command that re-runs and
-    whose output holds no figure that moves between runs."""
-    document = read_json(AGGREGATE)
-    lines = []
-    write_table_one(lines, document)
-    write_routes(lines, document)
-    write_across_counts(lines, document)
-    for line in lines:
-        say(line)
-    held = document["sat_verdicts"]
-    survived = []
-    for entry in held:
-        if entry.get("under_caller_extension") == "PROVED_ON_SHIP":
-            continue
-        survived.append(entry)
-    say("`sat` at the plain comparison, every written place: %d"
-        % len(held))
-    say("`sat` surviving the caller-extension re-pose: %d"
-        % len(survived))
-    agreed = 0
-    on_verdict = 0
-    missing = 0
-    for row in document["handful"]:
-        if row.get("this_loop") is None:
-            missing = missing + 1
-            continue
-        if row.get("agrees"):
-            agreed = agreed + 1
-        if row.get("agrees_on_the_verdict"):
-            on_verdict = on_verdict + 1
-    say("the handful's forty pairs: %d agree character for character, "
-        "%d agree on the verdict, %d not in this outer set"
-        % (agreed, on_verdict, missing))
-    return 0
-
-
-def write_across_counts(lines, document):
-    """Table 3 alone, without the two lists under it."""
-    lines.append("Table 3 -- a cell counts as proved on a target when "
-                 "the gate answered `unsat` at that target's "
-                 "destination place, at the 3,000 ms ceiling of record "
-                 "or under the caller-extension re-pose.")
-    lines.append("")
-    lines.append("| proved on | cells | ledger rows | share |")
-    lines.append("|---|---|---|---|")
-    for many in ("4", "3", "2", "1", "0"):
-        held = document["across_targets"][many]
-        lines.append("| %s of 4 | %d | %d | %s%% |"
-                     % (many, held["cells"], held["ledger_rows"],
-                        held["share_percent"]))
-    lines.append("")
-
-
-def causes_command():
-    """the report's section 3 summed over the four targets: one row per
-    cause over all 1,012 runs, and the arrival-contract group inside
-    them counted on its own."""
-    document = read_json(AGGREGATE)
-    summed = {}
-    for lang in document["meta"]["targets"]:
-        for name in document["causes"][lang]:
-            held = document["causes"][lang][name]
-            entry = summed.setdefault(name, {"runs": 0, "rows": 0,
-                                             "langs": []})
-            entry["runs"] = entry["runs"] + held["runs"]
-            entry["rows"] = entry["rows"] + held["ledger_rows"]
-            entry["langs"].append(lang)
-    say("Table 5 -- what did not work, by cause, the four targets "
-        "summed. `rows` counts a cell's attested ledger rows once per "
-        "run, so a cause seen on all four targets counts them four "
-        "times.")
-    say("")
-    say("| cause | runs | ledger rows | targets |")
-    say("|---|---|---|---|")
-    ordered = sorted(summed, key=lambda name: (-summed[name]["runs"],
-                                               name))
-    for name in ordered:
-        held = summed[name]
-        say("| %s | %d | %d | %s |"
-            % (escaped(name), held["runs"], held["rows"],
-               ", ".join(sorted(held["langs"]))))
-    total = 0
-    for name in summed:
-        total = total + summed[name]["runs"]
-    say("")
-    say("runs carrying a cause: %d of %d" % (total,
-                                             document["meta"]["runs"]))
-    say("")
-    say("THE ARRIVAL-CONTRACT GROUP, counted on its own: every gate "
-        "call that declined because the two sides name a different "
-        "number of arriving values.")
-    say("")
-    group = []
-    for run in document["runs"]:
-        for place in (run.get("places") or []):
-            check = place.get("check") or {}
-            reason = "%s" % check.get("reason")
-            if "the IN rows cannot be aligned" not in reason:
-                continue
-            group.append((run, place, reason))
-    say("places the gate declined on the IN-row alignment: %d"
-        % len(group))
-    shapes = {}
-    for _run, _place, reason in group:
-        shapes.setdefault(reason, 0)
-        shapes[reason] = shapes[reason] + 1
-    for reason in sorted(shapes, key=lambda one: -shapes[one]):
-        say("   %d place(s): %s" % (shapes[reason], reason))
-    say("")
-    say("| cell | route | ledger rows |")
-    say("|---|---|---|")
-    seen = set()
-    for run, _place, _reason in group:
-        key = (run["mnem"], run["shape"], run["key_width"],
-               run["route"])
-        if key in seen:
-            continue
-        seen.add(key)
-        say("| `%s` %s %s | %s | %d |"
-            % (run["mnem"], run["shape"], run["key_width"],
-               run["route"], run["attested_ledger_rows"]))
-    return 0
-
-
-def repose_command():
-    """what the ONE re-pose at 30,000 ms moved, which is the law's own
-    obligation on a time limit: re-run with more room and report
-    whether the answer changed."""
-    document = read_json(AGGREGATE)
-    posed = 0
-    answers = {}
-    moved = []
-    for run in document["runs"]:
-        for place in (run.get("places") or []):
-            check = place.get("check") or {}
-            again = check.get("recheck")
-            if again is None:
-                continue
-            posed = posed + 1
-            outcome = again.get("outcome")
-            answers.setdefault(outcome, 0)
-            answers[outcome] = answers[outcome] + 1
-            if outcome == "UNDECIDED":
-                continue
-            moved.append((run, place, outcome))
-    say("places UNDECIDED at the 3,000 ms ceiling of record and "
-        "re-posed once at 30,000 ms: %d" % posed)
-    for outcome in sorted(answers):
-        say("   %-16s %d" % (outcome, answers[outcome]))
-    say("")
-    say("| cell | lang | place | route | ledger rows | the re-pose's "
-        "answer |")
-    say("|---|---|---|---|---|---|")
-    for run, place, outcome in moved:
-        say("| `%s` %s %s | %s | %s | %s | %d | %s |"
-            % (run["mnem"], run["shape"], run["key_width"],
-               run["lang"], place["writes"], run["route"],
-               run["attested_ledger_rows"], outcome))
-    return 0
-
-
-def store_command():
-    """the incremental store and the aggregate read side by side and
-    compared run for run, so "they hold the same 1,012 runs" is checked
-    rather than asserted."""
-    lines = []
-    handle = open(RUNS)
+def already_recorded(store):
+    """the (cell, target) pairs already on a store, so a stopped lane
+    resumes by skipping them."""
+    out = set()
+    if not os.path.exists(store):
+        return out
+    handle = open(store)
     for line in handle:
-        if not line.strip():
+        text = line.strip()
+        if not text:
             continue
-        lines.append(as_machine_form(json.loads(line)))
+        run = json.loads(text)
+        asked = (run["mnem"], run["shape"], run["key_width"])
+        out.add(key_of(asked, run["lang"], run.get("setter")))
+        continue
     handle.close()
-    document = read_json(AGGREGATE)
-    runs = document["runs"]
-    say("lines on the store: %d" % len(lines))
-    say("runs on the aggregate: %d" % len(runs))
-    same = 0
-    for one, two in zip(lines, runs):
-        if json.dumps(one, sort_keys=True) != json.dumps(two,
-                                                         sort_keys=True):
+    return out
+
+
+def audited_rows_of(record, asked, lang, certificates):
+    """every audited place of one finished run, read against its
+    certificate."""
+    out = []
+    places = {}
+    for place in record.get("places") or []:
+        places[place.get("writes")] = place
+        continue
+    for key in sorted(certificates,
+                      key=lambda k: tuple("%s" % p for p in k)):
+        if key[0] != asked[0]:
             continue
-        same = same + 1
-    say("run for run identical: %d" % same)
-    keys = set()
-    for run in runs:
-        keys.add(key_of((run["mnem"], run["shape"], run["key_width"]),
-                        run["lang"]))
-    say("distinct (cell, target) pairs: %d" % len(keys))
-    return 0
-
-
-def sat_command():
-    """the two `sat` counts, the per-target split of the surviving ones,
-    and the five with the most attested ledger rows with z3's own
-    counterexample."""
-    document = read_json(AGGREGATE)
-    held = document["sat_verdicts"]
-    survived = []
-    for entry in held:
-        if entry.get("under_caller_extension") == "PROVED_ON_SHIP":
+        if key[1] != asked[1]:
             continue
-        survived.append(entry)
-    say("sat at the plain comparison, every written place: %d"
-        % len(held))
-    say("sat surviving the caller-extension re-pose: %d" % len(survived))
-    by_lang = {}
-    for entry in survived:
-        by_lang.setdefault(entry["lang"], 0)
-        by_lang[entry["lang"]] = by_lang[entry["lang"]] + 1
-    for lang in sorted(by_lang):
-        say("   %-6s %d" % (lang, by_lang[lang]))
-    say("the five surviving sat places with the most ledger rows:")
-    for entry in survived[:5]:
-        say("   %-10s %-12s %-5s %-6s [%s] %d rows"
-            % (entry["mnem"], entry["shape"], entry["key_width"],
-               entry["lang"], entry["writes"], entry["ledger_rows"]))
-        say("      counterexample: %s" % entry["counterexample"])
-    return 0
+        if key[2] != asked[2]:
+            continue
+        if key[3] != lang:
+            continue
+        out.append(one_audited_row(record, key, places.get(key[4]),
+                                   certificates[key]))
+        continue
+    return out
 
 
-def branch_command():
-    """`handful.renderer_input` quoted LITERAL, and which of its two
-    branches each task's own setting takes.
+def one_audited_row(record, key, place, cert):
+    """one audited (cell, target, written place), and the reading.
 
-    Here because a claim about the imported driver should carry the
-    driver's own source rather than a reading of it."""
-    import inspect
-    say(inspect.getsource(H.renderer_input))
-    for task in ("h1", "h2", "g1", "g1b", "g1c"):
-        H.TASK = task
-        if task in ("h2", "g1"):
-            which = "the normalised term (task h2's fix 1)"
-        else:
-            which = "order_commutative(simplify(term)), task h1's own"
-        say("TASK %-4s fixes_are_on %-5s primitive_first %-5s "
-            "setup_is_allowed %-5s -> %s"
-            % (task, H.fixes_are_on(), H.primitive_first(),
-               H.setup_is_allowed(), which))
-    use_task_ap1()
-    return 0
+    THE THREE READINGS OF AN AUDIT, and only the first is an alarm:
+      * ALARM -- the inputs are identical (same term text, same source
+        sha256, same compiler and flags) and the kind differs.  The
+        machinery and the record disagree about the same artifact.
+      * `the artifact changed` -- the source sha256 moved, so the
+        renderer built something else and this is a NEW certificate
+        beside the old one, never a replacement.  The brief's own
+        words.
+      * `not reproduced` -- the re-derivation produced no place at all
+        for this key.  The certificate stands; the machinery could not
+        reproduce it, which is the one direction the brief says is
+        possible."""
+    row = {
+        "cell": {"mnem": key[0], "shape": key[1], "key_width": key[2]},
+        "target": key[3],
+        "place": key[4],
+        "setter": setter_record(key[5]),
+        "certificate_kind": cert["kind"],
+        "certificate_pass": cert["pass"],
+        "rederived_kind": None,
+        "inputs_identical": None,
+        "reading": "not reproduced",
+        "certificate_sha256": cert["sha256"],
+        "rederived_sha256": None,
+    }
+    if place is None:
+        row["cause"] = record.get("refusal_cause")
+        return row
+    row["rederived_kind"] = BK.kind_of_place(place)
+    text = place.get("source")
+    if text is not None:
+        row["rederived_sha256"] = hashlib.sha256(
+            text.encode("utf-8")).hexdigest()
+    same = True
+    if row["rederived_sha256"] != cert["sha256"]:
+        same = False
+    if place.get("text") != cert["term_text"]:
+        same = False
+    if BK.ship_flags_source(key[3]) != cert["flags"]:
+        same = False
+    row["inputs_identical"] = same
+    if not same:
+        row["reading"] = "the artifact changed"
+        return row
+    if row["rederived_kind"] != cert["kind"]:
+        row["reading"] = "ALARM"
+        return row
+    row["reading"] = "reproduced"
+    return row
 
 
-def report_command():
-    """`autopoly.json` -> `autopoly.md`, the six sections the brief
-    names."""
-    document = read_json(AGGREGATE)
-    lines = []
-    write_head(lines, document)
-    write_table_one(lines, document)
-    write_routes(lines, document)
-    write_causes(lines, document)
-    write_across(lines, document)
-    write_sat(lines, document)
-    write_handful(lines, document)
-    handle = open(REPORT, "w")
-    handle.write("\n".join(lines) + "\n")
+def setter_record(setter):
+    """one setter cell as a record with its mnemonic in `mnem`, which is
+    the machine form the guard reads, or None where the cell reads no
+    flag state."""
+    if setter is None:
+        return None
+    return {"mnem": setter[0], "shape": setter[1],
+            "key_width": setter[2]}
+
+
+def write_cost(plan, store, ran, seconds, audit_rows, alarms):
+    """the aggregate: the five counts the brief names, the audit's own
+    rows, and the full pass to stand them against."""
+    newly = newly_certified(store, plan)
+    full_runs = plan["pairs_total"]
+    full_seconds = full_pass_seconds()
+    document = {
+        "meta": {
+            "pass": PASS_LABEL,
+            "what": "one delta-plus-audit pass over the five compiled "
+                    "targets",
+            "code_version": plan["code_version"],
+            "attempts_are_on": ATTEMPTS_ARE_ON,
+            "cells_source": CELLS,
+            "bank": BK.BANK,
+            "store": store,
+            "audit_share": AUDIT_SHARE,
+            "audit_seed": AUDIT_DATE,
+            "solver_ceiling_ms": SOLVER_MS,
+            "repose_ceiling_ms": REPOSE_MS,
+            "memory_bound_kb": ABORT_KB,
+            "memory_abort": ABORT_NAME,
+            "peak_kb": peak_kb(),
+            "targets": TARGETS,
+        },
+        "cost": {
+            "certified_before": plan["certified_before"],
+            "attempted": plan["attempt_triples"],
+            "held_by_the_code_version": plan["held_by_version"],
+            "newly_certified": newly,
+            "audited": len(audit_rows),
+            "alarms": len(alarms),
+            "runs_executed": ran,
+            "seconds": seconds,
+            "full_pass_runs": full_runs,
+            "full_pass_seconds": full_seconds,
+        },
+        "audit": audit_rows,
+    }
+    write_json(AGGREGATE, document)
+    return
+
+
+def newly_certified(store, plan):
+    """how many of the attempted place-triples this pass certified."""
+    wanted = set()
+    unknown = set()
+    for pair, place, setter in plan["attempt_list"]:
+        if place is None:
+            unknown.add(pair)
+            continue
+        wanted.add((pair[0], pair[1], pair[2], pair[3], place, setter))
+        continue
+    got = 0
+    handle = open(store)
+    for line in handle:
+        text = line.strip()
+        if not text:
+            continue
+        run = json.loads(text)
+        pair = (run["mnem"], run["shape"], run["key_width"], run["lang"])
+        for place in run.get("places") or []:
+            key = (pair[0], pair[1], pair[2], pair[3],
+                   place.get("writes"), setter_key(run.get("setter")))
+            if key not in wanted and pair not in unknown:
+                continue
+            if BK.kind_of_place(place) != "proved":
+                continue
+            got = got + 1
+            continue
+        continue
     handle.close()
-    say("wrote %s (%d lines)" % (REPORT, len(lines)))
-    say("peak resident: %d kB" % check_memory("report"))
-    return 0
+    return got
 
 
-def write_head(lines, document):
-    meta = document["meta"]
-    lines.append("# autopoly.md -- task ap1: AutoPoly's first full loop")
-    lines.append("")
-    lines.append("Node `hq.research.arch_unit_oracle.cross_construction"
-                 ".autopoly`. Written by `autopoly.py`; never "
-                 "hand-edited.")
-    lines.append("")
-    lines.append("**What this is, one sentence.** the owner's loop -- for "
-                 "every arch opcode of the model table that the corpus "
-                 "attests, for each of the four compiled targets, "
-                 "`find_emulation(cell, lang)` -- run for the first "
-                 "time over its whole measured outer set: %d cells x %d "
-                 "targets = %d runs, of which %d are recorded here."
-                 % (meta["cells"], len(meta["targets"]),
-                    meta["cells"] * len(meta["targets"]), meta["runs"]))
-    lines.append("")
-    lines.append("The route is `handful.py` as task g1b left it "
-                 "(`%s`), imported and called; this task's own program "
-                 "is the loop around it and the bookkeeping, nothing "
-                 "else." % meta["route"])
-    lines.append("")
-    lines.append("Every count below is of the run's own DESTINATION "
-                 "PLACE -- `handful.destination_place`, the first place "
-                 "the cell writes that is not the flags -- which is the "
-                 "place tasks h1, h2, g1 and g1b's own tables already "
-                 "summarize. The denominator of every share is %d, the "
-                 "attested ledger rows of the whole outer set."
-                 % document["ledger_rows_total"])
-    lines.append("")
-
-
-def write_table_one(lines, document):
-    lines.append("## 1. THE table: per target, what the loop reached")
-    lines.append("")
-    lines.append("Table 1 -- one row per target. `cells` counts runs; "
-                 "`rows` is the attested ledger rows those cells cover "
-                 "and `share` that as a percentage of %d."
-                 % document["ledger_rows_total"])
-    lines.append("")
-    header = ["step or verdict"]
-    for lang in document["meta"]["targets"]:
-        header.append(lang)
-    lines.append("| %s |" % " | ".join(header))
-    lines.append("|%s" % ("---|" * len(header)))
-    names = ["attempted", "rendered", "compiled"] + LANDINGS + OUTCOMES
-    for name in names:
-        row = ["`%s`" % name]
-        for lang in document["meta"]["targets"]:
-            held = document["per_language"][lang][name]
-            row.append("%d cells, %d rows, %s%%"
-                       % (held["runs"], held["ledger_rows"],
-                          held["share_percent"]))
-        lines.append("| %s |" % " | ".join(row))
-    lines.append("")
-
-
-def write_routes(lines, document):
-    lines.append("## 2. Per target, how far the primitive route reached")
-    lines.append("")
-    lines.append("Table 2 -- `primitive` is a target operator whose "
-                 "whole lowered body IS the cell; `primitive+setup` is "
-                 "that plus zero-operand accumulator setup (task g1c's "
-                 "widened lookup); `term` is the cell's own term "
-                 "written in the target's operators, which is the "
-                 "fallback.")
-    lines.append("")
-    header = ["route"]
-    for lang in document["meta"]["targets"]:
-        header.append(lang)
-    lines.append("| %s |" % " | ".join(header))
-    lines.append("|%s" % ("---|" * len(header)))
-    for name in ROUTES:
-        row = ["`%s`" % name]
-        for lang in document["meta"]["targets"]:
-            held = document["routes"][lang][name]
-            row.append("%d cells, %d rows, %s%%"
-                       % (held["runs"], held["ledger_rows"],
-                          held["share_percent"]))
-        lines.append("| %s |" % " | ".join(row))
-    lines.append("")
-
-
-def write_causes(lines, document):
-    lines.append("## 3. Refusals and non-proofs, by cause")
-    lines.append("")
-    for lang in document["meta"]["targets"]:
-        causes = document["causes"][lang]
-        lines.append("### 3.%d %s" % (document["meta"]["targets"]
-                                      .index(lang) + 1, lang))
-        lines.append("")
-        if not causes:
-            lines.append("Nothing was refused and every gate call "
-                         "proved.")
-            lines.append("")
-            continue
-        lines.append("| cause | cells | ledger rows | three examples |")
-        lines.append("|---|---|---|---|")
-        ordered = sorted(causes,
-                         key=lambda name: (-causes[name]["ledger_rows"],
-                                           name))
-        for name in ordered:
-            held = causes[name]
-            examples = []
-            for one in held["examples"]:
-                examples.append("`%s` %s %s (%s rows)"
-                                % (one["mnem"], one["shape"],
-                                   one["key_width"],
-                                   one["ledger_rows"]))
-            lines.append("| %s | %d | %d | %s |"
-                         % (escaped(name), held["runs"],
-                            held["ledger_rows"], "; ".join(examples)))
-        lines.append("")
-
-
-def escaped(text):
-    """a pipe inside a table cell, escaped, so a compiler's own error
-    line cannot break the row."""
-    held = "%s" % text
-    held = held.replace("|", "\\|")
-    held = held.replace("\n", " ")
-    if len(held) > 300:
-        held = held[:297] + "..."
+def full_pass_seconds():
+    """what a full pass over the four compiled targets cost, read off
+    task ap5's own aggregate rather than restated."""
+    path = os.path.join(HERE, "autopoly5.json")
+    if not os.path.exists(path):
+        return None
+    document = read_json(path)
+    held = document.get("seconds")
+    if isinstance(held, dict):
+        return held.get("total")
     return held
-
-
-def write_across(lines, document):
-    lines.append("## 4. Cells proved on all four targets, on three, "
-                 "two, one, none")
-    lines.append("")
-    lines.append("Table 3 -- a cell counts as proved on a target when "
-                 "the gate answered `unsat` at that target's "
-                 "destination place, at the 3,000 ms ceiling of record "
-                 "or under the caller-extension re-pose. The "
-                 "polyfill-complete set is the row `4`.")
-    lines.append("")
-    lines.append("| proved on | cells | ledger rows | share |")
-    lines.append("|---|---|---|---|")
-    for many in ("4", "3", "2", "1", "0"):
-        held = document["across_targets"][many]
-        lines.append("| %s of 4 | %d | %d | %s%% |"
-                     % (many, held["cells"], held["ledger_rows"],
-                        held["share_percent"]))
-    lines.append("")
-    lines.append("### 4.1 The polyfill-complete set, in full")
-    lines.append("")
-    held = document["across_targets"]["4"]["cell_list"]
-    if not held:
-        lines.append("No cell is proved on all four targets.")
-    lines.append("")
-    lines.append("| cell | ledger rows |")
-    lines.append("|---|---|")
-    for entry in held:
-        lines.append("| %s | %d |" % (named_cell(entry),
-                                      entry["ledger_rows"]))
-    lines.append("")
-    lines.append("### 4.2 The cells proved on no target, in full, with "
-                 "the cause on each")
-    lines.append("")
-    lines.append("| cell | ledger rows | c | rust | go | swift |")
-    lines.append("|---|---|---|---|---|---|")
-    for entry in document["across_targets"]["on_none_with_causes"]:
-        row = [named_cell(entry), "%d" % entry["ledger_rows"]]
-        for lang in document["meta"]["targets"]:
-            row.append(escaped(entry["causes"].get(lang)))
-        lines.append("| %s |" % " | ".join(row))
-    lines.append("")
-
-
-def named_cell(entry):
-    """one cell as a report reads it: the triple, the mnemonic in
-    backticks as the display label it is."""
-    return "`%s` %s %s" % (entry["mnem"], entry["shape"],
-                           entry["key_width"])
-
-
-def write_sat(lines, document):
-    lines.append("## 5. Every `sat` verdict, with its counterexample "
-                 "and the region it names")
-    lines.append("")
-    lines.append("A `sat` is where the target's edge region differs "
-                 "from the opcode's: z3 found a starting state under "
-                 "which the compiled body and the cell's term answer "
-                 "differently. The counterexample is z3's own, "
-                 "LITERAL.")
-    lines.append("")
-    held = document["sat_verdicts"]
-    survived = []
-    for entry in held:
-        if entry.get("under_caller_extension") == "PROVED_ON_SHIP":
-            continue
-        survived.append(entry)
-    lines.append("TWO COUNTS, and they are two different things.")
-    lines.append("")
-    lines.append("- **`sat` at the plain comparison: %d places.** z3 "
-                 "answered `sat` when the emulation's arriving values "
-                 "are whatever fits the register." % len(held))
-    lines.append("- **`sat` that survives the caller-extension re-pose: "
-                 "%d places.** Task o7's own rule: pose the same "
-                 "comparison again with every narrow-holder input row "
-                 "zero-extended from its holder width to the register, "
-                 "which is what the target's own calling rule "
-                 "guarantees the caller did. What is left is where the "
-                 "target's edge region really differs from the "
-                 "opcode's." % len(survived))
-    lines.append("")
-    lines.append("Table 1's `sat` row counts the second of these at the "
-                 "destination place; this table lists every written "
-                 "place, the flags included.")
-    lines.append("")
-    if not held:
-        lines.append("The loop produced no `sat` verdict.")
-        lines.append("")
-        return
-    lines.append("| cell | lang | place | route | ledger rows | "
-                 "survives the re-pose | region | counterexample "
-                 "(LITERAL) |")
-    lines.append("|---|---|---|---|---|---|---|---|")
-    for entry in held:
-        stands = "yes"
-        if entry.get("under_caller_extension") == "PROVED_ON_SHIP":
-            stands = "no, proved once zero-extended"
-        lines.append("| `%s` %s %s | %s | %s | %s | %s | %s | %s | %s |"
-                     % (entry["mnem"], entry["shape"],
-                        entry["key_width"], entry["lang"],
-                        entry["writes"], entry["route"],
-                        entry["ledger_rows"], stands,
-                        escaped(entry["region"]),
-                        escaped(entry["counterexample"])))
-    lines.append("")
-
-
-def write_handful(lines, document):
-    lines.append("## 6. The handful, reproduced")
-    lines.append("")
-    lines.append("Table 4 -- the ten cells tasks h1, h2, g1 and g1b ran, "
-                 "on the same four targets, as they came out of THIS "
-                 "loop, beside task g1b's own answer for the same pair. "
-                 "The handful's side is read from "
-                 "`handful3b.json` and, for the one pair the widened "
-                 "lookup changes, `handful3c.json`.")
-    lines.append("")
-    lines.append("| cell | lang | this loop: route / landed / gate | "
-                 "the handful: route / landed / gate | agrees | agrees "
-                 "on the verdict |")
-    lines.append("|---|---|---|---|---|---|")
-    agreed = 0
-    on_verdict = 0
-    for row in document["handful"]:
-        if row.get("agrees"):
-            agreed = agreed + 1
-        if row.get("agrees_on_the_verdict"):
-            on_verdict = on_verdict + 1
-        lines.append("| `%s` %s %s | %s | %s | %s | %s | %s |"
-                     % (row["mnem"], row["shape"], row["key_width"],
-                        row["lang"],
-                        escaped(three_cells(row.get("this_loop"))),
-                        escaped(three_cells(row.get("the_handful"))),
-                        yes_or_no(row.get("agrees")),
-                        yes_or_no(row.get("agrees_on_the_verdict"))))
-    lines.append("")
-    lines.append("Agree character for character: %d of %d. Agree on "
-                 "the verdict, the re-pose's own ceiling aside: %d -- "
-                 "this loop re-poses an UNDECIDED once at 30,000 ms "
-                 "where the handful re-posed at 300,000 ms, which is "
-                 "this brief's own instruction, so the two differ in "
-                 "that number and in nothing else."
-                 % (agreed, len(document["handful"]), on_verdict))
-    lines.append("")
 
 
 if __name__ == "__main__":

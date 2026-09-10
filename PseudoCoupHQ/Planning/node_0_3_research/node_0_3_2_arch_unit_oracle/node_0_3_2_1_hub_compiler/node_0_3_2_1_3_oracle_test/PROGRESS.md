@@ -9,3 +9,33 @@ status: living
   `PlanPlan/framework/generate_nodes.py` from the
   `nodes` register of `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/CORE_0_3_2_1_hub_compiler.md`. Skeleton only — definition,
   designation, and content pending.
+- 2026-09-10: **task hub1 — first form standing, and it PROVES** (step 5
+  of the master order). Body A = go's own build of one function of
+  `PseudoCoupHQ/Research/oracle/hub/handful/handful.go`,
+  carved; body B = the target's build of the composed file, carved; the
+  gate over the two aligned by IN row, IN-i being the i-th declared
+  parameter on both sides in each language's own calling rule. Of the
+  eight functions: four prove on c, five on rust, and five prove on go
+  once `//go:noinline` is dropped from the emulations (recorded as a
+  re-pose beside the strict verdict, never in place of it). The other
+  three are holes by cause and never by fallback. On c the float64
+  `(a + b) * c` function's body B is `addsd %xmm1,%xmm0; mulsd
+  %xmm2,%xmm0; ret` — the same instruction text go's own compiler left.
+  Report: `PseudoCoupHQ/DevComms/log_252_task_hub1_hub_v1_first_form.md` §5, §6.
+
+- 2026-09-10: **task hub2 — the same handful and the same measure, at
+  two levels.** `oracle_test2.md` carries task hub1's verdict beside
+  this task's for every one of the eight functions on all three targets.
+  ONE MOVED: `f5_u64_shift` on c, HOLE → PROVED, composed at the body
+  level from two proved pool-entry emulations — and its body B is
+  `mov %rsi,%rcx; shl %cl,%rdi; shr %cl,%rdi; xor %eax,%eax; cmp
+  $0x40,%rsi; cmovb %rdi,%rax; ret`, one clamp where go's own body has
+  two, because c's compiler lowered ACROSS the two calls. `f6` and `f8`
+  did not move and each says why off the record. THE MEASURE: over the
+  134 units task hub1 asked about every figure of the two tasks is
+  equal; over all 590 corpus go units the dictionary composes 325 to c
+  (290 proved, 3 disproved) and 276 to rust (260 proved, 3 disproved),
+  and on go 132 compose with 116 proved on the re-pose without
+  `//go:noinline`. The three disproved are kept as results with the
+  gate's own counterexamples.
+  Report: `PseudoCoupHQ/DevComms/log_254_task_hub2_the_dictionary_at_two_levels.md` §6, §7, §8.

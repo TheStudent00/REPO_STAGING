@@ -47,3 +47,49 @@ status: living
   per-instance check is the unverified compiler's output. Proposed
   order for this node in the log's §6, awaiting the owner. Record:
   `PseudoCoupHQ/DevComms/log_228_lean_float_model_and_the_proof_system.md`.
+- 2026-09-09: **task l3 closed the check's 19 DISCREPANCY rows and measured the
+  proofs' trust classes; the check's guard value is now `259 / 172 / 87`,
+  DISCREPANCY 0.** Status: the model_translator sub-node's check has no
+  unadjudicated row left; the trust question is measured and one item of it is
+  open for the owner. Record:
+  `PseudoCoupHQ/DevComms/log_251_task_l3_the_one_naming_and_the_trust_classes.md`.
+  Artifacts: `PseudoCoupHQ/Research/op_pipeline/lean/`
+  (`check_L2.json` and `check_L2.json.before_task_l3`, `l3_trust_classes.json`,
+  the updated `README.md`, 13 lane scripts under `lanes_l3/`).
+  - The 19 were ONE defect in the check's own composer, not a disagreement
+    about the machine: the theorem's two sides named the unit's arrivals by two
+    different print-order rules, because `bound_variables` numbered the free
+    symbols after a plain `z3.simplify` while the stored layer-5 line was named
+    by `term.Term.normalize`, which orders every commutative operator's
+    arguments before and after simplifying (task t104 added the first of those
+    two ordering steps on 2026-09-07, after the check was written). Verified on
+    the rows before anything was changed: the two rules agree on 214 of the 243
+    rows with a proved term and differ on 29 — the 19 and 10 rows already
+    refused for other causes.
+  - `bound_variables` now calls `term.py`'s own `order_commutative` and
+    `ordered_symbols` in that order, so the naming rule keeps ONE definition in
+    the module that owns it, and it PROVES the naming per row against the
+    stored line (refusal cause `NAMING_NOT_THE_STORED_ONE`; zero rows took it).
+    `term.py` was not modified.
+  - **All 19 now prove**, each by `bv_decide` in 0.40-0.99 s under 503 MB. The
+    check reads 259 rows, 172 STATED (39 `rfl`, 133 `bv_decide`), 87 REFUSED,
+    0 DISCREPANCY. **That tally is the guard value for every later task.**
+  - The trust classes of the 172 proved theorems, from `#print axioms`: 20 with
+    no axiom at all and 19 with `propext, Quot.sound` (both `rfl`), 61 with
+    Lean's own three axioms (`bv_decide` closing in its rewriting stage), and
+    72 that also carry `Lean.ofReduceBool` and `Lean.trustCompiler`, which
+    trust the Lean compiler. None depends on `sorryAx`; `lake build` of the
+    whole project is exit 0 over 318 jobs.
+  - The brief's "61 native-evaluation proofs to be re-proved by `bv_decide`"
+    does not exist as posed: `native_decide` occurs zero times in the project,
+    the 61 is log 232 §6's figure over rows `bv_decide` had already closed, and
+    the axiom is `bv_decide`'s own whenever it calls the SAT solver
+    (`Lean/Elab/Tactic/BVDecide/Frontend/BVDecide.lean`, the
+    `mkConst ``Lean.ofReduceBool`` at line 298 of the toolchain source);
+    `BVDecideConfig` has no field that turns it off. Each of the 72 was
+    re-posed with the definitions unfolded and `bv_normalize` — the tactic's
+    own rewriting stage — alone: **0 of 72 closed**, all with `unsolved goals`,
+    the attempt costing 26.2 s and peaking at 474 MB.
+  - `model_translate.py model` was re-run before the check so `model_L2.json`'s
+    census (173 mnemonics, 162 translated, 4,135 definitions) describes the
+    `Model.lean` on disk after task ap5 widened the sweep's operand shapes.

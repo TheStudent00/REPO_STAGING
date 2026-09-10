@@ -17,7 +17,7 @@ namespace Archproof
     discrepancy between them. -/
 theorem ModelCheck_go_9 (v0 : BitVec 64) (v1 : BitVec 64) :
     (v0 * v1)
-  = (model_imul_52 v0 v1) := by
+  = (model_imul_54 v0 v1) := by
   rfl
 
 #print axioms ModelCheck_go_9

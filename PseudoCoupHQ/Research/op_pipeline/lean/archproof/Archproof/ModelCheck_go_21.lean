@@ -17,7 +17,7 @@ namespace Archproof
     discrepancy between them. -/
 theorem ModelCheck_go_21 (v0 : BitVec 64) (v1 : BitVec 64) :
     ((v0 * (18446744073709551615#64)) + v1)
-  = (model_sub_51 v0 v1) := by
+  = (model_sub_51 v1 v0) := by
   simp only [model_sub_51]
   bv_decide
 

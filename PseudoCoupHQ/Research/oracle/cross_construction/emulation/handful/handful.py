@@ -1,10 +1,19 @@
 #!/usr/bin/env python3
-"""handful.py -- task h1: a handful of `find_emulation` runs from the
-arch-opcode model table.  Ten cells, two targets, twenty runs.
+"""handful.py -- THE DRIVER: one (cell, target) put through the four
+steps, with every contract rule unconditional and the code that decided
+it recorded on the answer.
 
 Node: hq.research.arch_unit_oracle
 (`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08).
+
+WHAT CHANGED ON 2026-09-10, one sentence: the nine `use_task_*` gates
+are gone and every rule below applies to every run, because a rule that
+is switched on by the NAME of the task asking is provenance done in the
+worst way -- what a reader needs is whether the machinery that produced
+an answer is the machinery running now, and that is `code_version`, the
+sha256 of this file and of the target's renderer, carried on every run
+and on every certificate the bank writes from it.
 
 THE OBJECTS, one sentence each, in relation.
   * A CELL is one (`mnem`, operand shape, `key_width`) row of the
@@ -12,50 +21,117 @@ THE OBJECTS, one sentence each, in relation.
     (`Research/oracle/arch_opcodes/model/model_table.json`, tasks
     m1/m1b), which holds, per place the opcode writes, the z3 term the
     reference simulator's own builder puts there.
-  * A RUN is `find_emulation(cell, lang)`: the cell's term written in
-    the target language's own operators by the existing renderer,
+  * A WRITTEN PLACE is one destination that opcode writes (`reg_rdi`,
+    `flags`, `reg_xmm0.low`, `x87_7`); the gate answers PER PLACE.
+  * A RUN is `find_emulation(cell, lang)`: the emulation rendered,
     compiled at the corpus's ship flags, carved, and put back to z3
-    against the cell's own term.
+    against the cell's own term, place by place.
   * THE CHECK has no unit behind it.  Task o8 ran this on SINGLETON
-    UNITS and could gate the emulation against the unit's own body;
-    a cell of the table is a mapping and nothing else, so the
-    comparison is the cell's term against the term of the body the
-    compiler emitted.
+    UNITS and could gate the emulation against the unit's own body; a
+    cell of the table is a mapping and nothing else, so the comparison
+    is the cell's term against the term of the body the compiler
+    emitted.
+  * THE CODE VERSION is the sha256 of this file and of the renderer
+    that wrote the target's source.  It is what a later pass asks
+    before it re-attempts anything.
+
+THE ROUTE, in the order it is asked, and NOT ONE STEP OF IT IS KEYED ON
+WHO IS ASKING.
+  1. THE IMMEDIATE IS AN INPUT (log 249).  Where the cell's chosen row
+     carries a symbolic immediate, there is no primitive: the lookup's
+     key is the cell's own triple and carries no immediate, so a body
+     it matched would carry a baked-in immediate of its own.  The route
+     is the term route and the gate quantifies over the immediate.
+  2. THE PRIMITIVE ROUTE (log 241, widened in log 242): does the target
+     have an OPERATOR whose whole lowered body IS this cell, possibly
+     with zero-operand setup instructions from the reference's own
+     `SPREAD_SIGN` / `ACCUMULATOR_WIDEN` tables beside it and nothing
+     else?  Where it has, the chosen member's OWN probe source is
+     rendered, its symbol renamed and nothing else changed.
+  3. THE TERM ROUTE otherwise: the term the pipeline's own normaliser
+     leaves is handed to the existing renderer, which writes it in the
+     target's own operators (log 240's fix 1, unconditional since log
+     244).
+  4. COMPILE at the corpus's own ship flags, CARVE with `lane_gen.
+     DRIVER`'s objdump reader, and put the carved body back to z3
+     against the cell's term, inputs aligned by IN row.
+
+THE CONTRACT RULES, each one unconditional, each with the reading it
+came from.  They are the rules the nine gates used to switch on.
+  * A VECTOR CELL'S PLACE IS A LANE (log 240's fix 2): the lane the
+    operation writes is projected out of the 128-bit place and rendered,
+    and what the bits above it hold is put to the gate as well.
+  * A 128-BIT PLACE IS TWO 64-BIT PLACES (log 244): a whole-register
+    place with no narrower lane is split into its two halves, and a
+    HALF is not a lane -- `projected_lane` is not asked about one.
+  * A MEMORY OPERAND IS AN ARRIVING VALUE, and so is a value on the
+    x87 register stack (logs 244, 246, 249).
+  * A FLAG CONSUMER'S SETTER IS IN THE ATTESTATION (log 244): a
+    flag-reading cell's mapping is a function of the flags a setter
+    wrote, so the pair is rendered as ONE function -- the comparison,
+    then the select -- and no flag state crosses the call.
+  * A PRESEEDED ROW THAT READS NO FLAG STATE IS NOT A FLAG CONSUMER
+    (log 245).
+  * AN ARRIVAL THAT IS A FUNCTION OF ANOTHER ARRIVAL IS ONE, AN EMPTY
+    BODY IS THE IDENTITY ON ITS ARRIVAL, AND A HALF OF THE FLAGS PLACE
+    IS THE FLAGS PLACE (log 246).
+  * A NARROW ARGUMENT IS RE-POSED under the target's own caller
+    extension, and the re-pose is recorded BESIDE the verdict, never in
+    place of it (task o7's precedent).
 
 WHAT IS REUSED RATHER THAN COPIED, said out loud.
   `model_table.places_of_attempt` rebuilds a row's z3 terms by
   re-running the row's own line on the reference -- the same call the
-  m1b edges pass makes.  `emulate.Renderer` writes c and
-  `rust_render.RustRenderer` writes rust, both unchanged; their
-  refusal causes are theirs.  `emulate.compile_and_carve` /
-  `rust_render.compile_and_carve` compile at the two corpora's own
-  ship flags and carve with `lane_gen.DRIVER`'s objdump reader.
-  `single_opcode_units.strip_chaff` / `parse_insn` are task o2's own
-  narrow chaff rule, which is what task o8's LANDED question is asked
-  through.  `canonical_form.render_one` wraps, `reference.
-  answer_for_unit` answers, `pool100_entry_equivalence` aligns the two
-  sides by IN row, and `gate.Gate.decide` is the one solver call.
-  Nothing under `Research/op_pipeline/` or `Research/oracle/
-  arch_opcodes/` is edited.
+  m1b edges pass makes.  `emulate.Renderer` writes c,
+  `rust_render.RustRenderer` rust, `go_render.GoRenderer` go,
+  `swift_render.SwiftRenderer` swift and `cpp_render.CppRenderer` cpp,
+  all unchanged; their refusal causes are theirs.  `emulate.
+  compile_and_carve` and each renderer's own compile at that corpus's
+  ship flags.  `single_opcode_units.strip_chaff` / `parse_insn` are
+  task o2's own narrow chaff rule.  `canonical_form.render_one` wraps,
+  `reference.answer_for_unit` answers, `pool100_entry_equivalence`
+  aligns the two sides by IN row, and `gate.Gate.decide` is the one
+  solver call.  Nothing under `Research/op_pipeline/` or
+  `Research/oracle/arch_opcodes/` is edited.
 
   ONE THING IS RESTATED RATHER THAN CALLED, and here is why.
   `emulate.prove_against_x` is the o7/o8/o11 proof step, and it takes
   an X UNIT -- a canon40 record whose body is the other side of the
-  comparison.  This task's other side is a table cell, which has no
+  comparison.  This driver's other side is a table cell, which has no
   body and no record, so that function cannot be handed the arguments
   it names.  `check_one_place` below poses the same obligation through
   the same objects (`pool100_entry_equivalence.input_rows` /
   `align_by_row` / `classify_symbols` / `rename_constants_apart`, then
-  `gate.Gate.decide`), and re-poses a DISPROVED verdict under o7's own
-  caller-extension rule with the same substitution.
+  `gate.Gate.decide`).
+
+THE COMPOSITION COLUMN (log 239).  A carved body is a sequence of arch
+opcodes, each a cell of the model table, so the body's term is a
+composition of table cells: `composition_of_run` walks the destination
+place's RAW carved body in body order and classifies each instruction
+by the SAME functions task m1b used -- `model_table.operand_class` /
+`model_table.SHAPE_OF_CLASSES` inside `model_table.classify_line`,
+imported and never re-implemented -- against the triples that are
+TRANSLATED rows of the table.  Three outcomes per instruction, each
+named, never merged: a TABLE CELL; CHAFF (`ret` or a
+calling-convention move, task o2's own `single_opcode_units.is_chaff`
+under its narrow rule); or an instruction that maps to no table cell,
+named with its own line and the classifier's own cause.
+
+THIS FILE IS A LIBRARY.  The loop's own entry is `autopoly.py --bank
+<command>`.  The commands the closed tasks' logs cite -- `report2`,
+`run3`, `report3b`, `changes3c`, `whynot3c`, `bodies3c`, `rechecked3b`,
+`reclassify`, `sources_counts` and the rest -- are those tasks' own
+report commands over those tasks' own products, and they are answered
+by `handful_frozen.py`, which is this file copied byte for byte on
+2026-09-10 before the gates were stripped: `python3 handful_frozen.py
+<command>` reproduces a closed log's output exactly.
 
 MEMORY BOUND, stated as the law requires: one collecting process, no
-forked workers (twenty runs, each one compile and one gate call per
-written place), peak resident checked after every run, named abort
-ABORT_MEMORY_H1 at 4 GB.  Lane `h1_l1_cells.sh` measured the one
-heavy read -- the 73 MB `model_table.json` -- at 290,040 kB, and this
-program does not read that file at all: it reads the ten-row
-`handful_cells.json` that lane wrote.
+forked workers (each run is one compile and one gate call per written
+place), peak resident checked after every run, named abort in
+`ABORT_NAME` at `ABORT_KB`, both of which the caller states.  This
+program never reads the 73 MB `model_table.json`: it reads the cells
+file its caller points `CELLS` at.
 
 THE SPELLING BAN, pasted verbatim as required:
 
@@ -76,207 +152,14 @@ spelling-key check (op_pipeline/check_no_spelling_keys.py) and refuse
 its own output on failure.  A brief handed to any subagent for this
 line MUST paste this paragraph verbatim."
 
-The population is TEN CELLS NAMED BY DEE IN THE BRIEF -- ratified
-intention, the one source the ban allows beside machine-form evidence
--- and each is addressed by the triple (`mnem`, operand shape,
-`key_width`), which the ruling of 2026-09-08 states is machine form.
-Nothing here groups, pairs or selects by a token: there is one run per
-(cell, target), fixed in advance.  Every field carrying a mnemonic is
-named `mnem`, which the guard reads as a machine form.
+HOW THIS FILE OBEYS IT.  A cell is addressed by the triple (`mnem`,
+operand shape, `key_width`), which the ruling of 2026-09-08 states is
+machine form, and every field carrying a mnemonic is named `mnem`,
+which the guard reads as machine form.  Nothing here groups, pairs or
+selects by a token: the population is the outer set the caller hands
+in, in the order the corpus's own attested ledger rows give.
 
 Coding discipline: no compound one-liner statements.
-
-usage:
-  handful.py probe     the ten cells' terms and nothing else
-  handful.py run       the twenty runs            -> handful.json
-  handful.py report    handful.json               -> handful.md
-  handful.py compose   task h1b: the composition column -> handful.json
-  handful.py tally     the two summary counts
-  task h2, the same twenty runs after the two printing fixes, written
-  beside task h1's products and never over them:
-  handful.py sources2  every place rendered BOTH ways, the two sources
-                       compared and the two terms proved equal where
-                       they differ  -> handful2_sources.json
-  handful.py run2      the twenty runs, fixed     -> handful2.json
-  handful.py recheck2 <ms>  every UNDECIDED gate call re-posed
-  handful.py compose2  the composition column     -> handful2.json
-  handful.py report2   handful2.json              -> handful2.md
-  handful.py tally2    the two summary counts, over handful2.json
-  task g1, the same ten cells on FOUR targets, primitive-first,
-  written beside tasks h1's and h2's products and never over them:
-  task g1b, task g1's forty runs again on the REBUILT image, where a
-  swift compiler is reachable; every product beside task g1's:
-  handful.py primitive3b / spellings3b / run3b / recheck3b <ms> /
-                       compose3b / report3b / tally3b
-  task g1c, the primitive lookup widened by one step (section 2e) and
-  only the (cell, target) pairs whose route it changes:
-  handful.py changes3c  which pairs the widened lookup changes, and
-                       the row each becomes, printed and nothing run
-  handful.py whynot3c <mnem> <shape> <key_width>
-                       per target, every single-opcode row carrying the
-                       cell's own arch mnemonic, with the strip, the
-                       setup split and the reason it is or is not
-                       accepted
-  handful.py rechecked3b / rechecked3c
-                       every place that results file re-posed, with the
-                       run's route and whether the place records a
-                       parameter plan of its own
-  handful.py bodies3c <mnem>
-                       per target, how many corpus units carry that
-                       arch mnemonic at all, with the shortest and the
-                       longest such body
-  handful.py primitive3c / run3c / recheck3c <ms> / compose3c /
-                       report3c / tally3c
-  handful.py primitive3  the primitive lookup alone, over the forty
-                       (cell, target) pairs -> handful3_primitive.json
-  handful.py spellings3  the per-target spelling tables, each row with
-                       the probe that measured it -> handful3_spellings.json
-  handful.py run3      the forty runs             -> handful3.json
-  handful.py recheck3 <ms>  every UNDECIDED gate call re-posed
-  handful.py compose3  the composition column     -> handful3.json
-  handful.py report3   handful3.json              -> handful3.md
-  handful.py tally3    the summary counts, over handful3.json
-  handful.py reclassify  task h1b's composition re-derived over task
-                       h1's OWN twenty bodies with the zero-operand
-                       width rule in place, entry by entry against what
-                       h1b recorded  -> handful2_classifier.json
-
-TASK h1b, added 2026-09-09: THE COMPOSITION COLUMN.  A carved body is a
-sequence of arch opcodes, each a cell of the model table, so the body's
-term is a composition of table cells.  `compose_command` adds one field
-to every run already on `handful.json`, `composition`: the RAW carved
-body of the run's own destination place (`destination_place`, the same
-place the `landed`/`gate` columns already summarize), walked in body
-order, each instruction classified by the SAME functions task m1b used
--- `model_table.operand_class` / `model_table.SHAPE_OF_CLASSES` (both
-inside `model_table.classify_line`, imported, never re-implemented) and
-`model_table.key_width` -- against the set of (`mnem`, shape,
-`key_width`) triples that are actually TRANSLATED rows of the table
-(`model_table_rows.json`, read once).  Three outcomes per instruction,
-each named, never merged: a TABLE CELL (`cell` true, with its shape and
-key_width); CHAFF -- `ret` or a calling-convention move, task o2's own
-`single_opcode_units.is_chaff` under its `narrow` rule, named as such
-rather than reported as unmapped; or an instruction that maps to no
-table cell, named with its own line and the classifier's own cause.
-For a LANDED run the table-cell entries are exactly one: the target.
-
-MEMORY BOUND, task h1b: the one read this task adds is
-`model_table_rows.json` (50 MB), sampled first; the same 4 GB bound and
-named abort as task h1 (`ABORT_KB`, `ABORT_NAME` below) govern it too,
-since it is the same collecting process reading one more file.
-
-TASK h2, added 2026-09-09: THE TWO PRINTING FIXES.  Task h1 found two
-failures and both are in how a cell's term is PRINTED, not in the route,
-so this task fixes both in the DRIVER and re-runs the same ten cells on
-the same two targets.  Section 2c holds them, one function each.
-  * FIX 1, `the_normalised_term`: the renderer is handed the term the
-    pipeline's own normaliser leaves (`term.Term.normalize`'s own steps,
-    the one t104 fixed), not `order_commutative(simplify(term))`.
-  * FIX 2, `projected_lane`: a vector cell's place is the whole 128-bit
-    register -- the lane the operation writes joined under the arrival
-    bits it leaves alone -- so the driver projects `Extract(key_width -
-    1, 0, place)` and renders that lane, recording what the bits above
-    it are and putting THAT to the gate as well.
-NEITHER RENDERER IS TOUCHED by either fix, and the proof of it is task
-o8's own per-opcode check re-run unchanged over its 243 rows into a
-scratch copy (`o8_regression.py` beside this file).  Where a renderer
-still refuses after the projection, the refusal is the RESULT, by its
-own cause word, and no operator table is extended.
-  A THIRD CHANGE is outside this file and is the only shared file this
-  task's brief authorises: `model_table.classify_line` gained an
-  additive width rule for a zero-operand opcode (`cqto`, `cltq`,
-  `cltd`, `cwtd`, `cqo`), whose width is in the reference's own
-  `SPREAD_SIGN` / `ACCUMULATOR_WIDEN` tables rather than in an operand.
-  `reclassify_command` re-derives task h1b's composition over task h1's
-  OWN twenty carved bodies with that rule in place and reports every
-  entry that moved.
-
-MEMORY BOUND, task h2: the same 4 GB resident bound on the same
-collecting process, named abort ABORT_MEMORY_H2, checked after every
-run; the o8 regression runs task o8's own program under task o8's own
-2 GB bound (`ABORT_MEMORY_O8`), unchanged.
-
-TASK g1, added 2026-09-09: TWO MORE TARGETS AND A ROUTE BEFORE THE
-TERM ROUTE.  The same ten cells, now on four targets (c, rust, go,
-swift), and `find_emulation` asks a question first that tasks h1 and h2
-never asked.  Section 2d holds it.
-  * THE PRIMITIVE ROUTE, `primitive_lookup` / `run_primitive`: does the
-    target have an OPERATOR whose whole lowered body IS this cell?  The
-    lookup is task o2's own `single_opcode_units.json` for the
-    language, each narrow row stripped again by task o2's own rule and
-    its one instruction classified by task m1b's own classifier to a
-    (`mnem`, shape, `key_width`) triple -- the machine-form key the
-    ruling of 2026-09-08 states.  Where a row matches, the chosen
-    member's OWN probe source is rendered, with its symbol renamed and
-    nothing else changed: the operator on holders of the operand types
-    the manifest records, and nothing else.  The EDGE REGIONS are then
-    whatever the compiler puts around the instruction (go's division
-    carries a branch into `runtime.panicdivide`), and they are not
-    hidden: the gate's own verdict says whether the body answers as the
-    cell does everywhere or only on a region, and `region_of` renders
-    that and invents no third answer.
-  * THE TERM ROUTE is the fallback, exactly what task h2 ran, with both
-    of task h2's printing fixes still on (`fixes_are_on`).
-  * TWO NEW RENDERERS, each in its own sub-folder and each deriving
-    from `emulate.Renderer`: `go/go_render.py` `GoRenderer`, whose
-    every spelling was measured first by `go/go_facts.py`, and
-    `swift/swift_render.py` `SwiftRenderer`, whose every spelling is
-    UNMEASURED and says so -- THERE IS NO SWIFTC IN THE IMAGE, so every
-    swift row is refused at the compile step with the literal answer the
-    machine gave, and no workaround was attempted.
-  * GO'S CALLING CONVENTION differs and nothing else's does, so
-    `expected_families` and `wrapped_body` dispatch per language;
-    `go_render.expected_go_families` and `go_render.recorded_facts`
-    carry go's own argument sequence, measured by probe
-    `arrival_registers_six`.
-
-MEMORY BOUND, task g1: the same 4 GB resident bound on the same
-collecting process, named abort ABORT_MEMORY_G1, checked after every
-run.  The one read this task adds is `single_opcode_units.json` (1.6 MB)
-plus one `probe_manifest_<lang>.json` per target (a few MB each), each
-read once and cached; the 73 MB `model_table.json` is not read at all.
-
-TASK g1b, added 2026-09-09: THE SAME FORTY RUNS ON A MACHINE WHERE
-SWIFT EXISTS.  Not one thing about the route, the lookup, the
-rendering, the carve or the gate differs from task g1 -- `use_task_g1b`
-changes the product paths and the named abort and nothing else -- so
-the two runs are comparable row for row and the swift rows are the ten
-that move.  TWO OBSTACLES had to go, and they were independent:
-  * THE IMAGE.  The old `sandbox-runner:latest` carried
-    `libncursesw.so.6` and not `libncurses.so.6`, which `swiftc` loads.
-    The coordinator rebuilt it with `libncurses6`; an instance picks a
-    new image only when its CONTAINER is re-created.
-  * THE PERSIST VOLUME, which is what task g1 actually hit.  `g1.conf`
-    named none, and Airlock has no "no volume" state: `instance.sh`
-    defaults `persist_volume` to `<name>-persist`, so the container got
-    a fresh EMPTY `g1-persist` at /persist.  Swift lives at
-    /persist/swift on the DEFAULT instance's volume, `sandbox-persist`.
-    That is why every swift place task g1 ran was refused with
-    "/persist/swift/usr/bin/swiftc: No such file or directory" -- a
-    missing FILE, not a loader failure.  `g1.conf` now mounts
-    `sandbox-persist` READ-ONLY, as `t101b.conf` and `t103.conf`
-    already do for the same toolchain.
-With both gone, `swiftc --version` answers `Swift version 6.0.3
-(swift-6.0.3-RELEASE)` and a probe compiles at the corpus's own `-O`.
-
-TASK g1c, added 2026-09-09: THE LOOKUP WIDENED BY ONE STEP.  Section 2e
-holds it and states its reason from what task g1 measured.  In one
-sentence: a single-opcode row is accepted for a cell when its
-narrow-stripped body is the cell's own instruction PLUS zero or more
-ZERO-OPERAND SETUP instructions from `reference.SPREAD_SIGN` /
-`reference.ACCUMULATOR_WIDEN`, and nothing else -- which is what a
-divide looks like in every one of the four targets (`cltd; idiv`).  The
-route is recorded as `primitive+setup` where a row carries setup and
-stays `primitive` where it carries none, and the setup cells ride on
-the lookup record and in the run's `composition`.  `run3c` runs ONLY
-the (cell, target) pairs whose route this changes, which `changes3c`
-prints on its own.
-
-MEMORY BOUND, tasks g1b and g1c: the same 4 GB resident bound on the
-same collecting process, named aborts ABORT_MEMORY_G1B and
-ABORT_MEMORY_G1C, checked after every run.  Task g1c reads
-`single_opcode_units.json` a second time, under the other rule list,
-and caches it beside the first.
 """
 
 import json
@@ -326,259 +209,85 @@ import single_opcode_units as SOU                                # noqa: E402
 GENERAL_FAMILIES = frozenset(canon.FAMILY_OF.values()) - R.XMM_NAMES
 
 CELLS = os.path.join(HERE, "handful_cells.json")
-RESULTS_H1 = os.path.join(HERE, "handful.json")
-REPORT_H1 = os.path.join(HERE, "handful.md")
-SRC_H1 = os.path.join(HERE, "src")
-RESULTS_H2 = os.path.join(HERE, "handful2.json")
-REPORT_H2 = os.path.join(HERE, "handful2.md")
-SRC_H2 = os.path.join(HERE, "src2")
-SOURCES_H2 = os.path.join(HERE, "handful2_sources.json")
-CLASSIFIER_H2 = os.path.join(HERE, "handful2_classifier.json")
-RESULTS_G1 = os.path.join(HERE, "handful3.json")
-REPORT_G1 = os.path.join(HERE, "handful3.md")
-SRC_G1 = os.path.join(HERE, "src3")
-PRIMITIVE_G1 = os.path.join(HERE, "handful3_primitive.json")
-SPELLINGS_G1 = os.path.join(HERE, "handful3_spellings.json")
-# task g1b: the same forty runs again, on the REBUILT image, where a
-# swift compiler is reachable at last. Task g1's own products are never
-# written by any lane of task g1b; these sit beside them.
-RESULTS_G1B = os.path.join(HERE, "handful3b.json")
-REPORT_G1B = os.path.join(HERE, "handful3b.md")
-SRC_G1B = os.path.join(HERE, "src3b")
-PRIMITIVE_G1B = os.path.join(HERE, "handful3b_primitive.json")
-SPELLINGS_G1B = os.path.join(HERE, "handful3b_spellings.json")
-# task g1c: the WIDENED primitive lookup, and only the (cell, target)
-# pairs whose route it changes.
-RESULTS_G1C = os.path.join(HERE, "handful3c.json")
-REPORT_G1C = os.path.join(HERE, "handful3c.md")
-SRC_G1C = os.path.join(HERE, "src3c")
-PRIMITIVE_G1C = os.path.join(HERE, "handful3c_primitive.json")
+"""THE CONFIGURATION, and every one of these is a PATH, not a rule.  A
+caller repoints them at its own products before it runs (`autopoly.py`
+does, in one function); nothing about what the driver decides moves
+with them."""
+RESULTS = os.path.join(HERE, "handful_driver.json")
+REPORT = os.path.join(HERE, "handful_driver.md")
+SRC_DIR = os.path.join(HERE, "src_driver")
+PRIMITIVE = os.path.join(HERE, "handful_driver_primitive.json")
+SPELLINGS = os.path.join(HERE, "handful_driver_spellings.json")
 HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/handful")
 
-# WHICH TASK IS RUNNING, and what it changes. `h1` is the run of record
-# of 2026-09-09 (log 238, log 239) and stays reproducible from this same
-# file. `h2` is the same twenty runs after the two printing fixes of
-# section 2c, written BESIDE h1's products and never over them.
-TASK = "h1"
-RESULTS = RESULTS_H1
-REPORT = REPORT_H1
-SRC_DIR = SRC_H1
-# WHERE THE PRIMITIVE LOOKUP AND THE SPELLING TABLES ARE WRITTEN, per
-# task. Tasks h1 and h2 write neither, so the g1 paths stand as the
-# defaults and only the `*3`, `*3b` and `*3c` commands reach them.
-PRIMITIVE = PRIMITIVE_G1
-SPELLINGS = SPELLINGS_G1
-
-# THE TARGETS ARE `targets()`, per task; this name is kept only so an
-# older reader of this file finds where the two of tasks h1 and h2 were
-# stated. Nothing reads it.
-TARGETS_H1_AND_H2 = ["c", "rust"]
+TARGETS = ["c", "cpp", "rust", "go", "swift"]
+"""the compiled targets, in the order the briefs name them.  A list a
+caller may repoint, and never a question asked about who is running."""
 
 ABORT_KB = 4 * 1024 * 1024
-ABORT_NAME = "ABORT_MEMORY_H1"
+ABORT_NAME = "ABORT_MEMORY_DRIVER"
+
+DRIVER_FILE = os.path.abspath(__file__)
+RENDERER_FILE = {
+    "c": os.path.join(EMULATION, "emulate.py"),
+    "cpp": os.path.join(CPP, "cpp_render.py"),
+    "rust": os.path.join(RUST, "rust_render.py"),
+    "go": os.path.join(GO, "go_render.py"),
+    "swift": os.path.join(SWIFT, "swift_render.py"),
+}
+"""THE CODE VERSION'S OWN INPUTS: the driver's source file, and the
+source file of the renderer that writes each target.  A certificate
+carries the sha256 of both, which is how a later pass knows whether the
+machinery that produced it has moved -- the question the nine task-name
+gates used to answer by label."""
+
+VERSION_CACHE = {}
 
 
-def use_task_h2():
-    """task h2's entry: the two printing fixes on, every product beside
-    task h1's rather than over it, and the named abort renamed to this
-    task's own."""
-    global TASK, RESULTS, REPORT, SRC_DIR, ABORT_NAME
-    TASK = "h2"
-    RESULTS = RESULTS_H2
-    REPORT = REPORT_H2
-    SRC_DIR = SRC_H2
-    ABORT_NAME = "ABORT_MEMORY_H2"
+def sha256_of_file(path):
+    """the sha256 of one source file's bytes, cached for the process."""
+    if path in VERSION_CACHE:
+        return VERSION_CACHE[path]
+    import hashlib
+    handle = open(path, "rb")
+    digest = hashlib.sha256(handle.read()).hexdigest()
+    handle.close()
+    VERSION_CACHE[path] = digest
+    return digest
 
 
-def use_task_g1():
-    """task g1's entry: task h2's two printing fixes STAY ON, the
-    primitive route is tried before the term route, the target list
-    becomes four, and every product sits beside tasks h1's and h2's
-    rather than over either."""
-    global TASK, RESULTS, REPORT, SRC_DIR, ABORT_NAME
-    global PRIMITIVE, SPELLINGS
-    TASK = "g1"
-    RESULTS = RESULTS_G1
-    REPORT = REPORT_G1
-    SRC_DIR = SRC_G1
-    PRIMITIVE = PRIMITIVE_G1
-    SPELLINGS = SPELLINGS_G1
-    ABORT_NAME = "ABORT_MEMORY_G1"
+def code_version(lang):
+    """THE VERSION OF THE MACHINERY THIS RUN WAS PRODUCED BY: the
+    driver's own source and the target's renderer, each by the sha256 of
+    its bytes.
 
-
-def use_task_g1b():
-    """task g1b's entry: EVERYTHING task g1 did, on the rebuilt image
-    where a swift compiler is reachable.
-
-    Not one thing about the route, the lookup, the rendering, the carve
-    or the gate differs from task g1 -- the only difference is the
-    machine, so the two runs are comparable row for row and the swift
-    rows are the ten that move.  Every product sits beside task g1's
-    and never over it."""
-    global TASK, RESULTS, REPORT, SRC_DIR, ABORT_NAME
-    global PRIMITIVE, SPELLINGS
-    TASK = "g1b"
-    RESULTS = RESULTS_G1B
-    REPORT = REPORT_G1B
-    SRC_DIR = SRC_G1B
-    PRIMITIVE = PRIMITIVE_G1B
-    SPELLINGS = SPELLINGS_G1B
-    ABORT_NAME = "ABORT_MEMORY_G1B"
-
-
-def use_task_g1c():
-    """task g1c's entry: the WIDENED primitive lookup (section 2e), and
-    only the (cell, target) pairs whose route it changes."""
-    global TASK, RESULTS, REPORT, SRC_DIR, ABORT_NAME
-    global PRIMITIVE, SPELLINGS
-    TASK = "g1c"
-    RESULTS = RESULTS_G1C
-    REPORT = REPORT_G1C
-    SRC_DIR = SRC_G1C
-    PRIMITIVE = PRIMITIVE_G1C
-    SPELLINGS = SPELLINGS_G1B
-    ABORT_NAME = "ABORT_MEMORY_G1C"
-
-
-def use_task_ap2():
-    """task ap2's entry: task g1c's route, with the six mechanical
-    causes task ap1 counted fixed.
-
-    THE FIVE THAT ARE IN THIS FILE ARE NOT GATED ON THIS NAME, and that
-    is deliberate.  A memory operand IS an arriving value, a flag
-    consumer's setter IS in the attestation, a 128-bit place IS two
-    64-bit places and the normalised term IS what the table prints --
-    for every task, not for this one.  Gating them would be the
-    half-inheritance `fixes_are_on` was written as one function to
-    prevent, and it is what let task h2's fix 1 fall out from under
-    tasks g1b, g1c and ap1 in the first place.  What the guards
-    measure is exactly that: task h2's 24 sources and task h1's
-    `cmovne` / `setne` runs come out unchanged."""
-    global TASK, ABORT_NAME
-    TASK = "ap2"
-    ABORT_NAME = "ABORT_MEMORY_AP2"
-
-
-def use_task_ap3():
-    """task ap3's entry: task ap2's route, with the two mechanical
-    causes ap2 left fixed in the layer that owns each.
-
-    THE FIXES ARE NOT GATED ON THIS NAME either, for the reason
-    `use_task_ap2`'s docstring gives: a 128-bit vector arrival IS two
-    64-bit arriving values, a preseeded row that reads no flag state is
-    NOT a flag consumer, and an x87 place IS a `long double` in c --
-    for every task, not for this one.  What is task-scoped is where the
-    products are written and the named abort.  The one switch this task
-    adds, `NORMALISE_BEFORE_RENDER`, is a module-level flag and not a
-    task gate: `autopoly3.py` moves it for one measurement lane and
-    moves it back."""
-    global TASK, ABORT_NAME
-    TASK = "ap3"
-    ABORT_NAME = "ABORT_MEMORY_AP3"
-
-
-def use_task_ap4():
-    """task ap4's entry: task ap3's route, with the three changes the owner's
-    ruling of 2026-09-09 states -- the contract for a value that is not
-    in a fresh register.
-
-    THE CHANGES ARE NOT GATED ON THIS NAME either, for the reason
-    `use_task_ap2`'s docstring gives and `use_task_ap3` repeats: an
-    arrival that is a function of another arrival IS one, an emulation
-    whose carved body carries no instruction IS the identity on its
-    arrival, a half of the flags place IS the flags place, and an
-    answer left on the x87 stack IS an answer -- for every task, not
-    for this one.  What is task-scoped is where the products are
-    written and the named abort."""
-    global TASK, ABORT_NAME
-    TASK = "ap4"
-    ABORT_NAME = "ABORT_MEMORY_AP4"
-
-
-def use_task_ap5():
-    """task ap5's entry: task ap4's route, with the two mechanical
-    remainders of the four languages closed.
-
-    NEITHER CHANGE IS GATED ON THIS NAME, for the reason
-    `use_task_ap2`'s docstring gives and `use_task_ap3` and
-    `use_task_ap4` repeat.  An answer left on the x87 register stack
-    IS an answer and an x87 arrival IS an arrival -- the reference and
-    the shared aligner now read them, which is true for every task and
-    not for this one.  An immediate IS an input of the mapping, so a
-    cell whose chosen row says so takes the term route, for every task
-    that meets such a row.  What is task-scoped is where the products
-    are written and the named abort."""
-    global TASK, ABORT_NAME
-    TASK = "ap5"
-    ABORT_NAME = "ABORT_MEMORY_AP5"
-
-
-def use_task_ex1():
-    """task ex1's entry: task ap4's route exactly, over FIVE compiled
-    targets instead of four -- cpp added as the fifth.
-
-    NOTHING ABOUT THE ROUTE MOVES.  `fixes_are_on`, `primitive_first`
-    and `setup_is_allowed` answer for `ex1` the way they answer for
-    `ap4`, and the three changes task ap4 made are not gated on a task
-    name at all, so a cpp run is put through the same four steps a c
-    run is.  What this name decides is the ONE thing that is genuinely
-    task-scoped: which targets `targets()` walks, and where the
-    products are written (`autopoly/expand1.py` repoints those)."""
-    global TASK, ABORT_NAME
-    TASK = "ex1"
-    ABORT_NAME = "ABORT_MEMORY_EX1"
-
-
-def fixes_are_on():
-    """whether the two printing fixes of task h2 apply.
-
-    They are h2's and they stay on for g1 and for both of its closers:
-    the vector projection is what makes the two float cells render at
-    all, and the normalised term is what the model table prints.
-    Written as one function rather than `TASK == "h2"` in three places,
-    so a later task cannot half-inherit them."""
-    return TASK in ("h2", "g1", "g1b", "g1c", "ap2", "ap3", "ap4",
-                    "ap5", "ex1")
-
-
-def primitive_first():
-    """whether the primitive route is tried before the term route.
-
-    Task g1 introduced it and both of its closers keep it: task g1b runs
-    the identical route on the rebuilt image, task g1c runs it with the
-    lookup widened by one step (section 2e).  One function rather than
-    `TASK == "g1"` in five places, for the same reason
-    `fixes_are_on` is one function."""
-    return TASK in ("g1", "g1b", "g1c", "ap2", "ap3", "ap4", "ap5",
-                    "ex1")
-
-
-def setup_is_allowed():
-    """whether the primitive lookup accepts a row that carries a
-    ZERO-OPERAND SETUP instruction beside the cell's own (section 2e).
-
-    Task g1c's one change, and the only thing that separates it from
-    task g1b."""
-    return TASK in ("g1c", "ap2", "ap3", "ap4", "ap5", "ex1")
+    IT REPLACES THE NINE TASK GATES.  Provenance used to be a task
+    LABEL, switched on by name so an older pass reproduced verbatim;
+    what a reader actually needs to know is whether the code that
+    produced a certificate is the code running now, and that is a
+    measurement of the files rather than a claim about a task."""
+    out = {
+        "driver": sha256_of_file(DRIVER_FILE),
+        "driver_source": os.path.basename(DRIVER_FILE),
+        "how": "sha256 of the source file's bytes",
+    }
+    path = RENDERER_FILE.get(lang)
+    if path is not None:
+        out["renderer"] = sha256_of_file(path)
+        out["renderer_source"] = os.path.basename(path)
+    return out
 
 
 def targets():
-    """the target languages of the running task.  Tasks h1 and h2 ran
-    two; task g1 and its closers run four, and the order is the brief's
-    own; task ex1 runs FIVE, cpp added as the fifth COMPILED target.
+    """the target languages, which is `TARGETS` and nothing else.
 
-    The fifth is task-scoped, which is what a task name is for here: it
-    changes WHICH pairs the loop walks, and tasks ap1 to ap4 counted
-    "proved on all four" over four.  Nothing else about cpp is gated on
-    a task name -- `renderer_for`, `suffix_of`, `compile_one_place` and
-    `wrapped_body` know cpp for every task, because a cpp emulation IS
-    rendered by `CppRenderer` and compiled by clang++ whoever asks."""
-    if TASK == "ex1":
-        return ["c", "cpp", "rust", "go", "swift"]
-    if primitive_first():
-        return ["c", "rust", "go", "swift"]
-    return ["c", "rust"]
+    It was a question about WHICH TASK was running: two targets under
+    the first two names, four under the next four, five under the last.
+    A target list is a configuration a caller states, so the caller
+    states it."""
+    return list(TARGETS)
+
 
 # THE TEN CELLS, as the brief names them: (mnem, operand shape,
 # key_width).  Ratified intention, in the brief's own order.
@@ -640,260 +349,8 @@ def write_json(path, document):
 # section 1: THE COMMANDS
 # ==================================================================
 
-def main(argv):
-    if not argv:
-        say(__doc__)
-        return 2
-    if argv[0] == "probe":
-        return probe_command()
-    if argv[0] == "run":
-        return run_command()
-    if argv[0] == "recheck":
-        return recheck_command(int(argv[1]))
-    if argv[0] == "report":
-        return report_command()
-    if argv[0] == "tally":
-        return tally_command()
-    if argv[0] == "compose":
-        return compose_command()
-    if argv[0] == "run2":
-        use_task_h2()
-        return run_command()
-    if argv[0] == "recheck2":
-        use_task_h2()
-        return recheck_command(int(argv[1]))
-    if argv[0] == "compose2":
-        use_task_h2()
-        return compose_command()
-    if argv[0] == "report2":
-        use_task_h2()
-        return report_command()
-    if argv[0] == "tally2":
-        use_task_h2()
-        return tally_command()
-    if argv[0] == "sources2":
-        use_task_h2()
-        return sources_command()
-    if argv[0] == "sources_counts":
-        return sources_counts_command()
-    if argv[0] == "sources_idiv":
-        return sources_idiv_command(argv[1], argv[2], argv[3])
-    if argv[0] == "reclassify":
-        return reclassify_command()
-    if argv[0] == "run3":
-        use_task_g1()
-        return run_command()
-    if argv[0] == "recheck3":
-        use_task_g1()
-        return recheck_command(int(argv[1]))
-    if argv[0] == "compose3":
-        use_task_g1()
-        return compose_command()
-    if argv[0] == "report3":
-        use_task_g1()
-        return report_command()
-    if argv[0] == "tally3":
-        use_task_g1()
-        return tally_command()
-    if argv[0] == "primitive3":
-        use_task_g1()
-        return primitive_command()
-    if argv[0] == "spellings3":
-        use_task_g1()
-        return spellings_command()
-    if argv[0] == "run3b":
-        use_task_g1b()
-        return run_command()
-    if argv[0] == "recheck3b":
-        use_task_g1b()
-        return recheck_command(int(argv[1]))
-    if argv[0] == "compose3b":
-        use_task_g1b()
-        return compose_command()
-    if argv[0] == "report3b":
-        use_task_g1b()
-        return report_command()
-    if argv[0] == "tally3b":
-        use_task_g1b()
-        return tally_command()
-    if argv[0] == "primitive3b":
-        use_task_g1b()
-        return primitive_command()
-    if argv[0] == "spellings3b":
-        use_task_g1b()
-        return spellings_command()
-    if argv[0] == "changes3c":
-        use_task_g1c()
-        return changes_command()
-    if argv[0] == "whynot3c":
-        use_task_g1c()
-        return why_not_command(argv[1], argv[2], argv[3])
-    if argv[0] == "bodies3c":
-        use_task_g1c()
-        return bodies_command(argv[1])
-    if argv[0] == "rechecked3b":
-        use_task_g1b()
-        return rechecked_command()
-    if argv[0] == "rechecked3c":
-        use_task_g1c()
-        return rechecked_command()
-    if argv[0] == "run3c":
-        use_task_g1c()
-        return run_command()
-    if argv[0] == "recheck3c":
-        use_task_g1c()
-        return recheck_command(int(argv[1]))
-    if argv[0] == "compose3c":
-        use_task_g1c()
-        return compose_command()
-    if argv[0] == "report3c":
-        use_task_g1c()
-        return report_command()
-    if argv[0] == "tally3c":
-        use_task_g1c()
-        return tally_command()
-    if argv[0] == "primitive3c":
-        use_task_g1c()
-        return primitive_command()
-    say("unknown command %r" % argv[0])
-    return 2
 
 
-def probe_command():
-    """step 1 for all ten cells and nothing else: the row chosen, the
-    term of every written place, its free symbols and its width."""
-    cells = read_json(CELLS)
-    for asked in ASKED:
-        record = cell_input(cells, asked)
-        say("")
-        say("CELL %s %s %s" % asked)
-        say("   row %s: %s" % (record.get("row_id"),
-                               record.get("line")))
-        if record.get("chosen_by") is not None:
-            say("   chosen: %s" % record["chosen_by"])
-        if record.get("setter") is not None:
-            say("   setter: %s (%s), its own row %s: %s"
-                % (record["setter"]["mnem"],
-                   record["setter"]["why"],
-                   record["setter"]["row_id"],
-                   record["setter"]["line"]))
-            say("   the pair as one function: %s"
-                % record["setter"]["composition"])
-        if record.get("refusal_cause") is not None:
-            say("   REFUSED: %s" % record["refusal_cause"])
-            continue
-        for place in record["places"]:
-            say("   place %s (%d bits), in rows %s"
-                % (place["writes"], place["bits"],
-                   place.get("families")))
-            say("      text: %s" % place["text"])
-            if place.get("not_rendered") is not None:
-                say("      not rendered: %s" % place["not_rendered"])
-    say("")
-    say("peak resident: %d kB" % check_memory("probe"))
-    return 0
-
-
-def run_command():
-    """the twenty runs."""
-    if not os.path.isdir(SRC_DIR):
-        os.makedirs(SRC_DIR)
-    shared = build_shared()
-    cells = read_json(CELLS)
-    runs = []
-    # WHICH PAIRS THIS RUN HOLDS.  Every task before g1c runs all of
-    # them; task g1c runs ONLY the pairs its widened lookup changes,
-    # which is its brief's own instruction, and `route_changes` is where
-    # that set is computed and printed.
-    wanted = None
-    if TASK == "g1c":
-        wanted = route_changes(cells)
-    pairs = []
-    for asked in ASKED:
-        for lang in targets():
-            if wanted is not None and (asked, lang) not in wanted:
-                continue
-            pairs.append((asked, lang))
-    total = len(pairs)
-    index = 0
-    for asked, lang in pairs:
-        held = cell_input(cells, asked)
-        index = index + 1
-        say("[%d/%d] %s %s %s -> %s"
-            % (index, total, asked[0], asked[1], asked[2], lang))
-        runs.append(find_emulation(shared, held, lang))
-        say("   peak resident: %d kB"
-            % check_memory("run %d" % index))
-    document = {
-        "meta": {
-            "task": TASK,
-            "what": "cells of the arch-opcode model table, one "
-                    "find_emulation run per (cell, target) this task "
-                    "holds",
-            "cells_source": CELLS,
-            "runs": total,
-            "ship_flags_c": E.SHIP_FLAGS_SOURCE,
-            "ship_flags_rust": RR.SHIP_FLAGS_SOURCE,
-            "ship_flags_go": GR.SHIP_FLAGS_SOURCE,
-            "ship_flags_swift": SR.SHIP_FLAGS_SOURCE,
-            "ship_flags_cpp": CPR.SHIP_FLAGS_SOURCE,
-            "clangxx_answer": CPR.clangxx_answer(),
-            "swiftc_answer": SR.swiftc_answer(),
-            "go_argument_sequence": GR.sequence_agrees(),
-            "solver_ceiling_ms": shared["gate"].solver_timeout_ms,
-            "memory_bound_kb": ABORT_KB,
-            "memory_abort": ABORT_NAME,
-            "peak_kb": peak_kb(),
-            "host_folder": HOST_FOLDER,
-        },
-        "runs": runs,
-    }
-    write_json(RESULTS, document)
-    say("wrote %s" % RESULTS)
-    say("peak resident: %d kB" % peak_kb())
-    return 0
-
-
-def recheck_command(ceiling_ms):
-    """every gate call the 3,000 ms ceiling left UNDECIDED, re-posed
-    with more room.
-
-    THE LAW'S RULE, followed literally: a time limit is a FLAG, so the
-    obligation is re-run with a larger ceiling and whether the answer
-    changed is reported.  The verdict OF RECORD stays the one the
-    pipeline's own ceiling gave; this answer sits beside it, and
-    nothing about what is measured changes -- the same two terms, the
-    same alignment, one number different."""
-    import gate as G
-    shared = build_shared()
-    shared["gate"] = G.Gate(reference=shared["reference"],
-                            solver_timeout_ms=ceiling_ms)
-    document = read_json(RESULTS)
-    cells = {}
-    count = 0
-    for run in document["runs"]:
-        for place in run.get("places") or []:
-            check = place.get("check") or {}
-            if check.get("outcome") != "UNDECIDED":
-                continue
-            if not place.get("compiled"):
-                continue
-            count = count + 1
-            say("[%d] %s %s %s -> %s [%s], re-posed at %d ms"
-                % (count, run["mnem"], run["shape"], run["key_width"],
-                   run["lang"], place["writes"], ceiling_ms))
-            check["recheck"] = one_recheck(shared, cells, run, place)
-            check["recheck"]["ceiling_ms"] = ceiling_ms
-            say("   %s" % check["recheck"].get("outcome"))
-            say("   peak resident: %d kB"
-                % check_memory("recheck %d" % count))
-    document["meta"]["recheck_ceiling_ms"] = ceiling_ms
-    document["meta"]["recheck_count"] = count
-    document["meta"]["peak_kb"] = max(document["meta"]["peak_kb"],
-                                      peak_kb())
-    write_json(RESULTS, document)
-    say("re-posed %d obligation(s); wrote %s" % (count, RESULTS))
-    return 0
 
 
 def one_recheck(shared, cells, run, place):
@@ -987,13 +444,14 @@ def find_emulation(shared, held, lang):
         "chosen_by": held.get("chosen_by"),
         "attestation": held.get("attestation"),
         "setter": held.get("setter"),
+        "code_version": code_version(lang),
         "places": [],
     }
     if held.get("refusal_cause") is not None:
         record["refusal_cause"] = held["refusal_cause"]
         record["refusal_detail"] = held.get("refusal_detail")
         return record
-    if primitive_first() and held.get("imm_symbolic"):
+    if held.get("imm_symbolic"):
         # THE IMMEDIATE IS AN INPUT, SO THERE IS NO PRIMITIVE, task
         # ap5.  `primitive_lookup`'s key is the cell's own triple
         # (`mnem`, operand shape, `key_width`) and that triple carries
@@ -1024,7 +482,7 @@ def find_emulation(shared, held, lang):
                       "its own",
         }
         record["route"] = "term"
-    elif primitive_first():
+    else:
         # PRIMITIVE-FIRST, task g1's one design decision: before the
         # cell's term is rendered at all, ask whether the target has an
         # operator whose whole lowered body IS this cell, and render
@@ -1074,7 +532,7 @@ def one_place(shared, held, place, lang):
     # the projected lane for a vector place under task h2, and the
     # place itself in every other case.
     working = place
-    if fixes_are_on() and place.get("halved") is None:
+    if place.get("halved") is None:
         # A HALF IS NOT A LANE (task ap2, fix 3).  `in_halves_where_it_
         # must_be` has already decided that this place has no narrower
         # lane to project and has split it into its two 64-bit halves;
@@ -1116,20 +574,106 @@ def one_place(shared, held, place, lang):
 # step 1: the input -- the cell's term per written place
 # ------------------------------------------------------------------
 
-def cell_input(cells, asked):
+CAUSE_NO_SEEDED_ROW = ("no TRANSLATED row at this cell whose "
+                       "arriving flag state was written by this setter")
+
+
+def cell_inputs(cells, asked):
+    """EVERY held cell of one (`mnem`, operand shape, `key_width`): one
+    per setter cell the corpus attests before this consumer, and exactly
+    one where the cell reads no flag state.
+
+    THE RULE, and it is the one the loop got wrong until 2026-09-10.  A
+    flag consumer's mapping is a function of the flag state a setter
+    wrote, so what is proved is the PAIR -- and the loop rendered each
+    consumer over ONE setter, the mnemonic its own attestation records
+    the most ledger rows for, at ONE width.  The hub measured what that
+    costs: the corpus attests 44 distinct pairs over its go units and
+    the dictionary could serve 10 of the 104 units that carry one,
+    because every other attested pair is at another width and the
+    setter's width is part of the machine-form key (log_254 SS4, and its
+    awaiting-the owner item 1).  So the driver now answers one held cell per
+    ATTESTED SETTER CELL, each rendered, compiled, carved and gated on
+    its own.
+
+    WHERE THE ATTESTED SETTER CELLS COME FROM: the cells file's own
+    `setter_cells` for this cell, which the corpus's own flag-pair
+    ledger rows give at cell granularity -- the setter's own LINE
+    classified by `model_table.classify_line`, the same reading task m1b
+    made and the hub's pair reader repeats.  Nothing is read off a
+    token.  Where the cells file carries none (the outer sets built
+    before 2026-09-10 record a setter by `mnem` alone), the answer is
+    the one held cell the loop always built, and the record says which
+    setter it is.  THE LOOP'S OWN CHOICE IS ALWAYS INCLUDED, so a
+    certificate banked before this change is still derivable."""
+    first = cell_input(cells, asked)
+    if first.get("setter") is None:
+        return [first]
+    wanted = attested_setter_cells(cells, asked)
+    held_by_key = {}
+    order = []
+    default = (first["setter"].get("mnem"), first["setter"].get("shape"),
+               first["setter"].get("key_width"))
+    held_by_key[default] = first
+    order.append(default)
+    for setter_cell in wanted:
+        key = (setter_cell["mnem"], setter_cell["shape"],
+               setter_cell["key_width"])
+        if key in held_by_key:
+            continue
+        held_by_key[key] = cell_input(cells, asked, setter_cell)
+        order.append(key)
+        continue
+    out = []
+    for key in order:
+        out.append(held_by_key[key])
+        continue
+    return out
+
+
+def attested_setter_cells(cells, asked):
+    """the setter CELLS the corpus attests before this consumer cell,
+    off the cells file's own `setter_cells`, strongest attestation
+    first."""
+    mnem, shape, key_width = asked
+    for record in cells["asked"]:
+        if record["asked"]["mnem"] != mnem:
+            continue
+        if record["asked"]["shape"] != shape:
+            continue
+        if record["asked"]["key_width"] != key_width:
+            continue
+        held = record.get("setter_cells") or []
+        return sorted(held,
+                      key=lambda entry: (-(entry.get("ledger_rows") or 0),
+                                         entry["mnem"],
+                                         "%s" % entry.get("shape"),
+                                         "%s" % entry.get("key_width")))
+    return []
+
+
+def cell_input(cells, asked, setter_cell=None):
     """the cell as the model table holds it, with the z3 term of every
-    written place rebuilt by re-running the row's own line."""
+    written place rebuilt by re-running the row's own line.
+
+    `setter_cell`, where it is given, is the setter cell this held cell
+    is to be composed over: the row chosen is the one the sweep seeded
+    with THAT setter's flag state, and the setter's own row is the one
+    at that cell's shape and width."""
     mnem, shape, key_width = asked
     held = {"mnem": mnem, "shape": shape, "key_width": key_width}
-    row = chosen_row(cells, asked, held)
+    row = chosen_row(cells, asked, held, setter_cell)
     if row is None:
         held["refusal_cause"] = CAUSE_NO_ROW
+        if held.pop("no_seeded_row", None):
+            held["refusal_cause"] = CAUSE_NO_SEEDED_ROW
         return held
     held["row_id"] = row["row_id"]
     held["line"] = row.get("text")
     held["width"] = row.get("width")
     held["attestation"] = row.get("attestation")
-    # TASK ap5: whether THIS cell's chosen row is the one whose
+    # THE IMMEDIATE IS AN INPUT (log 249): whether THIS cell's chosen
+    # row is the one whose
     # immediate is an input of the mapping.  It rides on `held`, which
     # is the driver's own working object, and not on the run record --
     # `chosen_by` is what the record says about it, and the cells file
@@ -1143,7 +687,7 @@ def cell_input(cells, asked):
     substitution = []
     if row.get("preseeded") and a_place_reads_the_arriving_flags(places,
                                                                 flags):
-        composed = compose_the_pair(cells, row, places)
+        composed = compose_the_pair(cells, row, places, setter_cell)
         if composed.get("refusal_cause") is not None:
             held["refusal_cause"] = composed["refusal_cause"]
             held["refusal_detail"] = composed.get("refusal_detail")
@@ -1275,7 +819,7 @@ def halves_of(record):
     return out
 
 
-def chosen_row(cells, asked, held):
+def chosen_row(cells, asked, held, setter_cell=None):
     """the one row of the cell.
 
     A cell can carry several sweep rows: the sweep walks four operand
@@ -1301,6 +845,41 @@ def chosen_row(cells, asked, held):
         if row.get("outcome") == "TRANSLATED":
             translated.append(row)
     if not translated:
+        return None
+    if setter_cell is not None:
+        # THE ROW SEEDED WITH THIS SETTER.  The sweep re-runs a
+        # flag-reading mnemonic once per flag-SETTING mnemonic it saw
+        # and seeds the flag state as (`the setter's mnem`,
+        # `seed_FLAG_L`, `seed_FLAG_R`), so the consumer's own term is
+        # written against that setter's flag semantics.  Composing it
+        # over another setter's values would be composing two mappings
+        # that were never posed together, so where the sweep never
+        # seeded this cell with this setter the answer is a refusal by
+        # cause and never a substitution.
+        for row in translated:
+            if (row.get("flags_in") or {}).get("mnem") != setter_cell["mnem"]:
+                continue
+            if row.get("width") != key_width:
+                continue
+            held["chosen_by"] = ("of the %d TRANSLATED rows at this "
+                                 "cell, the one whose arriving flag "
+                                 "state was written by the setter cell "
+                                 "this run composes over"
+                                 % len(translated))
+            return row
+        for row in translated:
+            if (row.get("flags_in") or {}).get("mnem") != setter_cell["mnem"]:
+                continue
+            held["chosen_by"] = ("of the %d TRANSLATED rows at this "
+                                 "cell, the one seeded by this run's "
+                                 "own setter mnemonic"
+                                 % len(translated))
+            return row
+        held["refusal_detail"] = ("%s %s %s"
+                                  % (setter_cell["mnem"],
+                                     setter_cell["shape"],
+                                     setter_cell["key_width"]))
+        held["no_seeded_row"] = True
         return None
     symbolic = the_symbolic_immediate_row(translated)
     if symbolic is not None:
@@ -1341,7 +920,7 @@ def the_symbolic_immediate_row(rows):
     """the row of this cell whose immediate is an INPUT of the mapping,
     or None where the cell has none.
 
-    TASK ap5, THE DRIVER'S HALF OF THE SECOND CHANGE.  A cell key is
+    THE DRIVER'S HALF OF THE SYMBOLIC IMMEDIATE (log 249).  A cell key is
     (`mnem`, operand shape, `key_width`) and carries no immediate, so
     the sweep's own `imm_*` spelling bakes its literal `$0x3` into the
     mapping while the corpus rows the cell is attested by spell
@@ -1502,7 +1081,7 @@ def reads_the_arriving_flags(term):
     return False
 
 
-def compose_the_pair(cells, row, places):
+def compose_the_pair(cells, row, places, setter_cell=None):
     """a flag-reading cell's mapping is a function OF THE FLAGS a
     setter wrote, so the pair is rendered as ONE function: the
     comparison, then the select.
@@ -1518,6 +1097,8 @@ def compose_the_pair(cells, row, places):
     between."""
     setter_mnem = (row.get("flags_in") or {}).get("mnem")
     from_the_corpus = None
+    if setter_cell is not None:
+        setter_mnem = setter_cell["mnem"]
     if setter_mnem is None:
         # FIX 2 (task ap2): the chosen row is preseeded but names no
         # setter, so the setter is the one the corpus's own flag-pair
@@ -1528,7 +1109,7 @@ def compose_the_pair(cells, row, places):
         held = {}
         setter_mnem = setter_from_the_corpus(cells, row["mnem"], held)
         from_the_corpus = held.get("setter_from_the_corpus")
-    setter_row = setter_row_for(cells, row, setter_mnem)
+    setter_row = setter_row_for(cells, row, setter_mnem, setter_cell)
     if setter_row is None:
         return {"refusal_cause": CAUSE_NO_SETTER,
                 "refusal_detail": "%s at width %s" % (setter_mnem,
@@ -1550,24 +1131,51 @@ def compose_the_pair(cells, row, places):
                                   % (left.size(), arrival_left.size())}
     setter = {
         "mnem": setter_row["mnem"],
+        # THE SETTER'S OWN CELL, in machine form, because the pair is
+        # what was proved: the same consumer over a setter at another
+        # width is another artifact and carries its own certificate.
+        "shape": setter_row.get("shape"),
+        "key_width": setter_row.get("key_width"),
         "row_id": setter_row["row_id"],
         "line": setter_row.get("text"),
         "why": "the setter this cell's own attestation records the most "
                "ledger rows for",
+        "why_this_cell": None,
         "composition": ("seed_FLAG_L := %s ; seed_FLAG_R := %s"
                         % (left, right)),
     }
     if from_the_corpus is not None:
         setter["why"] = from_the_corpus["why"]
         setter["from_the_corpus"] = from_the_corpus
+    if setter_cell is not None:
+        setter["why"] = ("one of the setter cells the corpus's own "
+                         "flag-pair ledger rows attest before this "
+                         "consumer")
+        setter["why_this_cell"] = {
+            "ledger_rows": setter_cell.get("ledger_rows"),
+            "how": "the setter's own line, classified by the model "
+                   "table's own classifier",
+        }
     return {"setter": setter,
             "substitution": [(arrival_left, left),
                              (arrival_right, right)]}
 
 
-def setter_row_for(cells, row, setter_mnem):
-    """the setter's own cell: its row at the consumer's own width, in
-    the two-register operand shape where it has one."""
+def setter_row_for(cells, row, setter_mnem, setter_cell=None):
+    """the setter's own cell: the row at the setter cell this run
+    composes over, or -- where the run names none -- the row at the
+    consumer's own width, in the two-register operand shape where it
+    has one, which is the choice the loop made before 2026-09-10."""
+    if setter_cell is not None:
+        for candidate in cells["setter_rows"]:
+            if candidate["mnem"] != setter_cell["mnem"]:
+                continue
+            if candidate.get("shape") != setter_cell["shape"]:
+                continue
+            if candidate.get("key_width") != setter_cell["key_width"]:
+                continue
+            return candidate
+        return None
     best = None
     for candidate in cells["setter_rows"]:
         if candidate["mnem"] != setter_mnem:
@@ -1817,7 +1425,8 @@ def vector_arrivals_in_halves(records, key_width):
     out = []
     for record in records:
         if is_a_lane_to_project(record, key_width):
-            # TASK h2's FIX 2 GETS THIS PLACE, and it is the guard the
+            # THE LANE PROJECTION GETS THIS PLACE (log 240's fix 2), and
+            # it is the guard the
             # brief names.  A vector cell with a lane narrower than its
             # place -- the handful's `addss` xmm_xmm 32 and `cvtsi2sd`
             # gpr_xmm 64 -- carries the arrival bits ABOVE the lane in
@@ -1943,7 +1552,7 @@ def families_of(term):
     the LITERAL text shows -- so `v0` is the first -- with the general
     registers before the vector ones.
 
-    THE ORDER IS THE CONVENTION THIS TASK STATES.  The renderer gives
+    THE ORDER IS THE CONVENTION THE DRIVER STATES.  The renderer gives
     parameter i the family at position i, and c's and rust's own
     calling rule puts general parameters in rdi, rsi, rdx, rcx, r8, r9
     and float parameters in xmm0 upwards, in declaration order
@@ -2067,8 +1676,6 @@ def render_one_place(place, lang, label, how=None, write=True):
     (`the_normalised_term`, section 2c).  It defaults to the running
     task; `sources_command` passes both, over the same places, to
     measure what the fix changed."""
-    if how is None:
-        how = TASK
     ordered = renderer_input(place["term"], how)
     families = place["families"]
     home = place["home"]
@@ -2208,7 +1815,8 @@ def landing_of(mnem, cell_mnem):
     """task o8's question: chaff-stripped by task o2's own narrow rule,
     is what remains exactly the cell's own arch opcode?
 
-    TASK ap4, CHANGE 3: a body that carries no instruction at all is
+    AN EMPTY BODY IS THE IDENTITY (log 246): a body that carries no
+    instruction at all is
     the IDENTITY, which is a LANDING and not a new outcome name -- the
     compiler emitted nothing because the value asked for is already in
     the register it answers in."""
@@ -2248,7 +1856,7 @@ def landing_of(mnem, cell_mnem):
 # ------------------------------------------------------------------
 
 # ==================================================================
-# TASK ap4 -- THE CONTRACT FOR A VALUE THAT IS NOT IN A FRESH REGISTER
+# THE CONTRACT FOR A VALUE THAT IS NOT IN A FRESH REGISTER (log 246)
 # ==================================================================
 #
 # the owner's ruling of 2026-09-09: "the contract may state a place by a
@@ -2951,27 +2559,31 @@ CAUSE_LANE_IS_THE_PLACE = "the cell's own key_width is not narrower " \
                           "project"
 
 
-def renderer_input(term, how):
+THE_SIMPLIFIED_FORM = "order_commutative(simplify(term))"
+"""the OTHER form of a term, named by what it is.  It is the form the
+renderer was handed before the normaliser's own output replaced it, and
+a caller names it to measure the difference; nothing in the route asks
+for it."""
+
+
+def renderer_input(term, how=None):
     """the term the renderer is handed.
 
-    TASK h2's FIX 1 IS NO LONGER GATED ON A TASK NAME (task ap2,
-    2026-09-09).  It was written as `how in ("h2", "g1")`, so every
-    task after `g1` -- `g1b`, `g1c` and task ap1's whole 1,012-run loop
-    -- silently fell through to task h1's form of the term, which task
-    ap1 found while reading this file and reported rather than changed
-    (log_243 section 11, item 3 of its awaiting-the owner list).  The
-    normalised term is what the model table PRINTS, so it is what the
-    renderer should walk, and there is no task for which that is not
-    so.
+    THE NORMALISED TERM IS WHAT THE RENDERER WALKS, for every run.
+    It was once written as `how in ("h2", "g1")`, so every pass after
+    that silently fell through to the older form -- the one defect the
+    driver's first full loop found by reading this file rather than by
+    running it (log 243 section 11, item 3).  The normalised term is
+    what the model table PRINTS, so it is what the renderer should
+    walk, and there is no run for which that is not so.
 
-    THE ONE NAME LEFT IS `h1`, and it is not a gate on the running
-    task: `sources_command` and `proved_the_same` pass "h1" and "h2"
-    EXPLICITLY, over the same places, to MEASURE what the fix changes,
-    and task h1's own products are a rendering of that form.  Every
-    call that does not name a form -- which is every call the route
-    makes, `how` defaulting to `TASK` -- now gets the normalised
-    term."""
-    if how == "h1":
+    THE OTHER FORM HAS A NAME OF ITS OWN, and it is not a task label:
+    `THE_SIMPLIFIED_FORM` is `order_commutative(simplify(term))`, which
+    the closed tasks' own products are a rendering of.  A caller that
+    wants to MEASURE what the two forms differ by passes that constant
+    explicitly, over the same places; every call the route makes passes
+    nothing and gets the normalised term."""
+    if how == THE_SIMPLIFIED_FORM:
         return T.order_commutative(z3.simplify(term))
     if not NORMALISE_BEFORE_RENDER:
         # THE SWITCH, and it is the ONLY thing it does (task ap3, fix
@@ -3563,7 +3175,7 @@ def primitive_lookup(held, lang, widened=None):
     `None` means "whatever the running task uses", which is what every
     caller inside a run passes."""
     if widened is None:
-        widened = setup_is_allowed()
+        widened = True
     key = [held["mnem"], held["shape"], held["key_width"]]
     if widened:
         rows = primitive_rows_with_setup(lang)
@@ -3786,7 +3398,7 @@ def one_place_primitive(shared, held, place, lang, label, built, got,
         out["refusal_detail"] = place.get("not_rendered_detail")
         return out
     if is_the_flags_place(place["writes"]):
-        # TASK ap4: `is_the_flags_place` and not `== "flags"`, so a HALF
+        # `is_the_flags_place` and not `== "flags"` (log 246), so a HALF
         # of the flags place is refused by this rule too.  Task ap2's
         # fix 3 splits a 128-bit place into `.low` and `.high`, and the
         # two halves of a 64-bit comparison's flags place slipped past
@@ -3837,337 +3449,12 @@ def one_place_primitive(shared, held, place, lang, label, built, got,
     return out
 
 
-def primitive_command():
-    """THE PRIMITIVE LOOKUP ALONE, over the forty (cell, target) pairs:
-    which of them has an operator whose whole lowered body IS the cell,
-    which row was chosen and on what ground, and the cause where none
-    is.  Nothing is rendered or compiled here -- this is the lookup's
-    own evidence, before the run."""
-    cells = read_json(CELLS)
-    document = {
-        "meta": {
-            "task": "g1",
-            "what": "the primitive lookup over the ten cells and the "
-                    "four targets: does the target have an operator "
-                    "whose whole lowered body IS this cell?",
-            "lookup_source": SOU_JSON,
-            "manifest_source": os.path.join(OP,
-                                            "probe_manifest_<lang>.json"),
-            "memory_bound_kb": ABORT_KB,
-            "memory_abort": ABORT_NAME,
-        },
-        "rows": [],
-    }
-    total = len(ASKED) * len(targets())
-    index = 0
-    counted = {"primitive": 0, "term": 0}
-    for asked in ASKED:
-        held = cell_input(cells, asked)
-        for lang in targets():
-            index = index + 1
-            if held.get("refusal_cause") is not None:
-                say("[%d/%d] %s %s %s -> %s: the cell itself is "
-                    "refused: %s" % (index, total, asked[0], asked[1],
-                                     asked[2], lang,
-                                     held["refusal_cause"]))
-                continue
-            found = primitive_lookup(held, lang)
-            found["mnem"] = asked[0]
-            found["shape"] = asked[1]
-            found["key_width"] = asked[2]
-            document["rows"].append(found)
-            if found.get("row") is not None:
-                counted["primitive"] = counted["primitive"] + 1
-                probe = found["probe"]
-                say("[%d/%d] %s %s %s -> %s: PRIMITIVE, %d row(s) at "
-                    "this cell, chosen `%s`, from %s (%s on %s)"
-                    % (index, total, asked[0], asked[1], asked[2], lang,
-                       found["rows_that_classify_to_this_cell"],
-                       found["row"]["body_text"], probe["unit"],
-                       probe["expression"], probe["lhs_type"]))
-            else:
-                counted["term"] = counted["term"] + 1
-                say("[%d/%d] %s %s %s -> %s: TERM, %s"
-                    % (index, total, asked[0], asked[1], asked[2], lang,
-                       found["cause"]))
-                wide = found.get("under_the_wide_rule") or {}
-                if wide.get("rows_that_classify_to_this_cell"):
-                    say("   under task o2's WIDE chaff rule there IS "
-                        "one, and it is evidence only: `%s` (%s)"
-                        % (wide.get("body_text"),
-                           wide.get("example_unit_id")))
-            say("   peak resident: %d kB"
-                % check_memory("primitive %d" % index))
-    document["meta"]["counted"] = counted
-    write_json(PRIMITIVE, document)
-    say("")
-    say("primitive route: %d of %d" % (counted["primitive"], total))
-    say("term route:      %d of %d" % (counted["term"], total))
-    say("wrote %s" % PRIMITIVE)
-    say("peak resident: %d kB" % peak_kb())
-    return 0
 
 
-def why_not_command(mnem, shape, key_width):
-    """WHY A CELL HAS NO PRIMITIVE IN A LANGUAGE, from that language's
-    own rows rather than from a guess.
-
-    For each target, every single-opcode row of task o2's two lists
-    whose body carries the cell's own arch mnemonic at all is printed
-    with: the body, the narrow strip, the setup split section 2e makes,
-    and what task m1b's classifier says the non-setup part is.  A row
-    that is not accepted is therefore accompanied by the reason it is
-    not, in the row's own text.
-
-    The mnemonic is MACHINE FORM -- it is the cell's own `mnem`, the key
-    the ruling of 2026-09-08 states -- and no operator token enters the
-    walk."""
-    key = [mnem, shape, int(key_width)]
-    say("cell %s %s %s" % (mnem, shape, key_width))
-    for lang in targets():
-        rows = primitive_rows_with_setup(lang)
-        MTAB._install_gpr_widths()
-        document = read_json(SOU_JSON)
-        groups = document["single_opcode_groups"].get(lang) or {}
-        seen = set()
-        carrying = []
-        for rule in ("narrow", "wide"):
-            for row in (groups.get(rule) or []):
-                if row["body_text"] in seen:
-                    continue
-                seen.add(row["body_text"])
-                body = row["body_text"].split("; ")
-                names = []
-                for line in body:
-                    name, _operands = SOU.parse_insn(line)
-                    names.append(name)
-                if mnem not in names:
-                    continue
-                carrying.append((rule, row))
-        accepted = 0
-        for row in rows:
-            if row["cell"] == key:
-                accepted = accepted + 1
-        say("")
-        say("%s: %d row(s) accepted by the widened rule at this cell; "
-            "%d row(s) of %d carry the mnemonic at all"
-            % (lang, accepted, len(carrying), len(seen)))
-        for rule, row in carrying:
-            body = row["body_text"].split("; ")
-            stripped = SOU.strip_chaff(body, "narrow")
-            setup, rest = split_setup(stripped)
-            say("   found under the %s rule, %d member(s), e.g. %s"
-                % (rule, row.get("member_count"),
-                   row.get("example_unit_id")))
-            say("      body:    %s" % row["body_text"])
-            say("      strip:   %s" % "; ".join(stripped))
-            say("      setup:   %s" % ("; ".join(setup) or "(none)"))
-            say("      rest:    %s" % "; ".join(rest))
-            if len(rest) != 1:
-                say("      REJECTED: the non-setup part is %d "
-                    "instructions, not one" % len(rest))
-                continue
-            name, _operands = SOU.parse_insn(rest[0])
-            got_shape, width, cause = MTAB.classify_line(name, rest[0], 0)
-            if got_shape is None:
-                say("      REJECTED: the classifier could not read it: "
-                    "%s" % cause)
-                continue
-            got = [name, got_shape, MTAB.key_width(name, width)]
-            if got == key:
-                say("      ACCEPTED at this cell")
-                continue
-            say("      REJECTED: classifies to (%s, %s, %d), not this "
-                "cell" % (got[0], got[1], got[2]))
-    say("peak resident: %d kB" % peak_kb())
-    return 0
 
 
-def rechecked_command():
-    """EVERY PLACE THIS TASK'S RESULTS FILE RE-POSED, with the run's
-    route and whether the place RECORDS a parameter plan of its own.
-
-    WHY IT EXISTS.  Task g1b fixed one defect in `one_recheck`: it
-    rebuilt the TERM-ROUTE renderer to get the parameter plan, which is
-    the arrival contract, and that is wrong for a PRIMITIVE-route place.
-    The fix uses the plan the place records and rebuilds only where none
-    is recorded.  Whether the fix moves a results file already written
-    is therefore a question with a mechanical answer, and this prints it
-    per place rather than asserting it: the ARRIVAL CONTRACT the
-    recorded plan gives, the one the old rebuild gives, and whether the
-    two differ.  Only a place where they differ can move."""
-    document = read_json(RESULTS)
-    cells = {}
-    total = 0
-    differs = 0
-    for run in document["runs"]:
-        for place in run.get("places") or []:
-            check = place.get("check") or {}
-            if check.get("recheck") is None:
-                continue
-            total = total + 1
-            recorded = plan_families(run["lang"], place.get("params"))
-            rebuilt = plan_families(run["lang"],
-                                    rebuilt_plan(cells, run, place))
-            same = recorded == rebuilt
-            if not same:
-                differs = differs + 1
-            say("%s %s %s/%s [%s]: run route %s; the plan the place "
-                "RECORDS gives %s; the plan the old code REBUILT gives "
-                "%s; %s"
-                % (run["mnem"], run["shape"], run["key_width"],
-                   run["lang"], place["writes"], run.get("route"),
-                   recorded, rebuilt,
-                   "the same" if same else "DIFFERS"))
-    say("")
-    say("re-posed places: %d" % total)
-    say("of those, the two plans give different arrival contracts: %d"
-        % differs)
-    say("so the parameter-plan fix moves: %d of them" % differs)
-    return 0
 
 
-def plan_families(lang, params):
-    """a parameter plan as the ARRIVAL CONTRACT it becomes -- the list
-    of registers `check_one_place` derives from it and aligns by IN row.
-    This, and not the plan's own text, is what the gate sees."""
-    if params is None:
-        return None
-    return expected_families(lang, params)
-
-
-def rebuilt_plan(cells, run, place):
-    """the plan the code BEFORE task g1b's fix would have handed the
-    gate: the term-route renderer built again for this place."""
-    key = (run["mnem"], run["shape"], run["key_width"])
-    if key not in cells:
-        cells[key] = cell_input(read_json(CELLS), key)
-    held = cells[key]
-    for candidate in held["places"]:
-        if candidate["writes"] != place["writes"]:
-            continue
-        try:
-            renderer = rebuilt_renderer(candidate, run["lang"],
-                                        place["label"])
-        except E.Refused:
-            return None
-        return renderer.params
-    return None
-
-
-def bodies_command(mnem):
-    """WHAT THE CORPUS ACTUALLY HOLDS at an arch mnemonic, per target:
-    how many of that language's units carry the instruction at all, the
-    shortest such body and the longest.
-
-    WHY IT IS NEEDED.  `why_not_command` answers "no row of task o2's
-    single-opcode lists carries this mnemonic" for three of the four
-    targets, and that is a fact about the LISTS.  This answers the
-    question underneath it -- does the language's corpus carry the
-    instruction at all, and in what shape -- from
-    `canon40_wrapped_<lang>.json`, the corpus itself.
-
-    THE SELECTION IS MACHINE FORM: a unit is taken when an instruction
-    of its body has this arch mnemonic, which is the cell's own `mnem`.
-    No operator token enters it; the operator each unit displays is
-    printed beside the body as the label it is, and selects nothing.
-
-    MEMORY: the four files are 4.9 MB (c), 0.9 MB (go), 0.8 MB (rust)
-    and 1.2 MB (swift), read ONE AT A TIME and dropped, so the resident
-    peak is one file plus this program."""
-    for lang in targets():
-        path = os.path.join(OP, "canon40_wrapped_%s.json" % lang)
-        if not os.path.exists(path):
-            say("%s: no canon40_wrapped file at %s" % (lang, path))
-            continue
-        document = read_json(path)
-        units = document["units"]
-        carrying = []
-        for uid, record in units.items():
-            body = record.get("body_verbatim") or []
-            text = record.get("body_text") or "; ".join(body)
-            if not text:
-                continue
-            names = []
-            for line in text.split("; "):
-                name, _operands = SOU.parse_insn(line)
-                names.append(name)
-            if mnem not in names:
-                continue
-            carrying.append((len(text.split("; ")), uid, text, record))
-        carrying.sort()
-        say("")
-        say("%s: %d unit(s) of %d carry `%s`"
-            % (lang, len(carrying), len(units), mnem))
-        for where, label in ((0, "shortest"), (-1, "longest")):
-            if not carrying:
-                break
-            count, uid, text, record = carrying[where]
-            say("   the %s such body, %d instruction(s), unit %s "
-                "(display label `%s`):"
-                % (label, count, uid, record.get("operator")))
-            for line in text.split("; "):
-                say("      %s" % line)
-        del document
-        del units
-        del carrying
-        say("   peak resident: %d kB" % check_memory("bodies %s" % lang))
-    say("peak resident: %d kB" % peak_kb())
-    return 0
-
-
-def changes_command():
-    """WHICH (cell, target) PAIRS THE WIDENED LOOKUP CHANGES, and the row
-    each becomes.  Nothing is rendered, compiled or proved here -- this
-    is the set `run3c` will run, printed before it runs."""
-    cells = read_json(CELLS)
-    changed = route_changes(cells)
-    say("")
-    for asked, lang in sorted(changed):
-        say("   %s %s %s -> %s" % (asked[0], asked[1], asked[2], lang))
-    say("peak resident: %d kB" % peak_kb())
-    return 0
-
-
-def spellings_command():
-    """THE PER-TARGET SPELLING TABLES, each row with the probe that
-    measured it -- or, for swift, with the marker that says nothing
-    measured it."""
-    document = {
-        "meta": {
-            "task": "g1",
-            "what": "one row per rule the target's renderer writes, "
-                    "keyed by the z3 declaration kind (machine form, "
-                    "never a language operator token), each with the "
-                    "probe that measured it",
-            "c": "task o7's renderer, unchanged by this task; its rows "
-                 "are the c column of task o11's coverage table "
-                 "(`Research/oracle/cross_construction/emulation/rust/"
-                 "coverage_table.json`, 62 rows)",
-            "rust": "task o11's renderer, unchanged by this task; its "
-                    "rows are the rust column of the same table",
-        },
-        "go": GR.spelling_rows(),
-        "swift": SR.spelling_rows(),
-    }
-    for lang in ("go", "swift"):
-        rows = document[lang]
-        measured = 0
-        for row in rows:
-            if row["measured"]:
-                measured = measured + 1
-        document["meta"]["%s_rows" % lang] = len(rows)
-        document["meta"]["%s_rows_measured" % lang] = measured
-        say("")
-        say("%s: %d spelling rows, %d measured by a probe of this task"
-            % (lang, len(rows), measured))
-        for row in rows:
-            say("   %-58s %s" % (row["z3_kind"], row["spelling"]))
-    write_json(SPELLINGS, document)
-    say("")
-    say("wrote %s" % SPELLINGS)
-    say("peak resident: %d kB" % peak_kb())
-    return 0
 
 
 def region_of(check):
@@ -4200,240 +3487,12 @@ def region_of(check):
     return "not decided: %s" % check.get("reason")
 
 
-def sources_command():
-    """THE REGRESSION GUARD FOR FIX 1: every place rendered BOTH ways --
-    the term task h1 handed the renderer and the normalised term task h2
-    hands it -- with the two sources compared character for character,
-    the h1-way source compared against the file task h1 itself wrote,
-    and, where the two sources differ, the two terms put to the gate.
-
-    "Unchanged or provably equal (z3, both terms)" is the brief's own
-    wording and this is that measurement; nothing here renders anything
-    into `src2/`."""
-    shared = build_shared()
-    cells = read_json(CELLS)
-    document = {"meta": {"task": "h2",
-                         "what": "every place rendered both ways, the "
-                                 "two sources compared, and the two "
-                                 "terms proved equal where they differ",
-                         "solver_ceiling_ms":
-                             shared["gate"].solver_timeout_ms,
-                         "memory_bound_kb": ABORT_KB,
-                         "memory_abort": ABORT_NAME},
-              "places": []}
-    total = len(ASKED) * len(targets())
-    index = 0
-    for asked in ASKED:
-        held = cell_input(cells, asked)
-        for lang in targets():
-            index = index + 1
-            say("[%d/%d] %s %s %s -> %s"
-                % (index, total, asked[0], asked[1], asked[2], lang))
-            for record in one_source_comparison(shared, held, lang):
-                document["places"].append(record)
-                say("   %s %s: %s" % (record["writes"],
-                                      record["outcome"],
-                                      record.get("detail") or ""))
-            say("   peak resident: %d kB"
-                % check_memory("sources %d" % index))
-    write_json(SOURCES_H2, document)
-    say("wrote %s" % SOURCES_H2)
-    return 0
 
 
-def one_source_comparison(shared, held, lang):
-    """every place of one cell, rendered both ways and compared."""
-    out = []
-    if held.get("refusal_cause") is not None:
-        return out
-    for place in held["places"]:
-        record = {"mnem": held["mnem"], "shape": held["shape"],
-                  "key_width": held["key_width"], "lang": lang,
-                  "writes": place["writes"]}
-        out.append(record)
-        if place.get("not_rendered") is not None:
-            record["outcome"] = "NOT_RENDERED"
-            record["detail"] = place["not_rendered"]
-            continue
-        label = E.sanitize("%s_%s_%d__%s__%s"
-                           % (held["mnem"], held["shape"],
-                              held["key_width"], place["writes"], lang))
-        record["label"] = label
-        first = render_one_place(place, lang, label, "h1", False)
-        second = render_one_place(place, lang, label, "h2", False)
-        record["h1_way"] = one_rendering(first)
-        record["h2_way"] = one_rendering(second)
-        record["same_as_the_file_task_h1_wrote"] = same_as_h1_file(
-            first, label, lang)
-        if not first.get("rendered") or not second.get("rendered"):
-            record["outcome"] = "ONE_SIDE_REFUSED"
-            record["detail"] = "%s / %s" % (record["h1_way"]["outcome"],
-                                            record["h2_way"]["outcome"])
-            continue
-        if first["source"] == second["source"]:
-            record["outcome"] = "SOURCE_UNCHANGED"
-            continue
-        record["outcome"] = "SOURCE_CHANGED"
-        record["proof"] = proved_the_same(shared, place["term"])
-        record["detail"] = record["proof"]["outcome"]
-    return out
 
 
-def one_rendering(built):
-    """one rendering, as much of it as the record keeps: whether it
-    rendered, the term the renderer was handed, and the source."""
-    if not built.get("rendered"):
-        return {"outcome": "REFUSED",
-                "refusal_cause": built.get("refusal_cause"),
-                "refusal_detail": built.get("refusal_detail")}
-    return {"outcome": "RENDERED",
-            "renderer_input_text": built["renderer_input_text"],
-            "source": built["source"]}
 
 
-def same_as_h1_file(built, label, lang):
-    """whether the h1-way rendering is character for character the file
-    task h1's own run wrote under `src/` -- so that "unchanged" is
-    measured against the artifact of record and not only against a
-    second call of this program."""
-    path = os.path.join(SRC_H1, label + suffix_of(lang))
-    if not os.path.exists(path):
-        return None
-    if not built.get("rendered"):
-        return None
-    handle = open(path)
-    text = handle.read()
-    handle.close()
-    return text == built["source"]
-
-
-def proved_the_same(shared, term):
-    """the two terms the renderer is handed, put to the gate: the one
-    task h1 handed it and the normalised one task h2 hands it."""
-    first = renderer_input(term, "h1")
-    second = renderer_input(term, "h2")
-    verdict = shared["gate"].decide(
-        first, second,
-        "the term task h1 handed the renderer against the normalised "
-        "term task h2 hands it",
-        "z3 proved the two terms equal for every input")
-    out = {"outcome": verdict.outcome, "reason": verdict.reason}
-    if verdict.counterexample is not None:
-        out["counterexample"] = verdict.counterexample
-    return out
-
-
-def sources_counts_command():
-    """`handful2_sources.json` counted: how many places rendered both
-    ways came back with the same source, and how many of those are
-    character for character the file task h1's own run wrote."""
-    document = read_json(SOURCES_H2)
-    counted = {}
-    rendered = 0
-    same_file = 0
-    for record in document["places"]:
-        name = record["outcome"]
-        counted[name] = counted.get(name, 0) + 1
-        if record.get("same_as_the_file_task_h1_wrote") is None:
-            continue
-        rendered = rendered + 1
-        if record["same_as_the_file_task_h1_wrote"]:
-            same_file = same_file + 1
-    for name in sorted(counted):
-        say("%s %d" % (name, counted[name]))
-    say("identical to the file task h1 wrote under src: %d of %d "
-        "rendered" % (same_file, rendered))
-    return 0
-
-
-def sources_idiv_command(mnem, lang, writes):
-    """one place of `handful2_sources.json`, both ways side by side: the
-    length of each term text, whether the two texts are the same
-    character for character, and whether the two sources are."""
-    document = read_json(SOURCES_H2)
-    for record in document["places"]:
-        if record["mnem"] != mnem:
-            continue
-        if record["lang"] != lang:
-            continue
-        if record["writes"] != writes:
-            continue
-        say("%s %s %s %s %s" % (record["mnem"], record["shape"],
-                                record["key_width"], record["lang"],
-                                record["writes"]))
-        first = record["h1_way"]
-        second = record["h2_way"]
-        say("   h1-way term text, %d characters"
-            % len(first["renderer_input_text"]))
-        say("   h2-way term text, %d characters"
-            % len(second["renderer_input_text"]))
-        say("   the two texts are identical: %s"
-            % (first["renderer_input_text"]
-               == second["renderer_input_text"]))
-        say("   the two rendered sources are identical: %s"
-            % (first["source"] == second["source"]))
-        return 0
-    say("no such place on the record")
-    return 2
-
-
-def reclassify_command():
-    """THE REGRESSION GUARD FOR THE CLASSIFIER RULE: task h1b's own
-    composition, re-derived over task h1's own twenty carved bodies with
-    the zero-operand width rule in place, entry by entry against the
-    composition h1b recorded.
-
-    Task h1's `handful.json` is READ and never written: this is the
-    check that the rule moves `cqto` and moves nothing else."""
-    document = read_json(RESULTS_H1)
-    MTAB._install_gpr_widths()
-    say("[1/2] the table's own TRANSLATED (mnem, shape, key_width) "
-        "triples, from %s" % MTAB.ROWS_JSON)
-    in_table = load_in_table()
-    say("   %d distinct triples" % len(in_table))
-    say("   peak resident: %d kB" % check_memory("load_in_table"))
-    say("[2/2] task h1b's composition, re-derived with the rule in "
-        "place")
-    out = {"meta": {"task": "h2",
-                    "what": "task h1b's composition over task h1's own "
-                            "twenty carved bodies, re-derived with the "
-                            "zero-operand width rule in place",
-                    "read": RESULTS_H1,
-                    "triples_in_the_table": len(in_table)},
-           "changed": [], "counts": {}}
-    counts = {"instructions": 0, "unchanged": 0, "changed": 0}
-    for run in document["runs"]:
-        before = run.get("composition") or []
-        after = composition_of_run(run, in_table)
-        for index, entry in enumerate(after):
-            counts["instructions"] = counts["instructions"] + 1
-            was = None
-            if index < len(before):
-                was = before[index]
-            if was == entry:
-                counts["unchanged"] = counts["unchanged"] + 1
-                continue
-            counts["changed"] = counts["changed"] + 1
-            out["changed"].append({
-                "mnem": run["mnem"], "shape": run["shape"],
-                "key_width": run["key_width"], "lang": run["lang"],
-                "at": index, "before": was, "after": entry,
-            })
-    out["counts"] = counts
-    for name in ["instructions", "unchanged", "changed"]:
-        say("   %-14s %d" % (name, counts[name]))
-    for record in out["changed"]:
-        say("   CHANGED %s %s %s/%s instruction %d"
-            % (record["mnem"], record["shape"], record["key_width"],
-               record["lang"], record["at"]))
-        say("      before: %s" % json.dumps(record["before"],
-                                            sort_keys=True))
-        say("      after:  %s" % json.dumps(record["after"],
-                                            sort_keys=True))
-    write_json(CLASSIFIER_H2, out)
-    say("wrote %s" % CLASSIFIER_H2)
-    say("peak resident: %d kB" % check_memory("reclassify done"))
-    return 0
 
 
 # ==================================================================
@@ -4549,7 +3608,7 @@ def composition_of_run(run, in_table):
         return []
     lines = body.split("; ")
     if the_body_is_empty(lines):
-        # TASK ap4, CHANGE 3: an emulation whose carved body carries no
+        # AN EMPTY BODY (log 246): an emulation whose carved body carries no
         # instruction of its own composes the cell out of NOTHING, and
         # the brief's own words for that record are `composition = []`.
         return []
@@ -4559,653 +3618,27 @@ def composition_of_run(run, in_table):
     return out
 
 
-def compose_command():
-    """task h1b: `composition` added to every run already on
-    `handful.json`, nothing else in the record changed."""
-    document = read_json(RESULTS)
-    MTAB._install_gpr_widths()
-    say("[1/2] the table's own TRANSLATED (mnem, shape, key_width) "
-        "triples, from %s" % MTAB.ROWS_JSON)
-    in_table = load_in_table()
-    say("   %d distinct triples" % len(in_table))
-    say("   peak resident: %d kB" % check_memory("load_in_table"))
-    say("[2/2] the composition of each run's own destination place")
-    total = len(document["runs"])
-    for index, run in enumerate(document["runs"]):
-        run["composition"] = composition_of_run(run, in_table)
-        say("   [%d/%d] %s %s %s/%s -> %d instruction(s)"
-            % (index + 1, total, run["mnem"], run["shape"],
-               run["key_width"], run["lang"], len(run["composition"])))
-    write_json(RESULTS, document)
-    say("wrote %s" % RESULTS)
-    say("peak resident: %d kB" % check_memory("compose done"))
-    return 0
-
-
-def composition_gloss(composition):
-    """the composition as one line, GLOSS: each table-cell instruction
-    by its mnemonic, chaff dropped from the sequence but counted, an
-    unmapped instruction starred -- and NEVER dropped by the length
-    cut below, because it is the rare, load-bearing case ("named as
-    such with its line" is the brief's own instruction) and a long
-    cell sequence (`idiv`'s fifty) is the common one.  The LITERAL
-    per-instruction record (line, shape, key_width or reason) is
-    `composition` itself in `handful.json`."""
-    if not composition:
-        return ""
-    cells = []
-    chaff = 0
-    unmapped = []
-    for entry in composition:
-        if entry["cell"]:
-            cells.append("`%s`" % entry["mnem"])
-            continue
-        if entry.get("mnem") is not None and entry["reason"].endswith(
-                "narrow rule"):
-            chaff = chaff + 1
-            continue
-        unmapped.append("`%s`\\*" % entry.get("mnem"))
-    tail = ""
-    if unmapped:
-        tail = tail + " -- maps to no cell: " + " ".join(unmapped)
-    if chaff:
-        tail = tail + " (+%d chaff)" % chaff
-    budget = 200 - len(tail)
-    text = " ".join(cells)
-    if budget > 3 and len(text) > budget:
-        text = text[:budget - 3] + "..."
-    elif budget <= 3:
-        text = "%d cell(s)" % len(cells)
-    return text + tail
 
 
 # ==================================================================
 # section 3: THE REPORT
 # ==================================================================
 
-def report_command():
-    document = read_json(RESULTS)
-    lines = []
-    write_head(lines, document)
-    write_runs(lines, document)
-    if primitive_first():
-        write_g1_table(lines, document, read_json(RESULTS_H2))
-    elif TASK == "h2":
-        write_h2_table(lines, document, read_json(RESULTS_H1))
-    else:
-        write_table(lines, document)
-    write_causes(lines, document)
-    if TASK == "h2":
-        write_h2_before_and_after(lines, document, read_json(RESULTS_H1))
-    if TASK in ("g1b", "g1c"):
-        write_against_g1(lines, document, read_json(RESULTS_G1))
-    if primitive_first():
-        write_g1_routes(lines, document)
-    handle = open(REPORT, "w")
-    handle.write("\n".join(lines) + "\n")
-    handle.close()
-    say("wrote %s" % REPORT)
-    return 0
 
 
-def tally_command():
-    """the two counts the report's prose rests on: whether the two
-    targets emitted the same bytes for the same place, and the verdicts
-    over the twenty runs."""
-    document = read_json(RESULTS)
-    per = {}
-    for run in document["runs"]:
-        key = (run["mnem"], run["shape"], run["key_width"])
-        for place in run["places"]:
-            if not place.get("compiled"):
-                continue
-            held = per.setdefault((key, place["writes"]), {})
-            held[run["lang"]] = place["body_bytes"]
-    same = 0
-    apart = 0
-    for key in sorted(per, key=str):
-        held = per[key]
-        if len(held) < 2:
-            continue
-        distinct = set(held.values())
-        if len(distinct) == 1:
-            same = same + 1
-            word = "SAME BYTES"
-        else:
-            apart = apart + 1
-            word = "DIFFERENT BYTES"
-        say("%-28s %-10s %-16s %s"
-            % ("%s %s %s" % key[0], key[1], word,
-               ", ".join(sorted(held))))
-    say("compiled places more than one target has a body for: %d"
-        % (same + apart))
-    say("   every target that compiled it emitted the same bytes: %d"
-        % same)
-    say("   they emitted different bytes: %d" % apart)
-    say("")
-    counted = counted_verdicts(document)
-    for name in ["runs", "runs refused before any compile",
-                 "places compiled and carved", "LANDED",
-                 "LANDED_ELSEWHERE", "NOT_COLLAPSED", "PROVED_ON_SHIP",
-                 "proved under caller extension", "neither"]:
-        say("%-32s %d" % (name, counted[name]))
-    say("")
-    say_composition_tally(document)
-    return 0
 
 
-def say_composition_tally(document):
-    """task h1b: the composition instructions over the twenty runs'
-    own destination places, by what each one is."""
-    if not document["runs"] or "composition" not in document["runs"][0]:
-        return
-    counted = counted_composition(document)
-    order = ["instructions", "table cells", "chaff: ret",
-             "chaff: calling-convention move", "maps to no table cell",
-             "LANDED runs whose composition is exactly one cell, the "
-             "target"]
-    for name in order:
-        say("%-62s %d" % (name, counted[name]))
 
 
-def counted_composition(document):
-    """the tally `say_composition_tally` prints: every composition
-    instruction, sorted into what it is, plus the check that every
-    LANDED run's composition is exactly one cell, the target."""
-    counted = {
-        "instructions": 0,
-        "table cells": 0,
-        "chaff: ret": 0,
-        "chaff: calling-convention move": 0,
-        "maps to no table cell": 0,
-        "LANDED runs whose composition is exactly one cell, the "
-        "target": 0,
-    }
-    for run in document["runs"]:
-        composition = run.get("composition") or []
-        cells = []
-        for entry in composition:
-            counted["instructions"] = counted["instructions"] + 1
-            if entry["cell"]:
-                counted["table cells"] = counted["table cells"] + 1
-                cells.append(entry["mnem"])
-                continue
-            if entry.get("mnem") == "ret":
-                counted["chaff: ret"] = counted["chaff: ret"] + 1
-                continue
-            if entry.get("reason", "").startswith(
-                    "a calling-convention move"):
-                key = "chaff: calling-convention move"
-                counted[key] = counted[key] + 1
-                continue
-            counted["maps to no table cell"] = \
-                counted["maps to no table cell"] + 1
-        place = destination_place(run)
-        landing = place.get("landing") if place is not None else None
-        if landing is not None and landing["verdict"] == "LANDED":
-            if cells == [run["mnem"]]:
-                key = ("LANDED runs whose composition is exactly one "
-                      "cell, the target")
-                counted[key] = counted[key] + 1
-    return counted
 
 
-def counted_verdicts(document):
-    counted = {
-        "runs": len(document["runs"]),
-        "runs refused before any compile": 0,
-        "places compiled and carved": 0,
-        "LANDED": 0,
-        "LANDED_ELSEWHERE": 0,
-        "NOT_COLLAPSED": 0,
-        "PROVED_ON_SHIP": 0,
-        "proved under caller extension": 0,
-        "neither": 0,
-    }
-    for run in document["runs"]:
-        compiled = []
-        for place in run["places"]:
-            if place.get("compiled"):
-                compiled.append(place)
-        if not compiled:
-            counted["runs refused before any compile"] = \
-                counted["runs refused before any compile"] + 1
-        for place in compiled:
-            counted["places compiled and carved"] = \
-                counted["places compiled and carved"] + 1
-            counted[place["landing"]["verdict"]] = \
-                counted[place["landing"]["verdict"]] + 1
-            check = place["check"]
-            again = check.get("under_caller_extension") or {}
-            if check.get("outcome") == "PROVED_ON_SHIP":
-                counted["PROVED_ON_SHIP"] = counted["PROVED_ON_SHIP"] + 1
-                continue
-            if again.get("outcome") == "PROVED_ON_SHIP":
-                counted["proved under caller extension"] = \
-                    counted["proved under caller extension"] + 1
-                continue
-            counted["neither"] = counted["neither"] + 1
-    return counted
 
 
-def write_head(lines, document):
-    meta = document["meta"]
-    if primitive_first():
-        if TASK == "g1":
-            lines.append("# handful3.md -- task g1: the same ten cells "
-                         "on FOUR targets, primitive-first")
-        elif TASK == "g1b":
-            lines.append("# handful3b.md -- task g1b: task g1's forty "
-                         "runs again, on the rebuilt image, with a "
-                         "swift compiler reachable")
-        else:
-            lines.append("# handful3c.md -- task g1c: the primitive "
-                         "lookup widened by one step, and the runs it "
-                         "changes")
-        lines.append("")
-        lines.append("The same ten cells of the arch-opcode model table "
-                     "tasks h1 and h2 ran, on four targets (c, rust, go "
-                     "and swift) and by a route that is tried before "
-                     "the term route: does the target have an OPERATOR "
-                     "whose whole lowered body IS this cell? Where it "
-                     "does, that operator on holders of the operand "
-                     "types the corpus recorded is what is rendered, "
-                     "and nothing else; where it does not, the term "
-                     "route of tasks h1 and h2 runs unchanged, with "
-                     "task h2's two printing fixes still on. Never "
-                     "hand-edited. The products of tasks h1, h2 and the "
-                     "other runs of this family are not written by this "
-                     "task: they sit beside these as `handful.json` / "
-                     "`handful.md`, `handful2.json` / `handful2.md`, "
-                     "`handful3*` and `handful3b*`.")
-        lines.append("")
-        if TASK == "g1":
-            lines.append("**There is no swift toolchain in the image "
-                         "this task ran under**, so every swift row is "
-                         "refused at the compile step with the literal "
-                         "answer the machine gave. The swift renderer "
-                         "is written and its rendering is on the "
-                         "record; every swift spelling in it is "
-                         "UNMEASURED and says so.")
-        else:
-            lines.append("**A swift compiler is reachable in this run.** "
-                         "Task g1's `g1` instance mounted an EMPTY "
-                         "persist volume, so `/persist/swift/usr/bin/"
-                         "swiftc` -- the path the whole swift corpus "
-                         "was built at -- did not exist and every swift "
-                         "place was refused there. `g1.conf` now mounts "
-                         "`sandbox-persist` read-only, as `t101b.conf` "
-                         "and `t103.conf` already do for the same "
-                         "toolchain, and the container was re-created "
-                         "on the rebuilt image, which carries "
-                         "`libncurses6`. `swiftc --version` answers "
-                         "`Swift version 6.0.3 (swift-6.0.3-RELEASE)`. "
-                         "The swift spelling table is still UNMEASURED "
-                         "row by row: what these runs measure is the "
-                         "renderer's OUTPUT through the real compiler, "
-                         "not each spelling by its own probe.")
-        if TASK == "g1c":
-            lines.append("")
-            lines.append("**This report holds only the runs the widened "
-                         "lookup CHANGES**, which is its brief's own "
-                         "instruction; every other (cell, target) pair "
-                         "is unchanged from `handful3b.json` and is not "
-                         "re-run or re-printed here.")
-        lines.append("")
-        write_head_shared(lines, meta)
-        return
-    if TASK == "h2":
-        lines.append("# handful2.md -- task h2: the same twenty "
-                     "`find_emulation` runs after two printing fixes")
-        lines.append("")
-        lines.append("The same ten cells of the arch-opcode model table "
-                     "and the same two targets (c and rust) task h1 ran, "
-                     "re-run with the cell's term put through the "
-                     "pipeline's own normaliser before the renderer sees "
-                     "it (fix 1) and a vector cell's lane projected in "
-                     "the driver (fix 2). Neither renderer was changed. "
-                     "Written by `handful.py report2`; never "
-                     "hand-edited. Task h1's own `handful.json` and "
-                     "`handful.md` are untouched.")
-    else:
-        lines.append("# handful.md -- task h1: twenty `find_emulation` "
-                     "runs")
-        lines.append("")
-        lines.append("Ten cells of the arch-opcode model table, two "
-                     "targets (c and rust), one run each. Written by "
-                     "`handful.py report`; never hand-edited.")
-    lines.append("")
-    lines.append("**What a run is, one sentence.** `find_emulation(cell, "
-                 "lang)` takes the z3 term the reference simulator's own "
-                 "builder writes into each place one table cell's opcode "
-                 "writes, has the existing renderer write that term in "
-                 "the target language's own operators, compiles it at "
-                 "the corpus's own ship flags, carves the body back out, "
-                 "and asks z3 whether the body answers as the cell's "
-                 "term says for every input.")
-    lines.append("")
-    lines.append("| what | value |")
-    lines.append("|---|---|")
-    lines.append("| runs | %d |" % len(document["runs"]))
-    lines.append("| c ship flags | %s |" % meta["ship_flags_c"])
-    lines.append("| rust ship flags | %s |" % meta["ship_flags_rust"])
-    lines.append("| solver ceiling | %s ms |" % meta["solver_ceiling_ms"])
-    lines.append("| memory bound | %d kB, named abort %s |"
-                 % (meta["memory_bound_kb"], meta["memory_abort"]))
-    lines.append("| peak resident | %d kB |" % meta["peak_kb"])
-    lines.append("")
 
 
-def write_head_shared(lines, meta):
-    """the head's own table, for task g1, whose four targets need four
-    ship-flag rows where tasks h1 and h2 needed two."""
-    lines.append("**What a run is, one sentence.** `find_emulation("
-                 "cell, lang)` asks first whether `lang` has an "
-                 "operator whose whole lowered body IS this cell and, "
-                 "where it has, renders that operator on holders of the "
-                 "operand types the corpus recorded for it; where it "
-                 "has not, it takes the z3 term the reference "
-                 "simulator's own builder writes into each place the "
-                 "cell's opcode writes and has the existing renderer "
-                 "write that term in the target's own operators. "
-                 "Either way the source is compiled at that corpus's "
-                 "own ship flags, the body is carved back out, and z3 "
-                 "is asked whether it answers as the cell's term says "
-                 "for every input.")
-    lines.append("")
-    lines.append("Table 0 -- what this run was.")
-    lines.append("")
-    lines.append("| what | value |")
-    lines.append("|---|---|")
-    lines.append("| runs | %d |" % meta.get("runs", 0))
-    lines.append("| c ship flags | %s |" % meta["ship_flags_c"])
-    lines.append("| rust ship flags | %s |" % meta["ship_flags_rust"])
-    lines.append("| go ship flags | %s |" % meta.get("ship_flags_go"))
-    lines.append("| swift ship flags | %s |"
-                 % meta.get("ship_flags_swift"))
-    lines.append("| swiftc, as this machine answers it | %s |"
-                 % meta.get("swiftc_answer"))
-    lines.append("| solver ceiling | %s ms |" % meta["solver_ceiling_ms"])
-    lines.append("| memory bound | %d kB, named abort %s |"
-                 % (meta["memory_bound_kb"], meta["memory_abort"]))
-    lines.append("| peak resident | %d kB |" % meta["peak_kb"])
-    lines.append("")
 
 
-def write_runs(lines, document):
-    lines.append("## 1. The runs, one section each")
-    lines.append("")
-    for index, run in enumerate(document["runs"]):
-        write_one_run(lines, index + 1, run)
 
-
-def write_one_run(lines, number, run):
-    lines.append("### 1.%d `%s` %s %s -> %s"
-                 % (number, run["mnem"], run["shape"], run["key_width"],
-                    run["lang"]))
-    lines.append("")
-    lines.append("The row, LITERAL: `%s` (`%s`), chosen: %s."
-                 % (run.get("line"), run.get("row_id"),
-                    run.get("chosen_by")))
-    attestation = run.get("attestation") or {}
-    lines.append("")
-    lines.append("The corpus's attestation of this cell: %s unit(s), %s "
-                 "ledger row(s)." % (attestation.get("units"),
-                                     attestation.get("ledger_rows")))
-    if run.get("setter") is not None:
-        setter = run["setter"]
-        lines.append("")
-        lines.append("This cell's mapping reads the flags, so the PAIR "
-                     "is rendered as one function. The setter this "
-                     "cell's attestation records the most ledger rows "
-                     "for is `%s`; its own row is `%s`, LITERAL: `%s`. "
-                     "The composition, LITERAL:"
-                     % (setter["mnem"], setter["row_id"],
-                        setter["line"]))
-        lines.append("")
-        lines.append("```")
-        lines.append(setter["composition"])
-        lines.append("```")
-    if run.get("refusal_cause") is not None:
-        lines.append("")
-        lines.append("REFUSED before any render: %s (%s)."
-                     % (run["refusal_cause"],
-                        run.get("refusal_detail")))
-        lines.append("")
-        return
-    for place in run["places"]:
-        write_one_place(lines, place)
-    lines.append("")
-
-
-def write_one_place(lines, place):
-    lines.append("")
-    lines.append("#### place `%s`, %d bits" % (place["writes"],
-                                               place["bits"]))
-    lines.append("")
-    lines.append("**Step 1, the input.** The cell's term for this place, "
-                 "LITERAL, as the model table prints it:")
-    lines.append("")
-    lines.append("```")
-    lines.append(place["text"])
-    lines.append("```")
-    if place.get("lane") is not None:
-        lane = place["lane"]
-        lines.append("")
-        lines.append("**Fix 2, the lane.** This place is a vector "
-                     "register, %s bits, and the cell's own `key_width` "
-                     "is %s, so the driver rendered `%s`. The projected "
-                     "lane, LITERAL:"
-                     % (lane.get("of_bits"), lane.get("lane_bits"),
-                        lane.get("projection")))
-        lines.append("")
-        lines.append("```")
-        lines.append(str(lane.get("lane_text")))
-        lines.append("```")
-        lines.append("")
-        above = lane.get("above_the_lane") or {}
-        lines.append("The bits above the lane, LITERAL: `%s` -- put to "
-                     "the gate against `%s`: **%s**."
-                     % (lane.get("above_the_lane_text"),
-                        above.get("expected"), above.get("outcome")))
-    if place.get("rendered") is False:
-        lines.append("")
-        lines.append("**Step 2, the render.** REFUSED: %s (%s)."
-                     % (place.get("refusal_cause"),
-                        place.get("refusal_detail")))
-        return
-    lines.append("")
-    lines.append("**Step 2, the render.** The term the renderer was "
-                 "handed, LITERAL:")
-    lines.append("")
-    lines.append("```")
-    lines.append(str(place.get("renderer_input_text")))
-    lines.append("```")
-    lines.append("")
-    lines.append("The source, LITERAL (`%s`):" % place.get("source_path"))
-    lines.append("")
-    lines.append("```")
-    lines.append(place["source"].rstrip())
-    lines.append("```")
-    if not place.get("compiled"):
-        lines.append("")
-        lines.append("**Step 3, the compile.** REFUSED: %s."
-                     % place.get("compile_refusal"))
-        return
-    landing = place["landing"]
-    lines.append("")
-    lines.append("**Step 3, the compile and carve.** The object's body, "
-                 "LITERAL:")
-    lines.append("")
-    lines.append("```")
-    lines.append(place["body_text"])
-    lines.append("```")
-    lines.append("")
-    lines.append("Chaff-stripped by task o2's own narrow rule, LITERAL:")
-    lines.append("")
-    lines.append("```")
-    lines.append(landing["stripped_text"])
-    lines.append("```")
-    lines.append("")
-    lines.append("Against the cell's own arch opcode: **%s**%s."
-                 % (landing["verdict"], landed_note(landing)))
-    check = place["check"]
-    lines.append("")
-    lines.append("**Step 4, the check.** %s. Verdict: **%s** -- %s"
-                 % (route_sentence(check), check.get("outcome"),
-                    check.get("reason")))
-    if check.get("width_note") is not None:
-        lines.append("")
-        lines.append("Widths: %s." % check["width_note"])
-    if check.get("recheck") is not None:
-        again = check["recheck"]
-        lines.append("")
-        lines.append("Re-posed with more solver room (%s ms instead of "
-                     "3,000): **%s** -- %s"
-                     % (again.get("ceiling_ms"), again.get("outcome"),
-                        again.get("reason")))
-    if check.get("aligned_rows"):
-        lines.append("")
-        lines.append("| row | the cell reads | the body reads |")
-        lines.append("|---|---|---|")
-        for row in check["aligned_rows"]:
-            lines.append("| %s | %s | %s |"
-                         % (row["row"], row["the cell reads"],
-                            row["the body reads"]))
-    if check.get("counterexample") is not None:
-        lines.append("")
-        lines.append("The counterexample, LITERAL:")
-        lines.append("")
-        lines.append("```")
-        lines.append(check["counterexample"])
-        lines.append("```")
-    if check.get("under_caller_extension") is not None:
-        again = check["under_caller_extension"]
-        lines.append("")
-        lines.append("Re-posed with every narrow-holder input row "
-                     "zero-extended from its holder width: **%s** -- %s"
-                     % (again.get("outcome"), again.get("reason")))
-
-
-def landed_note(landing):
-    if landing["verdict"] == "LANDED_ELSEWHERE":
-        return " (landed on `%s`)" % landing["landed"]["mnem"]
-    if landing["verdict"] == "NOT_COLLAPSED":
-        return " (%d arch opcodes remain)" % landing["stripped_count"]
-    return ""
-
-
-def route_sentence(check):
-    route = check.get("route") or {}
-    parts = []
-    for side in sorted(route):
-        parts.append("%s: %s" % (side, route[side]))
-    return "; ".join(parts)
-
-
-def write_table(lines, document):
-    lines.append("")
-    lines.append("## 2. The twenty runs, one row each")
-    lines.append("")
-    lines.append("Table 1 -- one row per run. The rendered column is a "
-                 "GLOSS: the destination place's rendered expression on "
-                 "one line with the casts stripped for reading; the "
-                 "LITERAL source sits in that run's own section above. "
-                 "The composition column is a GLOSS too, task h1b's own "
-                 "(2026-09-09): the RAW carved body of the destination "
-                 "place, walked instruction by instruction and "
-                 "classified by task m1b's classifier -- each table-cell "
-                 "instruction by its mnemonic, `ret` and "
-                 "calling-convention moves counted as chaff rather than "
-                 "listed, an instruction that maps to no table cell "
-                 "starred; the LITERAL per-instruction record (its own "
-                 "line, shape and key_width, or the classifier's cause) "
-                 "is `composition` in `handful.json`.")
-    lines.append("")
-    lines.append("| cell | lang | rendered (GLOSS) | landed | gate | "
-                 "composition (GLOSS) | cause if refused |")
-    lines.append("|---|---|---|---|---|---|---|")
-    for run in document["runs"]:
-        lines.append(table_row(run))
-    lines.append("")
-
-
-def table_row(run):
-    cell = "`%s` %s %s" % (run["mnem"], run["shape"], run["key_width"])
-    composition = composition_gloss(run.get("composition") or [])
-    if run.get("refusal_cause") is not None:
-        return "| %s | %s |  |  |  | %s | %s |" % (
-            cell, run["lang"], composition, run["refusal_cause"])
-    place = destination_place(run)
-    if place is None:
-        return "| %s | %s |  |  |  | %s | %s |" % (
-            cell, run["lang"], composition, "no place to render")
-    if place.get("rendered") is False:
-        return "| %s | %s |  |  |  | %s | %s: %s |" % (
-            cell, run["lang"], composition, place.get("refusal_cause"),
-            place.get("refusal_detail"))
-    if not place.get("compiled"):
-        return "| %s | %s | %s |  |  | %s | the compiler refused: %s |" % (
-            cell, run["lang"], gloss_of(place), composition,
-            place.get("compile_refusal"))
-    return "| %s | %s | %s | %s | %s | %s |  |" % (
-        cell, run["lang"], gloss_of(place),
-        landed_cell(place["landing"]),
-        gate_cell(place["check"]), composition)
-
-
-def write_h2_table(lines, document, first_document):
-    """task h2's own table: the same twenty runs, the verdict task h1
-    got beside the verdict this task got."""
-    before = {}
-    for run in first_document["runs"]:
-        before[run_key(run)] = run
-    lines.append("")
-    lines.append("## 2. The twenty runs, one row each: task h1's "
-                 "verdict beside task h2's")
-    lines.append("")
-    lines.append("Table 1 -- one row per run, the same ten cells and the "
-                 "same two targets as task h1. `h1 verdict` is the gate "
-                 "verdict of that run's destination place as task h1 "
-                 "recorded it (`handful.json`), and `h2 verdict` is the "
-                 "same place's verdict after the two printing fixes; "
-                 "where a run was refused before any gate call the "
-                 "column carries the refusal's own cause word. "
-                 "`composition (h2)` is a GLOSS, task h1b's own column "
-                 "over this task's own carved bodies: each table-cell "
-                 "instruction by its mnemonic, `ret` and "
-                 "calling-convention moves counted as chaff rather than "
-                 "listed, an instruction that maps to no table cell "
-                 "starred. The LITERAL objects of every run -- the "
-                 "cell's term, the rendered source, the carved body and "
-                 "the gate's own words -- are in that run's own section "
-                 "above.")
-    lines.append("")
-    lines.append("| cell | lang | h1 verdict | h2 verdict | landed (h2) "
-                 "| composition (h2) | cause if refused |")
-    lines.append("|---|---|---|---|---|---|---|")
-    for run in document["runs"]:
-        lines.append(h2_table_row(run, before.get(run_key(run))))
-    lines.append("")
-
-
-def run_key(run):
-    return (run["mnem"], run["shape"], run["key_width"], run["lang"])
-
-
-def h2_table_row(run, earlier):
-    cell = "`%s` %s %s" % (run["mnem"], run["shape"], run["key_width"])
-    composition = composition_gloss(run.get("composition") or [])
-    was = verdict_of_run(earlier)
-    now = verdict_of_run(run)
-    # A run that never reached the gate has no verdict, so the column
-    # carries its own cause word instead of an empty cell -- otherwise
-    # the four refused runs of task h1 read as blank rather than as
-    # refused.
-    return "| %s | %s | %s | %s | %s | %s | %s |" % (
-        cell, run["lang"], was["gate"] or was["cause"],
-        now["gate"] or now["cause"], now["landed"], composition,
-        now["cause"])
 
 
 def verdict_of_run(run):
@@ -5235,338 +3668,16 @@ def verdict_of_run(run):
     return out
 
 
-def write_g1_table(lines, document, h2_document):
-    """task g1's own tables: the forty runs, and -- for the twenty c and
-    rust runs, which task h2 also ran -- that task's verdict beside this
-    one's."""
-    lines.append("")
-    lines.append("## 2. The forty runs, one row each")
-    lines.append("")
-    lines.append("Table 1 -- one row per (cell, target). `route` is "
-                 "`primitive` where the target has an operator whose "
-                 "whole lowered body IS this cell (task o2's own "
-                 "single-opcode rows, classified by task m1b's own "
-                 "classifier) and `term` where it has not. `rendered` "
-                 "is a GLOSS: the destination place's rendered "
-                 "expression on one line with the casts stripped for "
-                 "reading; the LITERAL source sits in that run's own "
-                 "section above. `gate` carries the verdict and, beside "
-                 "it, WHERE it holds -- every input, or a region with "
-                 "z3's own counterexample. `composition` is a GLOSS, "
-                 "task h1b's own: the RAW carved body of the "
-                 "destination place, each table-cell instruction by its "
-                 "mnemonic, `ret` and calling-convention moves counted "
-                 "as chaff, an instruction that maps to no table cell "
-                 "starred.")
-    lines.append("")
-    lines.append("| cell | lang | route | rendered (GLOSS) | landed | "
-                 "composition (GLOSS) | gate (verdict, and where it "
-                 "holds) | cause if refused |")
-    lines.append("|---|---|---|---|---|---|---|---|")
-    for run in document["runs"]:
-        lines.append(g1_table_row(run))
-    lines.append("")
-    if TASK != "g1":
-        # Section 2a compares the two targets task h2 ran. Only task g1
-        # sits directly after task h2; its two closers compare against
-        # TASK g1 instead, in section 4 (`write_against_g1`), which
-        # holds all four targets.
-        return
-    lines.append("## 2a. c and rust: task h2's verdict beside this "
-                 "task's")
-    lines.append("")
-    lines.append("Table 2 -- the twenty runs task h2 also ran "
-                 "(`handful2.json`), so the primitive route's effect on "
-                 "the two targets that already had a term-route verdict "
-                 "is one comparison and not two documents.")
-    lines.append("")
-    lines.append("| cell | lang | h2 route | h2 verdict | g1 route | "
-                 "g1 verdict |")
-    lines.append("|---|---|---|---|---|---|")
-    earlier = {}
-    for run in h2_document["runs"]:
-        earlier[run_key(run)] = run
-    for run in document["runs"]:
-        if run["lang"] not in ("c", "rust"):
-            continue
-        was = verdict_of_run(earlier.get(run_key(run)))
-        now = verdict_of_run(run)
-        cell = "`%s` %s %s" % (run["mnem"], run["shape"],
-                               run["key_width"])
-        lines.append("| %s | %s | term | %s | %s | %s |"
-                     % (cell, run["lang"], was["gate"] or was["cause"],
-                        run.get("route"), now["gate"] or now["cause"]))
-    lines.append("")
 
 
-def g1_table_row(run):
-    cell = "`%s` %s %s" % (run["mnem"], run["shape"], run["key_width"])
-    composition = composition_gloss(run.get("composition") or [])
-    route = run.get("route") or ""
-    if run.get("refusal_cause") is not None:
-        return "| %s | %s | %s |  |  | %s |  | %s |" % (
-            cell, run["lang"], route, composition, run["refusal_cause"])
-    place = destination_place(run)
-    if place is None:
-        return "| %s | %s | %s |  |  | %s |  | %s |" % (
-            cell, run["lang"], route, composition, "no place to render")
-    if place.get("rendered") is False:
-        return "| %s | %s | %s |  |  | %s |  | %s: %s |" % (
-            cell, run["lang"], route, composition,
-            place.get("refusal_cause"), place.get("refusal_detail"))
-    if not place.get("compiled"):
-        return "| %s | %s | %s | %s |  | %s |  | the compiler " \
-               "refused: %s |" % (
-                   cell, run["lang"], route, gloss_of_g1(place),
-                   composition, place.get("compile_refusal"))
-    gate = "%s -- %s" % (gate_cell(place["check"]),
-                         region_of(place["check"]))
-    return "| %s | %s | %s | %s | %s | %s | %s |  |" % (
-        cell, run["lang"], route, gloss_of_g1(place),
-        landed_cell(place["landing"]), composition,
-        gate.replace("|", "\\|"))
 
 
-def gloss_of_g1(place):
-    """the rendered expression on one line, casts stripped for reading.
-    A GLOSS; the LITERAL source is in the run's own section.
-
-    `gloss_of` reads the FIRST braced block of the file, which is the
-    emulation function in a c and a rust source; a go source may open
-    with a helper function (go has no conditional expression, so a
-    conditional is a call to one), so this one finds the block of the
-    function whose name is this run's own."""
-    import re
-    source = place.get("source") or ""
-    match = re.search(r"emu_[A-Za-z0-9_]*\([^)]*\)[^{]*\{(.*?)\n\}",
-                      source, re.S)
-    if match is None:
-        return ""
-    text = " ".join(match.group(1).split())
-    text = re.sub(r"^return\s+", "", text)
-    text = text.rstrip(";")
-    text = re.sub(r"\((?:uint|int)\d+_t\)\s*", "", text)
-    text = re.sub(r"\(unsigned __int128\)\s*", "", text)
-    text = re.sub(r"\s+as\s+[a-z]\d+", "", text)
-    text = text.replace("|", "\\|")
-    if len(text) > 160:
-        text = text[:157] + "..."
-    return "`%s`" % text
 
 
-def write_g1_routes(lines, document):
-    """which route ran for each (cell, target), and -- where the term
-    route ran -- the primitive lookup's own cause for it."""
-    lines.append("## 5. Which route ran, and why")
-    lines.append("")
-    lines.append("Table 3 -- the primitive lookup, per (cell, target): "
-                 "how many of that language's single-opcode rows "
-                 "classify to the cell, which row was chosen and on "
-                 "what ground, and -- where none did -- the cause the "
-                 "term route ran instead.")
-    lines.append("")
-    lines.append("| cell | lang | route | single-opcode rows at this "
-                 "cell | chosen row's body, LITERAL | the setup cells "
-                 "the row carries | the operator and operand types the "
-                 "manifest records | cause if no primitive |")
-    lines.append("|---|---|---|---|---|---|---|---|")
-    for run in document["runs"]:
-        found = run.get("primitive") or {}
-        cell = "`%s` %s %s" % (run["mnem"], run["shape"],
-                               run["key_width"])
-        row = found.get("row")
-        if row is None:
-            cause = found.get("cause")
-            wide = found.get("under_the_wide_rule") or {}
-            if wide.get("rows_that_classify_to_this_cell"):
-                cause = ("%s -- though under task o2's WIDE chaff rule "
-                         "there is one, `%s` (%s), which is evidence "
-                         "about the cell and not a second route"
-                         % (cause, wide.get("body_text"),
-                            wide.get("example_unit_id")))
-            lines.append("| %s | %s | %s | %d |  |  |  | %s |"
-                         % (cell, run["lang"], run.get("route"),
-                            found.get(
-                                "rows_that_classify_to_this_cell", 0),
-                            cause))
-            continue
-        probe = found.get("probe") or {}
-        types = "%s on %s" % (probe.get("expression"),
-                              probe.get("lhs_type"))
-        if probe.get("rhs_type"):
-            types = "%s and %s" % (types, probe.get("rhs_type"))
-        lines.append("| %s | %s | %s | %d | `%s` | %s | `%s` (probe "
-                     "%s of %s) |  |"
-                     % (cell, run["lang"], run.get("route"),
-                        found.get("rows_that_classify_to_this_cell", 0),
-                        row.get("body_text"), setup_gloss(row), types,
-                        probe.get("unit"), run["lang"]))
-    lines.append("")
 
 
-def setup_gloss(row):
-    """the setup instructions an accepted row carries, each as the model
-    table cell it classifies to -- empty for a row that carries none,
-    which is every row task g1's own narrow rule accepted."""
-    parts = []
-    for one in (row.get("setup") or []):
-        if one.get("cell") is None:
-            parts.append("`%s` (%s)" % (one["line"],
-                                        one.get("not_classified")))
-            continue
-        parts.append("`%s` = (`%s`, %s, %d)"
-                     % (one["line"], one["cell"][0], one["cell"][1],
-                        one["cell"][2]))
-    return " ".join(parts)
 
 
-def write_against_g1(lines, document, g1_document):
-    """this run's verdict beside task g1's, one row per (cell, target)
-    this run holds.
-
-    WHY IT IS ITS OWN SECTION and not the `2a` table: `2a` compares two
-    targets against task h2, which ran two.  This compares FOUR against
-    task g1, which ran four -- so the swift rows, the ones the rebuilt
-    image moves, are in it, and so is the route where task g1c's widened
-    lookup changed it."""
-    earlier = {}
-    for run in g1_document["runs"]:
-        earlier[run_key(run)] = run
-    lines.append("## 4. Task g1's verdict beside this run's")
-    lines.append("")
-    lines.append("Table 4 -- one row per (cell, target) THIS run holds, "
-                 "with task g1's own answer for the same pair from "
-                 "`handful3.json` beside it. A row whose two sides "
-                 "differ is a row the change moved; a row whose two "
-                 "sides agree is the check that nothing else did.")
-    lines.append("")
-    lines.append("| cell | lang | g1 route | g1 verdict | this route | "
-                 "this verdict | moved |")
-    lines.append("|---|---|---|---|---|---|---|")
-    for run in document["runs"]:
-        was = verdict_of_run(earlier.get(run_key(run)))
-        now = verdict_of_run(run)
-        older = earlier.get(run_key(run))
-        was_route = ""
-        if older is not None:
-            was_route = older.get("route") or ""
-        was_text = was["gate"] or was["cause"]
-        now_text = now["gate"] or now["cause"]
-        moved = "no"
-        if was_text != now_text or was_route != (run.get("route") or ""):
-            moved = "**yes**"
-        cell = "`%s` %s %s" % (run["mnem"], run["shape"],
-                               run["key_width"])
-        lines.append("| %s | %s | %s | %s | %s | %s | %s |"
-                     % (cell, run["lang"], was_route, was_text,
-                        run.get("route"), now_text, moved))
-    lines.append("")
-
-
-def write_h2_before_and_after(lines, document, first_document):
-    """the objects task h2's brief asks for by name: what fix 1 did to
-    the term the renderer is handed, and what fix 2 projected."""
-    before = {}
-    for run in first_document["runs"]:
-        before[run_key(run)] = run
-    lines.append("## 4. What the two fixes changed, run by run")
-    lines.append("")
-    lines.append("### 4.1 Fix 1: the term the renderer is handed")
-    lines.append("")
-    lines.append("| cell | lang | place | instructions (h1) | "
-                 "instructions (h2) | gate (h1) | gate (h2) |")
-    lines.append("|---|---|---|---|---|---|---|")
-    for run in document["runs"]:
-        earlier = before.get(run_key(run))
-        for place in run["places"]:
-            lines.append(instruction_count_row(run, place, earlier))
-    lines.append("")
-    lines.append("### 4.2 Fix 2: the lane of a vector place")
-    lines.append("")
-    found = False
-    for run in document["runs"]:
-        for place in run["places"]:
-            if place.get("lane") is None:
-                continue
-            found = True
-            write_one_lane(lines, run, place)
-    if not found:
-        lines.append("No run's place was a vector place.")
-    lines.append("")
-
-
-def instruction_count_row(run, place, earlier):
-    cell = "`%s` %s %s" % (run["mnem"], run["shape"], run["key_width"])
-    was = matching_place(earlier, place["writes"])
-    return "| %s | %s | `%s` | %s | %s | %s | %s |" % (
-        cell, run["lang"], place["writes"], body_count(was),
-        body_count(place), place_gate(was), place_gate(place))
-
-
-def matching_place(run, writes):
-    if run is None:
-        return None
-    for place in run.get("places") or []:
-        if place["writes"] == writes:
-            return place
-    return None
-
-
-def body_count(place):
-    """how many instructions the compiler emitted for this place, or the
-    word for why there is no body."""
-    if place is None:
-        return "no place"
-    if place.get("body_text"):
-        return "%d" % len(place["body_text"].split("; "))
-    if place.get("refusal_cause") is not None:
-        return "refused"
-    if place.get("compile_refusal") is not None:
-        return "the compiler refused"
-    return "not rendered"
-
-
-def place_gate(place):
-    if place is None:
-        return "no place"
-    check = place.get("check")
-    if check is None:
-        return ""
-    return gate_cell(check)
-
-
-def write_one_lane(lines, run, place):
-    lane = place["lane"]
-    lines.append("**`%s` %s %s -> %s, place `%s`.** The place is %s "
-                 "bits and the cell's own `key_width` is %s, so the "
-                 "driver projected `%s`."
-                 % (run["mnem"], run["shape"], run["key_width"],
-                    run["lang"], place["writes"], lane.get("of_bits"),
-                    lane.get("lane_bits"), lane.get("projection")))
-    lines.append("")
-    if lane.get("lane_text") is not None:
-        lines.append("The projected lane, LITERAL:")
-        lines.append("")
-        lines.append("```")
-        lines.append(lane["lane_text"])
-        lines.append("```")
-        lines.append("")
-        lines.append("The bits above the lane, LITERAL:")
-        lines.append("")
-        lines.append("```")
-        lines.append(lane["above_the_lane_text"])
-        lines.append("```")
-        lines.append("")
-        above = lane.get("above_the_lane") or {}
-        lines.append("Put to the gate against `%s`: **%s** -- %s"
-                     % (above.get("expected"), above.get("outcome"),
-                        above.get("reason")))
-        lines.append("")
-    if place.get("refusal_cause") is not None:
-        lines.append("What happened next: REFUSED, %s (%s)."
-                     % (place["refusal_cause"],
-                        place.get("refusal_detail")))
-        lines.append("")
 
 
 def destination_place(run):
@@ -5579,25 +3690,6 @@ def destination_place(run):
         return run["places"][0]
     return None
 
-
-def gloss_of(place):
-    """the rendered expression on one line, casts stripped for reading.
-    A GLOSS; the LITERAL source is in the run's own section."""
-    import re
-    body = place["source"]
-    match = re.search(r"\{\n\s*(?:return )?(.*?);?\n\}", body,
-                      re.S)
-    if match is None:
-        return ""
-    text = " ".join(match.group(1).split())
-    text = re.sub(r"\((?:uint|int)\d+_t\)\s*", "", text)
-    text = re.sub(r"\(unsigned __int128\)\s*", "", text)
-    text = re.sub(r"\s+as\s+[a-z]\d+", "", text)
-    text = re.sub(r"\(\s*\(", "((", text)
-    text = text.replace("|", "\\|")
-    if len(text) > 160:
-        text = text[:157] + "..."
-    return "`%s`" % text
 
 
 def landed_cell(landing):
@@ -5621,114 +3713,17 @@ def gate_cell(check):
     return "%s" % outcome
 
 
-def write_causes(lines, document):
-    lines.append("## 3. What did not work, by cause")
-    lines.append("")
-    lines.append("### 3.1 Refusals and gate calls that did not prove")
-    lines.append("")
-    causes = {}
-    for run in document["runs"]:
-        for name, sighting in causes_of_run(run):
-            causes.setdefault(name, []).append(sighting)
-    if not causes:
-        lines.append("Nothing was refused and every gate call proved.")
-    for name in sorted(causes):
-        lines.append("- `%s`: %d -- %s"
-                     % (name, len(causes[name]),
-                        ", ".join(causes[name])))
-    lines.append("")
-    lines.append("### 3.2 The landings that were not LANDED, by cause")
-    lines.append("")
-    landings = {}
-    for run in document["runs"]:
-        for name, sighting in landing_causes_of_run(run):
-            landings.setdefault(name, []).append(sighting)
-    if not landings:
-        lines.append("Every compiled place landed on the cell's own "
-                     "arch opcode.")
-    for name in sorted(landings):
-        lines.append("- %s: %d -- %s"
-                     % (name, len(landings[name]),
-                        ", ".join(landings[name])))
-    lines.append("")
 
-
-def landing_causes_of_run(run):
-    """every compiled place whose landing is not LANDED, keyed
-    mechanically: which place it is, whether the cell's own opcode is
-    among the ones that remain, and what the landing verdict was."""
-    out = []
-    cell = "%s %s %s/%s" % (run["mnem"], run["shape"], run["key_width"],
-                            run["lang"])
-    for place in run.get("places") or []:
-        landing = place.get("landing")
-        if landing is None:
-            continue
-        if landing["verdict"] == "LANDED":
-            continue
-        where = "%s [%s]" % (cell, place["writes"])
-        if landing["verdict"] == "LANDED_ELSEWHERE":
-            out.append(("the compiler chose another arch opcode for the "
-                        "same computation (`%s`)"
-                        % landing["landed"]["mnem"], where))
-            continue
-        if place["writes"] == "flags":
-            out.append(("the flags place is the reference's flag model "
-                        "-- the two values the setter compared, "
-                        "repacked -- so it is not one operation and no "
-                        "single arch opcode is its landing (%d remain)"
-                        % landing["stripped_count"], where))
-            continue
-        if run.get("setter") is not None:
-            out.append(("the emulation is a PAIR by construction (the "
-                        "setter's comparison, then the select), so more "
-                        "than one arch opcode was never possible (%d "
-                        "remain)" % landing["stripped_count"], where))
-            continue
-        if landing.get("holds_the_cells_own_opcode"):
-            out.append(("the cell's own arch opcode IS among the ones "
-                        "that remain; what sits beside it is what the "
-                        "term carries beyond the operation (%d remain)"
-                        % landing["stripped_count"], where))
-            continue
-        out.append(("the cell's own arch opcode is NOT among the ones "
-                    "that remain (%d remain)"
-                    % landing["stripped_count"], where))
-    return out
-
-
-def causes_of_run(run):
-    out = []
-    cell = "%s %s %s/%s" % (run["mnem"], run["shape"], run["key_width"],
-                            run["lang"])
-    if run.get("refusal_cause") is not None:
-        out.append((run["refusal_cause"], cell))
-        return out
-    for place in run["places"]:
-        where = "%s [%s]" % (cell, place["writes"])
-        if place.get("refusal_cause") is not None:
-            out.append((place["refusal_cause"], where))
-            continue
-        if place.get("compile_refusal") is not None:
-            out.append(("the compiler refused", where))
-            continue
-        check = place.get("check") or {}
-        if check.get("outcome") in ("DISPROVED", "UNDECIDED"):
-            again = check.get("under_caller_extension") or {}
-            if again.get("outcome") == "PROVED_ON_SHIP":
-                continue
-            once_more = check.get("recheck") or {}
-            if once_more.get("outcome") == "PROVED_ON_SHIP":
-                continue
-            if once_more.get("outcome") == "UNDECIDED":
-                out.append(("the gate answered UNDECIDED at 3,000 ms "
-                            "and again at %s ms"
-                            % once_more.get("ceiling_ms"), where))
-                continue
-            out.append(("the gate answered %s" % check["outcome"],
-                        where))
-    return out
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    say(__doc__)
+    say("This file is the driver, and a driver is a library: the loop's "
+        "own entry is `autopoly.py --bank <command>`, which calls what "
+        "decides an answer here.  The commands the closed tasks' logs "
+        "cite (`report2`, `run3`, `changes3c` and the rest) are those "
+        "tasks' own report commands over those tasks' own products, and "
+        "they are answered by `handful_frozen.py` -- this file copied "
+        "byte for byte on 2026-09-10, before the nine task-name gates "
+        "were stripped out of it: `python3 handful_frozen.py <command>`.")
+    sys.exit(2)

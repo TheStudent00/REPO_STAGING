@@ -84,7 +84,7 @@ claimed.
     grouping anywhere carries an operator token.  A token rides on a
     unit object as the field `operator` -- the one place the ban allows
     it -- and on the `meta` sub-object copied from the probe manifest,
-    which the guard exempts by name.
+    which the guard passes over by name as the unit's own metadata.
   * The CANDIDATE SET for resolving a typed operator node is the TYPE
     TUPLE (arity, lhs holder, rhs holder, result holder) -- "type pairs",
     which the ban names as machine-form evidence.  Within that candidate
@@ -441,8 +441,34 @@ def go_side():
                               "family": family, "in_row": in_row})
             row["operand_slots"] = slots
             rows.append(row)
+    every = []
+    for unit_id in sorted(units):
+        probe = probe_of(unit_id, one, two)
+        record = units.get(unit_id)
+        found = cells.get(unit_id)
+        if probe is None or record is None:
+            continue
+        row = {
+            "unit": unit_id,
+            "lang": "go",
+            "n": unit_id.split("_", 1)[1],
+            "operator": probe.get("operator"),
+            "meta": probe,
+            "body_text": record.get("body_text"),
+            "holders": {
+                "arity": probe.get("arity"),
+                "position": probe.get("position"),
+                "lhs": probe.get("lhs_type"),
+                "rhs": probe.get("rhs_type"),
+                "result": probe.get("result_type"),
+            },
+            "cells": None if found is None else [
+                {"mnem": c["mnem"], "shape": c["shape"],
+                 "key_width": c["key_width"]} for c in found],
+        }
+        every.append(row)
     check_memory("go side")
-    return rows, refused, refusals
+    return rows, refused, refusals, every
 
 
 # ==================================================================
@@ -456,7 +482,7 @@ def dictionary_command():
         say("   %-5s entries %4d   holes %4d"
             % (target, len(entries[target]), len(holes[target])))
     say("[2/3] the go side, off the corpus")
-    rows, refused, refusals = go_side()
+    rows, refused, refusals, every = go_side()
     say("   go units under task o2's narrow rule that name one cell: %d"
         % len(rows))
     say("   go units the narrow rule holds that name no single cell: %d"
@@ -483,6 +509,7 @@ def dictionary_command():
         "targets": entries,
         "holes": holes,
         "go_units": rows,
+        "go_units_every": every,
         "go_units_without_one_cell": refused,
         "go_ledger_refusals": refusals,
     }
@@ -601,6 +628,27 @@ def dictionary_md(document):
 # o6's `go_types_join.py` joins them, and never by the operator token.
 
 OPERATOR_NODES = ("binary_expression", "unary_expression")
+
+# go/types spells the type of a comparison `untyped bool`, because the go
+# specification makes a comparison's value an UNTYPED boolean whose
+# DEFAULT TYPE is `bool`; the corpus's own probe records spell the same
+# holder `bool`, so the default type is what the two are joined on.  The
+# same rule covers the other untyped kinds go/types can print for a
+# constant expression.  This is a holder-spelling rule, stated here and
+# in the log; it is not a token.
+DEFAULT_TYPE = {
+    "untyped bool": "bool",
+    "untyped int": "int",
+    "untyped rune": "int32",
+    "untyped float": "float64",
+    "untyped string": "string",
+}
+
+
+def default_type(spelling):
+    if spelling is None:
+        return None
+    return DEFAULT_TYPE.get(spelling, spelling)
 
 
 def go_parser():
@@ -730,10 +778,13 @@ def front_end(path):
         operands = site.get("operands") or []
         record["typed"] = True
         record["arity"] = "binary" if len(operands) == 2 else "unary"
-        record["lhs"] = operands[0]["spelling"] if operands else None
-        record["rhs"] = operands[1]["spelling"] if len(operands) > 1 else None
-        record["result"] = site.get("result")
-        record["site_operator_label"] = site.get("operator")
+        record["lhs"] = None
+        if operands:
+            record["lhs"] = default_type(operands[0]["spelling"])
+        record["rhs"] = None
+        if len(operands) > 1:
+            record["rhs"] = default_type(operands[1]["spelling"])
+        record["result"] = default_type(site.get("result"))
         nodes.append(record)
     return nodes, source_bytes, None
 
@@ -783,29 +834,53 @@ def unit_operator_text(row, parser):
     return answer
 
 
-def resolve(node, index, parser):
-    """-> (the corpus go unit row, None) or (None, the cause)."""
-    if not node.get("typed"):
-        return None, node["cause"]
+def agreeing_units(node, index, parser):
+    """the candidate corpus units whose own source parses to the same
+    operator node as this one."""
     key = (node["arity"], node["lhs"], node["rhs"], node["result"])
-    candidates = index.get(key) or []
-    if not candidates:
-        return None, ("no go unit of the corpus carries a construct at "
-                      "these operand holders (%s) under task o2's narrow "
-                      "rule, so the corpus attests no cell for this node"
-                      % (key,))
-    agreeing = []
-    for row in candidates:
+    out = []
+    for row in index.get(key) or []:
         text = unit_operator_text(row, parser)
         if text is not None and text == node["operator"]:
-            agreeing.append(row)
-    if not agreeing:
-        return None, ("the corpus holds %d go unit(s) at these operand "
-                      "holders and none of their own sources parses to "
-                      "the same operator node as this one, so the corpus "
-                      "attests no cell for this node" % len(candidates))
-    agreeing.sort(key=lambda r: r["unit"])
-    return agreeing[0], None
+            out.append(row)
+    out.sort(key=lambda r: r["unit"])
+    return out
+
+
+def resolve(node, index, parser, every_index=None):
+    """-> (the corpus go unit row, None) or (None, the cause).
+
+    Where the narrow population attests no cell, the cause is read off
+    go's OWN build of the same construct at the same holders: the corpus
+    unit's body text and how many arch-opcode ledger rows it produced.
+    That is a result by cause, not an absence."""
+    if not node.get("typed"):
+        return None, node["cause"]
+    agreeing = agreeing_units(node, index, parser)
+    if agreeing:
+        return agreeing[0], None
+    if every_index is not None:
+        wider = agreeing_units(node, every_index, parser)
+        if wider:
+            row = wider[0]
+            cells = row.get("cells")
+            if cells is None:
+                return None, ("go's own build of this construct at these "
+                              "holders is the corpus unit %s, whose body "
+                              "could not be relinked, so it names no cell"
+                              % row["unit"])
+            names = ", ".join(["`%s`" % cell_label(c) for c in cells])
+            return None, ("go's own build of this construct at these "
+                          "holders is the corpus unit %s, whose body "
+                          "`%s` is not one arch-opcode instruction plus "
+                          "chaff (task o2's narrow rule), so the corpus "
+                          "attests no single cell for this node; its own "
+                          "ledger holds %d arch-opcode row(s): %s"
+                          % (row["unit"], row.get("body_text"),
+                             len(cells), names or "none"))
+    return None, ("no go unit of the corpus carries this construct at "
+                  "these operand holders, so the corpus attests no cell "
+                  "for this node")
 
 
 # ==================================================================
@@ -976,7 +1051,10 @@ def strip_go(source, symbol):
     return imports, "\n".join(lines[start:end + 1])
 
 
-def compose_file(target, emulations, functions):
+GO_NOINLINE = "//go:noinline"
+
+
+def compose_file(target, emulations, functions, drop_directive=False):
     """one composed source file: every emulation used, once, verbatim,
     then the composed functions."""
     blocks = []
@@ -1019,6 +1097,21 @@ def compose_file(target, emulations, functions):
         for line in got_imports:
             if line not in imports:
                 imports.append(line)
+        if drop_directive:
+            # THE ONE LINE DROPPED, and nothing else: `//go:noinline` is
+            # the directive the corpus's own probe shape puts on a probe
+            # so the compiler leaves it as its own carvable function.  In
+            # a COMPOSED file the emulation is not the unit being carved
+            # -- the composed function is -- and the directive forbids
+            # exactly the cross-operator lowering source composition
+            # exists to obtain.  Both files are built and both verdicts
+            # are recorded; nothing inside a proved function is touched.
+            kept = []
+            for line in rest.splitlines():
+                if line.strip() == GO_NOINLINE:
+                    continue
+                kept.append(line)
+            rest = "\n".join(kept)
         bodies.append(rest)
     blocks.append("package main")
     if imports:
@@ -1069,10 +1162,13 @@ def returning(target, text):
     return "    return %s;" % text
 
 
-def wrap_body(target, lines):
+def function_text(target, head, lines):
+    """the composed function, with the target's own brace placement: go
+    refuses a `{` on a line of its own after a declaration."""
+    body = "{\n%s\n}" % "\n".join(lines)
     if target == "go":
-        return "{\n%s\n}" % "\n".join(lines)
-    return "{\n%s\n}" % "\n".join(lines)
+        return "%s %s" % (head, body)
+    return "%s\n%s" % (head, body)
 
 
 def go_main_for(names_and_params):
@@ -1183,11 +1279,63 @@ def parameter_records(declaration_node, source_bytes):
     return out
 
 
+def span_key(node):
+    """a node's own SPAN, which is what identifies it: `a + b - c` gives
+    the outer node and its own left sub-node the same START, and a key on
+    the start alone loses one of the two."""
+    return (node.start_point[0] + 1, node.start_point[1] + 1,
+            node.end_point[0] + 1, node.end_point[1] + 1)
+
+
 def operand_nodes_of(node):
     if node.type == "binary_expression":
         return [node.child_by_field_name("left"),
                 node.child_by_field_name("right")]
     return [node.child_by_field_name("operand")]
+
+
+TRUTH_HOLDER = {"c": ("bool", "_Bool"), "rust": ("bool",),
+                "go": ("bool",)}
+
+
+def check_parameters(target, entry, plan, operand_types):
+    """whether the emulation's own parameters can carry the operands the
+    node passes, which is a question about the PROOF's reach and not
+    about taste.
+
+    Two refusals, both by cause.  (1) A parameter NARROWER than the
+    operand truncates it, and the loop proved the emulation over the
+    cell's own arrival contract, not over a truncated one.  (2) A
+    parameter declared in the target's TRUTH holder collapses every
+    non-zero value to one, which is a different mapping from the cell's:
+    the primitive route can match a corpus body whose own probe was
+    written over truth holders (task ap5's `add gpr_gpr 64` on c is the
+    same family), and its `params` record says so."""
+    truth = TRUTH_HOLDER.get(target) or ()
+    for index, position in enumerate(plan):
+        param = entry["params"][index]
+        holder = param.get("holder")
+        if holder in truth:
+            raise Refused("the emulation `%s` declares its parameter %d "
+                          "in %s's truth holder `%s`, which collapses "
+                          "every non-zero value to one; the cell's own "
+                          "mapping is over %d bits, so this entry cannot "
+                          "carry this node's operand"
+                          % (entry["symbol"], index, target, holder,
+                             entry["key_width"]))
+        go_type = operand_types[position]
+        wanted = HOLDER.get(go_type)
+        if wanted is None:
+            raise Refused("this task's holder table has no entry for the "
+                          "go holder `%s`" % go_type)
+        bits = param.get("bits")
+        if bits is None or bits < wanted["bits"]:
+            raise Refused("the emulation `%s` declares its parameter %d "
+                          "%s bits wide and the operand this node passes "
+                          "there is %d bits (`%s`), so the call would "
+                          "truncate it"
+                          % (entry["symbol"], index, bits, wanted["bits"],
+                             go_type))
 
 
 def argument_plan(row, entry, parser):
@@ -1270,9 +1418,15 @@ class Composer(object):
         self.calls = []
 
     def key_of(self, node):
-        return (node.start_point[0] + 1, node.start_point[1] + 1)
+        return span_key(node)
 
     def emit(self, node, parameter_names_here):
+        if node.type == "expression_list":
+            inner = named_children(node)
+            if len(inner) != 1:
+                raise Refused("an expression list of %d expressions"
+                              % len(inner))
+            return self.emit(inner[0], parameter_names_here)
         if node.type == "parenthesized_expression":
             inner = None
             for child in node.children:
@@ -1306,6 +1460,11 @@ class Composer(object):
             raise Refused("the dictionary has no proved entry for the "
                           "cell `%s` on %s" % (label, self.target))
         plan = argument_plan(row, entry, self.parser)
+        record = resolution["node_record"]
+        operand_types = [record.get("lhs")]
+        if record.get("arity") == "binary":
+            operand_types.append(record.get("rhs"))
+        check_parameters(self.target, entry, plan, operand_types)
         operands = operand_nodes_of(resolution["node"])
         values = []
         for operand in operands:
@@ -1351,23 +1510,35 @@ def function_declarations(source_bytes, parser):
     return out
 
 
+def named_children(node):
+    out = []
+    for child in node.children:
+        if child.is_named:
+            out.append(child)
+    return out
+
+
 def single_return(declaration_node):
-    """the body's one returned expression, or None."""
+    """the body's one returned expression, or None.
+
+    The installed grammar nests it `block -> statement_list ->
+    return_statement -> expression_list -> the expression`, and the walk
+    is written against that shape as lane `hub1_l6` printed it."""
     body = declaration_node.child_by_field_name("body")
     if body is None:
         return None
-    statements = []
-    for child in body.children:
-        if child.is_named:
-            statements.append(child)
+    statements = named_children(body)
+    if len(statements) == 1 and statements[0].type == "statement_list":
+        statements = named_children(statements[0])
     if len(statements) != 1:
         return None
     if statements[0].type != "return_statement":
         return None
-    values = []
-    for child in statements[0].children:
-        if child.is_named:
-            values.append(child)
+    values = named_children(statements[0])
+    if len(values) != 1:
+        return None
+    if values[0].type == "expression_list":
+        values = named_children(values[0])
     if len(values) != 1:
         return None
     return values[0]
@@ -1381,7 +1552,7 @@ def result_go_type(declaration_node, source_bytes):
 
 
 def compose_function(target, name, declaration_node, source_bytes,
-                     entries, resolutions, parser):
+                     entries, resolutions, parser, holes=None):
     """-> a record: the composed function text and what it calls, or the
     cause it is a hole."""
     out = {"target": target, "func": name}
@@ -1389,12 +1560,38 @@ def compose_function(target, name, declaration_node, source_bytes,
     out["params"] = params
     result = result_go_type(declaration_node, source_bytes)
     out["result"] = result
+    # THE NODE-LEVEL HOLES ARE NAMED FIRST, because a node with no proved
+    # entry is the brief's own "hole by cause" and the body's shape is a
+    # different, weaker reason for the same function not composing.
+    unresolved = []
+    for key in sorted(resolutions):
+        value = resolutions[key]
+        if value["node_record"].get("func") != name:
+            continue
+        if value["row"] is None:
+            unresolved.append("`%s`: %s" % (value["node_record"]["text"],
+                                            value["cause"]))
+            continue
+        label = cell_label(value["row"]["cell"])
+        if entries.get(label) is None:
+            hole = (holes or {}).get(label) or {}
+            unresolved.append("`%s`: the dictionary has no proved entry "
+                              "for the cell `%s` on %s: %s"
+                              % (value["node_record"]["text"], label,
+                                 target,
+                                 hole.get("cause")
+                                 or "(the dictionary records no cause)"))
+    if unresolved:
+        out["composed"] = False
+        out["cause"] = "; ".join(unresolved)
+        return out
     expression = single_return(declaration_node)
     if expression is None:
         out["composed"] = False
-        out["cause"] = ("Hub v1 composes a function whose body is one "
-                        "`return` of one expression; this body is not "
-                        "that shape")
+        out["cause"] = ("every operator node of this function resolves "
+                        "and has a proved entry, and Hub v1 composes a "
+                        "function whose body is one `return` of one "
+                        "expression; this body is not that shape")
         return out
     composer = Composer(target, entries, resolutions, parser, source_bytes)
     names_here = [param["name"] for param in params]
@@ -1408,7 +1605,7 @@ def compose_function(target, name, declaration_node, source_bytes,
         out["cause"] = refusal.cause
         return out
     out["composed"] = True
-    out["text"] = "%s\n%s" % (head, wrap_body(target, lines))
+    out["text"] = function_text(target, head, lines)
     out["used"] = composer.used
     out["calls"] = composer.calls
     return out
@@ -1528,6 +1725,35 @@ def gate_two_bodies(shared, side_a, side_b, plan):
     return out
 
 
+def go_re_pose(shared, record, side_a, plan, families_b, folder, name):
+    """the same proof again against the composed go file whose only
+    difference is that `//go:noinline` is off each emulation.
+
+    It is a RE-POSE and it is recorded beside the first verdict, never in
+    place of it: task o7's caller-extension re-pose is the precedent."""
+    import go_render as GR
+    path = os.path.join(folder, name)
+    if not os.path.exists(path):
+        return {"verdict": None, "cause": "no such composed file"}
+    handle = open(path)
+    source = handle.read()
+    handle.close()
+    got, refusal = GR.compile_and_carve(source, "main.%s" % record["func"])
+    if got is None:
+        return {"verdict": None,
+                "cause": "did not build or carve: %s" % refusal}
+    raw_bytes, mnem = got
+    out = {"body_b_text": "; ".join(mnem),
+           "body_b_bytes": " ".join(raw_bytes),
+           "what_was_dropped": GO_NOINLINE}
+    side_b = {"canon": wrapped(shared, "go", raw_bytes, mnem,
+                               "handfulBi_%s" % record["func"]),
+              "families": families_b}
+    out["check"] = gate_two_bodies(shared, side_a, side_b, plan)
+    out["verdict"] = verdict_word(out["check"])
+    return out
+
+
 def verdict_word(check):
     """the oracle test's own three words, off the gate's outcome."""
     outcome = check.get("outcome")
@@ -1547,12 +1773,14 @@ def verdict_word(check):
 # section 11: THE HANDFUL
 # ==================================================================
 
-def resolutions_for(nodes, index, parser):
+def resolutions_for(nodes, index, parser, every_index=None):
     out = {}
     for record in nodes:
         node = record.pop("node")
-        key = (record["position"]["line"], record["position"]["col"])
-        row, cause = resolve(record, index, parser)
+        key = (record["position"]["line"], record["position"]["col"],
+               record["position"]["end_line"],
+               record["position"]["end_col"])
+        row, cause = resolve(record, index, parser, every_index)
         out[key] = {"row": row, "cause": cause, "node": node,
                     "node_record": record}
     return out
@@ -1595,7 +1823,8 @@ def handful_command():
             typed = typed + 1
     say("   operator nodes: %d, typed by go/types: %d" % (len(nodes), typed))
     parser = go_parser()
-    resolutions = resolutions_for(nodes, index, parser)
+    every_index = candidate_index(document["go_units_every"])
+    resolutions = resolutions_for(nodes, index, parser, every_index)
     resolved = 0
     for value in resolutions.values():
         if value["row"] is not None:
@@ -1622,7 +1851,8 @@ def handful_command():
             if name == "main":
                 continue
             record = compose_function(target, name, node, source_bytes,
-                                      entries[target], resolutions, parser)
+                                      entries[target], resolutions,
+                                      parser, document["holes"][target])
             per_function.append(record)
         composed[target] = per_function
         texts = []
@@ -1658,6 +1888,16 @@ def handful_command():
         say("   %-5s %d function(s) composed, %d emulation(s), %s"
             % (target, len(texts) - (1 if target == "go" else 0),
                len(emulations), os.path.basename(path)))
+        if target == "go":
+            relaxed = compose_file(target, emulations, texts, True)
+            second = os.path.join(HANDFUL_DIR,
+                                  "composed_go_inlinable.go")
+            handle = open(second, "w")
+            handle.write(relaxed)
+            handle.close()
+            say("   %-5s and the same file with the `%s` directive "
+                "dropped from each emulation, %s"
+                % (target, GO_NOINLINE, os.path.basename(second)))
     say("[5/6] body B and the gate, per function per target")
     results = []
     for target in TARGETS:
@@ -1726,9 +1966,18 @@ def handful_command():
             row["canon40_outcome_B"] = side_b["canon"].get("outcome")
             row["check"] = gate_two_bodies(shared, side_a, side_b, plan)
             row["verdict"] = verdict_word(row["check"])
+            if target == "go" and row["verdict"] != "PROVED":
+                row["re_posed_without_the_noinline_directive"] = \
+                    go_re_pose(shared, record, side_a, plan, families_b,
+                               HANDFUL_DIR, "composed_go_inlinable.go")
             results.append(row)
-            say("   %-5s %-18s %s" % (target, record["func"],
-                                      row["verdict"]))
+            extra = ""
+            again = row.get("re_posed_without_the_noinline_directive")
+            if again is not None:
+                extra = "   (without the directive: %s)" % again.get(
+                    "verdict")
+            say("   %-5s %-18s %s%s" % (target, record["func"],
+                                        row["verdict"], extra))
             check_memory("gate %s %s" % (target, record["func"]))
     say("[6/6] writing")
     nodes_out = []
@@ -1818,6 +2067,10 @@ def compose_unit(target, row, entry, parser, name):
                       "construct's operands straight off its own "
                       "parameters")
     plan = argument_plan(row, entry, parser)
+    operand_types = [row["holders"]["lhs"]]
+    if row["holders"]["arity"] == "binary":
+        operand_types.append(row["holders"]["rhs"])
+    check_parameters(target, entry, plan, operand_types)
     values = []
     for parameter_index in positions:
         values.append(params[parameter_index]["name"])
@@ -1832,7 +2085,7 @@ def compose_unit(target, row, entry, parser, name):
     lines = [statement(target, "hub_t0", result, text),
              returning(target, "hub_t0")]
     head = declaration(target, name, params, result)
-    return {"text": "%s\n%s" % (head, wrap_body(target, lines)),
+    return {"text": function_text(target, head, lines),
             "params": params, "result": result,
             "cell": cell_label(row["cell"]), "symbol": symbol,
             "route": entry["route"]}
@@ -1932,6 +2185,16 @@ def measure_command(limit=None):
                       "families": families_b}
             out["check"] = gate_two_bodies(shared, side_a, side_b, plan)
             out["verdict"] = verdict_word(out["check"])
+            if target == "go" and out["verdict"] != "PROVED":
+                # THE SAME RE-POSE as the handful's, and for the same
+                # reason: `//go:noinline` on the emulation forbids the
+                # cross-operator lowering source composition exists to
+                # obtain, and go's own stack-growth preamble then leaves
+                # the unit, which the reference refuses to read.
+                relaxed = compose_file(target, emulations, texts, True)
+                out["re_posed_without_the_noinline_directive"] = \
+                    measure_re_pose(shared, relaxed, symbol, side_a, plan,
+                                    families_b, name)
             results.append(out)
             if done % 25 == 0 or done == total:
                 say("   [%d/%d] %d kB resident" % (done, total, peak_kb()))
@@ -1963,6 +2226,24 @@ def measure_command(limit=None):
     return 0
 
 
+def measure_re_pose(shared, source, symbol, side_a, plan, families_b,
+                    name):
+    import go_render as GR
+    got, refusal = GR.compile_and_carve(source, symbol)
+    if got is None:
+        return {"verdict": None,
+                "cause": "did not build or carve: %s" % refusal}
+    raw_bytes, mnem = got
+    out = {"body_b_text": "; ".join(mnem),
+           "what_was_dropped": GO_NOINLINE}
+    side_b = {"canon": wrapped(shared, "go", raw_bytes, mnem,
+                               "measureBi_%s" % name),
+              "families": families_b}
+    out["check"] = gate_two_bodies(shared, side_a, side_b, plan)
+    out["verdict"] = verdict_word(out["check"])
+    return out
+
+
 def measure_counts(results, document):
     per_target = {}
     for target in TARGETS:
@@ -1971,7 +2252,9 @@ def measure_counts(results, document):
                               "proved_under_caller_extension": 0,
                               "disproved": 0, "undecided": 0,
                               "composed_ledger_rows": 0,
-                              "proved_ledger_rows": 0}
+                              "proved_ledger_rows": 0,
+                              "re_posed": 0, "proved_on_the_re_pose": 0,
+                              "re_posed_ledger_rows": 0}
     causes = {}
     for target in TARGETS:
         causes[target] = collections.Counter()
@@ -1990,6 +2273,15 @@ def measure_counts(results, document):
             continue
         bucket["carved"] += 1
         verdict = row.get("verdict")
+        again = row.get("re_posed_without_the_noinline_directive")
+        if again is not None and again.get("verdict") is not None:
+            bucket["re_posed"] = bucket.get("re_posed", 0) + 1
+            if again["verdict"] in ("PROVED",
+                                    "PROVED_UNDER_CALLER_EXTENSION"):
+                bucket["proved_on_the_re_pose"] = bucket.get(
+                    "proved_on_the_re_pose", 0) + 1
+                bucket["re_posed_ledger_rows"] = bucket.get(
+                    "re_posed_ledger_rows", 0) + rows_covered
         if verdict is None:
             causes[target][row.get("cause") or "(no cause)"] += 1
             bucket["undecided"] += 1
@@ -2010,9 +2302,11 @@ def measure_counts(results, document):
                            or "(no reason)"] += 1
     out = {"per_target": per_target,
            "causes": {t: dict(causes[t]) for t in TARGETS},
-           "corpus_go_units": len(document["go_units"])
-           + len(document["go_units_without_one_cell"]),
-           "go_units_naming_one_cell": len(document["go_units"])}
+           "corpus_go_units": len(document["go_units_every"]),
+           "go_units_naming_one_cell": len(document["go_units"]),
+           "go_units_the_narrow_rule_holds":
+               len(document["go_units"])
+               + len(document["go_units_without_one_cell"])}
     return out
 
 
@@ -2059,9 +2353,15 @@ def tables_command():
         verdict = row.get("verdict")
         if verdict is None:
             verdict = "HOLE"
-        rows.append([row["func"], row["target"], verdict,
+        again = row.get("re_posed_without_the_noinline_directive")
+        second = "--"
+        if again is not None:
+            second = again.get("verdict") or ("not carved: %s"
+                                              % again.get("cause"))
+        rows.append([row["func"], row["target"], verdict, second,
                      (row.get("cause") or "--").replace("|", "/")])
     lines.append(pipe_table(["function", "target", "the gate's verdict",
+                             "re-posed without `//go:noinline`",
                              "cause where it is a hole"], rows))
     lines.append("")
     lines.append("## 3. Body A and body B, per function and target")
@@ -2080,13 +2380,28 @@ def tables_command():
     if os.path.exists(MEASURE_JSON):
         measure = read_json(MEASURE_JSON)
         counts = measure["counts"]
+        # The three population figures are read from the dictionary as it
+        # stands rather than from the counts the measure lane stored, so
+        # that a correction to how they are named never needs the ten
+        # minutes of the measure itself re-run.
+        held = read_json(DICTIONARY)
+        counts = dict(counts)
+        counts["corpus_go_units"] = len(held["go_units_every"])
+        counts["go_units_naming_one_cell"] = len(held["go_units"])
+        counts["go_units_the_narrow_rule_holds"] = (
+            len(held["go_units"]) + len(held["go_units_without_one_cell"]))
         lines.append("## 4. The measure over the corpus's own go units")
         lines.append("")
-        lines.append("The corpus holds %d go units. %d of them name one "
-                     "cell (task o2's narrow rule: the whole body is one "
-                     "arch-opcode instruction), and those are the units "
-                     "the dictionary can be asked about."
+        lines.append("The corpus holds %d go units. %d of them are held "
+                     "by task o2's NARROW rule (the whole body is one "
+                     "arch-opcode instruction plus chaff) and %d of "
+                     "those name exactly one cell; those are the units "
+                     "the dictionary can be asked about. The other go "
+                     "units of the corpus are the constructs go lowers "
+                     "to several cells, and they are named as such in "
+                     "the handful's own hole causes."
                      % (counts["corpus_go_units"],
+                        counts.get("go_units_the_narrow_rule_holds", 0),
                         counts["go_units_naming_one_cell"]))
         lines.append("")
         rows = []
@@ -2097,13 +2412,19 @@ def tables_command():
                          bucket["proved"],
                          bucket["proved_under_caller_extension"],
                          bucket["disproved"], bucket["undecided"],
-                         bucket["proved_ledger_rows"]])
+                         bucket["proved_ledger_rows"],
+                         bucket.get("re_posed", 0),
+                         bucket.get("proved_on_the_re_pose", 0),
+                         bucket.get("re_posed_ledger_rows", 0)])
         lines.append(pipe_table(["target", "units asked", "composed",
                                  "ledger rows the composed cells cover",
                                  "built and carved", "proved",
                                  "proved under caller extension",
                                  "disproved", "undecided",
-                                 "ledger rows the proved cells cover"],
+                                 "ledger rows the proved cells cover",
+                                 "re-posed without `//go:noinline`",
+                                 "proved on that re-pose",
+                                 "ledger rows that re-pose proves"],
                                 rows))
         lines.append("")
         lines.append("## 5. The measure, by cause")

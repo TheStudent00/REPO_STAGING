@@ -70,3 +70,72 @@ width, and neither the bit-slice nor the append could then be rendered at a
 narrow width, because the shift amount did not fit the holder. The model
 carries both forms now: a shift by a computed holder (guarded at run time) and
 a shift by a plain integer (guarded when the renderer writes it).
+
+## the single-opcode check, and what its tally means (task l3, 2026-09-09)
+
+The check (`model_translate.py check`, then `model_translate.py run`) states
+one Lean theorem per single-opcode compiled unit that carries its own proved
+term. Left of the equals sign is that stored term — the LEDGER route's
+reading of the unit, printed by the pipeline's own layer-5 rule. Right of it
+are the model's operations, applied in the order the unit's own body spells
+them. A failure is a DISCREPANCY between two readings of the hardware, never
+a Lean problem.
+
+**THE TALLY, and it is the guard value every later task states:**
+
+| what | count |
+|---|---|
+| rows (the single-opcode population of the five compiled languages) | 259 |
+| STATED (a theorem written and closed) | 172 |
+| REFUSED (no theorem stated, by cause) | 87 |
+| DISCREPANCY | 0 |
+
+So `259 / 172 / 87`, DISCREPANCY 0. Task L2 (log 232) left it at
+`259 / 153 / 87` with 19 DISCREPANCY; task l3 found those 19 to be one defect
+in the check's own composer, not a disagreement about the machine, and all 19
+now prove. The check_L2.json as L2 left it is kept beside the new one as
+`check_L2.json.before_task_l3`.
+
+**WHAT THE 19 WERE.** The theorem's two sides named the unit's arrivals by
+two different rules. The stored line's `v0`/`v1` come from
+`term.Term.normalize`, which orders every commutative operator's arguments by
+a key computed from the arguments themselves BEFORE it simplifies (task t104
+added that first ordering step on 2026-09-07) and then numbers the free
+symbols in the order the printed text meets them. `bound_variables` in
+`model_translate.py` numbered them after a plain `z3.simplify`, with neither
+ordering step — the rule as it stood before t104. On a term whose commutative
+operands the ordering step permutes, the two rules put the two arrivals in
+opposite order, so the left called one register `v0` and the right called the
+other one `v0`, and `bv_decide` answered with a counterexample about the
+names. Measured over the 243 rows with a proved term: the two rules agreed on
+214 and differed on 29 — the 19 and 10 rows refused for other causes.
+`bound_variables` now calls `term.py`'s own `order_commutative` and
+`ordered_symbols` in `term.Term.normalize`'s order, and PROVES the naming per
+row: with the names substituted the term is printed by the same printer and
+must give the stored line character for character, or the row is refused by
+cause `NAMING_NOT_THE_STORED_ONE`.
+
+**THE TRUST CLASSES, and how many proved theorems are in each.** Every one of
+the 172 is checked by Lean's kernel and none depends on `sorryAx`
+(`grep -rln sorry` over the project matches nothing). They differ in what
+else they trust:
+
+| class | what it trusts beside the kernel | tactic | count |
+|---|---|---|---|
+| no axiom at all | nothing | `rfl` | 20 |
+| `propext, Quot.sound` | nothing beyond Lean's own axioms | `rfl` | 19 |
+| `propext, Classical.choice, Quot.sound` | nothing beyond Lean's own axioms | `bv_decide`, closed in its rewriting stage | 61 |
+| the four above plus `Lean.ofReduceBool, Lean.trustCompiler` | the Lean COMPILER, because the SAT solver's LRAT certificate is read back in by compiled code | `bv_decide`, with the solver called | 72 |
+
+`Lean.ofReduceBool` is not a tactic anyone chose here: `native_decide`
+appears nowhere in this project, and `bv_decide` itself builds the axiom in
+whenever it calls the solver (`Lean/Elab/Tactic/BVDecide/Frontend/
+BVDecide.lean`, the `mkConst ``Lean.ofReduceBool` at line 298 of the
+toolchain's own source). `BVDecideConfig` has no field that turns it off. The
+only route out of that class is a goal closed without the solver, so each of
+the 72 was re-posed with the same model definitions unfolded and
+`bv_normalize` — `bv_decide`'s own rewriting stage, a tactic in its own right
+— alone: **0 of 72 closed**, every one with `unsolved goals`, the whole
+attempt costing 26.2 s and peaking at 474 MB. Those 72 keep their `bv_decide`
+proofs. The record, per row, with wall clock, peak RSS and the axiom line as
+Lean prints it, is `l3_trust_classes.json`.

@@ -9,3 +9,36 @@ status: living
   `PlanPlan/framework/generate_nodes.py` from the
   `nodes` register of `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/CORE_0_3_2_1_hub_compiler.md`. Skeleton only — definition,
   designation, and content pending.
+- 2026-09-10: **task hub1 — first form standing** (step 4 of the master
+  order). `PseudoCoupHQ/Research/oracle/hub/dictionary.json`:
+  per (target, cell) the proved emulation SOURCE task ap5's loop landed,
+  with its route, its verdict and the ledger rows it covers — 151 entries
+  on c, 151 on rust, 161 on go, over the 253 cells of the outer set; and
+  per target the holes with their causes, the largest being the 61 cells
+  that write only flags. The go SIDE is the corpus's own attestation:
+  134 go units whose whole body is one arch-opcode instruction (task
+  o2's narrow rule) each name one cell, and every corpus go unit is
+  carried beside them so a construct the narrow rule does not hold is a
+  hole with go's OWN body as its cause.
+  Report: `PseudoCoupHQ/DevComms/log_252_task_hub1_hub_v1_first_form.md` §2.
+
+- 2026-09-10: **task hub2 — the dictionary is now READ FROM THE BANK and
+  has a second level** (step 4 of the master order, second form).
+  `PseudoCoupHQ/Research/oracle/hub/dictionary2.json`.
+  LEVEL ONE, per (target, cell): the preferred certificate of task
+  bank1's `certificates.jsonl` whose kind is `proved` or
+  `proved_under_caller_extension` and whose place is the cell's own
+  answer, joined back to the run that produced it — in the store the
+  certificate names — for the emulation's source, its symbol and its
+  PARAMETER HOLDERS, with the join checked by hashing the run's source
+  against the certificate's sha256 (512 of 512 joined and matched). 176
+  entries on c, 175 on rust, 161 on go, over the same 253-cell outer
+  set; only 3 of c's 176 come from the last pass and 128 from the first.
+  LEVEL ONE KEYED BY THE PAIR, (setter cell, consumer cell): 39 / 38 /
+  34 entries, the setter's width part of the key. LEVEL TWO, per pool
+  entry: tasks o7 (c), o11 (rust) and o13 (the mode) as a lookup — 195
+  entries on c, 285 on rust, 0 on go, and the go column's absence is a
+  cause on every one of its 137 hole rows. Every entry records the
+  holders the proof was made over, and every hole at every level carries
+  its cause.
+  Report: `PseudoCoupHQ/DevComms/log_254_task_hub2_the_dictionary_at_two_levels.md` §3, §4, §5.

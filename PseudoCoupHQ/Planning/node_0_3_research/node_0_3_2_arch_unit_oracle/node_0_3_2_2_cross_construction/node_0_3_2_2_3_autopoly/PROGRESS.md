@@ -5,6 +5,106 @@ status: living
 
 # PROGRESS — autopoly
 
+- 2026-09-10: task bank1 closed — THE POLYFILL LIBRARY AS BANKED
+  CERTIFICATES, AND THE LOOP RESHAPED TO DELTA PLUS AUDIT. A CERTIFICATE
+  is a record about ONE ARTIFACT: one (cell, target, written place) with
+  the term text it was posed on, the rendered source and its sha256, the
+  compiler and its flags LITERAL, the carved body's bytes and text, and
+  the gate's verdict in z3's own words with the region sentence where one
+  applied. `bank.py` read every run of every pass on disk — `ap1`..`ap5`,
+  task ap3's normalise-off ablation, task ex1's cpp pass, task ex1's
+  interpreted handful, task ex2's interpreted loop, and this task's own
+  delta pass — and wrote 12,593 certificates over 4,117 distinct keys onto
+  `certificates.jsonl`, the strongest of each key marked `preferred` (ties
+  by the earliest pass) and every weaker or later entry kept beside it and
+  marked `superseded_by`. PER KIND, preferred in brackets: `proved` 5,806
+  (1,227), `proved_under_caller_extension` 677 (122), `agreed` 1,385
+  (1,322), `sat` 483 (91), `undecided` 583 (72), `refused` 3,659 (1,283).
+  THE HEADLINE IN THREE READINGS, stated as three from now on — STRICT
+  (every written place proved), DESTINATION-ONLY (every place of the
+  destination register proved, the flags not read; the reading tasks ap1
+  to ap5 published) and CORPUS-NEEDED (the destination proved AND the
+  flags proved wherever the corpus's flag-pair attestation records a
+  consumer of a cell of this `mnem`'s flags): over the bank, 1,999 /
+  2,241 / 2,203 proved (cell, target) pairs, and at the cell width all
+  four 93 / 144 / 134 cells (60,534 / 84,633 / 73,425 attested ledger
+  rows, 45.5% / 63.61% / 55.19%), all five 92 / 140 / 132, all twelve 87 /
+  135 / 127. The five passes' own STRICT figures reproduce the
+  coordinator's object for object — 330 / 434 / 465 / 521 / 504, union
+  523 — and the 19 pairs proved by some pass and not by the last are
+  restored, every one an `imm_gpr` cell (`and` 8; `cmp` 8 and 16; `mov` 8
+  and 16; `or` 8; `sbb` 8) on c, rust or swift, all 19 preferred from
+  `ap1`. The passes' own published count is reconciled rather than left as
+  a discrepancy: they counted `proved` OR `proved_under_caller_extension`,
+  which recomputes to ap5's 165 cells on all four exactly. THE TEN
+  WITHIN-PASS BACKUP STORES were deliberately not banked and each was read
+  anyway: none holds a certified key the bank lacks. THE LOOP, RESHAPED:
+  `autopoly.py --bank` attempts (a) every (cell, target, written place)
+  with no certificate of kind `proved`/`agreed` and (b) a 5% audit sample
+  of the certified, chosen by `random.Random("2026-09-10")` and re-derived
+  from the term; an audited triple whose verdict differs on IDENTICAL
+  inputs is an ALARM that stops the pass. One pass on the five compiled
+  targets: certified before 1,225 / attempted 954 / newly certified 2 /
+  audited 58 / alarms 0, over 707 runs. A FULL pass over the same five was
+  run in the same instance and the same hour for the comparison: 1,265
+  runs, so the delta ran 55.9% of the runs and cost 81.9% of the seconds —
+  the saving is in RUNS, not proportionally in seconds, because the runs
+  the delta drops are the fast already-proved ones. The audit's 58: 51
+  reproduced identically, 7 came back on a DIFFERENT artifact (six
+  `imm_*`, the certificate's source saying `3` where the re-derivation's
+  says `v0` — task ap5's symbolic immediate, the same mechanism as the 19;
+  the seventh, `or` gpr_gpr 64 on c at `flags.high`, was proved by ap2
+  through the primitive route which the current driver refuses outright,
+  so it is a proof the machinery can no longer reach and the certificate
+  keeps it). Task ap1's driver was copied unchanged to `autopoly1.py` and
+  every unflagged command of `autopoly.py` delegates to it, so log 243's
+  seven reproducing commands and `lanes_ap1/ap1_l5_run.sh` still answer.
+  No shared file changed. Report:
+  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/bank1.md`.
+  Log: `PseudoCoupHQ/DevComms/log_253_task_bank1_the_bank.md`.
+  Status: closed, guard PASS on both json and both jsonl products,
+  verifier 20 claims / 0 DIFFERS, instance `bank1` down.
+
+- 2026-09-10: task ex2 closed — THE INTERPRETED LOOP: task ex1's check
+  (the cell's mapping rendered as source in the target's own operators,
+  compared against the reference's own term over a stated sample) run
+  over the whole 253-cell outer set instead of the handful's ten, on all
+  seven of task ex1's interpreted targets. 1,771 of 1,771 runs recorded:
+  ZERO disagreements, ZERO timeouts. cpython, ruby and javascript render
+  193 of 253 cells (120,433 ledger rows, 90.52%); php, java, dart and
+  csharp render 184 (116,057 rows, 87.23%) — every rendered cell's whole
+  sample agrees, on every target, with no exception. Beside the compiled
+  side at neither width redefining the other: all four is 165 cells /
+  106,773 rows / 80.25%, all five is 163 / 105,877 / 79.58% (a LOWER
+  BOUND — cpp's own store predates task ap5's imm_symbolic gain and was
+  not re-run, out of this task's scope; flagged for the owner); all seven
+  interpreted is 184 / 116,057 / 87.23%; all twelve (the five compiled
+  proved AND the seven agreeing) is 158 / 100,023 / 75.18%. TWO DEFECTS
+  OF THIS TASK'S OWN were found by its own runs and fixed in the ONE file
+  the brief authorises — `interp/interp_check.py`, the interpreted route,
+  nothing else touched: a destination place name carrying a dot
+  (`flags.low`, a halved place) or a hyphen (`stack_-8`, `push`'s own
+  write) was never sanitised before becoming a rendered FUNCTION NAME,
+  which every target refuses to parse — six refuse cleanly, and csharp's
+  REUSED project folder silently ran a STALE dll from an earlier
+  successful build instead, producing what looked like eleven then one
+  genuine disagreement. Both fixed (the same sanitisation
+  `handful.one_place`, the compiled route, already applies to the dot,
+  extended to the hyphen); every apparent disagreement traced to one of
+  the two and re-run to zero before any deliverable was written. The
+  handful's ten cells reproduce inside this loop, 63 of 63 compared
+  (`sub` imm_gpr 64 is not in this outer set, as tasks ap4 and ex1 both
+  already found). Declines (division by zero, the NaN region of `addss`)
+  and refusals (the x87 register, vector-lane gaps, six nullary cells
+  whose zero-arrival sample point every dialect's own blank-line
+  convention skips) are counted by cause, never scored, never worked
+  around. Report:
+  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand2.md`.
+  Log:
+  `PseudoCoupHQ/DevComms/log_250_task_ex2_the_interpreted_loop.md`.
+  Status: closed, guard PASS on both json products, verifier zero DIFFERS,
+  instance `ex2` down.
+
 - 2026-09-09: task ap5 closed with a STOP — the two mechanical remainders
   of the four languages, each closed IN THE LAYER THAT OWNS IT, and
   AutoPoly's loop, fifth pass. (1) THE x87 STACK, READ END TO END:

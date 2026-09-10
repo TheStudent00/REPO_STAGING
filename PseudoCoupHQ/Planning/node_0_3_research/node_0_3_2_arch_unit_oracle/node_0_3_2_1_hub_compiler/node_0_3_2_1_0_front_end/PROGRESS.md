@@ -9,3 +9,27 @@ status: living
   `PlanPlan/framework/generate_nodes.py` from the
   `nodes` register of `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/CORE_0_3_2_1_hub_compiler.md`. Skeleton only — definition,
   designation, and content pending.
+- 2026-09-10: **task hub1 — first form standing.** tree-sitter-go parses
+  the file (`hub.py front_end`), and go's own type checker types every
+  operator node: `go_types_oracle.go` (task o6's program, READ and never
+  edited) is run over the file alone and the two are joined by POSITION,
+  never by the token. On the handful, `13 operator nodes, typed by
+  go/types: 13`. One holder-spelling rule was needed and is stated: go's
+  own default type for an untyped boolean value is `bool`, which is how
+  go/types' `untyped bool` at a comparison and the corpus's own `bool`
+  are joined. The node key is the whole SPAN, because `a + b - c` gives
+  the outer node and its own left sub-node the same start.
+  Report: `PseudoCoupHQ/DevComms/log_252_task_hub1_hub_v1_first_form.md` §3.
+
+- 2026-09-10: **task hub2 — the front end resolves at three levels.**
+  The resolution itself is unchanged and is task hub1's: the candidate
+  set is the TYPE TUPLE and within it the candidate corpus unit's own go
+  source is parsed by the same grammar and the two operator nodes
+  compared as a parser does. What is new is that the answer — a named
+  corpus unit — is then served by whichever level the dictionary holds
+  it at, in the order cell, pair, pool entry, and nothing about the
+  node's own text chooses a level. On the handful all 13 operator nodes
+  resolved to a corpus unit, where task hub1 resolved 9. The holder
+  table gained one holder, `bool`; c reaches it by a cast and rust and
+  go by their own test against zero.
+  Report: `PseudoCoupHQ/DevComms/log_254_task_hub2_the_dictionary_at_two_levels.md` §1, §6.

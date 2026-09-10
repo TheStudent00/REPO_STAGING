@@ -1,0 +1,1838 @@
+{
+ "counts": {
+  "accepted_probes_per_language": {
+   "c": 10896,
+   "cpp": 18164,
+   "go": 815,
+   "rust": 942,
+   "swift": 1547
+  },
+  "accepted_probes_with_a_dwarf_table_per_language": {
+   "c": 10896,
+   "cpp": 18164,
+   "go": 815,
+   "rust": 942,
+   "swift": 1547
+  },
+  "dwarf_rows_carrying_a_byte_size_or_encoding_field": 0,
+  "dwarf_rows_examined": 64398,
+  "refused_probes_per_language": {
+   "c": 42079,
+   "cpp": 54333,
+   "go": 2090,
+   "rust": 3559,
+   "swift": 5244
+  },
+  "store_files_read": {
+   "op_units_<lang>": 5,
+   "op_units_asg_<lang>": 5,
+   "trickle_store": 338
+  }
+ },
+ "deliverables_not_written": [
+  "types101_holders.json",
+  "types101_spellings.json",
+  "types101_entry_holders.json"
+ ],
+ "dwarf_row_shapes_measured": [
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "cpp",
+   "rows": 33820,
+   "store_kind": "trickle_store"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "c",
+   "rows": 19676,
+   "store_kind": "trickle_store"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "swift",
+   "rows": 2581,
+   "store_kind": "trickle_store"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "go",
+   "rows": 1875,
+   "store_kind": "trickle_store"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "cpp",
+   "rows": 1476,
+   "store_kind": "op_units_<lang>"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "rust",
+   "rows": 1441,
+   "store_kind": "trickle_store"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "c",
+   "rows": 1138,
+   "store_kind": "op_units_<lang>"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "cpp",
+   "rows": 648,
+   "store_kind": "op_units_asg_<lang>"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "c",
+   "rows": 552,
+   "store_kind": "op_units_asg_<lang>"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "swift",
+   "rows": 303,
+   "store_kind": "op_units_<lang>"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "go",
+   "rows": 301,
+   "store_kind": "op_units_<lang>"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "rust",
+   "rows": 230,
+   "store_kind": "op_units_<lang>"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "go",
+   "rows": 177,
+   "store_kind": "op_units_asg_<lang>"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "rust",
+   "rows": 122,
+   "store_kind": "op_units_asg_<lang>"
+  },
+  {
+   "build": "anchor",
+   "dwarf_row_fields": [
+    "location",
+    "name"
+   ],
+   "language": "swift",
+   "rows": 58,
+   "store_kind": "op_units_asg_<lang>"
+  }
+ ],
+ "generated_by": "types101_join.py",
+ "memory": {
+  "bound": "ABORT_MEMORY_T101 at 2 GB, resource.getrusage(RUSAGE_SELF)",
+  "method": "one store file held at a time; only counters kept across files",
+  "peak_rss_bytes": 26083328,
+  "peak_rss_mb": 24.9
+ },
+ "outcome": "REFUSED_AT_STEP_1",
+ "refusal": {
+  "can_it_be_re_read": "not from disk. The probe objects were built inside the trickle container's /work and no trickle volume survives (`podman volume ls` lists no trickle volume), so re-reading DW_AT_type means recompiling, which is a new compile run and not this task's scope.",
+  "what_is_on_disk": "a DWARF parameter table per accepted probe, at the ANCHOR build, whose every row carries exactly two fields: `name` and `location`. `location` is the parameter's frame address (DW_OP_fbreg), not its width, and carries no encoding.",
+  "what_was_asked": "per language, per scalar-core spelling, the DWARF byte size and encoding as the compiler recorded it, read from the parameter tables of the probes that used that spelling",
+  "who_narrowed_it": "the reader shared by every probe lane, Research/op_pipeline/fold.py :: dwarf_rows, line 80: '`a=fbreg -4;b=fbreg -8` -> [{name, location}]'. The lane that produced the text it parses collects DW_AT_name and DW_AT_location off each DW_TAG_formal_parameter and never follows DW_AT_type.",
+  "why_the_join_cannot_be_made": "brief \u00a73 stop rule: the DWARF encoding decides the class and the width. With no DW_AT_byte_size and no DW_AT_encoding stored, a width would have to be assigned by hand from the spelling, which that rule forbids. Signedness in particular is not recoverable from the machine text: the register file separates integer from float, and the instruction suffix gives an access width, but nothing in the emitted text distinguishes a signed holder from an unsigned one."
+ },
+ "spelling_ban": "no operator token appears in any key, grouping, pairing or row structure here; the groupings are by language and by TYPE spelling, and the probe `operator` field is never read",
+ "task": "t101 -- dominant types, the join of language spellings to machine holders (CORE_0_3_research \u00a74.2 step 3)",
+ "the_spelling_side_only": {
+  "by_language": {
+   "c": [
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "_Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Bool"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 613,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "c",
+     "normalised_class": "float",
+     "spelling": "_Float16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "_Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat long _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat long _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat short _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat short _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned long _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned long _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned short _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned short _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 613,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "c",
+     "normalised_class": "float",
+     "spelling": "__bf16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 613,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "c",
+     "normalised_class": "float",
+     "spelling": "__float128"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "c",
+     "normalised_class": "float",
+     "spelling": "__fp16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "c",
+     "normalised_class": "float",
+     "spelling": "__ibm128"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "__int128_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "__uint128_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1156,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "bool"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "char"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "char16_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "char32_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "char8_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 830,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "c",
+     "normalised_class": "float",
+     "spelling": "double"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 830,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "c",
+     "normalised_class": "float",
+     "spelling": "float"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "c",
+     "normalised_class": "float",
+     "spelling": "half"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "int"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "long _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "long _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 613,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "c",
+     "normalised_class": "float",
+     "spelling": "long double"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "long long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "short"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "short _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "short _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "signed char"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "signed int"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "signed long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "signed long long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "c",
+     "normalised_class": "integer_signed",
+     "spelling": "signed short"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned char"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned int"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned long _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned long _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned long long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 842,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned short"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned short _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned short _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "c",
+     "normalised_class": "integer_unsigned",
+     "spelling": "wchar_t"
+    }
+   ],
+   "cpp": [
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "_Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Bool"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 904,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "cpp",
+     "normalised_class": "float",
+     "spelling": "_Float16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "_Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat long _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat long _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat short _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "_Sat short _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned long _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned long _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned short _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "_Sat unsigned short _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 904,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "cpp",
+     "normalised_class": "float",
+     "spelling": "__bf16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 904,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "cpp",
+     "normalised_class": "float",
+     "spelling": "__float128"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "cpp",
+     "normalised_class": "float",
+     "spelling": "__fp16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "cpp",
+     "normalised_class": "float",
+     "spelling": "__ibm128"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1300,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "__int128_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1278,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "__uint128_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1640,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "bool"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1292,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "char"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1302,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "char16_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1288,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "char32_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1302,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "char8_t"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1164,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "cpp",
+     "normalised_class": "float",
+     "spelling": "double"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1164,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "cpp",
+     "normalised_class": "float",
+     "spelling": "float"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "cpp",
+     "normalised_class": "float",
+     "spelling": "half"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1292,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "int"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1296,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "long _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "long _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 904,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "cpp",
+     "normalised_class": "float",
+     "spelling": "long double"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1296,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "long long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1292,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "short"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "short _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "short _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1292,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "signed char"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1292,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "signed int"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1296,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "signed long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1296,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "signed long long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1292,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "cpp",
+     "normalised_class": "integer_signed",
+     "spelling": "signed short"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1302,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned char"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1288,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned int"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1280,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned long _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned long _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1280,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned long long"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1302,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned short"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned short _Accum"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 0,
+     "attested": false,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "unsigned short _Fract"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 1292,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "cpp",
+     "normalised_class": "integer_unsigned",
+     "spelling": "wchar_t"
+    }
+   ],
+   "go": [
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 34,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsBoolean",
+     "language": "go",
+     "normalised_class": "truth_value",
+     "spelling": "bool"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 89,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsFloat",
+     "language": "go",
+     "normalised_class": "float",
+     "spelling": "float32"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 89,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsFloat",
+     "language": "go",
+     "normalised_class": "float",
+     "spelling": "float64"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 78,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger",
+     "language": "go",
+     "normalised_class": "integer_signed",
+     "spelling": "int"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 78,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger",
+     "language": "go",
+     "normalised_class": "integer_signed",
+     "spelling": "int16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 234,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger",
+     "language": "go",
+     "normalised_class": "integer_signed",
+     "spelling": "int32"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 234,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger",
+     "language": "go",
+     "normalised_class": "integer_signed",
+     "spelling": "int64"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 78,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger",
+     "language": "go",
+     "normalised_class": "integer_signed",
+     "spelling": "int8"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 78,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger|IsUnsigned",
+     "language": "go",
+     "normalised_class": "integer_unsigned",
+     "spelling": "uint"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 78,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger|IsUnsigned",
+     "language": "go",
+     "normalised_class": "integer_unsigned",
+     "spelling": "uint16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 78,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger|IsUnsigned",
+     "language": "go",
+     "normalised_class": "integer_unsigned",
+     "spelling": "uint32"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 234,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger|IsUnsigned",
+     "language": "go",
+     "normalised_class": "integer_unsigned",
+     "spelling": "uint64"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 78,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger|IsUnsigned",
+     "language": "go",
+     "normalised_class": "integer_unsigned",
+     "spelling": "uint8"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 78,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "IsInteger|IsUnsigned",
+     "language": "go",
+     "normalised_class": "integer_unsigned",
+     "spelling": "uintptr"
+    }
+   ],
+   "rust": [
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 103,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "nonnumeric_grammar_marked",
+     "language": "rust",
+     "normalised_class": "truth_value",
+     "spelling": "bool"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 111,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "rust",
+     "normalised_class": "float",
+     "spelling": "f32"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 111,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "rust",
+     "normalised_class": "float",
+     "spelling": "f64"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 84,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "rust",
+     "normalised_class": "integer_signed",
+     "spelling": "i128"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 84,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "rust",
+     "normalised_class": "integer_signed",
+     "spelling": "i16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 240,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "rust",
+     "normalised_class": "integer_signed",
+     "spelling": "i32"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 240,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "rust",
+     "normalised_class": "integer_signed",
+     "spelling": "i64"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 84,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "rust",
+     "normalised_class": "integer_signed",
+     "spelling": "i8"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 84,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "rust",
+     "normalised_class": "integer_signed",
+     "spelling": "isize"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 83,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "rust",
+     "normalised_class": "integer_unsigned",
+     "spelling": "u128"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 83,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "rust",
+     "normalised_class": "integer_unsigned",
+     "spelling": "u16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 83,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "rust",
+     "normalised_class": "integer_unsigned",
+     "spelling": "u32"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 237,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "rust",
+     "normalised_class": "integer_unsigned",
+     "spelling": "u64"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 83,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "rust",
+     "normalised_class": "integer_unsigned",
+     "spelling": "u8"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 83,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "rust",
+     "normalised_class": "integer_unsigned",
+     "spelling": "usize"
+    }
+   ],
+   "swift": [
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 46,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "truth_value",
+     "language": "swift",
+     "normalised_class": "truth_value",
+     "spelling": "Bool"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 113,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "swift",
+     "normalised_class": "float",
+     "spelling": "Double"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 113,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "swift",
+     "normalised_class": "float",
+     "spelling": "Float"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 31,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "swift",
+     "normalised_class": "float",
+     "spelling": "Float16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 31,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "float",
+     "language": "swift",
+     "normalised_class": "float",
+     "spelling": "Float80"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 196,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "swift",
+     "normalised_class": "integer_signed",
+     "spelling": "Int"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 70,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "swift",
+     "normalised_class": "integer_signed",
+     "spelling": "Int128"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 196,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "swift",
+     "normalised_class": "integer_signed",
+     "spelling": "Int16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 368,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "swift",
+     "normalised_class": "integer_signed",
+     "spelling": "Int32"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 368,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "swift",
+     "normalised_class": "integer_signed",
+     "spelling": "Int64"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 196,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_signed",
+     "language": "swift",
+     "normalised_class": "integer_signed",
+     "spelling": "Int8"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 195,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "swift",
+     "normalised_class": "integer_unsigned",
+     "spelling": "UInt"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 69,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "swift",
+     "normalised_class": "integer_unsigned",
+     "spelling": "UInt128"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 195,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "swift",
+     "normalised_class": "integer_unsigned",
+     "spelling": "UInt16"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 195,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "swift",
+     "normalised_class": "integer_unsigned",
+     "spelling": "UInt32"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 365,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "swift",
+     "normalised_class": "integer_unsigned",
+     "spelling": "UInt64"
+    },
+    {
+     "accepted_probes_that_used_this_spelling_as_an_operand": 195,
+     "attested": true,
+     "dwarf_byte_size": "NOT ON DISK -- see refusal",
+     "dwarf_encoding": "NOT ON DISK -- see refusal",
+     "extracted_marking": "integer_unsigned",
+     "language": "swift",
+     "normalised_class": "integer_unsigned",
+     "spelling": "UInt8"
+    }
+   ]
+  },
+  "what_this_is": "HALF of step 1, and it is labelled so it is never read as the deliverable. Per language, per scalar-core spelling: how many ACCEPTED probes declared an operand with that spelling, and whether any did. The machine side of step 1 -- the byte size and encoding the compiler recorded -- is the missing half, and every row says so."
+ },
+ "where_it_was_looked_for": [
+  {
+   "found": "a `dwarf` list on the anchor side of every accepted probe; every row has fields (location, name)",
+   "place": "PseudoCoupHQ/Research/op_pipeline/trickle_store/",
+   "what": "the 338 folded stores of the regenerated corpus (task 40, log_131); 326 op_units2_<lang>_<chunk>.json plus 8 op_units_recapture_<chunk>.json"
+  },
+  {
+   "found": "the same two-field row shape",
+   "place": "PseudoCoupHQ/Research/op_pipeline/op_units_<lang>.json",
+   "what": "the original 1,779-probe corpus's folded stores (logs 125-130)"
+  },
+  {
+   "found": "no `dwarf` field at all; their unit records carry arrival_contract_bindings / entry_contract / ledger, which are register facts, not type facts",
+   "place": "PseudoCoupHQ/Research/op_pipeline/canon3[6-9]_regen_store/, canon40_regen_store/",
+   "what": "the canonical-form stores over the regenerated corpus"
+  },
+  {
+   "found": "no probe DWARF product; the only DWARF-typed artifacts there are result_types_<lang>.json, which record the probe's RESULT type name only",
+   "place": "Airlock/agent/out/",
+   "what": "the sandbox's product folder, 288 entries, 9.1 GB"
+  },
+  {
+   "found": "interpreter handler parameters only (cpython, ruby, php, java) -- not the five compiled languages' probes",
+   "place": "PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.json, dwarf_typed_key_t27.json, proposal_representation_dimension2.json, proposal_representation_dimension3.json, prove_interp_computation.json, op_units_php.json, op_units_ruby.json",
+   "what": "every file in the tree carrying a byte_size or DW_ATE_ string"
+  },
+  {
+   "found": "c 276 and cpp 324 assignment-operator probes, gcc-built, and the RESULT type only -- no parameter row, no go, rust or swift, and not the regenerated corpus",
+   "place": "PseudoCoupHQ/Research/op_pipeline/result_types_asg_c.json, result_types_asg_cpp.json",
+   "what": "the only compiled-language artifacts keyed on DW_AT_encoding + DW_AT_byte_size"
+  },
+  {
+   "found": "an ACCEPT/REFUSE verdict and the compiler's refusal text; no width and no encoding was read from those compiles",
+   "place": "PseudoCoupHQ/Research/op_pipeline/type_inventory3.json and declare_raw/decl_<lang>.txt",
+   "what": "the declaration witness, one compile per candidate type"
+  }
+ ]
+}

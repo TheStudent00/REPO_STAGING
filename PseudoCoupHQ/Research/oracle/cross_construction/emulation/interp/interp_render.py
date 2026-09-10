@@ -345,7 +345,14 @@ class Csharp(Dialect):
         return "%s {\n        return %s;\n    }\n" % (head, body)
 
     def command(self, folder, path, symbol):
-        return [os.path.join(folder, "bin", "Release", "net10.0", "emu")]
+        # THE DLL THROUGH THE HOST, not the framework-dependent
+        # launcher: the launcher answers `You must install .NET to run
+        # this application` when the runtime is in the persist volume
+        # rather than on the machine's own path, which is what lane
+        # ex1_l8's first pass recorded (exit 131).
+        return ["/persist/dotnet/dotnet", "exec",
+                os.path.join(folder, "bin", "Release", "net10.0",
+                             "emu.dll")]
 
     def prepare(self, folder, path, symbol, environment):
         """THE ONE RUNNER THAT IS A BUILD."""
@@ -354,7 +361,8 @@ class Csharp(Dialect):
              "--nologo", "-v", "quiet"],
             cwd=folder, capture_output=True, text=True, timeout=1800,
             env=environment)
-        binary = os.path.join(folder, "bin", "Release", "net10.0", "emu")
+        binary = os.path.join(folder, "bin", "Release", "net10.0",
+                              "emu.dll")
         if not os.path.exists(binary):
             first = "(no diagnostic)"
             text = (done.stdout or done.stderr).strip()
@@ -366,7 +374,7 @@ class Csharp(Dialect):
                 first = text.splitlines()[0][:300]
             return None, ("the c# build exited %d and left no binary: %s"
                           % (done.returncode, first))
-        return [binary], None
+        return self.command(folder, path, symbol), None
 
 
 DIALECTS = {

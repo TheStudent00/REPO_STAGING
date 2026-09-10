@@ -1,0 +1,4928 @@
+{
+ "meta": {
+  "cells_source": "PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful_cells.json",
+  "host_folder": "PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful",
+  "memory_abort": "ABORT_MEMORY_H1",
+  "memory_bound_kb": 4194304,
+  "peak_kb": 405812,
+  "recheck_ceiling_ms": 300000,
+  "recheck_count": 4,
+  "ship_flags_c": "lane_gen.py compile_probe: `[CLANG, \"-std=c17\"] + [\"-O1\"] + [\"-c\", src, \"-o\", obj]` -- the ship build of every c unit in the corpus",
+  "ship_flags_rust": "lane_gen.py compile_probe, rust branch: `opt = [\"-C\", \"opt-level=1\", \"-C\", \"debug-assertions=off\"]` then `[\"rustc\", \"--crate-type=lib\", \"--emit=obj\"] + opt + [\"-o\", obj, src]` -- the ship build of every rust unit in the corpus",
+  "solver_ceiling_ms": 3000,
+  "task": "h1",
+  "what": "ten cells of the arch-opcode model table, two targets, twenty find_emulation runs"
+ },
+ "runs": [
+  {
+   "attestation": {
+    "example_units": [
+     "go/op_312",
+     "swift/op_222",
+     "java/op_1"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 11,
+    "setter": [],
+    "units": 11
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "lea (%rdi,%rsi,1),%eax",
+     "mnem": "lea",
+     "shape": "lea_mem"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "c",
+   "line": "add %esi,%edi",
+   "mnem": "add",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "8d 04 37 c3",
+     "body_text": "lea (%rdi,%rsi,1),%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "add_gpr_gpr_32__reg_rdi__c",
+     "landing": {
+      "landed": {
+       "mnem": "lea"
+      },
+      "remaining": [
+       {
+        "mnem": "lea"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "lea (%rdi,%rsi,1),%eax",
+      "verdict": "LANDED_ELSEWHERE"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "uint32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "uint32_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "((_ zero_extend 32)\n  (bvadd ((_ extract 31 0) seed_rdi) ((_ extract 31 0) seed_rsi)))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of add_gpr_gpr_32__reg_rdi__c.  The term's layer-5 text, LITERAL:\n   Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1)) */\n#include <stdint.h>\n\nuint64_t\nemu_add_gpr_gpr_32__reg_rdi__c(uint32_t a, uint32_t b)\n{\n    return (uint64_t)((uint64_t)(((uint64_t)(UINT32_C(0x0)) << 32) | (uint64_t)((uint32_t)((uint32_t)((uint32_t)a) + (uint32_t)((uint32_t)b)))));\n}\n",
+     "source_path": "src/add_gpr_gpr_32__reg_rdi__c.c",
+     "symbol": "emu_add_gpr_gpr_32__reg_rdi__c",
+     "text": "Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 64,
+     "body_bytes": "48 c1 e7 20 89 f0 48 09 f8 c3",
+     "body_text": "shl $0x20,%rdi; mov %esi,%eax; or %rdi,%rax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 64,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "label": "add_gpr_gpr_32__flags__c",
+     "landing": {
+      "holds_the_cells_own_opcode": false,
+      "remaining": [
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       }
+      ],
+      "stripped_count": 2,
+      "stripped_text": "shl $0x20,%rdi; or %rdi,%rax",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "uint32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "uint32_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(concat ((_ extract 31 0) seed_rdi) ((_ extract 31 0) seed_rsi))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of add_gpr_gpr_32__flags__c.  The term's layer-5 text, LITERAL:\n   Concat(Extract(31, 0, v0), Extract(31, 0, v1)) */\n#include <stdint.h>\n\nuint64_t\nemu_add_gpr_gpr_32__flags__c(uint32_t a, uint32_t b)\n{\n    return (uint64_t)((uint64_t)(((uint64_t)((uint32_t)a) << 32) | (uint64_t)((uint32_t)b)));\n}\n",
+     "source_path": "src/add_gpr_gpr_32__flags__c.c",
+     "symbol": "emu_add_gpr_gpr_32__flags__c",
+     "text": "Concat(Extract(31, 0, v0), Extract(31, 0, v1))",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r00138",
+   "setter": null,
+   "shape": "gpr_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "go/op_312",
+     "swift/op_222",
+     "java/op_1"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 11,
+    "setter": [],
+    "units": 11
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "lea (%rdi,%rsi,1),%eax",
+     "mnem": "lea",
+     "shape": "lea_mem"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "rust",
+   "line": "add %esi,%edi",
+   "mnem": "add",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "8d 04 37 c3",
+     "body_text": "lea (%rdi,%rsi,1),%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "add_gpr_gpr_32__reg_rdi__rust",
+     "landing": {
+      "landed": {
+       "mnem": "lea"
+      },
+      "remaining": [
+       {
+        "mnem": "lea"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "lea (%rdi,%rsi,1),%eax",
+      "verdict": "LANDED_ELSEWHERE"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "u32",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "u32",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "((_ zero_extend 32)\n  (bvadd ((_ extract 31 0) seed_rdi) ((_ extract 31 0) seed_rsi)))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of add_gpr_gpr_32__reg_rdi__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))\n#[no_mangle]\npub extern \"C\" fn emu_add_gpr_gpr_32__reg_rdi__rust(a: u32, b: u32) -> u64\n{\n    (((((((0x0u32) as u64) << 32) | ((((((((a as u32)) as u32)).wrapping_add((((b as u32)) as u32))) as u32)) as u64)) as u64)) as u64)\n}\n",
+     "source_path": "src/add_gpr_gpr_32__reg_rdi__rust.rs",
+     "symbol": "emu_add_gpr_gpr_32__reg_rdi__rust",
+     "text": "Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 64,
+     "body_bytes": "48 c1 e7 20 89 f0 48 09 f8 c3",
+     "body_text": "shl $0x20,%rdi; mov %esi,%eax; or %rdi,%rax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 64,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "label": "add_gpr_gpr_32__flags__rust",
+     "landing": {
+      "holds_the_cells_own_opcode": false,
+      "remaining": [
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       }
+      ],
+      "stripped_count": 2,
+      "stripped_text": "shl $0x20,%rdi; or %rdi,%rax",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "u32",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "u32",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(concat ((_ extract 31 0) seed_rdi) ((_ extract 31 0) seed_rsi))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of add_gpr_gpr_32__flags__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(Extract(31, 0, v0), Extract(31, 0, v1))\n#[no_mangle]\npub extern \"C\" fn emu_add_gpr_gpr_32__flags__rust(a: u32, b: u32) -> u64\n{\n    ((((((((a as u32)) as u64) << 32) | (((b as u32)) as u64)) as u64)) as u64)\n}\n",
+     "source_path": "src/add_gpr_gpr_32__flags__rust.rs",
+     "symbol": "emu_add_gpr_gpr_32__flags__rust",
+     "text": "Concat(Extract(31, 0, v0), Extract(31, 0, v1))",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r00138",
+   "setter": null,
+   "shape": "gpr_gpr"
+  },
+  {
+   "attestation": {
+    "ledger_rows": 0,
+    "units": 0
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "lea -0x3(%rdi),%rax",
+     "mnem": "lea",
+     "shape": "mem_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 64,
+   "lang": "c",
+   "line": "sub $0x3,%rdi",
+   "mnem": "sub",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "48 8d 47 fd c3",
+     "body_text": "lea -0x3(%rdi),%rax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi"
+      ],
+      "body_bits": 64,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000
+     },
+     "compiled": true,
+     "families": [
+      "rdi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "sub_imm_gpr_64__reg_rdi__c",
+     "landing": {
+      "landed": {
+       "mnem": "lea"
+      },
+      "remaining": [
+       {
+        "mnem": "lea"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "lea -0x3(%rdi),%rax",
+      "verdict": "LANDED_ELSEWHERE"
+     },
+     "params": [
+      {
+       "bits": 64,
+       "family": "rdi",
+       "holder": "uint64_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(bvsub seed_rdi #x0000000000000003)",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of sub_imm_gpr_64__reg_rdi__c.  The term's layer-5 text, LITERAL:\n   v0 + 18446744073709551613 */\n#include <stdint.h>\n\nuint64_t\nemu_sub_imm_gpr_64__reg_rdi__c(uint64_t a)\n{\n    return (uint64_t)((uint64_t)((uint64_t)((uint64_t)a) + (uint64_t)(UINT64_C(0xfffffffffffffffd))));\n}\n",
+     "source_path": "src/sub_imm_gpr_64__reg_rdi__c.c",
+     "symbol": "emu_sub_imm_gpr_64__reg_rdi__c",
+     "text": "v0 + 18446744073709551613",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 128,
+     "body_bytes": "b8 03 00 00 00 48 89 fa c3",
+     "body_text": "mov $0x3,%eax; mov %rdi,%rdx; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 128,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 128 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "label": "sub_imm_gpr_64__flags__c",
+     "landing": {
+      "landed": {
+       "mnem": "mov"
+      },
+      "remaining": [
+       {
+        "mnem": "mov"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "mov $0x3,%eax",
+      "verdict": "LANDED_ELSEWHERE"
+     },
+     "params": [
+      {
+       "bits": 64,
+       "family": "rdi",
+       "holder": "uint64_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(concat seed_rdi #x0000000000000003)",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of sub_imm_gpr_64__flags__c.  The term's layer-5 text, LITERAL:\n   Concat(v0, 3) */\n#include <stdint.h>\n\nunsigned __int128\nemu_sub_imm_gpr_64__flags__c(uint64_t a)\n{\n    return (unsigned __int128)((unsigned __int128)(((unsigned __int128)((uint64_t)a) << 64) | (unsigned __int128)(UINT64_C(0x3))));\n}\n",
+     "source_path": "src/sub_imm_gpr_64__flags__c.c",
+     "symbol": "emu_sub_imm_gpr_64__flags__c",
+     "text": "Concat(v0, 3)",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r14165",
+   "setter": null,
+   "shape": "imm_gpr"
+  },
+  {
+   "attestation": {
+    "ledger_rows": 0,
+    "units": 0
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "lea -0x3(%rdi),%rax",
+     "mnem": "lea",
+     "shape": "mem_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 64,
+   "lang": "rust",
+   "line": "sub $0x3,%rdi",
+   "mnem": "sub",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "48 8d 47 fd c3",
+     "body_text": "lea -0x3(%rdi),%rax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi"
+      ],
+      "body_bits": 64,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000
+     },
+     "compiled": true,
+     "families": [
+      "rdi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "sub_imm_gpr_64__reg_rdi__rust",
+     "landing": {
+      "landed": {
+       "mnem": "lea"
+      },
+      "remaining": [
+       {
+        "mnem": "lea"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "lea -0x3(%rdi),%rax",
+      "verdict": "LANDED_ELSEWHERE"
+     },
+     "params": [
+      {
+       "bits": 64,
+       "family": "rdi",
+       "holder": "u64",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(bvsub seed_rdi #x0000000000000003)",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of sub_imm_gpr_64__reg_rdi__rust.\n// The term's layer-5 text, LITERAL:\n//   v0 + 18446744073709551613\n#[no_mangle]\npub extern \"C\" fn emu_sub_imm_gpr_64__reg_rdi__rust(a: u64) -> u64\n{\n    ((((((((a as u64)) as u64)).wrapping_add(((0xfffffffffffffffdu64) as u64))) as u64)) as u64)\n}\n",
+     "source_path": "src/sub_imm_gpr_64__reg_rdi__rust.rs",
+     "symbol": "emu_sub_imm_gpr_64__reg_rdi__rust",
+     "text": "v0 + 18446744073709551613",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 128,
+     "body_bytes": "b8 03 00 00 00 48 89 fa c3",
+     "body_text": "mov $0x3,%eax; mov %rdi,%rdx; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 128,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 128 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "label": "sub_imm_gpr_64__flags__rust",
+     "landing": {
+      "landed": {
+       "mnem": "mov"
+      },
+      "remaining": [
+       {
+        "mnem": "mov"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "mov $0x3,%eax",
+      "verdict": "LANDED_ELSEWHERE"
+     },
+     "params": [
+      {
+       "bits": 64,
+       "family": "rdi",
+       "holder": "u64",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(concat seed_rdi #x0000000000000003)",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of sub_imm_gpr_64__flags__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(v0, 3)\n#[no_mangle]\npub extern \"C\" fn emu_sub_imm_gpr_64__flags__rust(a: u64) -> u128\n{\n    ((((((((a as u64)) as u128) << 64) | ((0x3u64) as u128)) as u128)) as u128)\n}\n",
+     "source_path": "src/sub_imm_gpr_64__flags__rust.rs",
+     "symbol": "emu_sub_imm_gpr_64__flags__rust",
+     "text": "Concat(v0, 3)",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r14165",
+   "setter": null,
+   "shape": "imm_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_174",
+     "cpp/op_174",
+     "go/op_60"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 266,
+    "setter": [],
+    "units": 266
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": false,
+     "line": "mov %edi,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "imul %esi,%eax",
+     "mnem": "imul",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "c",
+   "line": "imul %esi,%edi",
+   "mnem": "imul",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "89 f8 0f af c6 c3",
+     "body_text": "mov %edi,%eax; imul %esi,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "imul_gpr_gpr_32__reg_rdi__c",
+     "landing": {
+      "landed": {
+       "mnem": "imul"
+      },
+      "remaining": [
+       {
+        "mnem": "imul"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "imul %esi,%eax",
+      "verdict": "LANDED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "uint32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "uint32_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "((_ zero_extend 32)\n  (bvmul ((_ extract 31 0) seed_rdi) ((_ extract 31 0) seed_rsi)))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of imul_gpr_gpr_32__reg_rdi__c.  The term's layer-5 text, LITERAL:\n   Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1)) */\n#include <stdint.h>\n\nuint64_t\nemu_imul_gpr_gpr_32__reg_rdi__c(uint32_t a, uint32_t b)\n{\n    return (uint64_t)((uint64_t)(((uint64_t)(UINT32_C(0x0)) << 32) | (uint64_t)((uint32_t)((uint32_t)((uint32_t)a) * (uint32_t)((uint32_t)b)))));\n}\n",
+     "source_path": "src/imul_gpr_gpr_32__reg_rdi__c.c",
+     "symbol": "emu_imul_gpr_gpr_32__reg_rdi__c",
+     "text": "Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 64,
+     "body_bytes": "48 c1 e7 20 89 f0 48 09 f8 c3",
+     "body_text": "shl $0x20,%rdi; mov %esi,%eax; or %rdi,%rax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 64,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "label": "imul_gpr_gpr_32__flags__c",
+     "landing": {
+      "holds_the_cells_own_opcode": false,
+      "remaining": [
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       }
+      ],
+      "stripped_count": 2,
+      "stripped_text": "shl $0x20,%rdi; or %rdi,%rax",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "uint32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "uint32_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(concat ((_ extract 31 0) seed_rdi) ((_ extract 31 0) seed_rsi))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of imul_gpr_gpr_32__flags__c.  The term's layer-5 text, LITERAL:\n   Concat(Extract(31, 0, v0), Extract(31, 0, v1)) */\n#include <stdint.h>\n\nuint64_t\nemu_imul_gpr_gpr_32__flags__c(uint32_t a, uint32_t b)\n{\n    return (uint64_t)((uint64_t)(((uint64_t)((uint32_t)a) << 32) | (uint64_t)((uint32_t)b)));\n}\n",
+     "source_path": "src/imul_gpr_gpr_32__flags__c.c",
+     "symbol": "emu_imul_gpr_gpr_32__flags__c",
+     "text": "Concat(Extract(31, 0, v0), Extract(31, 0, v1))",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r07499",
+   "setter": null,
+   "shape": "gpr_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_174",
+     "cpp/op_174",
+     "go/op_60"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 266,
+    "setter": [],
+    "units": 266
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": false,
+     "line": "mov %edi,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "imul %esi,%eax",
+     "mnem": "imul",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "rust",
+   "line": "imul %esi,%edi",
+   "mnem": "imul",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "89 f8 0f af c6 c3",
+     "body_text": "mov %edi,%eax; imul %esi,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "imul_gpr_gpr_32__reg_rdi__rust",
+     "landing": {
+      "landed": {
+       "mnem": "imul"
+      },
+      "remaining": [
+       {
+        "mnem": "imul"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "imul %esi,%eax",
+      "verdict": "LANDED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "u32",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "u32",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "((_ zero_extend 32)\n  (bvmul ((_ extract 31 0) seed_rdi) ((_ extract 31 0) seed_rsi)))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of imul_gpr_gpr_32__reg_rdi__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))\n#[no_mangle]\npub extern \"C\" fn emu_imul_gpr_gpr_32__reg_rdi__rust(a: u32, b: u32) -> u64\n{\n    (((((((0x0u32) as u64) << 32) | ((((((((a as u32)) as u32)).wrapping_mul((((b as u32)) as u32))) as u32)) as u64)) as u64)) as u64)\n}\n",
+     "source_path": "src/imul_gpr_gpr_32__reg_rdi__rust.rs",
+     "symbol": "emu_imul_gpr_gpr_32__reg_rdi__rust",
+     "text": "Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 64,
+     "body_bytes": "48 c1 e7 20 89 f0 48 09 f8 c3",
+     "body_text": "shl $0x20,%rdi; mov %esi,%eax; or %rdi,%rax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 64,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "label": "imul_gpr_gpr_32__flags__rust",
+     "landing": {
+      "holds_the_cells_own_opcode": false,
+      "remaining": [
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       }
+      ],
+      "stripped_count": 2,
+      "stripped_text": "shl $0x20,%rdi; or %rdi,%rax",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "u32",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "u32",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(concat ((_ extract 31 0) seed_rdi) ((_ extract 31 0) seed_rsi))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of imul_gpr_gpr_32__flags__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(Extract(31, 0, v0), Extract(31, 0, v1))\n#[no_mangle]\npub extern \"C\" fn emu_imul_gpr_gpr_32__flags__rust(a: u32, b: u32) -> u64\n{\n    ((((((((a as u32)) as u64) << 32) | (((b as u32)) as u64)) as u64)) as u64)\n}\n",
+     "source_path": "src/imul_gpr_gpr_32__flags__rust.rs",
+     "symbol": "emu_imul_gpr_gpr_32__flags__rust",
+     "text": "Concat(Extract(31, 0, v0), Extract(31, 0, v1))",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r07499",
+   "setter": null,
+   "shape": "gpr_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_714",
+     "c/op_715",
+     "c/op_716"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 335,
+    "setter": [],
+    "units": 335
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": false,
+     "line": "mov %esi,%ecx",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "mov %edi,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "sar %cl,%eax",
+     "mnem": "sar",
+     "shape": "cl_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "c",
+   "line": "sar %cl,%edi",
+   "mnem": "sar",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "89 f1 89 f8 d3 f8 c3",
+     "body_text": "mov %esi,%ecx; mov %edi,%eax; sar %cl,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rcx"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rcx"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "sar_cl_gpr_32__reg_rdi__c",
+     "landing": {
+      "landed": {
+       "mnem": "sar"
+      },
+      "remaining": [
+       {
+        "mnem": "sar"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "sar %cl,%eax",
+      "verdict": "LANDED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "uint32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 8,
+       "family": "rcx",
+       "holder": "uint8_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 (bvashr ((_ extract 31 0) seed_rdi)\n                   ((_ zero_extend 24) (bvand ((_ extract 7 0) seed_rcx) #x1f)))))\n  ((_ zero_extend 32) a!1))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of sar_cl_gpr_32__reg_rdi__c.  The term's layer-5 text, LITERAL:\n   Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1))) */\n#include <stdint.h>\n\nuint64_t\nemu_sar_cl_gpr_32__reg_rdi__c(uint32_t a, uint8_t b)\n{\n    return (uint64_t)((uint64_t)(((uint64_t)(UINT32_C(0x0)) << 32) | (uint64_t)((uint32_t)((int32_t)((uint32_t)a) >> (unsigned)(uint32_t)((uint32_t)(((uint32_t)(UINT32_C(0x0)) << 5) | (uint32_t)(((uint32_t)((uint32_t)b >> 0) & UINT32_C(0x1f)))))))));\n}\n",
+     "source_path": "src/sar_cl_gpr_32__reg_rdi__c.c",
+     "symbol": "emu_sar_cl_gpr_32__reg_rdi__c",
+     "text": "Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))",
+     "writes": "reg_rdi"
+    }
+   ],
+   "row_id": "r12211",
+   "setter": null,
+   "shape": "cl_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_714",
+     "c/op_715",
+     "c/op_716"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 335,
+    "setter": [],
+    "units": 335
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": false,
+     "line": "mov %esi,%ecx",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "mov %edi,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "sar %cl,%eax",
+     "mnem": "sar",
+     "shape": "cl_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "rust",
+   "line": "sar %cl,%edi",
+   "mnem": "sar",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "89 f1 89 f8 d3 f8 c3",
+     "body_text": "mov %esi,%ecx; mov %edi,%eax; sar %cl,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rcx"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rcx"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "sar_cl_gpr_32__reg_rdi__rust",
+     "landing": {
+      "landed": {
+       "mnem": "sar"
+      },
+      "remaining": [
+       {
+        "mnem": "sar"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "sar %cl,%eax",
+      "verdict": "LANDED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "u32",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 8,
+       "family": "rcx",
+       "holder": "u8",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 (bvashr ((_ extract 31 0) seed_rdi)\n                   ((_ zero_extend 24) (bvand ((_ extract 7 0) seed_rcx) #x1f)))))\n  ((_ zero_extend 32) a!1))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of sar_cl_gpr_32__reg_rdi__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))\n#[no_mangle]\npub extern \"C\" fn emu_sar_cl_gpr_32__reg_rdi__rust(a: u32, b: u8) -> u64\n{\n    (((((((0x0u32) as u64) << 32) | ((((((((a as u32)) as i32)).wrapping_shr(((((((((0x0u32) as u32) << 5) | (((((((b as u32)) >> 0) as u32) & 0x1fu32)) as u32)) as u32)) as u32) as u32))) as u32)) as u64)) as u64)) as u64)\n}\n",
+     "source_path": "src/sar_cl_gpr_32__reg_rdi__rust.rs",
+     "symbol": "emu_sar_cl_gpr_32__reg_rdi__rust",
+     "text": "Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))",
+     "writes": "reg_rdi"
+    }
+   ],
+   "row_id": "r12211",
+   "setter": null,
+   "shape": "cl_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_726",
+     "c/op_727",
+     "c/op_728"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 251,
+    "setter": [],
+    "units": 251
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": false,
+     "line": "mov %esi,%ecx",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "mov %rdi,%rax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shr %cl,%rax",
+     "mnem": "shr",
+     "shape": "cl_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 64,
+   "lang": "c",
+   "line": "shr %cl,%rdi",
+   "mnem": "shr",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "89 f1 48 89 f8 48 d3 e8 c3",
+     "body_text": "mov %esi,%ecx; mov %rdi,%rax; shr %cl,%rax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rcx"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 64,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rcx"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "shr_cl_gpr_64__reg_rdi__c",
+     "landing": {
+      "landed": {
+       "mnem": "shr"
+      },
+      "remaining": [
+       {
+        "mnem": "shr"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "shr %cl,%rax",
+      "verdict": "LANDED"
+     },
+     "params": [
+      {
+       "bits": 64,
+       "family": "rdi",
+       "holder": "uint64_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 8,
+       "family": "rcx",
+       "holder": "uint8_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(bvlshr seed_rdi ((_ zero_extend 56) (bvand ((_ extract 7 0) seed_rcx) #x3f)))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of shr_cl_gpr_64__reg_rdi__c.  The term's layer-5 text, LITERAL:\n   LShR(v0, Concat(0, Extract(5, 0, v1))) */\n#include <stdint.h>\n\nuint64_t\nemu_shr_cl_gpr_64__reg_rdi__c(uint64_t a, uint8_t b)\n{\n    return (uint64_t)((uint64_t)((uint64_t)((uint64_t)a) >> (unsigned)(uint64_t)((uint64_t)(((uint64_t)(UINT64_C(0x0)) << 6) | (uint64_t)(((uint32_t)((uint32_t)b >> 0) & UINT32_C(0x3f)))))));\n}\n",
+     "source_path": "src/shr_cl_gpr_64__reg_rdi__c.c",
+     "symbol": "emu_shr_cl_gpr_64__reg_rdi__c",
+     "text": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+     "writes": "reg_rdi"
+    }
+   ],
+   "row_id": "r13982",
+   "setter": null,
+   "shape": "cl_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_726",
+     "c/op_727",
+     "c/op_728"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 251,
+    "setter": [],
+    "units": 251
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": false,
+     "line": "mov %esi,%ecx",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "mov %rdi,%rax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shr %cl,%rax",
+     "mnem": "shr",
+     "shape": "cl_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 64,
+   "lang": "rust",
+   "line": "shr %cl,%rdi",
+   "mnem": "shr",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "89 f1 48 89 f8 48 d3 e8 c3",
+     "body_text": "mov %esi,%ecx; mov %rdi,%rax; shr %cl,%rax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rcx"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 64,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rcx"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "shr_cl_gpr_64__reg_rdi__rust",
+     "landing": {
+      "landed": {
+       "mnem": "shr"
+      },
+      "remaining": [
+       {
+        "mnem": "shr"
+       }
+      ],
+      "stripped_count": 1,
+      "stripped_text": "shr %cl,%rax",
+      "verdict": "LANDED"
+     },
+     "params": [
+      {
+       "bits": 64,
+       "family": "rdi",
+       "holder": "u64",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 8,
+       "family": "rcx",
+       "holder": "u8",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(bvlshr seed_rdi ((_ zero_extend 56) (bvand ((_ extract 7 0) seed_rcx) #x3f)))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of shr_cl_gpr_64__reg_rdi__rust.\n// The term's layer-5 text, LITERAL:\n//   LShR(v0, Concat(0, Extract(5, 0, v1)))\n#[no_mangle]\npub extern \"C\" fn emu_shr_cl_gpr_64__reg_rdi__rust(a: u64, b: u8) -> u64\n{\n    (((((((a as u64)) as u64).wrapping_shr(((((((((0x0u64) as u64) << 6) | (((((((b as u32)) >> 0) as u32) & 0x3fu32)) as u64)) as u64)) as u64) as u32))) as u64)) as u64)\n}\n",
+     "source_path": "src/shr_cl_gpr_64__reg_rdi__rust.rs",
+     "symbol": "emu_shr_cl_gpr_64__reg_rdi__rust",
+     "text": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+     "writes": "reg_rdi"
+    }
+   ],
+   "row_id": "r13982",
+   "setter": null,
+   "shape": "cl_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_210",
+     "c/op_240",
+     "c/op_246"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 778,
+    "setter": [],
+    "units": 389
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x20,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %esi,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%rax",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %edx,%ecx",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "mov %edx,%esi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "shr $0x1f,%esi",
+     "mnem": "shr",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdx",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x32,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x31,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x30,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2f,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2e,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2d,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r9",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2c,%r9",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%r9",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2b,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2a,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x29,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x28,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x27,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x26,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x25,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r9,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x24,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r9",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x23,%r9",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%r9",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x22,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r9,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r9",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x21,%r9",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%r9",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "movabs $0xf8000000000000,%r10",
+     "mnem": "movabs",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "imul %rsi,%r10",
+     "mnem": "imul",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x39,%rsi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "neg %rsi",
+     "mnem": "neg",
+     "shape": "gpr_one"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x38,%rdx",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x20,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r9,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rsi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdx,%rcx",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rcx,%r10",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%r10",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r10",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "cqto",
+     "mnem": "cqto",
+     "reason": "the classifier could not read it: no register name and no row size to give a width"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "idiv %r10",
+     "mnem": "idiv",
+     "shape": "gpr_one"
+    },
+    {
+     "cell": false,
+     "line": "mov %eax,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "c",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "48 c1 e7 20 89 f0 48 09 f8 89 d1 89 d6 c1 ee 1f 48 89 f2 48 89 f7 48 c1 e7 32 49 89 f0 49 c1 e0 31 49 09 f8 48 89 f7 48 c1 e7 30 4c 09 c7 49 89 f0 49 c1 e0 2f 49 09 f8 48 89 f7 48 c1 e7 2e 4c 09 c7 49 89 f0 49 c1 e0 2d 49 09 f8 49 89 f1 49 c1 e1 2c 4d 09 c1 48 89 f7 48 c1 e7 2b 49 89 f0 49 c1 e0 2a 49 09 f8 48 89 f7 48 c1 e7 29 4c 09 c7 49 89 f0 49 c1 e0 28 49 09 f8 48 89 f7 48 c1 e7 27 4c 09 c7 49 89 f0 49 c1 e0 26 49 09 f8 48 89 f7 48 c1 e7 25 4c 09 c7 4c 09 cf 49 89 f0 49 c1 e0 24 49 89 f1 49 c1 e1 23 4d 09 c1 49 89 f0 49 c1 e0 22 4d 09 c8 49 89 f1 49 c1 e1 21 4d 09 c1 49 89 f0 49 ba 00 00 00 00 00 00 f8 00 4c 0f af d6 48 c1 e6 39 48 f7 de 48 c1 e2 38 49 c1 e0 20 4d 09 c8 49 09 f0 48 09 d1 49 09 ca 4d 09 c2 49 09 fa 48 99 49 f7 fa 89 c0 c3",
+     "body_text": "shl $0x20,%rdi; mov %esi,%eax; or %rdi,%rax; mov %edx,%ecx; mov %edx,%esi; shr $0x1f,%esi; mov %rsi,%rdx; mov %rsi,%rdi; shl $0x32,%rdi; mov %rsi,%r8; shl $0x31,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x30,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x2f,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x2e,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x2d,%r8; or %rdi,%r8; mov %rsi,%r9; shl $0x2c,%r9; or %r8,%r9; mov %rsi,%rdi; shl $0x2b,%rdi; mov %rsi,%r8; shl $0x2a,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x29,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x28,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x27,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x26,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x25,%rdi; or %r8,%rdi; or %r9,%rdi; mov %rsi,%r8; shl $0x24,%r8; mov %rsi,%r9; shl $0x23,%r9; or %r8,%r9; mov %rsi,%r8; shl $0x22,%r8; or %r9,%r8; mov %rsi,%r9; shl $0x21,%r9; or %r8,%r9; mov %rsi,%r8; movabs $0xf8000000000000,%r10; imul %rsi,%r10; shl $0x39,%rsi; neg %rsi; shl $0x38,%rdx; shl $0x20,%r8; or %r9,%r8; or %rsi,%r8; or %rdx,%rcx; or %rcx,%r10; or %r8,%r10; or %rdi,%r10; cqto; idiv %r10; mov %eax,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdx"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rax"
+       },
+       {
+        "row": "IN-2",
+        "the body reads": "rdx",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi",
+       "rdx"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "UNDECIDED",
+      "reason": "the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved",
+      "recheck": {
+       "aligned_rows": [
+        {
+         "row": "IN-0",
+         "the body reads": "rdi",
+         "the cell reads": "rdx"
+        },
+        {
+         "row": "IN-1",
+         "the body reads": "rsi",
+         "the cell reads": "rax"
+        },
+        {
+         "row": "IN-2",
+         "the body reads": "rdx",
+         "the cell reads": "rdi"
+        }
+       ],
+       "arrival_families_read_off_the_body": [
+        "rdi",
+        "rsi",
+        "rdx"
+       ],
+       "body_bits": 32,
+       "body_side_free_state": [],
+       "canon40_outcome": "WRAPPED_TEXT_PROVED",
+       "ceiling_ms": 300000,
+       "cell_bits": 64,
+       "outcome": "UNDECIDED",
+       "reason": "the solver did not answer inside its 300000 ms limit, so the verdict is undecided and never disproved",
+       "route": {
+        "body": "the reference's answer for the carved body",
+        "cell": "the cell's own term, as the model table holds it"
+       },
+       "solver_timeout_ms": 300000,
+       "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+      },
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdx",
+      "rax",
+      "rdi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "idiv_gpr_one_32__reg_rax__c",
+     "landing": {
+      "holds_the_cells_own_opcode": true,
+      "remaining": [
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shr"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "movabs"
+       },
+       {
+        "mnem": "imul"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "neg"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "cqto"
+       },
+       {
+        "mnem": "idiv"
+       }
+      ],
+      "stripped_count": 51,
+      "stripped_text": "shl $0x20,%rdi; or %rdi,%rax; shr $0x1f,%esi; shl $0x32,%rdi; shl $0x31,%r8; or %rdi,%r8; shl $0x30,%rdi; or %r8,%rdi; shl $0x2f,%r8; or %rdi,%r8; shl $0x2e,%rdi; or %r8,%rdi; shl $0x2d,%r8; or %rdi,%r8; shl $0x2c,%r9; or %r8,%r9; shl $0x2b,%rdi; shl $0x2a,%r8; or %rdi,%r8; shl $0x29,%rdi; or %r8,%rdi; shl $0x28,%r8; or %rdi,%r8; shl $0x27,%rdi; or %r8,%rdi; shl $0x26,%r8; or %rdi,%r8; shl $0x25,%rdi; or %r8,%rdi; or %r9,%rdi; shl $0x24,%r8; shl $0x23,%r9; or %r8,%r9; shl $0x22,%r8; or %r9,%r8; shl $0x21,%r9; or %r8,%r9; movabs $0xf8000000000000,%r10; imul %rsi,%r10; shl $0x39,%rsi; neg %rsi; shl $0x38,%rdx; shl $0x20,%r8; or %r9,%r8; or %rsi,%r8; or %rdx,%rcx; or %rcx,%r10; or %r8,%r10; or %rdi,%r10; cqto; idiv %r10",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdx",
+       "holder": "uint32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rax",
+       "holder": "uint32_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "uint32_t",
+       "index": 2,
+       "kind": "bv",
+       "name": "c",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 ((_ extract 31 0)\n             (bvsdiv (concat ((_ extract 31 0) seed_rdx)\n                             ((_ extract 31 0) seed_rax))\n                     ((_ sign_extend 32) ((_ extract 31 0) seed_rdi))))))\n  ((_ zero_extend 32) a!1))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of idiv_gpr_one_32__reg_rax__c.  The term's layer-5 text, LITERAL:\n   Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2))))) */\n#include <stdint.h>\n\nuint64_t\nemu_idiv_gpr_one_32__reg_rax__c(uint32_t a, uint32_t b, uint32_t c)\n{\n    return (uint64_t)((uint64_t)(((uint64_t)(UINT32_C(0x0)) << 32) | (uint64_t)((uint32_t)((uint64_t)((uint64_t)((int64_t)((int64_t)((uint64_t)(((uint64_t)((uint32_t)a) << 32) | (uint64_t)((uint32_t)b)))) / (int64_t)((int64_t)((uint64_t)(((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 63) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 62) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 61) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 60) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 59) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 58) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 57) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 56) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 55) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 54) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 53) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 52) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 51) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 50) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 49) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 48) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 47) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 46) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 45) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 44) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 43) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 42) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 41) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 40) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 39) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 38) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 37) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 36) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 35) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 34) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 33) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 32) | (uint64_t)((uint32_t)c)))))) >> 0))));\n}\n",
+     "source_path": "src/idiv_gpr_one_32__reg_rax__c.c",
+     "symbol": "emu_idiv_gpr_one_32__reg_rax__c",
+     "text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+     "writes": "reg_rax"
+    },
+    {
+     "bits": 64,
+     "body_bytes": "48 c1 e7 20 89 f0 48 09 f8 89 d1 89 d6 c1 ee 1f 48 89 f2 48 89 f7 48 c1 e7 32 49 89 f0 49 c1 e0 31 49 09 f8 48 89 f7 48 c1 e7 30 4c 09 c7 49 89 f0 49 c1 e0 2f 49 09 f8 48 89 f7 48 c1 e7 2e 4c 09 c7 49 89 f0 49 c1 e0 2d 49 09 f8 49 89 f1 49 c1 e1 2c 4d 09 c1 48 89 f7 48 c1 e7 2b 49 89 f0 49 c1 e0 2a 49 09 f8 48 89 f7 48 c1 e7 29 4c 09 c7 49 89 f0 49 c1 e0 28 49 09 f8 48 89 f7 48 c1 e7 27 4c 09 c7 49 89 f0 49 c1 e0 26 49 09 f8 48 89 f7 48 c1 e7 25 4c 09 c7 4c 09 cf 49 89 f0 49 c1 e0 24 49 89 f1 49 c1 e1 23 4d 09 c1 49 89 f0 49 c1 e0 22 4d 09 c8 49 89 f1 49 c1 e1 21 4d 09 c1 49 89 f0 49 ba 00 00 00 00 00 00 f8 00 4c 0f af d6 48 c1 e6 39 48 f7 de 48 c1 e2 38 49 c1 e0 20 4d 09 c8 49 09 f0 48 09 d1 49 09 ca 4d 09 c2 49 09 fa 48 99 49 f7 fa 89 d0 c3",
+     "body_text": "shl $0x20,%rdi; mov %esi,%eax; or %rdi,%rax; mov %edx,%ecx; mov %edx,%esi; shr $0x1f,%esi; mov %rsi,%rdx; mov %rsi,%rdi; shl $0x32,%rdi; mov %rsi,%r8; shl $0x31,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x30,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x2f,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x2e,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x2d,%r8; or %rdi,%r8; mov %rsi,%r9; shl $0x2c,%r9; or %r8,%r9; mov %rsi,%rdi; shl $0x2b,%rdi; mov %rsi,%r8; shl $0x2a,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x29,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x28,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x27,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x26,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x25,%rdi; or %r8,%rdi; or %r9,%rdi; mov %rsi,%r8; shl $0x24,%r8; mov %rsi,%r9; shl $0x23,%r9; or %r8,%r9; mov %rsi,%r8; shl $0x22,%r8; or %r9,%r8; mov %rsi,%r9; shl $0x21,%r9; or %r8,%r9; mov %rsi,%r8; movabs $0xf8000000000000,%r10; imul %rsi,%r10; shl $0x39,%rsi; neg %rsi; shl $0x38,%rdx; shl $0x20,%r8; or %r9,%r8; or %rsi,%r8; or %rdx,%rcx; or %rcx,%r10; or %r8,%r10; or %rdi,%r10; cqto; idiv %r10; mov %edx,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdx"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rax"
+       },
+       {
+        "row": "IN-2",
+        "the body reads": "rdx",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi",
+       "rdx"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "UNDECIDED",
+      "reason": "the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved",
+      "recheck": {
+       "aligned_rows": [
+        {
+         "row": "IN-0",
+         "the body reads": "rdi",
+         "the cell reads": "rdx"
+        },
+        {
+         "row": "IN-1",
+         "the body reads": "rsi",
+         "the cell reads": "rax"
+        },
+        {
+         "row": "IN-2",
+         "the body reads": "rdx",
+         "the cell reads": "rdi"
+        }
+       ],
+       "arrival_families_read_off_the_body": [
+        "rdi",
+        "rsi",
+        "rdx"
+       ],
+       "body_bits": 32,
+       "body_side_free_state": [],
+       "canon40_outcome": "WRAPPED_TEXT_PROVED",
+       "ceiling_ms": 300000,
+       "cell_bits": 64,
+       "outcome": "UNDECIDED",
+       "reason": "the solver did not answer inside its 300000 ms limit, so the verdict is undecided and never disproved",
+       "route": {
+        "body": "the reference's answer for the carved body",
+        "cell": "the cell's own term, as the model table holds it"
+       },
+       "solver_timeout_ms": 300000,
+       "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+      },
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdx",
+      "rax",
+      "rdi"
+     ],
+     "home": {
+      "family": "rdx",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "idiv_gpr_one_32__reg_rdx__c",
+     "landing": {
+      "holds_the_cells_own_opcode": true,
+      "remaining": [
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shr"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "movabs"
+       },
+       {
+        "mnem": "imul"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "neg"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "cqto"
+       },
+       {
+        "mnem": "idiv"
+       }
+      ],
+      "stripped_count": 51,
+      "stripped_text": "shl $0x20,%rdi; or %rdi,%rax; shr $0x1f,%esi; shl $0x32,%rdi; shl $0x31,%r8; or %rdi,%r8; shl $0x30,%rdi; or %r8,%rdi; shl $0x2f,%r8; or %rdi,%r8; shl $0x2e,%rdi; or %r8,%rdi; shl $0x2d,%r8; or %rdi,%r8; shl $0x2c,%r9; or %r8,%r9; shl $0x2b,%rdi; shl $0x2a,%r8; or %rdi,%r8; shl $0x29,%rdi; or %r8,%rdi; shl $0x28,%r8; or %rdi,%r8; shl $0x27,%rdi; or %r8,%rdi; shl $0x26,%r8; or %rdi,%r8; shl $0x25,%rdi; or %r8,%rdi; or %r9,%rdi; shl $0x24,%r8; shl $0x23,%r9; or %r8,%r9; shl $0x22,%r8; or %r9,%r8; shl $0x21,%r9; or %r8,%r9; movabs $0xf8000000000000,%r10; imul %rsi,%r10; shl $0x39,%rsi; neg %rsi; shl $0x38,%rdx; shl $0x20,%r8; or %r9,%r8; or %rsi,%r8; or %rdx,%rcx; or %rcx,%r10; or %r8,%r10; or %rdi,%r10; cqto; idiv %r10",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdx",
+       "holder": "uint32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rax",
+       "holder": "uint32_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "uint32_t",
+       "index": 2,
+       "kind": "bv",
+       "name": "c",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 ((_ extract 31 0)\n             (bvsrem (concat ((_ extract 31 0) seed_rdx)\n                             ((_ extract 31 0) seed_rax))\n                     ((_ sign_extend 32) ((_ extract 31 0) seed_rdi))))))\n  ((_ zero_extend 32) a!1))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of idiv_gpr_one_32__reg_rdx__c.  The term's layer-5 text, LITERAL:\n   Concat(0, Extract(31, 0, bvsrem_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2))))) */\n#include <stdint.h>\n\nuint64_t\nemu_idiv_gpr_one_32__reg_rdx__c(uint32_t a, uint32_t b, uint32_t c)\n{\n    return (uint64_t)((uint64_t)(((uint64_t)(UINT32_C(0x0)) << 32) | (uint64_t)((uint32_t)((uint64_t)((uint64_t)((int64_t)((int64_t)((uint64_t)(((uint64_t)((uint32_t)a) << 32) | (uint64_t)((uint32_t)b)))) % (int64_t)((int64_t)((uint64_t)(((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 63) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 62) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 61) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 60) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 59) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 58) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 57) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 56) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 55) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 54) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 53) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 52) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 51) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 50) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 49) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 48) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 47) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 46) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 45) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 44) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 43) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 42) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 41) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 40) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 39) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 38) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 37) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 36) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 35) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 34) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 33) | ((uint64_t)(((uint32_t)((uint32_t)c >> 31) & UINT32_C(0x1))) << 32) | (uint64_t)((uint32_t)c)))))) >> 0))));\n}\n",
+     "source_path": "src/idiv_gpr_one_32__reg_rdx__c.c",
+     "symbol": "emu_idiv_gpr_one_32__reg_rdx__c",
+     "text": "Concat(0, Extract(31, 0, bvsrem_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+     "writes": "reg_rdx"
+    }
+   ],
+   "row_id": "r07409",
+   "setter": null,
+   "shape": "gpr_one"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_210",
+     "c/op_240",
+     "c/op_246"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 778,
+    "setter": [],
+    "units": 389
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x20,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %esi,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%rax",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %edx,%ecx",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "mov %edx,%esi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "shr $0x1f,%esi",
+     "mnem": "shr",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdx",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x32,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x31,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x30,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2f,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2e,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2d,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r9",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2c,%r9",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%r9",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2b,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x2a,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x29,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x28,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x27,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x26,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%rdi",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x25,%rdi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r9,%rdi",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x24,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r9",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x23,%r9",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%r9",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x22,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r9,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r9",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x21,%r9",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%r9",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "mov %rsi,%r8",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "movabs $0xf8000000000000,%r10",
+     "mnem": "movabs",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "imul %rsi,%r10",
+     "mnem": "imul",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x39,%rsi",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "neg %rsi",
+     "mnem": "neg",
+     "shape": "gpr_one"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x38,%rdx",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "shl $0x20,%r8",
+     "mnem": "shl",
+     "shape": "imm_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r9,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rsi,%r8",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdx,%rcx",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rcx,%r10",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %r8,%r10",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "or %rdi,%r10",
+     "mnem": "or",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "cqto",
+     "mnem": "cqto",
+     "reason": "the classifier could not read it: no register name and no row size to give a width"
+    },
+    {
+     "cell": true,
+     "key_width": 64,
+     "line": "idiv %r10",
+     "mnem": "idiv",
+     "shape": "gpr_one"
+    },
+    {
+     "cell": false,
+     "line": "mov %eax,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "rust",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "48 c1 e7 20 89 f0 48 09 f8 89 d1 89 d6 c1 ee 1f 48 89 f2 48 89 f7 48 c1 e7 32 49 89 f0 49 c1 e0 31 49 09 f8 48 89 f7 48 c1 e7 30 4c 09 c7 49 89 f0 49 c1 e0 2f 49 09 f8 48 89 f7 48 c1 e7 2e 4c 09 c7 49 89 f0 49 c1 e0 2d 49 09 f8 49 89 f1 49 c1 e1 2c 4d 09 c1 48 89 f7 48 c1 e7 2b 49 89 f0 49 c1 e0 2a 49 09 f8 48 89 f7 48 c1 e7 29 4c 09 c7 49 89 f0 49 c1 e0 28 49 09 f8 48 89 f7 48 c1 e7 27 4c 09 c7 49 89 f0 49 c1 e0 26 49 09 f8 48 89 f7 48 c1 e7 25 4c 09 c7 4c 09 cf 49 89 f0 49 c1 e0 24 49 89 f1 49 c1 e1 23 4d 09 c1 49 89 f0 49 c1 e0 22 4d 09 c8 49 89 f1 49 c1 e1 21 4d 09 c1 49 89 f0 49 ba 00 00 00 00 00 00 f8 00 4c 0f af d6 48 c1 e6 39 48 f7 de 48 c1 e2 38 49 c1 e0 20 4d 09 c8 49 09 f0 48 09 d1 49 09 ca 4d 09 c2 49 09 fa 48 99 49 f7 fa 89 c0 c3",
+     "body_text": "shl $0x20,%rdi; mov %esi,%eax; or %rdi,%rax; mov %edx,%ecx; mov %edx,%esi; shr $0x1f,%esi; mov %rsi,%rdx; mov %rsi,%rdi; shl $0x32,%rdi; mov %rsi,%r8; shl $0x31,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x30,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x2f,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x2e,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x2d,%r8; or %rdi,%r8; mov %rsi,%r9; shl $0x2c,%r9; or %r8,%r9; mov %rsi,%rdi; shl $0x2b,%rdi; mov %rsi,%r8; shl $0x2a,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x29,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x28,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x27,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x26,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x25,%rdi; or %r8,%rdi; or %r9,%rdi; mov %rsi,%r8; shl $0x24,%r8; mov %rsi,%r9; shl $0x23,%r9; or %r8,%r9; mov %rsi,%r8; shl $0x22,%r8; or %r9,%r8; mov %rsi,%r9; shl $0x21,%r9; or %r8,%r9; mov %rsi,%r8; movabs $0xf8000000000000,%r10; imul %rsi,%r10; shl $0x39,%rsi; neg %rsi; shl $0x38,%rdx; shl $0x20,%r8; or %r9,%r8; or %rsi,%r8; or %rdx,%rcx; or %rcx,%r10; or %r8,%r10; or %rdi,%r10; cqto; idiv %r10; mov %eax,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdx"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rax"
+       },
+       {
+        "row": "IN-2",
+        "the body reads": "rdx",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi",
+       "rdx"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "UNDECIDED",
+      "reason": "the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved",
+      "recheck": {
+       "aligned_rows": [
+        {
+         "row": "IN-0",
+         "the body reads": "rdi",
+         "the cell reads": "rdx"
+        },
+        {
+         "row": "IN-1",
+         "the body reads": "rsi",
+         "the cell reads": "rax"
+        },
+        {
+         "row": "IN-2",
+         "the body reads": "rdx",
+         "the cell reads": "rdi"
+        }
+       ],
+       "arrival_families_read_off_the_body": [
+        "rdi",
+        "rsi",
+        "rdx"
+       ],
+       "body_bits": 32,
+       "body_side_free_state": [],
+       "canon40_outcome": "WRAPPED_TEXT_PROVED",
+       "ceiling_ms": 300000,
+       "cell_bits": 64,
+       "outcome": "UNDECIDED",
+       "reason": "the solver did not answer inside its 300000 ms limit, so the verdict is undecided and never disproved",
+       "route": {
+        "body": "the reference's answer for the carved body",
+        "cell": "the cell's own term, as the model table holds it"
+       },
+       "solver_timeout_ms": 300000,
+       "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+      },
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdx",
+      "rax",
+      "rdi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "idiv_gpr_one_32__reg_rax__rust",
+     "landing": {
+      "holds_the_cells_own_opcode": true,
+      "remaining": [
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shr"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "movabs"
+       },
+       {
+        "mnem": "imul"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "neg"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "cqto"
+       },
+       {
+        "mnem": "idiv"
+       }
+      ],
+      "stripped_count": 51,
+      "stripped_text": "shl $0x20,%rdi; or %rdi,%rax; shr $0x1f,%esi; shl $0x32,%rdi; shl $0x31,%r8; or %rdi,%r8; shl $0x30,%rdi; or %r8,%rdi; shl $0x2f,%r8; or %rdi,%r8; shl $0x2e,%rdi; or %r8,%rdi; shl $0x2d,%r8; or %rdi,%r8; shl $0x2c,%r9; or %r8,%r9; shl $0x2b,%rdi; shl $0x2a,%r8; or %rdi,%r8; shl $0x29,%rdi; or %r8,%rdi; shl $0x28,%r8; or %rdi,%r8; shl $0x27,%rdi; or %r8,%rdi; shl $0x26,%r8; or %rdi,%r8; shl $0x25,%rdi; or %r8,%rdi; or %r9,%rdi; shl $0x24,%r8; shl $0x23,%r9; or %r8,%r9; shl $0x22,%r8; or %r9,%r8; shl $0x21,%r9; or %r8,%r9; movabs $0xf8000000000000,%r10; imul %rsi,%r10; shl $0x39,%rsi; neg %rsi; shl $0x38,%rdx; shl $0x20,%r8; or %r9,%r8; or %rsi,%r8; or %rdx,%rcx; or %rcx,%r10; or %r8,%r10; or %rdi,%r10; cqto; idiv %r10",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdx",
+       "holder": "u32",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rax",
+       "holder": "u32",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "u32",
+       "index": 2,
+       "kind": "bv",
+       "name": "c",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 ((_ extract 31 0)\n             (bvsdiv (concat ((_ extract 31 0) seed_rdx)\n                             ((_ extract 31 0) seed_rax))\n                     ((_ sign_extend 32) ((_ extract 31 0) seed_rdi))))))\n  ((_ zero_extend 32) a!1))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of idiv_gpr_one_32__reg_rax__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))\n#[no_mangle]\npub extern \"C\" fn emu_idiv_gpr_one_32__reg_rax__rust(a: u32, b: u32, c: u32) -> u64\n{\n    (((((((0x0u32) as u64) << 32) | ((((((((({ let n1: i64 = ((((((((((a as u32)) as u64) << 32) | (((b as u32)) as u64)) as u64)) as i64)) as i64); let d1: i64 = ((((((((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 63) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 62) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 61) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 60) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 59) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 58) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 57) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 56) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 55) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 54) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 53) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 52) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 51) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 50) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 49) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 48) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 47) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 46) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 45) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 44) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 43) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 42) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 41) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 40) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 39) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 38) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 37) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 36) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 35) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 34) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 33) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 32) | (((c as u32)) as u64)) as u64)) as i64)) as i64); unsafe { if d1 == 0 || (n1 == i64::MIN && d1 == -1) { core::hint::unreachable_unchecked(); } } n1 / d1 })) as u64)) as u64) >> 0) as u32)) as u64)) as u64)) as u64)\n}\n",
+     "source_path": "src/idiv_gpr_one_32__reg_rax__rust.rs",
+     "symbol": "emu_idiv_gpr_one_32__reg_rax__rust",
+     "text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+     "writes": "reg_rax"
+    },
+    {
+     "bits": 64,
+     "body_bytes": "48 c1 e7 20 89 f0 48 09 f8 89 d1 89 d6 c1 ee 1f 48 89 f2 48 89 f7 48 c1 e7 32 49 89 f0 49 c1 e0 31 49 09 f8 48 89 f7 48 c1 e7 30 4c 09 c7 49 89 f0 49 c1 e0 2f 49 09 f8 48 89 f7 48 c1 e7 2e 4c 09 c7 49 89 f0 49 c1 e0 2d 49 09 f8 49 89 f1 49 c1 e1 2c 4d 09 c1 48 89 f7 48 c1 e7 2b 49 89 f0 49 c1 e0 2a 49 09 f8 48 89 f7 48 c1 e7 29 4c 09 c7 49 89 f0 49 c1 e0 28 49 09 f8 48 89 f7 48 c1 e7 27 4c 09 c7 49 89 f0 49 c1 e0 26 49 09 f8 48 89 f7 48 c1 e7 25 4c 09 c7 4c 09 cf 49 89 f0 49 c1 e0 24 49 89 f1 49 c1 e1 23 4d 09 c1 49 89 f0 49 c1 e0 22 4d 09 c8 49 89 f1 49 c1 e1 21 4d 09 c1 49 89 f0 49 ba 00 00 00 00 00 00 f8 00 4c 0f af d6 48 c1 e6 39 48 f7 de 48 c1 e2 38 49 c1 e0 20 4d 09 c8 49 09 f0 48 09 d1 49 09 ca 4d 09 c2 49 09 fa 48 99 49 f7 fa 89 d0 c3",
+     "body_text": "shl $0x20,%rdi; mov %esi,%eax; or %rdi,%rax; mov %edx,%ecx; mov %edx,%esi; shr $0x1f,%esi; mov %rsi,%rdx; mov %rsi,%rdi; shl $0x32,%rdi; mov %rsi,%r8; shl $0x31,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x30,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x2f,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x2e,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x2d,%r8; or %rdi,%r8; mov %rsi,%r9; shl $0x2c,%r9; or %r8,%r9; mov %rsi,%rdi; shl $0x2b,%rdi; mov %rsi,%r8; shl $0x2a,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x29,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x28,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x27,%rdi; or %r8,%rdi; mov %rsi,%r8; shl $0x26,%r8; or %rdi,%r8; mov %rsi,%rdi; shl $0x25,%rdi; or %r8,%rdi; or %r9,%rdi; mov %rsi,%r8; shl $0x24,%r8; mov %rsi,%r9; shl $0x23,%r9; or %r8,%r9; mov %rsi,%r8; shl $0x22,%r8; or %r9,%r8; mov %rsi,%r9; shl $0x21,%r9; or %r8,%r9; mov %rsi,%r8; movabs $0xf8000000000000,%r10; imul %rsi,%r10; shl $0x39,%rsi; neg %rsi; shl $0x38,%rdx; shl $0x20,%r8; or %r9,%r8; or %rsi,%r8; or %rdx,%rcx; or %rcx,%r10; or %r8,%r10; or %rdi,%r10; cqto; idiv %r10; mov %edx,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdx"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rax"
+       },
+       {
+        "row": "IN-2",
+        "the body reads": "rdx",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi",
+       "rdx"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "UNDECIDED",
+      "reason": "the solver did not answer inside its 3000 ms limit, so the verdict is undecided and never disproved",
+      "recheck": {
+       "aligned_rows": [
+        {
+         "row": "IN-0",
+         "the body reads": "rdi",
+         "the cell reads": "rdx"
+        },
+        {
+         "row": "IN-1",
+         "the body reads": "rsi",
+         "the cell reads": "rax"
+        },
+        {
+         "row": "IN-2",
+         "the body reads": "rdx",
+         "the cell reads": "rdi"
+        }
+       ],
+       "arrival_families_read_off_the_body": [
+        "rdi",
+        "rsi",
+        "rdx"
+       ],
+       "body_bits": 32,
+       "body_side_free_state": [],
+       "canon40_outcome": "WRAPPED_TEXT_PROVED",
+       "ceiling_ms": 300000,
+       "cell_bits": 64,
+       "outcome": "UNDECIDED",
+       "reason": "the solver did not answer inside its 300000 ms limit, so the verdict is undecided and never disproved",
+       "route": {
+        "body": "the reference's answer for the carved body",
+        "cell": "the cell's own term, as the model table holds it"
+       },
+       "solver_timeout_ms": 300000,
+       "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+      },
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdx",
+      "rax",
+      "rdi"
+     ],
+     "home": {
+      "family": "rdx",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "idiv_gpr_one_32__reg_rdx__rust",
+     "landing": {
+      "holds_the_cells_own_opcode": true,
+      "remaining": [
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shr"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "movabs"
+       },
+       {
+        "mnem": "imul"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "neg"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "shl"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "or"
+       },
+       {
+        "mnem": "cqto"
+       },
+       {
+        "mnem": "idiv"
+       }
+      ],
+      "stripped_count": 51,
+      "stripped_text": "shl $0x20,%rdi; or %rdi,%rax; shr $0x1f,%esi; shl $0x32,%rdi; shl $0x31,%r8; or %rdi,%r8; shl $0x30,%rdi; or %r8,%rdi; shl $0x2f,%r8; or %rdi,%r8; shl $0x2e,%rdi; or %r8,%rdi; shl $0x2d,%r8; or %rdi,%r8; shl $0x2c,%r9; or %r8,%r9; shl $0x2b,%rdi; shl $0x2a,%r8; or %rdi,%r8; shl $0x29,%rdi; or %r8,%rdi; shl $0x28,%r8; or %rdi,%r8; shl $0x27,%rdi; or %r8,%rdi; shl $0x26,%r8; or %rdi,%r8; shl $0x25,%rdi; or %r8,%rdi; or %r9,%rdi; shl $0x24,%r8; shl $0x23,%r9; or %r8,%r9; shl $0x22,%r8; or %r9,%r8; shl $0x21,%r9; or %r8,%r9; movabs $0xf8000000000000,%r10; imul %rsi,%r10; shl $0x39,%rsi; neg %rsi; shl $0x38,%rdx; shl $0x20,%r8; or %r9,%r8; or %rsi,%r8; or %rdx,%rcx; or %rcx,%r10; or %r8,%r10; or %rdi,%r10; cqto; idiv %r10",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdx",
+       "holder": "u32",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rax",
+       "holder": "u32",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "u32",
+       "index": 2,
+       "kind": "bv",
+       "name": "c",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 ((_ extract 31 0)\n             (bvsrem (concat ((_ extract 31 0) seed_rdx)\n                             ((_ extract 31 0) seed_rax))\n                     ((_ sign_extend 32) ((_ extract 31 0) seed_rdi))))))\n  ((_ zero_extend 32) a!1))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of idiv_gpr_one_32__reg_rdx__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(0, Extract(31, 0, bvsrem_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))\n#[no_mangle]\npub extern \"C\" fn emu_idiv_gpr_one_32__reg_rdx__rust(a: u32, b: u32, c: u32) -> u64\n{\n    (((((((0x0u32) as u64) << 32) | ((((((((({ let n1: i64 = ((((((((((a as u32)) as u64) << 32) | (((b as u32)) as u64)) as u64)) as i64)) as i64); let d1: i64 = ((((((((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 63) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 62) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 61) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 60) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 59) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 58) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 57) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 56) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 55) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 54) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 53) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 52) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 51) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 50) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 49) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 48) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 47) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 46) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 45) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 44) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 43) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 42) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 41) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 40) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 39) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 38) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 37) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 36) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 35) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 34) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 33) | ((((((((c as u32)) >> 31) as u32) & 0x1u32)) as u64) << 32) | (((c as u32)) as u64)) as u64)) as i64)) as i64); unsafe { if d1 == 0 || (n1 == i64::MIN && d1 == -1) { core::hint::unreachable_unchecked(); } } n1 % d1 })) as u64)) as u64) >> 0) as u32)) as u64)) as u64)) as u64)\n}\n",
+     "source_path": "src/idiv_gpr_one_32__reg_rdx__rust.rs",
+     "symbol": "emu_idiv_gpr_one_32__reg_rdx__rust",
+     "text": "Concat(0, Extract(31, 0, bvsrem_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+     "writes": "reg_rdx"
+    }
+   ],
+   "row_id": "r07409",
+   "setter": null,
+   "shape": "gpr_one"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "swift/regen_2049",
+     "swift/regen_2085"
+    ],
+    "flag_pair_rows": 2,
+    "ledger_rows": 2,
+    "setter": [
+     {
+      "ledger_rows": 2,
+      "mnem": "test"
+     }
+    ],
+    "units": 2
+   },
+   "chosen_by": "of the 11 TRANSLATED rows at this cell, the one whose arriving flag state was written by the setter the cell's own attestation records the most ledger rows for",
+   "composition": [
+    {
+     "cell": false,
+     "line": "mov %edx,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "test %edi,%esi",
+     "mnem": "test",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "cmove %ecx,%eax",
+     "mnem": "cmove",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "c",
+   "line": "cmovne %esi,%edi",
+   "mnem": "cmovne",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "89 d0 85 fe 0f 44 c1 c3",
+     "body_text": "mov %edx,%eax; test %edi,%esi; cmove %ecx,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdx"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rcx"
+       },
+       {
+        "row": "IN-2",
+        "the body reads": "rdx",
+        "the cell reads": "rsi"
+       },
+       {
+        "row": "IN-3",
+        "the body reads": "rcx",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi",
+       "rdx",
+       "rcx"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdx",
+      "rcx",
+      "rsi",
+      "rdi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "cmovne_gpr_gpr_32__reg_rdi__c",
+     "landing": {
+      "holds_the_cells_own_opcode": false,
+      "remaining": [
+       {
+        "mnem": "test"
+       },
+       {
+        "mnem": "cmove"
+       }
+      ],
+      "stripped_count": 2,
+      "stripped_text": "test %edi,%esi; cmove %ecx,%eax",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdx",
+       "holder": "uint32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rcx",
+       "holder": "uint32_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "uint32_t",
+       "index": 2,
+       "kind": "bv",
+       "name": "c",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "uint32_t",
+       "index": 3,
+       "kind": "bv",
+       "name": "d",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 (ite (distinct (bvand ((_ extract 31 0) seed_rdx)\n                                 ((_ extract 31 0) seed_rcx))\n                          #x00000000)\n                ((_ extract 31 0) seed_rsi)\n                ((_ extract 31 0) seed_rdi))))\n  ((_ zero_extend 32) a!1))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of cmovne_gpr_gpr_32__reg_rdi__c.  The term's layer-5 text, LITERAL:\n   Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3))) */\n#include <stdint.h>\n\nuint64_t\nemu_cmovne_gpr_gpr_32__reg_rdi__c(uint32_t a, uint32_t b, uint32_t c, uint32_t d)\n{\n    return (uint64_t)((uint64_t)(((uint64_t)(UINT32_C(0x0)) << 32) | (uint64_t)(((((uint32_t)((uint32_t)(~(uint32_t)((uint32_t)((uint32_t)((uint32_t)(~(uint32_t)((uint32_t)b))) | (uint32_t)((uint32_t)(~(uint32_t)((uint32_t)a))))))) == (uint32_t)(UINT32_C(0x0)))) ? (uint32_t)((uint32_t)d) : (uint32_t)((uint32_t)c)))));\n}\n",
+     "source_path": "src/cmovne_gpr_gpr_32__reg_rdi__c.c",
+     "symbol": "emu_cmovne_gpr_gpr_32__reg_rdi__c",
+     "text": "Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 64,
+     "families": [
+      "rdx",
+      "rcx"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "refusal_cause": "the flags place of a preseeded row is the flag state that ARRIVED, not a place this opcode writes",
+     "refusal_detail": null,
+     "rendered": false,
+     "sexpr": "(concat (bvand ((_ extract 31 0) seed_rdx) ((_ extract 31 0) seed_rcx))\n        #x00000000)",
+     "text": "Concat(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)), 0)",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r27756",
+   "setter": {
+    "composition": "seed_FLAG_L := Extract(31, 0, seed_rdx) & Extract(31, 0, seed_rcx) ; seed_FLAG_R := 0",
+    "line": "test %esi,%edi",
+    "mnem": "test",
+    "row_id": "r14507",
+    "why": "the setter this cell's own attestation records the most ledger rows for"
+   },
+   "shape": "gpr_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "swift/regen_2049",
+     "swift/regen_2085"
+    ],
+    "flag_pair_rows": 2,
+    "ledger_rows": 2,
+    "setter": [
+     {
+      "ledger_rows": 2,
+      "mnem": "test"
+     }
+    ],
+    "units": 2
+   },
+   "chosen_by": "of the 11 TRANSLATED rows at this cell, the one whose arriving flag state was written by the setter the cell's own attestation records the most ledger rows for",
+   "composition": [
+    {
+     "cell": false,
+     "line": "mov %edx,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "test %edi,%esi",
+     "mnem": "test",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "cmove %ecx,%eax",
+     "mnem": "cmove",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "rust",
+   "line": "cmovne %esi,%edi",
+   "mnem": "cmovne",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "89 d0 85 fe 0f 44 c1 c3",
+     "body_text": "mov %edx,%eax; test %edi,%esi; cmove %ecx,%eax; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdx"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rcx"
+       },
+       {
+        "row": "IN-2",
+        "the body reads": "rdx",
+        "the cell reads": "rsi"
+       },
+       {
+        "row": "IN-3",
+        "the body reads": "rcx",
+        "the cell reads": "rdi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi",
+       "rdx",
+       "rcx"
+      ],
+      "body_bits": 32,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "outcome": "PROVED_ON_SHIP",
+      "reason": "z3 proved the carved body's answer equal to the cell's term for every value of every aligned input row",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "width_note": "the cell's place is 64 bits and the carved body answers 32, so the gate's own rule cut both to 32"
+     },
+     "compiled": true,
+     "families": [
+      "rdx",
+      "rcx",
+      "rsi",
+      "rdi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "cmovne_gpr_gpr_32__reg_rdi__rust",
+     "landing": {
+      "holds_the_cells_own_opcode": false,
+      "remaining": [
+       {
+        "mnem": "test"
+       },
+       {
+        "mnem": "cmove"
+       }
+      ],
+      "stripped_count": 2,
+      "stripped_text": "test %edi,%esi; cmove %ecx,%eax",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": "rdx",
+       "holder": "u32",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rcx",
+       "holder": "u32",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rsi",
+       "holder": "u32",
+       "index": 2,
+       "kind": "bv",
+       "name": "c",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": "rdi",
+       "holder": "u32",
+       "index": 3,
+       "kind": "bv",
+       "name": "d",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 (ite (distinct (bvand ((_ extract 31 0) seed_rdx)\n                                 ((_ extract 31 0) seed_rcx))\n                          #x00000000)\n                ((_ extract 31 0) seed_rsi)\n                ((_ extract 31 0) seed_rdi))))\n  ((_ zero_extend 32) a!1))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of cmovne_gpr_gpr_32__reg_rdi__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))\n#[no_mangle]\npub extern \"C\" fn emu_cmovne_gpr_gpr_32__reg_rdi__rust(a: u32, b: u32, c: u32, d: u32) -> u64\n{\n    (((((((0x0u32) as u64) << 32) | (((if ((((((!((((((((!(((b as u32)) as u32)) as u32)) as u32) | ((((!(((a as u32)) as u32)) as u32)) as u32)) as u32)) as u32)) as u32)) as u32) == ((0x0u32) as u32))) { (((d as u32)) as u32) } else { (((c as u32)) as u32) })) as u64)) as u64)) as u64)\n}\n",
+     "source_path": "src/cmovne_gpr_gpr_32__reg_rdi__rust.rs",
+     "symbol": "emu_cmovne_gpr_gpr_32__reg_rdi__rust",
+     "text": "Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 64,
+     "families": [
+      "rdx",
+      "rcx"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "refusal_cause": "the flags place of a preseeded row is the flag state that ARRIVED, not a place this opcode writes",
+     "refusal_detail": null,
+     "rendered": false,
+     "sexpr": "(concat (bvand ((_ extract 31 0) seed_rdx) ((_ extract 31 0) seed_rcx))\n        #x00000000)",
+     "text": "Concat(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)), 0)",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r27756",
+   "setter": {
+    "composition": "seed_FLAG_L := Extract(31, 0, seed_rdx) & Extract(31, 0, seed_rcx) ; seed_FLAG_R := 0",
+    "line": "test %esi,%edi",
+    "mnem": "test",
+    "row_id": "r14507",
+    "why": "the setter this cell's own attestation records the most ledger rows for"
+   },
+   "shape": "gpr_gpr"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_282",
+     "c/op_283",
+     "c/op_284"
+    ],
+    "flag_pair_rows": 10335,
+    "ledger_rows": 10335,
+    "setter": [
+     {
+      "ledger_rows": 1252,
+      "mnem": "or"
+     },
+     {
+      "ledger_rows": 5691,
+      "mnem": "test"
+     },
+     {
+      "ledger_rows": 1164,
+      "mnem": "ucomiss"
+     },
+     {
+      "ledger_rows": 432,
+      "mnem": "ucomisd"
+     },
+     {
+      "ledger_rows": 1266,
+      "mnem": "cmp"
+     },
+     {
+      "ledger_rows": 472,
+      "mnem": "fucomip"
+     },
+     {
+      "ledger_rows": 57,
+      "mnem": "fucomi"
+     },
+     {
+      "ledger_rows": 1,
+      "mnem": "sbb"
+     }
+    ],
+    "units": 6691
+   },
+   "chosen_by": "of the 11 TRANSLATED rows at this cell, the one whose arriving flag state was written by the setter the cell's own attestation records the most ledger rows for",
+   "composition": [
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "xor %eax,%eax",
+     "mnem": "xor",
+     "shape": "gpr_same"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "test %edi,%esi",
+     "mnem": "test",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 8,
+     "line": "setne %al",
+     "mnem": "setne",
+     "shape": "gpr_one"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 8,
+   "lang": "c",
+   "line": "setne %dil",
+   "mnem": "setne",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "31 c0 85 fe 0f 95 c0 c3",
+     "body_text": "xor %eax,%eax; test %edi,%esi; setne %al; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 8,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "counterexample": "[IN_1 = 3841776640, IN_0 = 3841776640]",
+      "outcome": "DISPROVED",
+      "reason": "z3 found a starting state under which the two sides differ",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "under_caller_extension": {
+       "counterexample": null,
+       "narrow_rows": [
+        {
+         "holder": "uint8_t",
+         "row": "IN-0"
+        },
+        {
+         "holder": "uint8_t",
+         "row": "IN-1"
+        }
+       ],
+       "outcome": "PROVED_ON_SHIP",
+       "reason": "z3 proved the two equal for every input whose narrow arguments are zero-extended to the register"
+      },
+      "width_note": "the cell's place is 64 bits and the carved body answers 8, so the gate's own rule cut both to 8"
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "setne_gpr_one_8__reg_rdi__c",
+     "landing": {
+      "holds_the_cells_own_opcode": true,
+      "remaining": [
+       {
+        "mnem": "xor"
+       },
+       {
+        "mnem": "test"
+       },
+       {
+        "mnem": "setne"
+       }
+      ],
+      "stripped_count": 3,
+      "stripped_text": "xor %eax,%eax; test %edi,%esi; setne %al",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 8,
+       "family": "rdi",
+       "holder": "uint8_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 8,
+       "family": "rsi",
+       "holder": "uint8_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 (ite (distinct (bvand ((_ extract 7 0) seed_rdi)\n                                 ((_ extract 7 0) seed_rsi))\n                          #x00)\n                #x01\n                #x00)))\n  ((_ zero_extend 56) a!1))",
+     "source": "/* task o7 emulation -- rendered by emulate.py Renderer from the layer-4 term of setne_gpr_one_8__reg_rdi__c.  The term's layer-5 text, LITERAL:\n   Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1)) */\n#include <stdint.h>\n\nuint64_t\nemu_setne_gpr_one_8__reg_rdi__c(uint8_t a, uint8_t b)\n{\n    return (uint64_t)((uint64_t)(((uint64_t)(UINT64_C(0x0)) << 8) | (uint64_t)(((((uint32_t)(((uint32_t)(~(uint32_t)(((uint32_t)((uint32_t)(((uint32_t)(~(uint32_t)((uint32_t)a)) & UINT32_C(0xff))) | (uint32_t)(((uint32_t)(~(uint32_t)((uint32_t)b)) & UINT32_C(0xff)))) & UINT32_C(0xff)))) & UINT32_C(0xff))) == (uint32_t)(UINT32_C(0x0)))) ? (uint32_t)(UINT32_C(0x0)) : (uint32_t)(UINT32_C(0x1))))));\n}\n",
+     "source_path": "src/setne_gpr_one_8__reg_rdi__c.c",
+     "symbol": "emu_setne_gpr_one_8__reg_rdi__c",
+     "text": "Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 16,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "refusal_cause": "the flags place of a preseeded row is the flag state that ARRIVED, not a place this opcode writes",
+     "refusal_detail": null,
+     "rendered": false,
+     "sexpr": "(concat (bvand ((_ extract 7 0) seed_rdi) ((_ extract 7 0) seed_rsi)) #x00)",
+     "text": "Concat(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)), 0)",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r64972",
+   "setter": {
+    "composition": "seed_FLAG_L := Extract(7, 0, seed_rdi) & Extract(7, 0, seed_rsi) ; seed_FLAG_R := 0",
+    "line": "test %sil,%dil",
+    "mnem": "test",
+    "row_id": "r14461",
+    "why": "the setter this cell's own attestation records the most ledger rows for"
+   },
+   "shape": "gpr_one"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_282",
+     "c/op_283",
+     "c/op_284"
+    ],
+    "flag_pair_rows": 10335,
+    "ledger_rows": 10335,
+    "setter": [
+     {
+      "ledger_rows": 1252,
+      "mnem": "or"
+     },
+     {
+      "ledger_rows": 5691,
+      "mnem": "test"
+     },
+     {
+      "ledger_rows": 1164,
+      "mnem": "ucomiss"
+     },
+     {
+      "ledger_rows": 432,
+      "mnem": "ucomisd"
+     },
+     {
+      "ledger_rows": 1266,
+      "mnem": "cmp"
+     },
+     {
+      "ledger_rows": 472,
+      "mnem": "fucomip"
+     },
+     {
+      "ledger_rows": 57,
+      "mnem": "fucomi"
+     },
+     {
+      "ledger_rows": 1,
+      "mnem": "sbb"
+     }
+    ],
+    "units": 6691
+   },
+   "chosen_by": "of the 11 TRANSLATED rows at this cell, the one whose arriving flag state was written by the setter the cell's own attestation records the most ledger rows for",
+   "composition": [
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "xor %eax,%eax",
+     "mnem": "xor",
+     "shape": "gpr_same"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "test %edi,%esi",
+     "mnem": "test",
+     "shape": "gpr_gpr"
+    },
+    {
+     "cell": true,
+     "key_width": 8,
+     "line": "setne %al",
+     "mnem": "setne",
+     "shape": "gpr_one"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 8,
+   "lang": "rust",
+   "line": "setne %dil",
+   "mnem": "setne",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "31 c0 85 fe 0f 95 c0 c3",
+     "body_text": "xor %eax,%eax; test %edi,%esi; setne %al; ret",
+     "check": {
+      "aligned_rows": [
+       {
+        "row": "IN-0",
+        "the body reads": "rdi",
+        "the cell reads": "rdi"
+       },
+       {
+        "row": "IN-1",
+        "the body reads": "rsi",
+        "the cell reads": "rsi"
+       }
+      ],
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi"
+      ],
+      "body_bits": 8,
+      "body_side_free_state": [],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "cell_bits": 64,
+      "counterexample": "[IN_1 = 3841776640, IN_0 = 3841776640]",
+      "outcome": "DISPROVED",
+      "reason": "z3 found a starting state under which the two sides differ",
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      },
+      "solver_timeout_ms": 3000,
+      "under_caller_extension": {
+       "counterexample": null,
+       "narrow_rows": [
+        {
+         "holder": "u8",
+         "row": "IN-0"
+        },
+        {
+         "holder": "u8",
+         "row": "IN-1"
+        }
+       ],
+       "outcome": "PROVED_ON_SHIP",
+       "reason": "z3 proved the two equal for every input whose narrow arguments are zero-extended to the register"
+      },
+      "width_note": "the cell's place is 64 bits and the carved body answers 8, so the gate's own rule cut both to 8"
+     },
+     "compiled": true,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rdi",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "setne_gpr_one_8__reg_rdi__rust",
+     "landing": {
+      "holds_the_cells_own_opcode": true,
+      "remaining": [
+       {
+        "mnem": "xor"
+       },
+       {
+        "mnem": "test"
+       },
+       {
+        "mnem": "setne"
+       }
+      ],
+      "stripped_count": 3,
+      "stripped_text": "xor %eax,%eax; test %edi,%esi; setne %al",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 8,
+       "family": "rdi",
+       "holder": "u8",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 8,
+       "family": "rsi",
+       "holder": "u8",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "sexpr": "(let ((a!1 (ite (distinct (bvand ((_ extract 7 0) seed_rdi)\n                                 ((_ extract 7 0) seed_rsi))\n                          #x00)\n                #x01\n                #x00)))\n  ((_ zero_extend 56) a!1))",
+     "source": "#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]\n\n// task o11 emulation -- rendered by rust_render.py\n// RustRenderer from the layer-4 term of setne_gpr_one_8__reg_rdi__rust.\n// The term's layer-5 text, LITERAL:\n//   Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))\n#[no_mangle]\npub extern \"C\" fn emu_setne_gpr_one_8__reg_rdi__rust(a: u8, b: u8) -> u64\n{\n    (((((((0x0u64) as u64) << 8) | (((if (((((((!((((((((((!(((a as u32)) as u32)) as u32) & 0xffu32)) as u32) | (((((!(((b as u32)) as u32)) as u32) & 0xffu32)) as u32)) as u32) & 0xffu32)) as u32)) as u32) & 0xffu32)) as u32) == ((0x0u32) as u32))) { ((0x0u32) as u32) } else { ((0x1u32) as u32) })) as u64)) as u64)) as u64)\n}\n",
+     "source_path": "src/setne_gpr_one_8__reg_rdi__rust.rs",
+     "symbol": "emu_setne_gpr_one_8__reg_rdi__rust",
+     "text": "Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))",
+     "writes": "reg_rdi"
+    },
+    {
+     "bits": 16,
+     "families": [
+      "rdi",
+      "rsi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "THE CONVENTION: the flags place has no register home, so the rendered function answers in the c and rust calling rule's own answer register and the return type is the term's own width"
+     },
+     "refusal_cause": "the flags place of a preseeded row is the flag state that ARRIVED, not a place this opcode writes",
+     "refusal_detail": null,
+     "rendered": false,
+     "sexpr": "(concat (bvand ((_ extract 7 0) seed_rdi) ((_ extract 7 0) seed_rsi)) #x00)",
+     "text": "Concat(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)), 0)",
+     "writes": "flags"
+    }
+   ],
+   "row_id": "r64972",
+   "setter": {
+    "composition": "seed_FLAG_L := Extract(7, 0, seed_rdi) & Extract(7, 0, seed_rsi) ; seed_FLAG_R := 0",
+    "line": "test %sil,%dil",
+    "mnem": "test",
+    "row_id": "r14461",
+    "why": "the setter this cell's own attestation records the most ledger rows for"
+   },
+   "shape": "gpr_one"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_105",
+     "c/op_111",
+     "c/op_117"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 210,
+    "setter": [],
+    "units": 198
+   },
+   "chosen_by": "of the 4 TRANSLATED rows at this cell, the one whose own sweep width equals the cell's key_width",
+   "composition": [],
+   "key_width": 32,
+   "lang": "c",
+   "line": "addss %xmm1,%xmm0",
+   "mnem": "addss",
+   "places": [
+    {
+     "bits": 128,
+     "families": [
+      "xmm0",
+      "xmm1"
+     ],
+     "home": {
+      "family": "xmm0",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "addss_xmm_xmm_32__reg_xmm0__c",
+     "refusal_cause": "vector arrival used beyond its low lane",
+     "refusal_detail": "xmm0 read above bit 63",
+     "rendered": false,
+     "sexpr": "(let ((a!1 (fp.to_ieee_bv (fp.add roundNearestTiesToEven\n                                  ((_ to_fp 8 24) ((_ extract 31 0) seed_xmm0))\n                                  ((_ to_fp 8 24) ((_ extract 31 0) seed_xmm1))))))\n  (concat ((_ extract 127 32) seed_xmm0) a!1))",
+     "text": "Concat(Extract(127, 32, v0), fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1))))",
+     "writes": "reg_xmm0"
+    }
+   ],
+   "row_id": "r00332",
+   "setter": null,
+   "shape": "xmm_xmm"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_105",
+     "c/op_111",
+     "c/op_117"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 210,
+    "setter": [],
+    "units": 198
+   },
+   "chosen_by": "of the 4 TRANSLATED rows at this cell, the one whose own sweep width equals the cell's key_width",
+   "composition": [],
+   "key_width": 32,
+   "lang": "rust",
+   "line": "addss %xmm1,%xmm0",
+   "mnem": "addss",
+   "places": [
+    {
+     "bits": 128,
+     "families": [
+      "xmm0",
+      "xmm1"
+     ],
+     "home": {
+      "family": "xmm0",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "addss_xmm_xmm_32__reg_xmm0__rust",
+     "refusal_cause": "vector arrival used beyond its low lane",
+     "refusal_detail": "xmm0 read above bit 63",
+     "rendered": false,
+     "sexpr": "(let ((a!1 (fp.to_ieee_bv (fp.add roundNearestTiesToEven\n                                  ((_ to_fp 8 24) ((_ extract 31 0) seed_xmm0))\n                                  ((_ to_fp 8 24) ((_ extract 31 0) seed_xmm1))))))\n  (concat ((_ extract 127 32) seed_xmm0) a!1))",
+     "text": "Concat(Extract(127, 32, v0), fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1))))",
+     "writes": "reg_xmm0"
+    }
+   ],
+   "row_id": "r00332",
+   "setter": null,
+   "shape": "xmm_xmm"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_106",
+     "c/op_112",
+     "c/op_126"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 860,
+    "setter": [],
+    "units": 860
+   },
+   "chosen_by": "of the 4 TRANSLATED rows at this cell, the one whose own sweep width equals the cell's key_width",
+   "composition": [],
+   "key_width": 64,
+   "lang": "c",
+   "line": "cvtsi2sd %rdi,%xmm0",
+   "mnem": "cvtsi2sd",
+   "places": [
+    {
+     "bits": 128,
+     "families": [
+      "rdi",
+      "xmm0"
+     ],
+     "home": {
+      "family": "xmm0",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "cvtsi2sd_gpr_xmm_64__reg_xmm0__c",
+     "refusal_cause": "vector arrival used beyond its low lane",
+     "refusal_detail": "xmm0 read above bit 63",
+     "rendered": false,
+     "sexpr": "(concat ((_ extract 127 64) seed_xmm0)\n        (fp.to_ieee_bv ((_ to_fp 11 53) roundNearestTiesToEven seed_rdi)))",
+     "text": "Concat(Extract(127, 64, v0), fp.to_ieee_bv(fpToFP(RNE(), v1)))",
+     "writes": "reg_xmm0"
+    }
+   ],
+   "row_id": "r02658",
+   "setter": null,
+   "shape": "gpr_xmm"
+  },
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_106",
+     "c/op_112",
+     "c/op_126"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 860,
+    "setter": [],
+    "units": 860
+   },
+   "chosen_by": "of the 4 TRANSLATED rows at this cell, the one whose own sweep width equals the cell's key_width",
+   "composition": [],
+   "key_width": 64,
+   "lang": "rust",
+   "line": "cvtsi2sd %rdi,%xmm0",
+   "mnem": "cvtsi2sd",
+   "places": [
+    {
+     "bits": 128,
+     "families": [
+      "rdi",
+      "xmm0"
+     ],
+     "home": {
+      "family": "xmm0",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "cvtsi2sd_gpr_xmm_64__reg_xmm0__rust",
+     "refusal_cause": "vector arrival used beyond its low lane",
+     "refusal_detail": "xmm0 read above bit 63",
+     "rendered": false,
+     "sexpr": "(concat ((_ extract 127 64) seed_xmm0)\n        (fp.to_ieee_bv ((_ to_fp 11 53) roundNearestTiesToEven seed_rdi)))",
+     "text": "Concat(Extract(127, 64, v0), fp.to_ieee_bv(fpToFP(RNE(), v1)))",
+     "writes": "reg_xmm0"
+    }
+   ],
+   "row_id": "r02658",
+   "setter": null,
+   "shape": "gpr_xmm"
+  }
+ ]
+}

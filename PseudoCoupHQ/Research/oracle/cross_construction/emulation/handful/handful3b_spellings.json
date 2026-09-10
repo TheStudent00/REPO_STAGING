@@ -1,0 +1,586 @@
+{
+ "go": [
+  {
+   "bodies": [
+    {
+     "body": "add %ebx,%eax; ret",
+     "probe": "plain_sum_u32"
+    },
+    {
+     "body": "sub %ebx,%eax; ret",
+     "probe": "plain_difference_u32"
+    },
+    {
+     "body": "imul %rbx,%rax; ret",
+     "probe": "plain_product_u64"
+    }
+   ],
+   "measured": true,
+   "probes": "plain_sum_u32, plain_difference_u32, plain_product_u64",
+   "spelling": "the plain operator on the unsigned holder",
+   "what_it_emits": "go's arithmetic on an unsigned holder wraps and carries no check at the ship flags, so the plain operator IS the term's meaning",
+   "z3_kind": "Z3_OP_BADD, Z3_OP_BSUB, Z3_OP_BMUL"
+  },
+  {
+   "bodies": [
+    {
+     "body": "mov %eax,%ecx; and %ebx,%ecx; xor %ebx,%eax; or %ecx,%eax; ret",
+     "probe": "bitwise_three_u32"
+    }
+   ],
+   "measured": true,
+   "probes": "bitwise_three_u32",
+   "spelling": "the plain bitwise operator",
+   "what_it_emits": "one instruction each",
+   "z3_kind": "Z3_OP_BAND, Z3_OP_BOR, Z3_OP_BXOR"
+  },
+  {
+   "bodies": [
+    {
+     "body": "neg %eax; ret",
+     "probe": "plain_negate_u32"
+    }
+   ],
+   "measured": true,
+   "probes": "plain_negate_u32",
+   "spelling": "unary minus on the unsigned holder",
+   "what_it_emits": "wraps, one instruction",
+   "z3_kind": "Z3_OP_BNEG"
+  },
+  {
+   "bodies": [
+    {
+     "body": "not %eax; ret",
+     "probe": "complement_u32"
+    }
+   ],
+   "measured": true,
+   "probes": "complement_u32",
+   "spelling": "the caret prefix, go's own complement",
+   "what_it_emits": "one instruction",
+   "z3_kind": "Z3_OP_BNOT"
+  },
+  {
+   "bodies": [
+    {
+     "body": "mov %ebx,%ecx; shl %cl,%eax; cmp $0x20,%ecx; sbb %edx,%edx; and %edx,%eax; ret",
+     "probe": "plain_left_shift_u32"
+    },
+    {
+     "body": "mov %ebx,%ecx; shl %cl,%eax; ret",
+     "probe": "masked_left_shift_u32"
+    },
+    {
+     "body": "mov %ebx,%ecx; shr %cl,%eax; ret",
+     "probe": "masked_right_shift_u32"
+    }
+   ],
+   "measured": true,
+   "probes": "plain_left_shift_u32, masked_left_shift_u32, masked_right_shift_u32",
+   "spelling": "the plain shift with the count MASKED to the width in the source",
+   "what_it_emits": "unmasked, go emits its own out-of-range guard after the shift because it defines a count at or above the width as answering zero; masked, it emits the bare shift",
+   "z3_kind": "Z3_OP_BSHL, Z3_OP_BLSHR"
+  },
+  {
+   "bodies": [
+    {
+     "body": "mov %ebx,%ecx; sar %cl,%eax; ret",
+     "probe": "masked_arith_shift_i32"
+    },
+    {
+     "body": "mov %ebx,%ecx; sar %cl,%eax; ret",
+     "probe": "masked_arith_shift_via_unsigned"
+    }
+   ],
+   "measured": true,
+   "probes": "masked_arith_shift_i32, masked_arith_shift_via_unsigned",
+   "spelling": "the value converted to the signed holder, shifted, converted back",
+   "what_it_emits": "one instruction either way",
+   "z3_kind": "Z3_OP_BASHR"
+  },
+  {
+   "bodies": [
+    {
+     "body": "push %rbp; mov %rsp,%rbp; test %ebx,%ebx; je 47a64e <main.plain_quotient_u32+0xe>; xor %edx,%edx; div %ebx; pop %rbp; ret; call 43f3c0 <runtime.panicdivide>; nop",
+     "probe": "plain_quotient_u32"
+    }
+   ],
+   "measured": true,
+   "probes": "plain_quotient_u32",
+   "spelling": "the plain operator on the unsigned holder",
+   "what_it_emits": "go checks the zero divisor and branches into runtime.panicdivide -- the EDGE REGION, rendered rather than hidden",
+   "z3_kind": "Z3_OP_BUDIV_I, Z3_OP_BUREM_I"
+  },
+  {
+   "bodies": [
+    {
+     "body": "push %rbp; mov %rsp,%rbp; test %ebx,%ebx; je 47a658 <main.plain_quotient_i32+0x18>; cmp $0xffffffff,%ebx; jne 47a653 <main.plain_quotient_i32+0x13>; neg %eax; xor %edx,%edx; jmp 47a656 <main.plain_quotient_i32+0x16>; cltd; idiv %ebx; pop %rbp; ret; call 43f3c0 <runtime.panicdivide>; nop",
+     "probe": "plain_quotient_i32"
+    },
+    {
+     "body": "push %rbp; mov %rsp,%rbp; test %ebx,%ebx; je 47a65a <main.plain_remainder_i32+0x1a>; cmp $0xffffffff,%ebx; jne 47a653 <main.plain_remainder_i32+0x13>; neg %eax; xor %edx,%edx; jmp 47a656 <main.plain_remainder_i32+0x16>; cltd; idiv %ebx; mov %edx,%eax; pop %rbp; ret; call 43f3c0 <runtime.panicdivide>; nop",
+     "probe": "plain_remainder_i32"
+    },
+    {
+     "body": "push %rbp; mov %rsp,%rbp; test %rbx,%rbx; je 47a67d <main.plain_quotient_i64+0x1d>; cmp $0xffffffffffffffff,%rbx; jne 47a676 <main.plain_quotient_i64+0x16>; neg %rax; xor %edx,%edx; jmp 47a67b <main.plain_quotient_i64+0x1b>; cqto; idiv %rbx; pop %rbp; ret; nopl (%rax); call 43f360 <runtime.panicdivide>; nop",
+     "probe": "plain_quotient_i64"
+    }
+   ],
+   "measured": true,
+   "probes": "plain_quotient_i32, plain_remainder_i32, plain_quotient_i64",
+   "spelling": "the plain operator on the signed holder",
+   "what_it_emits": "go checks the zero divisor AND the extreme case, which its own specification defines as wrapping -- both EDGE REGIONS",
+   "z3_kind": "Z3_OP_BSDIV_I, Z3_OP_BSREM_I"
+  },
+  {
+   "bodies": [
+    {
+     "body": "test %al,%al; cmovne %rbx,%rcx; mov %rcx,%rax; ret",
+     "probe": "select_u64"
+    },
+    {
+     "body": "nop; test %al,%al; jne 47a668 <main.select_f64+0x8>; movups %xmm1,%xmm0; ret",
+     "probe": "select_f64"
+    },
+    {
+     "body": "test %al,%al; test %bl,%bl; mov %rdi,%rdx; cmovne %rcx,%rdi; test %al,%al; cmovne %rdi,%rdx; mov %rdx,%rax; ret",
+     "probe": "nested_select_u64"
+    }
+   ],
+   "measured": true,
+   "probes": "select_u64, select_f64, nested_select_u64",
+   "spelling": "a call to a helper function written into the same file",
+   "what_it_emits": "go has no conditional EXPRESSION; the helper inlines to a conditional move for integer arms and to a branch for float arms",
+   "z3_kind": "Z3_OP_ITE"
+  },
+  {
+   "bodies": [
+    {
+     "body": "cmp %rax,%rbx; sete %cl; movzbl %cl,%eax; ret",
+     "probe": "equality_u64"
+    }
+   ],
+   "measured": true,
+   "probes": "equality_u64",
+   "spelling": "the plain comparison, through the conditional helper",
+   "what_it_emits": "one compare and one set",
+   "z3_kind": "Z3_OP_EQ, Z3_OP_DISTINCT"
+  },
+  {
+   "bodies": [
+    {
+     "body": "cmp %eax,%ebx; seta %cl; movzbl %cl,%eax; ret",
+     "probe": "compare_u32"
+    },
+    {
+     "body": "cmp %eax,%ebx; setg %cl; movzbl %cl,%eax; ret",
+     "probe": "signed_compare_i32"
+    }
+   ],
+   "measured": true,
+   "probes": "compare_u32, signed_compare_i32",
+   "spelling": "the plain comparison on the converted holder",
+   "what_it_emits": "one compare and one set",
+   "z3_kind": "Z3_OP_SLEQ .. Z3_OP_UGT"
+  },
+  {
+   "bodies": [
+    {
+     "body": "mov %eax,%eax; ret",
+     "probe": "zero_extend_after_narrow"
+    },
+    {
+     "body": "mov %eax,%eax; shl $0x20,%rax; mov %ebx,%ecx; or %rcx,%rax; ret",
+     "probe": "concat_shift_or_u64"
+    }
+   ],
+   "measured": true,
+   "probes": "zero_extend_after_narrow, concat_shift_or_u64",
+   "spelling": "the explicit conversion, and a shift joined by an or",
+   "what_it_emits": "go converts explicitly and never implicitly",
+   "z3_kind": "Z3_OP_EXTRACT, Z3_OP_CONCAT"
+  },
+  {
+   "bodies": [
+    {
+     "body": "movzbl %al,%eax; ret",
+     "probe": "widen_u8_to_u32"
+    }
+   ],
+   "measured": true,
+   "probes": "widen_u8_to_u32",
+   "spelling": "the explicit conversion to the wider holder",
+   "what_it_emits": "one instruction",
+   "z3_kind": "Z3_OP_ZERO_EXT"
+  },
+  {
+   "bodies": [
+    {
+     "body": "movsbq %al,%rax; ret",
+     "probe": "sign_extend_i8_to_i64"
+    }
+   ],
+   "measured": true,
+   "probes": "sign_extend_i8_to_i64",
+   "spelling": "the conversion through the signed holder",
+   "what_it_emits": "one instruction",
+   "z3_kind": "Z3_OP_SIGN_EXT"
+  },
+  {
+   "bodies": [
+    {
+     "body": "movq %xmm0,%rax; ret",
+     "probe": "f64_bits_unsafe"
+    },
+    {
+     "body": "movd %xmm0,%eax; ret",
+     "probe": "f32_bits_unsafe"
+    }
+   ],
+   "measured": true,
+   "probes": "f64_bits_unsafe, f32_bits_unsafe",
+   "spelling": "the pointer cast",
+   "what_it_emits": "one instruction; a parameter is already a variable, so the pointer cast costs nothing here",
+   "z3_kind": "Z3_OP_FPA_TO_IEEE_BV (a bare float arrival)"
+  },
+  {
+   "bodies": [
+    {
+     "body": "nop; movq %xmm0,%rax; ret",
+     "probe": "f64_bits_math"
+    },
+    {
+     "body": "nop; movd %xmm0,%eax; ret",
+     "probe": "f32_bits_math"
+    }
+   ],
+   "measured": true,
+   "probes": "f64_bits_math, f32_bits_math",
+   "spelling": "the standard library's own function",
+   "what_it_emits": "go's pointer cast needs an addressable variable and a sub-expression is not one; both spellings put the value through memory in a rendered emulation, because the library function is itself a pointer cast over a local and go folds neither",
+   "z3_kind": "Z3_OP_FPA_TO_IEEE_BV (mid-expression or at the answer)"
+  },
+  {
+   "bodies": [
+    {
+     "body": "nop; movq %rax,%xmm0; ret",
+     "probe": "bits_f64_math"
+    },
+    {
+     "body": "movq %rax,%xmm0; ret",
+     "probe": "bits_f64_unsafe"
+    },
+    {
+     "body": "movd %eax,%xmm0; ret",
+     "probe": "bits_f32_unsafe"
+    }
+   ],
+   "measured": true,
+   "probes": "bits_f64_math, bits_f64_unsafe, bits_f32_unsafe",
+   "spelling": "the standard library's own function",
+   "what_it_emits": "one instruction behind an inlining marker in isolation; in a rendered emulation the round trip costs a stack frame, which clang and rustc both fold away and go does not",
+   "z3_kind": "Z3_OP_FPA_TO_FP (bits reinterpreted)"
+  },
+  {
+   "bodies": [
+    {
+     "body": "xorps %xmm0,%xmm0; cvtsi2sd %rax,%xmm0; ret",
+     "probe": "int_to_f64"
+    },
+    {
+     "body": "xorps %xmm0,%xmm0; cvtsi2sd %eax,%xmm0; ret",
+     "probe": "int32_to_f64"
+    },
+    {
+     "body": "xorps %xmm0,%xmm0; cvtsi2ss %eax,%xmm0; ret",
+     "probe": "int32_to_f32"
+    },
+    {
+     "body": "cvtss2sd %xmm0,%xmm0; ret",
+     "probe": "f32_to_f64"
+    },
+    {
+     "body": "cvtsd2ss %xmm0,%xmm0; ret",
+     "probe": "f64_to_f32"
+    }
+   ],
+   "measured": true,
+   "probes": "int_to_f64, int32_to_f64, int32_to_f32, f32_to_f64, f64_to_f32",
+   "spelling": "the explicit conversion to the float holder",
+   "what_it_emits": "go breaks the destination register's dependency with an `xorps` before an integer-to-float conversion, so that row is TWO instructions where c's and rust's is one",
+   "z3_kind": "Z3_OP_FPA_TO_FP (value converted)"
+  },
+  {
+   "bodies": [
+    {
+     "body": "test %rax,%rax; jl 47a66f <main.uint_to_f64+0xf>; xorps %xmm1,%xmm1; cvtsi2sd %rax,%xmm1; jmp 47a687 <main.uint_to_f64+0x27>; mov %rax,%rcx; and $0x1,%eax; shr $1,%rcx; or %rax,%rcx; xorps %xmm1,%xmm1; cvtsi2sd %rcx,%xmm1; addsd %xmm1,%xmm1; movups %xmm1,%xmm0; ret",
+     "probe": "uint_to_f64"
+    }
+   ],
+   "measured": true,
+   "probes": "uint_to_f64",
+   "spelling": "the explicit conversion from the unsigned holder",
+   "what_it_emits": "eleven instructions: go's own unsigned-to-float sequence",
+   "z3_kind": "Z3_OP_FPA_TO_FP_UNSIGNED"
+  },
+  {
+   "bodies": [
+    {
+     "body": "cvttsd2si %xmm0,%rax; ret",
+     "probe": "f64_to_int"
+    }
+   ],
+   "measured": true,
+   "probes": "f64_to_int",
+   "spelling": "the explicit conversion to the integer holder",
+   "what_it_emits": "the bare truncating instruction, with none of the saturation sequence rust's plain conversion emits",
+   "z3_kind": "Z3_OP_FPA_TO_SBV, Z3_OP_FPA_TO_UBV"
+  },
+  {
+   "bodies": [
+    {
+     "body": "addss %xmm1,%xmm0; ret",
+     "probe": "sum_f32"
+    },
+    {
+     "body": "addsd %xmm1,%xmm0; ret",
+     "probe": "sum_f64"
+    }
+   ],
+   "measured": true,
+   "probes": "sum_f32, sum_f64",
+   "spelling": "the plain operator on the float holder",
+   "what_it_emits": "one instruction",
+   "z3_kind": "Z3_OP_FPA_ADD, Z3_OP_FPA_SUB, Z3_OP_FPA_MUL, Z3_OP_FPA_DIV"
+  },
+  {
+   "bodies": [
+    {
+     "body": "nop; movq %xmm0,%rax; btr $0x3f,%rax; movq %rax,%xmm0; ret",
+     "probe": "absolute_f64"
+    }
+   ],
+   "measured": true,
+   "probes": "absolute_f64",
+   "spelling": "the sign bit cleared through the bit casts",
+   "what_it_emits": "read, clear, write back",
+   "z3_kind": "Z3_OP_FPA_ABS"
+  },
+  {
+   "bodies": [
+    {
+     "body": "NOT BUILT: ./main.go:5:24: undefined: uint128",
+     "probe": "wide_holder_128"
+    },
+    {
+     "body": "NOT BUILT: ./main.go:5:23: undefined: float16",
+     "probe": "float16_holder"
+    }
+   ],
+   "measured": true,
+   "probes": "wide_holder_128, float16_holder",
+   "spelling": "uint8..uint64, int8..int64, float32, float64",
+   "what_it_emits": "go has NO 128-bit integer holder and NO 16-bit float holder: the compiler answers \"undefined\" for both",
+   "z3_kind": "the holders"
+  },
+  {
+   "bodies": [
+    {
+     "body": "sub %rbx,%rax; sub %rcx,%rax; sub %rdi,%rax; sub %rsi,%rax; sub %r8,%rax; ret",
+     "probe": "arrival_registers_six"
+    },
+    {
+     "body": "subsd %xmm1,%xmm0; subsd %xmm2,%xmm0; ret",
+     "probe": "arrival_registers_float"
+    }
+   ],
+   "measured": true,
+   "probes": "arrival_registers_six, arrival_registers_float",
+   "spelling": "rax, rbx, rcx, rdi, rsi, r8 ... and xmm0 upwards",
+   "what_it_emits": "go's own argument sequence, which is why this target needs its own `expected_go_families` and its own `recorded_facts`",
+   "z3_kind": "the arrival registers"
+  },
+  {
+   "bodies": [
+    {
+     "body": "movzbl %al,%ecx; movzbl %bl,%edx; lea (%rcx,%rdx,1),%eax; ret",
+     "probe": "narrow_arrival_u8"
+    },
+    {
+     "body": "movzwl %ax,%ecx; movzwl %bx,%edx; lea (%rcx,%rdx,1),%eax; ret",
+     "probe": "narrow_arrival_u16"
+    },
+    {
+     "body": "movzbl %al,%eax; ret",
+     "probe": "truth_arrival"
+    }
+   ],
+   "measured": true,
+   "probes": "narrow_arrival_u8, narrow_arrival_u16, truth_arrival",
+   "spelling": "no assumption about the caller",
+   "what_it_emits": "the go callee re-extends a narrow arrival itself, where c's and rust's assume the caller widened it",
+   "z3_kind": "the narrow arrival"
+  },
+  {
+   "bodies": [
+    {
+     "body": "ret",
+     "probe": "leaf_prologue"
+    }
+   ],
+   "measured": true,
+   "probes": "leaf_prologue",
+   "spelling": "none",
+   "what_it_emits": "a small leaf function carries no stack-growth prologue, so nothing of the kind sits in a carved emulation body",
+   "z3_kind": "the prologue"
+  }
+ ],
+ "meta": {
+  "c": "task o7's renderer, unchanged by this task; its rows are the c column of task o11's coverage table (`Research/oracle/cross_construction/emulation/rust/coverage_table.json`, 62 rows)",
+  "go_rows": 26,
+  "go_rows_measured": 26,
+  "rust": "task o11's renderer, unchanged by this task; its rows are the rust column of the same table",
+  "swift_rows": 17,
+  "swift_rows_measured": 0,
+  "task": "g1",
+  "what": "one row per rule the target's renderer writes, keyed by the z3 declaration kind (machine form, never a language operator token), each with the probe that measured it"
+ },
+ "swift": [
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the masking operators &+ &- &*",
+   "what_it_emits": "UNMEASURED -- swift's plain arithmetic traps on overflow, which the term does not; the &-prefixed forms are swift's own wrapping ones",
+   "z3_kind": "Z3_OP_BADD, Z3_OP_BSUB, Z3_OP_BMUL"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the plain bitwise operators",
+   "what_it_emits": "UNMEASURED -- no trap is defined for them",
+   "z3_kind": "Z3_OP_BAND, Z3_OP_BOR, Z3_OP_BXOR"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "zero &- the value",
+   "what_it_emits": "UNMEASURED -- swift's unary minus is not defined on an unsigned holder at all",
+   "z3_kind": "Z3_OP_BNEG"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the tilde prefix",
+   "what_it_emits": "UNMEASURED -- swift's own complement",
+   "z3_kind": "Z3_OP_BNOT"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the masking shifts &<< and &>>, inside the term's own guard where the count is not already bounded",
+   "what_it_emits": "UNMEASURED -- swift's plain shifts are defined for every count and its masking shifts mask to the width, which is the MACHINE's rule",
+   "z3_kind": "Z3_OP_BSHL, Z3_OP_BLSHR, Z3_OP_BASHR"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the plain operator",
+   "what_it_emits": "UNMEASURED -- swift traps on a zero divisor and on the signed extreme; those are the EDGE REGIONS, rendered rather than hidden",
+   "z3_kind": "Z3_OP_BUDIV_I, Z3_OP_BUREM_I, Z3_OP_BSDIV_I, Z3_OP_BSREM_I"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the conditional expression",
+   "what_it_emits": "UNMEASURED -- swift has one, so no helper of the kind go needs",
+   "z3_kind": "Z3_OP_ITE"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the plain comparison on the converted holder",
+   "what_it_emits": "UNMEASURED -- the conversions are explicit and non-trapping",
+   "z3_kind": "Z3_OP_EQ, Z3_OP_DISTINCT, Z3_OP_SLEQ .. Z3_OP_UGT"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the truncating initializer, and a masking shift joined by an or",
+   "what_it_emits": "UNMEASURED -- the plain initializer TRAPS when the value does not fit, which would put a trap in every intermediate step",
+   "z3_kind": "Z3_OP_EXTRACT, Z3_OP_CONCAT, Z3_OP_ZERO_EXT, Z3_OP_SIGN_EXT"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the float's own bit pattern",
+   "what_it_emits": "UNMEASURED -- swift names the bits of a float directly, so no helper of the kind c's renderer writes is needed",
+   "z3_kind": "Z3_OP_FPA_TO_IEEE_BV"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the float holder's bit-pattern initializer",
+   "what_it_emits": "UNMEASURED -- the same, inverted",
+   "z3_kind": "Z3_OP_FPA_TO_FP (bits reinterpreted)"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the float holder's plain initializer",
+   "what_it_emits": "UNMEASURED -- the conversion from an integer holder is exact for the widths this task's cells use",
+   "z3_kind": "Z3_OP_FPA_TO_FP (value converted)"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the integer holder's plain initializer",
+   "what_it_emits": "UNMEASURED -- THE THINNEST ROW: swift's initializer traps when the value does not fit, where the machine answers with the integer-indefinite pattern -- an edge region, and one nothing here has measured",
+   "z3_kind": "Z3_OP_FPA_TO_SBV, Z3_OP_FPA_TO_UBV"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the plain operator on the float holder",
+   "what_it_emits": "UNMEASURED -- no trap is defined",
+   "z3_kind": "Z3_OP_FPA_ADD, Z3_OP_FPA_SUB, Z3_OP_FPA_MUL, Z3_OP_FPA_DIV"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the sign bit cleared through the bit pattern",
+   "what_it_emits": "UNMEASURED -- the standard library's own absolute value would reach outside the file",
+   "z3_kind": "Z3_OP_FPA_ABS"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "Int8..Int64, UInt8..UInt64, Float, Double",
+   "what_it_emits": "UNMEASURED -- whether this toolchain has Float16 or the 128-bit holders is UNMEASURED, so both are refused rather than spelled",
+   "z3_kind": "the holders"
+  },
+  {
+   "bodies": [],
+   "measured": false,
+   "probes": "",
+   "spelling": "the SysV sequence",
+   "what_it_emits": "UNMEASURED -- canon37_gate.sequences_for answers with the SysV sequence for every language except go, so emulate.recorded_facts and emulate.expected_c_families apply unchanged",
+   "z3_kind": "the arrival registers"
+  }
+ ]
+}

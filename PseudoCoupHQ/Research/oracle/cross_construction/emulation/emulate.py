@@ -1539,41 +1539,22 @@ def expected_c_families(params):
     return out
 
 
-def x87_answer_for_unit(reference, record):
-    """the answer of a body that leaves its value on the x87 register
-    stack, read off the state the reference's own walk leaves.
-
-    TASK ap4, CHANGE 2, THE DRIVER'S HALF.  `reference.answer_of` reads
-    a REGISTER family and cuts bits out of it, and a value on the x87
-    stack is neither a register nor a bit pattern, so the reference
-    raises `Z3Exception: invalid extract application` on it.  Nothing
-    here models anything the reference does not: the walk is its own
-    `simulate`, the stack is its own `MachineState.x87`, and the bits
-    are the same `fp.to_ieee_bv` the model table's builder puts on an
-    x87 place, so the two sides are the same function of the same
-    value."""
-    import reference as R
-    state = reference.simulate(record.get("body_verbatim"),
-                               record.get("arrival_contract_bindings"),
-                               callees=reference.callees_for(record))
-    if state.x87["depth"] <= 0:
-        raise R.NotModeled(
-            "this body leaves nothing on the x87 register stack, so "
-            "there is no answer to read there")
-    top = state.x87["slots"][state.x87["top"]]
-    if top is None:
-        raise R.NotModeled(
-            "the x87 register stack's top position holds nothing "
-            "after this body, so there is no answer to read there")
-    return z3.fpToIEEEBV(top)
-
-
 def body_answer(reference, record):
-    """the reference simulator's answer for a body, or (None, cause)."""
+    """the reference simulator's answer for a body, or (None, cause).
+
+    TASK ap5: THE x87 BRANCH THAT STOOD HERE IS GONE, and this is the
+    whole of what moving the reading into the layer that owns it
+    costs.  Task ap4 read an answer left on the x87 register stack in
+    this file (`x87_answer_for_unit`), because `reference.answer_of`
+    raised `Z3Exception: invalid extract application` on such a home
+    and `reference.py` was not a file its brief named.  Task ap5's
+    brief names it: `answer_of` now reads an `X87_<k>` home off the
+    reference's own `MachineState.x87` and applies the same
+    `fpToIEEEBV`, so `answer_for_unit` answers an x87 unit like any
+    other and this function asks nothing special of it.  The removed
+    function was called from this one line and nowhere else."""
     import reference as R
     try:
-        if is_an_x87_arrival(record.get("result_family")):
-            return x87_answer_for_unit(reference, record), None
         term, _width = reference.answer_for_unit(record)
         return term, None
     except R.NotModeled as problem:

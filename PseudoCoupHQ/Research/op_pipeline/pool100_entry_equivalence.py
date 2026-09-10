@@ -481,9 +481,41 @@ def input_rows(families):
 
 def align_by_row(term, rows):
     """IN-i's `seed_<family>` -> the common symbol `IN_i` of the row's
-    width, on one side."""
+    width, on one side.
+
+    TASK ap5, and it is the ONE change this brief authorises in this
+    file: an arrival whose place is the x87 register stack is aligned
+    by its IN row like any other.  Such an arrival is not a bit
+    pattern -- the model table preseeds the stack as
+    `seed_X87_0` / `seed_X87_1` at `reference.X87_SORT`, an 80-bit
+    extended float -- so the `z3.BitVec` this function built for it
+    was a DIFFERENT constant from the one in the term and the
+    substitution silently did nothing, which is why task ap4 built
+    those rows in the driver instead.  The row's `bits` field is the
+    width `family_bits` gives every family that is not a vector one
+    and is not read for an x87 row, because an x87 arrival's width is
+    its sort's.
+
+    THE TEST IS THE DRIVER'S OWN, and it is BOTH spellings.  An x87
+    arrival reaches a row under two names and the pipeline already
+    says so in `emulate.X87_ARRIVAL`: `X87_<k>` is a stack POSITION
+    the model table preseeded, and `x87_<mangled operand>` is a
+    literal memory operand read at the x87 sort
+    (`reference.x87_symbol`), which `handful.x87_as_arrivals` re-reads
+    as an arrival of the same sort.  A first draft of this branch
+    tested only the first spelling; the loop's own measurement is what
+    caught it -- 30 `mem_one` 80 cells on c, whose second arrival is
+    the memory one, left `seed_x87__rsi_` free on the cell side while
+    the body side was on `IN_1`, and z3 answered `sat` with that
+    symbol in the counterexample."""
     substitution = []
     for index, row in enumerate(rows):
+        family = row["family"] or ""
+        if family.startswith("X87_") or family.startswith("x87_"):
+            seed = z3.Const("seed_%s" % family, R.X87_SORT)
+            common = z3.Const("IN_%d" % index, R.X87_SORT)
+            substitution.append((seed, common))
+            continue
         seed = z3.BitVec("seed_%s" % row["family"], row["bits"])
         common = z3.BitVec("IN_%d" % index, row["bits"])
         substitution.append((seed, common))

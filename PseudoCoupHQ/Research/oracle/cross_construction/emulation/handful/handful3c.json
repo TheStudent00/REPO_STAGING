@@ -1,0 +1,358 @@
+{
+ "meta": {
+  "cells_source": "PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful_cells.json",
+  "go_argument_sequence": {
+   "measured": [
+    "rax",
+    "rbx",
+    "rcx",
+    "rdi",
+    "rsi",
+    "r8",
+    "r9",
+    "r10",
+    "r11"
+   ],
+   "the pipeline's own": [
+    "rax",
+    "rbx",
+    "rcx",
+    "rdi",
+    "rsi",
+    "r8",
+    "r9",
+    "r10",
+    "r11"
+   ],
+   "the pipeline's own vector sequence": [
+    "xmm0",
+    "xmm1",
+    "xmm2",
+    "xmm3",
+    "xmm4",
+    "xmm5",
+    "xmm6",
+    "xmm7",
+    "xmm8",
+    "xmm9",
+    "xmm10",
+    "xmm11",
+    "xmm12",
+    "xmm13",
+    "xmm14"
+   ],
+   "they agree": true
+  },
+  "host_folder": "PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful",
+  "memory_abort": "ABORT_MEMORY_G1C",
+  "memory_bound_kb": 4194304,
+  "peak_kb": 87832,
+  "recheck_ceiling_ms": 300000,
+  "recheck_count": 2,
+  "runs": 1,
+  "ship_flags_c": "lane_gen.py compile_probe: `[CLANG, \"-std=c17\"] + [\"-O1\"] + [\"-c\", src, \"-o\", obj]` -- the ship build of every c unit in the corpus",
+  "ship_flags_go": "lane_gen.py compile_probe, go branch: `open(go.mod).write(GOMOD)`; `open(main.go).write(p[\"source\"])`; `cmd = [\"go\", \"build\"]` with no gcflags in the ship mode, then `cmd.extend([\"-o\", obj, \".\"])` run with cwd=the module directory -- the ship build of every go unit in the corpus",
+  "ship_flags_rust": "lane_gen.py compile_probe, rust branch: `opt = [\"-C\", \"opt-level=1\", \"-C\", \"debug-assertions=off\"]` then `[\"rustc\", \"--crate-type=lib\", \"--emit=obj\"] + opt + [\"-o\", obj, src]` -- the ship build of every rust unit in the corpus",
+  "ship_flags_swift": "lane_gen.py compile_probe, swift branch: `opt = [\"-Onone\", \"-g\"] if mode == \"anchor\" else [\"-O\"]`; `cmd = [SWIFTC] + opt + [\"-c\", src, \"-o\", obj]` -- the ship build of every swift unit in the corpus",
+  "solver_ceiling_ms": 3000,
+  "swiftc_answer": "Swift version 6.0.3 (swift-6.0.3-RELEASE)",
+  "task": "g1c",
+  "what": "cells of the arch-opcode model table, one find_emulation run per (cell, target) this task holds"
+ },
+ "runs": [
+  {
+   "attestation": {
+    "example_units": [
+     "c/op_210",
+     "c/op_240",
+     "c/op_246"
+    ],
+    "flag_pair_rows": 0,
+    "ledger_rows": 778,
+    "setter": [],
+    "units": 389
+   },
+   "chosen_by": "the one TRANSLATED row at this cell",
+   "composition": [
+    {
+     "cell": false,
+     "line": "mov %edi,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "cltd",
+     "mnem": "cltd",
+     "shape": "none"
+    },
+    {
+     "cell": true,
+     "key_width": 32,
+     "line": "idiv %esi",
+     "mnem": "idiv",
+     "shape": "gpr_one"
+    },
+    {
+     "cell": false,
+     "line": "mov %edx,%eax",
+     "mnem": "mov",
+     "reason": "a calling-convention move (a pure register-to-register or register-to-slot copy), chaff by task o2's narrow rule"
+    },
+    {
+     "cell": false,
+     "line": "ret",
+     "mnem": "ret",
+     "reason": "the function's own return, chaff by task o2's narrow rule"
+    }
+   ],
+   "key_width": 32,
+   "lang": "c",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "places": [
+    {
+     "bits": 64,
+     "body_bytes": "89 f8 99 f7 fe 89 d0 c3",
+     "body_text": "mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; ret",
+     "check": {
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi",
+       "rdx"
+      ],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "outcome": "UNDECIDED",
+      "reason": "the IN rows cannot be aligned: the two representatives' canon40 arrival contracts name 3 and 2 IN rows",
+      "recheck": {
+       "arrival_families_read_off_the_body": [
+        "rdi",
+        "rsi",
+        "rdx"
+       ],
+       "canon40_outcome": "WRAPPED_TEXT_PROVED",
+       "ceiling_ms": 300000,
+       "outcome": "UNDECIDED",
+       "reason": "the IN rows cannot be aligned: the two representatives' canon40 arrival contracts name 3 and 2 IN rows",
+       "route": {
+        "body": "the reference's answer for the carved body",
+        "cell": "the cell's own term, as the model table holds it"
+       }
+      },
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      }
+     },
+     "compiled": true,
+     "families": [
+      "rdx",
+      "rax",
+      "rdi"
+     ],
+     "home": {
+      "family": "rax",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "idiv_gpr_one_32__primitive__c",
+     "landing": {
+      "holds_the_cells_own_opcode": true,
+      "remaining": [
+       {
+        "mnem": "cltd"
+       },
+       {
+        "mnem": "idiv"
+       }
+      ],
+      "stripped_count": 2,
+      "stripped_text": "cltd; idiv %esi",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": null,
+       "holder": "int32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": null,
+       "holder": "int32_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "renderer_input_text": "a % b",
+     "route": "primitive+setup",
+     "sexpr": "(let ((a!1 ((_ extract 31 0)\n             (bvsdiv (concat ((_ extract 31 0) seed_rdx)\n                             ((_ extract 31 0) seed_rax))\n                     ((_ sign_extend 32) ((_ extract 31 0) seed_rdi))))))\n  ((_ zero_extend 32) a!1))",
+     "source": "/* probe 246 -- binary % */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} % (int32_t){0})\nemu_idiv_gpr_one_32__primitive__c(int32_t a, int32_t b)\n{\n    return a % b;\n}\n",
+     "source_path": "src3c/idiv_gpr_one_32__primitive__c.c",
+     "symbol": "emu_idiv_gpr_one_32__primitive__c",
+     "text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+     "writes": "reg_rax"
+    },
+    {
+     "bits": 64,
+     "body_bytes": "89 f8 99 f7 fe 89 d0 c3",
+     "body_text": "mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; ret",
+     "check": {
+      "arrival_families_read_off_the_body": [
+       "rdi",
+       "rsi",
+       "rdx"
+      ],
+      "canon40_outcome": "WRAPPED_TEXT_PROVED",
+      "outcome": "UNDECIDED",
+      "reason": "the IN rows cannot be aligned: the two representatives' canon40 arrival contracts name 3 and 2 IN rows",
+      "recheck": {
+       "arrival_families_read_off_the_body": [
+        "rdi",
+        "rsi",
+        "rdx"
+       ],
+       "canon40_outcome": "WRAPPED_TEXT_PROVED",
+       "ceiling_ms": 300000,
+       "outcome": "UNDECIDED",
+       "reason": "the IN rows cannot be aligned: the two representatives' canon40 arrival contracts name 3 and 2 IN rows",
+       "route": {
+        "body": "the reference's answer for the carved body",
+        "cell": "the cell's own term, as the model table holds it"
+       }
+      },
+      "route": {
+       "body": "the reference's answer for the carved body",
+       "cell": "the cell's own term, as the model table holds it"
+      }
+     },
+     "compiled": true,
+     "families": [
+      "rdx",
+      "rax",
+      "rdi"
+     ],
+     "home": {
+      "family": "rdx",
+      "source": "the place the reference's own builder wrote"
+     },
+     "label": "idiv_gpr_one_32__primitive__c",
+     "landing": {
+      "holds_the_cells_own_opcode": true,
+      "remaining": [
+       {
+        "mnem": "cltd"
+       },
+       {
+        "mnem": "idiv"
+       }
+      ],
+      "stripped_count": 2,
+      "stripped_text": "cltd; idiv %esi",
+      "verdict": "NOT_COLLAPSED"
+     },
+     "params": [
+      {
+       "bits": 32,
+       "family": null,
+       "holder": "int32_t",
+       "index": 0,
+       "kind": "bv",
+       "name": "a",
+       "used": true
+      },
+      {
+       "bits": 32,
+       "family": null,
+       "holder": "int32_t",
+       "index": 1,
+       "kind": "bv",
+       "name": "b",
+       "used": true
+      }
+     ],
+     "rendered": true,
+     "renderer_input_text": "a % b",
+     "route": "primitive+setup",
+     "sexpr": "(let ((a!1 ((_ extract 31 0)\n             (bvsrem (concat ((_ extract 31 0) seed_rdx)\n                             ((_ extract 31 0) seed_rax))\n                     ((_ sign_extend 32) ((_ extract 31 0) seed_rdi))))))\n  ((_ zero_extend 32) a!1))",
+     "source": "/* probe 246 -- binary % */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} % (int32_t){0})\nemu_idiv_gpr_one_32__primitive__c(int32_t a, int32_t b)\n{\n    return a % b;\n}\n",
+     "source_path": "src3c/idiv_gpr_one_32__primitive__c.c",
+     "symbol": "emu_idiv_gpr_one_32__primitive__c",
+     "text": "Concat(0, Extract(31, 0, bvsrem_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+     "writes": "reg_rdx"
+    }
+   ],
+   "primitive": {
+    "candidate_rows": [
+     {
+      "body_text": "mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; ret",
+      "example_unit_id": "c/op_246",
+      "member_count": 49
+     },
+     {
+      "body_text": "mov %edi,%eax; cltd; idiv %esi; ret",
+      "example_unit_id": "c/op_210",
+      "member_count": 49
+     }
+    ],
+    "cell": [
+     "idiv",
+     "gpr_one",
+     32
+    ],
+    "chosen_by": "of the 2 single-opcode rows that classify to this cell, the one the corpus attests with the most members; a tie is broken by the row's own body text",
+    "lang": "c",
+    "lookup": "single_opcode_units.json, this language's own rows under BOTH of task o2's rules, each stripped again under the NARROW rule and accepted when what remains is the cell's instruction plus zero or more zero-operand setup instructions from reference.SPREAD_SIGN / reference.ACCUMULATOR_WIDEN and nothing else",
+    "members_tried_before_one_resolved": 1,
+    "probe": {
+     "arity": "binary",
+     "expression": "a % b",
+     "lang": "c",
+     "lhs_rep": "i32",
+     "lhs_type": "int32_t",
+     "n": 246,
+     "operator": "%",
+     "position": null,
+     "result_type": null,
+     "rhs_rep": "i32",
+     "rhs_type": "int32_t",
+     "source": "/* probe 246 -- binary % */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} % (int32_t){0})\nop_246(int32_t a, int32_t b)\n{\n    return a % b;\n}\n",
+     "symbol": "op_246",
+     "unit": "c/op_246"
+    },
+    "row": {
+     "body_text": "mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; ret",
+     "example_unit_id": "c/op_246",
+     "found_under_rule": "wide",
+     "instruction": "idiv %esi",
+     "member_count": 49,
+     "setup": [
+      {
+       "cell": [
+        "cltd",
+        "none",
+        32
+       ],
+       "line": "cltd",
+       "mnem": "cltd"
+      }
+     ]
+    },
+    "rows_that_classify_to_this_cell": 2,
+    "single_opcode_rows_read": 89,
+    "widened": true
+   },
+   "route": "primitive+setup",
+   "row_id": "r07409",
+   "setter": null,
+   "shape": "gpr_one"
+  }
+ ]
+}

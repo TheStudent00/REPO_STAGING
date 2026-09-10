@@ -599,15 +599,29 @@ process.stdout.write(out.join("\\n") + "\\n");
 
 PHP_PRELUDE = '''<?php
 
+function ex_maskbits($w) {
+    // THE MASK, AND WHY IT IS NOT `(1 << $w) - 1`.  php's `1 << 63` is
+    // PHP_INT_MIN, so `(1 << 63) - 1` leaves the integers for a double
+    // and the mask becomes a float -- measured on lane ex1_l7's first
+    // pass, where `shr` cl_gpr 64 answered 0 where the reference
+    // answered 1 at the point [2, 1].
+    if ($w >= 64) { return -1; }
+    if ($w == 63) { return PHP_INT_MAX; }
+    return (1 << $w) - 1;
+}
+
 function ex_m($x, $w) {
     if ($w >= 64) { return $x; }
-    return $x & ((1 << $w) - 1);
+    return $x & ex_maskbits($w);
 }
 
 function ex_s($x, $w) {
     if ($w >= 64) { return $x; }
-    $x = $x & ((1 << $w) - 1);
-    if (($x >> ($w - 1)) != 0) { return $x - (1 << $w); }
+    $x = ex_m($x, $w);
+    if ((($x >> ($w - 1)) & 1) != 0) {
+        if ($w == 63) { return $x + PHP_INT_MIN; }
+        return $x - (1 << $w);
+    }
     return $x;
 }
 
@@ -628,16 +642,33 @@ function ex_sub($a, $b, $w) {
 }
 
 function ex_mul($a, $b, $w) {
-    if ($w < 32) { return ex_m($a * $b, $w); }
-    $al = $a & 0xFFFFFFFF;
-    $ah = ($a >> 32) & 0xFFFFFFFF;
-    $bl = $b & 0xFFFFFFFF;
-    $bh = ($b >> 32) & 0xFFFFFFFF;
-    $ll = $al * $bl;
-    $lo = $ll & 0xFFFFFFFF;
-    $carry = ($ll >> 32) & 0xFFFFFFFF;
-    $hi = ($al * $bh + $ah * $bl + $carry) & 0xFFFFFFFF;
-    $whole = (($hi & 0xFFFFFFFF) << 32) | $lo;
+    // THE MULTIPLY IN 16-BIT LIMBS, and the limb size is the
+    // measurement's own: a 32-bit by 32-bit product is up to 2^64 and
+    // php leaves the integers there, which is what answered 2147483648
+    // where the reference answered 2147483647 at the point
+    // [2147483649, 4294967295] on lane ex1_l7's first pass.  Every
+    // product below is under 2^34 and every running sum under 2^36.
+    if ($w <= 16) { return ex_m($a * $b, $w); }
+    $a0 = $a & 0xFFFF;
+    $a1 = ($a >> 16) & 0xFFFF;
+    $a2 = ($a >> 32) & 0xFFFF;
+    $a3 = ($a >> 48) & 0xFFFF;
+    $b0 = $b & 0xFFFF;
+    $b1 = ($b >> 16) & 0xFFFF;
+    $b2 = ($b >> 32) & 0xFFFF;
+    $b3 = ($b >> 48) & 0xFFFF;
+    $p0 = $a0 * $b0;
+    $p1 = $a0 * $b1 + $a1 * $b0;
+    $p2 = $a0 * $b2 + $a1 * $b1 + $a2 * $b0;
+    $p3 = $a0 * $b3 + $a1 * $b2 + $a2 * $b1 + $a3 * $b0;
+    $r0 = $p0 & 0xFFFF;
+    $t1 = $p1 + ($p0 >> 16);
+    $r1 = $t1 & 0xFFFF;
+    $t2 = $p2 + ($t1 >> 16);
+    $r2 = $t2 & 0xFFFF;
+    $t3 = $p3 + ($t2 >> 16);
+    $r3 = $t3 & 0xFFFF;
+    $whole = $r0 | ($r1 << 16) | ($r2 << 32) | ($r3 << 48);
     return ex_m($whole, $w);
 }
 
@@ -656,7 +687,7 @@ function ex_lshr($a, $n, $w) {
     if ($n >= $w) { return 0; }
     if ($w >= 64) {
         if ($n == 0) { return $a; }
-        return ($a >> $n) & ((1 << (64 - $n)) - 1);
+        return ($a >> $n) & (PHP_INT_MAX >> ($n - 1));
     }
     return ex_m($a, $w) >> $n;
 }
@@ -691,19 +722,19 @@ function ex_urem($a, $b, $w) {
 }
 
 function ex_sdiv($a, $b, $w) {
-    $x = ex_s($a, $w);
-    $y = ex_s($b, $w);
-    $q = intdiv(abs($x), abs($y));
-    if (($x < 0) != ($y < 0)) { $q = -$q; }
-    return ex_m($q, $w);
+    // php's OWN `intdiv` TRUNCATES -- lane ex1_l2 [5/9] measured
+    // `intdiv(-7, 2)` -> -3 -- which is z3's `bvsdiv`, so the abs-based
+    // spelling python and ruby need (their division FLOORS) is wrong
+    // here in one more way than it is unnecessary: `abs(PHP_INT_MIN)`
+    // leaves the integers for a float, and 27 points of lane ex1_l8's
+    // first pass declined `RAISE:TypeError` because of it.
+    return ex_m(intdiv(ex_s($a, $w), ex_s($b, $w)), $w);
 }
 
 function ex_srem($a, $b, $w) {
-    $x = ex_s($a, $w);
-    $y = ex_s($b, $w);
-    $r = abs($x) % abs($y);
-    if ($x < 0) { $r = -$r; }
-    return ex_m($r, $w);
+    // php's own remainder takes the sign of the DIVIDEND -- lane
+    // ex1_l2 [5/9], `-7 % 2` -> -1 -- which is z3's `bvsrem`.
+    return ex_m(ex_s($a, $w) % ex_s($b, $w), $w);
 }
 
 function ex_ult($a, $b, $w) {
@@ -945,7 +976,7 @@ JAVA_MAIN = '''
     public static void main(String[] args) throws IOException {
         BufferedReader reader =
             new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder out = new StringBuilder();
+        StringBuilder answers = new StringBuilder();
         String line = reader.readLine();
         while (line != null) {
             String text = line.trim();
@@ -956,17 +987,17 @@ JAVA_MAIN = '''
                     values[i] = Long.parseUnsignedLong(parts[i]);
                 }
                 try {
-                    out.append(Long.toUnsignedString(%(call)s));
-                    out.append("\\n");
+                    answers.append(Long.toUnsignedString(%(call)s));
+                    answers.append("\\n");
                 } catch (Throwable problem) {
-                    out.append("RAISE:");
-                    out.append(problem.getClass().getSimpleName());
-                    out.append("\\n");
+                    answers.append("RAISE:");
+                    answers.append(problem.getClass().getSimpleName());
+                    answers.append("\\n");
                 }
             }
             line = reader.readLine();
         }
-        System.out.print(out);
+        System.out.print(answers);
     }
 }
 '''
@@ -1211,7 +1242,7 @@ public static class Emu {
 
 CSHARP_MAIN = '''
     public static void Main() {
-        StringBuilder out = new StringBuilder();
+        StringBuilder answers = new StringBuilder();
         string line = Console.ReadLine();
         while (line != null) {
             string text = line.Trim();
@@ -1223,17 +1254,17 @@ CSHARP_MAIN = '''
                     values[i] = unchecked((long) ulong.Parse(parts[i]));
                 }
                 try {
-                    out.Append(((ulong) %(call)s).ToString());
-                    out.Append("\\n");
+                    answers.Append(((ulong) %(call)s).ToString());
+                    answers.Append("\\n");
                 } catch (Exception problem) {
-                    out.Append("RAISE:");
-                    out.Append(problem.GetType().Name);
-                    out.Append("\\n");
+                    answers.Append("RAISE:");
+                    answers.Append(problem.GetType().Name);
+                    answers.Append("\\n");
                 }
             }
             line = Console.ReadLine();
         }
-        Console.Write(out.ToString());
+        Console.Write(answers.ToString());
     }
 }
 '''

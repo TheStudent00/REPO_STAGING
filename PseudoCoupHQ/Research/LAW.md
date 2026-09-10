@@ -97,12 +97,14 @@ record and may be cleared. Never delete anything under
 status file, not a lane, not a log. A lane name that collides gets a new
 name; nothing is removed to make room.
 
-## Never end your turn while a lane you need is still running (2026-09-07)
+## Never end your turn while a lane you need is still running (2026-09-07; sharpened 2026-09-10)
 Agents receive NO notification when a lane finishes and NO wake-up from
-a background watcher. Poll in a timeout-bounded loop inside one Bash call
-(e.g. `timeout 3500 bash -c 'until ...; do sleep 60; done'`), repeated as
-needed, and continue. Two closers stopped "waiting for the notification"
-and their work had to be redone.
+a background watcher. A single tool call is CUT AT 120 SECONDS: anything
+longer is moved to the background and you will not see it finish. So wait
+in SHORT calls, each under 110 s (`remote_lane.sh wait` defaults to 100),
+repeated as many times as it takes — a 60-minute lane is forty short
+waits, and that is the job. Four closers have ended their turns with a
+lane still running; each time the work had to be picked up by another.
 
 ## Compute runs on the TOWER now (the owner, 2026-09-08). Every lane goes there
 The sandbox is a virtual machine on the owner's tower server, reached over ssh by
@@ -117,7 +119,7 @@ runs. The one tool for it, kept in the Airlock repo:
 | your instance conf (write it under `Airlock/instances/<task>.conf` here, copied from `t97.conf`, every number with its reason) | `$R conf Airlock/instances/<task>.conf` then `$R up --instance <task>` |
 | BEFORE every submit: mirror your artifact folder and any code you changed to the tower (paths are the same relative to the home directory on both machines) | `$R sync-to Programming/PseudoCoupHQ/Research/<your artifact folder>` and the same for `Research/op_pipeline` if you touched it |
 | submit a lane (the script lives here in the repo under `lanes_<task>/`; the copy on the tower is a working copy) | `$R submit --instance <task> --batch <task> --weight <n> <path to lane.sh>` |
-| wait for it, in one call, bounded; it prints the status lines then the whole log | `$R wait --instance <task> <lane.sh> --timeout 3500` (repeat if it times out) |
+| wait for it IN SLICES: each call at most 100 s (the default), repeated until it prints the log. YOUR TOOL CALL IS CUT AT 120 s and moved to the background, and you then lose the wait and believe you are done — two closers on 2026-09-10 ended their turns this way with the lane still running. Never `--timeout` above 100; never end your turn while the lane runs | `$R wait --instance <task> <lane.sh>` — again, and again, until it prints the log |
 | AFTER every lane: bring its artifacts back here; the laptop repo is the record | `$R sync-back Programming/PseudoCoupHQ/Research/<your artifact folder>` and `$R sync-back Programming/PseudoCoupHQ/DevComms` if a lane wrote a log |
 | done | `$R down --instance <task>` |
 

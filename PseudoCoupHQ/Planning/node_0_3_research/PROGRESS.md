@@ -576,3 +576,49 @@ status: living
   different constant — the immediate is an INPUT of the mapping and the
   sweep bakes `$0x3` in; the next closer makes it symbolic. cpp as a fifth
   target: task ex1 (starting).
+- 2026-09-09 (task ex1, log_248, on the tower): EXPANSION beyond the four.
+  (1) cpp as a fifth compiled target: c's renderer with two measured
+  differences (`extern "C"` linkage; `<cstdint>`/`<cstring>`), 305 of 309 c
+  sources compile verbatim under `clang++ -std=c++20 -O1 -c`; cpp proves
+  225 of 253 cells (63 outside the four-way set, the x87 arithmetic among
+  them, since cpp has `long double`); cells proved on all four and not on
+  cpp: 0, so all-five = all-four = 162 cells / 79.7%, both reported. (2) The
+  interpreted languages: `find_emulation` rendered for cpython, php, ruby,
+  java, javascript, dart, csharp (all seven runners present in the image or
+  the persist volume), and a CHECK defined and stated LITERAL before it
+  ran: the fuzz method over an ordered sample whose edge values come first
+  (sign boundary, top, -1, the width's shift counts, subnormals, infinities,
+  NaNs; ≤20,000 points per place). The handful, 70 runs: 70 rendered, ZERO
+  disagreements at ~38,240 scored points per target; declines counted
+  under each language's own word (division by zero; php's and c#'s
+  refusal of MIN/-1; 630 points where the reference's float term has no
+  numeral, the NaN region). An agreement is evidence, not a proof. Awaiting
+  the owner: the JIT dumps (`jit_out_*`) are three formats none of which is
+  objdump's, so "carve the JIT output" has no reader — a new instrument;
+  whether the polyfill-complete set is counted at four or five targets
+  (equal today; cpp is c's twin). Next: ap5 (x87 end to end; symbolic
+  immediates), then ex2 (the interpreted loop over all 253 cells × 7).
+- 2026-09-09/10 (task ap5, log_249, on the tower; cut off once by a usage
+  limit, resumed from disk): FIFTH PASS. The x87 reading moved into the
+  layer that owns it (`reference.answer_of` reads an `X87_<k>` home;
+  `pool100_entry_equivalence.align_by_row` aligns an x87 arrival in both
+  spellings; the driver's stop-gap `x87_answer_for_unit` removed): 36 x87
+  c places PROVED, no x87 place `sat` or DISPROVED (the 80-bit explicit-
+  integer-bit difference does not appear); rust/go/swift refused by nature.
+  The immediate as an INPUT: 20 `imm_*` cells given a symbolic row
+  (`shapes_for`, additive; 0 existing rows changed), six `sat` → proved.
+  Proved on ALL FOUR: 162 → 165 cells, 79.7% → 80.25%. Four guards at
+  their stated tallies. ONE REGRESSION, and the STOP fired: `sbb` imm_gpr
+  8 on swift — the symbolic row renders with four parameters and swiftc
+  answers the `@_cdecl` entry with a five-byte tail-call thunk (`jmp`,
+  PLT32 relocation to the mangled symbol), so the carve holds one `jmp`
+  and no arithmetic; ap4's three-parameter rendering carved 21 bytes and
+  proved. Same mechanism as g1b's swift divide. COORDINATOR'S DECISION,
+  to be carried by the next compiled-loop closer unless the owner objects: the
+  carve follows exactly one unconditional `jmp` whose relocation names a
+  symbol in the same object when that `jmp` is the whole body — the thunk
+  is the compiler's linkage artifact, the unit is the function the
+  exported symbol stands for; the unit-boundary ruling of 2026-09-04 is
+  not changed, the reading of "the body" is. Verifier 38 claims, 0 differ.
+  Started next, side by side: l3 (proof system), hub1 (Hub v1), ex2 (the
+  interpreted loop).

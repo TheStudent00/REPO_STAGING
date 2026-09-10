@@ -87,6 +87,7 @@ usage:
   expand1.py interp_run [<n>] the interpreted handful, one line per run
   expand1.py interp_table     the interpreted table the brief asks for
   expand1.py interp_sample    the sample rule LITERAL, and nothing run
+  expand1.py jit              what the corpus's JIT output actually is
   expand1.py report           expand1.md
 """
 
@@ -273,75 +274,54 @@ def tally_command():
 
 
 def causes_command():
-    return AP4.causes_command()
+    """what did not work on cpp, by cause.  `autopoly4.causes_command`
+    sums over `document["meta"]["targets"]`, which for this task's
+    aggregate is cpp alone, and its own header sentence says "the four
+    targets summed" -- true of the task that wrote it and not of this
+    one, so the header is said here and the counting is still that
+    function's."""
+    document = read_json(AGGREGATE)
+    say("Table -- what did not work on cpp, by cause.  One target, so "
+        "`runs` is cells and `rows` is their attested ledger rows.")
+    say("")
+    say("| cause | runs | ledger rows |")
+    say("|---|---|---|")
+    held = document["causes"]["cpp"]
+    ordered = sorted(held, key=lambda name: (-held[name]["runs"], name))
+    total = 0
+    for name in ordered:
+        say("| %s | %d | %d |"
+            % (escaped(name), held[name]["runs"],
+               held[name]["ledger_rows"]))
+        total = total + held[name]["runs"]
+    say("")
+    say("runs carrying a cause: %d of %d" % (total,
+                                             document["meta"]["runs"]))
+    return 0
 
 
 # ------------------------------------------------------------------
 # the two tables the brief asks for by name
 # ------------------------------------------------------------------
 
-def proved_places(run):
-    """whether this run's DESTINATION place was proved, by exactly the
-    rule task ap4's `across_targets` uses: the gate answered `unsat` at
-    the destination place, at the ceiling of record or under the
-    caller-extension re-pose."""
-    place = H.destination_place(run)
-    if place is None:
-        return False
-    check = place.get("check") or {}
-    if check.get("outcome") == "PROVED_ON_SHIP":
-        return True
-    if check.get("under_caller_extension") == "PROVED_ON_SHIP":
-        return True
-    return False
+def proved_on(run):
+    """whether this run's cell is proved on this target.
+
+    THE RULE IS TASK ap4'S OWN AND IS CALLED, NOT RESTATED:
+    `autopoly4.outcome_of` reads every place of the run's destination
+    REGISTER (two, where task ap2's fix 3 split a 128-bit place into
+    halves) and takes the weakest of their gate answers.  Re-deriving
+    it here from `destination_place` alone gave a different all-four
+    count -- 142 against task ap4's own 162 -- which is exactly the
+    kind of quiet drift a report at two widths must not carry."""
+    return AP4.outcome_of(run) in ("proved",
+                                   "proved under caller extension")
 
 
 def rate(part, whole):
     if not whole:
         return "0.0"
     return "%s" % round(100.0 * part / whole, 2)
-
-
-def column_of(runs, ledger_of, total_rows):
-    """one target's column of the per-target table, by the same steps
-    task ap4's Table 1 counts."""
-    steps = {"attempted": [], "rendered": [], "compiled": [],
-             "LANDED": [], "LANDED_ELSEWHERE": [], "NOT_COLLAPSED": [],
-             "proved": [], "sat": [], "undecided": [], "refused": []}
-    for run in runs:
-        key = cell_key(run)
-        steps["attempted"].append(key)
-        place = H.destination_place(run)
-        if place is None:
-            steps["refused"].append(key)
-            continue
-        if not place.get("rendered"):
-            steps["refused"].append(key)
-            continue
-        steps["rendered"].append(key)
-        if place.get("body_text") is None:
-            continue
-        steps["compiled"].append(key)
-        landing = (place.get("landing") or {}).get("verdict")
-        if landing in steps:
-            steps[landing].append(key)
-        check = place.get("check") or {}
-        outcome = check.get("outcome")
-        if proved_places(run):
-            steps["proved"].append(key)
-        elif outcome == "DISPROVED":
-            steps["sat"].append(key)
-        elif outcome == "UNDECIDED":
-            steps["undecided"].append(key)
-    out = {}
-    for name in steps:
-        cells = set(steps[name])
-        rows = 0
-        for key in cells:
-            rows = rows + ledger_of.get(key, 0)
-        out[name] = {"cells": len(cells), "rows": rows,
-                     "share": rate(rows, total_rows)}
-    return out
 
 
 def ledger_index(cells):
@@ -353,108 +333,122 @@ def ledger_index(cells):
     return out
 
 
+STEPS = ["attempted", "rendered", "compiled", "LANDED",
+         "LANDED_ELSEWHERE", "NOT_COLLAPSED", "proved",
+         "proved under caller extension", "sat", "undecided", "refused"]
+
+
 def tables_command():
     """THE cpp COLUMN, in the per-target table's own shape, and the
-    all-four and all-five lines side by side."""
+    all-four and all-five lines side by side.
+
+    Every figure in Table 1 is read off an AGGREGATE, never re-counted
+    here: cpp's from this task's `expand1.json`, the other four from
+    task ap4's `autopoly4.json`, both written by the same function
+    (`autopoly4.aggregate_command`) over their own stores."""
     cells = read_json(CELLS)
     ledger_of = ledger_index(cells)
     total_rows = 0
     for key in ledger_of:
         total_rows = total_rows + ledger_of[key]
-    mine = read_runs(RUNS)
-    theirs = read_runs(AP4_RUNS)
-    by_lang = {"cpp": mine}
-    for run in theirs:
-        by_lang.setdefault(run["lang"], []).append(run)
+    mine = read_json(AGGREGATE)
+    theirs = read_json(AP4_AGGREGATE)
+    columns = {"cpp": mine["per_language"]["cpp"]}
+    for lang in theirs["per_language"]:
+        columns[lang] = theirs["per_language"][lang]
     order = []
     for lang in FIVE:
-        if lang in by_lang:
+        if lang in columns:
             order.append(lang)
     say("Table 1 -- one row per target. `cells` counts runs; `rows` is "
         "the attested ledger rows those cells cover and `share` that as "
-        "a percentage of %d.  The four columns beside cpp are task "
-        "ap4's own runs, read off `autopoly4_runs.jsonl` and not re-run."
-        % total_rows)
+        "a percentage of %d.  cpp's column is this task's own aggregate; "
+        "the other four are task ap4's, read off `autopoly4.json` and "
+        "not re-run." % total_rows)
     say("")
     say("| step or verdict | %s |" % " | ".join(order))
     say("|---|%s" % ("---|" * len(order)))
-    columns = {}
-    for lang in order:
-        columns[lang] = column_of(by_lang[lang], ledger_of, total_rows)
-    for name in ("attempted", "rendered", "compiled", "LANDED",
-                 "LANDED_ELSEWHERE", "NOT_COLLAPSED", "proved", "sat",
-                 "undecided", "refused"):
-        cells_text = []
+    for name in STEPS:
+        parts = []
         for lang in order:
-            held = columns[lang][name]
-            cells_text.append("%d cells, %d rows, %s%%"
-                              % (held["cells"], held["rows"],
-                                 held["share"]))
-        say("| `%s` | %s |" % (name, " | ".join(cells_text)))
+            held = columns[lang].get(name)
+            if held is None:
+                parts.append("--")
+                continue
+            parts.append("%d cells, %d rows, %s%%"
+                         % (held["runs"], held["ledger_rows"],
+                            held["share_percent"]))
+        say("| `%s` | %s |" % (name, " | ".join(parts)))
     say("")
 
     # THE TWO WIDTHS, side by side and neither re-defining the other.
-    proved_by = {}
-    for lang in order:
-        proved_by[lang] = set()
-        for run in by_lang[lang]:
-            if proved_places(run):
-                proved_by[lang].add(cell_key(run))
-    four = [lang for lang in order if lang != "cpp"]
-    say("Table 2 -- the polyfill-complete set at BOTH widths.  A cell "
+    proved_cpp = set()
+    for run in read_runs(RUNS):
+        if proved_on(run):
+            proved_cpp.add(cell_key(run))
+    four = []
+    for entry in theirs["across_targets"]["4"]["cell_list"]:
+        four.append((entry["mnem"], entry["shape"], entry["key_width"]))
+    five = []
+    for key in four:
+        if key in proved_cpp:
+            five.append(key)
+    say("Table 2 -- the polyfill-complete set at BOTH widths, which is "
+        "what the brief asks for until the owner says which counts.  A cell "
         "counts as proved on a target when the gate answered `unsat` at "
         "that target's destination place, at the 3,000 ms ceiling of "
         "record or under the caller-extension re-pose.")
     say("")
     say("| width | targets | cells | ledger rows | share |")
     say("|---|---|---|---|---|")
-    for label, group in (("all four", four), ("all five", order)):
-        held = None
-        for lang in group:
-            if held is None:
-                held = set(proved_by[lang])
-            else:
-                held = held & proved_by[lang]
-        rows = 0
-        for key in held:
-            rows = rows + ledger_of.get(key, 0)
-        say("| %s | %s | %d | %d | %s%% |"
-            % (label, ", ".join(group), len(held), rows,
-               rate(rows, total_rows)))
+    rows_four = 0
+    for key in four:
+        rows_four = rows_four + ledger_of.get(key, 0)
+    rows_five = 0
+    for key in five:
+        rows_five = rows_five + ledger_of.get(key, 0)
+    say("| all four | c, rust, go, swift | %d | %d | %s%% |"
+        % (len(four), rows_four, rate(rows_four, total_rows)))
+    say("| all five | c, cpp, rust, go, swift | %d | %d | %s%% |"
+        % (len(five), rows_five, rate(rows_five, total_rows)))
     say("")
-    say("Table 3 -- how many of the five each cell is proved on.")
+    say("cells proved on all four and NOT on cpp: %d"
+        % (len(four) - len(five)))
+    for key in four:
+        if key in proved_cpp:
+            continue
+        say("   `%s` %s %s   ledger rows %d"
+            % (key[0], key[1], key[2], ledger_of.get(key, 0)))
+    say("")
+    say("cpp's own proved set: %d cells" % len(proved_cpp))
+    only_cpp = []
+    for key in sorted(proved_cpp):
+        if key in four:
+            continue
+        only_cpp.append(key)
+    say("cells proved on cpp that are not in the all-four set: %d"
+        % len(only_cpp))
+    say("")
+    say("Table 3 -- how many of the five each cell is proved on, from "
+        "task ap4's own per-cell list plus cpp's.")
     say("")
     say("| proved on | cells | ledger rows | share |")
     say("|---|---|---|---|")
     counted = {}
-    for key in ledger_of:
-        many = 0
-        for lang in order:
-            if key in proved_by[lang]:
-                many = many + 1
-        counted.setdefault(many, []).append(key)
-    for many in sorted(counted, reverse=True):
+    for many in ("4", "3", "2", "1", "0"):
+        for entry in theirs["across_targets"][many]["cell_list"]:
+            key = (entry["mnem"], entry["shape"], entry["key_width"])
+            total = int(many)
+            if key in proved_cpp:
+                total = total + 1
+            counted.setdefault(total, []).append(key)
+    for total in sorted(counted, reverse=True):
         rows = 0
-        for key in counted[many]:
+        for key in counted[total]:
             rows = rows + ledger_of.get(key, 0)
-        say("| %d of %d | %d | %d | %s%% |"
-            % (many, len(order), len(counted[many]), rows,
+        say("| %d of 5 | %d | %d | %s%% |"
+            % (total, len(counted[total]), rows,
                rate(rows, total_rows)))
-    say("")
-    only_four = None
-    for lang in four:
-        if only_four is None:
-            only_four = set(proved_by[lang])
-        else:
-            only_four = only_four & proved_by[lang]
-    lost = sorted(only_four - proved_by["cpp"])
-    say("cells proved on all four and NOT on cpp: %d" % len(lost))
-    for key in lost:
-        say("   `%s` %s %s" % key)
-    gained = sorted(proved_by["cpp"] - only_four)
-    say("cells proved on cpp and not on all four: %d" % len(gained))
-    for key in gained[:20]:
-        say("   `%s` %s %s" % key)
     return 0
 
 
@@ -502,6 +496,13 @@ def handful_command():
             % (asked[0], asked[1], asked[2], run.get("route") or "--",
                landing, escaped(verdict), escaped(their_verdict), note))
     say("")
+    say("`sub` imm_gpr 64 is one of the handful's ten and is NOT in the "
+        "253-cell outer set this loop walks, so no run of it exists on "
+        "either store; task ap4's own reproduction line says the same "
+        "of it, LITERAL: `the handful's forty pairs: 32 agree character "
+        "for character, 35 agree on the verdict, 4 not in this outer "
+        "set`.")
+    say("")
     say("of the ten, cpp's verdict is c's: %d" % agree)
     say("of the ten, cpp's source is c's but for the header and the "
         "linkage: %d" % same_source)
@@ -510,22 +511,40 @@ def handful_command():
 
 def strip_the_two(text):
     """the rendered source with the two things cpp spells differently
-    removed, so the rest can be compared character for character."""
+    removed -- the linkage and the header names -- and the leading
+    comment block with them, so what is left is the DECLARATION and the
+    EXPRESSION and those can be compared character for character.
+
+    The comment is dropped because it names the file that rendered it
+    (`emulate.py Renderer` against `cpp_render.py CppRenderer`), which
+    is a true difference about the printer and not about the source it
+    printed."""
     out = []
+    inside = False
+    started = False
     for line in (text or "").splitlines():
         stripped = line.strip()
-        if stripped in ('extern "C"',):
+        if not started and stripped.startswith("/*"):
+            inside = True
+        if inside:
+            if "*/" in stripped:
+                inside = False
+                started = True
+            continue
+        started = True
+        if stripped == 'extern "C"':
             continue
         if stripped in ("#include <cstdint>", "#include <stdint.h>"):
             continue
         if stripped in ("#include <cstring>", "#include <string.h>"):
             continue
-        if stripped.startswith("/* task "):
-            continue
-        if stripped.startswith("rendered by"):
-            continue
         out.append(line)
-    return "\n".join(out)
+    joined = "\n".join(out)
+    # THE LABEL CARRIES THE TARGET'S OWN NAME, which is what makes the
+    # symbol unique per run and is not a difference in what the source
+    # COMPUTES.  Both are folded to one word before the comparison.
+    import re
+    return re.sub(r"__(?:cpp|c)\b", "__LANG", joined)
 
 
 def source_note(run, other):
@@ -575,14 +594,76 @@ def sources_command():
 # section 2: THE INTERPRETED HALF
 # ==================================================================
 
+JIT_FOLDERS = ("javascript", "dart", "csharp")
+
+
+def jit_command():
+    """WHAT THE CORPUS'S JIT OUTPUT ACTUALLY IS, measured rather than
+    assumed, because the brief's instruction is conditional on it:
+    "where the language has a JIT whose output the corpus already
+    carves, ALSO carve and gate that output the compiled way"."""
+    op = os.path.normpath(os.path.join(EMULATION, "..", "..", "..",
+                                       "op_pipeline"))
+    say("| folder | files | the first line of its dump, LITERAL |")
+    say("|---|---|---|")
+    for lang in JIT_FOLDERS:
+        folder = os.path.join(op, "jit_out_%s" % lang)
+        if not os.path.isdir(folder):
+            say("| jit_out_%s | absent | -- |" % lang)
+            continue
+        names = sorted(os.listdir(folder))
+        first = "--"
+        for name in names:
+            if not name.endswith("_opt.txt") and name != "all_opt.txt":
+                continue
+            handle = open(os.path.join(folder, name))
+            for line in handle:
+                if line.strip():
+                    first = line.strip()
+                    break
+            handle.close()
+            break
+        say("| jit_out_%s | %d | `%s` |"
+            % (lang, len(names), escaped(first)))
+    say("")
+    say("what the corpus holds as ARCH-UNITS, per language "
+        "(`oracle/arch_opcodes/single_opcode_units.json`):")
+    say("")
+    document = read_json(os.path.join(EMULATION, "..", "..",
+                                      "arch_opcodes",
+                                      "single_opcode_units.json"))
+    groups = document["single_opcode_groups"]
+    say("| language | in the file | narrow single-opcode groups |")
+    say("|---|---|---|")
+    for lang in ("c", "cpp", "rust", "go", "swift", "java", "cpython",
+                 "php", "ruby", "javascript", "dart", "csharp"):
+        held = groups.get(lang)
+        if held is None:
+            say("| %s | no | -- |" % lang)
+            continue
+        say("| %s | yes | %d |" % (lang, len(held.get("narrow", {}))))
+    return 0
+
+
 def interp_sample_command():
     import interp_check as IC
     return IC.sample_command()
 
 
+HANDFUL_CELLS_FILE = os.path.join(HANDFUL, "handful_cells.json")
+"""THE CELLS THE INTERPRETED HALF READS, and it is the handful's own
+file rather than the 253-cell outer set.  `sub` imm_gpr 64 is one of
+the handful's ten and is NOT in the outer set -- task ap4's own
+reproduction line says so, LITERAL: "the handful's forty pairs: 32
+agree character for character, 35 agree on the verdict, 4 not in this
+outer set" -- so reading the ten out of the outer set would refuse that
+cell for a reason that is about the outer set and not about any
+interpreted language."""
+
+
 def interp_run_command(limit):
     import interp_check as IC
-    return IC.run_command(INTERP_RUNS, CELLS, limit)
+    return IC.run_command(INTERP_RUNS, HANDFUL_CELLS_FILE, limit)
 
 
 def interp_table_command():
@@ -599,35 +680,92 @@ def interp_aggregate_command():
 # section 3: THE REPORT
 # ==================================================================
 
+def captured(function, *arguments):
+    """one command's own printed output, captured so the report and the
+    lane log carry the same characters."""
+    import io
+    held = sys.stdout
+    buffer = io.StringIO()
+    sys.stdout = buffer
+    try:
+        function(*arguments)
+    finally:
+        sys.stdout = held
+    return buffer.getvalue().rstrip("\n")
+
+
 def report_command():
-    """expand1.md: the cpp column, the all-five line, the interpreted
-    table, the sample rule LITERAL, and by cause what did not run."""
+    """expand1.md: the cpp column, the all-four and all-five lines, the
+    interpreted handful table, the sample rule LITERAL, and by cause
+    what did not run.  Every table below is also a command of this
+    program, and the text here is that command's own output."""
     import interp_check as IC
     lines = []
     lines.append("# expand1 -- task ex1: beyond the four")
     lines.append("")
-    lines.append("Written by `expand1.py report`; every table below is "
-                 "also a command of this program, so a claim about it "
-                 "re-runs.")
-    lines.append("")
     lines.append("Node: hq.research.arch_unit_oracle.cross_construction"
-                 ".autopoly, and the interpreted half also "
+                 ".autopoly; the interpreted half also serves "
                  "node_0_3_1_12_remaining_languages.")
+    lines.append("")
+    lines.append("Written by `expand1.py report`. Every table is the "
+                 "output of a command of this program, captured: "
+                 "`tables`, `handful`, `causes`, `interp_table` and "
+                 "`interp_sample`.")
     lines.append("")
     lines.append("## 1. cpp, the fifth compiled target")
     lines.append("")
-    lines.append("`expand1.py tables`")
+    lines.append("The route is task ap4's, unchanged: the primitive "
+                 "lookup first, the cell's term in the target's own "
+                 "operators where there is no primitive, compiled at "
+                 "the corpus's own cpp ship flags "
+                 "(`%s`), carved by `lane_gen.DRIVER`'s own `extract`, "
+                 "and put back to z3 against the cell's own term."
+                 % " ".join([CPR.CLANGXX] + CPR.SHIP_FLAGS))
     lines.append("")
-    lines.append("## 2. the interpreted languages")
+    lines.append(captured(tables_command))
     lines.append("")
-    lines.append("`expand1.py interp_table`")
+    lines.append("## 2. the handful's ten cells on cpp, beside c")
     lines.append("")
-    lines.append("## 3. the sample rule, LITERAL")
+    lines.append(captured(handful_command))
+    lines.append("")
+    lines.append("## 3. what did not work on cpp, by cause")
+    lines.append("")
+    lines.append(captured(causes_command))
+    lines.append("")
+    lines.append("## 4. the interpreted handful")
+    lines.append("")
+    lines.append("There is no carve for an interpreted target, so the "
+                 "emulation is SOURCE in that language and the check is "
+                 "the fuzz census's method over a stated sample. An "
+                 "agreement is not a proof and no interpreted run "
+                 "carries a gate verdict.")
+    lines.append("")
+    lines.append(captured(interp_table_command))
+    lines.append("")
+    lines.append("## 5. the JIT output the corpus holds")
+    lines.append("")
+    lines.append("The brief's instruction is conditional -- ALSO carve "
+                 "and gate the JIT output where the corpus already "
+                 "carves it -- and the condition does not hold. What "
+                 "`jit_out_*` holds is each JIT's OWN dump text, in "
+                 "three different formats, none of them objdump's; the "
+                 "carve this line uses is `lane_gen.DRIVER`'s `extract` "
+                 "over objdump, and the corpus holds no arch-unit for "
+                 "javascript, dart or csharp at all. Building a reader "
+                 "for three new instruction-text formats is a new "
+                 "instrument, which is a flag for the coordinator and "
+                 "not something this task works around.")
+    lines.append("")
+    lines.append(captured(jit_command))
+    lines.append("")
+    lines.append("## 6. the sample rule, LITERAL, as it was run")
     lines.append("")
     lines.append("```")
     for line in IC.SAMPLE_RULE.splitlines():
         lines.append(line)
     lines.append("```")
+    lines.append("")
+    lines.append(captured(interp_sample_command))
     lines.append("")
     handle = open(REPORT, "w")
     handle.write("\n".join(lines) + "\n")
@@ -660,6 +798,8 @@ def main(argv):
         return sources_command()
     if argv[0] == "causes":
         return causes_command()
+    if argv[0] == "jit":
+        return jit_command()
     if argv[0] == "interp_sample":
         return interp_sample_command()
     if argv[0] == "interp_run":

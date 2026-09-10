@@ -401,11 +401,21 @@ def write_for_running(lang, label, source):
     return folder, path
 
 
-def interpreter_answers(lang, label, source, points):
+def interpreter_answers(lang, label, source, points, timeout=None):
     """one process for the whole sample.  Returns (answers, problem):
     `answers` is one entry per point -- an integer, or the runner's own
     `RAISE:<kind>` token -- or None with the problem stated when the
-    runner itself did not run."""
+    runner itself did not run.
+
+    TASK ex2's ONE ADDITION: `timeout` overrides `RUNNER_TIMEOUT` for
+    this call (None keeps ex1's own 900 s, unchanged); a timeout is no
+    longer just a string -- it is a dict `{"kind": "TIMEOUT", "seconds":
+    ..., "points_reached": ...}`, the point count read off whatever the
+    process had already printed before it was stopped (`subprocess`'s
+    own `TimeoutExpired.stdout`, captured because `capture_output` is
+    already on). TIMEOUT is not a new outcome name -- it is the word the
+    law already uses for a lane or a solver that ran out of room."""
+    run_timeout = timeout if timeout is not None else RUNNER_TIMEOUT
     folder, path = write_for_running(lang, label, source)
     lines = []
     for point in points:
@@ -414,20 +424,32 @@ def interpreter_answers(lang, label, source, points):
             parts.append("%d" % value)
         lines.append(" ".join(parts))
     fed = "\n".join(lines) + "\n"
-    command = IR.DIALECTS[lang].command(folder, path, label)
     environment = dict(os.environ)
     environment["HOME"] = folder
     environment["DOTNET_CLI_TELEMETRY_OPTOUT"] = "1"
     environment["DOTNET_NOLOGO"] = "1"
     try:
+        command, problem = IR.DIALECTS[lang].prepare(folder, path, label,
+                                                     environment)
+    except subprocess.TimeoutExpired:
+        return None, "the runner's own build did not finish in time"
+    except OSError as problem:
+        return None, "%s" % problem
+    if command is None:
+        return None, problem
+    try:
         done = subprocess.run(command, input=fed, capture_output=True,
-                              text=True, timeout=RUNNER_TIMEOUT,
+                              text=True, timeout=run_timeout,
                               cwd=folder, env=environment)
     except OSError as problem:
         return None, "%s: %s" % (command[0], problem.strerror)
-    except subprocess.TimeoutExpired:
-        return None, ("the runner did not finish inside %d s"
-                      % RUNNER_TIMEOUT)
+    except subprocess.TimeoutExpired as expired:
+        reached = 0
+        for line in (expired.stdout or "").splitlines():
+            if line.strip():
+                reached = reached + 1
+        return None, {"kind": "TIMEOUT", "seconds": run_timeout,
+                      "points_reached": reached}
     text = done.stdout
     got = []
     for line in text.splitlines():
@@ -459,26 +481,41 @@ def interpreter_answers(lang, label, source, points):
 # section 4: ONE RUN
 # ==================================================================
 
-def gloss_of(source, lang):
-    """the rendered body on one line: a GLOSS.  The LITERAL source is
-    kept under `interp/src_ex1/` and the run record names it."""
-    for line in (source or "").splitlines():
-        stripped = line.strip()
-        if stripped.startswith("return "):
-            return stripped[len("return "):].rstrip(";")
-        if stripped.startswith("  ") and lang == "ruby":
-            continue
-    # ruby's function body is the last line before its `end`
+def gloss_of(source, symbol):
+    """the EMULATION's own body on one line: a GLOSS.  The LITERAL
+    source is kept under `interp/src_ex1/` and the run record names it.
+
+    The body is found by the emulation's own symbol, never by the first
+    `return` in the file -- the prelude above it is full of them, and
+    reading one of those is what the first pass of lane ex1_l7 printed
+    in this column."""
     lines = (source or "").splitlines()
     for index, line in enumerate(lines):
-        if line.startswith("def emu_"):
+        if symbol not in line:
+            continue
+        if "(" not in line:
+            continue
+        for after in lines[index:index + 4]:
+            stripped = after.strip()
+            if stripped.startswith("return "):
+                return stripped[len("return "):].rstrip(";")
+            if stripped.startswith("=> "):
+                return stripped[len("=> "):].rstrip(";")
+        # ruby: the body is the line under the `def`
+        if index + 1 < len(lines):
             return lines[index + 1].strip()
     return ""
 
 
-def one_run(shared, cells, asked, lang):
+def one_run(shared, cells, asked, lang, timeout=None):
     """one (cell, interpreted target): the input, the render, the
-    sample, the two answers, the comparison."""
+    sample, the two answers, the comparison.
+
+    TASK ex2's ONE ADDITION: `timeout`, threaded to
+    `interpreter_answers` unchanged (None keeps ex1's own bound). A
+    TIMEOUT is recorded as `record["outcome"] = "TIMEOUT"` with the
+    point count reached, never as a `refusal_cause` -- it is a result
+    by cause, not a refusal of the cell."""
     started = time.time()
     record = {"mnem": asked[0], "shape": asked[1],
               "key_width": asked[2], "lang": lang,
@@ -509,6 +546,29 @@ def one_run(shared, cells, asked, lang):
     record["writes"] = place["writes"]
     record["bits"] = place["bits"]
     record["term_text"] = place["text"]
+    # FIX 2 (task h2), IN THE DRIVER, and the interpreted route runs it
+    # exactly where the compiled route runs it (`handful.py` around the
+    # `working = place` line): a vector cell's place carries the whole
+    # 128-bit register, so the lane the operation writes is projected
+    # out of it and it is that lane which is rendered and checked.  A
+    # place already split into halves is not asked again, which is task
+    # ap2's fix 3.
+    driver = shared["driver"]
+    if driver.fixes_are_on() and place.get("halved") is None:
+        projected = driver.projected_lane(shared["pipeline"], place,
+                                          held["key_width"])
+        if projected is not None:
+            record["lane"] = projected["lane"]
+            if projected.get("refusal_cause") is not None:
+                record["refusal_cause"] = projected["refusal_cause"]
+                record["refusal_detail"] = projected.get(
+                    "refusal_detail")
+                record["seconds"] = time.time() - started
+                return record
+            place = projected["place"]
+            record["writes"] = place["writes"]
+            record["bits"] = place["bits"]
+            record["term_text"] = place["text"]
     if place.get("families") is None:
         record["refusal_cause"] = place.get("not_rendered")
         record["refusal_detail"] = place.get("not_rendered_detail")
@@ -516,8 +576,19 @@ def one_run(shared, cells, asked, lang):
         return record
     term = shared["driver"].renderer_input(place["term"],
                                            shared["driver"].TASK)
+    # TASK ex2'S SECOND BOOKKEEPING FIX, found by the loop's own runs
+    # over the full outer set (the handful's ten cells never hit it): a
+    # PLACE NAME carries a dot when task ap2's fix 3 halves a place
+    # (`flags.low`) or task h2's fix 2 projects a vector lane
+    # (`reg_xmm0.low`), and the label becomes the rendered FUNCTION
+    # NAME -- a dot there is invalid syntax in every one of the seven
+    # targets. `handful.one_place` (the compiled route) already
+    # sanitises this exact way (`place["writes"].replace(".", "_")`);
+    # the interpreted route never called it. Sanitised here, the same
+    # way, and nowhere else.
     label = "%s_%s_%s__%s__%s" % (asked[0], asked[1], asked[2],
-                                  place["writes"], lang)
+                                  place["writes"].replace(".", "_"),
+                                  lang)
     renderer = IR.InterpRenderer(lang, place["families"],
                                  place["home"]["family"], place["bits"],
                                  label)
@@ -538,7 +609,7 @@ def one_run(shared, cells, asked, lang):
                                          os.path.basename(kept))
     record["symbol"] = symbol
     record["rendered"] = True
-    record["gloss"] = gloss_of(source, lang)
+    record["gloss"] = gloss_of(source, symbol)
     record["params"] = []
     for param in renderer.params:
         record["params"].append({"name": param["name"],
@@ -553,8 +624,15 @@ def one_run(shared, cells, asked, lang):
     for one in lists:
         record["sample_per_arrival"].append(len(one))
     reference = reference_answers(term, renderer.params, points)
-    answers, problem = interpreter_answers(lang, label, source, points)
+    answers, problem = interpreter_answers(lang, label, source, points,
+                                           timeout=timeout)
     if answers is None:
+        if isinstance(problem, dict) and problem.get("kind") == "TIMEOUT":
+            record["outcome"] = "TIMEOUT"
+            record["timeout_seconds"] = problem["seconds"]
+            record["points_reached"] = problem["points_reached"]
+            record["seconds"] = time.time() - started
+            return record
         record["refusal_cause"] = "the runner did not answer"
         record["refusal_detail"] = problem
         record["seconds"] = time.time() - started
@@ -597,9 +675,17 @@ def one_run(shared, cells, asked, lang):
 # ==================================================================
 
 def build_shared():
+    """the driver, and the pipeline's own walk beside it.
+
+    The walk is needed because task h2's FIX 2 -- the vector-lane
+    projection -- asks the GATE whether the bits above the lane are the
+    arrival's own bits passed through, and the interpreted route runs
+    that fix for the same reason the compiled route does: a vector
+    cell's place carries the whole 128-bit register and the lane the
+    operation writes is what an emulation computes."""
     import handful as H
     H.use_task_ex1()
-    return {"driver": H}
+    return {"driver": H, "pipeline": H.build_shared()}
 
 
 def read_runs(path):

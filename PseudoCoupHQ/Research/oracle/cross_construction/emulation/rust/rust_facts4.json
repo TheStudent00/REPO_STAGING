@@ -1,0 +1,115 @@
+{
+ "peak_kb": 27116,
+ "probes": [
+  {
+   "name": "unreachable_quotient_i32",
+   "question": "does spelling the hint as an unreachable branch drop the signed-extreme check",
+   "ship": {
+    "body_bytes": "89 f8 99 f7 fe c3",
+    "body_text": "mov %edi,%eax; cltd; idiv %esi; ret",
+    "byte_count": 6,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn unreachable_quotient_i32(a: i32, b: i32) -> i32 {\n    unsafe {\n        if b == 0 || (a == i32::MIN && b == -1) {\n            core::hint::unreachable_unchecked();\n        }\n    }\n    a / b\n}"
+  },
+  {
+   "name": "two_hint_quotient_i32",
+   "question": "the two facts hinted separately rather than as one conjunction",
+   "ship": {
+    "body_bytes": "89 f8 99 f7 fe c3",
+    "body_text": "mov %edi,%eax; cltd; idiv %esi; ret",
+    "byte_count": 6,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn two_hint_quotient_i32(a: i32, b: i32) -> i32 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n        core::hint::assert_unchecked(b != -1);\n    }\n    a / b\n}"
+  },
+  {
+   "name": "widened_quotient_i32",
+   "question": "the signed division done at double width, where the extreme cannot arise, then narrowed",
+   "ship": {
+    "body_bytes": "48 63 ce 48 63 c7 48 99 48 f7 f9 c3",
+    "body_text": "movslq %esi,%rcx; movslq %edi,%rax; cqto; idiv %rcx; ret",
+    "byte_count": 12,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 5
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn widened_quotient_i32(a: i32, b: i32) -> i32 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n    }\n    (((a as i64) / (b as i64)) as i32)\n}"
+  },
+  {
+   "name": "widened_remainder_i32",
+   "question": "the same for the signed remainder",
+   "ship": {
+    "body_bytes": "48 63 ce 48 63 c7 48 99 48 f7 f9 48 89 d0 c3",
+    "body_text": "movslq %esi,%rcx; movslq %edi,%rax; cqto; idiv %rcx; mov %rdx,%rax; ret",
+    "byte_count": 15,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 6
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn widened_remainder_i32(a: i32, b: i32) -> i32 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n    }\n    (((a as i64) % (b as i64)) as i32)\n}"
+  },
+  {
+   "name": "widened_quotient_i8",
+   "question": "the narrowest signed quotient, done at 32 bits",
+   "ship": {
+    "body_bytes": "89 f8 99 f7 fe c3",
+    "body_text": "mov %edi,%eax; cltd; idiv %esi; ret",
+    "byte_count": 6,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn widened_quotient_i8(a: i8, b: i8) -> i8 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n    }\n    (((a as i32) / (b as i32)) as i8)\n}"
+  },
+  {
+   "name": "widened_quotient_i64",
+   "question": "the 64-bit signed quotient done at 128 bits",
+   "ship": {
+    "body_bytes": "50 48 89 f2 48 89 f1 48 c1 f9 3f 48 89 fe 48 c1 fe 3f ff 15 00 00 00 00 59 c3",
+    "body_text": "push %rax; mov %rsi,%rdx; mov %rsi,%rcx; sar $0x3f,%rcx; mov %rdi,%rsi; sar $0x3f,%rsi; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:__divti3-0x4; pop %rcx; ret",
+    "byte_count": 26,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:__divti3-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 9
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn widened_quotient_i64(a: i64, b: i64) -> i64 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n    }\n    (((a as i128) / (b as i128)) as i64)\n}"
+  },
+  {
+   "name": "both_hint_quotient_i64",
+   "question": "the 64-bit signed quotient with the unreachable spelling",
+   "ship": {
+    "body_bytes": "48 89 f8 48 99 48 f7 fe c3",
+    "body_text": "mov %rdi,%rax; cqto; idiv %rsi; ret",
+    "byte_count": 9,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn both_hint_quotient_i64(a: i64, b: i64) -> i64 {\n    unsafe {\n        if b == 0 || (a == i64::MIN && b == -1) {\n            core::hint::unreachable_unchecked();\n        }\n    }\n    a / b\n}"
+  }
+ ],
+ "rustc_version": "rustc 1.96.1 (31fca3adb 2026-06-26)",
+ "ship_flags": [
+  "--crate-type=lib",
+  "--emit=obj",
+  "-C",
+  "opt-level=1",
+  "-C",
+  "debug-assertions=off"
+ ],
+ "task": "o11"
+}

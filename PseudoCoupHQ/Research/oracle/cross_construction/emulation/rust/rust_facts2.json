@@ -1,0 +1,317 @@
+{
+ "peak_kb": 27012,
+ "probes": [
+  {
+   "name": "nonzero_quotient_u32",
+   "question": "does dividing by a NonZero holder drop the zero check",
+   "ship": {
+    "body_bytes": "89 f8 31 d2 f7 f6 c3",
+    "body_text": "mov %edi,%eax; xor %edx,%edx; div %esi; ret",
+    "byte_count": 7,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn nonzero_quotient_u32(a: u32, b: u32) -> u32 { unsafe { a / core::num::NonZeroU32::new_unchecked(b) } }"
+  },
+  {
+   "name": "nonzero_remainder_u32",
+   "question": "the same for the remainder",
+   "ship": {
+    "body_bytes": "89 f8 31 d2 f7 f6 89 d0 c3",
+    "body_text": "mov %edi,%eax; xor %edx,%edx; div %esi; mov %edx,%eax; ret",
+    "byte_count": 9,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 5
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn nonzero_remainder_u32(a: u32, b: u32) -> u32 { unsafe { a % core::num::NonZeroU32::new_unchecked(b) } }"
+  },
+  {
+   "name": "nonzero_quotient_u64",
+   "question": "the same at 64 bits",
+   "ship": {
+    "body_bytes": "48 89 f8 31 d2 48 f7 f6 c3",
+    "body_text": "mov %rdi,%rax; xor %edx,%edx; div %rsi; ret",
+    "byte_count": 9,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn nonzero_quotient_u64(a: u64, b: u64) -> u64 { unsafe { a / core::num::NonZeroU64::new_unchecked(b) } }"
+  },
+  {
+   "name": "nonzero_quotient_u128",
+   "question": "the same at 128 bits",
+   "ship": {
+    "body_bytes": "50 ff 15 00 00 00 00 59 c3",
+    "body_text": "push %rax; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:__udivti3-0x4; pop %rcx; ret",
+    "byte_count": 9,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:__udivti3-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn nonzero_quotient_u128(a: u128, b: u128) -> u128 { unsafe { a / core::num::NonZeroU128::new_unchecked(b) } }"
+  },
+  {
+   "name": "nonzero_quotient_i32",
+   "question": "is there a signed NonZero division, and does it drop BOTH checks (zero and the signed extreme)",
+   "ship": {
+    "compiled": false,
+    "refusal": "error[E0277]: cannot divide `i32` by `NonZero<i32>`"
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn nonzero_quotient_i32(a: i32, b: i32) -> i32 { unsafe { a / core::num::NonZeroI32::new_unchecked(b) } }"
+  },
+  {
+   "name": "branch_quotient_u32",
+   "question": "does an explicit zero guard let the optimizer drop rustc's own",
+   "ship": {
+    "body_bytes": "85 f6 74 07 89 f8 31 d2 f7 f6 c3 31 c0 c3",
+    "body_text": "test %esi,%esi; je b <branch_quotient_u32+0xb>; mov %edi,%eax; xor %edx,%edx; div %esi; ret; xor %eax,%eax; ret",
+    "byte_count": 14,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 8
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn branch_quotient_u32(a: u32, b: u32) -> u32 { if b != 0 { a / b } else { 0 } }"
+  },
+  {
+   "name": "branch_quotient_i32",
+   "question": "the signed guard written out: zero divisor and the signed extreme",
+   "ship": {
+    "body_bytes": "31 c0 85 f6 74 13 8d 8f 00 00 00 80 89 f2 f7 d2 09 ca 74 05 89 f8 99 f7 fe c3",
+    "body_text": "xor %eax,%eax; test %esi,%esi; je 19 <branch_quotient_i32+0x19>; lea -0x80000000(%rdi),%ecx; mov %esi,%edx; not %edx; or %ecx,%edx; je 19 <branch_quotient_i32+0x19>; mov %edi,%eax; cltd; idiv %esi; ret",
+    "byte_count": 26,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 12
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn branch_quotient_i32(a: i32, b: i32) -> i32 { if b != 0 && !(a == i32::MIN && b == -1) { a / b } else { 0 } }"
+  },
+  {
+   "name": "checked_quotient_u32",
+   "question": "the Option-returning form, unwrapped to a constant",
+   "ship": {
+    "body_bytes": "85 f6 74 07 89 f8 31 d2 f7 f6 c3 31 c0 c3",
+    "body_text": "test %esi,%esi; je b <checked_quotient_u32+0xb>; mov %edi,%eax; xor %edx,%edx; div %esi; ret; xor %eax,%eax; ret",
+    "byte_count": 14,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 8
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn checked_quotient_u32(a: u32, b: u32) -> u32 { a.checked_div(b).unwrap_or(0) }"
+  },
+  {
+   "name": "wrapping_quotient_i32",
+   "question": "does the wrapping form drop the signed-extreme check",
+   "ship": {
+    "body_bytes": "50 8d 87 00 00 00 80 89 f1 f7 d1 09 c1 74 0b 85 f6 74 0e 89 f8 99 f7 fe 59 c3 b8 00 00 00 80 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; lea -0x80000000(%rdi),%eax; mov %esi,%ecx; not %ecx; or %eax,%ecx; je 1a <wrapping_quotient_i32+0x1a>; test %esi,%esi; je 21 <wrapping_quotient_i32+0x21>; mov %edi,%eax; cltd; idiv %esi; pop %rcx; ret; mov $0x80000000,%eax; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.3e6bb9caad6abfe634824d58e3e0d154.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 54,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 20
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn wrapping_quotient_i32(a: i32, b: i32) -> i32 { a.wrapping_div(b) }"
+  },
+  {
+   "name": "intrinsic_quotient_u32",
+   "question": "is the compiler intrinsic reachable on this stable rustc",
+   "ship": {
+    "compiled": false,
+    "refusal": "error[E0658]: use of unstable library feature `core_intrinsics`: intrinsics are unlikely to ever be stabilized, instead they should be used through stabilized interfaces in the rest of the standard library"
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn intrinsic_quotient_u32(a: u32, b: u32) -> u32 { unsafe { core::intrinsics::unchecked_div(a, b) } }"
+  },
+  {
+   "name": "float16_holder",
+   "question": "is there a 16-bit float holder on this rustc",
+   "ship": {
+    "compiled": false,
+    "refusal": "error[E0658]: the type `f16` is unstable"
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn float16_holder(a: f16, b: f16) -> f16 { a + b }"
+  },
+  {
+   "name": "float128_holder",
+   "question": "is there a 128-bit float holder on this rustc",
+   "ship": {
+    "compiled": false,
+    "refusal": "error[E0658]: the type `f128` is unstable"
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn float128_holder(a: f128, b: f128) -> f128 { a + b }"
+  },
+  {
+   "name": "truncating_f64_to_u64",
+   "question": "the unguarded float-to-UNSIGNED-integer idiom",
+   "ship": {
+    "body_bytes": "f2 48 0f 2c c8 48 89 ca f2 0f 5c 05 00 00 00 00 f2 48 0f 2c c0 48 c1 fa 3f 48 21 d0 48 09 c8 c3",
+    "body_text": "cvttsd2si %xmm0,%rcx; mov %rcx,%rdx; subsd 0x0(%rip),%xmm0 !!reloc=R_X86_64_PC32:.LCPI0_0-0x4; cvttsd2si %xmm0,%rax; sar $0x3f,%rdx; and %rdx,%rax; or %rcx,%rax; ret",
+    "byte_count": 32,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 8
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn truncating_f64_to_u64(a: f64) -> u64 { unsafe { a.to_int_unchecked::<u64>() } }"
+  },
+  {
+   "name": "truncating_f32_to_i32",
+   "question": "the same at 32 bits",
+   "ship": {
+    "body_bytes": "f3 0f 2c c0 c3",
+    "body_text": "cvttss2si %xmm0,%eax; ret",
+    "byte_count": 5,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn truncating_f32_to_i32(a: f32) -> i32 { unsafe { a.to_int_unchecked::<i32>() } }"
+  },
+  {
+   "name": "f32_bits",
+   "question": "reading a 32-bit float's bits",
+   "ship": {
+    "body_bytes": "66 0f 7e c0 c3",
+    "body_text": "movd %xmm0,%eax; ret",
+    "byte_count": 5,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn f32_bits(a: f32) -> u32 { a.to_bits() }"
+  },
+  {
+   "name": "bits_f32",
+   "question": "writing a 32-bit float from its bits",
+   "ship": {
+    "body_bytes": "66 0f 6e c7 c3",
+    "body_text": "movd %edi,%xmm0; ret",
+    "byte_count": 5,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn bits_f32(a: u32) -> f32 { f32::from_bits(a) }"
+  },
+  {
+   "name": "absolute_f64",
+   "question": "the float absolute value without the standard library's math",
+   "ship": {
+    "body_bytes": "0f 54 05 00 00 00 00 c3",
+    "body_text": "andps 0x0(%rip),%xmm0 !!reloc=R_X86_64_PC32:.LCPI0_0-0x4; ret",
+    "byte_count": 8,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn absolute_f64(a: f64) -> f64 { f64::from_bits(a.to_bits() & 0x7fff_ffff_ffff_ffff) }"
+  },
+  {
+   "name": "is_nan_f64",
+   "question": "the not-a-number test",
+   "ship": {
+    "body_bytes": "31 c0 66 0f 2e c0 0f 9a c0 c3",
+    "body_text": "xor %eax,%eax; ucomisd %xmm0,%xmm0; setp %al; ret",
+    "byte_count": 10,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn is_nan_f64(a: f64) -> u32 { if a != a { 1 } else { 0 } }"
+  },
+  {
+   "name": "is_infinite_f64",
+   "question": "the infinity test without the standard library's math",
+   "ship": {
+    "body_bytes": "66 48 0f 7e c0 48 b9 ff ff ff ff ff ff ff 7f 48 21 c1 48 ba 00 00 00 00 00 00 f0 7f 31 c0 48 39 d1 0f 94 c0 c3",
+    "body_text": "movq %xmm0,%rax; movabs $0x7fffffffffffffff,%rcx; and %rax,%rcx; movabs $0x7ff0000000000000,%rdx; xor %eax,%eax; cmp %rdx,%rcx; sete %al; ret",
+    "byte_count": 37,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 8
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn is_infinite_f64(a: f64) -> u32 { if (a.to_bits() & 0x7fff_ffff_ffff_ffff) == 0x7ff0_0000_0000_0000 { 1 } else { 0 } }"
+  },
+  {
+   "name": "sign_bit_f64",
+   "question": "the sign-bit test",
+   "ship": {
+    "body_bytes": "66 0f 50 c0 83 e0 01 c3",
+    "body_text": "movmskpd %xmm0,%eax; and $0x1,%eax; ret",
+    "byte_count": 8,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 3
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn sign_bit_f64(a: f64) -> u32 { if (a.to_bits() >> 63) != 0 { 1 } else { 0 } }"
+  },
+  {
+   "name": "concat_u64_pair",
+   "question": "the two-word join the c renderer wrote as a 128-bit shift and or",
+   "ship": {
+    "body_bytes": "48 89 f0 48 89 fa c3",
+    "body_text": "mov %rsi,%rax; mov %rdi,%rdx; ret",
+    "byte_count": 7,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 3
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn concat_u64_pair(a: u64, b: u64) -> u128 { (((a as u128) << 64) | (b as u128)) }"
+  },
+  {
+   "name": "sign_extend_narrow_field",
+   "question": "the sign-extension idiom over a field narrower than its holder",
+   "ship": {
+    "body_bytes": "89 f8 c1 e0 14 c1 f8 14 c3",
+    "body_text": "mov %edi,%eax; shl $0x14,%eax; sar $0x14,%eax; ret",
+    "byte_count": 9,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn sign_extend_narrow_field(a: u32) -> u32 { (((a << 20) as i32) >> 20) as u32 }"
+  },
+  {
+   "name": "saturating_i128_quotient",
+   "question": "the 128-bit signed division shape",
+   "ship": {
+    "compiled": false,
+    "refusal": "error[E0277]: cannot divide `i128` by `NonZero<i128>`"
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn saturating_i128_quotient(a: i128, b: i128) -> i128 { unsafe { a / core::num::NonZeroI128::new_unchecked(b) } }"
+  }
+ ],
+ "rustc_version": "rustc 1.96.1 (31fca3adb 2026-06-26)",
+ "ship_flags": [
+  "--crate-type=lib",
+  "--emit=obj",
+  "-C",
+  "opt-level=1",
+  "-C",
+  "debug-assertions=off"
+ ],
+ "task": "o11"
+}

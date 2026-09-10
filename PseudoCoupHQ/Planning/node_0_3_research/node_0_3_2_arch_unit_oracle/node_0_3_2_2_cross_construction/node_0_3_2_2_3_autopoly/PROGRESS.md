@@ -5,6 +5,106 @@ status: living
 
 # PROGRESS — autopoly
 
+- 2026-09-09: task ap5 closed with a STOP — the two mechanical remainders
+  of the four languages, each closed IN THE LAYER THAT OWNS IT, and
+  AutoPoly's loop, fifth pass. (1) THE x87 STACK, READ END TO END:
+  `reference.answer_of` now reads an answer home spelled `X87_<k>` off the
+  reference's own `MachineState.x87`, `pool100_entry_equivalence.align_by_row`
+  now aligns an x87 arrival by its IN row at `reference.X87_SORT`, and task
+  ap4's driver-side stand-in `emulate.x87_answer_for_unit` is REMOVED. The
+  branch must test BOTH spellings the pipeline already names in
+  `emulate.X87_ARRIVAL` — `X87_<k>`, a preseeded stack position, and
+  `x87_<operand>`, a memory operand read at the x87 sort — and the first
+  draft tested one, which the loop's own change table caught as 30
+  regressions; the branch was widened and the whole 1,012 re-run, the first
+  pass's store kept beside the second. THE x87 POPULATION DID NOT MOVE, and
+  that is the point: 36 x87 places PROVED on c, 0 disproved, 0 sat, 0
+  undecided, rust/go/swift refused by nature (41 places each), and the
+  standing cause "answer home or arrival on the x87 stack" still carries 114
+  runs, exactly task ap4's count. No `sat` and no counterexample on any x87
+  place, so the 80-bit explicit-integer-bit finding the brief asked to be
+  stated if it appeared does NOT appear. (2) THE IMMEDIATE AS AN INPUT OF THE
+  MAPPING: `model_translate.shapes_for` spells each `imm_*` shape a second
+  time with a register of the operand's own width in the immediate's slot,
+  marked `imm_symbolic`; the driver takes that immediate as one more
+  parameter and does not ask the primitive route, whose key carries no
+  immediate. 20 symbolic rows added, 0 existing rows changed, and the CELL
+  COUNT DID NOT RISE — 253 before and after, 133,044 ledger rows both. Six
+  runs task ap4 answered `sat` are proved (`mov` imm_gpr 32/8 on c, `xor`
+  imm_gpr 8 on c/rust/swift, `xor` imm_gpr 32 on go), every one a primitive
+  match against a corpus body with a foreign baked-in immediate. THE ALL-FOUR
+  LINE: 165 cells, 106,773 attested ledger rows, 80.25%, up from ap4's 162 /
+  106,032 / 79.7% (ap3 151, ap2 144, ap1 120). Runs carrying a cause 232 of
+  1,012, down from 237. THE FOUR GUARDS PASS: `model_translate check` 259 /
+  172 STATED / 87 REFUSED, task o8's totals 243 / 197 / 155 / 216, the h2
+  handful 24 of 24, and task t100's proved edges 12 of 12 with the new branch
+  measured UNREACHABLE for the whole pool (no x87 family on any edge) and the
+  aligner's substitution identical edge for edge. THE STOP: runs task ap4
+  proved that task ap5 does not is ONE, not zero — `sbb` imm_gpr 8 on swift,
+  whose four-parameter symbolic rendering compiled its `@_cdecl` entry to a
+  five-byte tail-call thunk (`e9 00 00 00 00`, `R_X86_64_PLT32` to the
+  mangled swift symbol), so the carve holds a `jmp` and the reference says the
+  unit record carries no body. The brief's rule is "zero regressions or STOP",
+  so no sixth pass was run and the cell is reported, not patched; whether the
+  symbolic row should be preferred where the target's compiler answers with a
+  thunk is left for the owner. Report:
+  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly5.md`.
+  Log:
+  `PseudoCoupHQ/DevComms/log_249_task_ap5_autopoly_fifth_pass.md`.
+  Status: closed with one regression standing, spelling guard PASS on all
+  three json products, conventions verifier 0 DIFFERS over three passes,
+  instance `ap5` down.
+
+- 2026-09-09: task ex1 closed — BEYOND THE FOUR, each expansion on the
+  handful first, per the owner's standing rule. TWO EXPANSIONS. (1) cpp as a
+  FIFTH COMPILED TARGET: `cpp/cpp_render.py`'s `CppRenderer` is c's
+  renderer with the two things measured to differ and nothing else —
+  the `extern "C"` linkage (without it the symbol is mangled and the
+  carve cannot ask objdump for it) and the `<cstdint>` / `<cstring>`
+  header names — on the evidence that 305 of the 309 c sources task
+  ap4's loop rendered compile under clang++ at the corpus's own cpp
+  ship flags VERBATIM, the four that do not being c primitive rows
+  (`bool` increment) and not term-route text. cpp's `long double`
+  carves to the same x87 body task ap3 measured for c's, so cpp joins
+  `TARGETS_WITH_AN_80_BIT_HOLDER`. The loop's 253 cells ran on cpp
+  alone (253 runs, 63 s): 245 rendered, 245 compiled, 202 proved plus
+  23 under the caller extension, 8 refused — the same eight as c. THE
+  ALL-FIVE LINE IS THE ALL-FOUR LINE: 162 cells, 106,032 attested
+  ledger rows, 79.7% on both widths, and the list of cells proved on
+  all four and NOT on cpp is empty; both widths are reported until the owner
+  says which counts. cpp's own proved set is 225 cells, 63 of them
+  outside the all-four set (the x87 arithmetic among them), which is a
+  reading about how much of the four-way intersection rust, go and
+  swift are setting. (2) THE INTERPRETED CHECK, defined and stated
+  LITERAL before it ran: there is no carve for an interpreted target,
+  so the emulation is SOURCE in that language over that language's own
+  value model (one measured prelude per language in
+  `interp/dialects.py`) and the check is the fuzz census's method — the
+  reference's own term evaluated at each point of a stated sample
+  against what the runner prints, one process for the whole sample,
+  declines never scored. Seven targets (cpython, php, ruby, java,
+  javascript, dart, csharp — every runner named by the brief is in the
+  image or the persist volume), ten cells each, 70 runs, ALL 70
+  RENDERED: 39,062 sample points per target, zero disagreements on any
+  target, 819 or 820 declines each with the target's own word for it
+  (division by zero on six spellings; the NaN region where
+  `fp.to_ieee_bv` is underspecified; php's and c#'s refusal of
+  MIN / −1). An agreement is evidence, not a proof, and no interpreted
+  run carries a gate verdict. FIVE DEFECTS OF THIS TASK'S OWN were
+  found by its own runs and each fixed in the layer that owns it, with
+  the run that caught it quoted; the fifth is the one worth reading —
+  the interpreted route was SKIPPING task h2's `projected_lane`, which
+  the compiled route runs, and that is why the two float cells refused
+  on all seven while proving on cpp. ONE THING FLAGGED: the brief's
+  "ALSO carve and gate the JIT output" has no object — `jit_out_*`
+  holds three different JIT dump formats, none of them objdump's, and
+  the corpus holds zero arch-units for javascript, dart and csharp.
+  Report:
+  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand1.md`.
+  Log:
+  `PseudoCoupHQ/DevComms/log_248_task_ex1_cpp_and_the_interpreted_check.md`.
+  Status: closed, guard PASS on all three json products, verifier zero
+  DIFFERS, instance `ex1` down.
 - 2026-09-06: node folder generated by
   `PlanPlan/framework/generate_nodes.py` from the
   `nodes` register of `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`. Skeleton only — definition,

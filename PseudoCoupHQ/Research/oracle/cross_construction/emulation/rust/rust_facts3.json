@@ -1,0 +1,173 @@
+{
+ "peak_kb": 26968,
+ "probes": [
+  {
+   "name": "hinted_quotient_i32",
+   "question": "does an unchecked hint drop rustc's two signed checks",
+   "ship": {
+    "body_bytes": "50 8d 87 00 00 00 80 89 f1 f7 d1 09 c1 74 07 89 f8 99 f7 fe 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; lea -0x80000000(%rdi),%eax; mov %esi,%ecx; not %ecx; or %eax,%ecx; je 16 <hinted_quotient_i32+0x16>; mov %edi,%eax; cltd; idiv %esi; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.6823a9bac3eecd3aa4cc7a9d974c8185.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 43,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 15
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn hinted_quotient_i32(a: i32, b: i32) -> i32 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n        core::hint::assert_unchecked(!(a == i32::MIN && b == -1));\n    }\n    a / b\n}"
+  },
+  {
+   "name": "hinted_remainder_i32",
+   "question": "the same for the signed remainder",
+   "ship": {
+    "body_bytes": "50 8d 87 00 00 00 80 89 f1 f7 d1 09 c1 74 09 89 f8 99 f7 fe 89 d0 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; lea -0x80000000(%rdi),%eax; mov %esi,%ecx; not %ecx; or %eax,%ecx; je 18 <hinted_remainder_i32+0x18>; mov %edi,%eax; cltd; idiv %esi; mov %edx,%eax; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.71e93dee14eb1071fd5aa002f1dea344.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 45,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_rem_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 16
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn hinted_remainder_i32(a: i32, b: i32) -> i32 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n        core::hint::assert_unchecked(!(a == i32::MIN && b == -1));\n    }\n    a % b\n}"
+  },
+  {
+   "name": "hinted_quotient_i64",
+   "question": "the same at 64 bits",
+   "ship": {
+    "body_bytes": "50 48 b8 00 00 00 00 00 00 00 80 48 31 f8 48 89 f1 48 f7 d1 48 09 c1 74 0a 48 89 f8 48 99 48 f7 fe 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; movabs $0x8000000000000000,%rax; xor %rdi,%rax; mov %rsi,%rcx; not %rcx; or %rax,%rcx; je 23 <hinted_quotient_i64+0x23>; mov %rdi,%rax; cqto; idiv %rsi; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e87fc32491d449abbe0dc322ffe0e39e.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 56,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 16
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn hinted_quotient_i64(a: i64, b: i64) -> i64 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n        core::hint::assert_unchecked(!(a == i64::MIN && b == -1));\n    }\n    a / b\n}"
+  },
+  {
+   "name": "hinted_quotient_u32",
+   "question": "does the same hint work for the unsigned holder, so one rule covers both readings",
+   "ship": {
+    "body_bytes": "89 f8 31 d2 f7 f6 c3",
+    "body_text": "mov %edi,%eax; xor %edx,%edx; div %esi; ret",
+    "byte_count": 7,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn hinted_quotient_u32(a: u32, b: u32) -> u32 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n    }\n    a / b\n}"
+  },
+  {
+   "name": "hinted_remainder_u32",
+   "question": "the unsigned remainder under the same hint",
+   "ship": {
+    "body_bytes": "89 f8 31 d2 f7 f6 89 d0 c3",
+    "body_text": "mov %edi,%eax; xor %edx,%edx; div %esi; mov %edx,%eax; ret",
+    "byte_count": 9,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 5
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn hinted_remainder_u32(a: u32, b: u32) -> u32 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n    }\n    a % b\n}"
+  },
+  {
+   "name": "hinted_quotient_u128",
+   "question": "the 128-bit unsigned quotient under the same hint",
+   "ship": {
+    "body_bytes": "50 ff 15 00 00 00 00 59 c3",
+    "body_text": "push %rax; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:__udivti3-0x4; pop %rcx; ret",
+    "byte_count": 9,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:__udivti3-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn hinted_quotient_u128(a: u128, b: u128) -> u128 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n    }\n    a / b\n}"
+  },
+  {
+   "name": "hinted_quotient_i128",
+   "question": "the 128-bit signed quotient under the same hint",
+   "ship": {
+    "body_bytes": "50 66 48 0f 6e c6 66 48 0f 6e cf 66 0f 6c c8 66 48 0f 6e c1 66 48 0f 6e d2 66 0f 6c d0 66 0f 76 c0 66 0f 74 0d 00 00 00 00 66 0f 74 c2 66 0f db c8 66 0f d7 c1 3d ff ff 00 00 74 08 ff 15 00 00 00 00 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; movq %rsi,%xmm0; movq %rdi,%xmm1; punpcklqdq %xmm0,%xmm1; movq %rcx,%xmm0; movq %rdx,%xmm2; punpcklqdq %xmm0,%xmm2; pcmpeqd %xmm0,%xmm0; pcmpeqb 0x0(%rip),%xmm1 !!reloc=R_X86_64_PC32:.LCPI0_0-0x4; pcmpeqb %xmm2,%xmm0; pand %xmm0,%xmm1; pmovmskb %xmm1,%eax; cmp $0xffff,%eax; je 44 <hinted_quotient_i128+0x44>; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:__divti3-0x4; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.310eafec6d1da6966e1c9b8b6b9ec89d.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 89,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:__divti3-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 21
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn hinted_quotient_i128(a: i128, b: i128) -> i128 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n        core::hint::assert_unchecked(!(a == i128::MIN && b == -1));\n    }\n    a / b\n}"
+  },
+  {
+   "name": "hinted_quotient_i8",
+   "question": "the narrowest signed quotient under the same hint",
+   "ship": {
+    "body_bytes": "50 8d 47 80 89 f1 f6 d1 08 c1 74 09 40 0f be c7 40 f6 fe 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; lea -0x80(%rdi),%eax; mov %esi,%ecx; not %cl; or %al,%cl; je 15 <hinted_quotient_i8+0x15>; movsbl %dil,%eax; idiv %sil; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.db05a551b5dbd49f76b0a1330d80641a.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 42,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 14
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn hinted_quotient_i8(a: i8, b: i8) -> i8 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n        core::hint::assert_unchecked(!(a == i8::MIN && b == -1));\n    }\n    a / b\n}"
+  },
+  {
+   "name": "hinted_quotient_u16",
+   "question": "the 16-bit unsigned quotient under the same hint",
+   "ship": {
+    "body_bytes": "89 f8 31 d2 66 f7 f6 c3",
+    "body_text": "mov %edi,%eax; xor %edx,%edx; div %si; ret",
+    "byte_count": 8,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn hinted_quotient_u16(a: u16, b: u16) -> u16 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n    }\n    a / b\n}"
+  },
+  {
+   "name": "widening_quotient_u64_pair",
+   "question": "the widening-division shape task o7's c renderer wrote, in rust",
+   "ship": {
+    "body_bytes": "48 89 f8 31 d2 48 f7 f6 c3",
+    "body_text": "mov %rdi,%rax; xor %edx,%edx; div %rsi; ret",
+    "byte_count": 9,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn widening_quotient_u64_pair(a: u64, b: u64) -> u64 {\n    unsafe {\n        core::hint::assert_unchecked(b != 0);\n    }\n    (((a as u128) << 0) / (b as u128)) as u64\n}"
+  }
+ ],
+ "rustc_version": "rustc 1.96.1 (31fca3adb 2026-06-26)",
+ "ship_flags": [
+  "--crate-type=lib",
+  "--emit=obj",
+  "-C",
+  "opt-level=1",
+  "-C",
+  "debug-assertions=off"
+ ],
+ "task": "o11"
+}

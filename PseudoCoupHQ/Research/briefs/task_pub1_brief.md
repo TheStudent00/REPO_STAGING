@@ -28,7 +28,7 @@ research depends on and fingerprint the published image, not a machine;
    versions (`<os>`, `<os>`), kernel strings
    (`Linux <kernel>`, `<kernel>`), podman versions, the
    tower's and laptop's memory / core counts / CPU model
-   (`31 GB`, `32 GiB`, `<vcpu>`, `<cores>`, `<cpu>`), Unraid
+   (`31 GB`, `32 GiB`, `<vcpu>`, `<cores>`, `<cpu>`), the tower OS
    version, disk sizes, MAC addresses, container ids (`3cea19671248`),
    hostnames not yet covered. List them by file and pattern in your report
    BEFORE writing patterns.

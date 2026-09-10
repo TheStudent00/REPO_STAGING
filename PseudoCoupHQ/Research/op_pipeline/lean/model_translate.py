@@ -118,7 +118,14 @@ REFUSED by the cause DEEP_TERM rather than stopping the run."""
 import z3                                                        # noqa: E402
 import layer5                                                    # noqa: E402
 import reference as R                                            # noqa: E402
+import term as TRM                                               # noqa: E402
 import term_to_lean as TTL                                       # noqa: E402
+
+"""`term` is READ here and never written: `bound_variables` calls its
+`order_commutative` and `ordered_symbols` so that the naming rule of the
+layer-5 line has ONE definition, in the module that owns it.  The alias is
+`TRM` and not `TERM` because `term.TERM` already names something else -- the
+module's own `Term()` instance."""
 
 
 # ==================================================================
@@ -253,6 +260,45 @@ def shapes_for(width):
         ("st_st", ["%st", "%st(1)"]),
         ("st_one", ["%st(1)"]),
         ("st_none", []),
+        # THE IMMEDIATE AS AN INPUT, added 2026-09-09 by task ap5, whose
+        # brief authorises exactly these four and nothing else.  A cell
+        # key is (mnem, operand shape, key_width) and carries no
+        # immediate, so the four `imm_*` spellings above -- which the
+        # sweep writes with the literal `$0x3` -- give a mapping with 3
+        # BAKED IN, while the corpus rows those cells are attested by
+        # spell `$0x1`, `$0x8` and the rest.  The immediate is an INPUT
+        # of the mapping, and these four say so.
+        #
+        # WHY A REGISTER IS HOW A SYMBOLIC IMMEDIATE IS SPELLED, and it
+        # is read off the reference rather than chosen.
+        # `reference.Operands.read_text` reads an immediate operand as
+        # `z3.BitVecVal(value, width)` and a register operand as that
+        # register's own symbol cut to the same width -- the two differ
+        # in nothing but whether the value is a literal.  So the second
+        # spelling of an `imm_*` shape is the same operand list with a
+        # register of the operand's OWN width in the immediate's slot,
+        # and the mapping it gives is the first spelling's with the
+        # literal replaced by a free symbol.  Task ap5's lane
+        # `ap5_l3_probe_the_symbolic_row_properly.sh` asked z3 that of
+        # all twenty imm_* cells of the outer set the reference
+        # translates: every written place and the flag pair came back
+        # `unsat` under the substitution.
+        #
+        # GPR_C IS THE SPARE.  It is spelled at the head of this
+        # section and used by no shape in the list above, so these four
+        # collide with no existing spelling.
+        #
+        # WHERE THE REFERENCE REFUSES IT, IT REFUSES BY NAME and that
+        # is the honest answer, not a defect: a shift count that is
+        # neither `%cl` nor an immediate is not modelled (`build_shift`,
+        # `build_double_shift`) -- and `%cl` IS the reference's own
+        # symbolic count, which the `cl_*` shapes above already spell --
+        # and a bit index or a word index must be a literal
+        # (`build_bit_test`, `build_insert_word`, `build_extract_word`).
+        ("imm_symbolic_gpr", [c, a]),
+        ("imm_symbolic_gpr_gpr", [c, b, a]),
+        ("imm_symbolic_xmm_gpr", [c, XMM_B, a]),
+        ("imm_symbolic_gpr_xmm", [c, b, XMM_A]),
     ]
     return out
 
@@ -942,17 +988,66 @@ FLAGS_READ = R.FLAGS
 STACK_READ = (R.MACHINE_STACK, R.X87_STACK, R.MEMORY)
 
 
-def bound_variables(unit_term):
-    """the theorem's bound variables, taken from the SAME rule that produced
-    the stored text: layer 5 renames free symbols positionally in the order
-    its own print meets them, so v0 is whichever symbol the stored line calls
-    v0."""
-    symbols = free_symbols_ordered(z3.simplify(unit_term))
+def bound_variables(unit_term, stored=None):
+    """THE ONE NAMING BOTH SIDES OF THE THEOREM USE: the names the STORED
+    line itself gave this unit's arrivals.
+
+    WHAT WENT WRONG BEFORE (task l3, 2026-09-09, measured on the 19
+    DISCREPANCY rows in lane `l3_l2_verify_the_nineteen_b.sh`).  The left of
+    the theorem is the stored layer-5 line, whose `v0`/`v1` were assigned by
+    `term.Term.normalize`; the right is composed here, and this function
+    assigned its own `v0`/`v1` by a DIFFERENT rule -- `z3.simplify` and then
+    the print-position rule, with neither of `term.Term.normalize`'s two
+    `order_commutative` steps.  Task t104 added the FIRST of those two steps
+    on 2026-09-07, after this function was written, and a term whose
+    commutative operands that step permutes then prints its symbols in the
+    other order.  So on those terms the left called one arrival `v0` and the
+    right called the other one `v0`, and `bv_decide` reported a
+    counterexample about the two names rather than about the two readings of
+    the hardware.  Neither rule was ever "the C parameter convention" and
+    neither was ledger arrival order: both are print-order rules, and which
+    register lands on `v0` is a property of the printed shape.  Measured:
+    the two rules agree on 214 of the 243 rows with a proved term and differ
+    on 29 -- the 19 DISCREPANCY rows and 10 rows refused for other causes.
+
+    THE RULE IS NOT RESTATED HERE.  The two steps are `term.py`'s own
+    `order_commutative` (the fixed order over a commutative operator's
+    arguments) and `term.ordered_symbols` (first-met in the printed text),
+    called in the order `term.Term.normalize` applies them.  `term.py` is
+    not modified by this task.
+
+    AND THE NAMING IS PROVED, per row, not asserted: with the names
+    substituted the term is printed by the same printer, and the line must
+    be the stored line character for character.  A naming that does not
+    reproduce the stored line is refused by cause NAMING_NOT_THE_STORED_ONE
+    rather than carried into a theorem."""
+    ordered = TRM.order_commutative(unit_term)
+    ordered = z3.simplify(ordered)
+    ordered = TRM.order_commutative(ordered)
+    symbols = TRM.ordered_symbols(ordered)
     names = {}
     widths = []
+    substitution = []
     for index, symbol in enumerate(symbols):
-        names[symbol.decl().name()] = "v%d" % index
+        fresh_name = "v%d" % index
+        names[symbol.decl().name()] = fresh_name
         widths.append(sort_width(symbol))
+        if symbol.sort().kind() == z3.Z3_BV_SORT:
+            fresh = z3.BitVec(fresh_name, symbol.size())
+        else:
+            fresh = z3.Const(fresh_name, symbol.sort())
+        substitution.append((symbol, fresh))
+    if stored is not None:
+        renamed = ordered
+        if substitution:
+            renamed = z3.substitute(renamed, *substitution)
+        renamed = z3.simplify(renamed)
+        renamed = TRM.order_commutative(renamed)
+        printed = TRM.one_line(renamed)
+        if printed != stored:
+            raise Refused("NAMING_NOT_THE_STORED_ONE",
+                          "the names this composer gives the arrivals print "
+                          "%r, and the stored line is %r" % (printed, stored))
     return names, widths
 
 
@@ -1062,7 +1157,13 @@ def compose_body(model, record, names):
 def check_one(model, record, stored_text, unit_term):
     """one row -> one theorem, or a refusal by cause."""
     out = {"unit": record.get("unit")}
-    names, widths = bound_variables(unit_term)
+    try:
+        names, widths = bound_variables(unit_term, stored_text)
+    except Refused as refusal:
+        out["outcome"] = "REFUSED"
+        out["cause"] = refusal.cause
+        out["detail"] = refusal.detail
+        return out
     free_widths = {}
     for index, width in enumerate(widths):
         free_widths["v%d" % index] = width

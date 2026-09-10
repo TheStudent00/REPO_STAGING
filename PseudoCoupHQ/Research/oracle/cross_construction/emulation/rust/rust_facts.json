@@ -1,0 +1,579 @@
+{
+ "crate_source": "#![allow(dead_code, unused_parens, unconditional_panic)]\n\n#[no_mangle]\npub extern \"C\" fn plain_sum_u32(a: u32, b: u32) -> u32 { a + b }\n\n#[no_mangle]\npub extern \"C\" fn wrapping_sum_u32(a: u32, b: u32) -> u32 { a.wrapping_add(b) }\n\n#[no_mangle]\npub extern \"C\" fn plain_product_u64(a: u64, b: u64) -> u64 { a * b }\n\n#[no_mangle]\npub extern \"C\" fn wrapping_product_u64(a: u64, b: u64) -> u64 { a.wrapping_mul(b) }\n\n#[no_mangle]\npub extern \"C\" fn plain_negate_i32(a: i32) -> i32 { -a }\n\n#[no_mangle]\npub extern \"C\" fn wrapping_negate_i32(a: i32) -> i32 { a.wrapping_neg() }\n\n#[no_mangle]\npub extern \"C\" fn plain_left_shift_u32(a: u32, b: u32) -> u32 { a << b }\n\n#[no_mangle]\npub extern \"C\" fn wrapping_left_shift_u32(a: u32, b: u32) -> u32 { a.wrapping_shl(b) }\n\n#[no_mangle]\npub extern \"C\" fn guarded_left_shift_u32(a: u32, b: u32) -> u32 { if b < 32 { a.wrapping_shl(b) } else { 0 } }\n\n#[no_mangle]\npub extern \"C\" fn plain_right_shift_i32(a: i32, b: u32) -> i32 { a.wrapping_shr(b) }\n\n#[no_mangle]\npub extern \"C\" fn plain_quotient_u32(a: u32, b: u32) -> u32 { a / b }\n\n#[no_mangle]\npub extern \"C\" fn plain_remainder_u32(a: u32, b: u32) -> u32 { a % b }\n\n#[no_mangle]\npub extern \"C\" fn plain_quotient_i32(a: i32, b: i32) -> i32 { a / b }\n\n#[no_mangle]\npub extern \"C\" fn unchecked_quotient_u32(a: u32, b: u32) -> u32 { unsafe { a.unchecked_div(b) } }\n\n#[no_mangle]\npub extern \"C\" fn unchecked_quotient_i32(a: i32, b: i32) -> i32 { unsafe { a.unchecked_div(b) } }\n\n#[no_mangle]\npub extern \"C\" fn unchecked_remainder_u32(a: u32, b: u32) -> u32 { unsafe { a.unchecked_rem(b) } }\n\n#[no_mangle]\npub extern \"C\" fn widen_u8_to_u32(a: u8) -> u32 { a as u32 }\n\n#[no_mangle]\npub extern \"C\" fn narrow_u32_to_u8(a: u32) -> u8 { a as u8 }\n\n#[no_mangle]\npub extern \"C\" fn sign_extend_i8_to_i64(a: i8) -> i64 { a as i64 }\n\n#[no_mangle]\npub extern \"C\" fn sum_u128(a: u128, b: u128) -> u128 { a.wrapping_add(b) }\n\n#[no_mangle]\npub extern \"C\" fn quotient_u128_from_u64(a: u64, b: u64) -> u64 { unsafe { ((a as u128).unchecked_div(b as u128)) as u64 } }\n\n#[no_mangle]\npub extern \"C\" fn sum_f64(a: f64, b: f64) -> f64 { a + b }\n\n#[no_mangle]\npub extern \"C\" fn sum_f32(a: f32, b: f32) -> f32 { a + b }\n\n#[no_mangle]\npub extern \"C\" fn f64_bits(a: f64) -> u64 { a.to_bits() }\n\n#[no_mangle]\npub extern \"C\" fn bits_f64(a: u64) -> f64 { f64::from_bits(a) }\n\n#[no_mangle]\npub extern \"C\" fn saturating_f64_to_i64(a: f64) -> i64 { a as i64 }\n\n#[no_mangle]\npub extern \"C\" fn truncating_f64_to_i64(a: f64) -> i64 { unsafe { a.to_int_unchecked::<i64>() } }\n\n#[no_mangle]\npub extern \"C\" fn i64_to_f64(a: i64) -> f64 { a as f64 }\n\n#[no_mangle]\npub extern \"C\" fn u64_to_f64(a: u64) -> f64 { a as f64 }\n\n#[no_mangle]\npub extern \"C\" fn f64_to_f32(a: f64) -> f32 { a as f32 }\n\n#[no_mangle]\npub extern \"C\" fn choose_u32(c: u32, a: u32, b: u32) -> u32 { if (c & 1) != 0 { a } else { b } }\n\n#[no_mangle]\npub extern \"C\" fn less_signed_i32(a: i32, b: i32) -> u32 { if a < b { 1 } else { 0 } }\n\n#[no_mangle]\npub extern \"C\" fn less_unsigned_u32(a: u32, b: u32) -> u32 { if a < b { 1 } else { 0 } }\n\n#[no_mangle]\npub extern \"C\" fn complement_u32(a: u32) -> u32 { !a }\n\n#[no_mangle]\npub extern \"C\" fn f16_exists(a: u16) -> u16 { a }\n\n#[no_mangle]\npub extern \"C\" fn wide_arrival_u8(a: u8, b: u8) -> u8 { a.wrapping_add(b) }\n",
+ "debug_flags": [
+  "--crate-type=lib",
+  "--emit=obj",
+  "-C",
+  "opt-level=1",
+  "-C",
+  "debug-assertions=on"
+ ],
+ "peak_kb": 26440,
+ "probes": [
+  {
+   "debug_assertions_on": {
+    "body_bytes": "50 01 f7 72 04 89 f8 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; add %esi,%edi; jb 9 <plain_sum_u32+0x9>; mov %edi,%eax; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e0e6ea8ce1e495dc70b525b094325df6.5-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_add_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 30,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_add_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 10
+   },
+   "name": "plain_sum_u32",
+   "question": "does plain two-place arithmetic wrap or check, at ship flags",
+   "ship": {
+    "body_bytes": "8d 04 37 c3",
+    "body_text": "lea (%rdi,%rsi,1),%eax; ret",
+    "byte_count": 4,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn plain_sum_u32(a: u32, b: u32) -> u32 { a + b }"
+  },
+  {
+   "name": "wrapping_sum_u32",
+   "question": "what the explicit wrapping form emits, at ship flags",
+   "ship": {
+    "body_bytes": "8d 04 37 c3",
+    "body_text": "lea (%rdi,%rsi,1),%eax; ret",
+    "byte_count": 4,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn wrapping_sum_u32(a: u32, b: u32) -> u32 { a.wrapping_add(b) }"
+  },
+  {
+   "debug_assertions_on": {
+    "body_bytes": "50 48 89 f8 48 f7 e6 70 02 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; mov %rdi,%rax; mul %rsi; jo b <plain_product_u64+0xb>; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e0e6ea8ce1e495dc70b525b094325df6.3-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_mul_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 32,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_mul_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 10
+   },
+   "name": "plain_product_u64",
+   "question": "does plain multiplication wrap or check, at ship flags",
+   "ship": {
+    "body_bytes": "48 89 f8 48 0f af c6 c3",
+    "body_text": "mov %rdi,%rax; imul %rsi,%rax; ret",
+    "byte_count": 8,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 3
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn plain_product_u64(a: u64, b: u64) -> u64 { a * b }"
+  },
+  {
+   "name": "wrapping_product_u64",
+   "question": "what the explicit wrapping multiplication emits",
+   "ship": {
+    "body_bytes": "48 89 f8 48 0f af c6 c3",
+    "body_text": "mov %rdi,%rax; imul %rsi,%rax; ret",
+    "byte_count": 8,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 3
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn wrapping_product_u64(a: u64, b: u64) -> u64 { a.wrapping_mul(b) }"
+  },
+  {
+   "debug_assertions_on": {
+    "body_bytes": "50 f7 df 70 04 89 f8 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; neg %edi; jo 9 <plain_negate_i32+0x9>; mov %edi,%eax; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e0e6ea8ce1e495dc70b525b094325df6.2-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_neg_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 30,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_neg_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 10
+   },
+   "name": "plain_negate_i32",
+   "question": "does plain negation wrap or check, at ship flags",
+   "ship": {
+    "body_bytes": "89 f8 f7 d8 c3",
+    "body_text": "mov %edi,%eax; neg %eax; ret",
+    "byte_count": 5,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 3
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn plain_negate_i32(a: i32) -> i32 { -a }"
+  },
+  {
+   "name": "wrapping_negate_i32",
+   "question": "what the explicit wrapping negation emits",
+   "ship": {
+    "body_bytes": "89 f8 f7 d8 c3",
+    "body_text": "mov %edi,%eax; neg %eax; ret",
+    "byte_count": 5,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 3
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn wrapping_negate_i32(a: i32) -> i32 { a.wrapping_neg() }"
+  },
+  {
+   "debug_assertions_on": {
+    "body_bytes": "50 83 fe 1f 77 08 89 f1 d3 e7 89 f8 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; cmp $0x1f,%esi; ja e <plain_left_shift_u32+0xe>; mov %esi,%ecx; shl %cl,%edi; mov %edi,%eax; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e0e6ea8ce1e495dc70b525b094325df6.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_shl_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 35,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_shl_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 12
+   },
+   "name": "plain_left_shift_u32",
+   "question": "what a VARIABLE shift count does when it can exceed the width",
+   "ship": {
+    "body_bytes": "89 f1 89 f8 d3 e0 c3",
+    "body_text": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%eax; ret",
+    "byte_count": 7,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn plain_left_shift_u32(a: u32, b: u32) -> u32 { a << b }"
+  },
+  {
+   "name": "wrapping_left_shift_u32",
+   "question": "what the explicit wrapping shift emits (count masked to the width)",
+   "ship": {
+    "body_bytes": "89 f1 89 f8 d3 e0 c3",
+    "body_text": "mov %esi,%ecx; mov %edi,%eax; shl %cl,%eax; ret",
+    "byte_count": 7,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn wrapping_left_shift_u32(a: u32, b: u32) -> u32 { a.wrapping_shl(b) }"
+  },
+  {
+   "name": "guarded_left_shift_u32",
+   "question": "the renderer's own out-of-range rule: zero above the width",
+   "ship": {
+    "body_bytes": "89 f1 d3 e7 31 c0 83 fe 20 0f 42 c7 c3",
+    "body_text": "mov %esi,%ecx; shl %cl,%edi; xor %eax,%eax; cmp $0x20,%esi; cmovb %edi,%eax; ret",
+    "byte_count": 13,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 6
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn guarded_left_shift_u32(a: u32, b: u32) -> u32 { if b < 32 { a.wrapping_shl(b) } else { 0 } }"
+  },
+  {
+   "name": "plain_right_shift_i32",
+   "question": "does the arithmetic right shift keep the sign",
+   "ship": {
+    "body_bytes": "89 f1 89 f8 d3 f8 c3",
+    "body_text": "mov %esi,%ecx; mov %edi,%eax; sar %cl,%eax; ret",
+    "byte_count": 7,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn plain_right_shift_i32(a: i32, b: u32) -> i32 { a.wrapping_shr(b) }"
+  },
+  {
+   "debug_assertions_on": {
+    "body_bytes": "50 85 f6 74 08 89 f8 31 d2 f7 f6 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; test %esi,%esi; je d <plain_quotient_u32+0xd>; mov %edi,%eax; xor %edx,%edx; div %esi; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.e0e6ea8ce1e495dc70b525b094325df6.4-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 34,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 12
+   },
+   "name": "plain_quotient_u32",
+   "question": "is a zero divisor checked in the emitted body, at ship flags",
+   "ship": {
+    "body_bytes": "50 85 f6 74 08 89 f8 31 d2 f7 f6 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; test %esi,%esi; je d <plain_quotient_u32+0xd>; mov %edi,%eax; xor %edx,%edx; div %esi; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.3cb88a6d288b556ebeb80c6acdba13ed.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 34,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 12
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn plain_quotient_u32(a: u32, b: u32) -> u32 { a / b }"
+  },
+  {
+   "name": "plain_remainder_u32",
+   "question": "is a zero divisor checked for the remainder too",
+   "ship": {
+    "body_bytes": "50 85 f6 74 0a 89 f8 31 d2 f7 f6 89 d0 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; test %esi,%esi; je f <plain_remainder_u32+0xf>; mov %edi,%eax; xor %edx,%edx; div %esi; mov %edx,%eax; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.fb56fb66b699d011b951ea64470381ba.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 36,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_rem_by_zero-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 13
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn plain_remainder_u32(a: u32, b: u32) -> u32 { a % b }"
+  },
+  {
+   "name": "plain_quotient_i32",
+   "question": "the signed quotient: which checks the body carries",
+   "ship": {
+    "body_bytes": "50 85 f6 74 15 89 f0 f7 d0 8d 8f 00 00 00 80 09 c1 74 16 89 f8 99 f7 fe 59 c3 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 eb 0d 48 8d 3d 00 00 00 00 ff 15 00 00 00 00 0f 0b ff 15 00 00 00 00",
+    "body_text": "push %rax; test %esi,%esi; je 1a <plain_quotient_i32+0x1a>; mov %esi,%eax; not %eax; lea -0x80000000(%rdi),%ecx; or %eax,%ecx; je 29 <plain_quotient_i32+0x29>; mov %edi,%eax; cltd; idiv %esi; pop %rcx; ret; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.107af0c894e12368aae0af7849350366.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4; jmp 36 <plain_quotient_i32+0x36>; lea 0x0(%rip),%rdi !!reloc=R_X86_64_PC32:.data.rel.ro..Lanon.107af0c894e12368aae0af7849350366.1-0x4; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4; ud2; call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4",
+    "byte_count": 62,
+    "calls": [
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const23panic_const_div_by_zero-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtNtCs3BFokC4QLxY_4core9panicking11panic_const24panic_const_div_overflow-0x4",
+     "call *0x0(%rip) !!reloc=R_X86_64_GOTPCREL:_RNvNtCs3BFokC4QLxY_4core9panicking19panic_cannot_unwind-0x4"
+    ],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 20
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn plain_quotient_i32(a: i32, b: i32) -> i32 { a / b }"
+  },
+  {
+   "name": "unchecked_quotient_u32",
+   "question": "the unguarded division idiom: does it emit a bare divide",
+   "ship": {
+    "compiled": false,
+    "refusal": "error[E0599]: no method named `unchecked_div` found for type `u32` in the current scope"
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn unchecked_quotient_u32(a: u32, b: u32) -> u32 { unsafe { a.unchecked_div(b) } }"
+  },
+  {
+   "name": "unchecked_quotient_i32",
+   "question": "the unguarded SIGNED division idiom",
+   "ship": {
+    "compiled": false,
+    "refusal": "error[E0599]: no method named `unchecked_div` found for type `i32` in the current scope"
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn unchecked_quotient_i32(a: i32, b: i32) -> i32 { unsafe { a.unchecked_div(b) } }"
+  },
+  {
+   "name": "unchecked_remainder_u32",
+   "question": "the unguarded remainder idiom",
+   "ship": {
+    "compiled": false,
+    "refusal": "error[E0599]: no method named `unchecked_rem` found for type `u32` in the current scope"
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn unchecked_remainder_u32(a: u32, b: u32) -> u32 { unsafe { a.unchecked_rem(b) } }"
+  },
+  {
+   "name": "widen_u8_to_u32",
+   "question": "is there implicit widening, or does it take a cast",
+   "ship": {
+    "body_bytes": "89 f8 c3",
+    "body_text": "mov %edi,%eax; ret",
+    "byte_count": 3,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn widen_u8_to_u32(a: u8) -> u32 { a as u32 }"
+  },
+  {
+   "name": "narrow_u32_to_u8",
+   "question": "what a narrowing cast emits",
+   "ship": {
+    "body_bytes": "89 f8 c3",
+    "body_text": "mov %edi,%eax; ret",
+    "byte_count": 3,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn narrow_u32_to_u8(a: u32) -> u8 { a as u8 }"
+  },
+  {
+   "name": "sign_extend_i8_to_i64",
+   "question": "what a signed widening cast emits",
+   "ship": {
+    "body_bytes": "48 63 c7 c3",
+    "body_text": "movslq %edi,%rax; ret",
+    "byte_count": 4,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn sign_extend_i8_to_i64(a: i8) -> i64 { a as i64 }"
+  },
+  {
+   "name": "sum_u128",
+   "question": "does a 128-bit holder exist and what does it emit",
+   "ship": {
+    "body_bytes": "48 89 f8 48 01 d0 48 11 ce 48 89 f2 c3",
+    "body_text": "mov %rdi,%rax; add %rdx,%rax; adc %rcx,%rsi; mov %rsi,%rdx; ret",
+    "byte_count": 13,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 5
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn sum_u128(a: u128, b: u128) -> u128 { a.wrapping_add(b) }"
+  },
+  {
+   "name": "quotient_u128_from_u64",
+   "question": "the widening-division shape task o7's c renderer used",
+   "ship": {
+    "compiled": false,
+    "refusal": "error[E0599]: no method named `unchecked_div` found for type `u128` in the current scope"
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn quotient_u128_from_u64(a: u64, b: u64) -> u64 { unsafe { ((a as u128).unchecked_div(b as u128)) as u64 } }"
+  },
+  {
+   "name": "sum_f64",
+   "question": "float arithmetic at 64 bits",
+   "ship": {
+    "body_bytes": "f2 0f 58 c1 c3",
+    "body_text": "addsd %xmm1,%xmm0; ret",
+    "byte_count": 5,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn sum_f64(a: f64, b: f64) -> f64 { a + b }"
+  },
+  {
+   "name": "sum_f32",
+   "question": "float arithmetic at 32 bits",
+   "ship": {
+    "body_bytes": "f3 0f 58 c1 c3",
+    "body_text": "addss %xmm1,%xmm0; ret",
+    "byte_count": 5,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn sum_f32(a: f32, b: f32) -> f32 { a + b }"
+  },
+  {
+   "name": "f64_bits",
+   "question": "reading a float's bits without a memory round trip",
+   "ship": {
+    "body_bytes": "66 48 0f 7e c0 c3",
+    "body_text": "movq %xmm0,%rax; ret",
+    "byte_count": 6,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn f64_bits(a: f64) -> u64 { a.to_bits() }"
+  },
+  {
+   "name": "bits_f64",
+   "question": "writing a float from its bits",
+   "ship": {
+    "body_bytes": "66 48 0f 6e c7 c3",
+    "body_text": "movq %rdi,%xmm0; ret",
+    "byte_count": 6,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn bits_f64(a: u64) -> f64 { f64::from_bits(a) }"
+  },
+  {
+   "name": "saturating_f64_to_i64",
+   "question": "what the plain float-to-integer cast does out of range",
+   "ship": {
+    "body_bytes": "f2 48 0f 2c c0 66 0f 2e 05 00 00 00 00 48 b9 ff ff ff ff ff ff ff 7f 48 0f 46 c8 31 c0 66 0f 2e c0 48 0f 4b c1 c3",
+    "body_text": "cvttsd2si %xmm0,%rax; ucomisd 0x0(%rip),%xmm0 !!reloc=R_X86_64_PC32:.LCPI0_0-0x4; movabs $0x7fffffffffffffff,%rcx; cmovbe %rax,%rcx; xor %eax,%eax; ucomisd %xmm0,%xmm0; cmovnp %rcx,%rax; ret",
+    "byte_count": 38,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 8
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn saturating_f64_to_i64(a: f64) -> i64 { a as i64 }"
+  },
+  {
+   "name": "truncating_f64_to_i64",
+   "question": "the unguarded float-to-integer idiom, matching the machine",
+   "ship": {
+    "body_bytes": "f2 48 0f 2c c0 c3",
+    "body_text": "cvttsd2si %xmm0,%rax; ret",
+    "byte_count": 6,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn truncating_f64_to_i64(a: f64) -> i64 { unsafe { a.to_int_unchecked::<i64>() } }"
+  },
+  {
+   "name": "i64_to_f64",
+   "question": "the integer-to-float cast",
+   "ship": {
+    "body_bytes": "f2 48 0f 2a c7 c3",
+    "body_text": "cvtsi2sd %rdi,%xmm0; ret",
+    "byte_count": 6,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn i64_to_f64(a: i64) -> f64 { a as f64 }"
+  },
+  {
+   "name": "u64_to_f64",
+   "question": "the unsigned integer-to-float cast",
+   "ship": {
+    "body_bytes": "66 48 0f 6e cf 66 0f 62 0d 00 00 00 00 66 0f 5c 0d 00 00 00 00 66 0f 28 c1 66 0f 15 c1 f2 0f 58 c1 c3",
+    "body_text": "movq %rdi,%xmm1; punpckldq 0x0(%rip),%xmm1 !!reloc=R_X86_64_PC32:.LCPI0_0-0x4; subpd 0x0(%rip),%xmm1 !!reloc=R_X86_64_PC32:.LCPI0_1-0x4; movapd %xmm1,%xmm0; unpckhpd %xmm1,%xmm0; addsd %xmm1,%xmm0; ret",
+    "byte_count": 34,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 7
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn u64_to_f64(a: u64) -> f64 { a as f64 }"
+  },
+  {
+   "name": "f64_to_f32",
+   "question": "the float narrowing cast",
+   "ship": {
+    "body_bytes": "f2 0f 5a c0 c3",
+    "body_text": "cvtsd2ss %xmm0,%xmm0; ret",
+    "byte_count": 5,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn f64_to_f32(a: f64) -> f32 { a as f32 }"
+  },
+  {
+   "name": "choose_u32",
+   "question": "the conditional expression",
+   "ship": {
+    "body_bytes": "89 f0 40 f6 c7 01 0f 44 c2 c3",
+    "body_text": "mov %esi,%eax; test $0x1,%dil; cmove %edx,%eax; ret",
+    "byte_count": 10,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn choose_u32(c: u32, a: u32, b: u32) -> u32 { if (c & 1) != 0 { a } else { b } }"
+  },
+  {
+   "name": "less_signed_i32",
+   "question": "a signed comparison, answered as a 0/1 holder",
+   "ship": {
+    "body_bytes": "31 c0 39 f7 0f 9c c0 c3",
+    "body_text": "xor %eax,%eax; cmp %esi,%edi; setl %al; ret",
+    "byte_count": 8,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn less_signed_i32(a: i32, b: i32) -> u32 { if a < b { 1 } else { 0 } }"
+  },
+  {
+   "name": "less_unsigned_u32",
+   "question": "an unsigned comparison, answered as a 0/1 holder",
+   "ship": {
+    "body_bytes": "31 c0 39 f7 0f 92 c0 c3",
+    "body_text": "xor %eax,%eax; cmp %esi,%edi; setb %al; ret",
+    "byte_count": 8,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 4
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn less_unsigned_u32(a: u32, b: u32) -> u32 { if a < b { 1 } else { 0 } }"
+  },
+  {
+   "name": "complement_u32",
+   "question": "the bit complement",
+   "ship": {
+    "body_bytes": "89 f8 f7 d0 c3",
+    "body_text": "mov %edi,%eax; not %eax; ret",
+    "byte_count": 5,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 3
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn complement_u32(a: u32) -> u32 { !a }"
+  },
+  {
+   "name": "f16_exists",
+   "question": "is there a 16-bit float holder in this rustc",
+   "ship": {
+    "body_bytes": "89 f8 c3",
+    "body_text": "mov %edi,%eax; ret",
+    "byte_count": 3,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn f16_exists(a: u16) -> u16 { a }"
+  },
+  {
+   "name": "wide_arrival_u8",
+   "question": "what the callee assumes about the bits above a narrow argument",
+   "ship": {
+    "body_bytes": "8d 04 3e c3",
+    "body_text": "lea (%rsi,%rdi,1),%eax; ret",
+    "byte_count": 4,
+    "calls": [],
+    "carved": true,
+    "compiled": true,
+    "instruction_count": 2
+   },
+   "source": "#[no_mangle]\npub extern \"C\" fn wide_arrival_u8(a: u8, b: u8) -> u8 { a.wrapping_add(b) }"
+  }
+ ],
+ "rustc_version": "rustc 1.96.1 (31fca3adb 2026-06-26)",
+ "ship_flags": [
+  "--crate-type=lib",
+  "--emit=obj",
+  "-C",
+  "opt-level=1",
+  "-C",
+  "debug-assertions=off"
+ ],
+ "ship_flags_source": "    if LANG == \"rust\":\n        src = os.path.join(d, \"unit.rs\")\n        obj = os.path.join(d, \"unit_%s.o\" % mode)\n        open(src, \"w\").write(p[\"source\"])\n        if mode == \"anchor\":\n            opt = [\"-C\", \"opt-level=0\", \"-g\"]\n        else:\n            opt = [\"-C\", \"opt-level=1\", \"-C\", \"debug-assertions=off\"]\n        cmd = ([\"rustc\", \"--crate-type=lib\", \"--emit=obj\"] + opt\n               + [\"-o\", obj, src])\n        rc, so, se = sh(cmd)\n        return rc, obj, (se or so)",
+ "task": "o11"
+}

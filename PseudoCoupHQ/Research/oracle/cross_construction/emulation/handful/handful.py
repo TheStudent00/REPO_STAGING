@@ -496,6 +496,24 @@ def use_task_ap4():
     ABORT_NAME = "ABORT_MEMORY_AP4"
 
 
+def use_task_ap5():
+    """task ap5's entry: task ap4's route, with the two mechanical
+    remainders of the four languages closed.
+
+    NEITHER CHANGE IS GATED ON THIS NAME, for the reason
+    `use_task_ap2`'s docstring gives and `use_task_ap3` and
+    `use_task_ap4` repeat.  An answer left on the x87 register stack
+    IS an answer and an x87 arrival IS an arrival -- the reference and
+    the shared aligner now read them, which is true for every task and
+    not for this one.  An immediate IS an input of the mapping, so a
+    cell whose chosen row says so takes the term route, for every task
+    that meets such a row.  What is task-scoped is where the products
+    are written and the named abort."""
+    global TASK, ABORT_NAME
+    TASK = "ap5"
+    ABORT_NAME = "ABORT_MEMORY_AP5"
+
+
 def use_task_ex1():
     """task ex1's entry: task ap4's route exactly, over FIVE compiled
     targets instead of four -- cpp added as the fifth.
@@ -521,7 +539,7 @@ def fixes_are_on():
     Written as one function rather than `TASK == "h2"` in three places,
     so a later task cannot half-inherit them."""
     return TASK in ("h2", "g1", "g1b", "g1c", "ap2", "ap3", "ap4",
-                    "ex1")
+                    "ap5", "ex1")
 
 
 def primitive_first():
@@ -532,7 +550,8 @@ def primitive_first():
     lookup widened by one step (section 2e).  One function rather than
     `TASK == "g1"` in five places, for the same reason
     `fixes_are_on` is one function."""
-    return TASK in ("g1", "g1b", "g1c", "ap2", "ap3", "ap4", "ex1")
+    return TASK in ("g1", "g1b", "g1c", "ap2", "ap3", "ap4", "ap5",
+                    "ex1")
 
 
 def setup_is_allowed():
@@ -541,7 +560,7 @@ def setup_is_allowed():
 
     Task g1c's one change, and the only thing that separates it from
     task g1b."""
-    return TASK in ("g1c", "ap2", "ap3", "ap4", "ex1")
+    return TASK in ("g1c", "ap2", "ap3", "ap4", "ap5", "ex1")
 
 
 def targets():
@@ -576,6 +595,9 @@ ASKED = [
     ("cvtsi2sd", "gpr_xmm", 64),
 ]
 
+CAUSE_IMMEDIATE_IS_AN_INPUT = (
+    "the immediate is an input of the mapping, and a corpus body "
+    "carries a baked-in immediate of its own")
 CAUSE_NO_ROW = "no TRANSLATED row at this cell"
 CAUSE_NO_SETTER = "no setter row to compose the flag pair from"
 CAUSE_FLAG_WIDTH = "the setter's flag values and the consumer's flag " \
@@ -971,7 +993,38 @@ def find_emulation(shared, held, lang):
         record["refusal_cause"] = held["refusal_cause"]
         record["refusal_detail"] = held.get("refusal_detail")
         return record
-    if primitive_first():
+    if primitive_first() and held.get("imm_symbolic"):
+        # THE IMMEDIATE IS AN INPUT, SO THERE IS NO PRIMITIVE, task
+        # ap5.  `primitive_lookup`'s key is the cell's own triple
+        # (`mnem`, operand shape, `key_width`) and that triple carries
+        # NO IMMEDIATE, so at an `imm_*` cell it matches a corpus body
+        # whose immediate is whatever constant that body happens to
+        # spell -- `mov $0x8,%eax` against a cell whose own line is
+        # `mov $0x3,%edi`.  Comparing those two is comparing two
+        # different mappings that share a key, and every one of the six
+        # `sat` verdicts task ap4's loop left at an `imm_*` cell is on
+        # this route (lane `ap5_l2`, section 3: the imm_* runs are 102
+        # `term` and 6 `primitive`, and the 6 are the 6 `sat`).
+        #
+        # Once the immediate is an INPUT of the mapping, a body with a
+        # baked-in immediate is not a function of it and so is not an
+        # emulation of it: the route is the term route, where the
+        # immediate is rendered as one more parameter of the operand's
+        # own width and the gate quantifies over it.  The refusal is
+        # recorded in the same `primitive` field every other run
+        # carries, so nothing about the record's shape changes.
+        record["primitive"] = {
+            "lang": lang,
+            "cell": [held["mnem"], held["shape"], held["key_width"]],
+            "row": None,
+            "cause": CAUSE_IMMEDIATE_IS_AN_INPUT,
+            "lookup": "not asked: the lookup's key is the cell's own "
+                      "triple, which carries no immediate, so a body "
+                      "it matches would carry a baked-in immediate of "
+                      "its own",
+        }
+        record["route"] = "term"
+    elif primitive_first():
         # PRIMITIVE-FIRST, task g1's one design decision: before the
         # cell's term is rendered at all, ask whether the target has an
         # operator whose whole lowered body IS this cell, and render
@@ -1076,6 +1129,12 @@ def cell_input(cells, asked):
     held["line"] = row.get("text")
     held["width"] = row.get("width")
     held["attestation"] = row.get("attestation")
+    # TASK ap5: whether THIS cell's chosen row is the one whose
+    # immediate is an input of the mapping.  It rides on `held`, which
+    # is the driver's own working object, and not on the run record --
+    # `chosen_by` is what the record says about it, and the cells file
+    # carries the row's own `imm_symbolic` field.
+    held["imm_symbolic"] = bool(row.get("imm_symbolic"))
     places, flags = terms_of_row(row)
     if places is None:
         held["refusal_cause"] = CAUSE_NO_ROW
@@ -1243,6 +1302,13 @@ def chosen_row(cells, asked, held):
             translated.append(row)
     if not translated:
         return None
+    symbolic = the_symbolic_immediate_row(translated)
+    if symbolic is not None:
+        held["chosen_by"] = ("of the %d TRANSLATED rows at this cell, "
+                             "the one whose immediate is an INPUT of "
+                             "the mapping rather than a literal "
+                             "(`imm_symbolic`)" % len(translated))
+        return symbolic
     if len(translated) == 1:
         held["chosen_by"] = "the one TRANSLATED row at this cell"
         return translated[0]
@@ -1269,6 +1335,32 @@ def chosen_row(cells, asked, held):
             return row
     held["chosen_by"] = "the first TRANSLATED row at this cell"
     return translated[0]
+
+
+def the_symbolic_immediate_row(rows):
+    """the row of this cell whose immediate is an INPUT of the mapping,
+    or None where the cell has none.
+
+    TASK ap5, THE DRIVER'S HALF OF THE SECOND CHANGE.  A cell key is
+    (`mnem`, operand shape, `key_width`) and carries no immediate, so
+    the sweep's own `imm_*` spelling bakes its literal `$0x3` into the
+    mapping while the corpus rows the cell is attested by spell
+    `$0x1`, `$0x8` and the rest -- which is why `mov` imm_gpr 8 and 32
+    disproved against them with an EMPTY counterexample (log_246
+    section 5.2: both sides constants, different constants, no free
+    variable for z3 to name).  `model_translate.shapes_for` now spells
+    each `imm_*` shape a second time with a register of the operand's
+    own width in the immediate's slot, which is how the reference's
+    own operand reader spells a value of that width that is not a
+    literal, and this function is what makes the driver ask THAT row.
+
+    THE FIELD AND NOT THE TOKEN.  The row is found by its own
+    `imm_symbolic` field, which the row carries; nothing here reads a
+    mnemonic, an operand text or a shape spelling to decide it."""
+    for row in rows:
+        if row.get("imm_symbolic"):
+            return row
+    return None
 
 
 def best_setter(rows):
@@ -2593,13 +2685,23 @@ def x87_aligned(shared, place, params, body_term, out):
                          "argument slot(s), so the IN rows cannot be "
                          "aligned" % (len(wanted), len(slots)))
         return out
+    # THE CELL SIDE IS THE SHARED ALIGNER'S, task ap5.  Task ap4 built
+    # both sides here, because `pool100_entry_equivalence.align_by_row`
+    # substituted a BITVECTOR `seed_<family>` per IN row and an x87
+    # arrival is an FP value at `reference.X87_SORT`, so the shared
+    # aligner silently substituted nothing.  Task ap5's brief names
+    # that function: it now aligns an x87 arrival by its IN row like
+    # any other, so the cell's side of this comparison is put on the
+    # rows by the same call every other place uses.  What stays here
+    # is the EMULATION's side, which is not a shared reading at all:
+    # its arrivals are named after the machine-stack slots the body
+    # itself loads them from, which is c's calling rule for a
+    # `long double` argument and is the driver's own business.
+    import pool100_entry_equivalence as P100
     out["aligned_rows"] = []
-    cell_substitution = []
     body_substitution = []
     for index, family in enumerate(wanted):
         common = z3.Const("IN_%d" % index, R.X87_SORT)
-        cell_substitution.append(
-            (z3.Const("seed_%s" % family, R.X87_SORT), common))
         body_substitution.append((slots[index][1], common))
         out["aligned_rows"].append({
             "row": "IN-%d" % index,
@@ -2608,14 +2710,18 @@ def x87_aligned(shared, place, params, body_term, out):
                               % (slots[index][1].decl().name(),
                                  slots[index][0]),
         })
-    cell_aligned = z3.substitute(place["term"], *cell_substitution)
+    cell_aligned = P100.align_by_row(place["term"],
+                                     P100.input_rows(wanted))
     body_aligned = z3.substitute(body_term, *body_substitution)
     out["cell_bits"] = cell_aligned.size()
     out["body_bits"] = body_aligned.size()
     out["x87_rows"] = ("the arrival contract is stated by the argument "
                        "slots the body itself spells, and not by a "
                        "register family, which is the ruling of "
-                       "2026-09-09")
+                       "2026-09-09; the cell's side of it is put on "
+                       "those rows by the shared aligner "
+                       "pool100_entry_equivalence.align_by_row, which "
+                       "task ap5 taught to align an x87 arrival")
     out.update(decided(shared, cell_aligned, body_aligned, params))
     return out
 

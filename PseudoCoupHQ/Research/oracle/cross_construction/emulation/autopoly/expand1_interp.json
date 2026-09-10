@@ -1,0 +1,3423 @@
+{
+ "meta": {
+  "runs": 70,
+  "sample_rule": "THE SAMPLE, for a place whose emulation takes k arrivals of widths\nw_1 .. w_k.\n\n  the per-arrival budget b = max(4, int(20000 ** (1.0 / k)))\n\n  P(an INTEGER arrival of width w) is this list, in this order,\n  deduplicated, every value taken modulo nothing and dropped when it\n  is not less than 2^w, then cut to its first b entries:\n      0, 1, 2, 3, 7, 100,\n      2^(w-1) - 1, 2^(w-1), 2^(w-1) + 1,          the sign boundary\n      2^w - 2, 2^w - 1,                           the top, and -1\n      w - 1, w, w + 1,                            this width's shift counts\n      7, 8, 9, 15, 16, 17, 31, 32, 33, 63, 64, 65, the other widths'\n      then 8 values from random.Random(20260909).randrange(2^w)\n\n  P(a FLOAT arrival of width w, which reaches the emulation as its\n  IEEE bit pattern) is this list, in this order, deduplicated, cut to\n  its first b entries:\n      +0, -0, 1.0, -1.0, 2.0, 0.5, -0.5,\n      the smallest subnormal, the largest subnormal,\n      the smallest normal, the largest finite,\n      +inf, -inf, a quiet NaN, a signalling NaN,\n      then 8 values from random.Random(20260909).randrange(2^w)\n\n  THE SAMPLE is the ordered cross product P(a_1) x ... x P(a_k), in\n  that order.  Its size is at most 20,000 by the budget above, and the\n  run record carries the exact count.\n\n  WHY b IS A CEILING AND NOT A CHOICE OF POINTS: the edge values come\n  FIRST in every list, so cutting to b drops ordinary values before it\n  drops an edge.  A place with one or two arrivals is never cut at all\n  (b is 20000 and 141), so the handful's edges are all present; a\n  place with four is cut to 11 per arrival, and the run record says\n  which values those were.",
+  "targets": [
+   "cpython",
+   "php",
+   "ruby",
+   "java",
+   "javascript",
+   "dart",
+   "csharp"
+  ],
+  "task": "ex1",
+  "what": "the interpreted handful: one run per (cell, target), the cell's mapping rendered as source and compared with the reference's own mapping over a stated sample"
+ },
+ "runs": [
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 11,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, add(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "cpython",
+   "line": "add %esi,%edi",
+   "mnem": "add",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00138",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.10025715827941895,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/add_gpr_gpr_32__reg_rdi__cpython.py",
+   "symbol": "emu_add_gpr_gpr_32__reg_rdi__cpython",
+   "term_text": "Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 11,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_cat(0, ex_add($a, $b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "php",
+   "line": "add %esi,%edi",
+   "mnem": "add",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00138",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.10026407241821289,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/add_gpr_gpr_32__reg_rdi__php.php",
+   "symbol": "emu_add_gpr_gpr_32__reg_rdi__php",
+   "term_text": "Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 11,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, add(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "ruby",
+   "line": "add %esi,%edi",
+   "mnem": "add",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00138",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.14288878440856934,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/add_gpr_gpr_32__reg_rdi__ruby.rb",
+   "symbol": "emu_add_gpr_gpr_32__reg_rdi__ruby",
+   "term_text": "Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 11,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, add(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "java",
+   "line": "add %esi,%edi",
+   "mnem": "add",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00138",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.6049649715423584,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/add_gpr_gpr_32__reg_rdi__java.java",
+   "symbol": "emu_add_gpr_gpr_32__reg_rdi__java",
+   "term_text": "Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 11,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0n, add(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "javascript",
+   "line": "add %esi,%edi",
+   "mnem": "add",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00138",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.18506169319152832,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/add_gpr_gpr_32__reg_rdi__javascript.js",
+   "symbol": "emu_add_gpr_gpr_32__reg_rdi__javascript",
+   "term_text": "Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 11,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, add(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "dart",
+   "line": "add %esi,%edi",
+   "mnem": "add",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00138",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.38437414169311523,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/add_gpr_gpr_32__reg_rdi__dart.dart",
+   "symbol": "emu_add_gpr_gpr_32__reg_rdi__dart",
+   "term_text": "Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 11,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, add(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "csharp",
+   "line": "add %esi,%edi",
+   "mnem": "add",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00138",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 1.2053828239440918,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/add_gpr_gpr_32__reg_rdi__csharp.cs",
+   "symbol": "emu_add_gpr_gpr_32__reg_rdi__csharp",
+   "term_text": "Concat(0, Extract(31, 0, v0) + Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 0,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(add(a, 18446744073709551613, 64), 64)",
+   "key_width": 64,
+   "lang": "cpython",
+   "line": "sub $0x3,%rdi",
+   "mnem": "sub",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r14165",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.024328231811523438,
+   "shape": "imm_gpr",
+   "source_path": "interp/src_ex1/sub_imm_gpr_64__reg_rdi__cpython.py",
+   "symbol": "emu_sub_imm_gpr_64__reg_rdi__cpython",
+   "term_text": "v0 + 18446744073709551613",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 0,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_add($a, -3, 64), 64)",
+   "key_width": 64,
+   "lang": "php",
+   "line": "sub $0x3,%rdi",
+   "mnem": "sub",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r14165",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.025215625762939453,
+   "shape": "imm_gpr",
+   "source_path": "interp/src_ex1/sub_imm_gpr_64__reg_rdi__php.php",
+   "symbol": "emu_sub_imm_gpr_64__reg_rdi__php",
+   "term_text": "v0 + 18446744073709551613",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 0,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(add(a, 18446744073709551613, 64), 64)",
+   "key_width": 64,
+   "lang": "ruby",
+   "line": "sub $0x3,%rdi",
+   "mnem": "sub",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r14165",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.07416462898254395,
+   "shape": "imm_gpr",
+   "source_path": "interp/src_ex1/sub_imm_gpr_64__reg_rdi__ruby.rb",
+   "symbol": "emu_sub_imm_gpr_64__reg_rdi__ruby",
+   "term_text": "v0 + 18446744073709551613",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 0,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(add(a, -3L, 64), 64)",
+   "key_width": 64,
+   "lang": "java",
+   "line": "sub $0x3,%rdi",
+   "mnem": "sub",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r14165",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.529170036315918,
+   "shape": "imm_gpr",
+   "source_path": "interp/src_ex1/sub_imm_gpr_64__reg_rdi__java.java",
+   "symbol": "emu_sub_imm_gpr_64__reg_rdi__java",
+   "term_text": "v0 + 18446744073709551613",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 0,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(add(a, 18446744073709551613n, 64), 64)",
+   "key_width": 64,
+   "lang": "javascript",
+   "line": "sub $0x3,%rdi",
+   "mnem": "sub",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r14165",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.11308002471923828,
+   "shape": "imm_gpr",
+   "source_path": "interp/src_ex1/sub_imm_gpr_64__reg_rdi__javascript.js",
+   "symbol": "emu_sub_imm_gpr_64__reg_rdi__javascript",
+   "term_text": "v0 + 18446744073709551613",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 0,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(add(a, -3, 64), 64)",
+   "key_width": 64,
+   "lang": "dart",
+   "line": "sub $0x3,%rdi",
+   "mnem": "sub",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r14165",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.27971625328063965,
+   "shape": "imm_gpr",
+   "source_path": "interp/src_ex1/sub_imm_gpr_64__reg_rdi__dart.dart",
+   "symbol": "emu_sub_imm_gpr_64__reg_rdi__dart",
+   "term_text": "v0 + 18446744073709551613",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 0,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(add(a, -3L, 64), 64)",
+   "key_width": 64,
+   "lang": "csharp",
+   "line": "sub $0x3,%rdi",
+   "mnem": "sub",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r14165",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 1.0789759159088135,
+   "shape": "imm_gpr",
+   "source_path": "interp/src_ex1/sub_imm_gpr_64__reg_rdi__csharp.cs",
+   "symbol": "emu_sub_imm_gpr_64__reg_rdi__csharp",
+   "term_text": "v0 + 18446744073709551613",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 266,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, mul(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "cpython",
+   "line": "imul %esi,%edi",
+   "mnem": "imul",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07499",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.10239410400390625,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/imul_gpr_gpr_32__reg_rdi__cpython.py",
+   "symbol": "emu_imul_gpr_gpr_32__reg_rdi__cpython",
+   "term_text": "Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 266,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_cat(0, ex_mul($a, $b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "php",
+   "line": "imul %esi,%edi",
+   "mnem": "imul",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07499",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.10391616821289062,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/imul_gpr_gpr_32__reg_rdi__php.php",
+   "symbol": "emu_imul_gpr_gpr_32__reg_rdi__php",
+   "term_text": "Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 266,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, mul(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "ruby",
+   "line": "imul %esi,%edi",
+   "mnem": "imul",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07499",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.1419508457183838,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/imul_gpr_gpr_32__reg_rdi__ruby.rb",
+   "symbol": "emu_imul_gpr_gpr_32__reg_rdi__ruby",
+   "term_text": "Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 266,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, mul(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "java",
+   "line": "imul %esi,%edi",
+   "mnem": "imul",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07499",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.6105208396911621,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/imul_gpr_gpr_32__reg_rdi__java.java",
+   "symbol": "emu_imul_gpr_gpr_32__reg_rdi__java",
+   "term_text": "Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 266,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0n, mul(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "javascript",
+   "line": "imul %esi,%edi",
+   "mnem": "imul",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07499",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.18565797805786133,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/imul_gpr_gpr_32__reg_rdi__javascript.js",
+   "symbol": "emu_imul_gpr_gpr_32__reg_rdi__javascript",
+   "term_text": "Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 266,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, mul(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "dart",
+   "line": "imul %esi,%edi",
+   "mnem": "imul",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07499",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 0.3932030200958252,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/imul_gpr_gpr_32__reg_rdi__dart.dart",
+   "symbol": "emu_imul_gpr_gpr_32__reg_rdi__dart",
+   "term_text": "Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 900,
+   "attested_ledger_rows": 266,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, mul(a, b, 32), 32), 64)",
+   "key_width": 32,
+   "lang": "csharp",
+   "line": "imul %esi,%edi",
+   "mnem": "imul",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07499",
+   "sample_per_arrival": [
+    30,
+    30
+   ],
+   "sample_points": 900,
+   "seconds": 1.158437967300415,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/imul_gpr_gpr_32__reg_rdi__csharp.cs",
+   "symbol": "emu_imul_gpr_gpr_32__reg_rdi__csharp",
+   "term_text": "Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ashr(a, cat(0, ext(b, 4, 0), 5), 32), 32), 64)",
+   "key_width": 32,
+   "lang": "cpython",
+   "line": "sar %cl,%edi",
+   "mnem": "sar",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r12211",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.09149384498596191,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/sar_cl_gpr_32__reg_rdi__cpython.py",
+   "symbol": "emu_sar_cl_gpr_32__reg_rdi__cpython",
+   "term_text": "Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_cat(0, ex_ashr($a, ex_cat(0, ex_ext($b, 4, 0), 5), 32), 32), 64)",
+   "key_width": 32,
+   "lang": "php",
+   "line": "sar %cl,%edi",
+   "mnem": "sar",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r12211",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.09509539604187012,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/sar_cl_gpr_32__reg_rdi__php.php",
+   "symbol": "emu_sar_cl_gpr_32__reg_rdi__php",
+   "term_text": "Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ashr(a, cat(0, ext(b, 4, 0), 5), 32), 32), 64)",
+   "key_width": 32,
+   "lang": "ruby",
+   "line": "sar %cl,%edi",
+   "mnem": "sar",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r12211",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.13517165184020996,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/sar_cl_gpr_32__reg_rdi__ruby.rb",
+   "symbol": "emu_sar_cl_gpr_32__reg_rdi__ruby",
+   "term_text": "Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, ashr(a, cat(0L, ext(b, 4, 0), 5), 32), 32), 64)",
+   "key_width": 32,
+   "lang": "java",
+   "line": "sar %cl,%edi",
+   "mnem": "sar",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r12211",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.5971376895904541,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/sar_cl_gpr_32__reg_rdi__java.java",
+   "symbol": "emu_sar_cl_gpr_32__reg_rdi__java",
+   "term_text": "Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0n, ashr(a, cat(0n, ext(b, 4, 0), 5), 32), 32), 64)",
+   "key_width": 32,
+   "lang": "javascript",
+   "line": "sar %cl,%edi",
+   "mnem": "sar",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r12211",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.1838536262512207,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/sar_cl_gpr_32__reg_rdi__javascript.js",
+   "symbol": "emu_sar_cl_gpr_32__reg_rdi__javascript",
+   "term_text": "Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ashr(a, cat(0, ext(b, 4, 0), 5), 32), 32), 64)",
+   "key_width": 32,
+   "lang": "dart",
+   "line": "sar %cl,%edi",
+   "mnem": "sar",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r12211",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.37924981117248535,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/sar_cl_gpr_32__reg_rdi__dart.dart",
+   "symbol": "emu_sar_cl_gpr_32__reg_rdi__dart",
+   "term_text": "Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, ashr(a, cat(0L, ext(b, 4, 0), 5), 32), 32), 64)",
+   "key_width": 32,
+   "lang": "csharp",
+   "line": "sar %cl,%edi",
+   "mnem": "sar",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r12211",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 1.150557279586792,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/sar_cl_gpr_32__reg_rdi__csharp.cs",
+   "symbol": "emu_sar_cl_gpr_32__reg_rdi__csharp",
+   "term_text": "Concat(0, Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 251,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(lshr(a, cat(0, ext(b, 5, 0), 6), 64), 64)",
+   "key_width": 64,
+   "lang": "cpython",
+   "line": "shr %cl,%rdi",
+   "mnem": "shr",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r13982",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.08738112449645996,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/shr_cl_gpr_64__reg_rdi__cpython.py",
+   "symbol": "emu_shr_cl_gpr_64__reg_rdi__cpython",
+   "term_text": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 251,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_lshr($a, ex_cat(0, ex_ext($b, 5, 0), 6), 64), 64)",
+   "key_width": 64,
+   "lang": "php",
+   "line": "shr %cl,%rdi",
+   "mnem": "shr",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r13982",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.09177851676940918,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/shr_cl_gpr_64__reg_rdi__php.php",
+   "symbol": "emu_shr_cl_gpr_64__reg_rdi__php",
+   "term_text": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 251,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(lshr(a, cat(0, ext(b, 5, 0), 6), 64), 64)",
+   "key_width": 64,
+   "lang": "ruby",
+   "line": "shr %cl,%rdi",
+   "mnem": "shr",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r13982",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.13001799583435059,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/shr_cl_gpr_64__reg_rdi__ruby.rb",
+   "symbol": "emu_shr_cl_gpr_64__reg_rdi__ruby",
+   "term_text": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 251,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(lshr(a, cat(0L, ext(b, 5, 0), 6), 64), 64)",
+   "key_width": 64,
+   "lang": "java",
+   "line": "shr %cl,%rdi",
+   "mnem": "shr",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r13982",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.5991952419281006,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/shr_cl_gpr_64__reg_rdi__java.java",
+   "symbol": "emu_shr_cl_gpr_64__reg_rdi__java",
+   "term_text": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 251,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(lshr(a, cat(0n, ext(b, 5, 0), 6), 64), 64)",
+   "key_width": 64,
+   "lang": "javascript",
+   "line": "shr %cl,%rdi",
+   "mnem": "shr",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r13982",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.1768648624420166,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/shr_cl_gpr_64__reg_rdi__javascript.js",
+   "symbol": "emu_shr_cl_gpr_64__reg_rdi__javascript",
+   "term_text": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 251,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(lshr(a, cat(0, ext(b, 5, 0), 6), 64), 64)",
+   "key_width": 64,
+   "lang": "dart",
+   "line": "shr %cl,%rdi",
+   "mnem": "shr",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r13982",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 0.3870818614959717,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/shr_cl_gpr_64__reg_rdi__dart.dart",
+   "symbol": "emu_shr_cl_gpr_64__reg_rdi__dart",
+   "term_text": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 810,
+   "attested_ledger_rows": 251,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(lshr(a, cat(0L, ext(b, 5, 0), 6), 64), 64)",
+   "key_width": 64,
+   "lang": "csharp",
+   "line": "shr %cl,%rdi",
+   "mnem": "shr",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rcx",
+     "holder": "a 8-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r13982",
+   "sample_per_arrival": [
+    30,
+    27
+   ],
+   "sample_points": 810,
+   "seconds": 1.1577174663543701,
+   "shape": "cl_gpr",
+   "source_path": "interp/src_ex1/shr_cl_gpr_64__reg_rdi__csharp.cs",
+   "symbol": "emu_shr_cl_gpr_64__reg_rdi__csharp",
+   "term_text": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 18954,
+   "attested_ledger_rows": 778,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 729,
+   "declines": {
+    "the interpreter RAISE:ZeroDivisionError": 729
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ext(sdiv(cat(a, b, 32), cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(ext(c, 31, 31), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), c, 32), 64), 31, 0), 32), 64)",
+   "key_width": 32,
+   "lang": "cpython",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rax",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "c"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07409",
+   "sample_per_arrival": [
+    27,
+    27,
+    27
+   ],
+   "sample_points": 19683,
+   "seconds": 2.597602367401123,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/idiv_gpr_one_32__reg_rax__cpython.py",
+   "symbol": "emu_idiv_gpr_one_32__reg_rax__cpython",
+   "term_text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+   "writes": "reg_rax"
+  },
+  {
+   "agreements": 18953,
+   "attested_ledger_rows": 778,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 730,
+   "declines": {
+    "the interpreter RAISE:ArithmeticError": 1,
+    "the interpreter RAISE:DivisionByZeroError": 729
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_cat(0, ex_ext(ex_sdiv(ex_cat($a, $b, 32), ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_cat(ex_ext($c, 31, 31), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), ex_ext($c, 31, 31), 1), $c, 32), 64), 31, 0), 32), 64)",
+   "key_width": 32,
+   "lang": "php",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rax",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "c"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07409",
+   "sample_per_arrival": [
+    27,
+    27,
+    27
+   ],
+   "sample_points": 19683,
+   "seconds": 2.701570987701416,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/idiv_gpr_one_32__reg_rax__php.php",
+   "symbol": "emu_idiv_gpr_one_32__reg_rax__php",
+   "term_text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+   "writes": "reg_rax"
+  },
+  {
+   "agreements": 18954,
+   "attested_ledger_rows": 778,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 729,
+   "declines": {
+    "the interpreter RAISE:ZeroDivisionError": 729
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ext(sdiv(cat(a, b, 32), cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(ext(c, 31, 31), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), c, 32), 64), 31, 0), 32), 64)",
+   "key_width": 32,
+   "lang": "ruby",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rax",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "c"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07409",
+   "sample_per_arrival": [
+    27,
+    27,
+    27
+   ],
+   "sample_points": 19683,
+   "seconds": 2.6645734310150146,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/idiv_gpr_one_32__reg_rax__ruby.rb",
+   "symbol": "emu_idiv_gpr_one_32__reg_rax__ruby",
+   "term_text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+   "writes": "reg_rax"
+  },
+  {
+   "agreements": 18954,
+   "attested_ledger_rows": 778,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 729,
+   "declines": {
+    "the interpreter RAISE:ArithmeticException": 729
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, ext(sdiv(cat(a, b, 32), cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(ext(c, 31, 31), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), c, 32), 64), 31, 0), 32), 64)",
+   "key_width": 32,
+   "lang": "java",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rax",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "c"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07409",
+   "sample_per_arrival": [
+    27,
+    27,
+    27
+   ],
+   "sample_points": 19683,
+   "seconds": 3.049726963043213,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/idiv_gpr_one_32__reg_rax__java.java",
+   "symbol": "emu_idiv_gpr_one_32__reg_rax__java",
+   "term_text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+   "writes": "reg_rax"
+  },
+  {
+   "agreements": 18954,
+   "attested_ledger_rows": 778,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 729,
+   "declines": {
+    "the interpreter RAISE:RangeError": 729
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0n, ext(sdiv(cat(a, b, 32), cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(ext(c, 31, 31), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), c, 32), 64), 31, 0), 32), 64)",
+   "key_width": 32,
+   "lang": "javascript",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rax",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "c"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07409",
+   "sample_per_arrival": [
+    27,
+    27,
+    27
+   ],
+   "sample_points": 19683,
+   "seconds": 2.6644933223724365,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/idiv_gpr_one_32__reg_rax__javascript.js",
+   "symbol": "emu_idiv_gpr_one_32__reg_rax__javascript",
+   "term_text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+   "writes": "reg_rax"
+  },
+  {
+   "agreements": 18954,
+   "attested_ledger_rows": 778,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 729,
+   "declines": {
+    "the interpreter RAISE:IntegerDivisionByZeroException": 729
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ext(sdiv(cat(a, b, 32), cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(ext(c, 31, 31), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), c, 32), 64), 31, 0), 32), 64)",
+   "key_width": 32,
+   "lang": "dart",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rax",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "c"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07409",
+   "sample_per_arrival": [
+    27,
+    27,
+    27
+   ],
+   "sample_points": 19683,
+   "seconds": 3.5242505073547363,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/idiv_gpr_one_32__reg_rax__dart.dart",
+   "symbol": "emu_idiv_gpr_one_32__reg_rax__dart",
+   "term_text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+   "writes": "reg_rax"
+  },
+  {
+   "agreements": 18953,
+   "attested_ledger_rows": 778,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 730,
+   "declines": {
+    "the interpreter RAISE:DivideByZeroException": 729,
+    "the interpreter RAISE:OverflowException": 1
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, ext(sdiv(cat(a, b, 32), cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(cat(ext(c, 31, 31), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), ext(c, 31, 31), 1), c, 32), 64), 31, 0), 32), 64)",
+   "key_width": 32,
+   "lang": "csharp",
+   "line": "idiv %edi",
+   "mnem": "idiv",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rax",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "c"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r07409",
+   "sample_per_arrival": [
+    27,
+    27,
+    27
+   ],
+   "sample_points": 19683,
+   "seconds": 3.5596296787261963,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/idiv_gpr_one_32__reg_rax__csharp.cs",
+   "symbol": "emu_idiv_gpr_one_32__reg_rax__csharp",
+   "term_text": "Concat(0, Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0), Extract(31, 0, v1)), Concat(Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 31, v2), Extract(31, 0, v2)))))",
+   "writes": "reg_rax"
+  },
+  {
+   "agreements": 14641,
+   "attested_ledger_rows": 2,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ((d) if (eq(bnot(bor(bnot(b, 32), bnot(a, 32), 32), 32), 0, 32)) else (c)), 32), 64)",
+   "key_width": 32,
+   "lang": "cpython",
+   "line": "cmovne %esi,%edi",
+   "mnem": "cmovne",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rcx",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "c"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "d"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r27756",
+   "sample_per_arrival": [
+    11,
+    11,
+    11,
+    11
+   ],
+   "sample_points": 14641,
+   "seconds": 2.0538036823272705,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/cmovne_gpr_gpr_32__reg_rdi__cpython.py",
+   "symbol": "emu_cmovne_gpr_gpr_32__reg_rdi__cpython",
+   "term_text": "Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 14641,
+   "attested_ledger_rows": 2,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_cat(0, ((ex_eq(ex_bnot(ex_bor(ex_bnot($b, 32), ex_bnot($a, 32), 32), 32), 0, 32)) ? ($d) : ($c)), 32), 64)",
+   "key_width": 32,
+   "lang": "php",
+   "line": "cmovne %esi,%edi",
+   "mnem": "cmovne",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rcx",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "c"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "d"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r27756",
+   "sample_per_arrival": [
+    11,
+    11,
+    11,
+    11
+   ],
+   "sample_points": 14641,
+   "seconds": 2.134502649307251,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/cmovne_gpr_gpr_32__reg_rdi__php.php",
+   "symbol": "emu_cmovne_gpr_gpr_32__reg_rdi__php",
+   "term_text": "Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 14641,
+   "attested_ledger_rows": 2,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ((eq(bnot(bor(bnot(b, 32), bnot(a, 32), 32), 32), 0, 32)) ? (d) : (c)), 32), 64)",
+   "key_width": 32,
+   "lang": "ruby",
+   "line": "cmovne %esi,%edi",
+   "mnem": "cmovne",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rcx",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "c"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "d"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r27756",
+   "sample_per_arrival": [
+    11,
+    11,
+    11,
+    11
+   ],
+   "sample_points": 14641,
+   "seconds": 2.1175787448883057,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/cmovne_gpr_gpr_32__reg_rdi__ruby.rb",
+   "symbol": "emu_cmovne_gpr_gpr_32__reg_rdi__ruby",
+   "term_text": "Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 14641,
+   "attested_ledger_rows": 2,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, ((eq(bnot(bor(bnot(b, 32), bnot(a, 32), 32), 32), 0L, 32)) ? (d) : (c)), 32), 64)",
+   "key_width": 32,
+   "lang": "java",
+   "line": "cmovne %esi,%edi",
+   "mnem": "cmovne",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rcx",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "c"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "d"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r27756",
+   "sample_per_arrival": [
+    11,
+    11,
+    11,
+    11
+   ],
+   "sample_points": 14641,
+   "seconds": 2.5511889457702637,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/cmovne_gpr_gpr_32__reg_rdi__java.java",
+   "symbol": "emu_cmovne_gpr_gpr_32__reg_rdi__java",
+   "term_text": "Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 14641,
+   "attested_ledger_rows": 2,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0n, ((eq(bnot(bor(bnot(b, 32), bnot(a, 32), 32), 32), 0n, 32)) ? (d) : (c)), 32), 64)",
+   "key_width": 32,
+   "lang": "javascript",
+   "line": "cmovne %esi,%edi",
+   "mnem": "cmovne",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rcx",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "c"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "d"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r27756",
+   "sample_per_arrival": [
+    11,
+    11,
+    11,
+    11
+   ],
+   "sample_points": 14641,
+   "seconds": 2.1336324214935303,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/cmovne_gpr_gpr_32__reg_rdi__javascript.js",
+   "symbol": "emu_cmovne_gpr_gpr_32__reg_rdi__javascript",
+   "term_text": "Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 14641,
+   "attested_ledger_rows": 2,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ((eq(bnot(bor(bnot(b, 32), bnot(a, 32), 32), 32), 0, 32)) ? (d) : (c)), 32), 64)",
+   "key_width": 32,
+   "lang": "dart",
+   "line": "cmovne %esi,%edi",
+   "mnem": "cmovne",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rcx",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "c"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "d"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r27756",
+   "sample_per_arrival": [
+    11,
+    11,
+    11,
+    11
+   ],
+   "sample_points": 14641,
+   "seconds": 3.1368603706359863,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/cmovne_gpr_gpr_32__reg_rdi__dart.dart",
+   "symbol": "emu_cmovne_gpr_gpr_32__reg_rdi__dart",
+   "term_text": "Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 14641,
+   "attested_ledger_rows": 2,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, ((eq(bnot(bor(bnot(b, 32), bnot(a, 32), 32), 32), 0L, 32)) ? (d) : (c)), 32), 64)",
+   "key_width": 32,
+   "lang": "csharp",
+   "line": "cmovne %esi,%edi",
+   "mnem": "cmovne",
+   "params": [
+    {
+     "bits": 32,
+     "family": "rdx",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "rcx",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "b"
+    },
+    {
+     "bits": 32,
+     "family": "rsi",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "c"
+    },
+    {
+     "bits": 32,
+     "family": "rdi",
+     "holder": "a 32-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "d"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r27756",
+   "sample_per_arrival": [
+    11,
+    11,
+    11,
+    11
+   ],
+   "sample_points": 14641,
+   "seconds": 3.117431402206421,
+   "shape": "gpr_gpr",
+   "source_path": "interp/src_ex1/cmovne_gpr_gpr_32__reg_rdi__csharp.cs",
+   "symbol": "emu_cmovne_gpr_gpr_32__reg_rdi__csharp",
+   "term_text": "Concat(0, If(~(~Extract(31, 0, v0) | ~Extract(31, 0, v1)) == 0, Extract(31, 0, v2), Extract(31, 0, v3)))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 729,
+   "attested_ledger_rows": 10335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ((0) if (eq(bnot(bor(bnot(a, 8), bnot(b, 8), 8), 8), 0, 8)) else (1)), 8), 64)",
+   "key_width": 8,
+   "lang": "cpython",
+   "line": "setne %dil",
+   "mnem": "setne",
+   "params": [
+    {
+     "bits": 8,
+     "family": "rdi",
+     "holder": "a 8-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rsi",
+     "holder": "a 8-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r64972",
+   "sample_per_arrival": [
+    27,
+    27
+   ],
+   "sample_points": 729,
+   "seconds": 0.09872031211853027,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/setne_gpr_one_8__reg_rdi__cpython.py",
+   "symbol": "emu_setne_gpr_one_8__reg_rdi__cpython",
+   "term_text": "Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 729,
+   "attested_ledger_rows": 10335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_cat(0, ((ex_eq(ex_bnot(ex_bor(ex_bnot($a, 8), ex_bnot($b, 8), 8), 8), 0, 8)) ? (0) : (1)), 8), 64)",
+   "key_width": 8,
+   "lang": "php",
+   "line": "setne %dil",
+   "mnem": "setne",
+   "params": [
+    {
+     "bits": 8,
+     "family": "rdi",
+     "holder": "a 8-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rsi",
+     "holder": "a 8-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r64972",
+   "sample_per_arrival": [
+    27,
+    27
+   ],
+   "sample_points": 729,
+   "seconds": 0.10064935684204102,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/setne_gpr_one_8__reg_rdi__php.php",
+   "symbol": "emu_setne_gpr_one_8__reg_rdi__php",
+   "term_text": "Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 729,
+   "attested_ledger_rows": 10335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ((eq(bnot(bor(bnot(a, 8), bnot(b, 8), 8), 8), 0, 8)) ? (0) : (1)), 8), 64)",
+   "key_width": 8,
+   "lang": "ruby",
+   "line": "setne %dil",
+   "mnem": "setne",
+   "params": [
+    {
+     "bits": 8,
+     "family": "rdi",
+     "holder": "a 8-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rsi",
+     "holder": "a 8-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r64972",
+   "sample_per_arrival": [
+    27,
+    27
+   ],
+   "sample_points": 729,
+   "seconds": 0.14385604858398438,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/setne_gpr_one_8__reg_rdi__ruby.rb",
+   "symbol": "emu_setne_gpr_one_8__reg_rdi__ruby",
+   "term_text": "Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 729,
+   "attested_ledger_rows": 10335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, ((eq(bnot(bor(bnot(a, 8), bnot(b, 8), 8), 8), 0L, 8)) ? (0L) : (1L)), 8), 64)",
+   "key_width": 8,
+   "lang": "java",
+   "line": "setne %dil",
+   "mnem": "setne",
+   "params": [
+    {
+     "bits": 8,
+     "family": "rdi",
+     "holder": "a 8-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rsi",
+     "holder": "a 8-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r64972",
+   "sample_per_arrival": [
+    27,
+    27
+   ],
+   "sample_points": 729,
+   "seconds": 0.6160750389099121,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/setne_gpr_one_8__reg_rdi__java.java",
+   "symbol": "emu_setne_gpr_one_8__reg_rdi__java",
+   "term_text": "Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 729,
+   "attested_ledger_rows": 10335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0n, ((eq(bnot(bor(bnot(a, 8), bnot(b, 8), 8), 8), 0n, 8)) ? (0n) : (1n)), 8), 64)",
+   "key_width": 8,
+   "lang": "javascript",
+   "line": "setne %dil",
+   "mnem": "setne",
+   "params": [
+    {
+     "bits": 8,
+     "family": "rdi",
+     "holder": "a 8-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rsi",
+     "holder": "a 8-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r64972",
+   "sample_per_arrival": [
+    27,
+    27
+   ],
+   "sample_points": 729,
+   "seconds": 0.18965458869934082,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/setne_gpr_one_8__reg_rdi__javascript.js",
+   "symbol": "emu_setne_gpr_one_8__reg_rdi__javascript",
+   "term_text": "Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 729,
+   "attested_ledger_rows": 10335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0, ((eq(bnot(bor(bnot(a, 8), bnot(b, 8), 8), 8), 0, 8)) ? (0) : (1)), 8), 64)",
+   "key_width": 8,
+   "lang": "dart",
+   "line": "setne %dil",
+   "mnem": "setne",
+   "params": [
+    {
+     "bits": 8,
+     "family": "rdi",
+     "holder": "a 8-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rsi",
+     "holder": "a 8-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r64972",
+   "sample_per_arrival": [
+    27,
+    27
+   ],
+   "sample_points": 729,
+   "seconds": 0.37158942222595215,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/setne_gpr_one_8__reg_rdi__dart.dart",
+   "symbol": "emu_setne_gpr_one_8__reg_rdi__dart",
+   "term_text": "Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 729,
+   "attested_ledger_rows": 10335,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(cat(0L, ((eq(bnot(bor(bnot(a, 8), bnot(b, 8), 8), 8), 0L, 8)) ? (0L) : (1L)), 8), 64)",
+   "key_width": 8,
+   "lang": "csharp",
+   "line": "setne %dil",
+   "mnem": "setne",
+   "params": [
+    {
+     "bits": 8,
+     "family": "rdi",
+     "holder": "a 8-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "a"
+    },
+    {
+     "bits": 8,
+     "family": "rsi",
+     "holder": "a 8-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r64972",
+   "sample_per_arrival": [
+    27,
+    27
+   ],
+   "sample_points": 729,
+   "seconds": 1.1545748710632324,
+   "shape": "gpr_one",
+   "source_path": "interp/src_ex1/setne_gpr_one_8__reg_rdi__csharp.cs",
+   "symbol": "emu_setne_gpr_one_8__reg_rdi__csharp",
+   "term_text": "Concat(0, If(~(~Extract(7, 0, v0) | ~Extract(7, 0, v1)) == 0, 0, 1))",
+   "writes": "reg_rdi"
+  },
+  {
+   "agreements": 439,
+   "attested_ledger_rows": 210,
+   "bits": 32,
+   "check": "the fuzz census's method",
+   "declined_points": 90,
+   "declines": {
+    "the reference's own term does not evaluate to a numeral at this point": 90
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(fadd(a, b, 32), 32)",
+   "key_width": 32,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 32, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 32, v0)",
+    "lane_bits": 32,
+    "lane_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+    "of_bits": 128,
+    "projection": "Extract(31, 0, the cell's own term for this place)"
+   },
+   "lang": "cpython",
+   "line": "addss %xmm1,%xmm0",
+   "mnem": "addss",
+   "params": [
+    {
+     "bits": 32,
+     "family": "xmm0",
+     "holder": "the 32-bit float's IEEE bit pattern, in cpython's own integer",
+     "kind": "fp",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "xmm1",
+     "holder": "the 32-bit float's IEEE bit pattern, in cpython's own integer",
+     "kind": "fp",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00332",
+   "sample_per_arrival": [
+    23,
+    23
+   ],
+   "sample_points": 529,
+   "seconds": 0.07693934440612793,
+   "shape": "xmm_xmm",
+   "source_path": "interp/src_ex1/addss_xmm_xmm_32__reg_xmm0__cpython.py",
+   "symbol": "emu_addss_xmm_xmm_32__reg_xmm0__cpython",
+   "term_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 439,
+   "attested_ledger_rows": 210,
+   "bits": 32,
+   "check": "the fuzz census's method",
+   "declined_points": 90,
+   "declines": {
+    "the reference's own term does not evaluate to a numeral at this point": 90
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_fadd($a, $b, 32), 32)",
+   "key_width": 32,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 32, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 32, v0)",
+    "lane_bits": 32,
+    "lane_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+    "of_bits": 128,
+    "projection": "Extract(31, 0, the cell's own term for this place)"
+   },
+   "lang": "php",
+   "line": "addss %xmm1,%xmm0",
+   "mnem": "addss",
+   "params": [
+    {
+     "bits": 32,
+     "family": "xmm0",
+     "holder": "the 32-bit float's IEEE bit pattern, in php's own integer",
+     "kind": "fp",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "xmm1",
+     "holder": "the 32-bit float's IEEE bit pattern, in php's own integer",
+     "kind": "fp",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00332",
+   "sample_per_arrival": [
+    23,
+    23
+   ],
+   "sample_points": 529,
+   "seconds": 0.07973933219909668,
+   "shape": "xmm_xmm",
+   "source_path": "interp/src_ex1/addss_xmm_xmm_32__reg_xmm0__php.php",
+   "symbol": "emu_addss_xmm_xmm_32__reg_xmm0__php",
+   "term_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 439,
+   "attested_ledger_rows": 210,
+   "bits": 32,
+   "check": "the fuzz census's method",
+   "declined_points": 90,
+   "declines": {
+    "the reference's own term does not evaluate to a numeral at this point": 90
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(fadd(a, b, 32), 32)",
+   "key_width": 32,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 32, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 32, v0)",
+    "lane_bits": 32,
+    "lane_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+    "of_bits": 128,
+    "projection": "Extract(31, 0, the cell's own term for this place)"
+   },
+   "lang": "ruby",
+   "line": "addss %xmm1,%xmm0",
+   "mnem": "addss",
+   "params": [
+    {
+     "bits": 32,
+     "family": "xmm0",
+     "holder": "the 32-bit float's IEEE bit pattern, in ruby's own integer",
+     "kind": "fp",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "xmm1",
+     "holder": "the 32-bit float's IEEE bit pattern, in ruby's own integer",
+     "kind": "fp",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00332",
+   "sample_per_arrival": [
+    23,
+    23
+   ],
+   "sample_points": 529,
+   "seconds": 0.1196441650390625,
+   "shape": "xmm_xmm",
+   "source_path": "interp/src_ex1/addss_xmm_xmm_32__reg_xmm0__ruby.rb",
+   "symbol": "emu_addss_xmm_xmm_32__reg_xmm0__ruby",
+   "term_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 439,
+   "attested_ledger_rows": 210,
+   "bits": 32,
+   "check": "the fuzz census's method",
+   "declined_points": 90,
+   "declines": {
+    "the reference's own term does not evaluate to a numeral at this point": 90
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(fadd(a, b, 32), 32)",
+   "key_width": 32,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 32, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 32, v0)",
+    "lane_bits": 32,
+    "lane_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+    "of_bits": 128,
+    "projection": "Extract(31, 0, the cell's own term for this place)"
+   },
+   "lang": "java",
+   "line": "addss %xmm1,%xmm0",
+   "mnem": "addss",
+   "params": [
+    {
+     "bits": 32,
+     "family": "xmm0",
+     "holder": "the 32-bit float's IEEE bit pattern, in java's own integer",
+     "kind": "fp",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "xmm1",
+     "holder": "the 32-bit float's IEEE bit pattern, in java's own integer",
+     "kind": "fp",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00332",
+   "sample_per_arrival": [
+    23,
+    23
+   ],
+   "sample_points": 529,
+   "seconds": 0.5574603080749512,
+   "shape": "xmm_xmm",
+   "source_path": "interp/src_ex1/addss_xmm_xmm_32__reg_xmm0__java.java",
+   "symbol": "emu_addss_xmm_xmm_32__reg_xmm0__java",
+   "term_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 439,
+   "attested_ledger_rows": 210,
+   "bits": 32,
+   "check": "the fuzz census's method",
+   "declined_points": 90,
+   "declines": {
+    "the reference's own term does not evaluate to a numeral at this point": 90
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(fadd(a, b, 32), 32)",
+   "key_width": 32,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 32, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 32, v0)",
+    "lane_bits": 32,
+    "lane_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+    "of_bits": 128,
+    "projection": "Extract(31, 0, the cell's own term for this place)"
+   },
+   "lang": "javascript",
+   "line": "addss %xmm1,%xmm0",
+   "mnem": "addss",
+   "params": [
+    {
+     "bits": 32,
+     "family": "xmm0",
+     "holder": "the 32-bit float's IEEE bit pattern, in javascript's own integer",
+     "kind": "fp",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "xmm1",
+     "holder": "the 32-bit float's IEEE bit pattern, in javascript's own integer",
+     "kind": "fp",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00332",
+   "sample_per_arrival": [
+    23,
+    23
+   ],
+   "sample_points": 529,
+   "seconds": 0.169175386428833,
+   "shape": "xmm_xmm",
+   "source_path": "interp/src_ex1/addss_xmm_xmm_32__reg_xmm0__javascript.js",
+   "symbol": "emu_addss_xmm_xmm_32__reg_xmm0__javascript",
+   "term_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 439,
+   "attested_ledger_rows": 210,
+   "bits": 32,
+   "check": "the fuzz census's method",
+   "declined_points": 90,
+   "declines": {
+    "the reference's own term does not evaluate to a numeral at this point": 90
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(fadd(a, b, 32), 32)",
+   "key_width": 32,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 32, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 32, v0)",
+    "lane_bits": 32,
+    "lane_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+    "of_bits": 128,
+    "projection": "Extract(31, 0, the cell's own term for this place)"
+   },
+   "lang": "dart",
+   "line": "addss %xmm1,%xmm0",
+   "mnem": "addss",
+   "params": [
+    {
+     "bits": 32,
+     "family": "xmm0",
+     "holder": "the 32-bit float's IEEE bit pattern, in dart's own integer",
+     "kind": "fp",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "xmm1",
+     "holder": "the 32-bit float's IEEE bit pattern, in dart's own integer",
+     "kind": "fp",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00332",
+   "sample_per_arrival": [
+    23,
+    23
+   ],
+   "sample_points": 529,
+   "seconds": 0.3574669361114502,
+   "shape": "xmm_xmm",
+   "source_path": "interp/src_ex1/addss_xmm_xmm_32__reg_xmm0__dart.dart",
+   "symbol": "emu_addss_xmm_xmm_32__reg_xmm0__dart",
+   "term_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 439,
+   "attested_ledger_rows": 210,
+   "bits": 32,
+   "check": "the fuzz census's method",
+   "declined_points": 90,
+   "declines": {
+    "the reference's own term does not evaluate to a numeral at this point": 90
+   },
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(fadd(a, b, 32), 32)",
+   "key_width": 32,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 32, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 32, v0)",
+    "lane_bits": 32,
+    "lane_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+    "of_bits": 128,
+    "projection": "Extract(31, 0, the cell's own term for this place)"
+   },
+   "lang": "csharp",
+   "line": "addss %xmm1,%xmm0",
+   "mnem": "addss",
+   "params": [
+    {
+     "bits": 32,
+     "family": "xmm0",
+     "holder": "the 32-bit float's IEEE bit pattern, in csharp's own integer",
+     "kind": "fp",
+     "name": "a"
+    },
+    {
+     "bits": 32,
+     "family": "xmm1",
+     "holder": "the 32-bit float's IEEE bit pattern, in csharp's own integer",
+     "kind": "fp",
+     "name": "b"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r00332",
+   "sample_per_arrival": [
+    23,
+    23
+   ],
+   "sample_points": 529,
+   "seconds": 1.1492128372192383,
+   "shape": "xmm_xmm",
+   "source_path": "interp/src_ex1/addss_xmm_xmm_32__reg_xmm0__csharp.cs",
+   "symbol": "emu_addss_xmm_xmm_32__reg_xmm0__csharp",
+   "term_text": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 860,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(i2f(a, 64, 64), 64)",
+   "key_width": 64,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 64, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 64, v0)",
+    "lane_bits": 64,
+    "lane_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+    "of_bits": 128,
+    "projection": "Extract(63, 0, the cell's own term for this place)"
+   },
+   "lang": "cpython",
+   "line": "cvtsi2sd %rdi,%xmm0",
+   "mnem": "cvtsi2sd",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in cpython's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r02658",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.026590585708618164,
+   "shape": "gpr_xmm",
+   "source_path": "interp/src_ex1/cvtsi2sd_gpr_xmm_64__reg_xmm0__cpython.py",
+   "symbol": "emu_cvtsi2sd_gpr_xmm_64__reg_xmm0__cpython",
+   "term_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 860,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "ex_m(ex_i2f($a, 64, 64), 64)",
+   "key_width": 64,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 64, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 64, v0)",
+    "lane_bits": 64,
+    "lane_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+    "of_bits": 128,
+    "projection": "Extract(63, 0, the cell's own term for this place)"
+   },
+   "lang": "php",
+   "line": "cvtsi2sd %rdi,%xmm0",
+   "mnem": "cvtsi2sd",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in php's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r02658",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.02764129638671875,
+   "shape": "gpr_xmm",
+   "source_path": "interp/src_ex1/cvtsi2sd_gpr_xmm_64__reg_xmm0__php.php",
+   "symbol": "emu_cvtsi2sd_gpr_xmm_64__reg_xmm0__php",
+   "term_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 860,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(i2f(a, 64, 64), 64)",
+   "key_width": 64,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 64, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 64, v0)",
+    "lane_bits": 64,
+    "lane_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+    "of_bits": 128,
+    "projection": "Extract(63, 0, the cell's own term for this place)"
+   },
+   "lang": "ruby",
+   "line": "cvtsi2sd %rdi,%xmm0",
+   "mnem": "cvtsi2sd",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in ruby's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r02658",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.06813693046569824,
+   "shape": "gpr_xmm",
+   "source_path": "interp/src_ex1/cvtsi2sd_gpr_xmm_64__reg_xmm0__ruby.rb",
+   "symbol": "emu_cvtsi2sd_gpr_xmm_64__reg_xmm0__ruby",
+   "term_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 860,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(i2f(a, 64, 64), 64)",
+   "key_width": 64,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 64, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 64, v0)",
+    "lane_bits": 64,
+    "lane_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+    "of_bits": 128,
+    "projection": "Extract(63, 0, the cell's own term for this place)"
+   },
+   "lang": "java",
+   "line": "cvtsi2sd %rdi,%xmm0",
+   "mnem": "cvtsi2sd",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in java's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r02658",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.5332465171813965,
+   "shape": "gpr_xmm",
+   "source_path": "interp/src_ex1/cvtsi2sd_gpr_xmm_64__reg_xmm0__java.java",
+   "symbol": "emu_cvtsi2sd_gpr_xmm_64__reg_xmm0__java",
+   "term_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 860,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(i2f(a, 64, 64), 64)",
+   "key_width": 64,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 64, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 64, v0)",
+    "lane_bits": 64,
+    "lane_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+    "of_bits": 128,
+    "projection": "Extract(63, 0, the cell's own term for this place)"
+   },
+   "lang": "javascript",
+   "line": "cvtsi2sd %rdi,%xmm0",
+   "mnem": "cvtsi2sd",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in javascript's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r02658",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.11940765380859375,
+   "shape": "gpr_xmm",
+   "source_path": "interp/src_ex1/cvtsi2sd_gpr_xmm_64__reg_xmm0__javascript.js",
+   "symbol": "emu_cvtsi2sd_gpr_xmm_64__reg_xmm0__javascript",
+   "term_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 860,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(i2f(a, 64, 64), 64)",
+   "key_width": 64,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 64, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 64, v0)",
+    "lane_bits": 64,
+    "lane_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+    "of_bits": 128,
+    "projection": "Extract(63, 0, the cell's own term for this place)"
+   },
+   "lang": "dart",
+   "line": "cvtsi2sd %rdi,%xmm0",
+   "mnem": "cvtsi2sd",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in dart's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r02658",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 0.2891714572906494,
+   "shape": "gpr_xmm",
+   "source_path": "interp/src_ex1/cvtsi2sd_gpr_xmm_64__reg_xmm0__dart.dart",
+   "symbol": "emu_cvtsi2sd_gpr_xmm_64__reg_xmm0__dart",
+   "term_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+   "writes": "reg_xmm0"
+  },
+  {
+   "agreements": 30,
+   "attested_ledger_rows": 860,
+   "bits": 64,
+   "check": "the fuzz census's method",
+   "declined_points": 0,
+   "declines": {},
+   "disagreements": 0,
+   "first_disagreement": null,
+   "gloss": "m(i2f(a, 64, 64), 64)",
+   "key_width": 64,
+   "lane": {
+    "above_the_lane": {
+     "expected": "Extract(127, 64, seed_xmm0)",
+     "outcome": "PROVED_ON_SHIP",
+     "reason": "z3 proved the bits above the lane are the arrival's own bits, passed through"
+    },
+    "above_the_lane_text": "Extract(127, 64, v0)",
+    "lane_bits": 64,
+    "lane_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+    "of_bits": 128,
+    "projection": "Extract(63, 0, the cell's own term for this place)"
+   },
+   "lang": "csharp",
+   "line": "cvtsi2sd %rdi,%xmm0",
+   "mnem": "cvtsi2sd",
+   "params": [
+    {
+     "bits": 64,
+     "family": "rdi",
+     "holder": "a 64-bit value, in csharp's own integer",
+     "kind": "bv",
+     "name": "a"
+    }
+   ],
+   "rendered": true,
+   "route": "source",
+   "row_id": "r02658",
+   "sample_per_arrival": [
+    30
+   ],
+   "sample_points": 30,
+   "seconds": 1.121624231338501,
+   "shape": "gpr_xmm",
+   "source_path": "interp/src_ex1/cvtsi2sd_gpr_xmm_64__reg_xmm0__csharp.cs",
+   "symbol": "emu_cvtsi2sd_gpr_xmm_64__reg_xmm0__csharp",
+   "term_text": "fp.to_ieee_bv(fpToFP(RNE(), v0))",
+   "writes": "reg_xmm0"
+  }
+ ]
+}

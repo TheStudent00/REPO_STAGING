@@ -5,15 +5,15 @@ Written by the Claude Code coordinator (Fable), for the next session.
 the owner's own words are quoted where a ruling rests on them.
 
 READ FIRST, in this order, before doing anything:
-1. `DevComms/LLM_communication_protocol.md` — all of it.
+1. `PRIVATE/DevComms/LLM_communication_protocol.md` — all of it.
    §1.8 (answer "what is it" in one sentence, in relation, first),
    §4.6 (machine mechanisms shown as machine state) and §4.7 were
    written this session after failures that cost the owner an hour. Read
    them as the reason this session was abandoned.
-2. `PseudoCoupHQ/AgentMemory.md` — section "the rulings
+2. `PRIVATE/PseudoCoupHQ/AgentMemory.md` — section "the rulings
    of 2026-09-04 / 2026-09-05" and the "communication, added
    2026-09-05" section at the end.
-3. `PseudoCoupHQ/CLAUDE.md`.
+3. `PRIVATE/PseudoCoupHQ/CLAUDE.md`.
 4. This file.
 
 ---
@@ -101,7 +101,7 @@ the seventh block kind (reach 0x538 past `own-address`'s 0x100).
 ### 1.7 The dashboard (tasks 85, 86, 93, 98)
 Python route: `Research/op_pipeline/dashboard_ouro.py` +
 `dashboard_ouro.html`, opened in Ourobrowser at
-`ourobrowser://local/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html`
+`ourobrowser://local/PRIVATE/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html`
 (saved in `dashboard_ouro_address.txt`).
 - Chronology is the OUTER CONTROLLER above the tab bar; a moment is
   a commit; scale is raw `git log`, nothing curates it.

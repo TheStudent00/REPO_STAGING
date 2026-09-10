@@ -1,7 +1,7 @@
 # log 154 — TASK 54: the_pool3, the pool over canon38
 
 Date: 2026-09-03. Author: Claude Code (implementer), no sub-agents.
-Working directory: `PseudoCoupHQ/Research/op_pipeline`.
+Working directory: `PRIVATE/PseudoCoupHQ/Research/op_pipeline`.
 Python: `/tmp/reconnect_venv/bin/python3`. Assembly on the host:
 `as --64`, `objdump -d`.
 

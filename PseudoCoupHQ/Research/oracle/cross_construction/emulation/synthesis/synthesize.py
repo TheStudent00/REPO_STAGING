@@ -4,14 +4,14 @@ arch-units into a program that answers as a go / rust / swift unit
 does, counterexample-guided, with NO COMPILER anywhere in the loop.
 
 Node: hq.research.arch_unit_oracle.cross_construction.autopoly
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/CORE_0_3_2_2_3_autopoly.md`),
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/CORE_0_3_2_2_3_autopoly.md`),
 "what is next, in order", item 2: the second producer beside the
 compiler route of task o7 (log_218).
 
 THE OBJECTS, one sentence each, in relation.
   * A POOL ENTRY is the set of arch-units, across languages, proved to
     answer the same for every input
-    (`PseudoCoupHQ/Research/op_pipeline/the_pool5.json`).
+    (`PRIVATE/PseudoCoupHQ/Research/op_pipeline/the_pool5.json`).
   * A LAYER-5 TEXT is one of those units written as a z3 expression and
     printed by one fixed rule, its free symbols renamed positionally
     v0, v1, ... in first-met order (`term.Term.normalize`).
@@ -33,7 +33,7 @@ THE OBJECTS, one sentence each, in relation.
     input to the counterexamples and the loop repeats.
 
 WHICH PARSER REBUILDS THE Z3 OBJECTS, said out loud as the brief asks.
-  `PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py`
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py`
   -- its `Parser`, `infer` (width recovery by unification), `roundtrip`
   (z3's own printer must reproduce the input text, or the text is
   REFUSED) and `to_z3`.  Task o1's `cross2_length_two.parse_text`
@@ -122,7 +122,7 @@ O7_RESULTS = os.path.join(EMU, "emulation_results.json")
 PLAN = os.path.join(HERE, "synthesis_plan.json")
 RESULTS = os.path.join(HERE, "synthesis_results.json")
 REPORT = os.path.join(HERE, "synthesis_report.md")
-HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PRIVATE/PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/synthesis")
 
 X_LANGUAGES = ["go", "rust", "swift"]

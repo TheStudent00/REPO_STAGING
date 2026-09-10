@@ -7,7 +7,7 @@ what is changed where — so that it can be checked, not believed.
 
 # 1. What the owner ruled, in the record
 
-LITERAL — `PseudoCoupHQ/DevComms/log_072_compiler_graph_tracing.md`,
+LITERAL — `PRIVATE/PseudoCoupHQ/DevComms/log_072_compiler_graph_tracing.md`,
 2026-08-24, line 25:
 
 > the owner's requirement, now understood: **the actual graph as data,
@@ -20,7 +20,7 @@ definition):
 > level variable to its low level form, built by turning the
 > COMPILER'S OWN SOURCE into a graph and walking it.
 
-LITERAL — `PseudoCoupHQ/DevComms/log_081_seeded_grouping_and_super_ops.md`
+LITERAL — `PRIVATE/PseudoCoupHQ/DevComms/log_081_seeded_grouping_and_super_ops.md`
 §5, 2026-08-29, the super-op ruling as I recorded it:
 
 > That routine is written as high-level code in the compiler's
@@ -51,7 +51,7 @@ different instrument as "the detector" and called the rule
 "ratified". That sentence was then carried into AgentMemory as the
 standing ruling:
 
-LITERAL — `PseudoCoupHQ/AgentMemory.md`, as it stood
+LITERAL — `PRIVATE/PseudoCoupHQ/AgentMemory.md`, as it stood
 2026-08-29 → 2026-09-03 (line 475):
 
 > Detector: the component miner's recurrence counts x unmodelled
@@ -88,7 +88,7 @@ compiler source. No graph.
    detector IS the compiler graph (static + dynamic structure,
    the PCv5 ledgerer's design); the old sentence is quoted inside
    it and marked as an unruled substitution, with dates.
-   Check: `grep -n "THE DETECTOR IS THE COMPILER GRAPH" PseudoCoupHQ/AgentMemory.md`.
+   Check: `grep -n "THE DETECTOR IS THE COMPILER GRAPH" PRIVATE/PseudoCoupHQ/AgentMemory.md`.
 2. **The tree** —
    `Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_9_graph/CORE_0_3_5_9_graph.md`
    now carries `static_structure`, `dynamic_structure`, and

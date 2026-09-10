@@ -1,6 +1,6 @@
 # Task ex1 — expanding beyond the four: cpp as a fifth compiled target, and the check for the interpreted languages, each on the handful first
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
 `task_ap4_brief.md` beside this file and its log (ap4 runs BEFORE this
 task and changes the driver; read what it left), `task_g1_brief.md` (how
 a target is added: a renderer subclass, spellings MEASURED by probes at
@@ -9,7 +9,7 @@ branch for the language), the research CORE's §4.2 and the
 `node_0_3_1_12_remaining_languages` node (which languages the corpus holds
 and how each was compiled or run: `lane_gen.py`, and the interpreter
 work in `Research/op_pipeline/interp103_*`, log_222). Instance `ex1.conf`
-(copy from `Airlock/instances/ex1.conf`; mounts
+(copy from `PUBLIC/Airlock/instances/ex1.conf`; mounts
 `sandbox-persist` read-only — the interpreter anchors live there). Artifact
 folder: `.../emulation/`, new sub-folders `cpp/` and `interp/`; results
 under `autopoly/` as `expand1_*`; lanes under `handful/lanes_ex1/`.

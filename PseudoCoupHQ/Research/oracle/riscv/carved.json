@@ -1,0 +1,206 @@
+{
+ "meta": {
+  "calling_convention": "RISC-V psABI lp64d: a0-a7 (x10-x17) carry integer arguments in order and a0 carries the integer answer; fa0-fa7 (f10-f17) carry floating-point arguments and fa0 the floating-point answer; there is no flags register.",
+  "disassembler": "llvm-objdump -dr -M no-aliases --mattr=+m,+a,+f,+d,+c --disassemble-symbols=<symbol>",
+  "task": "rv1",
+  "what": "each unit's own probe source compiled for riscv64 at the corpus's own ship optimisation level and carved at its function symbol"
+ },
+ "rows": [
+  {
+   "body": [
+    "c.add a0, a1",
+    "jalr zero, 0x0(ra)"
+   ],
+   "bytes": [
+    "952e",
+    "00008067"
+   ],
+   "compile_command": "GOARCH=riscv64 GOOS=linux go build -o /work/rv1carve/go_op_312/bin_rv .",
+   "compile_rc": 0,
+   "instruction_count": 2,
+   "key_width": 32,
+   "lang": "go",
+   "mnem": "add",
+   "outcome": "CARVED",
+   "shape": "gpr_gpr",
+   "unit": "go/op_312"
+  },
+  {
+   "body": [
+    "mulw a0, a1, a0",
+    "c.jr ra"
+   ],
+   "bytes": [
+    "02a5853b",
+    "8082"
+   ],
+   "compile_command": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -nostdlibinc -c /work/rv1carve/c_op_174/unit.c -o /work/rv1carve/c_op_174/unit.o",
+   "compile_rc": 0,
+   "instruction_count": 2,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "imul",
+   "outcome": "CARVED",
+   "shape": "gpr_gpr",
+   "unit": "c/op_174"
+  },
+  {
+   "body": [
+    "sraw a0, a0, a1",
+    "c.jr ra"
+   ],
+   "bytes": [
+    "40b5553b",
+    "8082"
+   ],
+   "compile_command": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -nostdlibinc -c /work/rv1carve/c_op_714/unit.c -o /work/rv1carve/c_op_714/unit.o",
+   "compile_rc": 0,
+   "instruction_count": 2,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "sar",
+   "outcome": "CARVED",
+   "shape": "cl_gpr",
+   "unit": "c/op_714"
+  },
+  {
+   "body": [
+    "srl a0, a0, a1",
+    "c.jr ra"
+   ],
+   "bytes": [
+    "00b55533",
+    "8082"
+   ],
+   "compile_command": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -nostdlibinc -c /work/rv1carve/c_op_726/unit.c -o /work/rv1carve/c_op_726/unit.o",
+   "compile_rc": 0,
+   "instruction_count": 2,
+   "key_width": 64,
+   "lang": "c",
+   "mnem": "shr",
+   "outcome": "CARVED",
+   "shape": "cl_gpr",
+   "unit": "c/op_726"
+  },
+  {
+   "body": [
+    "divw a0, a0, a1",
+    "c.jr ra"
+   ],
+   "bytes": [
+    "02b5453b",
+    "8082"
+   ],
+   "compile_command": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -nostdlibinc -c /work/rv1carve/c_op_210/unit.c -o /work/rv1carve/c_op_210/unit.o",
+   "compile_rc": 0,
+   "instruction_count": 2,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "idiv",
+   "outcome": "CARVED",
+   "shape": "gpr_one",
+   "unit": "c/op_210"
+  },
+  {
+   "body": [
+    "czero.eqz a0, a0, a1",
+    "c.jr ra"
+   ],
+   "bytes": [
+    "0eb55533",
+    "8082"
+   ],
+   "compile_command": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -nostdlibinc -c /work/rv1carve/c_op_185/unit.c -o /work/rv1carve/c_op_185/unit.o",
+   "compile_rc": 0,
+   "instruction_count": 2,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "cmovne",
+   "outcome": "CARVED",
+   "shape": "gpr_gpr",
+   "unit": "c/op_185"
+  },
+  {
+   "body": [
+    "c.xor a0, a1",
+    "sltu a0, zero, a0",
+    "c.jr ra"
+   ],
+   "bytes": [
+    "8d2d",
+    "00a03533",
+    "8082"
+   ],
+   "compile_command": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -nostdlibinc -c /work/rv1carve/c_op_498/unit.c -o /work/rv1carve/c_op_498/unit.o",
+   "compile_rc": 0,
+   "instruction_count": 3,
+   "key_width": 8,
+   "lang": "c",
+   "mnem": "setne",
+   "outcome": "CARVED",
+   "shape": "gpr_one",
+   "unit": "c/op_498"
+  },
+  {
+   "body": [
+    "fcvt.s.w fa5, a0, dyn",
+    "fadd.s fa0, fa0, fa5, dyn",
+    "c.jr ra"
+   ],
+   "bytes": [
+    "d00577d3",
+    "00f57553",
+    "8082"
+   ],
+   "compile_command": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -nostdlibinc -c /work/rv1carve/c_op_105/unit.c -o /work/rv1carve/c_op_105/unit.o",
+   "compile_rc": 0,
+   "instruction_count": 3,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "addss",
+   "outcome": "CARVED",
+   "shape": "xmm_xmm",
+   "unit": "c/op_105"
+  },
+  {
+   "body": [
+    "fcvt.d.w fa5, a0",
+    "fadd.d fa0, fa0, fa5, dyn",
+    "c.jr ra"
+   ],
+   "bytes": [
+    "d20507d3",
+    "02f57553",
+    "8082"
+   ],
+   "compile_command": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -nostdlibinc -c /work/rv1carve/c_op_106/unit.c -o /work/rv1carve/c_op_106/unit.o",
+   "compile_rc": 0,
+   "instruction_count": 3,
+   "key_width": 64,
+   "lang": "c",
+   "mnem": "cvtsi2sd",
+   "outcome": "CARVED",
+   "shape": "gpr_xmm",
+   "unit": "c/op_106"
+  },
+  {
+   "body": [
+    "c.addw a0, a1",
+    "c.jr ra"
+   ],
+   "bytes": [
+    "9d2d",
+    "8082"
+   ],
+   "compile_command": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -nostdlibinc -c /work/rv1carve/c_op_102/unit.c -o /work/rv1carve/c_op_102/unit.o",
+   "compile_rc": 0,
+   "instruction_count": 2,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "add",
+   "outcome": "CARVED",
+   "shape": "gpr_gpr",
+   "unit": "c/op_102"
+  }
+ ]
+}

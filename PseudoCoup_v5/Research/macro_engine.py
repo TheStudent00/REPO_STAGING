@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The macro operator itself, in Python — one engine, macros as data.
 
-    python3 PseudoCoup_v5/Research/macro_engine.py
+    python3 PRIVATE/PseudoCoup_v5/Research/macro_engine.py
 
 This is NOT a hand-written Python version of any particular macro. It is
 the machinery that runs ALL of them: give it a definition (a pattern and

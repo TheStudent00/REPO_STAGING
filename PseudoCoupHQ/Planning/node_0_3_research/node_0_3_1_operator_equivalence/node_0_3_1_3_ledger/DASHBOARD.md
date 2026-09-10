@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_3_1_3_ledger
@@ -34,7 +34,7 @@ sub-node count: 4
 
 ## blocked
 
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_3_ledger/node_0_3_1_3_3_destination_rules/PROGRESS.md` line 20 — — **blocked** on the owner's ruling; every other entry is unaffected.
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_3_ledger/node_0_3_1_3_3_destination_rules/PROGRESS.md` line 20 — — **blocked** on the owner's ruling; every other entry is unaffected.
 
 ## PROGRESS bullet statuses
 

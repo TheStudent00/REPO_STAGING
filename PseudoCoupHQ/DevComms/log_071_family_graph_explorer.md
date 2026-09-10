@@ -6,7 +6,7 @@ here — no threshold is ruled, no name is coined, neither reading of
 `matrices_full_v2/` and `dominant_operators_v1.json` are read-only to
 this log.
 
-Read first: `PseudoCoupHQ/CLAUDE.md` (the vocabulary bans
+Read first: `PRIVATE/PseudoCoupHQ/CLAUDE.md` (the vocabulary bans
 and the explorer requirements, both binding),
 `DevComms/log_069_disagreement_kind_classifier.md` (the ruled
 classifier),
@@ -19,7 +19,7 @@ Vocabulary held throughout: super-node / sub-node / co-node / sub-tree;
 the OS-stopped outcome is ABORT.
 
 Products, all under
-`PseudoCoupHQ/Research/kind_fuzz_clustering/`:
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`:
 
 | product | what it is |
 | --- | --- |
@@ -263,7 +263,7 @@ re-classified cell by cell, components by an independent union-find,
 maximal cliques by an independent Bron-Kerbosch.
 
 Run with `node verify_family_graph.js` in
-`PseudoCoupHQ/Research/kind_fuzz_clustering/`. 47 s,
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`. 47 s,
 2.7 GB peak. Verbatim:
 
 ```

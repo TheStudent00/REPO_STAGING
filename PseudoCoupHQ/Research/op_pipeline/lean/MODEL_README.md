@@ -4,9 +4,9 @@ The reference simulator's opcode semantics, turned into Lean `BitVec`
 definitions by a program rather than by hand, then checked against every
 single-opcode unit that carries a proved term. Node:
 `hq.research.compiler_graph.gate.lean.model_translator`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/node_0_3_1_5_6_0_model_translator/CORE_0_3_1_5_6_0_model_translator.md`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/node_0_3_1_5_6_0_model_translator/CORE_0_3_1_5_6_0_model_translator.md`).
 Opened 2026-09-06; task L2 filled it. The full account is
-`PseudoCoupHQ/DevComms/log_232_task_L2_model_translator.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_232_task_L2_model_translator.md`.
 
 ## what is in here
 

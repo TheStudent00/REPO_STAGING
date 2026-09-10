@@ -21,10 +21,10 @@ the OS-stopped outcome is ABORT.
 
 **The running container is not bound to Airlock's agent folders.** Three
 lanes were submitted through the validating CLI and sat in
-`Airlock/agent/drop/` for 21 minutes with
-`Airlock/agent/status/`,
-`Airlock/agent/logs/` and
-`Airlock/agent/out/` **all still empty** — no
+`PUBLIC/Airlock/agent/drop/` for 21 minutes with
+`PUBLIC/Airlock/agent/status/`,
+`PUBLIC/Airlock/agent/logs/` and
+`PUBLIC/Airlock/agent/out/` **all still empty** — no
 lane has ever run in this tree.
 
 | evidence | reading |
@@ -41,7 +41,7 @@ itself, severity NOTE). The file evidence is decisive on its own.
 **the owner must run, exactly this, and not me:**
 
 ```
-bash Airlock/down.sh && bash Airlock/up.sh
+bash PUBLIC/Airlock/down.sh && bash PUBLIC/Airlock/up.sh
 ```
 
 The three lanes are already queued, so `up.sh`'s startup `sweep()` runs
@@ -62,7 +62,7 @@ block costs.
 
 ## 1 — what was built
 
-| file (all under `PseudoCoupHQ/Research/kind_fuzz_clustering/`) | change |
+| file (all under `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`) | change |
 | --- | --- |
 | `l3_cart_values.py` | 15 holder entries added (8 python, 7 go); `INT_RANGE_BY_LANG`, `STATIC_TRUTH`, `NO_SIGNED_ZERO`, `F32_HOLDERS`; `decl()` branches for both; `canon_point` decimal branch widened to python's `Decimal` |
 | `l3_cart_gen.py` | `emit_go` + `GO_SH` + `GO_DRIVER`; `emit_python` + `PYTHON_SH` + `PYTHON_DRIVER` + `PYTHON_RUNNER`; `accepted_go` / `go_cells_l1` / `go_l1_output_types` / `go_cells_l2`; `python_cells`; `--pygo` in `main()`; the projection printer |
@@ -97,7 +97,7 @@ audit products' hashes are unchanged on disk.
 ## 2 — the holders, and why these and not others
 
 Both holder sets are the **layer-2 census's own** `rep` entries
-(`PseudoCoupHQ/Research/data_representation/representations_python.json`
+(`PRIVATE/PseudoCoupHQ/Research/data_representation/representations_python.json`
 and `…_go.json`). Nothing is invented here.
 
 ### python — 8 holders
@@ -282,9 +282,9 @@ the accepted cells and the X-set sizes, not an estimate. Wall times are
 | **go total (L1 only so far)** | | **116** | **19,184** | | |
 
 Batch: **`pygo-emitters-log061`**, id `batch-20260822T151140Z`, manifest
-`Airlock/agent/batch.json`, 3 lanes, weight
+`PUBLIC/Airlock/agent/batch.json`, 3 lanes, weight
 379,185. All submitted through the validating CLI
-(`python3 Airlock/airlock submit … --batch
+(`python3 PUBLIC/Airlock/airlock submit … --batch
 pygo-emitters-log061 --weight <probe count>`) — **zero refusals, zero
 warnings**, so every lane carries its `[n/total]` progress line. The
 four level-2 shards were `--dry-run` validated identically and are held
@@ -478,12 +478,12 @@ ruby 24, python 25, go 19) against 43 today.
 ## awaiting the owner
 
 1. **Restart Airlock so the queued lanes run** — `bash
-   Airlock/down.sh && bash Airlock/up.sh`.
+   PUBLIC/Airlock/down.sh && bash PUBLIC/Airlock/up.sh`.
    The three lanes are queued in the right order and `up.sh`'s startup
    `sweep()` will take them. Everything in §5's "not measured" and all
    of §7's "AFTER" numbers follow from that one command. (While it is
-   down: `cp Airlock/proxy/allowlist.txt.example
-   Airlock/proxy/allowlist.txt` clears `doctor`'s one
+   down: `cp PUBLIC/Airlock/proxy/allowlist.txt.example
+   PUBLIC/Airlock/proxy/allowlist.txt` clears `doctor`'s one
    FAULT; these lanes do not need it.)
 2. **python's stall budget, 0.5 s against ruby's 2.0 s.** Decided on
    the owner's own recorded principle and measured, but the ruby budget is a
@@ -571,7 +571,7 @@ All 9 lanes joined the LIVE manifest under the existing label — no new
 label created:
 
 ```
-python3 Airlock/airlock submit <lane.sh> \
+python3 PUBLIC/Airlock/airlock submit <lane.sh> \
     --batch pygo-emitters-log061 --weight <probe count>
 ```
 
@@ -646,8 +646,8 @@ standing requirement.
 
 ### products
 
-`Airlock/agent/out/ct_go_l2.txt` and
-`Airlock/agent/out/ct_python_l2_s{0..7}.txt` now exist
+`PUBLIC/Airlock/agent/out/ct_go_l2.txt` and
+`PUBLIC/Airlock/agent/out/ct_python_l2_s{0..7}.txt` now exist
 alongside the level-1 outputs and the other eight languages' level-2
 products. **Nothing here was folded into any matrices generation, no
 dominance script was run, no containment-pairs or WRAP-family question

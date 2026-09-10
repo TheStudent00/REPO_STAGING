@@ -130,7 +130,7 @@ def claim_two():
                                               "PseudoCoupHQ"))
     command = ["git", "status", "--porcelain", "--"] + relative
     proc = subprocess.run(command, capture_output=True, text=True,
-                          cwd="PseudoCoupHQ")
+                          cwd="PRIVATE/PseudoCoupHQ")
     text = proc.stdout.strip()
     print("  $ git status --porcelain -- <%d prior paths>"
           % len(relative))

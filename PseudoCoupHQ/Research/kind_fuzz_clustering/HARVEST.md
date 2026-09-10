@@ -41,7 +41,7 @@ its own code are in log 035.
 
 ```
 A=SandboxDesign/agent
-K=PseudoCoupHQ/Research/\
+K=PRIVATE/PseudoCoupHQ/Research/\
 kind_fuzz_clustering
 cd $K
 python3 l3_swiftfull_read.py   # swift matrix

@@ -7,7 +7,7 @@
 # Usage:
 #   bash PlanningPlan/framework/install_silverbullet.sh
 #   # then serve a vault, e.g.:
-#   silverbullet PseudoCoup_v6/Planning
+#   silverbullet PRIVATE/PseudoCoup_v6/Planning
 #   # opens a local web UI (default http://localhost:3000)
 
 set -e
@@ -33,4 +33,4 @@ echo
 echo "done. serve a folder with:"
 echo "  silverbullet <path-to-folder>"
 echo "e.g.:"
-echo "  silverbullet PseudoCoup_v6/Planning"
+echo "  silverbullet PRIVATE/PseudoCoup_v6/Planning"

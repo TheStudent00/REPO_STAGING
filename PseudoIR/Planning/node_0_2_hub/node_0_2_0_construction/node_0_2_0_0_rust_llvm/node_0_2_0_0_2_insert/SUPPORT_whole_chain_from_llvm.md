@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — whole chain from llvm
 
 projected 2026-07-30 from the previous plan, now archived at
-`PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`PRIVATE/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_3_application_rust_llvm/node_0_3_2_all_llvm_chain/CORE_0_3_2_all_llvm_chain.md  (250 words)

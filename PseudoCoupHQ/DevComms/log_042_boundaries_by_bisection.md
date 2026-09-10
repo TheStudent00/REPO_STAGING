@@ -1,8 +1,8 @@
 # log 042 — the boundaries, found by halving
 
 Date: 2026-08-20. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 Log 042 was free when this was written; 041 and 043 exist and neither
 is touched.

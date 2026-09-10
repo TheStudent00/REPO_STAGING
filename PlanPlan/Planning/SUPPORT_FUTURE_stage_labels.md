@@ -1,7 +1,7 @@
 # SUPPORT_FUTURE — stage labels: making brainstorms and future plans visible from the top
 
 2026-08-12, ruled by the owner in conversation (PCv5 session; state record
-`PseudoCoup_v5/DevComms/log_020_session_state_2026_08_12.md`
+`PRIVATE/PseudoCoup_v5/DevComms/log_020_session_state_2026_08_12.md`
 §5). This file is itself the first instance of the convention it
 records — a `SUPPORT_FUTURE_` file, findable by filename glob from
 any dashboard or sweep, changing nothing in PROTOCOL.md.

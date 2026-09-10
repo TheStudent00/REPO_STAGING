@@ -3,7 +3,7 @@
 target.
 
 Node: hq.research.arch_unit_oracle.cross_construction
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`).
 
 THE OBJECTS, one sentence each, in relation.
   * A TERM is one place of one arch-opcode written as a z3 expression

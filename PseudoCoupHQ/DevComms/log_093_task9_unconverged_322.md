@@ -27,7 +27,7 @@ this line MUST paste this paragraph verbatim."
 ## plain-words walkthrough
 
 I read AgentMemory.md, the comms protocol (the file at
-`DevComms/LLM_communication_protocol.md` -- the "v2"
+`PRIVATE/DevComms/LLM_communication_protocol.md` -- the "v2"
 name in the brief is this same file's own title line, "Communication
 Protocol, v2"; no separate `_v2.md` file exists on disk, stated here
 so the next lap does not lose time on the same lookup), log_091's

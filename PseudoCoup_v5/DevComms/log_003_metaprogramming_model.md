@@ -1,7 +1,7 @@
 # log 003 — how the metaprogramming model was arrived at
 
 2026-08-02. The working record behind
-`PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`,
+`PRIVATE/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`,
 which holds the design direction itself. This log holds the
 measurements, the demonstrations, and the wrong turns — kept because
 the wrong turns are where the reasoning is.
@@ -78,7 +78,7 @@ bisected.
 
 Two of the six are load-bearing for the LLVM path: `llvm/ffi.rs` is the
 FFI wall named as a stage in
-`PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`,
+`PRIVATE/PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`,
 and `macros.rs` defines that crate's own macros. **A 96.8% pass rate
 does not mean 96.8% of the value.**
 
@@ -88,11 +88,11 @@ does not mean 96.8% of the value.**
 
 Two runnable files, both standard library only.
 
-**`PseudoCoup_v5/Research/macro_demo.py`** — what a macro
+**`PRIVATE/PseudoCoup_v5/Research/macro_demo.py`** — what a macro
 IS: tokens in, tokens out, run before parsing. Hand-written per macro,
 which is its limitation and the reason for the second file.
 
-**`PseudoCoup_v5/Research/macro_engine.py`** — the
+**`PRIVATE/PseudoCoup_v5/Research/macro_engine.py`** — the
 operator itself. One engine that names no macro; each macro is a
 pattern and a template handed to it as data. Verified on three
 definitions including the shape of the real `math_builder_methods!`.

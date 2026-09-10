@@ -17,7 +17,7 @@ cheap).
 
 ## §2 registry findings
 
-Files: `PseudoIR/pseudoir/registry/data/{ops.json,xforms.json,schema.md}`.
+Files: `PRIVATE/PseudoIR/pseudoir/registry/data/{ops.json,xforms.json,schema.md}`.
 Per `schema.md` §5 and `pseudoir/registry/__init__.py`, these are packaged
 COPIES of a `v2/registry/` working tree that no longer exists in the repo.
 
@@ -115,7 +115,7 @@ that era lacked most runtimes.)
 **Verdict: the probers exist only as design/record. Zero prober code is
 present anywhere in PseudoIR.**
 
-- `find PseudoIR -type d -name 'prober*'` → nothing.
+- `find PRIVATE/PseudoIR -type d -name 'prober*'` → nothing.
   `parse_prober.py`, `runtime_prober.py`, `demo_pipeline.py`,
   `candidate_alignment.json`, `runtime_results.json` — none exist in the repo.
   `PseudoIR/archive/` is EMPTY; `v5/` is empty; `tests/` is empty.

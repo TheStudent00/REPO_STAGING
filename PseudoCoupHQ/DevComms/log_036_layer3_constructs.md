@@ -1,8 +1,8 @@
 # log 036 — layer 3 extended to constructs: access, flow, binding
 
 Date: 2026-08-19. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 **Written in the readable register of the rewritten logs 034 and 035.**
 Glossary first. Every leaned-on fact restated rather than pointed at.

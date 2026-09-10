@@ -44,7 +44,7 @@ inquiry.
 
 ## the research that is left
 
-the gutting happened 2026-07-31. `PseudoCoup_v5/`
+the gutting happened 2026-07-31. `PRIVATE/PseudoCoup_v5/`
 went from 550 MB to 55 MB. what went, and why:
 
 - **vendored upstream compiler source, ~430 MB** — rustc and
@@ -52,8 +52,8 @@ went from 550 MB to 55 MB. what went, and why:
   work, and not in version control: `rust_routing/.gitignore`
   excluded `sources/` outright. the four files anything actually read
   are now vendored, with their provenance recorded, into
-  `PseudoCoup_v6/Tools/ledgerer/fixtures/upstream/` and
-  `PseudoCoup_v6/Tools/transpiler/fixtures/upstream/`.
+  `PRIVATE/PseudoCoup_v6/Tools/ledgerer/fixtures/upstream/` and
+  `PRIVATE/PseudoCoup_v6/Tools/transpiler/fixtures/upstream/`.
   PCv6's suite passes without this repo present.
 - **generated tables and build artifacts, ~100 MB** — LLVM's `.inc`
   tables and a compiled Rust harness. tracked, so recoverable from
@@ -61,7 +61,7 @@ went from 550 MB to 55 MB. what went, and why:
 - **`Designing/` and three unreferenced research folders** (historical)
   — the intentions table generators and the basis audit. tracked;
   the artifact they produced, `pc_verdicts.json`, was copied forward
-  long ago and lives in `PseudoIR/Tools/intentions/`.
+  long ago and lives in `PRIVATE/PseudoIR/Tools/intentions/`.
 
 what remains under `Research/` is about 1.5 MB: `cpp_ingress`,
 `divergence_suite`, `vocab_transpiler`'s python, and `rust_routing`'s
@@ -72,7 +72,7 @@ it is small. deleting it after the harvest is a live option.
 ## the surveys
 
 the two 2026-07-27 surveys under
-`PseudoCoup_v5/DevComms/` carry line-cited evidence for
+`PRIVATE/PseudoCoup_v5/DevComms/` carry line-cited evidence for
 every harvest claim. the condensed maps elsewhere drop the citations,
 so a claim being acted on is checked here.
 

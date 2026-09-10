@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """A card explorer for a planning tree — click a node to open it.
 
-    python3 PlanPlan/framework/explorer.py <root> -o view.html
-    python3 PlanPlan/framework/explorer.py <root> --serve 8800
+    python3 PRIVATE/PlanPlan/framework/explorer.py <root> -o view.html
+    python3 PRIVATE/PlanPlan/framework/explorer.py <root> --serve 8800
 
 WHAT IT IS. One card per node. A card shows the node's name, its
 designation and status, and its definition line. Clicking it opens the

@@ -2,7 +2,7 @@
 
 PROVENANCE (harvested pattern, adapted):
   The (operation, type) cache-key shape is the PCv5 dispatch pattern from
-  PseudoCoup_v5/Research/rust_routing/pc_runtime.py +
+  PRIVATE/PseudoCoup_v5/Research/rust_routing/pc_runtime.py +
   ledger.py (read-and-verified): the ledger answers the operand-type
   question, and the mounted routine is chosen by (bin_op, ty). PCv5 held
   mounted pages for process life via that dispatch.

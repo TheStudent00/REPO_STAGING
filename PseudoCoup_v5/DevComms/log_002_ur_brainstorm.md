@@ -352,7 +352,7 @@ Run in the podman sandbox's agent lane against
 `Sources/rust/compiler`, grammar pinned to PCv6's
 manifest of record (`tree-sitter==0.26.0`,
 `tree-sitter-rust==0.24.2`), by
-`PseudoCoup_v5/Research/census_macros.py`. Raw output
+`PRIVATE/PseudoCoup_v5/Research/census_macros.py`. Raw output
 kept at `SandboxDesign/agent/out/macro_census2.txt`.
 
 **Scope caveat, stated first because it bounds everything below:** the
@@ -442,7 +442,7 @@ the owner asked for the count. **I cannot produce it on this machine**, and
 the reason is concrete rather than a shrug:
 
 - The vendored rustc sources are NOT on disk.
-  `PseudoCoup_v5/Research/rust_routing/sources/` does not
+  `PRIVATE/PseudoCoup_v5/Research/rust_routing/sources/` does not
   exist; it is created by that folder's `fetch_sources.sh`, which does
   a sparse `git clone` of `rust-lang/rust`, and it was never committed
   (nothing in git history under that path). This is also why PCv6's
@@ -452,10 +452,10 @@ the reason is concrete rather than a shrug:
   a census.
 
 What can be run on the host, after `./fetch_sources.sh` in
-`PseudoCoup_v5/Research/rust_routing/`:
+`PRIVATE/PseudoCoup_v5/Research/rust_routing/`:
 
 ```bash
-SRC=PseudoCoup_v5/Research/rust_routing/sources/rust/compiler
+SRC=PRIVATE/PseudoCoup_v5/Research/rust_routing/sources/rust/compiler
 # 1. crude but instant: invocation-shaped occurrences, and derive attrs
 grep -rEo '\b[a-z_][a-z0-9_]*!' "$SRC" --include='*.rs' | wc -l
 grep -rEo '#\[derive\([^)]*\)\]' "$SRC" --include='*.rs' | wc -l
@@ -816,7 +816,7 @@ assumes re-parsing is normal rather than exceptional.
 ### 8.4 "The ~30-kind vocabulary" — what that phrase meant
 
 It was shorthand for the class list in
-`PseudoCoup/pseudocoup/core/ur_ast.py` (154 lines): a
+`PUBLIC/PseudoCoup/pseudocoup/core/ur_ast.py` (154 lines): a
 base `URNode` plus roughly thirty subclasses, one per neutral
 construct — `ModuleNode`, `ClassDefNode`, `FunctionDefNode`,
 `MethodDefNode`, `AssignmentNode`, `BinaryOpNode`, `UnaryOpNode`,
@@ -850,11 +850,11 @@ and `node-types.json`'s supertypes may supply part of it directly.
   https://tree-sitter.github.io/tree-sitter/using-parsers/6-static-node-types
 - Stack graphs: https://docs.rs/tree-sitter-stack-graphs and the
   paper, https://arxiv.org/pdf/2211.01224
-- `PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`
+- `PRIVATE/PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`
   — the addendum this builds on.
-- `PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
+- `PRIVATE/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
   — the nine harvested parts.
-- `PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`
+- `PRIVATE/PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`
   §2, §3, §5 — the recorded parse/ingest/grammar numbers.
-- `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`
+- `PRIVATE/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`
   — the archived `tree_sitter_base` design (pin + census + coverage).

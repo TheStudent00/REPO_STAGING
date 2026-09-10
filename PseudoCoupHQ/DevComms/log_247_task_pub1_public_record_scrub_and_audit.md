@@ -1,11 +1,11 @@
 # log_247 — task pub1: the public record — REPO_STAGING scrub and the other five public repos, audit only
 
 Read first, in full, before any of this work: the cardinal rule at the
-top of `DevComms/LLM_communication_protocol.md` ("NEVER
+top of `PRIVATE/DevComms/LLM_communication_protocol.md` ("NEVER
 PUT SENSITIVE INFORMATION IN A PUBLIC REPO"), the brief at
-`PseudoCoupHQ/Research/briefs/task_pub1_brief.md`, and
-`REPO_STAGING/stage.sh` +
-`REPO_STAGING/scrub_patterns.tsv`. No sub-agents were
+`PRIVATE/PseudoCoupHQ/Research/briefs/task_pub1_brief.md`, and
+`PUBLIC/REPO_STAGING/stage.sh` +
+`PUBLIC/REPO_STAGING/scrub_patterns.tsv`. No sub-agents were
 used; this was done by hand, in the foreground, over the tracked text
 of six private sources and five public repositories.
 
@@ -88,7 +88,7 @@ grep -rnEi '<class-regex>' .stage_tmp/<would-be-tracked files>
 | container id (hostname-shaped hex) | `log_138_airlock_instances_feature.md:434,514`, `log_175_task72_go_diaries_coverage.md:779`, `canon39_callee_swift_lane_printed.txt:10,11` | `hostname: <container-id>`, `hostname: <container-id>`, `hostname: <container-id>` |
 | account handle / real name (`<user>`, bare) | 556 occurrences, e.g. `log_195_task89_bank_round15.md:70` | `-rw-rw-r-- 1 <user> <user> 5811 Sep 3 23:17 check_dashboard_py_no_spelling.py` (an `ls -l` paste) |
 | account handle / real name (`<user>`, bare) | 84 occurrences, e.g. `log_239_task_h1b_composition_column.md:27` | `<runs>/h1b/agent/logs/` |
-| absolute home path | 316 occurrences of `~/Programming` + 204 of `~(airlock)?/AirlockRuns`, e.g. `log_124_task34_interp_union_relaunch.md:97` | ``shell's `hostname` is `<user>` and `PseudoCoupHQ` `` |
+| absolute home path | 316 occurrences of `~/Programming` + 204 of `~(airlock)?/AirlockRuns`, e.g. `log_124_task34_interp_union_relaunch.md:97` | ``shell's `hostname` is `<user>` and `PRIVATE/PseudoCoupHQ` `` |
 | working name (`the owner`) | 7,352 occurrences across 1,338 files (this is the whole corpus's normal use of his working name, not a special case) | e.g. `PseudoCoupHQ/AgentMemory.md:8` — `Created 2026-08-12 at the owner's instruction` |
 
 Checked and confirmed **absent** everywhere in the current corpus (no
@@ -242,19 +242,19 @@ Examples, LITERAL, file and line:
   - `Planning/CHECK_0.md:37` — `the owner's to settle; PROTOCOL §2 reserves level-1 COREs to him.`
   - `Planning/CORE_0.md:5` — `settled_by: the owner`
 - **Ourobrowser**, `~/Programming`:
-  - `Planning/CHECK_0.md:41-42` — `python3 PlanPlan/framework/check_plans.py \` / `Ourobrowser/Planning`
-  - `Planning/DASHBOARD.md:2` — `<!-- Produced by PlanPlan/framework/generate_dashboards.py …`
+  - `Planning/CHECK_0.md:41-42` — `python3 PRIVATE/PlanPlan/framework/check_plans.py \` / `PUBLIC/Ourobrowser/Planning`
+  - `Planning/DASHBOARD.md:2` — `<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py …`
 - **ZSpectralCompression**, `the owner`:
   - `DevComms/log_001_one_dimensional_measurements.md:8` — `the owner, 2026-09-08:`
   - `DevComms/log_001_one_dimensional_measurements.md:140,168` — `the owner:` (speaker label)
 - **ZSpectralCompression**, `~/Programming`:
-  - `DevComms/log_001_one_dimensional_measurements.md:3` — `` Repo: `ZSpectralCompression`. Written 2026-09-08 by ``
-  - `DevComms/log_001_one_dimensional_measurements.md:266` — `` `ZSpectralCompression/zspectral_compression.py` — the ``
+  - `DevComms/log_001_one_dimensional_measurements.md:3` — `` Repo: `PUBLIC/ZSpectralCompression`. Written 2026-09-08 by ``
+  - `DevComms/log_001_one_dimensional_measurements.md:266` — `` `PUBLIC/ZSpectralCompression/zspectral_compression.py` — the ``
 - **PseudoCoup**, `the owner`:
   - `.planning/00_Upgrade_Plan.md:4` — `` `version = "3.0.0"` -> `"4.0.0"` (rename approved by the owner in the executing session). ``
   - `.planning/00_Upgrade_Plan.md:20` — `Status date: 2026-07-14. Author-of-record: planning agent, for the owner's sign-off.`
 - **PseudoCoup**, `~/Programming` (a tracked config file, not a log):
-  - `.claude/launch.json:8-9` — `"PseudoCoupHQ/Research/op_pipeline/dashboard_test_server.py"`, `"PseudoCoupHQ/Research"`
+  - `.claude/launch.json:8-9` — `"PRIVATE/PseudoCoupHQ/Research/op_pipeline/dashboard_test_server.py"`, `"PRIVATE/PseudoCoupHQ/Research"`
 - **Airlock**, `<owner>`/email (both deliberate, see note):
   - `DevComms/log_002_pii_scrub.md:29-30` — `` **Deliberately kept.** `<owner>` and "The Student" are the chosen public identity for this line of work. ``
 - **Airlock**, OS name+version (see note):

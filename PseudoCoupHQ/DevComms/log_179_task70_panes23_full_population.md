@@ -453,7 +453,7 @@ whole index recomputed in python (section 6.1) and is walked by the
 guard:
 
 ```
-$ git -C PseudoCoupHQ status --porcelain \
+$ git -C PRIVATE/PseudoCoupHQ status --porcelain \
       Research/op_pipeline/check_no_spelling_keys.py
 (no output: unmodified)
 $ /tmp/reconnect_venv/bin/python3 check_no_spelling_keys.py pane23_ground_truth.json

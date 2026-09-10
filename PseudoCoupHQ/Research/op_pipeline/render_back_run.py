@@ -5,7 +5,7 @@ proved terms, ASSEMBLES each rendered text with `as`, and GATES it
 with `gate.Gate.prove_wrapped` against the unit's OWN ship code.
 
 CORE:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_6_term/node_0_3_5_6_5_render_back/CORE_0_3_5_6_5_render_back.md`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_6_term/node_0_3_5_6_5_render_back/CORE_0_3_5_6_5_render_back.md`
 
 WHAT THE RENDERED TEXT IS, relative to layer 3 and layer 5.  Layer 3 is
 the unit's own machine code wrapped: the compiler's body verbatim

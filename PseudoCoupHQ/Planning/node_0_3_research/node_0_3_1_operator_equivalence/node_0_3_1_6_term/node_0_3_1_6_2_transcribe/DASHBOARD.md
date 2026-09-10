@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_3_1_6_2_transcribe
@@ -32,7 +32,7 @@ sub-node count: 0
 
 ## blocked
 
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_2_transcribe/PROGRESS.md` line 90 — round's stated 6 GB cap** — **blocked, flagged for the owner**. Evidence:
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_2_transcribe/PROGRESS.md` line 90 — round's stated 6 GB cap** — **blocked, flagged for the owner**. Evidence:
 
 ## PROGRESS bullet statuses
 

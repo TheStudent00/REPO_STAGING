@@ -57,4 +57,4 @@ everything is standard library only. `install_silverbullet.sh` was
 archived 2026-08-01 to
 `framework/.archive/install_silverbullet_superseded_2026-07-31/`.
 readiness defects are recorded with evidence in
-`PlanPlan/DevComms/log_001_readiness_and_tree.md`.
+`PRIVATE/PlanPlan/DevComms/log_001_readiness_and_tree.md`.

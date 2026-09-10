@@ -99,7 +99,7 @@ because it is the kind of claim that survives if unchecked.
 
 ## 5. Checks
 
-`bash PlanPlan/plan.sh check PseudoCoupHQ/Planning`
+`bash PRIVATE/PlanPlan/plan.sh check PRIVATE/PseudoCoupHQ/Planning`
 after the work: the errors under `node_0_3_research` are six
 dangling paths that predate this session (elided log names,
 `SandboxDesign/allow.sh`, a shell glob in a PROGRESS

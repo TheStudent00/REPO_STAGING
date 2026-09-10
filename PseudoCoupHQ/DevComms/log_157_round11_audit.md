@@ -1,7 +1,7 @@
 # log 157 — audit of round 11's completion logs (152–156)
 
 Date: 2026-09-02. Auditor: the coordinating session, not a sub-agent.
-Figures recomputed from `PseudoCoupHQ/Research/op_pipeline/`
+Figures recomputed from `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`
 this session; commands and outputs pasted. Renderings labelled per
 protocol §5.1a.
 

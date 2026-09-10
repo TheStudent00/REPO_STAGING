@@ -22,7 +22,7 @@ status: living
 - **insertion — mount+border+cache+platform-assertion core done
   2026-07-29** (delegated to a Sonnet subagent; suites re-run and
   confirmed here). Harvested the proven PCv5 mechanism into
-  `PseudoCoup_v6/Tools/slicer/`, provenance-headered:
+  `PRIVATE/PseudoCoup_v6/Tools/slicer/`, provenance-headered:
   `mount_bytes.py` (from PCv5
   `Research/rust_routing/output_ring.py` — libc mmap RW/PRIVATE|ANON
   -> memmove -> mprotect RX -> ctypes.CFUNCTYPE; `MountedCode` owns

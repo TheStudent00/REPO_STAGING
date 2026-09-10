@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — Planning
@@ -37,7 +37,7 @@ sub-node count: 18
 
 ## blocked
 
-- `PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/PROGRESS.md` line 121 — blocked this node from ever reaching `status: settled` while it
+- `PRIVATE/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/PROGRESS.md` line 121 — blocked this node from ever reaching `status: settled` while it
 
 ## PROGRESS bullet statuses
 
@@ -53,4 +53,4 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 ## SUPPORT files in this sub-tree
 
-- `PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`
+- `PRIVATE/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`

@@ -42,7 +42,7 @@ recommendation.
 3. **Generate instances** of those types at random.
 4. **Run them through the compiler**, with detectors reporting which
    UR-AST nodes activate — the mechanism from
-   `PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`.
+   `PRIVATE/PseudoIR/Planning/node_0_0_tools/node_0_0_1_slice/SUPPORT_brainstorm.md`.
 5. **At each activated branch, look underneath it** for further
    branches that only fire under some condition.
 6. **Read the condition, then aim at it** — generate an input that

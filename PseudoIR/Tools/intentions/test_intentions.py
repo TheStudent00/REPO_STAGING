@@ -1,17 +1,17 @@
 """Acceptance suite for T5 intentions: both sub-node acceptance sections of node_0_0_4 (schema extension + slicing request forms).
 
 Implements the acceptance sections of
-PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md
+PRIVATE/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md
 and
-PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md
+PRIVATE/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md
 
-Run:  python3 -m pytest PseudoIR/Tools/intentions/ -q
+Run:  python3 -m pytest PRIVATE/PseudoIR/Tools/intentions/ -q
 
 No environment variable and no other repo needed.
 
 Vendored 2026-07-31. `pc_verdicts.json` — the R1-verified artifact
 this suite checks the copy-forward against — used to be read out of
-`PseudoCoup_v5/Designing/` through a PCV5_ROOT
+`PRIVATE/PseudoCoup_v5/Designing/` through a PCV5_ROOT
 environment variable, with a fallback that guessed at a co-tree beside
 this repo. That made this suite unable to pass without another repo on
 disk, and it broke the day PCv5 was gutted. The artifact is now

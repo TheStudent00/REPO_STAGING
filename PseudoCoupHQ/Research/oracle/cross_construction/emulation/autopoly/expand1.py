@@ -4,7 +4,7 @@ target, and the interpreted languages with a check of their own, each
 on the handful first.
 
 Node: hq.research.arch_unit_oracle.cross_construction.autopoly
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08); the
 interpreted half also serves
 `node_0_3_1_operator_equivalence/node_0_3_1_12_remaining_languages`.
@@ -131,7 +131,7 @@ AP4_RUNS = os.path.join(HERE, "autopoly4_runs.jsonl")
 AP4_AGGREGATE = os.path.join(HERE, "autopoly4.json")
 AP4_CELLS = os.path.join(HERE, "autopoly4_cells.json")
 
-HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PRIVATE/PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/autopoly")
 
 ABORT_KB = 6 * 1024 * 1024

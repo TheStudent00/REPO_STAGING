@@ -1,7 +1,7 @@
 """Acceptance test for the phase-1 ledger: uniqueness, recount equality, round-trip, refusal.
 
 Run:
-    python3 -m pytest PseudoCoup_v6/Tools/ledgerer/ -q
+    python3 -m pytest PRIVATE/PseudoCoup_v6/Tools/ledgerer/ -q
 
 No environment variable and no other repo needed. The corpus is
 vendored beside this test — see `fixtures/upstream/MANIFEST.md`.

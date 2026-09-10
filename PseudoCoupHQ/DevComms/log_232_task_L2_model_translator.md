@@ -1,13 +1,13 @@
 # log_232 — task L2: the model translator — the reference's opcode semantics turned into Lean, checked against 259 single-opcode units, 19 DISCREPANCY, zero sorryAx
 
 Node: `hq.research.compiler_graph.gate.lean.model_translator`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/node_0_3_1_5_6_0_model_translator/CORE_0_3_1_5_6_0_model_translator.md`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/node_0_3_1_5_6_0_model_translator/CORE_0_3_1_5_6_0_model_translator.md`).
 Its super-node is the lean node
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`),
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`),
 whose task L1 built the `archproof` project this task builds inside
-(log_227). Artifacts: `PseudoCoupHQ/Research/op_pipeline/lean/`.
-Instance: `Airlock/instances/L2.conf`. Lanes: 20, all kept at
-`PseudoCoupHQ/Research/op_pipeline/lean/lanes_L2/`.
+(log_227). Artifacts: `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/`.
+Instance: `PUBLIC/Airlock/instances/L2.conf`. Lanes: 20, all kept at
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/lanes_L2/`.
 
 ---
 
@@ -759,22 +759,22 @@ already carrying its host log path per the standing convention.
 
 ## 12. See also
 
-- `PseudoCoupHQ/Research/op_pipeline/lean/MODEL_README.md` —
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/MODEL_README.md` —
   what is in the artifact folder, restated as reference documentation.
-- `PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`
   — the translator and the checker, six commands (`table`, `five`, `model`,
   `check`, `run`, `imports`, plus `axioms_gap`/`axioms_refresh` added this
   session).
-- `PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json` —
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json` —
   the 259-row population, every outcome, every `left`/`right` term pair,
   every proved theorem's axioms line.
-- `PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json` —
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/model_L2.json` —
   the 171-mnemonic census, and the guard's failure (§7).
-- `PseudoCoupHQ/Research/op_pipeline/lean/lanes_L2/` — all 20
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/lanes_L2/` — all 20
   lane scripts, in submission order.
-- `PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md`
   — the `archproof` project and its own proof, which this task's `lake
   build` (§6) extends without touching.
-- `PseudoCoupHQ/DevComms/log_229_operator_mapping_proof_system_purpose.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_229_operator_mapping_proof_system_purpose.md`
   §4.1 — the framing this task implements: level 0 DERIVED from the
   reference, never written twice.

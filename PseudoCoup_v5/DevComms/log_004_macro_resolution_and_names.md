@@ -2,7 +2,7 @@
 
 2026-08-02. Two questions the owner asked, both measured rather than
 reasoned. Companion to
-`PseudoCoup_v5/DevComms/log_003_metaprogramming_model.md`,
+`PRIVATE/PseudoCoup_v5/DevComms/log_003_metaprogramming_model.md`,
 which holds the model; this log holds the resolution numbers.
 
 Measured over `rustc_codegen_ssa` and `rustc_codegen_llvm` in
@@ -192,7 +192,7 @@ in the meantime is to record the invocation, mark the produced names
 
 ## 6. The syn-shim spike — measured, then built
 
-Research folder: `PseudoCoup_v5/Research/syn_shim/`
+Research folder: `PRIVATE/PseudoCoup_v5/Research/syn_shim/`
 (shim, derive logic, runner, README with full detail).
 
 **The surface, measured on `compiler/rustc_macros` at 1.97.0** — the

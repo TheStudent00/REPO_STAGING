@@ -1,7 +1,7 @@
 # log 138 — Airlock instances: a second sandbox is a feature, not a copy
 
-Date: 2026-09-02. Repository changed: `Airlock` (the
-application). Repository also touched: `PseudoCoupHQ` (the
+Date: 2026-09-02. Repository changed: `PUBLIC/Airlock` (the
+application). Repository also touched: `PRIVATE/PseudoCoupHQ` (the
 caller). Report shape: LLM_communication_protocol Appendix B.
 
 ---
@@ -39,7 +39,7 @@ An **instance** is one running sandbox. One install runs as many as asked
 for, side by side. A second sandbox is one settings file and one flag:
 
 ```
-$ cat Airlock/instances/trickle.conf
+$ cat PUBLIC/Airlock/instances/trickle.conf
 cpus              = 6
 memory            = 8g
 proxy             = no
@@ -47,7 +47,7 @@ persist_volume    = sandbox-persist
 persist_mode      = ro
 watch             = poll
 
-$ bash Airlock/up.sh --instance trickle --cpus 6
+$ bash PUBLIC/Airlock/up.sh --instance trickle --cpus 6
 ```
 
 Nothing about `trickle` lives in PseudoCoupHQ, and nothing project-specific
@@ -81,7 +81,7 @@ because they are what a caller actually touches.
 
 ## 2.2 The mechanism: one file decides every name
 
-`Airlock/instance.sh` is the only place a container name is
+`PUBLIC/Airlock/instance.sh` is the only place a container name is
 spelled. Its whole contract:
 
 | derived thing | from the instance name |
@@ -595,8 +595,8 @@ no status files and no logs at all.
 `AirlockTrickle` no longer exists.
 
 ```
-$ ls -d Airlock*
-Airlock
+$ ls -d PUBLIC/Airlock*
+PUBLIC/Airlock
 ```
 
 It was **present** early in this session and counted:
@@ -638,7 +638,7 @@ project's records belong under Airlock's contract:
 | the folded per-chunk stores | `…/trickle_store/` | 334 |
 
 Recorded, with the absence stated, in
-`Airlock/instances/trickle/agent/README.md`. Their `status/`
+`PUBLIC/Airlock/instances/trickle/agent/README.md`. Their `status/`
 and `logs/` are absent because those runs predate the protocol being used at
 all on that copy — the fork started its container idle and reached in from
 outside, so the daemon wrote nothing.
@@ -652,8 +652,8 @@ for each:
 
 | superseded | replaced by |
 |---|---|
-| `bash trickle_up.sh` | `bash Airlock/up.sh --instance trickle --cpus 6` |
-| `bash trickle_down.sh` | `bash Airlock/down.sh --instance trickle` |
+| `bash trickle_up.sh` | `bash PUBLIC/Airlock/up.sh --instance trickle --cpus 6` |
+| `bash trickle_down.sh` | `bash PUBLIC/Airlock/down.sh --instance trickle` |
 | `bash trickle_doctor.sh` | `airlock doctor` — it lists every instance and its state |
 | `trickle.py --run` | `python3 trickle2.py --run` |
 
@@ -666,10 +666,10 @@ that ran the lane: render → `airlock submit` → poll the status file → read
 anything else it calls.
 
 ```
-$ AIRLOCK_ROOT=Airlock python3 trickle2.py --plan
+$ AIRLOCK_ROOT=PUBLIC/Airlock python3 trickle2.py --plan
 planned 326 chunks over 129553 probes
 
-$ AIRLOCK_ROOT=Airlock python3 trickle2.py --run --langs go --limit 1
+$ AIRLOCK_ROOT=PUBLIC/Airlock python3 trickle2.py --run --langs go --limit 1
 instance trickle  runner trickle-runner  cpus 6  agent …/instances/trickle/agent
 1 chunk(s) to run, one at a time (Airlock runs lanes serially)
   regen_go_c0000       400 submitted   330 accepted    70 refused    97.0s
@@ -775,7 +775,7 @@ Two of these are more than spelling and are flagged as such:
 
 # 10. Complete file inventory
 
-## 10.1 New, in `Airlock/`
+## 10.1 New, in `PUBLIC/Airlock/`
 
 | file | what it is |
 |---|---|
@@ -796,7 +796,7 @@ Two of these are more than spelling and are flagged as such:
 `quadlet/*.container` and `quadlet/*.network` are **unchanged**: they are
 templates, rendered per instance by `install_quadlet.sh`.
 
-## 10.3 New, in `PseudoCoupHQ/Research/op_pipeline/`
+## 10.3 New, in `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`
 
 | file | what it is |
 |---|---|
@@ -809,10 +809,10 @@ templates, rendered per instance by `install_quadlet.sh`.
 
 ## 10.4 Edited, append-only
 
-`PseudoCoupHQ/DevComms/log_131_task40_regeneration_trickle.md`
+`PRIVATE/PseudoCoupHQ/DevComms/log_131_task40_regeneration_trickle.md`
 — one dated `# CORRECTION` section appended, nothing above it edited.
 
-## 10.5 New, in `PseudoCoupHQ/DevComms/`
+## 10.5 New, in `PRIVATE/PseudoCoupHQ/DevComms/`
 
 `log_138_airlock_instances_feature.md` — this log.
 
@@ -830,7 +830,7 @@ The 30-second daemon committed throughout; nothing was held back and no
 commit was made by hand.
 
 ```
-$ git -C Airlock log --oneline --since="6 hours ago"
+$ git -C PUBLIC/Airlock log --oneline --since="6 hours ago"
 5baaf98 auto: 1 file (README.md)
 5a137c7 auto: 1 file (watcher.py)
 0149425 auto: 2 files (instance.sh, up.sh)

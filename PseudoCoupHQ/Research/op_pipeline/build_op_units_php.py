@@ -62,7 +62,7 @@ import sys
 import slice_extractor_fix
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DUMPS = "Airlock/agent/out/t27"
+DUMPS = "PUBLIC/Airlock/agent/out/t27"
 OUT = os.path.join(HERE, "op_units_php.json")
 
 SYMBOLS = [

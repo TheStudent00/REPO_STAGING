@@ -1,8 +1,8 @@
 # log 035 — the re-fold: swift's real answers and the word-spelled leaves
 
 Date: 2026-08-19. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 **Rewritten 2026-08-19 for readability at the owner's instruction. The content
 is identical — same facts, same numbers, same findings, same section
@@ -357,7 +357,7 @@ opening another file.
   Several of their numbered open items are answered or carried forward
   below, and each is restated where it comes up.
 - **`HARVEST.md`** — full path
-  `PseudoCoupHQ/Research/kind_fuzz_clustering/HARVEST.md`
+  `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/HARVEST.md`
   — is the checklist written before this pass saying which lanes to
   collect, in what order, and what still had to be built. It was the
   authority for this pass.
@@ -1155,7 +1155,7 @@ the state of it is.
 ## §9 — artifacts
 
 All paths are inside
-`PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 | file | what it is |
 |---|---|

@@ -1,7 +1,7 @@
 # log_206 — the arch_unit_oracle line: founding thoughts
 
 This log belongs to the arch_unit_oracle line
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_8_arch_unit_oracle/CORE_0_3_8_arch_unit_oracle.md`),
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_8_arch_unit_oracle/CORE_0_3_8_arch_unit_oracle.md`),
 forked 2026-09-05 from the operator-equivalence line. Written by the
 coordinator (Fable) in answer to the owner's "thoughts?" on the three
 objectives. Nothing here is measured unless marked measured; the
@@ -162,7 +162,7 @@ the ceiling measurement.
 ## 5. Isolation, as set up
 
 - Planning node: `node_0_3_8_arch_unit_oracle`, own sub-nodes.
-- Artifacts: `PseudoCoupHQ/Research/oracle/` (created
+- Artifacts: `PRIVATE/PseudoCoupHQ/Research/oracle/` (created
   empty, with a README naming the line).
 - Airlock instances: `o<N>.conf`; lane names `o<N>_l<M>_<what>.sh`.
 - Main-line artifacts are read, never written. Nothing under

@@ -9,7 +9,7 @@ relevance at the end.
 ## The find: three generations of runtime state-graph tooling
 
 ### Gen 3 (most advanced) — the WALKER suite
-`StressBot/RelevantProjects/WFL_MixingCenter/render/`
+`PRIVATE/StressBot/RelevantProjects/WFL_MixingCenter/render/`
 
 - **`walker.py` (1,403 lines)** — builds a runtime STATE GRAPH from
   a live, driven app. Nodes = app states (content-addressed:

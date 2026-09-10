@@ -61,6 +61,25 @@ def say(text):
     sys.stdout.flush()
 
 
+def chaff_vocabulary():
+    """the mnemonics task o2's own narrow chaff rule names, read off
+    that program rather than spelled here.
+
+    They are not cells of the model table -- a return and a
+    calling-convention move are chaff, which is why the cells file's own
+    vocabulary does not carry them -- and a branch that names one is
+    still a branch keyed on an opcode name, so the checker reads them
+    too."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    arch = os.path.normpath(os.path.join(here, "..", "..",
+                                         "arch_opcodes"))
+    if arch not in sys.path:
+        sys.path.insert(0, arch)
+    import single_opcode_units as SOU
+    return set(SOU.NARROW_BARE) | set(SOU.NARROW_PURE_MOVE) | set(
+        SOU.WIDTH_CHANGE)
+
+
 def mnemonics(path):
     """the arch mnemonic vocabulary, off the cells file's own machine
     form: every `mnem` field it carries."""
@@ -136,8 +155,9 @@ def main(argv):
     if len(argv) < 2:
         say(__doc__)
         return 2
-    vocabulary = mnemonics(argv[0])
-    say("the arch mnemonic vocabulary: %d tokens read from %s"
+    vocabulary = mnemonics(argv[0]) | chaff_vocabulary()
+    say("the arch mnemonic vocabulary: %d tokens, read off %s and off "
+        "task o2's own chaff tables"
         % (len(vocabulary), os.path.basename(argv[0])))
     say("")
     say("| file | line | what is compared | kind | the line |")

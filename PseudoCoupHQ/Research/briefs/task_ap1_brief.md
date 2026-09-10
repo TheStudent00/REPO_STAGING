@@ -8,7 +8,7 @@ sections; `task_h1_brief.md`, `task_h2_brief.md`, `task_g1_brief.md`,
 lookup, the `idiv` arrival-region finding, the swift thunk); the driver
 `Research/oracle/cross_construction/emulation/handful/handful.py` as g1b
 left it, and the four renderers. Instance `ap1.conf` (copy from
-`Airlock/instances/ap1.conf` with `remote_lane.sh conf`;
+`PUBLIC/Airlock/instances/ap1.conf` with `remote_lane.sh conf`;
 bring it up; it mounts `sandbox-persist` read-only, which swift needs).
 Artifact folder: `Research/oracle/cross_construction/emulation/autopoly/`;
 lanes under `lanes_ap1/`.

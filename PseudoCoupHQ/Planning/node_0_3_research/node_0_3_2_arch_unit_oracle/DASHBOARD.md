@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_3_2_arch_unit_oracle
@@ -16,13 +16,13 @@ A rollup over this node's own sub-tree (itself plus everything beneath it). Rege
 
 ## sub-tree
 
-sub-node count: 14
+sub-node count: 17
 
 ### status breakdown
 
 | status | count |
 | --- | --- |
-| draft | 15 |
+| draft | 18 |
 
 ### designation breakdown
 
@@ -31,8 +31,8 @@ sub-node count: 14
 | code (class) | 1 |
 | code (function) | 1 |
 | code (module) | 7 |
-| grouping | 4 |
-| work | 2 |
+| grouping | 5 |
+| work | 4 |
 
 ## blocked
 
@@ -46,7 +46,7 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 | --- | --- |
 | planned | 0 |
 | in-progress | 0 |
-| done | 7 |
+| done | 13 |
 | blocked | 0 |
 | deferred | 0 |
 

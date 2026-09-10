@@ -18,7 +18,7 @@ outlook (unscheduled): a searchable/selectable menu interface, or
 interfacing with the UR-AST, could fill forms interactively.
 
 **Why this node exists.** The survey of PCv5's working chain
-(`PseudoCoup_v6/Research/r5_slice_mechanism_survey/REPORT.md`)
+(`PRIVATE/PseudoCoup_v6/Research/r5_slice_mechanism_survey/REPORT.md`)
 assessed, stage by stage, whether the SELECTION of what to slice
 was mechanically derivable. The finding: choosing the entry seam
 — e.g. that `codegen_int_binop` in rustc's `num.rs` is where MIR

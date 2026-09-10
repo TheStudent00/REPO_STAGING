@@ -4,9 +4,9 @@ Project node: node_0_3_1_11_interp_feeder (operator_equivalence line, master pla
 
 Date: 2026-09-06. Node: `node_0_3_1_11_interp_feeder` (the
 operator_equivalence line's interpreter feeder), master plan
-`PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
 §4.2. Report shape per
-`DevComms/LLM_communication_protocol.md` Appendix B: one
+`PRIVATE/DevComms/LLM_communication_protocol.md` Appendix B: one
 numbered tree, §1 names the objects in relation, instances before
 mechanisms, the two lists at the end. Renderings are labelled
 **LITERAL** (the object itself, quoted, with its path) or **GLOSS** (a
@@ -15,12 +15,12 @@ plain-words reading beside it), per §5.1a. Every claim below carries a
 cannot.
 
 All computation ran through Airlock, instance `t103`
-(`Airlock/instances/t103.conf`, copied from `t97.conf`
+(`PUBLIC/Airlock/instances/t103.conf`, copied from `t97.conf`
 per the brief, cpus 2 / memory 6g, `persist_volume = sandbox-persist`
 read-only so the shared ship build is reached without any instance
 being able to alter it — the same convention `t101b.conf` uses for
 swift). One lane per step; every lane prints `[i/total]`. Lane logs
-under `Airlock/agent/logs/` (this instance's own agent
+under `PUBLIC/Airlock/agent/logs/` (this instance's own agent
 dir is `<runs>/t103/agent/logs/` — Airlock's per-instance
 convention; named at each transcript below).
 
@@ -35,27 +35,27 @@ convention; named at each transcript below).
   the machinery reaches today.
 - **the cpython ship build** is the compiled binary the question is
   about: `/persist/cpython_ship/python`, the same build task 94 read
-  (`PseudoCoupHQ/DevComms/log_199_task94_interpreter_function_bodies.md`).
+  (`PRIVATE/PseudoCoupHQ/DevComms/log_199_task94_interpreter_function_bodies.md`).
 - **the multiply handler**, `long_mul`, is the C function inside that
   build whose compiled bytes ARE the object the question is about: the
   whole-function boundary the owner ruled 2026-09-05
-  (`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/CORE_0_3_5_1_arch_unit.md`,
+  (`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/CORE_0_3_5_1_arch_unit.md`,
   "the unit's boundary").
 - **the canonical form** is the one shape every arch-unit -- compiled
   or interpreted -- is rendered into so a gate can ask about it:
-  `PseudoCoupHQ/Research/op_pipeline/canonical_form.py`,
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/canonical_form.py`,
   task 96's form
-  (`PseudoCoupHQ/DevComms/log_201_task96_interpreters_onto_canonical_form.md`).
+  (`PRIVATE/PseudoCoupHQ/DevComms/log_201_task96_interpreters_onto_canonical_form.md`).
 - **the term** is the handler's canonical-form body expressed as a z3
-  expression, built by `PseudoCoupHQ/Research/op_pipeline/term.py`'s
+  expression, built by `PRIVATE/PseudoCoupHQ/Research/op_pipeline/term.py`'s
   `Term.transcribe`, the machinery `term97_walk.py` finished over the
   compiled-language population
-  (`PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md`)
+  (`PRIVATE/PseudoCoupHQ/DevComms/log_202_task97_term_pool_canon40.md`)
   and this task is the first to ask about an interpreter handler.
 - **the c unit**, `c/op_181`, is the single-opcode reference this
   task's step 2 gates the handler's term against: `imul`, `a * b`
   on two `int64_t`, its pool entry `E00063` in
-  `PseudoCoupHQ/Research/op_pipeline/the_pool5.json`.
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/the_pool5.json`.
 - **the projection** is the input domain both sides are compared on:
   both operands `_PyLong_BothAreCompact` under cpython's own compact
   test, stated LITERAL in §4.
@@ -127,7 +127,7 @@ returns (a pointer, not the number 12).
 
 ## 3. The JIT question, literal
 
-**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/t103_l1_inventory.sh`
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/op_pipeline/t103_l1_inventory.sh`
 and `t103_l3_readsrc.sh`, run in Airlock instance `t103`, lane log
 `<runs>/t103/agent/logs/20260906T191137Z__t103_l1_inventory.sh.log`
 and `20260906T191256Z__t103_l2_source.sh.log`:
@@ -201,7 +201,7 @@ fast path is a distinct function ... carve it; where it is inlined
 into `long_mul`, carve `long_mul` and say so") **the unit is the whole
 `long_mul` function.**
 
-**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json`
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/op_pipeline/interp103_bounds.json`
 (`interp103_bounds.py`, reusing `t94_read_bounds.symbol_rows`,
 `.dwarf_rows`, `.objdump_range` unmodified; lane log
 `20260906T192107Z__t103_l8_bounds_run.sh.log`):
@@ -224,7 +224,7 @@ print(r['new_low'], r['new_high'], r['new_byte_length'], r['new_instruction_coun
 which is one of the ruling's two named sources.
 
 **LITERAL**, the arrival contract
-(`PseudoCoupHQ/Research/op_pipeline/interp103_canonical.py`,
+(`PRIVATE/PseudoCoupHQ/Research/op_pipeline/interp103_canonical.py`,
 field `ARRIVAL_CONTRACT`):
 
 ```
@@ -243,7 +243,7 @@ the returned pointer on every one of `long_mul`'s three `ret`s.
 
 ## 5. The canonical form, the term, and the verdict against its own body
 
-**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json`
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/op_pipeline/interp103_canonical.json`
 (FORM 2, `canonical_form.py` Part A -- unmodified; lane log
 `20260906T192231Z__t103_l9_canonical_run.sh.log`), the wrapped text in
 full:
@@ -265,7 +265,7 @@ register (C5), the only text this form changed is 26 transfer targets
 form wraps the whole branchy function without collision, exactly as
 task 96 found for addition.
 
-**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/interp103_term.json`
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/op_pipeline/interp103_term.json`
 (`interp103_term.py`, reusing `term97_walk.build` and
 `term66_run.one_unit` unmodified; lane log
 `<runs>/t103/agent/logs/20260906T192541Z__t103_l11_term_run.sh.log`):
@@ -369,7 +369,7 @@ digit count is 0 or 1 (`tag = 8*ndigits + 3 flag bits`); one digit is
 (`cmp $0xf,%rcx; jbe ...` in §4's disassembly).
 
 **LITERAL**, `c/op_181`'s pool entry and proved term, read rather than
-rebuilt, `PseudoCoupHQ/Research/op_pipeline/the_pool5.json`
+rebuilt, `PRIVATE/PseudoCoupHQ/Research/op_pipeline/the_pool5.json`
 entry `E00063`:
 
 ```
@@ -384,7 +384,7 @@ for e in d['entries']:
 E00063 PROVED_ON_SHIP v0*v1
 ```
 
-**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json`
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/op_pipeline/interp103_gate_c181.json`
 (lane log `<runs>/t103/agent/logs/20260906T192922Z__t103_l12_gate_c181.sh.log`):
 
 ```
@@ -415,7 +415,7 @@ addresses.
 value below is computed by `interp103_step.py` from these two facts
 and the real instruction text in `interp103_bounds.json`; nothing is
 asserted without the opcode above it. Full table:
-`PseudoCoupHQ/Research/op_pipeline/interp103_step.json`.
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/interp103_step.json`.
 
 **LITERAL**, lane log `<runs>/t103/agent/logs/20260906T193330Z__t103_l14_step.sh.log`:
 
@@ -569,7 +569,7 @@ keys, groups, pairs or selects on it.
 
 No file under `Research/op_pipeline/` was edited except these new
 `interp103_*` files and their own lane scripts, per the brief's stop
-rule. `Airlock/instances/t103.conf` is new, copied from
+rule. `PUBLIC/Airlock/instances/t103.conf` is new, copied from
 `t97.conf`.
 
 ---

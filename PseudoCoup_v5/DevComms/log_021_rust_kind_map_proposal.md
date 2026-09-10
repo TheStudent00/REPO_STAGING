@@ -2,7 +2,7 @@
 
 Date: 2026-08-13. Author: clustering agent, for the owner's review. This is the PCv5-side landing of PCHQ research step P-a (PCHQ log_016 §6): the pack generator now exists, rust ran first, and this log carries its full output — the instrument that turns q1 (ratify the ts_kind → ur_kind map; log_017 open questions) from 163 raw judgments into “review the evidence, rule the residue.”
 
-Artifacts (all under `PseudoCoupHQ/Research/kind_signature_clustering/`, all re-derivable):
+Artifacts (all under `PRIVATE/PseudoCoupHQ/Research/kind_signature_clustering/`, all re-derivable):
 
 - `pack_generator.py` — the generator, language-agnostic (`python3 pack_generator.py rust`)
 - `proposed_kind_map_rust.json` — machine-readable rows (kind, proposed, confidence, evidence, intention_note, residue flag)

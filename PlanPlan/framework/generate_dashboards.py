@@ -6,7 +6,7 @@ everything beneath it): status and designation breakdowns, anything
 blocked, PROGRESS bullet-status counts, and the SUPPORT files present.
 
 Usage:
-    python3 PlanPlan/framework/generate_dashboards.py \
+    python3 PRIVATE/PlanPlan/framework/generate_dashboards.py \
         <root>... [--check]
 
 `--check` writes nothing: exits 1 if any node's DASHBOARD.md would differ
@@ -143,7 +143,7 @@ def render_dashboard(node, stats):
     lines = []
     lines.append("<!-- GENERATED FILE — do not hand-edit. -->")
     lines.append("<!-- Produced by "
-                  "PlanPlan/framework/generate_dashboards.py "
+                  "PRIVATE/PlanPlan/framework/generate_dashboards.py "
                   "from this node's own sub-tree. Hand edits are lost the -->")
     lines.append("<!-- next time the tool runs; re-run it instead of "
                   "editing this file. -->")

@@ -1,15 +1,15 @@
 # log 213 — task t101: dominant types, and the flag that stops the join at step 1
 
 Project node: `hq.research.compiler_graph.probes.type_inventory` —
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_0_probes/node_0_3_1_0_1_type_inventory/CORE_0_3_1_0_1_type_inventory.md`.
-Master plan step: `PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_0_probes/node_0_3_1_0_1_type_inventory/CORE_0_3_1_0_1_type_inventory.md`.
+Master plan step: `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
 §4.2 step 3, "dominant types: the join of language spellings to machine
 holders".
 
-Date 2026-09-06. Instance `Airlock/instances/t101.conf`.
+Date 2026-09-06. Instance `PUBLIC/Airlock/instances/t101.conf`.
 Every transcript below was produced by a lane of that instance, where
 this repo is mounted at `PseudoCoupHQ`; the host path of that
-mount is `PseudoCoupHQ`.
+mount is `PRIVATE/PseudoCoupHQ`.
 
 ---
 
@@ -19,16 +19,16 @@ mount is `PseudoCoupHQ`.
   integer, unsigned integer, float, truth) at a width — with every
   language's spellings for it hanging off it (research CORE §1).
 - **The language type inventory**,
-  `PseudoCoupHQ/Research/op_pipeline/type_inventory2_core2.json`,
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/type_inventory2_core2.json`,
   is the left side of the join: per language, per scalar-core spelling,
   a class and no width.
 - **The DWARF parameter table** is the right side: the compiler's own
   debug record of a probe function's parameters, stored on every
   accepted probe under
-  `PseudoCoupHQ/Research/op_pipeline/trickle_store/`.
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/trickle_store/`.
 - **The machine type key** is what the join was to make readable: the
   `type_key` field on every entry of
-  `PseudoCoupHQ/Research/op_pipeline/the_pool5.json` —
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/the_pool5.json` —
   arrival register families and answer width, 88 distinct over 1,831
   entries.
 
@@ -71,7 +71,7 @@ rather than a spot check, and refuses by name.
 ## 3.1 One stored DWARF parameter table, LITERAL
 
 The c probe whose operand is declared `_Bool`, from
-`PseudoCoupHQ/Research/op_pipeline/trickle_store/op_units2_c_c0000.json`.
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/trickle_store/op_units2_c_c0000.json`.
 The first printed line is the declared spelling; the second is the
 whole stored table.
 
@@ -87,7 +87,7 @@ did not say it is a boolean.
 
 ## 3.2 The reader every probe lane's product passes through, LITERAL
 
-`PseudoCoupHQ/Research/op_pipeline/fold.py`, the body of
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/fold.py`, the body of
 `dwarf_rows`, lines 82–91. Both branches build a row the same way, and
 both name the same two fields.
 
@@ -120,7 +120,7 @@ touched.
 
 ## 3.3 The lane that produced the text that reader parses, LITERAL
 
-`PseudoCoupHQ/Research/op_pipeline/trickle_lanes/asgrecap_asgrecap_go_c0001.sh`,
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/trickle_lanes/asgrecap_asgrecap_go_c0001.sh`,
 lines 255–262. It is inside the walk over `DW_TAG_formal_parameter`
 DIEs.
 
@@ -143,7 +143,7 @@ carries `DW_AT_byte_size` and `DW_AT_encoding` — is never followed.
 ## 3.4 The measurement over every store on disk
 
 Lane `t101_l1_dwarf_shape.sh` ran
-`PseudoCoupHQ/Research/op_pipeline/types101_join.py`,
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_join.py`,
 which streams every store one file at a time and folds only counters.
 
 ```
@@ -210,8 +210,8 @@ reason is one row.
 
 | cause | places | what they hold instead |
 |---|---|---|
-| the record shape carries no type facts | `PseudoCoupHQ/Research/op_pipeline/trickle_store/` (338 files), `.../op_units_<lang>.json` (5), `.../op_units_asg_<lang>.json` (5) | a `(name, location)` DWARF row per parameter — measured in §3.4 |
-| the store is downstream of the type facts and never carried them | `.../canon36_regen_store/` … `.../canon40_regen_store/`, `.../layer4*_regen_store/`, `Airlock/agent/out/` (288 entries, 9.1 GB) | register facts: `arrival_contract_bindings`, `entry_contract`, `ledger`; in Airlock's product folder the only DWARF-typed artifacts are `result_types_<lang>.json`, which record the probe's RESULT type NAME |
+| the record shape carries no type facts | `PRIVATE/PseudoCoupHQ/Research/op_pipeline/trickle_store/` (338 files), `.../op_units_<lang>.json` (5), `.../op_units_asg_<lang>.json` (5) | a `(name, location)` DWARF row per parameter — measured in §3.4 |
+| the store is downstream of the type facts and never carried them | `.../canon36_regen_store/` … `.../canon40_regen_store/`, `.../layer4*_regen_store/`, `PUBLIC/Airlock/agent/out/` (288 entries, 9.1 GB) | register facts: `arrival_contract_bindings`, `entry_contract`, `ledger`; in Airlock's product folder the only DWARF-typed artifacts are `result_types_<lang>.json`, which record the probe's RESULT type NAME |
 | the type facts exist but for another population | `.../dwarf_typed_key.json`, `.../dwarf_typed_key_t27.json`, `.../proposal_representation_dimension2.json`, `.../proposal_representation_dimension3.json`, `.../prove_interp_computation.json`, `.../op_units_php.json`, `.../op_units_ruby.json` | interpreter handler parameters (cpython, ruby, php, java), not the five compiled languages' probes |
 | the type facts exist but for the wrong side and the wrong build | `.../result_types_asg_c.json`, `.../result_types_asg_cpp.json` | the only compiled-language artifacts keyed on `DW_AT_encoding` + `DW_AT_byte_size`: c 276 and cpp 324 assignment probes, gcc-built, RESULT type only |
 | the compile that could have recorded it did not | `.../type_inventory3.json`, `.../declare_raw/decl_<lang>.txt` | an ACCEPT/REFUSE verdict per candidate type and the compiler's refusal text; no width and no encoding was read from those compiles |
@@ -222,7 +222,7 @@ reason is one row.
 Labelled so it is never read as the deliverable. Per language, per
 scalar-core spelling, how many ACCEPTED probes declared an operand
 with that spelling. The rows themselves are in
-`PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json`
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_dwarf_flag.json`
 under `the_spelling_side_only`; each row's `dwarf_byte_size` and
 `dwarf_encoding` read `NOT ON DISK -- see refusal`.
 
@@ -282,7 +282,7 @@ $ python3 -c "import json;d=json.load(open('PseudoCoupHQ/Research/op_pipeline/ty
 
 # 7. The guard
 
-`PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py`
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py`
 is unmodified and was run from this instance over the one json this
 task wrote, and the LAW's zero-count check was run over every file
 this task added.
@@ -307,11 +307,11 @@ exists and lane 2 was withdrawn.
 
 One compile pass, not a redesign. Recompile one probe per (language,
 spelling) at the anchor flags already pinned in
-`PseudoCoupHQ/Research/op_pipeline/type_inventory3.json`,
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/type_inventory3.json`,
 and read `DW_AT_byte_size` and `DW_AT_encoding` off the
 `DW_TAG_formal_parameter`'s `DW_AT_type` chain. The reader already
 exists in this folder:
-`PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.py`
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.py`
 walks exactly that chain with pyelftools for the interpreter handlers.
 That is a new compile run and a change to the capture path, so it is
 the coordinator's to authorize.
@@ -330,10 +330,10 @@ the coordinator's to authorize.
 | `t101_l9_claims2.sh` | the final verify over this log; its tally is §11 | `<runs>/t101/agent/logs/20260906T055403Z__t101_l9_claims2.sh.log` |
 
 Lane scripts:
-`PseudoCoupHQ/Research/op_pipeline/lanes_t101/`.
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_t101/`.
 
 Products written, all new, all under
-`PseudoCoupHQ/Research/op_pipeline/`:
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/`:
 
 | file | what it is |
 |---|---|
@@ -360,7 +360,7 @@ would have had to be invented.
   anywhere in this task.
 - The spelling side of step 1 was computed in the same pass and stored
   under a field name that says it is half of step 1.
-- The instance `Airlock/instances/t101.conf` was created
+- The instance `PUBLIC/Airlock/instances/t101.conf` was created
   from `o3.conf` at cpus 2 / memory 4g with the abort
   `ABORT_MEMORY_T101` at 2 GB; measured peak 24.9 MB; the instance was
   brought down at the end of the task.

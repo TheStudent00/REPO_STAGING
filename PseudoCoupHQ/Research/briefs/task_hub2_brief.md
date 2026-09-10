@@ -1,6 +1,6 @@
 # Task hub2 — Hub v2: the dictionary at two levels (cells and operator bodies), comparisons as the pair entry, and the lookup key with its holders
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
 `task_hub1_brief.md` beside this file and its log `DevComms/log_252` (its
 §5 decisions and §6 "Awaiting the owner" are this task's inputs), the
 hub_compiler node's CORE and sub-nodes, `Research/oracle/hub/` as hub1
@@ -9,7 +9,7 @@ left it, the bank task's certificates (`task_bank1_brief.md`; its log;
 THE BANK from now on), and the pool-entry emulation work: `log_218` (o7,
 c), `log_226` (o11, rust), `log_230`/`o13` (mode rendering), the pool
 (`Research/op_pipeline/the_pool5.json`; pool6 candidate `pool104_candidate.json`).
-Instance `hub2.conf` (copy from `Airlock/instances/hub2.conf`;
+Instance `hub2.conf` (copy from `PUBLIC/Airlock/instances/hub2.conf`;
 mounts `sandbox-persist` read-only). Artifact folder: `Research/oracle/hub/`,
 new files `dictionary2.*`, `hub2.py`, `oracle_test2.*`; lanes under
 `lanes_hub2/`. Task bank1 must have CLOSED before this task starts.
@@ -37,6 +37,6 @@ before writing); verifier lane; PROGRESS on the hub_compiler node and its
 sub-nodes; sync-back; instance down. Memory bound 6g, sample first, peak
 RSS, abort `ABORT_MEMORY_HUB2`. No shared-file change is authorised; the
 renderers, the loop's driver and the bank are READ. Never delete anything
-under `<runs>/` or `Airlock/`. Waits in short calls.
+under `<runs>/` or `PUBLIC/Airlock/`. Waits in short calls.
 Reply with the handful table hub1 → hub2, the measure hub1 → hub2, the
 dictionary's counts at both levels per target, the tally, the two lists.

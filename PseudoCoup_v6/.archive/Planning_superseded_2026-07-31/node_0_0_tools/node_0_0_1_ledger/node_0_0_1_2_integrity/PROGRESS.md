@@ -7,7 +7,7 @@ status: living
 
 - plan — **settled** 2026-07-28.
 - `--check` harness — **done** 2026-07-28
-  (`PseudoCoup_v6/Tools/ledger/check_ledger.py`:
+  (`PRIVATE/PseudoCoup_v6/Tools/ledger/check_ledger.py`:
   uniqueness, independent-recount equality, missing/extra,
   declaration typing, unresolvable count first-class).
 - refusal-at-consumption test — **done** (in the acceptance

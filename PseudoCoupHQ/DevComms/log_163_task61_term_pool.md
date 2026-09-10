@@ -2,7 +2,7 @@
 
 Date: 2026-09-03. Nodes: `0_3_5_6 term`, `0_3_5_7 pool`. Round 12,
 under the plan tree. Home:
-`PseudoCoupHQ/Research/op_pipeline/`.
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/`.
 
 ---
 
@@ -739,7 +739,7 @@ put the spelling in a parenthesis.
 Nothing of task 61 is left running or half-written. To re-derive
 everything from the canon39 artifacts, in order, with
 `/tmp/reconnect_venv/bin/python3` from
-`PseudoCoupHQ/Research/op_pipeline`:
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline`:
 
 ```
 term61_run.py 30000      # resumable; ~30 minutes, one process

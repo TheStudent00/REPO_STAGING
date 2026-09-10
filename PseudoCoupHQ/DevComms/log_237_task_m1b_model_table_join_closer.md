@@ -1,23 +1,23 @@
 # log 237 — task m1b: closing the model table's join, and the four populations it had missed
 
 Node: `hq.research.arch_unit_oracle`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 its "goal" section of 2026-09-07 and its ruling of 2026-09-08). This closes
-task m1 (`PseudoCoupHQ/DevComms/log_236_task_m1_arch_opcode_model_table.md`),
+task m1 (`PRIVATE/PseudoCoupHQ/DevComms/log_236_task_m1_arch_opcode_model_table.md`),
 the first item of that goal and step 3 of the research master order
-(`PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md` §4.2).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md` §4.2).
 
 Date: 2026-09-08. Instance `m1b` (its conf
-`Airlock/instances/m1b.conf`), brought up and down by this
+`PUBLIC/Airlock/instances/m1b.conf`), brought up and down by this
 task. Every lane ran on the tower guest through
-`bash Airlock/remote_lane.sh`, per LAW's last section; nothing
+`bash PUBLIC/Airlock/remote_lane.sh`, per LAW's last section; nothing
 but file editing, git and those commands ran on the laptop. A lane log's host
 path on the tower is
 `<runs>/m1b/agent/logs/<stamp>__<lane>.sh.log`;
 every attribution below names its file.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into the
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into the
 instance. Every rendering is labelled **LITERAL** (the object, quoted) or
 **GLOSS** (a plain-words reading beside a literal), per
 `object.literal-gloss-analogy`.
@@ -114,17 +114,17 @@ under the new name.
 ## §1. The objects, one sentence each, in relation
 
 - The **model table** is
-  `PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py`
+  `PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py`
   and what it writes beside itself: every mapping the reference's
   `opcode_table` holds, one row per operand form the sweep spells, with the
   corpus's attestation joined onto it.
 - The **sweep** is `shapes_for`, `attempts_for`, `sweep`, `one_attempt` and
   `run_line` in
-  `PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`:
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`:
   it hands every builder every operand spelling it knows at every width.
   This task added three operand spellings to it and changed nothing else.
 - The **reference** is
-  `PseudoCoupHQ/Research/op_pipeline/reference.py`: one entry
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/reference.py`: one entry
   per arch mnemonic, each holding the builder that turns operand texts plus
   a machine state into the z3 term the opcode writes. This task changed one
   branch of one builder.
@@ -142,7 +142,7 @@ under the new name.
   corpus mnemonic, in exactly one of four categories, in
   `model_table.json`'s `counts.coverage`.
 - The **162** is the corpus's mnemonic vocabulary,
-  `PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.json`.
 
 ---
 
@@ -778,7 +778,7 @@ fix is named in §14.
 ### §10.1 o2's zero-opcode examples, FIXED
 
 **LITERAL**, the change in
-`PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py`:
+`PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py`:
 
 ```
 $ sed -n '164,166p' PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py

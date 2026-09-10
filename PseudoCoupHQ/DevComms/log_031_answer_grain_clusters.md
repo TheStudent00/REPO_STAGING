@@ -1,8 +1,8 @@
 # log 031 — layer 3 phase 4: the answer-grain clusters
 
 Date: 2026-08-19. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 **Rewritten 2026-08-19 for readability at the owner's instruction. The content
 is identical — same facts, same numbers, same findings, same section
@@ -916,7 +916,7 @@ php     sequence:[195,169,108,108,111]
 ## §7 — artifacts
 
 All paths are inside
-`PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 | file | what it is |
 |---|---|
@@ -929,8 +929,8 @@ All paths are inside
 Reproduce with two commands, neither of which touches a lane:
 
 ```
-cd PseudoCoupHQ/Research/kind_fuzz_clustering && python3 l3_answers.py
-cd PseudoCoupHQ/Research/kind_fuzz_clustering && python3 make_dendrogram_answers.py
+cd PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering && python3 l3_answers.py
+cd PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering && python3 make_dendrogram_answers.py
 ```
 
 The visual keeps every convention of `dendrogram_sweep.html`, the

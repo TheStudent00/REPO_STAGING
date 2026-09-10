@@ -38,7 +38,7 @@ sub_nodes: []
 The length-one construction map: for every ordered pair of languages
 (x, y), the pool entries with a y member that also have an x member.
 `cross1_length_one.py` and `cross1_length_one.json` under
-`PseudoCoupHQ/Research/oracle/cross_construction/`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/`,
 over `the_pool5.json`'s five languages with entries. Task o1,
 log_207: c and cpp build each other ~46–52%; every language builds
 45–77% of rust and go; swift, go and rust build under 10% of c and

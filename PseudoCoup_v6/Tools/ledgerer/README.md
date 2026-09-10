@@ -2,11 +2,11 @@
 
 The per-program record, one entry per NAMED source node, everything
 keyed by positional-path ids. Plan node:
-`PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/`
+`PRIVATE/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/`
 (id `pcv6.tools.t2_ledger`).
 
 - `generate_ids.py` — the id generator, transplanted from
-  `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py`:
+  `PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/idgen.py`:
   segment `"<childIndex>:<nodeKind>"` recorded unconditionally at
   every node; files are positioned nodes; anchors are metadata,
   never keys.
@@ -25,7 +25,7 @@ keyed by positional-path ids. Plan node:
 Run acceptance:
 
 ```bash
-python3 -m pytest PseudoCoup_v6/Tools/ledgerer/ -q
+python3 -m pytest PRIVATE/PseudoCoup_v6/Tools/ledgerer/ -q
 ```
 
 ## Phase-1 adaptations on record (each intentional, each revisitable)

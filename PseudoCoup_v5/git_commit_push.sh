@@ -10,7 +10,7 @@
 # Usage:  ./git_commit_push.sh ["commit message"]
 
 set +e
-REPO=PseudoCoup_v5
+REPO=PRIVATE/PseudoCoup_v5
 MSGFILE="$REPO/DevComms/next_commit_message.txt"
 if [ -n "$1" ]; then
     MSG="$1"

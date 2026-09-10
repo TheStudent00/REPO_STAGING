@@ -272,7 +272,7 @@ this report and `next_commit_message.txt` are the posterity record
 for searchability; the daemon's own commits are the actual save
 points for round 4's earlier tasks.
 
-`PseudoCoupHQ/DevComms/next_commit_message.txt` was
+`PRIVATE/PseudoCoupHQ/DevComms/next_commit_message.txt` was
 found EMPTY before this task wrote it (0 bytes) -- no round-3 message
 existed to preserve forward, so the new content is written directly
 as the file's sole content, with a pointer to git history for
@@ -282,11 +282,11 @@ there).
 
 ## file inventory (every file touched this task)
 
-- `PseudoCoupHQ/DevComms/next_commit_message.txt` --
+- `PRIVATE/PseudoCoupHQ/DevComms/next_commit_message.txt` --
   OVERWRITTEN (was empty; now round 4's posterity banking message).
-- `PseudoCoupHQ/DevComms/log_108_task23_bank_round4.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_108_task23_bank_round4.md`
   -- this report (new).
-- `PseudoCoupHQ/Planning/node_0_3_research/
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/
   node_0_3_5_compiler_graph/PROGRESS.md` -- dated entry appended
   under the single `# PROGRESS` heading (unchanged elsewhere).
 

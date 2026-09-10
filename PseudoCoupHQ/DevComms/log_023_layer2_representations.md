@@ -1,8 +1,8 @@
 # log 023 — layer 2: the representations, enumerated and audited
 
 Date: 2026-08-17. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_4_data_representation/CORE_0_3_4_data_representation.md`.
-Artifacts: `PseudoCoupHQ/Research/data_representation/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_4_data_representation/CORE_0_3_4_data_representation.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/data_representation/`.
 
 ---
 
@@ -15,7 +15,7 @@ definition does not survive a gap.
   nothing, truth, whole number, fractional number, text, sequence,
   keyed grouping, nesting, identity marks. It was ruled on 2026-08-15
   and written down as one shared file,
-  [data_layer1.json](file://PseudoCoupHQ/Research/data_representation/data_layer1.json).
+  [data_layer1.json](file://PRIVATE/PseudoCoupHQ/Research/data_representation/data_layer1.json).
 - **Layer 2** is the REPRESENTATIONS: for each language, the ways a
   running program can HOLD that content — python's list and tuple and
   dict, rust's `Vec` and `[T; N]` and `HashMap`, go's slice and map and
@@ -122,7 +122,7 @@ is how many distinct shapes that language offers for holding that form.
 
 Full detail — every representation's spelling, kind (literal or
 constructor) and one-line note — is in
-`PseudoCoupHQ/Research/data_representation/representations_<language>.json`.
+`PRIVATE/PseudoCoupHQ/Research/data_representation/representations_<language>.json`.
 
 Two shapes of the table worth naming. **Sequence is the most crowded
 form (60 of the 328 cells)**, because every language offers several
@@ -152,7 +152,7 @@ way to hold two values.
 | **all 12** | 328 | 211 | 66 | 18 | 33 | 1,324 |
 
 Per-cell detail with the printed result of every probe is in
-`PseudoCoupHQ/Research/data_representation/audit/audit_<language>.json`;
+`PRIVATE/PseudoCoupHQ/Research/data_representation/audit/audit_<language>.json`;
 the raw `FACT_ID|RESULT` lines are in `audit/raw/l2_<language>.txt`, and
 the scripts that produced them in `audit/lanes/`.
 

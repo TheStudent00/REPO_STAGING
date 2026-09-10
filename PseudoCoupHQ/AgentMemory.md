@@ -19,7 +19,7 @@ python, typescript, java, csharp, go, rust, ruby, php, kotlin, cpp,
 dart, swift
 
 - source of record:
-  `PseudoIR/pseudoir/registry/data/xforms.json`
+  `PRIVATE/PseudoIR/pseudoir/registry/data/xforms.json`
   (`"languages"` key; ops.json carries the same per-language
   columns).
 
@@ -58,7 +58,7 @@ PseudoIR and PCv6 changes are DEFERRED by recorded ruling.
 - Mirror tree-sitter's pin; pin bump before compiler fallback.
 - Refusal posture: refuse by name, never silently; UNRESOLVABLE is
   a value; unknown kind refuses.
-- cranelift is BANNED (`PseudoCoupHQ/CRANELIFT_IS_BANNED.md`).
+- cranelift is BANNED (`PRIVATE/PseudoCoupHQ/CRANELIFT_IS_BANNED.md`).
 - `SUPPORT_BRAINSTORM_` / `SUPPORT_FUTURE_` filename convention for
   stage visibility (2026-08-12; PlanPlan
   `Planning/SUPPORT_FUTURE_stage_labels.md`). `.archive/` stays as
@@ -67,28 +67,28 @@ PseudoIR and PCv6 changes are DEFERRED by recorded ruling.
 ## where things are
 
 - planning framework of record:
-  `PlanPlan/framework/PROTOCOL.md`; conformance sweep:
-  `bash PseudoCoupHQ/hq.sh check`.
+  `PRIVATE/PlanPlan/framework/PROTOCOL.md`; conformance sweep:
+  `bash PRIVATE/PseudoCoupHQ/hq.sh check`.
 - intentions vocabulary (11 objects + categories A-J):
-  `PseudoIR/Tools/intentions/pc_intentions.json`;
+  `PRIVATE/PseudoIR/Tools/intentions/pc_intentions.json`;
   minimum-set argument: `.../minimum_intention_set.md`.
-- PCv5 ledgerer code: `PseudoCoup_v5/Tools/ledgerer/`
+- PCv5 ledgerer code: `PRIVATE/PseudoCoup_v5/Tools/ledgerer/`
   (ur.py, ledger.py, ts_to_ur.py, test_ts_to_ur.py); research
-  scripts: `PseudoCoup_v5/Research/`.
+  scripts: `PRIVATE/PseudoCoup_v5/Research/`.
 - pins: tree-sitter==0.26.0, tree-sitter-rust==0.24.2.
 - session records: per-repo `DevComms/log_NNN_*.md`; PCv5 state as
   of 2026-08-12: `PseudoCoup_v5/DevComms/log_020_session_state_2026_08_12.md`.
-- sandbox/toolchain: `Airlock` since 2026-08-22, derived
+- sandbox/toolchain: `PUBLIC/Airlock` since 2026-08-22, derived
   from `SandboxDesign` (which still works and is not
   retired, but shares container names, so never run both at once).
-  Way in: `python3 Airlock/airlock submit <lane.sh>
+  Way in: `python3 PUBLIC/Airlock/airlock submit <lane.sh>
   --batch <label> --weight <n>`, then `airlock status` (`watch` to
-  refresh) and `airlock doctor`. `bash Airlock/progress.sh`
+  refresh) and `airlock doctor`. `bash PUBLIC/Airlock/progress.sh`
   still exists and still works (`-w` refreshes). Underneath, the file
   protocol is unchanged: write `agent/drop/x.sh`, poll `agent/status/`,
   read `agent/logs/`, collect `agent/out/`; container has Rust 1.96.1.
   Migration record:
-  `PseudoCoupHQ/DevComms/log_060_sandbox_to_airlock_migration.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_060_sandbox_to_airlock_migration.md`.
 
 ## the kinds vocabulary rulings of 2026-08-12 (basis-report walk)
 
@@ -142,7 +142,7 @@ anchor existed for phases to answer to; this anchor is the fix.
 
 ## communication — load-bearing, re-read EVERY session (2026-08-24)
 
-- `DevComms/LLM_communication_protocol_v2.md` is the
+- `PRIVATE/DevComms/LLM_communication_protocol_v2.md` is the
   protocol of record (refactored 2026-08-24; v1 preserved beside
   it). Read it at session start and hold it every turn, alongside
   this file. the owner has had to demand this repeatedly; each repeat
@@ -308,7 +308,7 @@ Briefs: log_151.
 **THE PLAN TREE GOVERNS THE PIPELINE (the owner, 2026-09-03: "we have
 completely drifted away from the use of PlanPlan. unacceptable …
 plan out every fucking step").**
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/`
 now has nine ratified level-3 nodes —
 probes, arch_unit, canonical_form, ledger, reference, gate, term,
 pool, guard — and 31 level-4 nodes, each with designation,
@@ -327,11 +327,11 @@ OWN runtime (libgcc / compiler-rt: __divti3 family) is IN SCOPE and
 followed — the owner: "if its within the compiler, its not a library call";
 the "out of scope" note of 2026-09-03 is superseded, its 308-unit
 list stands. Render:
-`python3 PlanPlan/framework/render_plan.py PseudoCoupHQ/Planning -o PseudoCoupHQ/DevComms/renders/plan_<date>.html`.
+`python3 PRIVATE/PlanPlan/framework/render_plan.py PRIVATE/PseudoCoupHQ/Planning -o PRIVATE/PseudoCoupHQ/DevComms/renders/plan_<date>.html`.
 
 **THE VIRTUAL-MEMORY FORM — SEE LOG 141 (2026-09-02).** The full
 saved understanding, accepted by the owner, lives in
-`PseudoCoupHQ/DevComms/log_141_virtual_memory_form_explained.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_141_virtual_memory_form_explained.md`.
 Two additions over the refinement below: (1) NO CONTIGUITY
 ASSUMPTION — blocks are addressed through a LEDGER (an array of
 block base pointers, fixed order IN/CONST/TEMP/OWN/GUARD/OUT, one
@@ -848,3 +848,179 @@ explained what a term was FOR instead of what it IS. Name the thing
 in relation to what it sits between, in the first sentence, before
 any purpose, motivation or walkthrough. Withholding the definition
 while explaining around it reads as bad faith.
+
+## the arch-opcode emulation line, rulings and state of 2026-09-07 → 2026-09-10 (re-read before any work on it)
+
+THE GLOSSARY IS `Research/GLOSSARY.md`, in the owner's form. Every word of this
+line (cell, term, tier, gate, bank, reading, carve, lifter, ...) is
+defined there. A reply to the owner defines each one it uses, in place, before
+it carries weight; the loop is shown as a code block, never inline.
+
+the owner's four names, the loop, and where each thing lives. This is the
+whole line in one place; the logs (233–256) hold the evidence.
+
+`set_of_unique_arch_opcodes`
+- every arch opcode any compiler or interpreter in the corpus produced,
+  one instance each — 162 mnemonics (`Research/oracle/arch_opcodes/unique_opcodes.json`).
+- RULING 2026-09-08: a mnemonic alone is a SPELLING. The machine-form key
+  is (mnemonic, operand form, width); the mnemonic sits in the field
+  `mnem`, which the spelling guard exempts as machine form. Whether two
+  cells compute the same mapping is z3's verdict on their terms, never a
+  reading of names (`add` and `lea` share a value and differ on flags).
+- at that key the corpus uses 253 attested cells over 134 mnemonics
+  (`Research/oracle/arch_opcodes/model/model_table.json`, tasks m1/m1b).
+
+`cell`
+- one row of the model table: the reference's mapping of that opcode
+  at that form and width, as a z3 term per written place (destination,
+  flags, accumulator pair, memory), plus the corpus's attestation.
+- a cell's term is architecture-neutral; only the reading opcode → term
+  (the reference) is x86's.
+
+`find_emulation(cell, target)` — the running algorithm, exactly
+```
+term   = cell.mapping                       # from the model table
+source = render(term, target)               # one spelling per z3 operator; the target's
+                                            #   own primitive where one lowers to this cell
+body   = carve(compile(source, ship flags)) # the target's compiler does the optimising
+verdict = z3(walk(body) == term)            # per written place; no search anywhere
+```
+- no branch is keyed on an opcode name (checked, 2026-09-10; the one
+  `ret` is the carver's). The contract rules (a vector place projects to
+  its lane; memory and flag reads are parameters; a 128-bit place is two
+  halves; a derived arrival is a region; an immediate is an input; an
+  empty body is the identity; a flag consumer is rendered over EVERY
+  attested setter) are general and unconditional since task ap6.
+- the driver is `emulation/handful/handful.py` + `autopoly/autopoly.py`;
+  renderers for c, cpp, rust, go, swift; the interpreted route
+  (`emulation/interp/`) renders in cpython, php, ruby, java, javascript,
+  dart, csharp and CHECKS by the fuzz method (edge values first in every
+  sample; an agreement is evidence, never a proof).
+- the SECOND TIER (task t2, running): where a target lacks a primitive
+  at a width or kind, construct it from `& | ^ ~`, a conditional and
+  variables, smallest width first; both routes per cell, bank whichever
+  proves; proof canonical-form first, the schema's lemma second, z3 last
+  and bounded. the owner: "whoever gets there first"; the guarantee is that a
+  Turing-complete language with full arithmetic has every logic gate.
+
+`the bank` (`emulation/autopoly/certificates.jsonl`, task bank1)
+- the polyfill library: one certificate per (cell, target, place, setter):
+  term text, rendered source and its sha256, compiler and flags, carved
+  body, verdict, the code version that produced it. A certificate never
+  regresses; only the machinery can fail to reproduce it.
+- the loop runs `autopoly.py --bank`: uncertified keys plus a 5% audit;
+  a differing verdict on identical inputs is an ALARM and a STOP.
+- pass-over-pass full re-derivation (ap1–ap5) was a DESIGN ERROR: it
+  re-did 75–98% of known work per pass and lost 19 proved pairs once.
+- THE HEADLINE IS ALWAYS THREE READINGS: strict (every written place),
+  destination-only, corpus-needed (flags only where the corpus's
+  flag-pair rows show a consumer). On all four compiled targets, as of
+  ap6: strict 94 cells / 49.4% of attested rows; destination-only 147 /
+  73.1%; corpus-needed 137 / 68.0%. All seven interpreters agree on 184
+  cells / 87.2% (ex2). cpp is c's twin.
+
+`the Hub` (`Research/oracle/hub/`, tasks hub1/hub2)
+- source composition: tree-sitter + go/types resolve each operator node
+  to a cell (else the setter+consumer PAIR, else the operator's whole
+  lowered body = its pool entry); each node becomes a call of the
+  dictionary's proved emulation; the target's compiler lowers ACROSS the
+  calls (measured: `a + b - c` → `lea; sub; ret`); the gate proves body
+  B against go's own body A. Over 590 corpus go units: c composes 325 /
+  proves 290, rust 276 / 260, disproved 3 on each.
+
+`level 0` (the reference, `Research/op_pipeline/reference.py`)
+- VEX's reading of Intel's prose; RATIFIED ground truth for every term.
+- 2026-09-10, task ref1: checked against the K-framework x86-64 semantics
+  (Strata's chip-tested formulas, in `Sources/X86-64-semantics`, read from
+  `/sources`, never copied): 383 disagreeing places over 144 cells, ALL
+  resting on four lines — `full64` zero-extends 8/16-bit writes (the
+  hardware keeps the upper bits), `build_carry_binary` leaves the carry
+  out of the flags, `cond_to_z3` computes every condition as L−R,
+  `sub`/`sbb` missing from `WIDTH_IS_NOT_A_SUFFIX`. Intel's undefined
+  flags recorded as regions. NOTHING DECIDED; task ref2 (written) fixes
+  the four and re-derives everything that rests on them — on the owner's word.
+
+`the layout, 2026-09-10` (DevComms log_001, §13–§15)
+- the laptop's `~/Programming` is split: this repo is
+  `PRIVATE/PseudoCoupHQ`, Airlock is
+  `PUBLIC/Airlock`, DevComms `PRIVATE/DevComms`. The old
+  names DO NOT EXIST (links retired); a path that fails is meant to.
+  The tower stays flat; `remote_lane.sh` maps either spelling both
+  ways; sync args stay `Programming/PseudoCoupHQ/...`; container paths
+  `...` unchanged. Lane scripts under Research are tower-side
+  and keep the flat spelling on purpose.
+
+`the tower`
+- all lanes run on the VM on the owner's tower over ssh, through
+  `PUBLIC/Airlock/remote_lane.sh` (LAW.md's tower section);
+  waits in short calls under 110 s (a tool call is cut at 120 s).
+- the law is `Research/LAW.md`; briefs live in `Research/briefs/`; never
+  the session scratchpad (wiped twice).
+
+`the ruling of 2026-09-10 evening: the guarantee tier is top priority`
+- the owner: the general construction from primitives "is meant to be capable
+  of proving as a guarantee" — top priority. t2's eight schemas were
+  patterns for the refused shapes, NOT the method; that was my
+  sequencing error. t4 builds the method (one construction per
+  operation kind, general in width and word, proved once, composed over
+  any term with named intermediates; native operator wins) and measures
+  every unproved cell with a named cause. Runs from 2026-09-10 evening,
+  ahead of t3 and rv3b.
+
+`the second tier, closed 2026-09-10 (t2, log_257)`
+- 14 constructed places proved (adc/sbb/shld/shrd at 64 on go and
+  swift), every one by the schema's Lean lemma; the compiler collapsed
+  NONE (LANDED 0 of 14; bodies 4–17 instructions for the one the cell
+  names). That is the measured answer to the owner's question "can the
+  c-compiler simplify the constructions": no — it supports his IP claim
+  (proof-carrying simplification rules generated from arch-unit
+  equivalences). Bank 24,758 certificates; strict 96 / destination 154
+  (75.2%) / corpus-needed 141.
+- what blocks the rest, each a named thing and each mechanical: the
+  renderers print one nested expression (no intermediates → divider,
+  softfloats unstatable); the x87 family refused at the arrival
+  contract (80-bit value as two integer words fixes it); the tier's
+  source outside code_version (full pass instead of delta). Task t3
+  (brief written) does those three, after ref2.
+
+`RISC-V` (exploration, not a pivot; rv1 CLOSED 2026-09-10, log_258; rv2 running)
+- rv1: ten units carved on riscv64; level 0 for RV64IM = `riscv_reference.py`
+  checked at 860,304 points against the ratified Sail simulator, 0
+  disagree (a check at points, not an equality); the claim on 10 units:
+  7 IDENTICAL after normalize, 3 DIFFER for contract causes only (the
+  ABI's narrow-argument extension; `idiv` traps where `divw` defines);
+  the surface 2,644 lines in 5 files, the lifter 44% — the term store,
+  table, bank and proofs transferred untouched.
+- rv2 (log_259): the transfer measured. 255 RISC-V cells; a TWIN = an
+  x86 cell with an equal term: 102 at the whole place, 161 at the
+  cell's own width (RISC-V's 32-bit forms sign-extend into the register,
+  x86's zero-extend — a contract, stated per row). Inherited
+  certificates compiled for riscv64 and gated: 103 proved, 0 disproved.
+  The loop over the untwinned proved 82 cells. 116 of 255 (45.5%) hold
+  a proved riscv64 emulation. Readings coincide on RISC-V (no flags).
+  Owed (rv3): Zba/Zbb/Zbs in the lifter; twins vs ref2's table; rust
+  `riscv64gc-unknown-linux-gnu` + `g++-riscv64-linux-gnu` headers in
+  the image (rebuild queued); the 734 certificates into the bank.
+  FOR DEE: does the Hub's dictionary key carry the extension rule.
+- rv3 part 1 (log_260): the lifter gained `c.zext.w add.uw c.mul bseti
+  fsgnjn.d` (99,968 Sail points, 0 disagree); the inheritance re-run on
+  the sixth image: 244 PROVED / 0 DISPROVED / 0 UNDECIDED of 734 (c 58,
+  cpp 54, go 71, rust 61; swift 56 not attempted: no swiftc for
+  riscv64), against rv2's 103. Twins on the corrected table and the
+  bank merge WAIT FOR ref2 (a follow-on lane, rv3b). the owner owns a planning
+  sub-node for RISC-V (wanted, not created).
+- the ratified Sail model is level 0 for free; no flags at all; the
+  library transfers by TERM identity (a certificate says "this source
+  computes this term", architecture-neutral); only the compiler's
+  backend is re-verified. The image gains the rust riscv64 target, Sail
+  (0.20.2) and the sail-riscv C simulator `sail_riscv_sim` (Isla dropped:
+  unbuildable against a released Sail); sixth build adds the rust
+  `riscv64gc-unknown-linux-gnu` target and `g++-riscv64-linux-gnu`
+  (glibc/libstdc++ headers at /usr/riscv64-linux-gnu; clang takes
+  `--target=riscv64-linux-gnu --gcc-toolchain=/usr`). On the tower
+  2026-09-10 evening.
+
+communication, 2026-09-10 (cards in the protocol, cases Appendix D): the
+model of how to write is the owner's own message in cases Appendix C.1 —
+plain vocabulary, terms loudly defined, a loop, a few sentences that
+hold the big picture; not a prose block, not a cold telegraph.

@@ -1,8 +1,8 @@
 # log 024 — layer 3, python: the kind fuzz generated, run, and read
 
 Date: 2026-08-17. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 Phases 1 and 2 of that node's plan of record. Python only — generalising to
 the other ten is gated on the owner's review, as the node's own plan requires.
 
@@ -489,7 +489,7 @@ before saying go on the other ten:
 ## record
 
 Everything is in
-`PseudoCoupHQ/Research/kind_fuzz_clustering/`:
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`:
 
 - `probe_design.md` — phase 1, the rules, written before generation.
 - `probe_generate.py` -> `probes_python.json` — every probe with its
@@ -504,7 +504,7 @@ Everything is in
   first behavior signatures and their readable slice.
 
 To reproduce:
-`bash -c "cd PseudoCoupHQ/Research/kind_fuzz_clustering && python3 probe_generate.py && python3 lane_build.py"`,
+`bash -c "cd PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering && python3 probe_generate.py && python3 lane_build.py"`,
 copy `lanes/l3_python.sh` into `SandboxDesign/agent/drop/`,
 poll `agent/status/l3_python.sh.status`, copy `agent/out/l3_python.txt`
 back to `raw/`, then `python3 signatures.py`.

@@ -1,12 +1,12 @@
 # log 145 — three open calls on Airlock, for its owner
 
-2026-09-02. Airlock is `Airlock`, an application several
+2026-09-02. Airlock is `PUBLIC/Airlock`, an application several
 projects use through `AIRLOCK_ROOT` and lanes. Three questions about its
 shape are open. Nothing here decides anything; each section carries the
 real lines so its question is answerable from this page alone.
 
 An **instance**, in Airlock's own words
-(`Airlock/README.md`, Instances section) — LITERAL:
+(`PUBLIC/Airlock/README.md`, Instances section) — LITERAL:
 
 > An **instance** is one running sandbox: its own runner container, its own
 > proxy, its own networks, its own agent lane, its own caps. One Airlock
@@ -21,7 +21,7 @@ Every quoted line below was grepped this session; the commands are in §4.
 ## 1.1 The instance: the ten names, and the line each one lives on
 
 LITERAL — the table as it stands in
-`PseudoCoupHQ/DevComms/log_138_airlock_instances_feature.md`
+`PRIVATE/PseudoCoupHQ/DevComms/log_138_airlock_instances_feature.md`
 §7, reproduced row for row, with a fourth column added holding the exact
 artifact line grepped this session.
 
@@ -47,7 +47,7 @@ artifact line grepped this session.
   edit — that is what the fourth column above shows.
 - Two rows carry more than spelling. Row 8 is call three of this page (a
   location, not a word). Row 10 is a bridge the README already documents
-  as temporary — `Airlock/README.md`, Configuration table,
+  as temporary — `PUBLIC/Airlock/README.md`, Configuration table,
   LITERAL: "It exists because the daemon is part of the image: a change
   to `daemon/watcher.py` otherwise needs a full rebuild before any
   instance can use it. Drop the key after the next `build.sh`."
@@ -63,7 +63,7 @@ a complete answer.
 
 ## 2.1 The instance: the daemon says serial, in its own words
 
-LITERAL — `Airlock/daemon/watcher.py`, lines 30-32:
+LITERAL — `PUBLIC/Airlock/daemon/watcher.py`, lines 30-32:
 
 ```
 EXECUTION IS SERIAL. run_script() is called synchronously from the single
@@ -75,11 +75,11 @@ GLOSS of those three lines: one loop reads the drop folder and calls the
 runner function directly, so the next lane cannot begin until the current
 one returns; the stated reason is the scratch filesystems, which are
 fixed-size tmpfs (`work_size = 4g`, `tmp_size = 2g` in
-`Airlock/instances/sandbox.conf.example`).
+`PUBLIC/Airlock/instances/sandbox.conf.example`).
 
 ## 2.2 What a caller gives up, in values in motion
 
-LITERAL — `PseudoCoupHQ/Research/op_pipeline/trickle2.py`,
+LITERAL — `PRIVATE/PseudoCoupHQ/Research/op_pipeline/trickle2.py`,
 lines 51-52 and 333:
 
 ```
@@ -116,7 +116,7 @@ The walk, with the real numbers from that program's state file
 | every caller of Airlock, today, behaves this way | the change lands on every caller of Airlock, not only the one asking |
 
 The key does not exist: `grep -rn "workers"` over every `.sh`, `.py` and
-the `airlock` CLI in `Airlock` returns nothing (§4).
+the `airlock` CLI in `PUBLIC/Airlock` returns nothing (§4).
 
 ## 2.4 The question
 
@@ -130,7 +130,7 @@ daemon comment names — or does serial stay the rule for every caller?
 
 ## 3.1 The instance: the derivation, and the ignore stanza
 
-LITERAL — `Airlock/instance.sh`, lines 146-156:
+LITERAL — `PUBLIC/Airlock/instance.sh`, lines 146-156:
 
 ```
     # --- the agent lane -------------------------------------------------
@@ -152,7 +152,7 @@ takes that value if it is non-empty and the derived default otherwise.
 So the conf key already accepts any path; the default is what is being
 asked about.
 
-LITERAL — `Airlock/.gitignore`, lines 28-34:
+LITERAL — `PUBLIC/Airlock/.gitignore`, lines 28-34:
 
 ```
 # Which INSTANCES this install runs, and each one's caps. Same pattern as
@@ -164,7 +164,7 @@ instances/*.conf
 instances/*/
 ```
 
-LITERAL — `Airlock/instances/sandbox.conf.example`, the
+LITERAL — `PUBLIC/Airlock/instances/sandbox.conf.example`, the
 `agent_dir` block as shipped (commented out, so the derivation applies):
 
 ```
@@ -178,7 +178,7 @@ mounts_file     = mounts.conf
 
 | shape A — inside the checkout (as built) | shape B — outside the checkout |
 |---|---|
-| an instance named `trickle` gets `Airlock/instances/trickle/agent/{drop,status,logs,out}` | the earlier fork put its tree at `AirlockTrickle/agent`, deliberately |
+| an instance named `trickle` gets `PUBLIC/Airlock/instances/trickle/agent/{drop,status,logs,out}` | the earlier fork put its tree at `AirlockTrickle/agent`, deliberately |
 | kept out of git by the stanza `instances/*/` quoted above | outside the repo entirely, so no ignore rule is load-bearing |
 | `airlock doctor` finds every instance by listing `instances/`, so one directory answers "what else runs here" | a second place to look; `doctor`'s listing no longer sees the tree |
 | the reason the fork avoided it: the 30-second commit daemon (`~/Programming` repos, all 16) walks the checkout; run records sit next to source, protected only by the ignore rule | run records never sit beside source at all |
@@ -196,7 +196,7 @@ and only the default is in question?
 # 4. Verification — every quoted line, grepped this session
 
 ```
-$ cd Airlock
+$ cd PUBLIC/Airlock
 
 $ grep -n -i "serial\|concurrent\|scratch" daemon/watcher.py
 27:    a run that exhausts scratch space is otherwise diagnosed only by its
@@ -235,16 +235,16 @@ $ grep -n 'AL_DAEMON_FILE' up.sh
 $ grep -rn "workers" --include=*.sh --include=*.py --include=airlock .
 (no output)
 
-$ grep -n "one at a time\|serially" PseudoCoupHQ/Research/op_pipeline/trickle2.py
+$ grep -n "one at a time\|serially" PRIVATE/PseudoCoupHQ/Research/op_pipeline/trickle2.py
 52:time and waits.
 333:    print("%d chunk(s) to run, one at a time (Airlock runs lanes serially)"
 ```
 
-Sources: `PseudoCoupHQ/DevComms/log_138_airlock_instances_feature.md`
+Sources: `PRIVATE/PseudoCoupHQ/DevComms/log_138_airlock_instances_feature.md`
 §6.4.1, §7, §8;
-`PseudoCoupHQ/DevComms/log_140_open_calls_explained.md` §5-§7;
-`Airlock/README.md` Instances and Configuration sections;
-`Airlock/instances/sandbox.conf.example`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_140_open_calls_explained.md` §5-§7;
+`PUBLIC/Airlock/README.md` Instances and Configuration sections;
+`PUBLIC/Airlock/instances/sandbox.conf.example`.
 
 No recommendation is made on any of the three; no fact on this page forces
 one.

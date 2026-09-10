@@ -6,7 +6,7 @@ its by-cause table, its §"Awaiting the owner"), `log_242` §7–§11 (g1b), the
 driver `Research/oracle/cross_construction/emulation/handful/handful.py`
 and `.../autopoly/autopoly.py`, the four renderers, and
 `Research/oracle/arch_opcodes/model/model_table.py`. Instance `ap2.conf`
-(copy from `Airlock/instances/ap2.conf`; it mounts
+(copy from `PUBLIC/Airlock/instances/ap2.conf`; it mounts
 `sandbox-persist` read-only). Artifact folder: the same `.../emulation/autopoly/`,
 writing `autopoly2_*` files; ap1's products are not overwritten; lanes
 under `lanes_ap2/`.

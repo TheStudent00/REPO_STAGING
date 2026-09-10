@@ -5,11 +5,11 @@
 **What this is.** A proposed coarse tag for every one of the 163 named
 kinds of the pinned `tree-sitter-rust` grammar, drawn from the validated
 intentions artifact at
-`PseudoIR/Tools/intentions/pc_intentions.json` — its
+`PRIVATE/PseudoIR/Tools/intentions/pc_intentions.json` — its
 `minimum_set` (11 universal objects) and its `intent_categories` (10
 differentiator categories A-J), 21 buckets in all, plus two PROPOSED new
 buckets argued for below. It serves
-`PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`
+`PRIVATE/PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md`
 item 3 (what `ur_kind` classifies) and item 5 (the mechanical seed at
 language one): the proposal is that the coarse layer of `ur_kind` is
 these buckets rather than the grammar's five supertype families, and the
@@ -420,11 +420,11 @@ Five clusters account for most of them:
 
 ## sources
 
-- `PseudoIR/Tools/intentions/pc_intentions.json` —
+- `PRIVATE/PseudoIR/Tools/intentions/pc_intentions.json` —
   `minimum_set`, `intent_categories`, `t1_realizations`, `border_lattice`.
-- `PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md` —
+- `PRIVATE/PseudoCoup_v5/DevComms/log_006_ur_kinds_vocabulary.md` —
   items 3 and 5, which this drafts for.
-- `PseudoCoup_v5/DevComms/log_002_ur_brainstorm.md` §2-§3 —
+- `PRIVATE/PseudoCoup_v5/DevComms/log_002_ur_brainstorm.md` §2-§3 —
   the worked sample and the kind families.
 - The compiled `Language` object, `tree-sitter==0.26.0` /
   `tree-sitter-rust==0.24.2`, enumerated 2026-08-05.

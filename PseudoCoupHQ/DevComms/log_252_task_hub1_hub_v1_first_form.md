@@ -1,25 +1,25 @@
 # log 252 — task hub1: Hub v1, first form — the dictionary read off the polyfill-complete set, one typed go file lowered as source composition of proved emulations, and the measure over the corpus's own go units
 
 Node: `hq.research.arch_unit_oracle.hub_compiler`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/`),
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/`),
 its CORE's "definition" of 2026-09-07 (SOURCE COMPOSITION) and its four
 sub-nodes front_end, dictionary, joiner, oracle_test. Line: steps 4 and 5
 of the master order,
-`PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
-§4.2. Law: `PseudoCoupHQ/Research/LAW.md`, read in full
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
+§4.2. Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, read in full
 including its tower section. Brief:
-`PseudoCoupHQ/Research/briefs/task_hub1_brief.md`.
+`PRIVATE/PseudoCoupHQ/Research/briefs/task_hub1_brief.md`.
 Date: 2026-09-10. Instance `hub1`, on the tower guest.
 
-Artifact folder: `PseudoCoupHQ/Research/oracle/hub/`. Lane
-scripts: `PseudoCoupHQ/Research/oracle/hub/lanes_hub1/`,
+Artifact folder: `PRIVATE/PseudoCoupHQ/Research/oracle/hub/`. Lane
+scripts: `PRIVATE/PseudoCoupHQ/Research/oracle/hub/lanes_hub1/`,
 sixteen of them, each kept in the repo as the standing rule of 2026-09-07
 requires. Every lane log named below is on the TOWER
 (`<user>@<tower>`) under
 `<runs>/hub1/agent/logs/`.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into the
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into the
 instance. Every rendering is labelled per the protocol's
 `object.literal-gloss-analogy`: **LITERAL** is the object itself, quoted;
 **GLOSS** is a plain-words reading beside a literal.
@@ -34,20 +34,20 @@ instance. Every rendering is labelled per the protocol's
   AutoPoly loop rendered for that cell on that target, the route it took
   (primitive / primitive+setup / term), the gate's verdict on it, and the
   ledger rows the cell is attested by. Task ap5's store
-  (`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly5_runs.jsonl`,
+  (`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly5_runs.jsonl`,
   1,012 runs, log 249) holds every one; this task writes them out as one
   lookup and names, per target, the cells that have no proved entry and
   why.
 * The **GO SIDE** of the lookup is the corpus's own attestation: a go
   unit whose WHOLE body is one arch-opcode instruction plus chaff (task
   o2's narrow rule,
-  `PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json`)
+  `PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json`)
   says which cell go's compiler produces for the construct that unit's
   own source holds at the operand holders that unit's own probe record
   names.
 * The **FRONT END** parses the file to be lowered with tree-sitter-go and
   types every operator node's operands with go's own type checker
-  (`PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go`,
+  (`PRIVATE/PseudoCoupHQ/Research/oracle/compiler_units/go_types_oracle.go`,
   task o6's program, READ and never edited), joining the two by POSITION.
 * **SOURCE COMPOSITION** is the egress the CORE ruled on 2026-09-07: the
   tree walked post-order, each operator node replaced by a CALL of its
@@ -94,8 +94,8 @@ Three things are said before the numbers so the numbers are not misread.
 
 # 2. The dictionary (step 4 of the master order)
 
-`PseudoCoupHQ/Research/oracle/hub/dictionary.json` and its
-reading `PseudoCoupHQ/Research/oracle/hub/dictionary.md`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/dictionary.json` and its
+reading `PRIVATE/PseudoCoupHQ/Research/oracle/hub/dictionary.md`,
 both written by
 `python3 PseudoCoupHQ/Research/oracle/hub/hub.py dictionary`
 (lane `hub1_l7`).
@@ -314,7 +314,7 @@ unsigned counterpart and a float answer is already the value.
 # 5. The handful (step 5 of the master order)
 
 The file is
-`PseudoCoupHQ/Research/oracle/hub/handful/handful.go`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/handful/handful.go`,
 written for this task: eight explicitly typed functions, each one or two
 operators, in the corpus's own probe shape (`//go:noinline`, package
 main, globals fed from `main`) so that go's build of it is carved exactly
@@ -425,9 +425,9 @@ cmp 0x10(%r14),%rsp; jbe 47a80b <main.f1_i32_add_sub+0x2b>; push %rbp; mov %rsp,
 
 So the proof is RE-POSED against the same composed file with that ONE
 line dropped from each emulation and nothing else changed —
-`PseudoCoupHQ/Research/oracle/hub/handful/composed_go_inlinable.go`
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/handful/composed_go_inlinable.go`
 beside
-`PseudoCoupHQ/Research/oracle/hub/handful/composed_go.go`.
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/handful/composed_go.go`.
 Both files are kept, both verdicts are recorded, and the re-pose is
 recorded BESIDE the strict verdict and never in place of it; task o7's
 caller-extension re-pose is the precedent.
@@ -443,7 +443,7 @@ others, off `oracle_test.json`:
 | `f4_i64_mul` | `nop; imul %rbx,%rax; nop; ret` |
 | `f7_f64_add_mul` | `push %rbp; mov %rsp,%rbp; sub $0x10,%rsp; addsd %xmm1,%xmm0; nop; movsd %xmm0,0x8(%rsp); movsd 0x8(%rsp),%xmm1; mulsd %xmm2,%xmm1; nop; movsd %xmm1,(%rsp); movsd (%rsp),%xmm0; add $0x10,%rsp; pop %rbp; ret` |
 
-*(attribution: `PseudoCoupHQ/Research/oracle/hub/oracle_test.json`,
+*(attribution: `PRIVATE/PseudoCoupHQ/Research/oracle/hub/oracle_test.json`,
 `results[*].re_posed_without_the_noinline_directive.body_b_text`.)*
 
 **GLOSS.** All five prove. `f1_i32_add_sub` comes back as
@@ -503,7 +503,7 @@ body B: test %edi,%edi; setne %al; test %esi,%esi; setne %cl; and %al,%cl; movzb
 the gate: z3 found a starting state under which the two sides differ
 the counterexample: [IN_1 = 4261396478, IN_0 = 4261396478]
 ```
-*(attribution: `PseudoCoupHQ/Research/oracle/hub/measure.json`
+*(attribution: `PRIVATE/PseudoCoupHQ/Research/oracle/hub/measure.json`
 as lane `hub1_l12` left it, read in this session before lane `hub1_l13`
 overwrote it.)*
 
@@ -599,12 +599,12 @@ peaked at 78,376 kB and the dictionary lane at 86,984 kB. No lane hit a
 time or memory limit, so nothing is re-run for room.
 
 **THE LANES**, sixteen, all kept in
-`PseudoCoupHQ/Research/oracle/hub/lanes_hub1/`: `l1`
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/lanes_hub1/`: `l1`
 toolchain probe, `l2` and `l3` the go side explored, `l4` and `l7` the
 dictionary, `l5`, `l8`, `l9`, `l10` and `l13` the handful, `l6` the
 grammar's real shape, `l11` the measure sampled, `l12` and `l13` the
 measure whole, `l14` the pastes of this log, `l15` and `l16` the tables.
-Nothing under `<runs>/` or `Airlock/` was deleted,
+Nothing under `<runs>/` or `PUBLIC/Airlock/` was deleted,
 and no shared file was changed: `emulate.py`, `go_render.py`,
 `rust_render.py`, `handful.py`, `model_table.py`, `ledger.py`,
 `pool100_entry_equivalence.py`, `gate.py`, `reference.py`,

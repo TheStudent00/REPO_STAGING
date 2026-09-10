@@ -1,8 +1,8 @@
 # log 028 — layer 3 phase 3: close-out, certification, and the value matrix
 
 Date: 2026-08-18 (later the same day than log 027). Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 This log closes the five items log 027 §6.1 left open.
 
 **Rewritten 2026-08-19 for readability at the owner's instruction. The content
@@ -1107,9 +1107,9 @@ dropped, which is cost order. ETAs are **derived** from §6.2.
 
 ```
 cp SandboxDesign/agent/out/vm_*.txt \
-   PseudoCoupHQ/Research/\
+   PRIVATE/PseudoCoupHQ/Research/\
 kind_fuzz_clustering/raw/
-cd PseudoCoupHQ/Research/kind_fuzz_clustering
+cd PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering
 python3 l3_matrix_read.py
 ```
 
@@ -1126,7 +1126,7 @@ python3 l3_matrix_read.py
 
 ```
 cp SandboxDesign/agent/out/ld_*.txt \
-   PseudoCoupHQ/Research/\
+   PRIVATE/PseudoCoupHQ/Research/\
 kind_fuzz_clustering/raw/
 ```
 
@@ -1155,7 +1155,7 @@ kind_fuzz_clustering/raw/
 ## record
 
 New this session, all in
-`PseudoCoupHQ/Research/kind_fuzz_clustering/`:
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`:
 
 - `l3_accept.py` — java and typescript templates added; a mechanical
   right-side type rename for java's two type-declaring holders.

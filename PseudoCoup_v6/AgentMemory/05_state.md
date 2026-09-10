@@ -86,7 +86,7 @@ Planning/Research.
 ## Planning stands (restructured 2026-07-28 to the node grammar)
 
 `Planning/` is `node_0` under the PlanPlan framework
-(`PlanPlan/framework/PROTOCOL.md` — CORE/SUPPORT/
+(`PRIVATE/PlanPlan/framework/PROTOCOL.md` — CORE/SUPPORT/
 node_<indexpath>_<description>; NODE chosen over level/branch).
 Tree: `CORE_0.md` + `SUPPORT_0_dee_frame.md` (the owner's frame
 verbatim) → `node_0_0_tools/` (T1–T6, one node each; T2 ledger has

@@ -149,7 +149,7 @@ not exist.** Measured just now:
 
 | generator | emitters present |
 | --- | --- |
-| `PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_gen.py` | `emit_rust` (line 486), `emit_ruby` (line 865) — and nothing else |
+| `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_gen.py` | `emit_rust` (line 486), `emit_ruby` (line 865) — and nothing else |
 
 The cartesian design was built for two languages. "Launching the other
 ten" is therefore not a launch; it is writing ten new emitters, each

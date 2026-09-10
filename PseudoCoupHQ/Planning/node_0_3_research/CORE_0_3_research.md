@@ -228,7 +228,7 @@ Still open:
 
 ## 6. Rulings shared by every project
 
-Each is recorded in full in `PseudoCoupHQ/AgentMemory.md`;
+Each is recorded in full in `PRIVATE/PseudoCoupHQ/AgentMemory.md`;
 a project CORE restates only the ones it adds to.
 
 - The unit boundary is a function body, read from the symbol table
@@ -248,17 +248,17 @@ a project CORE restates only the ones it adds to.
   (2026-09-04, 2026-09-05).
 - Vocabulary: super / sub / co-node, never the familial words; ABORT,
   never the death words.
-- Planning: this tree conforms to `PlanPlan/framework/PROTOCOL.md`;
+- Planning: this tree conforms to `PRIVATE/PlanPlan/framework/PROTOCOL.md`;
   level-0 and level-1 COREs change only through the owner; a lower node
   refines, never contradicts, its super-node.
 
 ## 7. Where things are recorded
 
-- Artifacts: `PseudoCoupHQ/Research/<project or line>/`
+- Artifacts: `PRIVATE/PseudoCoupHQ/Research/<project or line>/`
   (`kind_signature_clustering/`, `dominant_intentions/`,
   `kind_fuzz_clustering/`, `data_representation/`, `op_pipeline/`,
   `compiler_graph/`, `oracle/`; graphs in `PseudoCoupGraphs/`).
-- The record of what was learned: `PseudoCoupHQ/DevComms/`,
+- The record of what was learned: `PRIVATE/PseudoCoupHQ/DevComms/`,
   numbered per repo, shared by every project; a log names its
   project in its first line.
 - Standing shape: this tree. Progress: each node's `PROGRESS.md`.

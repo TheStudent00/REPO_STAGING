@@ -1,6 +1,6 @@
 # Task t2 — the second tier: construct what a target lacks from the primitives it has, smallest width first, proved canonical-form first
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it (waits in short
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it (waits in short
 calls). Then `task_ap6_brief.md` beside this file and its log (ap6 runs
 BEFORE this task: the driver is one, versioned, gate-free), `log_234`
 (the mappings as fits: the two bases and the mixed case), `log_221` §7
@@ -10,7 +10,7 @@ causes: "float of 80 bits", "answer 128 bits", "no spelling for kind",
 "no 80-bit holder"), the renderers, `Research/op_pipeline/term.py`
 (`Term.normalize`, `identical_text`'s basis), `Research/op_pipeline/lean/`
 (L1's preservation theorem; `run_edges_L1.py`). Instance `t2.conf` (copy
-from `Airlock/instances/t2.conf`). Artifact folder:
+from `PUBLIC/Airlock/instances/t2.conf`). Artifact folder:
 `.../emulation/`, new sub-folder `construct/`; lanes under `construct/lanes_t2/`.
 
 ## 1. The ruling this task carries out (the owner, 2026-09-10)
@@ -77,6 +77,6 @@ lane; PROGRESS on the autopoly node and the lean node; sync-back;
 instance down. Memory bound 6g, sample 20, peak RSS, abort
 `ABORT_MEMORY_T2`; z3 ceiling 30 s hard. Shared-file changes: the
 driver's one call site and `construct/` only. Never delete anything under
-`<runs>/` or `Airlock/`. Reply with the before →
+`<runs>/` or `PUBLIC/Airlock/`. Reply with the before →
 after by schema and target, the proof-form counts, the collapse counts,
 the three readings, the tally, the two lists.

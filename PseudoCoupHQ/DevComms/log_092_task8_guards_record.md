@@ -155,12 +155,12 @@ the failure mode log_091's round-2 header describes.
 
 ## File inventory (every artifact written this task)
 
-- `PseudoCoupHQ/Research/op_pipeline/guards4.py` — new. The record-of-record generator.
-- `PseudoCoupHQ/Research/op_pipeline/guards4.json` — new. THE guard record of record (313 rows). PASSES `check_no_spelling_keys.py`, no exemption.
-- `PseudoCoupHQ/Research/op_pipeline/exception_families2.py` — new. exception_families.py's logic, re-pointed at guards4.json.
-- `PseudoCoupHQ/Research/op_pipeline/exception_families2.json` — new. 39 families. PASSES `check_no_spelling_keys.py`, no exemption.
-- `PseudoCoupHQ/Research/op_pipeline/cross_axis_table.py` — new. Operator-family x exception-family crossing.
-- `PseudoCoupHQ/Research/op_pipeline/cross_axis_table.json` — new. 17 crossed cells + 83 named uncrossed rows. PASSES `check_no_spelling_keys.py`, no exemption (after the fix described in (d)).
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/guards4.py` — new. The record-of-record generator.
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/guards4.json` — new. THE guard record of record (313 rows). PASSES `check_no_spelling_keys.py`, no exemption.
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/exception_families2.py` — new. exception_families.py's logic, re-pointed at guards4.json.
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/exception_families2.json` — new. 39 families. PASSES `check_no_spelling_keys.py`, no exemption.
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/cross_axis_table.py` — new. Operator-family x exception-family crossing.
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/cross_axis_table.json` — new. 17 crossed cells + 83 named uncrossed rows. PASSES `check_no_spelling_keys.py`, no exemption (after the fix described in (d)).
 - No file was modified or deleted. `guards2.json`, `guards2_parallel.json`, `guards3.json`, `guards_java_deopt.py`, `exception_families.json`, `exception_families.py` are all left exactly as they were, kept as superseded/predecessor records, named here.
 
 ## Task 13 — the two documentation slips (verified against artifacts before correcting)

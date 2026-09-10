@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_2_0_0_1_slice
@@ -32,9 +32,9 @@ sub-node count: 0
 
 ## blocked
 
-- `PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 3 — status: blocked
-- `PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 9 — - 2026-07-31: status -> blocked. stage 2 (IRMapping) has no answer,
-- `PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 10 — so the chain cannot close; stages 1 and 3 are not blocked, and
+- `PRIVATE/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 3 — status: blocked
+- `PRIVATE/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 9 — - 2026-07-31: status -> blocked. stage 2 (IRMapping) has no answer,
+- `PRIVATE/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/PROGRESS.md` line 10 — so the chain cannot close; stages 1 and 3 are not blocked, and
 
 ## PROGRESS bullet statuses
 
@@ -50,6 +50,6 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 ## SUPPORT files in this sub-tree
 
-- `PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_choosing_machine_instructions.md`
-- `PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_per_cpu_architecture.md`
-- `PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_rust_source_to_llvm_ir.md`
+- `PRIVATE/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_choosing_machine_instructions.md`
+- `PRIVATE/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_per_cpu_architecture.md`
+- `PRIVATE/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_1_slice/SUPPORT_rust_source_to_llvm_ir.md`

@@ -1,6 +1,6 @@
 import sys
-sys.path.insert(0, "PseudoCoupHQ/Research/kind_fuzz_clustering")
-sys.path.insert(0, "PseudoCoupHQ/Research/op_pipeline")
+sys.path.insert(0, "PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering")
+sys.path.insert(0, "PRIVATE/PseudoCoupHQ/Research/op_pipeline")
 import arch_sem as AS
 import sem_anchored as SA
 import json

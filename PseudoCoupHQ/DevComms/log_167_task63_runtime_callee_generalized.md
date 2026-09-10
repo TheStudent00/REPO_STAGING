@@ -1,9 +1,9 @@
 # log 167 — task 63: runtime_callee, generalized
 
 Date: 2026-09-03. Round 13, TASK 63 of
-`PseudoCoupHQ/DevComms/log_166_claude_code_task_briefs_round13.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_166_claude_code_task_briefs_round13.md`.
 Node: `hq.research.compiler_graph.arch_unit.runtime_callee`, at
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/`.
 Appendix-B shape; §5.1a LITERAL / GLOSS labels throughout; every
 number carries its population.
 
@@ -48,7 +48,7 @@ the symbol's address range instead of asking for it by name.
 
 ## 2.1 What was counted, and over what
 
-LITERAL — `PseudoCoupHQ/Research/op_pipeline/canon39_callee_printed.txt`,
+LITERAL — `PRIVATE/PseudoCoupHQ/Research/op_pipeline/canon39_callee_printed.txt`,
 part 1:
 
 ```
@@ -411,12 +411,12 @@ forbids taking a callee from another toolchain's archive.
 The commands, exactly as run:
 
 ```
-bash Airlock/up.sh --instance trickle
-python3 Airlock/airlock --instance trickle submit \
-    PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane2.sh \
+bash PUBLIC/Airlock/up.sh --instance trickle
+python3 PUBLIC/Airlock/airlock --instance trickle submit \
+    PRIVATE/PseudoCoupHQ/Research/op_pipeline/runtime_callee_swift_lane2.sh \
     --batch t63 --weight 1
-AIRLOCK_INSTANCE=trickle bash Airlock/progress.sh status
-bash Airlock/down.sh --instance trickle
+AIRLOCK_INSTANCE=trickle bash PUBLIC/Airlock/progress.sh status
+bash PUBLIC/Airlock/down.sh --instance trickle
 ```
 
 The instance was brought down when the lane was done; the lane exited
@@ -428,7 +428,7 @@ The instance was brought down when the lane was done; the lane exited
 
 ## 6.1 What was missing, computed
 
-LITERAL — `PseudoCoupHQ/Research/op_pipeline/acceptance63_printed.txt`,
+LITERAL — `PRIVATE/PseudoCoupHQ/Research/op_pipeline/acceptance63_printed.txt`,
 part 0:
 
 ```
@@ -522,7 +522,7 @@ GLOSS: every attached body now stops only where task 64 takes over.
 
 ## 6.4 Nothing that already answered was moved
 
-LITERAL — `PseudoCoupHQ/Research/op_pipeline/regression63_printed.txt`:
+LITERAL — `PRIVATE/PseudoCoupHQ/Research/op_pipeline/regression63_printed.txt`:
 
 ```
 population: canon39's proved units; SAMPLE of 3000 drawn from 40
@@ -549,7 +549,7 @@ attached body is task 64's, not this task's.
 
 ## 7.1 The unmodified guard, one process
 
-LITERAL — `PseudoCoupHQ/Research/op_pipeline/guard63_transcript.txt`:
+LITERAL — `PRIVATE/PseudoCoupHQ/Research/op_pipeline/guard63_transcript.txt`:
 
 ```
 guard63.py -- every artifact task 63 writes, unmodified guard, ONE
@@ -570,9 +570,9 @@ GUARD EXIT CODE = 0
 ```
 
 ```
-$ cd PseudoCoupHQ/Research/op_pipeline && grep -c exempt guard63_transcript.txt
+$ cd PRIVATE/PseudoCoupHQ/Research/op_pipeline && grep -c exempt guard63_transcript.txt
 0
-$ git -C PseudoCoupHQ diff --stat Research/op_pipeline/check_no_spelling_keys.py
+$ git -C PRIVATE/PseudoCoupHQ diff --stat Research/op_pipeline/check_no_spelling_keys.py
 (no output — the checker is unmodified)
 ```
 
@@ -605,12 +605,12 @@ log_158's binding rule 3:
 - `CORE_0_3_5_4_0_opcode_table.md` — one new settled rule: the corpus
   the table is built over includes the attached callee bodies.
 
-LITERAL — `python3 PlanPlan/framework/check_plans.py PseudoCoupHQ/Planning`:
+LITERAL — `python3 PRIVATE/PlanPlan/framework/check_plans.py PRIVATE/PseudoCoupHQ/Planning`:
 
 ```
 summary: 4 error(s), 3 warning(s)
-[ERROR] dangling-path: PseudoCoupHQ/DevComms/log_107_task21_interp_ does not exist
-[ERROR] dangling-path: PseudoCoupHQ/DevComms/log_110_task25_ does not exist
+[ERROR] dangling-path: PRIVATE/PseudoCoupHQ/DevComms/log_107_task21_interp_ does not exist
+[ERROR] dangling-path: PRIVATE/PseudoCoupHQ/DevComms/log_110_task25_ does not exist
 [ERROR] dangling-path: SandboxDesign/allow.sh does not exist
 [ERROR] dangling-path: Sources/llvm- does not exist
 ```
@@ -650,7 +650,7 @@ rather than assumed. The brief allows editing `ledger.py` and
 
 ## 8.1 Written by this task
 
-Under `PseudoCoupHQ/Research/op_pipeline/`:
+Under `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`:
 
 | file | what it is |
 |---|---|
@@ -674,17 +674,17 @@ Under `PseudoCoupHQ/Research/op_pipeline/`:
 
 ## 8.2 Edited
 
-- `PseudoCoupHQ/Research/op_pipeline/runtime_callee.py`
-- `PseudoCoupHQ/Research/op_pipeline/reference.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/runtime_callee.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/reference.py`
 
 ## 8.3 Plan files touched
 
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/CORE_0_3_5_1_8_runtime_callee.md`
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/PROGRESS.md`
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/node_0_3_5_4_0_opcode_table/CORE_0_3_5_4_0_opcode_table.md`
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/node_0_3_5_4_0_opcode_table/PROGRESS.md`
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/CORE_0_3_5_1_8_runtime_callee.md`
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_1_arch_unit/node_0_3_5_1_8_runtime_callee/PROGRESS.md`
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/node_0_3_5_4_0_opcode_table/CORE_0_3_5_4_0_opcode_table.md`
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_4_reference/node_0_3_5_4_0_opcode_table/PROGRESS.md`
 - 67 `DASHBOARD.md` files, regenerated by
-  `python3 PlanPlan/framework/generate_dashboards.py PseudoCoupHQ/Planning`
+  `python3 PRIVATE/PlanPlan/framework/generate_dashboards.py PRIVATE/PseudoCoupHQ/Planning`
 
 ---
 

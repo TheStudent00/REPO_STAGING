@@ -43,7 +43,7 @@ PATH_RE = re.compile(r"[^\s`)]*")
 # check would push writers toward deleting the history instead.
 #
 # Put the marker anywhere on the line:
-#     `PseudoCoup_v6/Tools/slicer/` (historical)
+#     `PRIVATE/PseudoCoup_v6/Tools/slicer/` (historical)
 #
 # Keep it to lines where the path is genuinely being described in the
 # past tense. A marker used to silence a real stale pointer turns the
@@ -340,7 +340,7 @@ class DanglingPathCheck(Check):
     @staticmethod
     def repo_root_for(path_text, programming_root):
         """The top-level project directory a `<X>/...` path
-        names, e.g. `PseudoCoup_v6` for anything under it."""
+        names, e.g. `PRIVATE/PseudoCoup_v6` for anything under it."""
         rel = os.path.relpath(os.path.expanduser(path_text), programming_root)
         if rel.startswith(".."):
             return None
@@ -976,9 +976,13 @@ class EdgeRegisterCheck(Check):
         edges must use the absolute form, per §6a — the two trees move
         independently, so a relative path between them breaks the first
         time either one moves."""
+        # realpath, not abspath: since 2026-09-10 the working copies sit
+        # under PRIVATE and PUBLIC with a
+        # symlink at the old name, so one file has two spellings. An edge
+        # is about the FILE, so both ends are compared as the file.
         if entry_path.startswith("~"):
-            return os.path.abspath(os.path.expanduser(entry_path))
-        return os.path.abspath(os.path.join(os.path.dirname(core_path), entry_path))
+            return os.path.realpath(os.path.expanduser(entry_path))
+        return os.path.realpath(os.path.join(os.path.dirname(core_path), entry_path))
 
     @classmethod
     def read_edges(cls, core_path):
@@ -1069,7 +1073,7 @@ class EdgeRegisterCheck(Check):
                             f"({t_sup_st})")
                         continue
                     back = self.resolve(t_sup["path"], target)
-                    if back != os.path.abspath(core_path):
+                    if back != os.path.realpath(core_path):
                         disagreeing.append(
                             f"{self.disp(core_path)} names "
                             f"`{entry['name']}`, but that node's "
@@ -1085,7 +1089,7 @@ class EdgeRegisterCheck(Check):
                     else:
                         _, _, t_sub_st, t_subs = self.read_edges(target)
                         named = any(
-                            self.resolve(e[schema.EdgeKeys.PATH], target) == os.path.abspath(core_path)
+                            self.resolve(e[schema.EdgeKeys.PATH], target) == os.path.realpath(core_path)
                             for e in t_subs
                             if e.get(schema.EdgeKeys.REALIZE) is not False)
                         if not named:
@@ -1533,7 +1537,7 @@ class Checker:
               "sweep over the")
         print("  whole tree. for the older register gap, adoption is "
               "mechanical:")
-        print("      python3 PlanPlan/framework/"
+        print("      python3 PRIVATE/PlanPlan/framework/"
               "generate_nodes.py \\")
         print("          <planning root> --adopt --apply")
         print("  which writes each register FROM the folders already on "

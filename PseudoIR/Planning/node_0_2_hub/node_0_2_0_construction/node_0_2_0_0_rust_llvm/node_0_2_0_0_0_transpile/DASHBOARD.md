@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_2_0_0_0_transpile
@@ -48,4 +48,4 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 ## SUPPORT files in this sub-tree
 
-- `PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_0_transpile/SUPPORT_rust_ingestor.md`
+- `PRIVATE/PseudoIR/Planning/node_0_2_hub/node_0_2_0_construction/node_0_2_0_0_rust_llvm/node_0_2_0_0_0_transpile/SUPPORT_rust_ingestor.md`

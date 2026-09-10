@@ -13,15 +13,15 @@ super_node:
     path: ../CORE_0.md
 sub_nodes:
     - name: pcv5
-      path: PseudoCoup_v5/Planning/CORE_0.md
+      path: PRIVATE/PseudoCoup_v5/Planning/CORE_0.md
       repo: PseudoCoup_v5
       remote: https://github.com/<owner>/PseudoCoup_v5.git
     - name: pcv6
-      path: PseudoCoup_v6/Planning/CORE_0.md
+      path: PRIVATE/PseudoCoup_v6/Planning/CORE_0.md
       repo: PseudoCoup_v6
       remote: https://github.com/<owner>/PseudoCoup_v6.git
     - name: pseudoir
-      path: PseudoIR/Planning/CORE_0.md
+      path: PRIVATE/PseudoIR/Planning/CORE_0.md
       repo: PseudoIR
       remote: https://github.com/<owner>/PseudoIR.git
 ---
@@ -54,7 +54,7 @@ detail lives in each project's own plan; this node exists so that a
 reader arriving at the line for the first time knows which repos
 exist and which are live before opening any of them.
 
-## PseudoCoup, version 5 — `PseudoCoup_v5`
+## PseudoCoup, version 5 — `PRIVATE/PseudoCoup_v5`
 
 being gutted and rebuilt (the owner, 2026-07-31). the PseudoCoup research
 is gathered and composed into **Frankenstein tools** — built from the
@@ -66,7 +66,7 @@ its tools node names four: ledgerer, transpiler, polyfill, tracer
 ledgerer). *(this entry said "those two become version 5", naming
 only the transpiler and ledgerer, which was the state before that
 ruling.)* the detail is
-`PseudoCoup_v5/Planning/node_0_0_tools/CORE_0_0_tools.md`;
+`PRIVATE/PseudoCoup_v5/Planning/node_0_0_tools/CORE_0_0_tools.md`;
 this roster stays a pointer, so the count lives there.
 
 gutting is safe because the VCS tracks the research. references to
@@ -75,7 +75,7 @@ material from before the gutting are annotated
 the current tree.
 
 recorded in
-`PseudoCoup_v6/AgentMemory/02_decisions.md` under
+`PRIVATE/PseudoCoup_v6/AgentMemory/02_decisions.md` under
 Direction, superseding the 2026-07-28 decision that PCv5 was
 archived research.
 
@@ -86,16 +86,16 @@ or whatever and we want to update it." So a question of the form "does
 this move to PCv5 / how does PCv6 change" is not an open item; it is
 work that happens after.
 
-## PseudoCoup, version 6 — `PseudoCoup_v6`
+## PseudoCoup, version 6 — `PRIVATE/PseudoCoup_v6`
 
 the tool to transpile from source languages into the hub. plan at
-`PseudoCoup_v6/Planning/CORE_0.md`. holds three tools
+`PRIVATE/PseudoCoup_v6/Planning/CORE_0.md`. holds three tools
 today: ledgerer, transpiler, polyfill.
 
-## PseudoIR — `PseudoIR`
+## PseudoIR — `PRIVATE/PseudoIR`
 
 the system the hub is constructed with; connects languages at the ir
-level. plan at `PseudoIR/Planning/CORE_0.md`. holds
+level. plan at `PRIVATE/PseudoIR/Planning/CORE_0.md`. holds
 three tools today: transpile, slice, insert — one per stage.
 
 *(corrected 2026-08-01: this entry read "two tools today: insert,

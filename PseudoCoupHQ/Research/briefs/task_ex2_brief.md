@@ -1,13 +1,13 @@
 # Task ex2 — the interpreted loop: every attested cell on the seven interpreted targets, by the check ex1 defined
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
 `task_ex1_brief.md` beside this file and its log `DevComms/log_248` (§3
 the sample rule LITERAL, §4 the 70-row handful, §5 the declines, the
 "Awaiting the owner" on the JIT dumps — NOT this task's), `task_ap1_brief.md`
 (the loop's bookkeeping: order by attested rows, one jsonl line per run,
 resume by skipping), and the driver as task ap5 left it (ap5 runs before
 this task; read its log). Instance `ex2.conf` (copy from
-`Airlock/instances/ex2.conf`; mounts `sandbox-persist`
+`PUBLIC/Airlock/instances/ex2.conf`; mounts `sandbox-persist`
 read-only — dart and .NET live there). Artifact folder:
 `.../emulation/autopoly/`, writing `expand2_*`; lanes under
 `handful/lanes_ex2/`.
@@ -48,6 +48,6 @@ json; log (next free number, check right before writing); verifier lane;
 PROGRESS on the autopoly node and the remaining_languages node (append);
 sync-back; instance down. Memory bound 6g, sample 20 runs, peak RSS,
 abort `ABORT_MEMORY_EX2`. No shared-file change is authorised. Never
-delete anything under `<runs>/` or `Airlock/`. Reply
+delete anything under `<runs>/` or `PUBLIC/Airlock/`. Reply
 with the per-target table, the all-seven and all-twelve lines, the
 disagreement count with three examples, the tally, the two lists.

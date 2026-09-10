@@ -19,8 +19,8 @@
 
 set -u
 
-KFZ="$HOME/Programming/PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering"
-AIR="$HOME/Programming/PUBLIC/Airlock"
+KFZ="$HOME/Programming/PseudoCoupHQ/Research/kind_fuzz_clustering"
+AIR="$HOME/Programming/Airlock"
 LANES="$KFZ/lanes"
 BATCH="pygo-emitters-log061"
 

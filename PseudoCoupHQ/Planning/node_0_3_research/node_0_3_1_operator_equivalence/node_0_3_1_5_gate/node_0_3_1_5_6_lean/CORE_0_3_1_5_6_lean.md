@@ -69,7 +69,7 @@ the bit-vector tactic `bv_decide` bit-blasts to a SAT solver and
 verifies the solver's certificate inside Lean.
 
 Lean 4 (elan, toolchain v4.24.0, core only, no Mathlib) was installed
-INTO the Airlock image on 2026-09-07 (`Airlock/Containerfile`,
+INTO the Airlock image on 2026-09-07 (`PUBLIC/Airlock/Containerfile`,
 the Lean block).
 
 ## the levels this node holds (log_229 §1)
@@ -115,5 +115,5 @@ it is not a Lean limitation.
 
 ## artifacts
 
-`PseudoCoupHQ/Research/op_pipeline/lean/` (the `archproof`
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/` (the `archproof`
 lake project; `term_to_lean.py`; `lanes_L1/`). Logs 227, 228, 229.

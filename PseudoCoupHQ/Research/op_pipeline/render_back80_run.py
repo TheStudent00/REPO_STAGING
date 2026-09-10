@@ -4,7 +4,7 @@ path as round 13, now with the CONDITIONAL template the one fixed rule
 gained (`term.RenderBack.emit_condition` / `.emit_choice`).
 
 CORE:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_6_term/node_0_3_5_6_5_render_back/CORE_0_3_5_6_5_render_back.md`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_6_term/node_0_3_5_6_5_render_back/CORE_0_3_5_6_5_render_back.md`
 
 WHAT IS REUSED RATHER THAN COPIED.  This file imports
 `render_back_run` and calls its `Assembler` (the `as` / `objdump -d`

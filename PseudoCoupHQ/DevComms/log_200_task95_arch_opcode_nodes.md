@@ -686,7 +686,7 @@ The `co-located` column is §8.3's number, and it is not a promotion.
 - `t95_l10_own_evidence.sh`, `t95_l11_own_evidence2.sh`,
   `t95_compare.py` — this log's own evidence.
 
-Lane logs, in `Airlock/agent/logs/`:
+Lane logs, in `PUBLIC/Airlock/agent/logs/`:
 `20260905T053851Z__t95_l1_recon.sh.log`,
 `20260905T054126Z__t95_l2_recon.sh.log`,
 `20260905T054346Z__t95_l3_recon2.sh.log`,
@@ -702,7 +702,7 @@ Lane logs, in `Airlock/agent/logs/`:
 ## 11.4 One operational fact, recorded because it changed the sandbox
 
 `mounts.conf` DID name `PseudoCoupGraphs:PseudoCoupGraphs:rw`
-and `PseudoCoupHQ:PseudoCoupHQ:rw`, but the
+and `PRIVATE/PseudoCoupHQ:PseudoCoupHQ:rw`, but the
 running `sandbox-runner` had neither: it is a systemd quadlet, and the
 quadlet unit had been rendered before those lines were added. `./down.sh`
 plus `./up.sh` could not fix it — the unit restarts the container from

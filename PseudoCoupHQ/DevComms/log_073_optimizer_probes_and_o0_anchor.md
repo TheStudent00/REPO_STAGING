@@ -3,7 +3,7 @@
 2026-08-24, conversation with the owner, following log_072's instrument
 build. Airlock outputs of record: `ce_routes.txt`,
 `ce_opt_form.txt`, `ce_rec_and_o0.txt`, `ce_o0_go.txt` (in
-`Airlock/agent/out/`; lane scripts in `drop/.done`).
+`PUBLIC/Airlock/agent/out/`; lane scripts in `drop/.done`).
 
 ## 1. the route probes (the owner's idea): vary HOW a value reaches the
 operator, read what survives

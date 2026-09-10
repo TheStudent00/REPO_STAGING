@@ -135,7 +135,7 @@ AP5_AGGREGATE = os.path.join(HERE, "autopoly5.json")
 EX1_CPP_RUNS = os.path.join(HERE, "expand1_runs.jsonl")
 EX1_INTERP_RUNS = os.path.join(HERE, "expand1_interp.jsonl")
 
-HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PRIVATE/PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/autopoly")
 
 ABORT_KB = 6 * 1024 * 1024

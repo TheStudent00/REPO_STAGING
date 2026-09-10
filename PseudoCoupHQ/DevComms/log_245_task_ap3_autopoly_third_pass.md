@@ -1,17 +1,17 @@
 # log 245 — task ap3: AutoPoly's loop, third pass — the vector ARRIVAL as two halves, the x87 cells through c's 80-bit holder, the blocked check un-blocked, and one fix measured alone
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the ruling of
 2026-09-08 in
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
-Law: `PseudoCoupHQ/Research/LAW.md`, read in full including
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, read in full including
 its tower section; task ap2's first awaiting-the owner item — that the law was
 not staged — is answered, it is staged and it was read.
 Date: 2026-09-09. Instance `ap3`, on the tower guest.
 
 Artifact folder:
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
 writing `autopoly3_*`; tasks ap1's and ap2's products are not
 overwritten. Lane scripts: `.../autopoly/lanes_ap3/`, sixteen of them,
 each kept in the repo as the standing rule of 2026-09-07 requires. Every
@@ -19,7 +19,7 @@ lane log named below is on the TOWER (`<user>@<tower>`) under
 `<runs>/ap3/agent/logs/`.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into
 the instance. Every rendering is labelled per the protocol's
 `object.literal-gloss-analogy`: **LITERAL** is the object itself, quoted;
 **GLOSS** is a plain-words reading beside a literal.
@@ -99,7 +99,7 @@ name `mnemonic`, which task mn1 renamed to `mnem`, so `check` stopped on
 
 **THE CHANGE**, the one line in a shared file the brief authorises.
 **LITERAL**, from
-`PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`:
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`:
 
 ```
     for language in ("c", "cpp", "go", "rust", "swift"):
@@ -741,7 +741,7 @@ new outcome name.
 
 # 13. Memory
 
-The bound stated in `Airlock/instances/ap3.conf`, in every
+The bound stated in `PUBLIC/Airlock/instances/ap3.conf`, in every
 lane header and in `autopoly3.py`'s own constants is 6 GB resident on the
 one collecting process, named abort `ABORT_MEMORY_AP3`, checked after
 every run. The sample the law asks for is the first twenty runs, printed
@@ -778,7 +778,7 @@ cannot see.
 # 14. The deliverables
 
 Under
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
 
 | file | what it is |
 |---|---|
@@ -889,7 +889,7 @@ there is no exemption in any product.
     40 lines written before the guards passed and the 20 written before
     the `KeyError: 79` was refused are beside the store with
     `.before_the_guards_passed` and `.before_the_x87_bits_refusal`
-    suffixes. Nothing under `<runs>/` or `Airlock/`
+    suffixes. Nothing under `<runs>/` or `PUBLIC/Airlock/`
     was deleted on either machine; three lane names collided and each
     took a new name.
 11. **Task h2's normalise-before-render stays ON** (§8), on the

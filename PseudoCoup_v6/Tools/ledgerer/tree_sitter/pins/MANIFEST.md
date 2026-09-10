@@ -20,9 +20,9 @@ pip install --break-system-packages tree-sitter==0.26.0 tree-sitter-python==0.25
 ```
 
 Note on the vendoring pattern. The settled plan node
-(`PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`)
+(`PRIVATE/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`)
 named a pattern from an earlier research repo: in
-`PseudoIR/v2/grammars/` there is one folder per
+`PRIVATE/PseudoIR/v2/grammars/` there is one folder per
 language (12 of them), each holding that grammar's `grammar.json`
 and `node-types.json` copied out of the upstream grammar repo, with
 the exact upstream commit recorded in a `provenance.json` — so the

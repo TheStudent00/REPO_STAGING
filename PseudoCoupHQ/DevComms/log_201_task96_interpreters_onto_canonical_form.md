@@ -131,7 +131,7 @@ WHAT WAS MISREAD. `region36.py:10` quotes the 2026-09-02 ruling
 
 ## 1.2 The `%r15` count, re-run
 
-Lane log: `Airlock/agent/logs/20260905T072317Z__t96_l9_r15count.sh.log`.
+Lane log: `PUBLIC/Airlock/agent/logs/20260905T072317Z__t96_l9_r15count.sh.log`.
 
 ```
 $ python3 -c "
@@ -182,7 +182,7 @@ $ grep -o '"wrapped_text": "[^"]*%r15[^"]*"' PseudoCoupHQ/Research/op_pipeline/c
 `t94_recarve.json` and never re-run. FORM 2 is
 `canonical_form.CanonicalForm.wrap`, unmodified.
 
-Lane log: `Airlock/agent/logs/20260905T071648Z__t96_l5_analysis.sh.log` (the full three-way dump for all eleven is `t96_wrapped_texts.txt`).
+Lane log: `PUBLIC/Airlock/agent/logs/20260905T071648Z__t96_l5_analysis.sh.log` (the full three-way dump for all eleven is `t96_wrapped_texts.txt`).
 
 **LITERAL**, the first eight lines and last six of each:
 
@@ -438,7 +438,7 @@ the two integers are an illustrative instantiation of a real body, said
 once. Everything else is computed by the stepper from the instruction
 text.
 
-Lane log: `Airlock/agent/logs/20260905T072154Z__t96_l7_step.sh.log`.
+Lane log: `PUBLIC/Airlock/agent/logs/20260905T072154Z__t96_l7_step.sh.log`.
 
 **The instantiation**
 
@@ -1147,7 +1147,7 @@ where FORM 1's texts were read from. None was deleted, none re-rendered.
 | `t96_l16_verify_this_log3.sh` | `20260905T073526Z__t96_l16_verify_this_log3.sh.log` |
 | `t96_l17_verify_final.sh` | `20260905T073722Z__t96_l17_verify_final.sh.log` |
 
-All in `Airlock/agent/logs/`. **That directory is
+All in `PUBLIC/Airlock/agent/logs/`. **That directory is
 outside every path Airlock mounts, so no claim about a lane log's
 contents can be re-run by the verifier; the lane logs are named as
 provenance and the artifacts they wrote carry the numbers.** **Lanes 10, 11 and 12

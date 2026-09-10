@@ -859,10 +859,10 @@ which contained the word inside "exemption". The heading now says
 ## 6.1 All compute ran as Airlock lanes
 
 Instance `t83`, brought up from
-`Airlock/instances/t83.conf` (cpus 4, memory 8g, proxy
+`PUBLIC/Airlock/instances/t83.conf` (cpus 4, memory 8g, proxy
 off, poll watch, script_timeout 21600). Every computation in this
 report is a lane; the lane scripts live in the project's own repo at
-`PseudoCoupHQ/Research/op_pipeline/lanes_t83/`, are
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_t83/`, are
 dropped by `airlock submit`, and their logs are cited by path in every
 section above.
 
@@ -1002,7 +1002,7 @@ that replaced one that could not run.
 
 ## 8.1 Written by this task — code, all NEW files
 
-| path (under `PseudoCoupHQ/Research/op_pipeline/`) | what it is |
+| path (under `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`) | what it is |
 |---|---|
 | `probe83b_memory.py` | one shard walked unit by unit with a 5 GB address-space bound, to locate the excursion by unit name |
 | `probe83d_callee_population.py` | how many canon40-proved units reach `Term.runtime_row`, per attached callee, off the stored ledgers' typed producer objects |
@@ -1026,7 +1026,7 @@ edited by it.
 ## 8.2 Written by this task — lanes
 
 All under
-`PseudoCoupHQ/Research/op_pipeline/lanes_t83/`; the lane
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_t83/`; the lane
 belongs to the project's repo, is dropped into Airlock, and its log is
 the evidence.
 
@@ -1056,7 +1056,7 @@ the evidence.
 
 ## 8.3 Written by this task — artifacts
 
-| path (under `PseudoCoupHQ/Research/op_pipeline/`) | what it holds |
+| path (under `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`) | what it holds |
 |---|---|
 | `probe83d_callee_population.json` | 3,927 of 30,324 canon40-proved units carry a runtime-callee row; 49,362 rows over 30 callees, per callee and per language |
 | `probe83e_callee_bodies.json` | all 76 attached bodies walked alone: 60 walked, 16 refused by the opcode table, hungriest 56,676 kB / 0.21 s |

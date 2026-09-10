@@ -41,7 +41,7 @@ line MUST paste this paragraph verbatim."
   registers, flags, memory, the machine stack and the x87 stack that
   hold z3 terms rather than numbers, and returns the term the body
   leaves in its answer place. Its file is
-  `PseudoCoupHQ/Research/op_pipeline/reference.py`.
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/reference.py`.
 - **THE LEDGER** is the stored provenance table for one unit: one row
   per value the unit's machine code produces, saying what produced it
   and which rows it read. `OUT-0` holds the answer. The stored ledgers
@@ -801,7 +801,7 @@ provenance exemption is claimed by nothing (`grep -c exempt` = **0**).
 
 # 8. Every artifact this task wrote
 
-Home: `PseudoCoupHQ/Research/op_pipeline/`.
+Home: `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`.
 
 | artifact | what it is |
 |---|---|

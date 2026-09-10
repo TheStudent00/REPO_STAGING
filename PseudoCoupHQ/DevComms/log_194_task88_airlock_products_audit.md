@@ -40,15 +40,15 @@ Per the brief, hashing 9.7 GB and searching a multi-GB tree run as Airlock
 lanes, numbered once each, on the default (`sandbox`) instance:
 
 ```
-cd Airlock
-./airlock submit PseudoCoupHQ/Research/airlock_audit/t88_l1_inventory.sh     --no-batch
-./airlock submit PseudoCoupHQ/Research/airlock_audit/t88_l2_hash_out.sh      --no-batch
-./airlock submit PseudoCoupHQ/Research/airlock_audit/t88_l3_rss_sample.sh    --no-batch
-./airlock submit PseudoCoupHQ/Research/airlock_audit/t88_l4_hash_hq_matches.sh --no-batch
+cd PUBLIC/Airlock
+./airlock submit PRIVATE/PseudoCoupHQ/Research/airlock_audit/t88_l1_inventory.sh     --no-batch
+./airlock submit PRIVATE/PseudoCoupHQ/Research/airlock_audit/t88_l2_hash_out.sh      --no-batch
+./airlock submit PRIVATE/PseudoCoupHQ/Research/airlock_audit/t88_l3_rss_sample.sh    --no-batch
+./airlock submit PRIVATE/PseudoCoupHQ/Research/airlock_audit/t88_l4_hash_hq_matches.sh --no-batch
 ```
 
 Lane scripts live at
-`PseudoCoupHQ/Research/airlock_audit/t88_l{1,2,3,4}_*.sh` (in
+`PRIVATE/PseudoCoupHQ/Research/airlock_audit/t88_l{1,2,3,4}_*.sh` (in
 the project's own repo, per Airlock's own README: "no lane scripts" belong
 in Airlock itself). All four write only to stdout (captured into
 `agent/logs/`) or read-only reads of `/out` and `PseudoCoupHQ`;
@@ -254,7 +254,7 @@ material by design.
 - No file was moved, copied into the tree, or deleted. Proof:
 
   ```
-  $ cd PseudoCoupHQ && git status --porcelain
+  $ cd PRIVATE/PseudoCoupHQ && git status --porcelain
   ?? Research/compiler_graph/variant_connections_c.json
   ?? Research/compiler_graph/variant_connections_c_and_cpp.json
   ?? Research/compiler_graph/variant_connections_cpp.json
@@ -266,7 +266,7 @@ material by design.
   files this audit added to the tree — no `agent/out` product among them)
 
   ```
-  $ cd Airlock && git status --porcelain
+  $ cd PUBLIC/Airlock && git status --porcelain
   ?? php-7.4.33.tar.gz
   ?? php-8.2.13.tar.gz
   ?? php-8.3.0.tar.gz

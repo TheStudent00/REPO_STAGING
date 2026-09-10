@@ -258,7 +258,7 @@ lane's own documentation of the check, not against any produced data.
 **LITERAL**:
 
 ```
-$ bash Airlock/down.sh --instance o6
+$ bash PUBLIC/Airlock/down.sh --instance o6
 ```
 
 (run at the close of this log; all 8 lanes — `o6_l1` through `o6_l8`
@@ -277,7 +277,7 @@ about a lane log that does not exist yet)
 **LITERAL**, `o6_l9_claims_verify.sh`:
 
 ```
-$ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lanes_o6/o6_l9_claims_verify.sh --instance o6 --no-batch
+$ python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o6/o6_l9_claims_verify.sh --instance o6 --no-batch
 ```
 
 ```

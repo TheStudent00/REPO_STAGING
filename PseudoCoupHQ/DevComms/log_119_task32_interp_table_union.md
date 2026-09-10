@@ -572,7 +572,7 @@ the three views.
 
 ```
 $ /tmp/reconnect_venv/bin/python3 interp_zero_regression.py
-wrote PseudoCoupHQ/Research/op_pipeline/interp_zero_regression.json
+wrote PRIVATE/PseudoCoupHQ/Research/op_pipeline/interp_zero_regression.json
 recorded converged recomputed from disk: 1635  (baseline 1635, matches: True)
 per language: {"c": {"converged": 583, "unchanged": 20}, "cpp": {"converged": 728, "unchanged": 22}, "go": {"converged": 72, "unchanged": 16}, "rust": {"converged": 112, "unchanged": 2}, "swift": {"converged": 140, "unchanged": 10}}
 honest standing converged: 1622; withdrawn, separate population: 13

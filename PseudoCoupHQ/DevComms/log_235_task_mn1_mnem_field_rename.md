@@ -1,7 +1,7 @@
 # log 235 — task mn1: the `mnem` field rename across o2/o8/o9/o10
 
 Node: `hq.research.arch_unit_oracle.cross_construction.single_opcode_units`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/CORE_0_3_2_2_2_single_opcode_units.md`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/CORE_0_3_2_2_2_single_opcode_units.md`).
 
 **One sentence.** The spelling guard
 (`Research/op_pipeline/check_no_spelling_keys.py`) already exempts a
@@ -14,8 +14,8 @@ anything measured.
 Date: 2026-09-08. Instance `mn1`, copied from `t97.conf` (already on
 the tower and up per the brief), brought down at the end of this log.
 Every lane ran on the tower guest through
-[`remote_lane.sh`](file://Airlock/remote_lane.sh)
-(`Airlock/remote_lane.sh`), per LAW's last section — none
+[`remote_lane.sh`](file://PUBLIC/Airlock/remote_lane.sh)
+(`PUBLIC/Airlock/remote_lane.sh`), per LAW's last section — none
 of the twelve compute lanes below ran on the laptop.
 
 THE SPELLING BAN, pasted verbatim as required:
@@ -41,7 +41,7 @@ THE SPELLING BAN, pasted verbatim as required:
 Every rendering below is labelled per `object.literal-gloss-analogy`:
 **LITERAL** is the object itself, quoted; **GLOSS** is a plain-words
 reading beside a literal. Paths inside a pasted command are the ones
-the lane sees: `PseudoCoupHQ` IS `PseudoCoupHQ`,
+the lane sees: `PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`,
 mounted into the instance on the tower guest.
 
 ---
@@ -49,7 +49,7 @@ mounted into the instance on the tower guest.
 ## §1. What the objects are, one sentence each, in relation
 
 - The **guard** is
-  [`Research/op_pipeline/check_no_spelling_keys.py`](file://PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py),
+  [`Research/op_pipeline/check_no_spelling_keys.py`](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py),
   never modified this task; its `PROSE_FIELDS` set names `mnem` (not
   `mnemonic`) as exempt, on the stated ground "a byte/sem key is a
   machine form".
@@ -61,11 +61,11 @@ mounted into the instance on the tower guest.
 - The **five generators** are the scripts that write the field, each
   read and edited this task, in the dependency order they run (a
   later one reads an earlier one's json):
-  1. [`single_opcode_units.py`](file://PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py) (task o2)
-  2. [`unique_opcodes.py`](file://PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.py) (task o2)
-  3. [`opcode_signatures.py`](file://PseudoCoupHQ/Research/oracle/arch_opcodes/signatures/opcode_signatures.py) (task o9) — reads o2's two jsons
-  4. [`ledger_signatures.py`](file://PseudoCoupHQ/Research/oracle/arch_opcodes/signatures/ledger_signatures.py) (task o10) — reads `unique_opcodes.json` and imports o9's own module (`opcode_signatures.py`, as `OS`), never forked
-  5. [`per_opcode.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py) (task o8) — reads `single_opcode_units.json`
+  1. [`single_opcode_units.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.py) (task o2)
+  2. [`unique_opcodes.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/unique_opcodes.py) (task o2)
+  3. [`opcode_signatures.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/signatures/opcode_signatures.py) (task o9) — reads o2's two jsons
+  4. [`ledger_signatures.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/signatures/ledger_signatures.py) (task o10) — reads `unique_opcodes.json` and imports o9's own module (`opcode_signatures.py`, as `OS`), never forked
+  5. [`per_opcode.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py) (task o8) — reads `single_opcode_units.json`
 - The **scope of the rename**, decided once and held for all five
   scripts: only the JSON object key spelled EXACTLY `mnemonic` — in
   what a script writes and in what it reads back off another script's
@@ -127,7 +127,7 @@ invent an exemption or a further rename.
 
 ## §3. The diff per script, LITERAL
 
-Command run on the laptop, `PseudoCoupHQ` as the working
+Command run on the laptop, `PRIVATE/PseudoCoupHQ` as the working
 directory (the pre-session baseline commit is `f34a38a0`, the last
 commit under `Research/oracle/` before this task's edits):
 
@@ -464,7 +464,7 @@ all five compiled clean.
 ## §4. Regeneration, one lane per generator command, and the counts table
 
 Every lane script is kept in the repo under
-[`Research/oracle/arch_opcodes/lanes_mn1/`](file://PseudoCoupHQ/Research/oracle/arch_opcodes/lanes_mn1/),
+[`Research/oracle/arch_opcodes/lanes_mn1/`](file://PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/lanes_mn1/),
 submitted from there per LAW. Order: o2's two generators, then o9,
 then o10 (both read o2's `unique_opcodes.json`), then o8 (reads o2's
 `single_opcode_units.json`), a `sync-back` after every stage.
@@ -496,7 +496,7 @@ after regeneration.**
 | `per_opcode_results.json` | o8 proved-on-ship (Q3) | 216 | 216 |
 
 Every count is identical before/after. Reproducing commands, run from
-`PseudoCoupHQ` (the verifier's own cwd) against the
+`PRIVATE/PseudoCoupHQ` (the verifier's own cwd) against the
 synced-back copies on the laptop:
 
 ```
@@ -551,7 +551,7 @@ Guard command, run from `Research/op_pipeline` inside the instance
 `python3 check_no_spelling_keys.py <path>`. Lane
 `mn1_l3_o2_guard.sh`, `mn1_l6_o9_guard.sh`, `mn1_l9_o10_guard.sh` and
 `mn1_l13_o8_guard.sh` under
-[`lanes_mn1/`](file://PseudoCoupHQ/Research/oracle/arch_opcodes/lanes_mn1/).
+[`lanes_mn1/`](file://PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/lanes_mn1/).
 
 **PASS, three files that had never passed before this rename:**
 
@@ -715,7 +715,7 @@ print(len(findings), 'findings, all zero_opcode_examples:',
 "
 30 findings, all zero_opcode_examples: True
 ```
-(run from `PseudoCoupHQ`)
+(run from `PRIVATE/PseudoCoupHQ`)
 
 `grep -c exempt` over every file this task added that DOES work (the
 thirteen lanes that generate, guard, or regenerate something, and the
@@ -747,7 +747,7 @@ Research/oracle/arch_opcodes/unique_opcodes.py:0
 Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py:0
 ```
 Every count is 0 (18 files, run on the laptop from
-`PseudoCoupHQ`; `sort` pins the order — `grep` given
+`PRIVATE/PseudoCoupHQ`; `sort` pins the order — `grep` given
 several file arguments was measured NOT to keep argument order stable
 across repeated runs in this environment). Separately, every verify
 lane under `lanes_mn1/` (`mn1_l14_verify.sh` onward) was also read by
@@ -860,7 +860,7 @@ asserted with nothing beside it anywhere in the log.
 ## §8. PROGRESS entry
 
 Appended (dated, append-only) to
-[`Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/PROGRESS.md`](file://PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/PROGRESS.md).
+[`Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/PROGRESS.md`](file://PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/PROGRESS.md).
 
 ## §9. The two lists
 

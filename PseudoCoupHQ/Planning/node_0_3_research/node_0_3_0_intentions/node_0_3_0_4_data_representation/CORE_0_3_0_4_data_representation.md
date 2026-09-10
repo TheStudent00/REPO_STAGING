@@ -134,7 +134,7 @@ valid as measurements; only the framing moves.
 
 ## record
 
-- artifacts: `PseudoCoupHQ/Research/data_representation/`
+- artifacts: `PRIVATE/PseudoCoupHQ/Research/data_representation/`
 - co-nodes: `dominant_intentions` holds the verified census
   (layer-3 measurements of specific layer-2 representations) and
   the harness; `kind_fuzz_clustering` owns layer 3;

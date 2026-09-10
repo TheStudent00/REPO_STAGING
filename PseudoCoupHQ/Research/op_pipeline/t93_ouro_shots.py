@@ -6,7 +6,7 @@ This is the ONE thing in task 93 that is not an Airlock lane: the browser
 IS the viewer of the deliverable, so looking at the deliverable happens on
 the host.  It computes nothing the page does not compute for itself.
 
-It imports `Ourobrowser/browser_engine.py` and does not edit
+It imports `PUBLIC/Ourobrowser/browser_engine.py` and does not edit
 it: the engine belongs to the owner and that work is paused.
 
 WHAT IT PHOTOGRAPHS, and why each shot exists
@@ -29,9 +29,9 @@ the key IS the commit, so these clicks keep working while the repository's
 own daemon adds commits underneath the page.
 
 usage:
-    cd Ourobrowser && \
+    cd PUBLIC/Ourobrowser && \
     LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1 \
-    python3 PseudoCoupHQ/Research/op_pipeline/t93_ouro_shots.py \
+    python3 PRIVATE/PseudoCoupHQ/Research/op_pipeline/t93_ouro_shots.py \
         [<commit identity of the earlier moment>]
 """
 
@@ -40,11 +40,11 @@ import resource
 import subprocess
 import sys
 
-OURO = os.path.expanduser("Ourobrowser")
+OURO = os.path.expanduser("PUBLIC/Ourobrowser")
 PAGE = os.path.expanduser(
-    "PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html")
+    "PRIVATE/PseudoCoupHQ/Research/op_pipeline/dashboard_ouro.html")
 SHOTS = os.path.expanduser(
-    "PseudoCoupHQ/DevComms/screens/log_198")
+    "PRIVATE/PseudoCoupHQ/DevComms/screens/log_198")
 
 sys.path.insert(0, OURO)
 
@@ -173,7 +173,7 @@ def earlier_day():
     """
     if len(sys.argv) > 1:
         return sys.argv[1]
-    root = os.path.expanduser("PseudoCoupHQ")
+    root = os.path.expanduser("PRIVATE/PseudoCoupHQ")
     out = subprocess.run(
         ["git", "-C", root, "log", "--format=%cI"],
         capture_output=True, text=True).stdout.splitlines()

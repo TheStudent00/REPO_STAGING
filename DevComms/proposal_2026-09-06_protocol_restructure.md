@@ -11,22 +11,22 @@
 best." What was done, against §5 and §7 below:
 
 - The rulebook is now v3 at
-  `DevComms/LLM_communication_protocol.md`: 60 cards
+  `PRIVATE/DevComms/LLM_communication_protocol.md`: 60 cards
   in seven families, a glossary of its own terms, one precedence
   list, and a checklist that is the TEST line of every card.
 - The cases file is
-  `DevComms/LLM_communication_protocol_cases.md`:
+  `PRIVATE/DevComms/LLM_communication_protocol_cases.md`:
   every v2 section verbatim under the cards it feeds, with the
   v1 → v2 → card id map at the top. It sits beside the rulebook, not
   in the archive, so a new case can be appended.
 - v2 is archived as
-  `DevComms/0_Archive/LLM_communication_protocol_v2.md`.
+  `PRIVATE/DevComms/0_Archive/LLM_communication_protocol_v2.md`.
 - §6.3 (static methods) moved to
-  `PseudoCoupHQ/plan_and_code.md` §7; §6.2 was already
+  `PRIVATE/PseudoCoupHQ/plan_and_code.md` §7; §6.2 was already
   there. The rulebook keeps one pointer card, `scope.code-shape`.
 - Precedence is the order in §5.4. Ids are slugs, per §5.5.
 - The lost-nothing check ran and passed
-  (`DevComms/0_Archive/build_cases_2026-09-06.py`).
+  (`PRIVATE/DevComms/0_Archive/build_cases_2026-09-06.py`).
 - The §6 size estimate was wrong. The rulebook is 1,146 lines, not
   about 460: each card keeps the whole v2 rule text rather than a
   one-sentence distillation, and the glossary and the 60-line
@@ -72,7 +72,7 @@ best." What was done, against §5 and §7 below:
 
 Every task brief from round 2 onward carries this line or one like
 it (logs 091, 097, 103, 109, 115, 123, 134 in
-`PseudoCoupHQ/DevComms/`):
+`PRIVATE/PseudoCoupHQ/DevComms/`):
 
 > Read AgentMemory.md and the comms protocol in full first
 
@@ -232,9 +232,9 @@ protocol's own §9.2 says to separate.
 
 | file | job | size |
 |---|---|---|
-| `DevComms/LLM_communication_protocol.md` | the rulebook: what each rule IS, one card per rule | about 400 lines |
-| `DevComms/LLM_communication_protocol_cases.md` | the account: every dated failure and quote, verbatim, keyed by rule id; Appendix A and Appendix B entire; the id map v1 § → v2 § → id | unbounded; nothing dropped |
-| `PseudoCoupHQ/plan_and_code.md` (exists) | §6.2 and §6.3 join the file §6.2 already names as their full statement | about 60 lines added |
+| `PRIVATE/DevComms/LLM_communication_protocol.md` | the rulebook: what each rule IS, one card per rule | about 400 lines |
+| `PRIVATE/DevComms/LLM_communication_protocol_cases.md` | the account: every dated failure and quote, verbatim, keyed by rule id; Appendix A and Appendix B entire; the id map v1 § → v2 § → id | unbounded; nothing dropped |
+| `PRIVATE/PseudoCoupHQ/plan_and_code.md` (exists) | §6.2 and §6.3 join the file §6.2 already names as their full statement | about 60 lines added |
 
 §11 (vocabulary) becomes a five-line card under NAMES that points at
 the six list files. Its analysis paragraphs move to the cases file.

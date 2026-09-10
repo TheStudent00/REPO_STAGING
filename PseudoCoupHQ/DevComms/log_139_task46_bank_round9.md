@@ -19,7 +19,7 @@ dom_ops22/22b/23 are round-8-and-earlier records, checked separately
 in §3 as superseded, not as round-9 grouping output.
 
 I VERIFIED (command + output pasted, run from
-`PseudoCoupHQ/Research/op_pipeline`):
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline`):
 
 ```
 $ /tmp/reconnect_venv/bin/python3 check_no_spelling_keys.py the_pool1.json
@@ -122,7 +122,7 @@ not a modelling artifact. Source: log_112 lines 459-475, 661.
 ## 3. Prior tables verified untouched, as superseded records
 
 I VERIFIED (md5 + git diff against last commit, from
-`PseudoCoupHQ/Research/op_pipeline`):
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline`):
 
 ```
 $ md5sum dominant_table24.json dominant_table24b.json dominant_table25.json dom_ops22.json dom_ops22b.json dom_ops23.json
@@ -158,7 +158,7 @@ CONTAINER ID  IMAGE                            COMMAND               CREATED    
 ffa29c11714e  localhost/sandbox-proxy:latest   squid ...             57 minutes ago  Up 57 minutes  3128/tcp    sandbox-proxy
 66eaf0524a25  localhost/sandbox-runner:latest  python3 -u /opt/d...  57 minutes ago  Up 57 minutes              sandbox-runner
 
-$ python3 Airlock/airlock doctor
+$ python3 PUBLIC/Airlock/airlock doctor
 | severity | check | what was seen |
 | WARN | agent/drop clutter | test_parse.py not a runnable lane |
 | NOTE | instances | 2 known: sandbox (sandbox-runner: running) <- this command; trickle (trickle-runner: absent) |
@@ -246,7 +246,7 @@ From the assignment-run testimony work: 118 findings, not yet ruled on.
 
 ## 7. Posterity message
 
-Written to `PseudoCoupHQ/DevComms/next_commit_message.txt`,
+Written to `PRIVATE/PseudoCoupHQ/DevComms/next_commit_message.txt`,
 including this session's two process corrections (the AirlockTrickle
 copy-where-a-feature-was-needed correction, and the inotify
 max_user_watches attribution correction). The repo-daemon consumes
@@ -258,10 +258,10 @@ to be overwritten by that pass.
 I VERIFIED:
 
 ```
-$ wc -c PseudoCoupHQ/DevComms/next_commit_message.txt
-2422 PseudoCoupHQ/DevComms/next_commit_message.txt
+$ wc -c PRIVATE/PseudoCoupHQ/DevComms/next_commit_message.txt
+2422 PRIVATE/PseudoCoupHQ/DevComms/next_commit_message.txt
 
-$ head -5 PseudoCoupHQ/DevComms/next_commit_message.txt
+$ head -5 PRIVATE/PseudoCoupHQ/DevComms/next_commit_message.txt
 Round 9 banked (Task 46, log_139): region36 form redone (1,752/1,779
 original proved, 9/11 interpreter, 27,223/29,288 regenerated), THE
 POOL (5,548 entries over 28,984 member units; original-1,779 subset:
@@ -275,9 +275,9 @@ the declarable-witness type second witness (85/208 demoted), and the
 
 New files created by Task 46:
 
-- `PseudoCoupHQ/DevComms/next_commit_message.txt` (2,422
+- `PRIVATE/PseudoCoupHQ/DevComms/next_commit_message.txt` (2,422
   bytes; overwritten, previously empty/absent content)
-- `PseudoCoupHQ/DevComms/log_139_task46_bank_round9.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_139_task46_bank_round9.md`
   (this file)
 
 Files read, not modified: `the_pool1.json`, `the_families1.json`,

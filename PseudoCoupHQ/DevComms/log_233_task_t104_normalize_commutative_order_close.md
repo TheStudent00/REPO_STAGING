@@ -1,4 +1,4 @@
-Project node: `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_3_normalize/CORE_0_3_1_6_3_normalize.md`
+Project node: `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_3_normalize/CORE_0_3_1_6_3_normalize.md`
 
 # Closing task t104 -- canonical operand order for commutative operators
 
@@ -62,7 +62,7 @@ normalizer itself:
 
 ## 1. The objects, in relation
 
-- `Term.normalize` (`PseudoCoupHQ/Research/op_pipeline/term.py`)
+- `Term.normalize` (`PRIVATE/PseudoCoupHQ/Research/op_pipeline/term.py`)
   is the function that turns a proved z3 term into the one printed
   string the pool line compares entries by.
 - `order_commutative` is the helper `Term.normalize` calls, that puts
@@ -86,7 +86,7 @@ normalizer itself:
 
 ## 2. The fix -- LITERAL, the whole function
 
-`Term.normalize`, `PseudoCoupHQ/Research/op_pipeline/term.py:923-972`:
+`Term.normalize`, `PRIVATE/PseudoCoupHQ/Research/op_pipeline/term.py:923-972`:
 
 ```python
     def normalize(self, term):
@@ -448,10 +448,10 @@ used.
 
 ## 7. Full paths
 
-- Fix: [`PseudoCoupHQ/Research/op_pipeline/term.py`](file://PseudoCoupHQ/Research/op_pipeline/term.py)
-- New store: [`PseudoCoupHQ/Research/op_pipeline/term104_store/`](file://PseudoCoupHQ/Research/op_pipeline/term104_store/)
-- Audit: [`PseudoCoupHQ/Research/op_pipeline/t104_audit.json`](file://PseudoCoupHQ/Research/op_pipeline/t104_audit.json)
-- Pool candidate/delta: [`pool104_candidate.json`](file://PseudoCoupHQ/Research/op_pipeline/pool104_candidate.json), [`pool104_delta.json`](file://PseudoCoupHQ/Research/op_pipeline/pool104_delta.json)
-- Lane scripts: [`PseudoCoupHQ/Research/op_pipeline/lanes_t104/`](file://PseudoCoupHQ/Research/op_pipeline/lanes_t104/) (l1-l14, this session's new ones l12-l14)
+- Fix: [`PRIVATE/PseudoCoupHQ/Research/op_pipeline/term.py`](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/term.py)
+- New store: [`PRIVATE/PseudoCoupHQ/Research/op_pipeline/term104_store/`](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/term104_store/)
+- Audit: [`PRIVATE/PseudoCoupHQ/Research/op_pipeline/t104_audit.json`](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/t104_audit.json)
+- Pool candidate/delta: [`pool104_candidate.json`](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/pool104_candidate.json), [`pool104_delta.json`](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/pool104_delta.json)
+- Lane scripts: [`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_t104/`](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_t104/) (l1-l14, this session's new ones l12-l14)
 - Lane logs: `<runs>/t104/agent/logs/`
-- PROGRESS entry: [`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_3_normalize/PROGRESS.md`](file://PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_3_normalize/PROGRESS.md)
+- PROGRESS entry: [`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_3_normalize/PROGRESS.md`](file://PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_3_normalize/PROGRESS.md)

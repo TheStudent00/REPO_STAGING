@@ -90,7 +90,7 @@ probes.emit
 
 ## realization (what exists on disk, 2026-09-03)
 
-Home: `PseudoCoupHQ/Research/op_pipeline/`.
+Home: `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`.
 
 | part | current file | status |
 |---|---|---|

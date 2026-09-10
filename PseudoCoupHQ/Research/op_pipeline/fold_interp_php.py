@@ -2,7 +2,7 @@
 """fold_interp_php.py -- task 5(d): fold the php dispatch pilot into
 the pilots' own .md+.json format (log_082 finding 5).
 
-SOURCE, unmodified, read only: `Airlock/agent/out/
+SOURCE, unmodified, read only: `PUBLIC/Airlock/agent/out/
 interp_php_b/{dispatch_report.txt,dispatch_diff.json,probes/*.php}`,
 plus the Airlock lane logs under `agent/logs/*interp_php*` for the
 pin history and build outcomes.
@@ -53,8 +53,8 @@ import json
 import os
 import re
 
-AIRLOCK_OUT = os.path.expanduser("Airlock/agent/out")
-AIRLOCK_LOGS = os.path.expanduser("Airlock/agent/logs")
+AIRLOCK_OUT = os.path.expanduser("PUBLIC/Airlock/agent/out")
+AIRLOCK_LOGS = os.path.expanduser("PUBLIC/Airlock/agent/logs")
 PHP_DIR = os.path.join(AIRLOCK_OUT, "interp_php_b")
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -241,7 +241,7 @@ def main():
                      "interpreter track\n")
     md_lines.append("Folded 2026-08-31 by `fold_interp_php.py`, task "
                      "5(d), from the Airlock lane outputs under "
-                     "`Airlock/agent/out/interp_php_b/` "
+                     "`PUBLIC/Airlock/agent/out/interp_php_b/` "
                      "(real gcov deltas, dated 2026-08-31: 344 lines "
                      "with a positive delta across 9 files for the "
                      "smallint probe -- the number log_082 named as "

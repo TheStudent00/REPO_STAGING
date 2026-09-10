@@ -1,7 +1,7 @@
 # log 239 — task h1b: the composition column, closing task h1
 
 Node: `hq.research.arch_unit_oracle`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08). The
 PROGRESS entry is on the autopoly sub-node
 (`.../node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/PROGRESS.md`),
@@ -9,7 +9,7 @@ beside tasks o12, o13 and h1.
 
 Date: 2026-09-09. Instance `h1b`, on the TOWER, brought down at the
 end of this log. Artifact folder (the same one task h1 wrote):
-[`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
+[`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
 This task's own instruction was task h1's brief, §5, added 2026-09-09
 after h1 had already run: one new field on every run already in
 `handful.json`, `composition`, plus the matching column in
@@ -21,7 +21,7 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into
 the instance. Prose names host paths. **The lane logs are on the
 TOWER** (`<user>@<tower>`), under
 `<runs>/h1b/agent/logs/`, and every
@@ -39,7 +39,7 @@ attribution below names one of them.
 | `h1b_l8_evidence4.sh` | the LANDED-runs check re-run with the `->` removed from its print statement, so the REFUSED claim clears | `20260909T055154Z__h1b_l8_evidence4.sh.log` |
 
 Every lane script is kept in the repo at
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/`
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1b/`
 and was submitted from there.
 
 ---

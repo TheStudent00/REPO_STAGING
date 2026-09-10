@@ -14,11 +14,11 @@ Vocabulary: the outcome where the operating system stops a lane is
 
 | lane | who queued it | state |
 |---|---|---|
-| `ct_go_l1.sh` | log_061 | queued in `Airlock/agent/drop/`, never ran |
+| `ct_go_l1.sh` | log_061 | queued in `PUBLIC/Airlock/agent/drop/`, never ran |
 | `ct_python_l1.sh` | log_061 | queued, never ran |
 | `kfz_pygo_ping.sh` | log_061 | queued, never ran |
 
-`Airlock/agent/batch.json` already carries the
+`PUBLIC/Airlock/agent/batch.json` already carries the
 batch **`pygo-emitters-log061`**. Everything below **joins that batch**
 rather than replacing it, so the three lanes above keep their
 denominator. Do not pass `--new-batch` unless you mean to throw that
@@ -34,14 +34,14 @@ bound to these folders. `daemon/watcher.py` sweeps the drop folder
 what picks the queue up.
 
 ```
-bash Airlock/down.sh && bash Airlock/up.sh
+bash PUBLIC/Airlock/down.sh && bash PUBLIC/Airlock/up.sh
 ```
 
 While it is down, one unrelated fault is worth clearing — the proxy
 default-denies everything because there is no allowlist file:
 
 ```
-cp Airlock/proxy/allowlist.txt.example Airlock/proxy/allowlist.txt
+cp PUBLIC/Airlock/proxy/allowlist.txt.example PUBLIC/Airlock/proxy/allowlist.txt
 ```
 
 **None of these lanes needs the network.** Nothing downloads, nothing
@@ -52,8 +52,8 @@ housekeeping, not a prerequisite.
 Then check the sandbox is healthy:
 
 ```
-python3 Airlock/airlock doctor
-bash Airlock/selftest.sh
+python3 PUBLIC/Airlock/airlock doctor
+bash PUBLIC/Airlock/selftest.sh
 ```
 
 ---
@@ -61,7 +61,7 @@ bash Airlock/selftest.sh
 ## 2 — the one command
 
 ```
-bash PseudoCoupHQ/Research/kind_fuzz_clustering/run_all_languages.sh
+bash PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/run_all_languages.sh
 ```
 
 That script submits all eight level-1 lanes, waits for them, generates
@@ -77,9 +77,9 @@ section 4 is the same thing, one command per line.
 ## 3 — how to watch it
 
 ```
-python3 Airlock/airlock status
-python3 Airlock/airlock watch
-bash Airlock/progress.sh -w
+python3 PUBLIC/Airlock/airlock status
+python3 PUBLIC/Airlock/airlock watch
+bash PUBLIC/Airlock/progress.sh -w
 ```
 
 `airlock status` shows the batch summary, the queue, the running lane
@@ -102,14 +102,14 @@ inside a single long compile — kotlin's is the slow one.
 Run these **in this order**. Each is one line.
 
 ```
-python3 Airlock/airlock submit PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_php_l1.sh        --batch pygo-emitters-log061 --weight 37544
-python3 Airlock/airlock submit PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_typescript_l1.sh --batch pygo-emitters-log061 --weight 16238
-python3 Airlock/airlock submit PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_java_l1.sh       --batch pygo-emitters-log061 --weight 89430
-python3 Airlock/airlock submit PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_kotlin_l1.sh     --batch pygo-emitters-log061 --weight 25486
-python3 Airlock/airlock submit PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_cpp_l1.sh        --batch pygo-emitters-log061 --weight 96934
-python3 Airlock/airlock submit PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_swift_l1.sh      --batch pygo-emitters-log061 --weight 10054
-python3 Airlock/airlock submit PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_dart_l1.sh       --batch pygo-emitters-log061 --weight 46305
-python3 Airlock/airlock submit PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_csharp_l1.sh     --batch pygo-emitters-log061 --weight 45011
+python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_php_l1.sh        --batch pygo-emitters-log061 --weight 37544
+python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_typescript_l1.sh --batch pygo-emitters-log061 --weight 16238
+python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_java_l1.sh       --batch pygo-emitters-log061 --weight 89430
+python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_kotlin_l1.sh     --batch pygo-emitters-log061 --weight 25486
+python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_cpp_l1.sh        --batch pygo-emitters-log061 --weight 96934
+python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_swift_l1.sh      --batch pygo-emitters-log061 --weight 10054
+python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_dart_l1.sh       --batch pygo-emitters-log061 --weight 46305
+python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_csharp_l1.sh     --batch pygo-emitters-log061 --weight 45011
 ```
 
 Wait until `airlock status` shows all eight `done`. The daemon runs
@@ -121,12 +121,12 @@ lanes **serially**, one at a time, so this is one queue and not eight.
 level-2 cell exists only where `op(y, y)` typechecks, and `y`'s type is
 read out of the level-1 lane output — the same rule rust has followed
 since log_052 and go since log_061. Until `ct_<lang>_l1.txt` exists in
-`Airlock/agent/out/`, the generator refuses to
+`PUBLIC/Airlock/agent/out/`, the generator refuses to
 emit that language's level-2 lane and says so by name.
 
 ```
-cd PseudoCoupHQ/Research/kind_fuzz_clustering
-python3 PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_gen.py --eight l2 --no-drop
+cd PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering
+python3 PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_gen.py --eight l2 --no-drop
 ```
 
 It prints, per language, the cell count, the probe count, the projected
@@ -140,7 +140,7 @@ The generator prints the exact file names. Submit each one the same
 way, using the probe count it printed as `--weight`:
 
 ```
-python3 Airlock/airlock submit PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/<lane>.sh --batch pygo-emitters-log061 --weight <probe count>
+python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/<lane>.sh --batch pygo-emitters-log061 --weight <probe count>
 ```
 
 `ct_php_l2.sh` is already generated and can go in this phase too
@@ -200,7 +200,7 @@ it.
 
 **First, nothing is lost.** Every lane writes its answers to `/out` as
 they arrive, so an ABORTed lane still leaves everything it measured in
-`Airlock/agent/out/`. The php lane additionally
+`PUBLIC/Airlock/agent/out/`. The php lane additionally
 writes one part file per worker (`ct_php_l2.w0.txt` …) as answers
 arrive.
 
@@ -224,21 +224,21 @@ columns.
 
 | what | where |
 |---|---|
-| the emitters | `PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_gen.py` |
-| the value sets and holders | `PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_values.py` |
-| the generated lanes | `PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_*.sh` |
-| the batch manifests written at generation time | `PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/batch_eight-l1-log062.json`, `…/batch_eight-l2-php-log062.json` |
-| the live manifest Airlock reads | `Airlock/agent/batch.json` |
-| queued lanes | `Airlock/agent/drop/` |
-| statuses | `Airlock/agent/status/` |
-| logs | `Airlock/agent/logs/` |
-| **raw lane output** | `Airlock/agent/out/ct_<lang>_l<n>*.txt` |
-| the record of this work | `PseudoCoupHQ/DevComms/log_062_remaining_language_emitters.md` |
+| the emitters | `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_gen.py` |
+| the value sets and holders | `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/l3_cart_values.py` |
+| the generated lanes | `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/ct_*.sh` |
+| the batch manifests written at generation time | `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/lanes/batch_eight-l1-log062.json`, `…/batch_eight-l2-php-log062.json` |
+| the live manifest Airlock reads | `PUBLIC/Airlock/agent/batch.json` |
+| queued lanes | `PUBLIC/Airlock/agent/drop/` |
+| statuses | `PUBLIC/Airlock/agent/status/` |
+| logs | `PUBLIC/Airlock/agent/logs/` |
+| **raw lane output** | `PUBLIC/Airlock/agent/out/ct_<lang>_l<n>*.txt` |
+| the record of this work | `PRIVATE/PseudoCoupHQ/DevComms/log_062_remaining_language_emitters.md` |
 
 The two `batch_*.json` files beside the lanes are a **record of what was
 generated**, in Airlock's own manifest byte-shape. The manifest Airlock
 actually reads is the one `airlock submit` maintains at
-`Airlock/agent/batch.json`; you do not need to
+`PUBLIC/Airlock/agent/batch.json`; you do not need to
 copy anything.
 
 ---
@@ -246,7 +246,7 @@ copy anything.
 ## 8 — after the run
 
 Nothing here folds. The raw answers sit in
-`Airlock/agent/out/` in the same line shape rust
+`PUBLIC/Airlock/agent/out/` in the same line shape rust
 and go already use (`pid|type|ENCODING`), which is what
 `l3_cart_read.read_rust` reads. Whether and how these eight columns join
 `matrices_cart_v2/`, the compatibility gate, containment and the mode

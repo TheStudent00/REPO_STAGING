@@ -48,7 +48,7 @@ then 4.1 and 13.5, AgentMemory "ROUND 10 RULINGS".
 
 ## FINISHED 2026-09-03
 All six steps ran; log written to
-`PseudoCoupHQ/DevComms/log_153_task53_layer4_canon38_census.md`
+`PRIVATE/PseudoCoupHQ/DevComms/log_153_task53_layer4_canon38_census.md`
 and a dated entry appended under PROGRESS.md's single `# PROGRESS` heading.
 Census: 54 producers / 1,719 rows / 1,668 units.
 Guard: 334 PASS, 0 FAIL, 0 exempt, exit 0.

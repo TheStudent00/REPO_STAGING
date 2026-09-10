@@ -5,9 +5,9 @@ conversation before the machinery is built. Per protocol §18a: the
 chat carried the conclusions; this is the working record. The
 operand-identity question (which register holds parameter `a`) was
 the driving example throughout; the captures behind it are
-`Airlock/agent/out/ce_trace_walk.txt` and
+`PUBLIC/Airlock/agent/out/ce_trace_walk.txt` and
 `ce_trace_all.txt`, and the interactive walkthrough is
-`PseudoCoupHQ/Research/kind_fuzz_clustering/operand_walk.html`.
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/operand_walk.html`.
 
 ## 1. the correction that produced this log
 

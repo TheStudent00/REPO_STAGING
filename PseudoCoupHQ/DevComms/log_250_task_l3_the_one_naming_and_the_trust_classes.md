@@ -1,13 +1,13 @@
 # log_250 — task l3: the check's composer names both sides by the stored line's own rule (19 DISCREPANCY → 0), and the native-evaluation trust class measured
 
 Node: `hq.research.compiler_graph.gate.lean.model_translator`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/node_0_3_1_5_6_0_model_translator/CORE_0_3_1_5_6_0_model_translator.md`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/node_0_3_1_5_6_0_model_translator/CORE_0_3_1_5_6_0_model_translator.md`).
 Its super-node is the lean node
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`).
-Artifacts: `PseudoCoupHQ/Research/op_pipeline/lean/`.
-Instance: `Airlock/instances/l3.conf`, on the tower.
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`).
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/`.
+Instance: `PUBLIC/Airlock/instances/l3.conf`, on the tower.
 Lanes: 12, all kept at
-`PseudoCoupHQ/Research/op_pipeline/lean/lanes_l3/`.
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/lanes_l3/`.
 Lane logs cited below are TOWER paths
 (`<runs>/l3/agent/logs/...`), stated as such.
 
@@ -93,7 +93,7 @@ solver (the other 8 close in the rewriting stage, in the stronger class).
   `model_translate.py`) — the code that builds the RIGHT of a theorem by
   walking the unit's body and applying one model definition per line, and
   that decides which bound variable stands where an arrival is read.
-- **`term.Term.normalize`** (`PseudoCoupHQ/Research/op_pipeline/term.py`)
+- **`term.Term.normalize`** (`PRIVATE/PseudoCoupHQ/Research/op_pipeline/term.py`)
   — the pipeline's fixed print rule, and therefore the rule that gave the
   stored line its `v0`/`v1`: order the commutative operators' arguments,
   simplify, order again, number the free symbols in first-met printed order,
@@ -202,7 +202,7 @@ naming disagreement and nothing else is.
 ## 3. The one function, and what the composer does now
 
 The change is inside `bound_variables` in
-`PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`,
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py`,
 which is the one shared file this brief authorises and the composer is the
 only part of it touched.
 
@@ -262,7 +262,7 @@ host log
 
 **THE NEW GUARD VALUE IS `259 / 172 / 87`, DISCREPANCY 0.** The check as L2
 left it is kept beside the new one as
-`PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json.before_task_l3`,
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json.before_task_l3`,
 so the before/after is auditable without git.
 
 ---
@@ -376,7 +376,7 @@ theorem file so that nothing already proved was disturbed. Lane
 **ZERO of the 72 moved.** Every attempt came back `unsolved goals`; the
 per-row outcome, wall clock, peak RSS, tactic and Lean output are one record
 each in
-`PseudoCoupHQ/Research/op_pipeline/lean/l3_trust_classes.json`.
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/l3_trust_classes.json`.
 The 61 the brief names are all still in the weaker class and all 61 are still
 proved.
 
@@ -712,27 +712,27 @@ output to itself is the self-reference log 232 §11 hit.
 
 ## 11. See also
 
-- `PseudoCoupHQ/Research/op_pipeline/lean/README.md` — the
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/README.md` — the
   check's tally, what it means, and the trust classes, as reference
   documentation rather than an account of a day.
-- `PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py` —
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py` —
   the translator and the checker; `bound_variables` is the only part this
   task changed.
-- `PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json` — the
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/check_L2.json` — the
   259-row population as this task leaves it, and
   `check_L2.json.before_task_l3` as task L2 left it.
-- `PseudoCoupHQ/Research/op_pipeline/lean/l3_trust_classes.json`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/l3_trust_classes.json`
   — one record per row carrying the native-evaluation axiom, with the
   attempt to close it without the SAT solver.
-- `PseudoCoupHQ/Research/op_pipeline/lean/lanes_l3/` — all nine
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/lanes_l3/` — all nine
   lane scripts, in submission order.
-- `PseudoCoupHQ/DevComms/log_232_task_L2_model_translator.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_232_task_L2_model_translator.md`
   §5 — the 19 as task L2 recorded them, and §7 the guard finding this task
   inherits.
-- `PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md`
   — the `archproof` project this check builds inside; §4 is where the brief's
   "61 native-evaluation proofs" was expected and is not.
-- `PseudoCoupHQ/DevComms/log_249_task_ap5_autopoly_fifth_pass.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_249_task_ap5_autopoly_fifth_pass.md`
   §2.2 — the widened `shapes_for` this task re-ran the sweep for, and §8.1
   the guard reading of `check` at `259 / 172 / 87` that this task's tally
   keeps.

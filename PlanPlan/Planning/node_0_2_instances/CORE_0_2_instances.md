@@ -34,6 +34,6 @@ when the definition is settled.)*
 there is no `instances/` folder in this repo, checked 2026-08-01.
 
 the candidate sources exist, though: five conforming trees are under
-version control today — this repo's, `PseudoCoupHQ`,
-`PseudoCoup_v5`, `PseudoCoup_v6` and
-`PseudoIR`.
+version control today — this repo's, `PRIVATE/PseudoCoupHQ`,
+`PRIVATE/PseudoCoup_v5`, `PRIVATE/PseudoCoup_v6` and
+`PRIVATE/PseudoIR`.

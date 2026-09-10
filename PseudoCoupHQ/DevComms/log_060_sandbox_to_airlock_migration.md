@@ -3,12 +3,12 @@
 2026-08-22. the owner: *"if you can migrate from SandboxDesign to Airlock for
 PCHQ -- and the Claude skill if needed -- yes please"*.
 
-The sandbox this line drives is now `Airlock`.
+The sandbox this line drives is now `PUBLIC/Airlock`.
 `SandboxDesign` is **not** retired, **not** modified and
 **not** moved by this work; it still runs. Airlock is a derivation of it,
-recorded in `Airlock/DevComms/log_001_airlock_derivation.md`,
+recorded in `PUBLIC/Airlock/DevComms/log_001_airlock_derivation.md`,
 and the move-across instructions are in
-`Airlock/MIGRATING.md`.
+`PUBLIC/Airlock/MIGRATING.md`.
 
 Vocabulary held throughout: super-node / sub-node / co-node / sub-tree,
 higher / lower; the outcome where the operating system stops a lane is
@@ -20,14 +20,14 @@ higher / lower; the outcome where the operating system stops a lane is
 
 | old | new |
 |---|---|
-| `SandboxDesign` | `Airlock` |
-| `SandboxDesign/agent/drop/<lane>.sh` | `Airlock/agent/drop/<lane>.sh` |
-| `SandboxDesign/agent/status/<lane>.sh.status` | `Airlock/agent/status/<lane>.sh.status` |
-| `SandboxDesign/agent/logs/<stamp>__<lane>.sh.log` | `Airlock/agent/logs/<stamp>__<lane>.sh.log` |
-| `SandboxDesign/agent/out/` | `Airlock/agent/out/` |
-| `SandboxDesign/agent/batch.json` | `Airlock/agent/batch.json` |
-| `SandboxDesign/proxy/allowlist.txt` | `Airlock/proxy/allowlist.txt` |
-| `SandboxDesign/mounts.conf` | `Airlock/mounts.conf` |
+| `SandboxDesign` | `PUBLIC/Airlock` |
+| `SandboxDesign/agent/drop/<lane>.sh` | `PUBLIC/Airlock/agent/drop/<lane>.sh` |
+| `SandboxDesign/agent/status/<lane>.sh.status` | `PUBLIC/Airlock/agent/status/<lane>.sh.status` |
+| `SandboxDesign/agent/logs/<stamp>__<lane>.sh.log` | `PUBLIC/Airlock/agent/logs/<stamp>__<lane>.sh.log` |
+| `SandboxDesign/agent/out/` | `PUBLIC/Airlock/agent/out/` |
+| `SandboxDesign/agent/batch.json` | `PUBLIC/Airlock/agent/batch.json` |
+| `SandboxDesign/proxy/allowlist.txt` | `PUBLIC/Airlock/proxy/allowlist.txt` |
+| `SandboxDesign/mounts.conf` | `PUBLIC/Airlock/mounts.conf` |
 
 The tail of every path under `agent/` is identical. Only the repo
 directory changed.
@@ -36,17 +36,17 @@ directory changed.
 
 | old | new |
 |---|---|
-| a hand-write into `SandboxDesign/agent/drop/x.sh` | `python3 Airlock/airlock submit x.sh --batch <label> --weight <n>` (the hand-write still works, and is still the truth underneath) |
-| `SandboxDesign/sandbox submit x.sh --batch b --weight 40` | `python3 Airlock/airlock submit x.sh --batch b --weight 40` |
-| `SandboxDesign/sandbox status x.sh` | `python3 Airlock/airlock status x.sh` |
-| `SandboxDesign/sandbox watch` | `python3 Airlock/airlock watch` |
-| `SandboxDesign/sandbox doctor` | `python3 Airlock/airlock doctor` |
-| `bash SandboxDesign/progress.sh` | `python3 Airlock/airlock status` — **or** `bash Airlock/progress.sh`, which still exists, is carried across unchanged, and still works |
-| `bash SandboxDesign/progress.sh -w` | `python3 Airlock/airlock watch` — **or** `bash Airlock/progress.sh -w`, unchanged |
-| `bash SandboxDesign/allow.sh sync` | `bash Airlock/allow.sh sync` (or `airlock allow sync`, which delegates to it) |
-| `bash SandboxDesign/up.sh` / `down.sh` / `build.sh` / `selftest.sh` / `submit.sh` / `logs.sh` / `pull.sh` / `report.sh` / `batch.sh` / `probe_host.sh` / `submit_project.sh` / `install_quadlet.sh` | the same script name under `Airlock/`, same arguments, same behaviour |
+| a hand-write into `SandboxDesign/agent/drop/x.sh` | `python3 PUBLIC/Airlock/airlock submit x.sh --batch <label> --weight <n>` (the hand-write still works, and is still the truth underneath) |
+| `SandboxDesign/sandbox submit x.sh --batch b --weight 40` | `python3 PUBLIC/Airlock/airlock submit x.sh --batch b --weight 40` |
+| `SandboxDesign/sandbox status x.sh` | `python3 PUBLIC/Airlock/airlock status x.sh` |
+| `SandboxDesign/sandbox watch` | `python3 PUBLIC/Airlock/airlock watch` |
+| `SandboxDesign/sandbox doctor` | `python3 PUBLIC/Airlock/airlock doctor` |
+| `bash SandboxDesign/progress.sh` | `python3 PUBLIC/Airlock/airlock status` — **or** `bash PUBLIC/Airlock/progress.sh`, which still exists, is carried across unchanged, and still works |
+| `bash SandboxDesign/progress.sh -w` | `python3 PUBLIC/Airlock/airlock watch` — **or** `bash PUBLIC/Airlock/progress.sh -w`, unchanged |
+| `bash SandboxDesign/allow.sh sync` | `bash PUBLIC/Airlock/allow.sh sync` (or `airlock allow sync`, which delegates to it) |
+| `bash SandboxDesign/up.sh` / `down.sh` / `build.sh` / `selftest.sh` / `submit.sh` / `logs.sh` / `pull.sh` / `report.sh` / `batch.sh` / `probe_host.sh` / `submit_project.sh` / `install_quadlet.sh` | the same script name under `PUBLIC/Airlock/`, same arguments, same behaviour |
 
-`Airlock/progress.sh` is not deprecated and is not
+`PUBLIC/Airlock/progress.sh` is not deprecated and is not
 replaced. It is the only view that lists live processes inside
 `sandbox-runner`, and every `airlock` view ends by pointing at it.
 
@@ -74,8 +74,8 @@ looking. Bring one down before bringing the other up.
 
 | file | what changed |
 |---|---|
-| `PseudoCoupHQ/CLAUDE.md` | the `## the sandbox` section rewritten as `## the sandbox — Airlock, since 2026-08-22`: Airlock paths, the CLI as the way in, the mandatory batch decision, `airlock status` / `watch` / `doctor`, the plain statement that `Airlock/progress.sh` still exists and still works, the ABORT rendering, and the named exception for the Research generators (§4) |
-| `PseudoCoupHQ/AgentMemory.md` | the `sandbox/toolchain:` entry under `## where things are` repointed to `Airlock`, with the CLI commands and the note that `progress.sh` still works |
+| `PRIVATE/PseudoCoupHQ/CLAUDE.md` | the `## the sandbox` section rewritten as `## the sandbox — Airlock, since 2026-08-22`: Airlock paths, the CLI as the way in, the mandatory batch decision, `airlock status` / `watch` / `doctor`, the plain statement that `PUBLIC/Airlock/progress.sh` still exists and still works, the ABORT rendering, and the named exception for the Research generators (§4) |
+| `PRIVATE/PseudoCoupHQ/AgentMemory.md` | the `sandbox/toolchain:` entry under `## where things are` repointed to `PUBLIC/Airlock`, with the CLI commands and the note that `progress.sh` still works |
 | `Planning/node_0_3_research/node_0_3_1_dominant_intentions/CORE_0_3_1_dominant_intentions.md` | `**runner**: the SandboxDesign agent lane` → the Airlock agent lane, with the submit and status commands |
 | `Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md` | step 2 of `## the method`: `run — through the SandboxDesign agent lane` → the Airlock agent lane, with the submit and status commands |
 | `DevComms/log_060_sandbox_to_airlock_migration.md` | this file, new |
@@ -85,7 +85,7 @@ Four existing files edited, one written.
 ## 3 — the DevComms logs were deliberately NOT touched
 
 **A log said what was true on its date.** Eighteen logs in
-`PseudoCoupHQ/DevComms/` name `SandboxDesign`, and every
+`PRIVATE/PseudoCoupHQ/DevComms/` name `SandboxDesign`, and every
 one of those references **is correct as of that log's date**. Every run
 they record really did go through
 `SandboxDesign/agent/`, and rewriting them would make the
@@ -136,14 +136,14 @@ records what happened on a date.**
 
 ## 4 — the Research tooling was NOT repointed, and why
 
-Seventeen files under `PseudoCoupHQ/Research/` resolve a
+Seventeen files under `PRIVATE/PseudoCoupHQ/Research/` resolve a
 `SandboxDesign` path. They are live tooling, and the obvious move is to
 repoint them. **They were deliberately left alone**, because repointing
 them would break them against the data they read.
 
 `SandboxDesign/agent/out/` holds **480 products** — every
-run of record for this line. `Airlock/agent/out/` holds
-**0**, and `Airlock/MIGRATING.md` states the rule
+run of record for this line. `PUBLIC/Airlock/agent/out/` holds
+**0**, and `PUBLIC/Airlock/MIGRATING.md` states the rule
 explicitly: *"Nothing is copied out of `SandboxDesign/agent/`.
 Old logs, statuses and products stay where they are; Airlock starts with
 an empty lane."* A reader repointed at Airlock would find nothing.
@@ -177,7 +177,7 @@ coherent options:
    the sandbox for new work and for anyone else.
 2. **Repoint them, and move the products.** Copy
    `SandboxDesign/agent/out/` into
-   `Airlock/agent/out/` first, then repoint. The readers
+   `PUBLIC/Airlock/agent/out/` first, then repoint. The readers
    keep working because the data moved with them.
 
 `timing_build.py`'s hardcoded `/sessions/brave-optimistic-cannon/...`
@@ -190,12 +190,12 @@ Checked line by line for a `SandboxDesign` path:
 
 | script | result |
 |---|---|
-| `PseudoCoupHQ/hq.sh` | **no `SandboxDesign` reference.** Its four occurrences of the word "sandbox" all mean the Cowork agent sandbox — the thing that cannot set an executable bit and leaves stale `.git/index.lock` files — not this repo. Nothing to change |
-| `PseudoCoupHQ/create_github_repo.sh` | none |
-| `PseudoCoupHQ/git_commit_push.sh` | none (same Cowork-sandbox sense) |
-| `PseudoCoupHQ/git_commit_push_all.sh` | none (same) |
+| `PRIVATE/PseudoCoupHQ/hq.sh` | **no `SandboxDesign` reference.** Its four occurrences of the word "sandbox" all mean the Cowork agent sandbox — the thing that cannot set an executable bit and leaves stale `.git/index.lock` files — not this repo. Nothing to change |
+| `PRIVATE/PseudoCoupHQ/create_github_repo.sh` | none |
+| `PRIVATE/PseudoCoupHQ/git_commit_push.sh` | none (same Cowork-sandbox sense) |
+| `PRIVATE/PseudoCoupHQ/git_commit_push_all.sh` | none (same) |
 
-`bash PseudoCoupHQ/hq.sh check` was run after every edit
+`bash PRIVATE/PseudoCoupHQ/hq.sh check` was run after every edit
 above and reports the same clean result it did before: **0 errors.**
 
 ## 6 — the toolchain skill
@@ -208,12 +208,12 @@ was **not** edited.
 
 The exact replacement text for every affected section — quoted
 old-versus-new, ready to paste — is at
-`Airlock/DevComms/toolchain_skill_airlock_patch.md`. It has
+`PUBLIC/Airlock/DevComms/toolchain_skill_airlock_patch.md`. It has
 to be applied through the skill-save mechanism by a session that has it.
 
 ## decided, recorded for audit
 
-- **The sandbox of record for this line is `Airlock`**, as
+- **The sandbox of record for this line is `PUBLIC/Airlock`**, as
   of 2026-08-22. `SandboxDesign` is untouched, still
   works, and is not retired by this log.
 - **Four files updated, one written**, listed in §2. The rule applied:
@@ -225,7 +225,7 @@ to be applied through the skill-save mechanism by a session that has it.
 - **Four `PROGRESS.md` references were left for the same reason** — each
   sits inside a dated bullet recording a past event. Named individually
   in §3.
-- **`Airlock/progress.sh` still exists and still works.**
+- **`PUBLIC/Airlock/progress.sh` still exists and still works.**
   It is carried across unchanged, `-w` still refreshes, and it is the
   only view listing live processes inside `sandbox-runner`.
 - **The `sandbox-` container, network, image and volume names are

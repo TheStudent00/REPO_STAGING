@@ -19,7 +19,7 @@ no code anywhere maps one tree's nodes to the other's.
 
 Every path and line cited below was verified on disk 2026-08-02.
 The part numbers (§2.1–§2.9) are the nine parts of
-`PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`.
+`PRIVATE/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`.
 
 ---
 
@@ -62,7 +62,7 @@ in a specific grammar's parse tree**. Two consequences:
   from the grammar side, and no surveyed component owns it. The only
   design that does is the archived `tree_sitter_base` plan node
   (projected into
-  `PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`):
+  `PRIVATE/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`):
   commit-pinned vendored grammars with a provenance manifest and a
   byte-compared census. That node is design, not surveyed code.
 - **Every id-consuming part inherits the dependency.** 2.2, 2.5, 2.7

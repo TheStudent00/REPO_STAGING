@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — Planning
@@ -16,13 +16,13 @@ A rollup over this node's own sub-tree (itself plus everything beneath it). Rege
 
 ## sub-tree
 
-sub-node count: 88
+sub-node count: 91
 
 ### status breakdown
 
 | status | count |
 | --- | --- |
-| draft | 88 |
+| draft | 91 |
 | superseded | 1 |
 
 ### designation breakdown
@@ -35,45 +35,46 @@ sub-node count: 88
 | code (method) | 19 |
 | code (module) | 13 |
 | finding | 4 |
-| grouping | 18 |
+| grouping | 19 |
 | rule | 19 |
-| work | 12 |
+| work | 14 |
 
 ## blocked
 
-- `PseudoCoupHQ/Planning/node_0_0_projects/PROGRESS.md` line 10 — - **blocked, and naming what is not**: PseudoCoup_v5's rebuild cannot
-- `PseudoCoupHQ/Planning/node_0_0_projects/PROGRESS.md` line 15 — through `PCV5_ROOT`, and 95 passed once it is set. NOT blocked by
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/PROGRESS.md` line 12 — probe blocked until host-side `allow.sh sync`).
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/PROGRESS.md` line 70 — dart REMAINS BLOCKED: `storage.googleapis.com` 403s through the
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/PROGRESS.md` line 423 — 5,092 blocked**, down from log 041's 31, with **ten of the fourteen
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/PROGRESS.md` line 425 — 1,711 pairs, every one blocked. **Log 041's headline candidate does
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/PROGRESS.md` line 1453 — - (the 2026-08-15 "next", kept for the record and now answered) phase 1 — probe design, blocked on six rulings listed in log
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_4_data_representation/PROGRESS.md` line 70 — REFUSES-behavioral / 33 NOT-RUN (328 cells). c# stayed blocked: a
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 134 — blocked, languages, regular/irregular — the actionable
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 211 — (movq/punpckldq/subpd/movapd/unpckhpd/addsd), 44 blocked
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 265 — Concat blocked the sign-extend recognizer, producing a
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 274 — are genuine negate units (blocked on missing XMM register
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 501 — expressions byte-identical, one cluster; go/rust blocked by
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 1180 — (no class exists to match -- cause 1, some blocked further by
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 1208 — 100 (network blocked), so no fix was available this session.
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 3031 — blocked 219 units in the old census and appears nowhere in the new
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_10_dashboard/PROGRESS.md` line 512 — diaried through them, quoting the cost page (rust BLOCKED on this
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_1_arch_unit/node_0_3_1_1_5_arrival_contract/PROGRESS.md` line 22 — **blocked** on the prelude ordering defect; the contract itself is
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_3_ledger/node_0_3_1_3_3_destination_rules/PROGRESS.md` line 20 — — **blocked** on the owner's ruling; every other entry is unaffected.
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/PROGRESS.md` line 50 — line is **blocked on task 59**, not out of scope. Evidence:
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 24 — **blocked** on those two models; the proved population is
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 59 — - 2026-09-03: the 5,602 units blocked on the two missing blocks —
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 62 — stays **blocked on the gate**, no longer on the models. Evidence:
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_0_verdict/PROGRESS.md` line 23 — remainder — **blocked** on the reference fix. Evidence:
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_2_transcribe/PROGRESS.md` line 90 — round's stated 6 GB cap** — **blocked, flagged for the owner**. Evidence:
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 40 — producers, 1,637 rows blocked**, against census5's 52 / 1,877.
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 54 — store — **blocked on the transcribe node, flagged for the owner**.
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 61 — blocked, 1,220 units blocked, 1,059 cascades**, keyed by the typed
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_5_render_back/PROGRESS.md` line 18 — **planned**, and blocked on `render`. Evidence:
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/PROGRESS.md` line 51 — store — **blocked on the transcribe node, flagged for the owner**.
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/PROGRESS.md` line 54 — - 2026-09-05: the pool over canon40 is BLOCKED by its own refusal, and
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/PROGRESS.md` line 61 — agree, and no record was composed for the 44 — **blocked, reported**.
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_9_graph/PROGRESS.md` line 559 — **WHAT RUST AND SWIFT GAINED.** Both are blocked from instrumentation
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_0_projects/PROGRESS.md` line 10 — - **blocked, and naming what is not**: PseudoCoup_v5's rebuild cannot
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_0_projects/PROGRESS.md` line 15 — through `PCV5_ROOT`, and 95 passed once it is set. NOT blocked by
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/PROGRESS.md` line 548 — REGISTER FAMILIES. `model_translate.py check` un-blocked (one line;
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/PROGRESS.md` line 12 — probe blocked until host-side `allow.sh sync`).
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/PROGRESS.md` line 70 — dart REMAINS BLOCKED: `storage.googleapis.com` 403s through the
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/PROGRESS.md` line 423 — 5,092 blocked**, down from log 041's 31, with **ten of the fourteen
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/PROGRESS.md` line 425 — 1,711 pairs, every one blocked. **Log 041's headline candidate does
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/PROGRESS.md` line 1453 — - (the 2026-08-15 "next", kept for the record and now answered) phase 1 — probe design, blocked on six rulings listed in log
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_4_data_representation/PROGRESS.md` line 70 — REFUSES-behavioral / 33 NOT-RUN (328 cells). c# stayed blocked: a
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 134 — blocked, languages, regular/irregular — the actionable
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 211 — (movq/punpckldq/subpd/movapd/unpckhpd/addsd), 44 blocked
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 265 — Concat blocked the sign-extend recognizer, producing a
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 274 — are genuine negate units (blocked on missing XMM register
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 501 — expressions byte-identical, one cluster; go/rust blocked by
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 1180 — (no class exists to match -- cause 1, some blocked further by
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 1208 — 100 (network blocked), so no fix was available this session.
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/PROGRESS.md` line 3031 — blocked 219 units in the old census and appears nowhere in the new
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_10_dashboard/PROGRESS.md` line 512 — diaried through them, quoting the cost page (rust BLOCKED on this
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_1_arch_unit/node_0_3_1_1_5_arrival_contract/PROGRESS.md` line 22 — **blocked** on the prelude ordering defect; the contract itself is
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_3_ledger/node_0_3_1_3_3_destination_rules/PROGRESS.md` line 20 — — **blocked** on the owner's ruling; every other entry is unaffected.
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/PROGRESS.md` line 50 — line is **blocked on task 59**, not out of scope. Evidence:
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 24 — **blocked** on those two models; the proved population is
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 59 — - 2026-09-03: the 5,602 units blocked on the two missing blocks —
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_4_reference/node_0_3_1_4_1_machine_state/PROGRESS.md` line 62 — stays **blocked on the gate**, no longer on the models. Evidence:
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_0_verdict/PROGRESS.md` line 23 — remainder — **blocked** on the reference fix. Evidence:
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_2_transcribe/PROGRESS.md` line 90 — round's stated 6 GB cap** — **blocked, flagged for the owner**. Evidence:
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 40 — producers, 1,637 rows blocked**, against census5's 52 / 1,877.
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 54 — store — **blocked on the transcribe node, flagged for the owner**.
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_4_census/PROGRESS.md` line 61 — blocked, 1,220 units blocked, 1,059 cascades**, keyed by the typed
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_6_term/node_0_3_1_6_5_render_back/PROGRESS.md` line 18 — **planned**, and blocked on `render`. Evidence:
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/PROGRESS.md` line 51 — store — **blocked on the transcribe node, flagged for the owner**.
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/PROGRESS.md` line 54 — - 2026-09-05: the pool over canon40 is BLOCKED by its own refusal, and
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/PROGRESS.md` line 61 — agree, and no record was composed for the 44 — **blocked, reported**.
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_9_graph/PROGRESS.md` line 559 — **WHAT RUST AND SWIFT GAINED.** Both are blocked from instrumentation
 
 ## PROGRESS bullet statuses
 
@@ -83,15 +84,15 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 | --- | --- |
 | planned | 25 |
 | in-progress | 0 |
-| done | 83 |
+| done | 89 |
 | blocked | 4 |
 | deferred | 2 |
 
 ## SUPPORT files in this sub-tree
 
-- `PseudoCoupHQ/Planning/SUPPORT_planning_trees.md`
-- `PseudoCoupHQ/Planning/node_0_3_research/SUPPORT_BRAINSTORM_autopoly.md`
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/SUPPORT_BRAINSTORM_basis_data_structures.md`
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/SUPPORT_conversion_spec.md`
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/SUPPORT_ontology.md`
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/SUPPORT_scaling_design.md`
+- `PRIVATE/PseudoCoupHQ/Planning/SUPPORT_planning_trees.md`
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/SUPPORT_BRAINSTORM_autopoly.md`
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_1_dominant_intentions/SUPPORT_BRAINSTORM_basis_data_structures.md`
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/SUPPORT_conversion_spec.md`
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_intentions/node_0_3_0_2_kind_fuzz_clustering/SUPPORT_ontology.md`
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/SUPPORT_scaling_design.md`

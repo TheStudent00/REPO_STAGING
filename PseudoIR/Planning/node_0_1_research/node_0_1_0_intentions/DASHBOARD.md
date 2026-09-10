@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_1_0_intentions
@@ -48,5 +48,5 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 ## SUPPORT files in this sub-tree
 
-- `PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md`
-- `PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md`
+- `PRIVATE/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md`
+- `PRIVATE/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md`

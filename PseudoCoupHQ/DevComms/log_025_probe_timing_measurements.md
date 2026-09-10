@@ -1,8 +1,8 @@
 # log 025 — what one layer-3 probe costs, measured, and what brute force would cost
 
 Date: 2026-08-18. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`
 (`timing_build.py`, `timing_read.py`, `lanes/tm_*.sh`, `raw/tm_*.txt`,
 `timing_results.json`).
 
@@ -295,7 +295,7 @@ How the counts were obtained.
 
 ## record
 
-Everything is in `PseudoCoupHQ/Research/kind_fuzz_clustering/`:
+Everything is in `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`:
 
 - `timing_build.py` -> `lanes/tm_<language>.sh` — the twelve self-contained
   timing lanes, one per language; the runner cannot see the repo, so each

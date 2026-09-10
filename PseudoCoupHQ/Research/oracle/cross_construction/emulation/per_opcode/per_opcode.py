@@ -11,7 +11,7 @@ rather than the whole c corpus) and Q3 (the gate's proof against the
 row's example unit) are asked exactly as o7 asks them.
 
 Node: hq.research.arch_unit_oracle.cross_construction
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
 FROZEN for term-level composition; this task, like o7, asks a
 different question and does not unfreeze it).
 
@@ -149,7 +149,7 @@ POPULATION = os.path.join(HERE, "per_opcode_population.json")
 HELD = os.path.join(HERE, "per_opcode_held.json")
 RESULTS = os.path.join(HERE, "per_opcode_results.json")
 REPORT = os.path.join(HERE, "per_opcode_report.md")
-HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/cross_construction/"
+HOST_FOLDER = ("PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/"
               "emulation/per_opcode")
 
 LANGS = ["c", "cpp", "go", "rust", "swift"]

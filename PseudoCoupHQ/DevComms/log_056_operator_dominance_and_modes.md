@@ -8,9 +8,9 @@ partition the guarantees rule calls for, and a measurement that should
 be checked before it is believed.
 
 No probes were run. Everything is a re-read of `matrices_full/`.
-Script: `PseudoCoupHQ/Research/kind_fuzz_clustering/l3_operator_dominance.py`
+Script: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/l3_operator_dominance.py`
 (2.5 s, run under `nice`). Product:
-`PseudoCoupHQ/Research/kind_fuzz_clustering/operator_dominance_v1.json`.
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/operator_dominance_v1.json`.
 
 ---
 

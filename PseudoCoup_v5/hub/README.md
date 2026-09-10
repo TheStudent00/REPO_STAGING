@@ -16,7 +16,7 @@ between them and a version-to-version diff stays readable.
   fine; touching anything in it raises `InertHubError` naming what
   was wanted and where the real hub is defined.
 - `test_hub_is_inert.py` — the acceptance test. 7 checks, green.
-  Run: `python3 -m pytest PseudoCoup_v5/hub -q`
+  Run: `python3 -m pytest PRIVATE/PseudoCoup_v5/hub -q`
 
 ## Two decisions worth knowing before editing this
 
@@ -33,7 +33,7 @@ answers to any name through `__getattr__` instead.
 
 ## Do not describe the hub here
 
-`PseudoIR/Planning/node_0_2_hub/` describes what the
+`PRIVATE/PseudoIR/Planning/node_0_2_hub/` describes what the
 hub IS. This folder holds the artifact. A second description growing
 here is the duplication the project split exists to prevent.
 

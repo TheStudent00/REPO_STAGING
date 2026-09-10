@@ -3,10 +3,10 @@
 Law: `LAW.md` beside this file — read ALL of it first, including its last
 section, "Compute runs on the TOWER now": every lane you submit runs on the
 tower through `remote_lane.sh`, and the commands are given there. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_2_single_opcode_units/`
 (read its CORE and PROGRESS). Instance: `mn1.conf` is already on the tower
 and up; use it. Your lane scripts live in
-`PseudoCoupHQ/Research/oracle/arch_opcodes/lanes_mn1/`.
+`PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/lanes_mn1/`.
 
 ## What this is, in one sentence
 The spelling guard, `Research/op_pipeline/check_no_spelling_keys.py`,
@@ -31,7 +31,7 @@ field. It is a rename, not a change of anything measured.
 
 How each was originally run is recorded in its own lane scripts beside it
 (`lane_logs/`, `lanes/`, `lanes_o10/`) and in its log: logs 208 (o2), 220
-(o8), and the o9/o10 logs (`ls PseudoCoupHQ/DevComms | grep
+(o8), and the o9/o10 logs (`ls PRIVATE/PseudoCoupHQ/DevComms | grep
 -i "o9\|o10"`). Re-run each generator the way its own lane ran it. The
 scripts import each other's outputs in places (o9 reads o2's json; o8 reads
 o2's): regenerate in the order o2, then o9 and o10, then o8, and sync-back
@@ -59,7 +59,7 @@ between them so each reads the renamed input.
 5. One note in the log for the record: commands in the earlier logs that
    read `.mnemonic` from these artifacts would now need `.mnem`; the old
    logs are not edited.
-6. Log (next free number; check `ls PseudoCoupHQ/DevComms |
+6. Log (next free number; check `ls PRIVATE/PseudoCoupHQ/DevComms |
    tail` right before writing); verifier lane on the tower; PROGRESS entry
    (append only, dated) on the node above; sync-back of the artifact
    folders and DevComms; instance down.

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # The one bash entry point for the planning framework.
 #
-#   bash PlanPlan/plan.sh <command> [args...]
+#   bash PRIVATE/PlanPlan/plan.sh <command> [args...]
 #
-# Every command is a call into PlanPlan/framework/. This
+# Every command is a call into PRIVATE/PlanPlan/framework/. This
 # script holds two things and nothing else: which interpreter to use,
 # and which tool a word maps to.
 #

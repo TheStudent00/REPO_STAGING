@@ -38,7 +38,7 @@ sub_nodes: []
 The census of which grammar operators OCCUR in a compiler's own
 source, set against the operators the language offers and the subset
 the corpus has lowered: `compiler_operators_used.py` under
-`PseudoCoupHQ/Research/oracle/compiler_units/`, a
+`PRIVATE/PseudoCoupHQ/Research/oracle/compiler_units/`, a
 tree-sitter walk over every source file counting operator nodes
 (strings and comments excluded), measured against the inventory of
 the language the compiler is WRITTEN in. Task o3, log_209; six rows

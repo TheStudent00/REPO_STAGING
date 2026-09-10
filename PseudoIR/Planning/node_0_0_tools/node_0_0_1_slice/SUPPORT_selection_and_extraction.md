@@ -6,7 +6,7 @@ status: projected
 # SUPPORT — selection and extraction
 
 projected 2026-07-30 from the previous plan, now archived at
-`PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
+`PRIVATE/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/`.
 the `source:` paths below are relative to that folder.
 
 source: node_0_0_tools/node_0_0_5_slicer/node_0_0_5_0_selection/CORE_0_0_5_0_selection.md  (343 words)
@@ -64,7 +64,7 @@ mechanical once the set is stated.
   carry it. R5 was removed with its subject in the 2026-07-30 purge —
   it surveyed the retired backend's chain — so there is no current
   document holding this. Recorded in
-  `PseudoCoup_v6/Planning/PROGRESS.md` ("R5 removed
+  `PRIVATE/PseudoCoup_v6/Planning/PROGRESS.md` ("R5 removed
   with its subject"). Rebuilding the mechanism detail against LLVM is
   open work, not a lost file to go and find.
 
@@ -125,10 +125,10 @@ region computed.
 
 ## Reuse (already built and green)
 
-`PseudoCoup_v6/Tools/ledgerer/tree_sitter/`,
-`PseudoCoup_v6/Tools/ledgerer/`,
-`PseudoCoup_v6/Tools/transpiler/`,
-`PseudoCoup_v6/Tools/polyfill/`.
+`PRIVATE/PseudoCoup_v6/Tools/ledgerer/tree_sitter/`,
+`PRIVATE/PseudoCoup_v6/Tools/ledgerer/`,
+`PRIVATE/PseudoCoup_v6/Tools/transpiler/`,
+`PRIVATE/PseudoCoup_v6/Tools/polyfill/`.
 
 (Renamed 2026-07-31: `Tools/tree_sitter_base/` became a component of
 the ledgerer, and `Tools/ledger/` became `Tools/ledgerer/`. The

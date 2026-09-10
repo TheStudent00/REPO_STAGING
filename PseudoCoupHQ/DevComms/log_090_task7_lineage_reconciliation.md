@@ -1,6 +1,6 @@
 # log_090 — TASK 7: reconcile the two table lineages into dominant_table24.json / dom_ops22.json
 
-Date: 2026-08-31. Session: Claude Code, TASK 7 of `log_083_claude_code_task_briefs.md`. Working directory: `PseudoCoupHQ/Research/op_pipeline`.
+Date: 2026-08-31. Session: Claude Code, TASK 7 of `log_083_claude_code_task_briefs.md`. Working directory: `PRIVATE/PseudoCoupHQ/Research/op_pipeline`.
 
 THE SPELLING BAN, pasted verbatim as required by the brief:
 

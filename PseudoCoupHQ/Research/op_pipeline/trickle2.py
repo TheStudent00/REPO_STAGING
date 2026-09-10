@@ -11,8 +11,8 @@ the install, so a second sandbox at half the cores could not be asked for.
 Airlock now has INSTANCES. A second sandbox is a name and a settings file
 inside Airlock itself:
 
-    Airlock/instances/trickle.conf
-    bash Airlock/up.sh --instance trickle
+    PUBLIC/Airlock/instances/trickle.conf
+    bash PUBLIC/Airlock/up.sh --instance trickle
 
 So this program submits lanes the documented way -- `airlock submit` --
 polls the status file, and reads the product out of the instance's own
@@ -81,7 +81,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 # ---- where Airlock is, and which instance -------------------------------
 AIRLOCK_ROOT = os.environ.get(
-    "AIRLOCK_ROOT", os.path.expanduser("Airlock"))
+    "AIRLOCK_ROOT", os.path.expanduser("PUBLIC/Airlock"))
 INSTANCE = os.environ.get("AIRLOCK_INSTANCE", "trickle")
 
 STATE = os.path.join(HERE, "trickle2_state.json")

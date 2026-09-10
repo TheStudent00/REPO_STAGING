@@ -3,7 +3,7 @@
 go / rust / swift unit's term back to a c arch-unit?
 
 Node: hq.research.arch_unit_oracle.cross_construction
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
 FROZEN for term-level composition; this task asks a different
 question and does not unfreeze it).
 
@@ -127,7 +127,7 @@ REPORT = os.path.join(HERE, "emulation_report.md")
 # The same folder as seen from the host, for the report's paths:
 # inside the lane HERE is PseudoCoupHQ/..., and the owner reads
 # the report on the host.
-HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/cross_construction/emulation")
+HOST_FOLDER = ("PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation")
 
 X_LANGUAGES = ["go", "rust", "swift"]
 CLANG = "/usr/bin/clang"

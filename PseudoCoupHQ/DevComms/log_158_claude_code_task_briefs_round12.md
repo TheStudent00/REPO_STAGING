@@ -8,7 +8,7 @@ DEFAULT SUB-AGENT. ONE AIRLOCK INSTANCE PER TASK.
 the owner, 2026-09-03: "plan out every fucking step … we have completely
 drifted away from the use of PlanPlan." The tree now exists:
 
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/`
 
 nine level-3 nodes (probes, arch_unit, canonical_form, ledger,
 reference, gate, term, pool, guard) and 31 level-4 nodes. EVERY task
@@ -130,8 +130,8 @@ term and pool nodes.
 
 WORK: verification transcripts; the one-page state in Appendix B
 shape; authoritative count line over pool4; `python3
-PlanPlan/framework/check_plans.py
-PseudoCoupHQ/Planning` pasted (non-dangling lines);
+PRIVATE/PlanPlan/framework/check_plans.py
+PRIVATE/PseudoCoupHQ/Planning` pasted (non-dangling lines);
 dashboards regenerated; posterity message with `wc -c`.
 
 ---

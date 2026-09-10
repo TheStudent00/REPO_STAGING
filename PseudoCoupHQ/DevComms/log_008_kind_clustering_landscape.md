@@ -1,8 +1,8 @@
 # log_008 — kind-clustering landscape survey of six tree-sitter node-types.json files
 
 Date: 2026-08-12. Author: survey agent for the owner's PseudoCoup research node.
-Raw data: `PseudoCoupHQ/Research/kind_signature_clustering/raw/`.
-Re-runnable measurement script: `PseudoCoupHQ/Research/kind_signature_clustering/survey.py`.
+Raw data: `PRIVATE/PseudoCoupHQ/Research/kind_signature_clustering/raw/`.
+Re-runnable measurement script: `PRIVATE/PseudoCoupHQ/Research/kind_signature_clustering/survey.py`.
 
 Vocabulary note: tree-sitter's JSON key `"children"` names the unnamed-slot
 spec of a kind; in prose this log calls it the **sub-node spec**. Nodes that a

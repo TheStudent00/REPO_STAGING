@@ -99,4 +99,4 @@ compositions the gate then confirms is the experiment.
 
 ## artifacts
 
-`PseudoCoupHQ/Research/oracle/cross_construction/`.
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/`.

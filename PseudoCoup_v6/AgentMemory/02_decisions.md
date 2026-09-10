@@ -241,7 +241,7 @@ decision without noticing is a logged failure mode (04, F2).
 
 ## Planning framework (the owner, 2026-07-28)
 
-- **PlanPlan** (`PlanPlan/`, private repo):
+- **PlanPlan** (`PRIVATE/PlanPlan/`, private repo):
   the owner's research into ontology evolution in project development;
   hosts the planning framework as a template. Plans carry prose +
   YAML frontmatter metadata (stable dotted ids, status,
@@ -343,7 +343,7 @@ decision without noticing is a logged failure mode (04, F2).
 
 - **The automation boundary — RESOLVED by the owner's churn-resilience
   framing (2026-07-28, level-0 note in
-  `PseudoCoup_v6/Planning/CORE_0.md`)**: the goal is
+  `PRIVATE/PseudoCoup_v6/Planning/CORE_0.md`)**: the goal is
   a MOSTLY automated transpile+slice+insert system whose purpose
   is keeping the repo current when the intention-landscape or the
   source compilers churn. Human seam declarations fit inside
@@ -354,7 +354,7 @@ decision without noticing is a logged failure mode (04, F2).
   default; minimal slicing optional (the owner's precision point).
 - **T4 MIN/-1 — RESOLVED (the owner, 2026-07-28): TRAP. IMPLEMENTED
   same day.** `MIN / -1` and `MIN % -1` raise `OverflowError` in
-  `PseudoCoup_v6/Tools/polyfill/wrap_fixed_width.py`
+  `PRIVATE/PseudoCoup_v6/Tools/polyfill/wrap_fixed_width.py`
   (real Rust panics on both; remainder inclusion is the agent's
   mechanical extension — PCv5's srem(MIN,-1)=0 was a retired
   reference backend's machine-level guard, not Rust surface

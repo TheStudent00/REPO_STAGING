@@ -1,7 +1,7 @@
 # log 242 — task g1b: swift on the rebuilt image, and the primitive lookup widened by one step
 
 Node: `hq.research.arch_unit_oracle`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08). The
 PROGRESS entry is on the autopoly sub-node
 (`.../node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/PROGRESS.md`),
@@ -10,12 +10,12 @@ beside tasks o12, o13, h1, h1b, h2 and g1.
 Date: 2026-09-09. Instance `g1`, on the TOWER, brought down at the end
 of this log. Artifact folder (the same one tasks h1, h1b, h2 and g1
 wrote):
-[`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
+[`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
 
 **WHAT THIS TASK IS.** Task g1b is the closer for task g1. Its first
 job was to bank task g1's own record from what task g1 left on disk,
 and that is
-[`log_241`](file://PseudoCoupHQ/DevComms/log_241_task_g1_find_emulation_go_and_swift.md),
+[`log_241`](file://PRIVATE/PseudoCoupHQ/DevComms/log_241_task_g1_find_emulation_go_and_swift.md),
 a separate log. This one carries task g1b's own two pieces of work: the
 same forty runs re-run on a machine where a swift compiler exists, and
 the primitive lookup widened by one step so that a divide can take the
@@ -23,18 +23,18 @@ primitive route.
 
 The deliverables:
 
-- [`handful/handful3b.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.json)
+- [`handful/handful3b.json`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.json)
   and
-  [`handful/handful3b.md`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md)
+  [`handful/handful3b.md`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md)
   — the second run of record: the same forty runs, on the rebuilt image.
-- [`handful/handful3c.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.json)
+- [`handful/handful3c.json`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.json)
   and
-  [`handful/handful3c.md`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md)
+  [`handful/handful3c.md`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3c.md)
   — the widened lookup, and the ONE run it changes.
-- [`handful/handful.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
+- [`handful/handful.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
   extended with section 2e (the widened rule) and the `*3b` / `*3c`
   commands, and with one defect fixed in `one_recheck` (§8).
-- `Airlock/instances/g1.conf` — one change, stated with
+- `PUBLIC/Airlock/instances/g1.conf` — one change, stated with
   its reason in the file: the instance now mounts `sandbox-persist`
   READ-ONLY (§3). Airlock's own `.gitignore` line 35 excludes
   `instances/*.conf` as per-machine configuration, so this one lives on
@@ -53,7 +53,7 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into
 the instance. Prose names host paths. **The lane logs are on the
 TOWER** (`<user>@<tower>`), under
 `<runs>/g1/agent/logs/`, and every attribution
@@ -77,7 +77,7 @@ below names one of them.
 | `g1b_l16_verify_242_2.sh` | the verifier again, over this log as it stands: 13 MATCHES, 0 DIFFERS | `20260909T102006Z__g1b_l16_verify_242_2.sh.log` |
 
 Every lane script is kept in the repo at
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/`
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1b/`
 and was submitted from there.
 
 ---
@@ -183,7 +183,7 @@ Task g1's refusal text, which log 241 §9 carries in full, was
 FILE. Its lane `g1_l2_swift_where.sh` also measured that `/persist`
 inside the `g1` container held two entries and nothing else.
 
-**LITERAL**, `Airlock/instance.sh` lines 174-176, which is
+**LITERAL**, `PUBLIC/Airlock/instance.sh` lines 174-176, which is
 where the empty volume comes from:
 
 ```
@@ -488,7 +488,7 @@ own line.
 ## 7.1 The rule, LITERAL
 
 **LITERAL**,
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`,
 section 2e, `is_setup_line` — what counts as setup:
 
 ```python
@@ -990,7 +990,7 @@ two additions are the two extra UNVERIFIABLE and change nothing else.
    | line | shape | outcome | claim / reason |
    |---|---|---|---|
    | 138 | prose_verification | **UNVERIFIABLE** | `The forty runs were then run again, unchanged in every other respect. All forty reach a compiled` — prose_only -- a verification is asserted with nothing beside it |
-   | 185 | attribution | **UNVERIFIABLE** | `**LITERAL**, `Airlock/instance.sh` lines 174-176, which is where the empty volume ` — attribution_only -- cites `Airlock/instance.sh`, carries no command |
+   | 185 | attribution | **UNVERIFIABLE** | `**LITERAL**, `PUBLIC/Airlock/instance.sh` lines 174-176, which is where the empty volume ` — attribution_only -- cites `PUBLIC/Airlock/instance.sh`, carries no command |
    | 209 | shell_transcript | **NOT_RERUNNABLE** | `ls -la /persist/swift/usr/bin/swiftc` — output_annotated -- the paste carries an arrow gloss (`->`); an exact comparison is impossible |
    | 213 | shell_transcript | **NOT_RERUNNABLE** | `ls -la /usr/lib/x86_64-linux-gnu/libncurses.so.6` — output_annotated -- the paste carries an arrow gloss (`->`); an exact comparison is impossible |
    | 217 | shell_transcript | **REFUSED** | `/persist/swift/usr/bin/swiftc --version` — head_not_on_the_read_only_allowlist -- `/persist/swift/usr/bin/swiftc` |
@@ -999,7 +999,7 @@ two additions are the two extra UNVERIFIABLE and change nothing else.
    | 352 | shell_transcript | **MATCHES** | `python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py t` |
    | 406 | shell_transcript | **MATCHES** | `sed -n \\%\^###\ 3.1\ Refusals%\,\\%\^###\ 3.2%p PseudoCoupHQ/Research/oracle/cross_co` |
    | 436 | shell_transcript | **MATCHES** | `sed -n \\%\^###\ 3.2\ The\ landings%\,\\%\^##\ 4%p PseudoCoupHQ/Research/oracle/cross_` |
-   | 490 | attribution | **UNVERIFIABLE** | `**LITERAL**, `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/ha` — attribution_only -- cites `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/han |
+   | 490 | attribution | **UNVERIFIABLE** | `**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/ha` — attribution_only -- cites `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/han |
    | 503 | attribution | **UNVERIFIABLE** | `**LITERAL**, the same file and section, `primitive_rows_with_setup` — the acceptance itself:` — attribution_only -- cites `primitive_rows_with_setup`, carries no command |
    | 536 | shell_transcript | **NOT_RERUNNABLE** | `python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py c` — output_annotated -- the paste carries an arrow gloss (`->`); an exact comparison is impossible |
    | 557 | shell_transcript | **MATCHES** | `python3 PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py w` |

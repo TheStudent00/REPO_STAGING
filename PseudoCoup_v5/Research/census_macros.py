@@ -2,7 +2,7 @@
 """Census: how much of a Rust source tree is macros, and how much of it
 tree-sitter can parse at all.
 
-    python3 PseudoCoup_v5/Research/census_macros.py \\
+    python3 PRIVATE/PseudoCoup_v5/Research/census_macros.py \\
         Sources/rust/compiler
 
 Two questions in one pass, because they are measured from the same

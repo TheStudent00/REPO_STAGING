@@ -2,7 +2,7 @@
 
 Date: 2026-08-12. Author: clustering agent for the owner's PseudoCoup research node (PCHQ). Plan-of-record step 3 of `CORE_0_3_0_kind_clustering.md`, on the archetype basis measured in log_013.
 
-Inputs: `PseudoCoupHQ/Research/kind_signature_clustering/` — `features_all.json` (counts-fixed v2 vectors for all 31,212 clusterable kinds of 411 grammars, vectors-once format), `archetypes.json` (8,329 archetypes with member lists), `grammar_inventory.json` (category tags), the v2 distance function of `cluster.py` reused exactly.
+Inputs: `PRIVATE/PseudoCoupHQ/Research/kind_signature_clustering/` — `features_all.json` (counts-fixed v2 vectors for all 31,212 clusterable kinds of 411 grammars, vectors-once format), `archetypes.json` (8,329 archetypes with member lists), `grammar_inventory.json` (category tags), the v2 distance function of `cluster.py` reused exactly.
 
 New outputs, same directory: `spectrum_all.py`, `spectrum_all.npz` (+`_holdout`), `dist_all.npy` (+`_holdout`, distance checkpoints), `merge_tree_all.json`, `top_counterparts_all.json`, `features_all_holdout.json` / `archetypes_holdout.json` (via the new `--hold-out-declared` flag on `features_all.py`), `validate_all.py` / `holdout_validation_all.json`, `report_all.py` / `report_all.json`, `export_tree_all.py`, `make_explorer_all.py` / `dendrogram_explorer_all.html`, `verify_explorer_all.js`.
 

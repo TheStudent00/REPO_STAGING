@@ -4,16 +4,16 @@ Kept in the repository since 2026-09-09: the session scratchpad it lived in
 was wiped twice, and a brief without its law is not a brief. Briefs live
 beside it under `Research/briefs/`.
 
-1. `DevComms/LLM_communication_protocol.md` — all of it.
+1. `PRIVATE/DevComms/LLM_communication_protocol.md` — all of it.
    §1.8 what-is-it in one sentence first; §3.5 walkthrough before
    numbers; §4.3 pipe tables only; §5.1 quote the object; §5.1a every
    rendering says LITERAL or GLOSS; §5.3 report by cause; §8 full paths.
-2. `PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
+2. `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
    — the master plan; your task is one of its §4.2 steps.
-3. `PseudoCoupHQ/AgentMemory.md` — "the operator-
+3. `PRIVATE/PseudoCoupHQ/AgentMemory.md` — "the operator-
    equivalence pipeline (RATIFIED)", "the rulings of 2026-09-04 /
    2026-09-05", "communication, added 2026-09-05".
-4. `PseudoCoupHQ/CLAUDE.md` (never parent/child/sibling/
+4. `PRIVATE/PseudoCoupHQ/CLAUDE.md` (never parent/child/sibling/
    orphan; never kill/die — ABORT; two-list rule in every report).
 5. Pasted verbatim, as required:
 
@@ -35,7 +35,7 @@ beside it under `Research/briefs/`.
 > on failure. A brief handed to any subagent for this line MUST
 > paste this paragraph verbatim.
 
-The guard `PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py`
+The guard `PRIVATE/PseudoCoupHQ/Research/op_pipeline/check_no_spelling_keys.py`
 is never modified; run it in a lane over every json you write and
 paste its output; `grep -c exempt` over files you add = 0.
 
@@ -49,12 +49,12 @@ never a reading of names.
 - DO THE WORK YOURSELF. Do not use the Agent tool; do not spawn
   sub-agents.
 - ALL compute through Airlock. One instance per task:
-  `Airlock/instances/<task>.conf`, copied from
+  `PUBLIC/Airlock/instances/<task>.conf`, copied from
   `t97.conf` (or `o3.conf` for light tasks), every number in the
   header stating its reason. An instance that needs the swift toolchain
   mounts `sandbox-persist` read-only (`persist_volume = sandbox-persist`,
   `persist_mode = ro`); an instance with no persist line gets an EMPTY
-  volume of its own. `python3 Airlock/airlock --help`
+  volume of its own. `python3 PUBLIC/Airlock/airlock --help`
   for up / submit (`--instance <task> --batch <task> --weight <n>`) /
   status. Lane names used ONCE: `<task>_l<N>_<what>.sh`; every lane
   prints `[$i/$total]`. Bring the instance down when done. Poll lane
@@ -66,9 +66,9 @@ never a reading of names.
   never load a whole store at once.
 - Time or memory limits are FLAGS: re-run with more room, report
   whether the answer changed; never change what is measured to fit.
-- Report: `PseudoCoupHQ/DevComms/log_<nnn>_<task>_<topic>.md`
+- Report: `PRIVATE/PseudoCoupHQ/DevComms/log_<nnn>_<task>_<topic>.md`
   (take the next free number when you finish; several tasks run at
-  once, so check `ls PseudoCoupHQ/DevComms | tail` right
+  once, so check `ls PRIVATE/PseudoCoupHQ/DevComms | tail` right
   before writing and never overwrite). First line names the project
   node. Every claim carries its reproducing command or says it can't;
   every attribution names its lane log file (host path stated). Final
@@ -93,7 +93,7 @@ Every lane script you submit is FIRST written under the task's artifact
 folder as `lanes_<task>/<lane name>.sh` (the repo-daemon commits it),
 and submitted from there. Airlock's own `.done/` archive is not the
 record and may be cleared. Never delete anything under
-`Airlock/` or `<runs>/`, on either machine — not a
+`PUBLIC/Airlock/` or `<runs>/`, on either machine — not a
 status file, not a lane, not a log. A lane name that collides gets a new
 name; nothing is removed to make room.
 
@@ -112,11 +112,20 @@ key from this laptop. Nothing about the lane protocol changes; only where it
 runs. The one tool for it, kept in the Airlock repo:
 
     export AIRLOCK_REMOTE=<user>@<tower> AIRLOCK_REMOTE_ROOT=Programming/Airlock
-    R="bash Airlock/remote_lane.sh"
+    R="bash PUBLIC/Airlock/remote_lane.sh"
+    # STATE 2026-09-10 16:00 EDT: MOVED. The real paths are PRIVATE/PseudoCoupHQ,
+    # PUBLIC/Airlock, PRIVATE/DevComms (and so on per log_001 §3); a
+    # compatibility link stays at every old name, so every path in this file and in every brief
+    # still resolves. A brief or a file you WRITE from now on uses the real path. Do not rewrite an
+    # existing reference that resolves (that is Phase 5, per repo, on the owner's word).
+    # The laptop's ~/Programming is split into PRIVATE/ and PUBLIC/ (DevComms log_001);
+    # the TOWER keeps the flat layout. sync-to/sync-back paths are written in the flat form
+    # (`Programming/PseudoCoupHQ/...`); the script maps a PRIVATE/ or PUBLIC/ spelling to it.
+    # Container paths (PseudoCoupHQ, /sources) never change. No lane runs while the move runs.
 
 | step | command |
 |---|---|
-| your instance conf (write it under `Airlock/instances/<task>.conf` here, copied from `t97.conf`, every number with its reason) | `$R conf Airlock/instances/<task>.conf` then `$R up --instance <task>` |
+| your instance conf (write it under `PUBLIC/Airlock/instances/<task>.conf` here, copied from `t97.conf`, every number with its reason) | `$R conf PUBLIC/Airlock/instances/<task>.conf` then `$R up --instance <task>` |
 | BEFORE every submit: mirror your artifact folder and any code you changed to the tower (paths are the same relative to the home directory on both machines) | `$R sync-to Programming/PseudoCoupHQ/Research/<your artifact folder>` and the same for `Research/op_pipeline` if you touched it |
 | submit a lane (the script lives here in the repo under `lanes_<task>/`; the copy on the tower is a working copy) | `$R submit --instance <task> --batch <task> --weight <n> <path to lane.sh>` |
 | wait for it IN SLICES: each call at most 100 s (the default), repeated until it prints the log. YOUR TOOL CALL IS CUT AT 120 s and moved to the background, and you then lose the wait and believe you are done — two closers on 2026-09-10 ended their turns this way with the lane still running. Never `--timeout` above 100; never end your turn while the lane runs | `$R wait --instance <task> <lane.sh>` — again, and again, until it prints the log |

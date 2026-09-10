@@ -1,6 +1,6 @@
 # Task ap4 — closing the four languages: the contract for a value that is not in a register, and the loop's fourth pass
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
 `task_ap3_brief.md`, `task_ap2_brief.md` beside this file and their logs
 `DevComms/log_245` (§"Awaiting the owner", the x87 finding, the fix-1
 measurement), `log_244`, `log_242` §7–§8 (the arrival-contract finding as
@@ -11,7 +11,7 @@ where "the IN rows cannot be aligned" is raised, ~line 2110) and
 ~2061/2132: how arrivals are loaded and the answer stored) and
 `canonical_form.py`; `Research/op_pipeline/lean/model_translate.py`
 (`preseeded_state`: the reference already models the x87 stack as places).
-Instance `ap4.conf` (copy from `Airlock/instances/ap4.conf`;
+Instance `ap4.conf` (copy from `PUBLIC/Airlock/instances/ap4.conf`;
 mounts `sandbox-persist` read-only). Artifact folder: `.../emulation/autopoly/`,
 writing `autopoly4_*`; lanes under `lanes_ap4/`.
 
@@ -72,7 +72,7 @@ the autopoly node; sync-back; instance down. Memory: bound 6g, sample 20,
 peak RSS, abort `ABORT_MEMORY_AP4`. Stop rules per LAW; the only shared
 file this brief authorises is `ledger.py` (and `canonical_form.py` only if
 the refusal text lives there too), for change 2, with the three guards.
-Never delete anything under `<runs>/` or `Airlock/`.
+Never delete anything under `<runs>/` or `PUBLIC/Airlock/`.
 Reply with the per-target table, the four-pass all-four line, the change
 table, the region list's totals by verdict, the three guard tallies, the
 tally, the two lists.

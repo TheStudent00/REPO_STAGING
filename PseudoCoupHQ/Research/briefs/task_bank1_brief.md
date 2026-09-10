@@ -1,11 +1,11 @@
 # Task bank1 — the polyfill library as banked certificates: bank every proved pair on disk, restore the 19, and turn the loop into delta plus audit
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it. Then the five
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it. Then the five
 loop briefs `task_ap1_brief.md` … `task_ap5_brief.md` beside this file and
 their logs (`DevComms/log_243`, `244`, `245`, `246`, `249`), and the stores
 `.../emulation/autopoly/autopoly_runs.jsonl`, `autopoly2_runs.jsonl`, …,
 `autopoly5_runs.jsonl` with their `src*/` folders. Instance `bank1.conf`
-(copy from `Airlock/instances/bank1.conf`). Artifact folder:
+(copy from `PUBLIC/Airlock/instances/bank1.conf`). Artifact folder:
 `.../emulation/autopoly/`; new files `certificates.jsonl`, `bank.py`, and
 the driver change; lanes under `lanes_bank1/`. Task ex2's closer may still
 be writing `expand2_*` in the same folder when you start: do not touch
@@ -70,6 +70,6 @@ dated line in the research node's PROGRESS naming the design error and
 its cost, in the coordinator's words above; sync-back; instance down.
 Memory bound 6g, sample 20, peak RSS, abort `ABORT_MEMORY_BANK1`. No
 shared-file change authorised. Never delete anything under
-`<runs>/` or `Airlock/`. Reply with the banked counts
+`<runs>/` or `PUBLIC/Airlock/`. Reply with the banked counts
 per kind, the 19 restored, the three headline readings, the delta pass's
 cost line, the tally, the two lists.

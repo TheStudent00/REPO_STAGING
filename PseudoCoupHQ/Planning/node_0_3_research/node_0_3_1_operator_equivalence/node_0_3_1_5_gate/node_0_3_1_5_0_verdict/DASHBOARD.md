@@ -1,5 +1,5 @@
 <!-- GENERATED FILE — do not hand-edit. -->
-<!-- Produced by PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
+<!-- Produced by PRIVATE/PlanPlan/framework/generate_dashboards.py from this node's own sub-tree. Hand edits are lost the -->
 <!-- next time the tool runs; re-run it instead of editing this file. -->
 
 # DASHBOARD — node_0_3_1_5_0_verdict
@@ -32,7 +32,7 @@ sub-node count: 0
 
 ## blocked
 
-- `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_0_verdict/PROGRESS.md` line 23 — remainder — **blocked** on the reference fix. Evidence:
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_0_verdict/PROGRESS.md` line 23 — remainder — **blocked** on the reference fix. Evidence:
 
 ## PROGRESS bullet statuses
 

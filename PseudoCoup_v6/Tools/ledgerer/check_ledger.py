@@ -1,10 +1,10 @@
 """Check ledger integrity invariants; nonzero exit on any failure.
 
 Provenance: invariant set from
-StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py
+PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/ledger_unified.py
 check() (every id exactly once, entry count == independent recount,
 nothing missing/extra), extended per the settled integrity node
-(PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_validation.md):
+(PRIVATE/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_validation.md):
 declaration-kind entries must carry a type or the explicit
 "unresolvable" marker; the unresolvable count is a first-class
 number.

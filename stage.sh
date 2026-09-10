@@ -13,8 +13,8 @@
 # unscrubbed byte, not even for a second. The repo-daemon is configured to
 # leave this repository alone; this script is the one way it changes.
 #
-#     bash ~/Programming/REPO_STAGING/stage.sh            # refresh, scrub, commit, push
-#     bash ~/Programming/REPO_STAGING/stage.sh --no-push  # stop before the push
+#     bash ~/Programming/PUBLIC/REPO_STAGING/stage.sh            # refresh, scrub, commit, push
+#     bash ~/Programming/PUBLIC/REPO_STAGING/stage.sh --no-push  # stop before the push
 #
 # A source that no longer exists on this machine is left as it is in the
 # staging tree: its last snapshot stands as the record.

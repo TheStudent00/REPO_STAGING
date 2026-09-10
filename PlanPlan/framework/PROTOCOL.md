@@ -790,7 +790,7 @@ deepening. Sequencing to be discussed.
 
 - The project's planning root plays `node_0`: `CORE_0.md` +
   SUPPORT files + level-1 node folders conforming to §1–§5.
-  > **Note on Root Naming:** (<user>, 2026-08-23) The root node's file and `id` should potentially be named after the project itself (e.g., `CORE_0_<project_name>.md` and `id: <project_name>`) rather than generic terms like `CORE_0_planning.md` or `id: root`. This prevents namespace collisions when cross-referencing between trees in a multi-project framework (like `PCHQ`).
+  > **Note on Root Naming:** (the owner, 2026-08-23) The root node's file and `id` should potentially be named after the project itself (e.g., `CORE_0_<project_name>.md` and `id: <project_name>`) rather than generic terms like `CORE_0_planning.md` or `id: root`. This prevents namespace collisions when cross-referencing between trees in a multi-project framework (like `PCHQ`).
 - The framework is a template, not a dependency: conforming
   projects copy the conventions; PlanPlan later EXTRACTS
   instances from their VCS histories for the ontology-evolution

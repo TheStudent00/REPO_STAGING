@@ -9,3 +9,42 @@ status: living
   `PlanPlan/framework/generate_nodes.py` from the
   `nodes` register of `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`. Skeleton only — definition,
   designation, and content pending.
+- 2026-09-10: **task hub1 — Hub v1, first form, RUN.** Steps 4 and 5 of
+  the master order (`CORE_0_3_research.md` §4.2) done together on the
+  tower, instance `hub1`. Artifacts:
+  `PseudoCoupHQ/Research/oracle/hub/` — `dictionary.json`
+  / `.md` (the lookup), `hub.py` (front end, resolve, compose),
+  `handful/` (the eight-function go file, the composed source per
+  target, both carved bodies), `oracle_test.json` / `.md` (the gate's
+  verdicts), `measure.json` (the section-3 counts). Lane scripts under
+  `lanes_hub1/`, thirteen of them. Report:
+  `PseudoCoupHQ/DevComms/log_252_task_hub1_hub_v1_first_form.md`.
+  THE NUMBERS: the dictionary holds 151 proved entries on c, 151 on
+  rust and 161 on go, over 253 cells; of the eight handful functions,
+  four prove on c, five on rust, and five prove on go once
+  `//go:noinline` is dropped from the emulations; over the corpus's own
+  go units the dictionary composes 100 of 134 to c (98 proved, 2 under
+  caller extension, 0 disproved) and 114 of 134 to rust (112 + 2, 0
+  disproved). Status: first form standing; the node is no longer "not
+  started".
+- 2026-09-10: **task hub2 — Hub v2, the dictionary at two levels, RUN.**
+  The three holes task hub1 measured, answered and measured again on the
+  tower, instance `hub2`. New artifacts beside task hub1's, same folder
+  `PseudoCoupHQ/Research/oracle/hub/`: `hub2.py` (the
+  front end resolving a node to a cell, else a pair, else a pool entry),
+  `dictionary2.json` / `.md`, `oracle_test2.json` / `.md`,
+  `measure2.json`, `hub2_paste_a_pair.py`, and under `handful/` the four
+  `composed2_*` files. Lane scripts under `lanes_hub2/`, sixteen of
+  them. Report:
+  `PseudoCoupHQ/DevComms/log_254_task_hub2_the_dictionary_at_two_levels.md`.
+  THE NUMBERS: the dictionary holds 176 cell entries on c, 175 on rust
+  and 161 on go (task hub1: 151 / 151 / 161, the difference being the
+  bank), 39 / 38 / 34 pair entries and 195 / 285 / 0 body entries; of
+  the same eight handful functions `f5_u64_shift` moved from a hole to
+  PROVED on c through the body level and five now prove on c where four
+  did; over the corpus's own go units the dictionary composes 325 of 590
+  to c (290 proved, 32 under caller extension, 3 disproved) and 276 of
+  590 to rust (260 + 13, 3 disproved), against the 134 units task hub1
+  could ask about at all — and on the 134 they share, every figure of
+  the two tasks is equal. Status: second form standing; the frontier is
+  the loop's one-setter-per-consumer rendering (the report's second list).

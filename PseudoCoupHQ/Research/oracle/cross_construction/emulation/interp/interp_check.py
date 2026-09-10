@@ -578,17 +578,26 @@ def one_run(shared, cells, asked, lang, timeout=None):
                                            shared["driver"].TASK)
     # TASK ex2'S SECOND BOOKKEEPING FIX, found by the loop's own runs
     # over the full outer set (the handful's ten cells never hit it): a
-    # PLACE NAME carries a dot when task ap2's fix 3 halves a place
-    # (`flags.low`) or task h2's fix 2 projects a vector lane
-    # (`reg_xmm0.low`), and the label becomes the rendered FUNCTION
-    # NAME -- a dot there is invalid syntax in every one of the seven
-    # targets. `handful.one_place` (the compiled route) already
-    # sanitises this exact way (`place["writes"].replace(".", "_")`);
-    # the interpreted route never called it. Sanitised here, the same
-    # way, and nowhere else.
+    # PLACE NAME can carry a character invalid in an identifier, and the
+    # label becomes the rendered FUNCTION NAME. Two are attested over
+    # the whole 253-cell outer set, measured rather than assumed (every
+    # `writes` string this loop ever saw was scanned character by
+    # character): the dot task ap2's fix 3 puts on a halved place
+    # (`flags.low`) or task h2's fix 2 puts on a projected vector lane
+    # (`reg_xmm0.low`), and the hyphen a negative stack offset carries
+    # (`stack_-8`, `push`'s own destination). `handful.one_place` (the
+    # compiled route) sanitises the dot the same way
+    # (`place["writes"].replace(".", "_")`) but NOT the hyphen -- it
+    # has the identical gap, dormant only because every compiled cell
+    # this loop met with a hyphenated `writes` was already refused
+    # earlier, for an unrelated reason (`CAUSE_STATE`, "no answer
+    # home"), before its label is ever built. That dormant gap is out
+    # of this task's scope (the interpreted route only) and is on the
+    # awaiting-the owner list. Both characters are sanitised here, and
+    # nowhere else.
+    safe_writes = place["writes"].replace(".", "_").replace("-", "_")
     label = "%s_%s_%s__%s__%s" % (asked[0], asked[1], asked[2],
-                                  place["writes"].replace(".", "_"),
-                                  lang)
+                                  safe_writes, lang)
     renderer = IR.InterpRenderer(lang, place["families"],
                                  place["home"]["family"], place["bits"],
                                  label)
@@ -683,7 +692,10 @@ def build_shared():
     that fix for the same reason the compiled route does: a vector
     cell's place carries the whole 128-bit register and the lane the
     operation writes is what an emulation computes."""
-    import handful as H
+    # THE FROZEN DRIVER (task ap6, 2026-09-10): task ex1/ex2's route
+    # reads the copy of `handful.py` made before its task gates were
+    # stripped, so a closed pass answers as its log records.
+    import handful_frozen as H
     H.use_task_ex1()
     return {"driver": H, "pipeline": H.build_shared()}
 

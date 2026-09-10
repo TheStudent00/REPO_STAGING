@@ -221,7 +221,13 @@ EMULATION = os.path.normpath(os.path.join(HERE, ".."))
 HANDFUL = os.path.join(EMULATION, "handful")
 sys.path.insert(0, HANDFUL)
 
-import handful as H                                             # noqa: E402
+# THE FROZEN DRIVER (task ap6, 2026-09-10).  This closed pass's driver
+# reads `handful_frozen.py`, which is `handful.py` copied byte for byte
+# on 2026-09-10, before the nine task-name gates were stripped out of
+# it, so this pass answers exactly as its own log records.  The ONE
+# driver is `handful.py`, which carries no task gate and is entered
+# through `autopoly.py`.
+import handful_frozen as H                                      # noqa: E402
 import model_table as MTAB                                      # noqa: E402
 import gate as G                                                # noqa: E402
 

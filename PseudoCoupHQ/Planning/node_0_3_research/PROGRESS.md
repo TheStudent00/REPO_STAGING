@@ -622,3 +622,119 @@ status: living
   not changed, the reading of "the body" is. Verifier 38 claims, 0 differ.
   Started next, side by side: l3 (proof system), hub1 (Hub v1), ex2 (the
   interpreted loop).
+- 2026-09-10 (task ex2, log_250, on the tower): THE INTERPRETED LOOP —
+  253 cells × {cpython, php, ruby, java, javascript, dart, csharp}, 1,771
+  runs, ex1's check unchanged. Every cell that rendered agreed on its whole
+  sample on every target: 193 cells on cpython/ruby/javascript, 184 on
+  php/java/dart/csharp; ZERO disagreements; zero timeouts. All seven
+  interpreters agree on 184 cells / 116,057 rows / 87.2%; all twelve
+  targets (five compiled proved ∩ seven agreeing) 158 cells / 75.2%. The
+  loop's own runs found and fixed one harness defect in the interpreted
+  route: a place name carrying `.` or `-` (`flags.low`, `stack_-8`) made
+  an invalid identifier; six targets refused with a parse error, csharp's
+  reused build folder RAN A STALE DLL from an earlier build and produced
+  wrong answers that looked like language disagreements (17 runs) — fixed
+  by sanitising both characters as the compiled route already does; the
+  before-fix store is kept beside the run of record. Flags: the compiled
+  route carries the same dormant hyphen gap; six nullary cells (self-XOR)
+  cannot be checked by an interpreter (a harness gap); the all-five figure
+  is a lower bound until cpp is re-run after ap5. Process: two closers
+  ended their turns while the lane ran (the 120 s tool cut), the original
+  implementer was woken by its own background wait and finished; the law
+  and `remote_lane.sh wait` now enforce sliced waits. Verifier 0 differ.
+- 2026-09-10 (task l3, log_251, on the tower): THE PROOF SYSTEM'S OWED
+  ITEMS. The 19 DISCREPANCY rows of the L2 check were one defect in the
+  check's composer — but NOT the one the coordinator named: neither side
+  numbered arrivals by the C parameter convention or by ledger order; both
+  are print-order rules, and the stored line's `v0`/`v1` come from
+  `Term.normalize`'s commutative ordering (t104 added its first step after
+  the check was written) while the composer numbered after a plain
+  `z3.simplify`. Verified on the rows first, then the composer made to
+  call `term.py`'s own `order_commutative`/`ordered_symbols` and to PROVE
+  the naming per row against the stored line. All 19 now STATED by
+  `bv_decide` (0.4–1.0 s each): the check reads 259 / 172 STATED / 87
+  REFUSED, DISCREPANCY 0 — THE GUARD VALUE FOR EVERY LATER TASK. The "61
+  native-evaluation proofs to re-prove": a false premise — `native_decide`
+  occurs nowhere; `Lean.ofReduceBool` is `bv_decide`'s own axiom whenever
+  it calls the SAT solver, Lean 4.24 offers no route out, and 0 of the 72
+  such rows close by rewriting alone (`bv_normalize`). Trust classes over
+  the 172 proved theorems: 20 no axiom, 19 propext/Quot.sound, 61 Lean's
+  three, 72 also trusting the compiler; none with sorry. COORDINATOR'S
+  DISPOSITION: the 72 stand as the SAT-certificate class (the lean node
+  names it); `model_L2.json`'s mnemonic-keyed `per_mnemonic` summary is a
+  diagnostic keyed short of the triple, superseded by the model table,
+  not repaired. Verifier 29 claims, 0 differ.
+- 2026-09-10 (task hub1, log_252, on the tower): HUB v1, FIRST FORM. The
+  dictionary read off the loop (c 151 entries / rust 151 / go 161, holes by
+  cause), the front end (tree-sitter-go + go/types; a node resolves where
+  go's own compiler lowers that construct at those holders to ONE cell, by
+  o2's narrow rule over go's own corpus; the candidate set is the type
+  tuple, machine form), source composition (each node a call of its
+  cell's proved emulation; the target's compiler lowers ACROSS the calls —
+  measured: `a + b - c` on c came back `lea; sub; ret`, both calls gone),
+  and the oracle test. The eight-function handful: c 4 proved / 4 holes,
+  rust 5 / 3, go 5 proved on re-pose without `//go:noinline` / 3 holes.
+  THE MEASURE over the corpus's own go units (134 that name one cell):
+  composed c 100, rust 114, go 124; PROVED c 100 of 100, rust 114 of 114,
+  go 108 of 124 on re-pose; DISPROVED 0. Everything composable is proved.
+  The holes are structural, and they name Hub v2: (1) 61 of 253 cells
+  write only flags — no comparison (`a != b`, `a < b`) composes without a
+  flag state across nodes; the loop already proves the (setter, consumer)
+  PAIR cells (`test; cmove`, `xor; test; setne`), so the front end should
+  resolve a comparison feeding a select as the pair entry, no new flag
+  machinery; (2) go's guarded constructs (`<<` at uint64 = six cells with
+  the count guard; `/` at int32 = eight with the zero and overflow guards)
+  lower to a SEQUENCE, never one cell: the Hub needs entries at the
+  OPERATOR-BODY level too — the pool entries, whose emulations o7/o11
+  already proved 76–95% to c and rust — the two AutoPoly branches meet
+  here; (3) the primitive route's lookup key carries no holder widths, so
+  five proved entries have truth-holder parameters a composition cannot
+  use — a loop fix, cheap under bank1's delta mode. Verifier 28 claims, 0
+  differ; peak 112 MB.
+- 2026-09-10 (task bank1, log_253, on the tower): THE DESIGN ERROR IN THE
+  LOOP, NAMED AND COSTED, in the coordinator's own words of 2026-09-10.
+  "The passes re-derived every emulation from the cell's term every time,
+  so a renderer change made the same cell yield a different artifact, and
+  the old proof no longer described what had just been built." Counted on
+  the STRICT reading (every written place, flags included), proved (cell,
+  target) pairs per pass were 330 / 434 / 465 / 521 / 504, their union
+  523; 19 pairs proved by some pass are not proved by the last, five of
+  them cells on all four through pass 4 and not in pass 5 (`and`, `cmp`
+  x2, `mov`, `or`, all `imm_gpr` — exactly what pass 5 changed). Passes 2
+  to 5 spent 75% to 98% of their runs re-doing known results, and every
+  change cost a full pass, three guards, a report and a verifier before
+  its effect was visible. "A proof is a certificate about ONE artifact —
+  the term text, the rendered source, the compiler and its flags, the
+  carved body, the verdict — and a certificate cannot regress; only the
+  machinery can fail to reproduce it. The deliverable is the LIBRARY, one
+  proved emulation per (cell, target), and it only grows." The library is
+  `certificates.jsonl` (12,593 certificates over 4,117 keys) and the loop
+  is `autopoly.py --bank`: delta plus a 5% audit. Its first pass measured
+  the residual cost — 707 runs against a full pass's 1,265, 55.9% of the
+  runs and 81.9% of the seconds — and its audit caught the same mechanism
+  again, seven artifacts changed under a moved renderer, zero alarms.
+  Verifier 20 claims, 0 differ.
+- 2026-09-10 (task hub2, log_254, on the tower): HUB v2 — the dictionary at
+  two levels, read from the bank (cell entries joined back to their run by
+  sha256) and from o7/o11's proved pool-entry emulations (body level), with
+  a PAIR level (setter+consumer, key = two cells) for comparisons. Over
+  hub1's own 134 units every figure is equal (the regression guard). Over
+  EVERY corpus go unit (590), which hub1 could not ask: c composes 325 /
+  proves 290 (+32 under caller extension, 3 disproved with counterexamples
+  kept), rust 276 / 260 (+13, 3), go 132 / 116 on re-pose — the body level
+  gives c 215 composed / 184 proved and rust 152 / 140 on top of the cell
+  level's 100 / 114. The handful: `f5` (uint64 shift, six cells in go's
+  body) now PROVES on c from two body-level entries, and c's compiler
+  lowered across the two calls to ONE clamp where go's own body has two.
+  `f8` (compare feeding a select) resolves to its pair (`cmp gpr_gpr 32` +
+  `setne gpr_one 8`) but the loop rendered `setne` over one setter only
+  (`test gpr_gpr 8`): the design hole became one missing run. `f6` (div):
+  its pool entry carries no layer-5 text. Dictionary per target: c 176
+  cell / 39 pair / 195 body entries; rust 175 / 38 / 285; go 161 / 34 / 0.
+  Loop-side changes it names (next closer): each flag consumer rendered
+  over EVERY attested setter cell (44 distinct pairs in go's corpus; 10
+  served today, 58 possible); the primitive lookup carrying holders; a
+  narrow-answer re-pose in the gate. Note: `dictionary2.json` and the
+  bank's `certificates.json` are held out of git by the repo-daemon's
+  high-entropy guard (sha256 strings); the `.md` is in git and the json
+  rebuilds in a second. Verifier 22 claims, 0 differ; peak 123 MB.

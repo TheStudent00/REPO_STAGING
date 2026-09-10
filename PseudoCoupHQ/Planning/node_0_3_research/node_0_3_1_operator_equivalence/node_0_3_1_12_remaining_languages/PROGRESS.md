@@ -2,6 +2,27 @@
 
 Initialized.
 
+- 2026-09-10: task ex2 — THE SAME CHECK task ex1 DEFINED, RUN OVER EVERY
+  ATTESTED CELL RATHER THAN THE HANDFUL: 253 cells x the seven targets
+  (cpython, php, ruby, java, javascript, dart, csharp) = 1,771 runs, all
+  recorded, ZERO disagreements, ZERO timeouts. cpython/ruby/javascript
+  render 193 of 253 cells (90.52% of attested ledger rows); php/java/
+  dart/csharp render 184 (87.23%) — every rendered cell's whole sample
+  agrees, on every target, with no exception; the ten-cell handful
+  reproduces inside this loop, 63 of 63 compared. Refusals scale the same
+  way task ex1 already measured (the x87 register, vector-lane gaps) plus
+  ONE NEW HARNESS-LEVEL FINDING the handful was too small to meet: six
+  NULLARY cells (self-XOR and the like) cannot be checked by ANY of the
+  seven interpreted targets, because a zero-arrival sample point renders
+  as a blank input line and every dialect's own `main` skips blank lines
+  by convention — symmetric across languages, not a language difference,
+  flagged rather than worked around. This task's OWN runs also found and
+  fixed two defects in `interp/interp_check.py` (an unsanitised `.` or `-`
+  in a rendered function name, masked on csharp alone by a reused build
+  folder's stale binary) — see the autopoly node's PROGRESS.md and
+  `PseudoCoupHQ/DevComms/log_250_task_ex2_the_interpreted_loop.md`
+  for the full account; nothing here duplicates it.
+
 - 2026-09-09: task ex1 — THE FIRST TIME THIS NODE'S LANGUAGES ARE RUN
   AS EMULATION TARGETS, on the handful of ten arch-opcode cells. The
   route is not this node's interpreter/JIT shape and does not replace

@@ -17,7 +17,7 @@ namespace Archproof
     discrepancy between them. -/
 theorem ModelCheck_c_39  :
     (4#32)
-  = (model_mov_22.extractLsb 31 0) := by
+  = (model_mov_23.extractLsb 31 0) := by
   rfl
 
 #print axioms ModelCheck_c_39

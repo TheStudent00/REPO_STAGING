@@ -1,0 +1,10 @@
+/* task ex1 emulation -- rendered by cpp_render.py CppRenderer from the layer-4 term of filds_mem_one_80__x87_7__cpp.  The term's layer-5 text, LITERAL:
+   fp.to_ieee_bv(v0) */
+#include <cstdint>
+
+extern "C"
+long double
+emu_filds_mem_one_80__x87_7__cpp(long double a)
+{
+    return a;
+}

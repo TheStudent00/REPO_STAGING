@@ -30,7 +30,7 @@ echo "== staging at $STAMP =="
 rm -rf "$TMP"; mkdir -p "$TMP"   # the private area starts empty every run
 refreshed=()
 for s in "${SOURCES[@]}"; do
-    src="$HOME/Programming/$s"
+    src="$HOME/Programming/PRIVATE/$s"
     if [ ! -d "$src" ]; then
         # the source is gone; its last snapshot still passes through the scrub
         if [ -d "$s" ]; then mkdir -p "$TMP/$s"; rsync -a "$s/" "$TMP/$s/"; refreshed+=("$s"); echo "  $s: source absent here, last snapshot re-scrubbed"; fi

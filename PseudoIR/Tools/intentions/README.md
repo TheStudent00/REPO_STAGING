@@ -3,10 +3,10 @@
 Turns the project's hand-made intentions data into slicer-steering
 data. Two settled sub-nodes of the T5 super node govern this tool:
 
-- `PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md`
+- `PRIVATE/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_intentions_data_shape.md`
   — the four structured fields R1 found missing (row_satisfiers,
   canon, minimum_set, policy_refs; working names, the owner's to settle).
-- `PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md`
+- `PRIVATE/PseudoIR/Planning/node_0_1_research/node_0_1_0_intentions/SUPPORT_retired_seam_declarations.md`
   — slicing request forms, whose core is the seam declaration. The
   automation boundary: a human declares seams once per language;
   everything downstream is mechanical. (This once cited an "r5 slice
@@ -16,7 +16,7 @@ data. Two settled sub-nodes of the T5 super node govern this tool:
 
 Per the schema-extension node's recommendation, the verdict data is
 COPIED FORWARD from the archived PCv5 tree and maintained here from
-now on; nothing writes back into `PseudoCoup_v5`.
+now on; nothing writes back into `PRIVATE/PseudoCoup_v5`.
 
 ## Files
 
@@ -37,37 +37,37 @@ stays for the next, LLVM-facing, form.
 
 ## Provenance
 
-- Verdict data: `PseudoCoup_v5/Designing/intention_tables_gen.py`
-  and `PseudoCoup_v5/Designing/build_verdicts.py`,
+- Verdict data: `PRIVATE/PseudoCoup_v5/Designing/intention_tables_gen.py`
+  and `PRIVATE/PseudoCoup_v5/Designing/build_verdicts.py`,
   copied forward 2026-07-28; the R1-verified reference artifact is
-  `PseudoCoup_v5/Designing/pc_verdicts.json`.
-- row_satisfiers: `PseudoCoup_v5/Designing/intention_row_satisfiers.md`
-  and `PseudoCoup_v5/Designing/BEJ_expansion.md`.
+  `PRIVATE/PseudoCoup_v5/Designing/pc_verdicts.json`.
+- row_satisfiers: `PRIVATE/PseudoCoup_v5/Designing/intention_row_satisfiers.md`
+  and `PRIVATE/PseudoCoup_v5/Designing/BEJ_expansion.md`.
 - canon: the `pc_verdict` strings themselves; every entry cites the
   exact string it came from and the builder refuses on drift.
-- minimum_set: `PseudoCoup_v5/Designing/minimum_intention_set.md`
+- minimum_set: `PRIVATE/PseudoCoup_v5/Designing/minimum_intention_set.md`
   (the 11 objects, post-audit).
 - policy_refs: the "policy N" mentions in verdict strings, linked to
-  `PseudoCoup_v5/Designing/PCv7_policy_decisions.md`.
+  `PRIVATE/PseudoCoup_v5/Designing/PCv7_policy_decisions.md`.
 ## Run
 
 Rebuild the artifact (refuses on incomplete data):
 
 ```
-python3 PseudoIR/Tools/intentions/build_intentions.py
+python3 PRIVATE/PseudoIR/Tools/intentions/build_intentions.py
 ```
 
 Validate a form:
 
 ```
-python3 PseudoIR/Tools/intentions/validate_form.py \
-    FORM.json --root PseudoCoup_v5
+python3 PRIVATE/PseudoIR/Tools/intentions/validate_form.py \
+    FORM.json --root PRIVATE/PseudoCoup_v5
 ```
 
 Acceptance:
 
 ```
-python3 -m pytest PseudoIR/Tools/intentions/ -q
+python3 -m pytest PRIVATE/PseudoIR/Tools/intentions/ -q
 ```
 
 No environment variable and no other repo needed. The R1-verified

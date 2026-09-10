@@ -1,9 +1,9 @@
 # log 205 — task 99: two recording gaps closed, no decision involved
 
 Written 2026-09-05, round 20. Reports to the owner under
-`DevComms/LLM_communication_protocol.md`. All compute
+`PRIVATE/DevComms/LLM_communication_protocol.md`. All compute
 ran inside Airlock instance `t99`
-(`Airlock/instances/t99.conf`), except item B's proof
+(`PUBLIC/Airlock/instances/t99.conf`), except item B's proof
 (a2), which the brief itself requires to run on the DEFAULT instance
 (`sandbox`) — that contrast is the point of the proof, explained in
 §3.
@@ -46,7 +46,7 @@ lane ran, `unit c/regen_10427` (shard
 
 ### 2.2 What `term99_reason.py` does with it
 
-`PseudoCoupHQ/Research/op_pipeline/term99_reason.py`
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/term99_reason.py`
 streams each of the store's 332 shards, and for every NO_TERM record
 whose `reason is None`, strips the `'...'`-quoted callee/register
 names out of each hole's `why` string (the two variable parts §2.2 of
@@ -102,7 +102,7 @@ so the unit column below sums past 485.
 
 Every lane ran on instance `t99`; its own `/logs` is
 `<runs>/t99/agent/logs/` on the host — a DIFFERENT folder from
-the default instance's `Airlock/agent/logs/` (this
+the default instance's `PUBLIC/Airlock/agent/logs/` (this
 distinction is exactly item B's subject, §3.2).
 
 **1. Dry run** — `t99_l2_dry_run.sh`,
@@ -207,7 +207,7 @@ separate code path needed.
 
 `t99` has its own run directory
 (`<runs>/t99/agent/logs`, mounted to `/logs` inside
-`t99-runner`) — separate from `Airlock/agent/logs`
+`t99-runner`) — separate from `PUBLIC/Airlock/agent/logs`
 (mounted to `/logs` inside the DEFAULT `sandbox-runner`), which is
 where the `t98_l*` lanes `log_203` cites actually ran; so a claim in
 `log_203` that cats a `t98` lane log is reachable from the default
@@ -245,7 +245,7 @@ expectation of an unchanged 14/14 from `t99`.
 **(a2) `--verify log_203` on the DEFAULT instance** —
 `t99_l6_claims_log203_default.sh`, submitted with `--no-batch`, no
 `--instance` flag, run:
-`Airlock/agent/logs/20260905T150253Z__t99_l6_claims_log203_default.sh.log`.
+`PUBLIC/Airlock/agent/logs/20260905T150253Z__t99_l6_claims_log203_default.sh.log`.
 This file sits under the DEFAULT instance's own log folder, which is
 NOT mounted into `t99` — the very fact item B fixes — so the
 re-verify below (run from `t99`, like everything else in this report)
@@ -267,7 +267,7 @@ population: 14 claims across 1 logs
 ONE LINE: 14 of 14 claims reproduce; 0 (0%) carry nothing to re-run
 ```
 Unchanged from task 98's own score, because `/logs` on the default
-instance IS `Airlock/agent/logs`, where the cited
+instance IS `PUBLIC/Airlock/agent/logs`, where the cited
 `t98_l13` log actually is.
 
 **(b) fixture, unreachable path** — `t99_l7_fixture_refused.sh`,

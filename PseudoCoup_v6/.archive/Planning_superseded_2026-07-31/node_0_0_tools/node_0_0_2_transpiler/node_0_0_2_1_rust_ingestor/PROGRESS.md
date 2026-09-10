@@ -8,7 +8,7 @@ status: living
 - plan — **settled** 2026-07-28.
 - **UNBLOCKED** 2026-07-28: R2 done — all sources parse clean
   under T1's grammars; milestone-1 node table sized at 91 named
-  kinds (`PseudoCoup_v6/Research/r2_compiler_source_census/REPORT.md`).
+  kinds (`PRIVATE/PseudoCoup_v6/Research/r2_compiler_source_census/REPORT.md`).
 - Two increments of this node (a generated-vocabulary ingestor and its
   statement-level CST deepening) were built pointing at a retired
   reference backend instead of the settled LLVM/rustc-LLVM direction.
@@ -16,7 +16,7 @@ status: living
   and acceptance oracles are gone, and no claim from that work is
   carried forward.
 - **increment 2 (LLVM C++ encoder) — done** 2026-07-28:
-  `PseudoCoup_v6/Tools/transpiler/ingest_llvm_encoder.py`
+  `PRIVATE/PseudoCoup_v6/Tools/transpiler/ingest_llvm_encoder.py`
   + `render_cpp.py` (verbatim-copied rendering/assembly layer).
   Structure (functions, enum, class body) from tree-sitter,
   replacing the regex/brace-scanning extractors. **Acceptance met:

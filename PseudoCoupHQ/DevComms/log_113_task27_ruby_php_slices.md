@@ -185,7 +185,7 @@ section below, where it caught exactly that.
 ## Instance 3 — php's clean pair, and its ten-instruction handler
 
 The build, from the lane's own log
-(`Airlock/agent/logs/20260901T154246Z__t27_php_clean_build2.sh.log`):
+(`PUBLIC/Airlock/agent/logs/20260901T154246Z__t27_php_clean_build2.sh.log`):
 
 ```
 php clean anchor configure exit=0
@@ -347,7 +347,7 @@ Verified: the ruby slices were built.
 
 ```
 $ /tmp/reconnect_venv/bin/python3 build_op_units_ruby.py
-wrote PseudoCoupHQ/Research/op_pipeline/op_units_ruby.json
+wrote PRIVATE/PseudoCoupHQ/Research/op_pipeline/op_units_ruby.json
 vm_opt_plus      anchor=165  ship=0
 rb_fix_plus      anchor=13   ship=126
 rb_int_plus      anchor=37   ship=190
@@ -370,7 +370,7 @@ Verified: the php slices were built, from the clean pair.
 
 ```
 $ /tmp/reconnect_venv/bin/python3 build_op_units_php.py
-wrote PseudoCoupHQ/Research/op_pipeline/op_units_php.json
+wrote PRIVATE/PseudoCoupHQ/Research/op_pipeline/op_units_php.json
 add_function                                             anchor=146  ship=55
 ZEND_ADD_SPEC_TMPVARCV_TMPVARCV_HANDLER                  anchor=157  ship=48
 ZEND_ADD_LONG_SPEC_TMPVARCV_TMPVARCV_HANDLER             anchor=61   ship=20
@@ -418,7 +418,7 @@ Verified: the carve.
 
 ```
 $ /tmp/reconnect_venv/bin/python3 lineage_carve.py
-wrote PseudoCoupHQ/Research/op_pipeline/lineage_carve.json
+wrote PRIVATE/PseudoCoupHQ/Research/op_pipeline/lineage_carve.json
 anchor   vm_opt_plus                                              REFUSED  ...
 ship     vm_opt_plus                                              REFUSED  ...
 anchor   rb_fix_plus                                              REFUSED  ...
@@ -455,7 +455,7 @@ Verified: the proofs.
 
 ```
 $ /tmp/reconnect_venv/bin/python3 prove_interp_computation.py
-wrote PseudoCoupHQ/Research/op_pipeline/prove_interp_computation.json
+wrote PRIVATE/PseudoCoupHQ/Research/op_pipeline/prove_interp_computation.json
 ship   rb_fix_plus                                              PROVED   proved against 8 of 88 candidates
 ship   rb_int_plus                                              PROVED   proved against 8 of 88 candidates
 anchor rb_fix_plus_fix                                          PROVED   proved against 8 of 88 candidates
@@ -475,7 +475,7 @@ Verified: the extended proposal was written and passes the guard.
 
 ```
 $ /tmp/reconnect_venv/bin/python3 build_proposal_representation_dimension3.py
-wrote PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension3.json
+wrote PRIVATE/PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension3.json
 summary: {
  "handlers_considered": 9,
  "handlers_with_a_real_carve_at_some_build": 6,
@@ -495,7 +495,7 @@ prover population sits behind reads 1,561 converged, unchanged; task
 touched here.
 
 ```
-$ cd PseudoCoupHQ && git status --porcelain Research/op_pipeline/
+$ cd PRIVATE/PseudoCoupHQ && git status --porcelain Research/op_pipeline/
 ?? Research/op_pipeline/build_proposal_representation_dimension3.py
 ?? Research/op_pipeline/proposal_representation_dimension3.json
 
@@ -588,51 +588,51 @@ added in their own section and are not part of the nine.
 
 Created this session; nothing existing was edited.
 
-- `PseudoCoupHQ/Research/op_pipeline/t27_ruby_dump.sh` —
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/t27_ruby_dump.sh` —
   the Airlock lane that disassembled ruby's handlers out of both pinned
   builds. 1311 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/t27_php_clean_build.sh`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/t27_php_clean_build.sh`
   — the first clean-php attempt: it got configure past libxml for the
   first time and stopped in `make` on `ext/standard/scanf.c`. Kept on
   disk as the record of that step. 4099 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/t27_php_clean_build2.sh`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/t27_php_clean_build2.sh`
   — the lane that built the clean php pair (adds `-std=gnu17`) and
   dumped ruby's `rb_fix_plus_fix`. 2832 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/build_op_units_ruby.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/build_op_units_ruby.py`
   — ruby slice builder. 11137 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/op_units_ruby.json`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/op_units_ruby.json`
   — ruby slices, op_units shape. 75171 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/build_op_units_php.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/build_op_units_php.py`
   — php slice builder. 11935 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/op_units_php.json`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/op_units_php.json`
   — php slices, op_units shape, from the clean pair. 52470 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key_t27.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key_t27.py`
   — the typed-key read over the binaries this task carves. 5950 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key_t27.json`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key_t27.json`
   — its output, 20 records. 19433 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/lineage_carve.py` —
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lineage_carve.py` —
   the lineage-confluence carve. 31128 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/lineage_carve.json`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lineage_carve.json`
   — its output, 20 records. 290208 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/prove_interp_computation.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/prove_interp_computation.py`
   — the computation-part prover driver. 13496 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/prove_interp_computation.json`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/prove_interp_computation.json`
   — its output, 11 records. 18567 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/build_proposal_representation_dimension3.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/build_proposal_representation_dimension3.py`
   — the proposal extender. 14382 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension3.json`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension3.json`
   — **the artifact for the owner's ratification**, nine handlers plus the two
   route symbols. 79102 bytes.
-- `PseudoCoupHQ/DevComms/log_113_task27_ruby_php_slices.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_113_task27_ruby_php_slices.md`
   — this log.
 - A dated entry appended to
-  `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
+  `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
 
 Inside the sandbox container, not in any repo:
 `/persist/php_c_src/`, `/persist/php_c_anchor/`, `/persist/php_c_ship/`
 (the clean php source and builds), `/persist/dwarf_typed_key_t27.json`,
 `/persist/resolve_value.py` (the typedef resolver quoted above), and
-the lane products under `Airlock/agent/out/t27/`.
+the lane products under `PUBLIC/Airlock/agent/out/t27/`.
 
 Read but never written: `proposal_representation_dimension.json`,
 `proposal_representation_dimension2.json`, `dwarf_typed_key.json`,

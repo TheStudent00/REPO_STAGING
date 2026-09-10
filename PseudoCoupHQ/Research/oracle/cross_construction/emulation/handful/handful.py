@@ -4,7 +4,7 @@ steps, with every contract rule unconditional and the code that decided
 it recorded on the answer.
 
 Node: hq.research.arch_unit_oracle
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08).
 
 WHAT CHANGED ON 2026-09-10, one sentence: the nine `use_task_*` gates
@@ -189,9 +189,11 @@ sys.path.insert(0, MODEL)
 GO = os.path.join(EMULATION, "go")
 SWIFT = os.path.join(EMULATION, "swift")
 CPP = os.path.join(EMULATION, "cpp")
+CONSTRUCT = os.path.join(EMULATION, "construct")
 sys.path.insert(0, GO)
 sys.path.insert(0, SWIFT)
 sys.path.insert(0, CPP)
+sys.path.insert(0, CONSTRUCT)
 
 import z3                                                        # noqa: E402
 import canon                                                     # noqa: E402
@@ -202,6 +204,7 @@ import rust_render as RR                                         # noqa: E402
 import go_render as GR                                           # noqa: E402
 import swift_render as SR                                        # noqa: E402
 import cpp_render as CPR                                          # noqa: E402
+import construct as CONS                                         # noqa: E402
 import model_table as MTAB                                       # noqa: E402
 import model_translate as MT                                     # noqa: E402
 import single_opcode_units as SOU                                # noqa: E402
@@ -218,7 +221,7 @@ REPORT = os.path.join(HERE, "handful_driver.md")
 SRC_DIR = os.path.join(HERE, "src_driver")
 PRIMITIVE = os.path.join(HERE, "handful_driver_primitive.json")
 SPELLINGS = os.path.join(HERE, "handful_driver_spellings.json")
-HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PRIVATE/PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/handful")
 
 TARGETS = ["c", "cpp", "rust", "go", "swift"]
@@ -400,6 +403,7 @@ def one_recheck(shared, cells, run, place):
     mnem = place["body_text"].split("; ")
     return check_one_place(shared, wanted, params, raw_bytes,
                            mnem, place["label"], run["lang"],
+                           answer_bits=held.get("key_width"),
                            attested=attested_of(
                                held,
                                ((run.get("primitive") or {})
@@ -432,8 +436,35 @@ def build_shared():
 # ==================================================================
 
 def find_emulation(shared, held, lang):
+    """one (cell, target) through BOTH TIERS.
+
+    THE ONE CHANGE TASK t2 MAKES TO THIS DRIVER, and it is
+    UNCONDITIONAL: after the native route has answered, the second tier
+    is asked, always, on every run.  It looks at each place the native
+    route did not prove and, where that place's term has a node WIDER
+    THAN THE TARGET'S OWN WIDEST HOLDER, constructs the mapping out of
+    the operations the target does have and puts the constructed mapping
+    through the same render, compile, carve and gate.  Where there is no
+    such node it gives the term back unchanged and the tier declines by
+    cause, so the decision is a property of the TERM and never of who is
+    asking -- the thing the nine task gates were removed for.
+
+    `record["constructed"]` is None where the tier built nothing, so a
+    caller that knows nothing about the tier is unaffected; a caller
+    that does (`construct.split`) writes it to the store as a SECOND run
+    carrying `route = constructed`, and the bank keys it exactly as it
+    keys this one."""
+    record = the_native_route(shared, held, lang)
+    record["constructed"] = CONS.second_tier(shared, held, lang, record)
+    return record
+
+
+def the_native_route(shared, held, lang):
     """one (cell, target): the input, the render, the compile and
-    carve, the check.  Every step's object is on the record."""
+    carve, the check.  Every step's object is on the record.
+
+    This is the driver exactly as task ap6 left it, under its own name
+    so that the second tier can be a tier and not a branch inside it."""
     record = {
         "mnem": held["mnem"],
         "shape": held["shape"],
@@ -566,6 +597,7 @@ def one_place(shared, held, place, lang):
     out["landing"] = landing_of(mnem, held["mnem"])
     out["check"] = check_one_place(shared, working, renderer.params,
                                    raw_bytes, mnem, label, lang,
+                                   answer_bits=held.get("key_width"),
                                    attested=attested_of(held, None))
     return out
 
@@ -621,7 +653,24 @@ def cell_inputs(cells, asked):
                setter_cell["key_width"])
         if key in held_by_key:
             continue
-        held_by_key[key] = cell_input(cells, asked, setter_cell)
+        one = cell_input(cells, asked, setter_cell)
+        # A PAIR THE SWEEP NEVER POSED IS NOT A RUN OF THIS LOOP.  The
+        # corpus attests a setter by `mnem` and the sweep gives that
+        # mnemonic every operand shape it walks, so the join above
+        # offers cells the corpus never recorded before this consumer --
+        # and the two refusals that fall out of it, `no TRANSLATED row
+        # at this cell whose arriving flag state was written by this
+        # setter` and `the setter's flag values and the consumer's flag
+        # arrival are of different widths`, are properties of the OUTER
+        # SET and of neither target nor compiler.  Recording them as a
+        # run per target would write the same sentence five times about
+        # a pair no proof was ever posed for.  They are counted and
+        # stated by cause over the outer set instead, by
+        # `setter_cell_census`, which is one reading and not 11,450
+        # records.
+        if one.get("refusal_cause") is not None:
+            continue
+        held_by_key[key] = one
         order.append(key)
         continue
     out = []
@@ -631,10 +680,74 @@ def cell_inputs(cells, asked):
     return out
 
 
+def setter_cell_census(cells):
+    """THE SETTER CELLS, counted over the whole outer set: how many the
+    corpus attests before each consumer, how many the sweep posed, and
+    the cause of every one it did not.
+
+    It is what `cell_inputs` drops, said once and by cause rather than
+    banked as a run per target.  Nothing here compiles or solves: it is
+    the composition step alone."""
+    census = {
+        "consumers": 0,
+        "setter_cells_attested": 0,
+        "held_cells_built": 0,
+        "at_the_consumers_own_key_width": 0,
+        "refused_by_cause": {},
+        "per_consumer": [],
+    }
+    for record in cells["asked"]:
+        asked = (record["asked"]["mnem"], record["asked"]["shape"],
+                 record["asked"]["key_width"])
+        first = cell_input(cells, asked)
+        if first.get("setter") is None:
+            continue
+        census["consumers"] = census["consumers"] + 1
+        built = 0
+        for entry in attested_setter_cells(cells, asked):
+            census["setter_cells_attested"] = \
+                census["setter_cells_attested"] + 1
+            one = cell_input(cells, asked, entry)
+            cause = one.get("refusal_cause")
+            if cause is not None:
+                census["refused_by_cause"][cause] = \
+                    (census["refused_by_cause"].get(cause) or 0) + 1
+                continue
+            built = built + 1
+            census["held_cells_built"] = census["held_cells_built"] + 1
+            if entry["key_width"] == asked[2]:
+                census["at_the_consumers_own_key_width"] = \
+                    census["at_the_consumers_own_key_width"] + 1
+            continue
+        census["per_consumer"].append({
+            "mnem": asked[0], "shape": asked[1], "key_width": asked[2],
+            "built": built,
+        })
+        continue
+    return census
+
+
 def attested_setter_cells(cells, asked):
     """the setter CELLS the corpus attests before this consumer cell,
-    off the cells file's own `setter_cells`, strongest attestation
-    first."""
+    strongest attestation first.
+
+    WHERE THEY COME FROM, and it is two machine-form readings joined,
+    never a token.
+      * WHICH SETTERS the corpus records before this consumer is the
+        cell's own `attestation.setter` -- task m1b's flag-pair ledger
+        rows, counted per setter, which the outer set carries on every
+        row of every asked cell.  That reading names a setter by `mnem`
+        and by nothing else, because a ledger row's `produced_by.mnem`
+        on a flag pair is a two-element list of mnemonics.
+      * WHICH CELLS each of those setters HAS is the outer set's own
+        `setter_rows` -- the sweep's TRANSLATED flag-writing rows, each
+        already carrying its operand shape and its `key_width`, both
+        read off the row's own LINE by `model_table.classify_line` when
+        the outer set was built.  So the cell granularity is the sweep's
+        and the attestation is the corpus's, and neither is a reading of
+        a name.
+    Where a later outer set carries `setter_cells` on the asked record
+    itself, that is used instead and this derivation is not made."""
     mnem, shape, key_width = asked
     for record in cells["asked"]:
         if record["asked"]["mnem"] != mnem:
@@ -643,13 +756,59 @@ def attested_setter_cells(cells, asked):
             continue
         if record["asked"]["key_width"] != key_width:
             continue
-        held = record.get("setter_cells") or []
+        held = record.get("setter_cells")
+        if held is None:
+            held = derived_setter_cells(cells, record)
         return sorted(held,
                       key=lambda entry: (-(entry.get("ledger_rows") or 0),
                                          entry["mnem"],
                                          "%s" % entry.get("shape"),
                                          "%s" % entry.get("key_width")))
     return []
+
+
+def derived_setter_cells(cells, record):
+    """the setter cells of one asked record, derived from the outer
+    set's own two readings.  `ledger_rows` on each is the PAIR's own
+    count -- the flag-pair ledger rows the corpus records with this
+    setter before this consumer -- and `setter_ledger_rows` is the
+    setter cell's own attestation, which breaks a tie between two cells
+    of one setter."""
+    attested = {}
+    for row in record.get("rows") or []:
+        for entry in ((row.get("attestation") or {}).get("setter") or []):
+            was = attested.get(entry["mnem"]) or 0
+            if (entry.get("ledger_rows") or 0) > was:
+                attested[entry["mnem"]] = entry.get("ledger_rows") or 0
+            continue
+        continue
+    if not attested:
+        return []
+    out = []
+    seen = set()
+    for candidate in cells.get("setter_rows") or []:
+        if candidate.get("outcome") != "TRANSLATED":
+            continue
+        if candidate["mnem"] not in attested:
+            continue
+        key = (candidate["mnem"], candidate.get("shape"),
+               candidate.get("key_width"))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append({
+            "mnem": candidate["mnem"],
+            "shape": candidate.get("shape"),
+            "key_width": candidate.get("key_width"),
+            "ledger_rows": attested[candidate["mnem"]],
+            "setter_ledger_rows": ((candidate.get("attestation") or {})
+                                   .get("ledger_rows")),
+            "how": "the corpus records this setter before this consumer "
+                   "on m1b's flag-pair ledger rows, and this is one of "
+                   "the cells the sweep's own TRANSLATED rows give it",
+        })
+        continue
+    return out
 
 
 def cell_input(cells, asked, setter_cell=None):
@@ -662,6 +821,29 @@ def cell_input(cells, asked, setter_cell=None):
     at that cell's shape and width."""
     mnem, shape, key_width = asked
     held = {"mnem": mnem, "shape": shape, "key_width": key_width}
+    if setter_cell is not None:
+        # THE PAIR IS ON THE RECORD EVEN WHERE IT REFUSES.  A held cell
+        # the composition refuses is a result about THIS pair, so the
+        # setter cell rides on it from the start: without it every
+        # refusal of every setter cell of one consumer would land on one
+        # key (the consumer, no setter) and the store would hold many
+        # lines saying the same thing about different pairs.  What the
+        # composition adds when it succeeds -- the setter's own row, its
+        # line and the substitution -- replaces this below.
+        held["setter"] = {
+            "mnem": setter_cell["mnem"],
+            "shape": setter_cell["shape"],
+            "key_width": setter_cell["key_width"],
+            "row_id": None,
+            "line": None,
+            "why": "one of the setter cells the corpus's own flag-pair "
+                   "ledger rows attest before this consumer",
+            "why_this_cell": {
+                "ledger_rows": setter_cell.get("ledger_rows"),
+                "how": setter_cell.get("how"),
+            },
+            "composition": None,
+        }
     row = chosen_row(cells, asked, held, setter_cell)
     if row is None:
         held["refusal_cause"] = CAUSE_NO_ROW
@@ -1926,7 +2108,7 @@ def is_the_flags_place(writes):
     return writes.split(".")[0] == "flags"
 
 
-def the_identity(shared, place, params, lang, out):
+def the_identity(shared, place, params, lang, out, answer_bits=None):
     """CHANGE 3: the emulation whose carved body carries no instruction.
 
     The compiler emitted nothing because the value it was asked for is
@@ -1976,7 +2158,8 @@ def the_identity(shared, place, params, lang, out):
     body_aligned = P100.align_by_row(body_term, body_rows)
     out["cell_bits"] = cell_aligned.size()
     out["body_bits"] = body_aligned.size()
-    out.update(decided(shared, cell_aligned, body_aligned, params))
+    out.update(decided(shared, cell_aligned, body_aligned, params,
+                       answer_bits=answer_bits))
     return out
 
 
@@ -2228,7 +2411,8 @@ def x87_arrivals(families):
     return True
 
 
-def x87_aligned(shared, place, params, body_term, out):
+def x87_aligned(shared, place, params, body_term, out,
+                answer_bits=None):
     """CHANGE 2's DRIVER HALF: the two sides put on one set of IN rows
     when the arrivals are values on the x87 register stack.
 
@@ -2330,12 +2514,13 @@ def x87_aligned(shared, place, params, body_term, out):
                        "those rows by the shared aligner "
                        "pool100_entry_equivalence.align_by_row, which "
                        "task ap5 taught to align an x87 arrival")
-    out.update(decided(shared, cell_aligned, body_aligned, params))
+    out.update(decided(shared, cell_aligned, body_aligned, params,
+                       answer_bits=answer_bits))
     return out
 
 
 def check_one_place(shared, place, params, raw_bytes, mnem, label,
-                    lang, attested=None):
+                    lang, attested=None, answer_bits=None):
     """z3 asked whether the carved body answers as the cell's term says,
     for every input, at the gate's own 3,000 ms ceiling.
 
@@ -2355,7 +2540,8 @@ def check_one_place(shared, place, params, raw_bytes, mnem, label,
         # instruction line").  What the compiler did is not a failure:
         # it emitted nothing because the value asked for is already in
         # the register it answers in.
-        return the_identity(shared, place, params, lang, out)
+        return the_identity(shared, place, params, lang, out,
+                            answer_bits=answer_bits)
     canon = wrapped_body(shared, raw_bytes, mnem, label, lang)
     out["canon40_outcome"] = canon.get("outcome")
     out["arrival_families_read_off_the_body"] = canon.get(
@@ -2386,7 +2572,8 @@ def check_one_place(shared, place, params, raw_bytes, mnem, label,
         # BEFORE `expected_families`, whose own refusal is that an
         # 80-bit float argument arrives in memory and names no register
         # family -- which is exactly what this branch answers.
-        return x87_aligned(shared, place, params, body_term, out)
+        return x87_aligned(shared, place, params, body_term, out,
+                           answer_bits=answer_bits)
     try:
         body_families = expected_families(lang, params)
     except E.Refused as refusal:
@@ -2442,7 +2629,8 @@ def check_one_place(shared, place, params, raw_bytes, mnem, label,
                              "rule cut both to %d"
                              % (out["cell_bits"], out["body_bits"],
                                 min(out["cell_bits"], out["body_bits"])))
-    out.update(decided(shared, cell_aligned, body_aligned, params))
+    out.update(decided(shared, cell_aligned, body_aligned, params,
+                       answer_bits=answer_bits))
     return out
 
 
@@ -2466,8 +2654,22 @@ def wrapped_body(shared, raw_bytes, mnem, label, lang):
     return canon
 
 
-def decided(shared, cell_aligned, body_aligned, params):
+def decided(shared, cell_aligned, body_aligned, params,
+            answer_bits=None):
     """the gate's own call, and o7's caller-extension re-pose.
+
+    `answer_bits`, where the caller states it, is THE NODE'S OWN ANSWER
+    WIDTH, and it joins the re-pose on the same rule the arguments are
+    already re-posed under.  The caller extension says what the caller
+    guarantees about the values that ARRIVE; the answer width says how
+    much of the register the caller READS, and a body that answers in a
+    wider register may leave anything it likes above the node's own
+    bits.  The hub measured the cost of not asking it: `go/regen_146` is
+    disproved on c and on rust only in the bits above the eight its node
+    answers in (`log_254` SS8, cause 2, and its awaiting-the owner item 3).
+    A caller that states nothing gets exactly the re-pose o7 wrote, and
+    the cut is applied only where the node is NARROWER than both sides,
+    so a loop whose node IS the place it compares never reaches it.
 
     RESTATED, NOT CALLED, and the docstring at the top of this file
     says why: `emulate.prove_against_x` takes an x unit, and a table
@@ -2508,17 +2710,32 @@ def decided(shared, cell_aligned, body_aligned, params):
         substitution.append((row, z3.ZeroExt(64 - param["bits"],
                                              z3.Extract(param["bits"] - 1,
                                                         0, row))))
-    if not substitution:
+    left = body_aligned
+    right = cell_aligned
+    if substitution:
+        left = z3.substitute(left, *substitution)
+        right = z3.substitute(right, *substitution)
+    cut = None
+    if answer_bits is not None:
+        if answer_bits < left.size() and answer_bits < right.size():
+            cut = answer_bits
+            left = z3.Extract(answer_bits - 1, 0, left)
+            right = z3.Extract(answer_bits - 1, 0, right)
+    if not substitution and cut is None:
         return out
-    again = gate.decide(
-        z3.substitute(body_aligned, *substitution),
-        z3.substitute(cell_aligned, *substitution),
-        "the same, with every narrow-holder input row zero-extended "
-        "from its holder width (the target's caller-extension rule)",
-        "z3 proved the two equal for every input whose narrow "
-        "arguments are zero-extended to the register")
+    claim = ("the same, with every narrow-holder input row "
+             "zero-extended from its holder width (the target's "
+             "caller-extension rule)")
+    proof = ("z3 proved the two equal for every input whose narrow "
+             "arguments are zero-extended to the register")
+    if cut is not None:
+        claim = ("%s, and both answers cut to the %d bits the node "
+                 "answers in" % (claim, cut))
+        proof = ("%s, on the bits the node answers in" % proof)
+    again = gate.decide(left, right, claim, proof)
     out["under_caller_extension"] = {
         "narrow_rows": narrow,
+        "answer_bits": cut,
         "outcome": again.outcome,
         "reason": again.reason,
         "counterexample": again.counterexample,
@@ -2839,6 +3056,12 @@ CAUSE_PRIMITIVE_FLAGS = "the primitive route renders the operator's " \
 # these six come from, and the name is the arch campaign's rather than
 # the language's spelling, which is why this table is one table and not
 # five.
+TRUTH_REPRESENTATION = "bool"
+"""the manifest's own name for the truth representation.  It is read as
+a REPRESENTATION and never as a language spelling: `bool` in c and cpp,
+`bool` in rust, `bool` in go and `Bool` in swift are four spellings of
+one representation, and the manifest records the representation."""
+
 REP_HOLDER = {
     "i32": ("bv", 32),
     "i64": ("bv", 64),
@@ -3229,17 +3452,55 @@ def primitive_lookup(held, lang, widened=None):
             "member_count": row["member_count"],
             "example_unit_id": row["example_unit_id"],
         })
+    # THE LOOKUP CARRIES THE MATCHED BODY'S HOLDERS (2026-09-10).
+    # A row classifies to this cell by its INSTRUCTION; the emulation it
+    # renders is the member's own source, whose parameters sit in
+    # whatever holders the manifest recorded for that member -- and the
+    # hub found five entries proved in the bank and unusable by any
+    # composition because those holders are the target's TRUTH holder
+    # (`log_252` SS7, `log_254`'s awaiting-the owner item 2).  A truth holder
+    # collapses every non-zero byte to one, so a body written over it is
+    # not a faithful emulation of a register cell, and a body whose
+    # parameters are 8 bits wide is not an emulation of a 64-bit cell
+    # whatever its instruction classifies to.  So the holders are part
+    # of what the lookup MATCHES: members are tried in order until one
+    # fits the cell's own width and none of its holders is a truth
+    # holder, the fit is recorded on the entry, and where no member fits
+    # the lookup refuses BY CAUSE and the run takes the term route,
+    # which renders the cell at a holder of its own width.
     probe = None
     tried = 0
-    for member in best["members"]:
-        tried = tried + 1
-        probe = probe_of_member(lang, member.get("unit"))
+    refused_holders = []
+    for candidate in ordered:
+        for member in candidate["members"]:
+            tried = tried + 1
+            found_probe = probe_of_member(lang, member.get("unit"))
+            if found_probe is None:
+                continue
+            fit = holders_fit(found_probe, held)
+            if fit["cause"] is not None:
+                refused_holders.append({
+                    "unit": member.get("unit"),
+                    "body_text": candidate["body_text"],
+                    "cause": fit["cause"],
+                    "holders": fit["holders"],
+                })
+                continue
+            probe = found_probe
+            best = candidate
+            found["holders"] = fit["holders"]
+            break
         if probe is not None:
             break
+        continue
     found["members_tried_before_one_resolved"] = tried
+    if refused_holders:
+        found["members_refused_by_holder"] = refused_holders
     if probe is None:
         found["row"] = None
         found["cause"] = CAUSE_NO_MEMBER
+        if refused_holders:
+            found["cause"] = CAUSE_HOLDER
         found["row_that_matched"] = {
             "body_text": best["body_text"],
             "instruction": best["instruction"],
@@ -3258,6 +3519,61 @@ def primitive_lookup(held, lang, widened=None):
     }
     found["probe"] = probe
     return found
+
+
+CAUSE_HOLDER = ("every member of every row that classifies to this "
+                "cell is written over holders the cell's own operands "
+                "do not fit")
+
+
+def holders_fit(probe, held):
+    """whether the matched body's parameter holders can hold the cell's
+    own operands.  `cause` is None where they fit.
+
+    TWO CONDITIONS, both machine form and neither reading a token.
+      * NO TRUTH HOLDER.  The manifest records a parameter's
+        REPRESENTATION, and `bool` is the truth one; a truth holder
+        holds 0 or 1, so the compiler is free to lower an operation over
+        it to something that is correct for those two values and wrong
+        for every other byte of the register -- which is exactly the
+        counterexample the hub's own measure carries (`log_254` SS8,
+        cause 1: at 8 and 247 the two sides differ).  A cell of the arch
+        table is a mapping over a REGISTER, so a truth-holder body is
+        never an emulation of one.
+      * THE WIDTH IS THE CELL'S.  A parameter must be as wide as the
+        cell's own `key_width`; a body whose operands are 8 bits wide
+        computes a different mapping from a 64-bit cell however its one
+        instruction classifies."""
+    holders = []
+    cause = None
+    try:
+        params = primitive_params(probe)
+    except E.Refused as refusal:
+        return {"holders": [], "cause": "%s: %s" % (refusal.cause,
+                                                    refusal.detail)}
+    reps = [probe.get("lhs_rep")]
+    if probe.get("arity") == "binary":
+        reps.append(probe.get("rhs_rep"))
+    for index, param in enumerate(params):
+        holders.append({
+            "index": param["index"],
+            "holder": param["holder"],
+            "representation": reps[index],
+            "kind": param["kind"],
+            "bits": param["bits"],
+        })
+        if reps[index] == TRUTH_REPRESENTATION:
+            cause = ("the member's parameter %d sits in the target's "
+                     "TRUTH holder (`%s`), which holds 0 or 1 and is "
+                     "not a faithful holder of a register"
+                     % (index, param["holder"]))
+            continue
+        if param["bits"] != held["key_width"]:
+            cause = ("the member's parameter %d is %d bits wide and "
+                     "the cell's own key_width is %d"
+                     % (index, param["bits"], held["key_width"]))
+        continue
+    return {"holders": holders, "cause": cause}
 
 
 def wide_rule_evidence(key, lang):
@@ -3445,6 +3761,7 @@ def one_place_primitive(shared, held, place, lang, label, built, got,
     out["landing"] = landing_of(mnem, held["mnem"])
     out["check"] = check_one_place(shared, working, built["params"],
                                    raw_bytes, mnem, label, lang,
+                                   answer_bits=held.get("key_width"),
                                    attested=attested_of(held, found_row))
     return out
 

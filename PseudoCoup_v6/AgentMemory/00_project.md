@@ -23,7 +23,7 @@ executed in-process in stock CPython).
 - **Ultimate:** greatest amount of automation of transpiling and
   slicing of languages — in particular the 12. Purpose stated by
   the owner (2026-07-28, level-0 note in
-  `PseudoCoup_v6/Planning/CORE_0.md`): CHURN
+  `PRIVATE/PseudoCoup_v6/Planning/CORE_0.md`): CHURN
   RESILIENCE — the Hub satisfies the source scripts' intentions;
   when the intention-landscape changes, a mostly-automated
   transpile+slice+insert system updates the repo quickly, keeping
@@ -84,8 +84,8 @@ column set).
 
 ## Repos
 
-- `PseudoCoup_v6/` — THIS repo: the build.
-- `PseudoCoup_v5/` — research stage: proofs, oracle
+- `PRIVATE/PseudoCoup_v6/` — THIS repo: the build.
+- `PRIVATE/PseudoCoup_v5/` — research stage: proofs, oracle
   assets, surveys, plans. Being archived except what carries
   forward (oracle assets stay live).
 - Earlier versions + precursors: see 03.

@@ -66,7 +66,7 @@ Three things came out of it.
 
 ## 2.1 The thing being replaced, quoted
 
-> `PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
+> `PRIVATE/PseudoCoupHQ/Research/op_pipeline/probe_gen.py`,
 > lines 76–92
 >
 > ```
@@ -86,7 +86,7 @@ arch campaign used" — a decision recorded, not an authority read.
 
 Against it, the precedent the ruling points at:
 
-> `PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.json`
+> `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/operator_arity.json`
 >
 > ```
 > "authority": "tree-sitter grammar sources; every operator is
@@ -159,7 +159,7 @@ over:
 
 The rule, quoted from the pinned cache:
 
-> `PseudoCoupHQ/Research/kind_fuzz_clustering/grammar_cache/c.js`,
+> `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/grammar_cache/c.js`,
 > line 640
 >
 > ```
@@ -564,7 +564,7 @@ recommendation:
 ## 6.1 The spelling-key check, both artifacts
 
 ```
-$ cd PseudoCoupHQ/Research/op_pipeline
+$ cd PRIVATE/PseudoCoupHQ/Research/op_pipeline
 $ /tmp/reconnect_venv/bin/python3 check_no_spelling_keys.py \
       type_inventory.json type_inventory_validation.json
 operator inventory: 91 tokens read from probe_manifest_*.json
@@ -582,7 +582,7 @@ inherit.
 ## 6.2 Zero regressions
 
 ```
-$ cd PseudoCoupHQ && git status --porcelain
+$ cd PRIVATE/PseudoCoupHQ && git status --porcelain
  M Research/op_pipeline/type_inventory.py
  M Research/op_pipeline/type_inventory_validate.py
 ?? Research/compiler_graph/graph_cpp2.json
@@ -626,17 +626,17 @@ Created this session, all new, nothing existing modified:
 
 | path | what it is |
 |---|---|
-| `PseudoCoupHQ/Research/op_pipeline/type_inventory.py` | the extractor (TASK 29a) |
-| `PseudoCoupHQ/Research/op_pipeline/type_inventory.json` | the extracted inventory, pinned, per language, per type, with the authority that admits it |
-| `PseudoCoupHQ/Research/op_pipeline/type_inventory.md` | the readable rendering of the same |
-| `PseudoCoupHQ/Research/op_pipeline/type_inventory_validate.py` | the two-direction validation (TASK 29b/c) |
-| `PseudoCoupHQ/Research/op_pipeline/type_inventory_validation.json` | the measurements, per language, with the cells and the cause families |
-| `PseudoCoupHQ/Research/op_pipeline/type_inventory_validation.md` | the readable rendering of the same |
-| `PseudoCoupHQ/DevComms/log_116_task29_type_inventory.md` | this log |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/type_inventory.py` | the extractor (TASK 29a) |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/type_inventory.json` | the extracted inventory, pinned, per language, per type, with the authority that admits it |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/type_inventory.md` | the readable rendering of the same |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/type_inventory_validate.py` | the two-direction validation (TASK 29b/c) |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/type_inventory_validation.json` | the measurements, per language, with the cells and the cause families |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/type_inventory_validation.md` | the readable rendering of the same |
+| `PRIVATE/PseudoCoupHQ/DevComms/log_116_task29_type_inventory.md` | this log |
 
 Modified this session: one line appended under the single
 `# PROGRESS` heading of
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
 
 Read but not modified: `probe_gen.py`, `check_no_spelling_keys.py`,
 `lane_gen.py`, `op_units_<lang>.json` (five),

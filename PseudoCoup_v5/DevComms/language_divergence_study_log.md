@@ -185,7 +185,7 @@ Conjecture to test: every implicit uniqueness is **machine-model dependence** (c
 
 ## Entry 2026-07-22 (later) — Protocol consolidation and formatting pass
 
-- The communication protocol was consolidated: canonical now at [LLM_communication_protocol.md](file://DevComms/LLM_communication_protocol.md); live-project copies are symlinks; archive copies frozen.
+- The communication protocol was consolidated: canonical now at [LLM_communication_protocol.md](file://PRIVATE/DevComms/LLM_communication_protocol.md); live-project copies are symlinks; archive copies frozen.
 - This log was reformatted to comply with the merged protocol's ban on whitespace-aligned tables in code blocks: tabular data now uses pipe tables or lists. The paradigm-form block is retained as-is — it is a definition form (tab-structured, short lines, per the Text diagrams conditions), not a data table.
 
 ---

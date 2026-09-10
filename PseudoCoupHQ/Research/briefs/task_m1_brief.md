@@ -2,12 +2,12 @@
 
 Law: `LAW.md` beside this file — ALL of it, including the last section:
 every lane runs on the tower through `remote_lane.sh`. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`
 — read its "goal" section (the owner's four set names and his loop; this task is
-the first item of that goal) and `PseudoCoupHQ/DevComms/log_234_arch_opcode_mappings_as_fits.md`
+the first item of that goal) and `PRIVATE/PseudoCoupHQ/DevComms/log_234_arch_opcode_mappings_as_fits.md`
 §2 and §6, then log_221 §2–§3. Instance `m1.conf` (on the tower; bring it
 up yourself with `$R up --instance m1`). Artifact folder:
-`PseudoCoupHQ/Research/oracle/arch_opcodes/model/`; lanes
+`PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/model/`; lanes
 under `lanes_m1/` there. Task mn1 may still be regenerating the o2/o9/o10
 artifacts in the same tree with the field `mnemonic` renamed `mnem`: read
 whichever name is present, and write ONLY under your own folder.
@@ -88,7 +88,7 @@ by (`mnem`, `shape`, `width`), one per sweep attempt that TRANSLATED, with:
 8. Guard over every json; report (`model_table.md`, sections in the order
    above, five example rows in full: `add` gpr_gpr 32, `imul` gpr_one 32 and
    gpr_gpr 32, `sar` cl_gpr 32, `idiv` gpr_one 32); log (next free number;
-   check `ls PseudoCoupHQ/DevComms | tail` right before
+   check `ls PRIVATE/PseudoCoupHQ/DevComms | tail` right before
    writing; task mn1 may take one); verifier lane on the tower; PROGRESS
    entry on the arch_unit_oracle node (append only); sync-back; instance
    down.

@@ -105,18 +105,18 @@ load-bearing.
 
 - **F12 — Editing another repo on this project's behalf.**
   (2026-07-31: `plan_and_code.md`, which is about how THIS line maps
-  plans to code, was written into `DevComms` — a
+  plans to code, was written into `PRIVATE/DevComms` — a
   deliberately light place for decisions affecting most of the owner's LLM
   work generally.) The guard is not permission, it is scope. the owner's
   framing: we are devs of PseudoCoupHQ and only USERS of
-  `PlanPlan`; wearing the PlanPlan hat, a change
+  `PRIVATE/PlanPlan`; wearing the PlanPlan hat, a change
   gets made if it is abstract enough to serve every project using the
   framework. So the test before editing it is **"would this be right
   for a project that has nothing to do with PseudoCoup?"** Yes means
   make it — PlanPlan is new and changes often. No means it belongs
-  in HQ. `DevComms` is a third thing again and takes no
+  in HQ. `PRIVATE/DevComms` is a third thing again and takes no
   line-specific content at all. Full statement in
-  `PseudoCoupHQ/Planning/node_0_2_conventions/CORE_0_2_conventions.md`.
+  `PRIVATE/PseudoCoupHQ/Planning/node_0_2_conventions/CORE_0_2_conventions.md`.
 
 ## Check the skills before improvising (2026-07-30)
 
@@ -148,7 +148,7 @@ unaware of.** Therefore:
   CONTEXT: what it is, mechanically, in the owner's terms. A name
   dropped as if known is a dead end.
 - Recorded in the communication protocol
-  (`DevComms/LLM_communication_protocol.md` §14);
+  (`PRIVATE/DevComms/LLM_communication_protocol.md` §14);
   repeated here because forks must load it with the project, not
   discover it by being corrected.
 

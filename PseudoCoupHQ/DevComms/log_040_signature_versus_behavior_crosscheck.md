@@ -1,9 +1,9 @@
 # log 040 — the cross-check: declared signatures against measured behavior
 
 Date: 2026-08-20. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`
-and `PseudoCoupHQ/Research/kind_signature_clustering/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`
+and `PRIVATE/PseudoCoupHQ/Research/kind_signature_clustering/`.
 
 This log closes CHECK item 4j, which was the last open item in the
 `kind_fuzz_clustering` node and the oldest unstarted one. It is the

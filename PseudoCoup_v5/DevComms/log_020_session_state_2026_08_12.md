@@ -4,7 +4,7 @@ At the owner's request ("please make note of the state of our
 conversations, especially the research findings"). The record of the
 stretch from the token-table brainstorm through the empirical
 compiler research. Predecessor state log:
-`PseudoCoupHQ/DevComms/log_006_ur_research_record.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_006_ur_research_record.md`.
 
 ---
 
@@ -22,7 +22,7 @@ compiler research. Predecessor state log:
   This superseded "census-generated, human-reviewed" — the review
   gate fell to the owner's automation push, replaced by a mechanical
   three-way classification (STENCIL / DERIVED / VARIANT,
-  `PseudoCoup_v5/Research/census_stencils.py`) plus
+  `PRIVATE/PseudoCoup_v5/Research/census_stencils.py`) plus
   the convergence oracle as verifier.
 - **`ts_to_ur` shape** (2026-08-11): `Mapper` + `LanguagePack`, both
   realize:false, designed in

@@ -5,6 +5,57 @@ status: living
 
 # PROGRESS — autopoly
 
+- 2026-09-10: task ap6 closed — ONE DRIVER, NO TASK-NAME GATES, AND THE
+  PAIR AS THE NODE. The driver's contract rules were switched on by TASK
+  NAME — nine `use_task_*` entries over seventy-five branches, so an
+  older pass reproduced verbatim — and they are gone: `handful.py` now
+  carries ONE opcode-name branch, `ret`, which is how the carver finds the
+  end of a body, and provenance is carried instead by `code_version`, the
+  sha256 of the driver's source, the loop's and the target's renderer,
+  recorded on every run. THE GUARD ON THAT REMOVAL was the bank's audit at
+  100%: every one of the 1,227 certified place-triples of the five
+  compiled targets re-derived once through the gate-free driver, 962 runs,
+  645 seconds, ALARMS 0 — no verdict moved on identical inputs. FOUR MORE
+  CHANGES, each with its own guard. (1) A flag consumer is rendered over
+  EVERY setter cell the sweep posed before it, not one setter mnemonic at
+  one width: the corpus attests a setter by `mnem` only, the outer set's
+  own `setter_rows` give that mnemonic its cells, and the join is cut to
+  the pairs the sweep actually seeded — 2,674 offered over 39 consumers,
+  384 posed, the other 2,290 counted and stated by two causes once rather
+  than banked as a run per target. `setne gpr_one 8` went from one held
+  cell to thirty-one. PAIR-LEVEL CERTIFICATES 2,623 → 7,519 over 39 → 397
+  distinct (consumer cell, setter cell) pairs; all 111 pair entries task
+  hub2's dictionary serves are still carried at the kind they were served
+  at, and 9 of hub2's 111 pair HOLES are now certified `proved`. (2) The
+  primitive lookup carries the matched body's HOLDERS: no truth holder,
+  and the parameter as wide as the cell's own `key_width`. Task hub1's
+  five entries that were PROVED and unusable by any composition all became
+  usable, matched at `int32_t` / `i32`; task ap5's `add gpr_gpr 64` on c
+  refuses BY CAUSE at the loop and takes the term route. (3) The gate has
+  a narrow-ANSWER re-pose beside task o7's narrow-argument one: task hub2's
+  own sighting `go/regen_146` is DISPROVED as posed and PROVED_ON_SHIP cut
+  to the eight bits its node answers in. (4) A `refused` / `undecided` /
+  `sat` key is re-attempted only when the code version on its certificate
+  differs from the one running — the task label is gone from the delta
+  rule too. THE DELTA PASS ran 2,499 runs in 2,224 s (197.5% of a full
+  pass's runs at 0.87 s a run against 1.17), certified 1,053 place-triples,
+  audited 61 with ALARMS 0. THE THREE READINGS over the bank: 2,003 /
+  2,251 / 2,213 proved (cell, target) pairs against log_253's 1,999 /
+  2,241 / 2,203; at the cell width all four 94 / 147 / 137 cells (49.4% /
+  73.11% / 68.02% of 133,044 attested ledger rows, against 45.5% / 63.61%
+  / 55.19%), and all five now equals all four on every reading. ONE
+  DEFECT FOUND AND FIXED IN THIS TASK'S OWN MACHINERY: the audit's key is
+  six-part and its matcher compared four, which was harmless while the
+  loop wrote one run per (cell, target) and stopped being harmless the
+  moment it wrote one per setter cell — the first delta pass stopped at
+  192/709 on three alarms that were a run over one setter read against a
+  certificate about another. Report:
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/ap6_delta.json`.
+  Log:
+  `PRIVATE/PseudoCoupHQ/DevComms/log_255_task_ap6_one_versioned_driver.md`.
+  Status: closed, spelling guard PASS on all five json products, the
+  conventions verifier 0 DIFFERS, instance `ap6` down.
+
 - 2026-09-10: task bank1 closed — THE POLYFILL LIBRARY AS BANKED
   CERTIFICATES, AND THE LOOP RESHAPED TO DELTA PLUS AUDIT. A CERTIFICATE
   is a record about ONE ARTIFACT: one (cell, target, written place) with
@@ -60,8 +111,8 @@ status: living
   every unflagged command of `autopoly.py` delegates to it, so log 243's
   seven reproducing commands and `lanes_ap1/ap1_l5_run.sh` still answer.
   No shared file changed. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/bank1.md`.
-  Log: `PseudoCoupHQ/DevComms/log_253_task_bank1_the_bank.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/bank1.md`.
+  Log: `PRIVATE/PseudoCoupHQ/DevComms/log_253_task_bank1_the_bank.md`.
   Status: closed, guard PASS on both json and both jsonl products,
   verifier 20 claims / 0 DIFFERS, instance `bank1` down.
 
@@ -99,9 +150,9 @@ status: living
   whose zero-arrival sample point every dialect's own blank-line
   convention skips) are counted by cause, never scored, never worked
   around. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand2.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand2.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_250_task_ex2_the_interpreted_loop.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_250_task_ex2_the_interpreted_loop.md`.
   Status: closed, guard PASS on both json products, verifier zero DIFFERS,
   instance `ex2` down.
 
@@ -148,9 +199,9 @@ status: living
   so no sixth pass was run and the cell is reported, not patched; whether the
   symbolic row should be preferred where the target's compiler answers with a
   thunk is left for the owner. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly5.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly5.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_249_task_ap5_autopoly_fifth_pass.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_249_task_ap5_autopoly_fifth_pass.md`.
   Status: closed with one regression standing, spelling guard PASS on all
   three json products, conventions verifier 0 DIFFERS over three passes,
   instance `ap5` down.
@@ -200,14 +251,14 @@ status: living
   holds three different JIT dump formats, none of them objdump's, and
   the corpus holds zero arch-units for javascript, dart and csharp.
   Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand1.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand1.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_248_task_ex1_cpp_and_the_interpreted_check.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_248_task_ex1_cpp_and_the_interpreted_check.md`.
   Status: closed, guard PASS on all three json products, verifier zero
   DIFFERS, instance `ex1` down.
 - 2026-09-06: node folder generated by
-  `PlanPlan/framework/generate_nodes.py` from the
-  `nodes` register of `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`. Skeleton only — definition,
+  `PRIVATE/PlanPlan/framework/generate_nodes.py` from the
+  `nodes` register of `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`. Skeleton only — definition,
   designation, and content pending.
 - 2026-09-07: task o13 closed ("what is next, in order" item 1 —
   render the mode). The guard read off the ledger's GUARD-block rows
@@ -222,8 +273,8 @@ status: living
   disagree with a mode rendered, diagnosed by cause (both sides' guard
   fires correctly; the guarded BODY still differs); 85 of 95 carry no
   ledger guard row at all and are unaffected by this task. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode/mode_report.md`.
-  Log: `PseudoCoupHQ/DevComms/log_231_task_o13_mode_rendered_guard.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/mode/mode_report.md`.
+  Log: `PRIVATE/PseudoCoupHQ/DevComms/log_231_task_o13_mode_rendered_guard.md`.
   Status: closed, verifier zero DIFFERS, instance `o13` down.
 - 2026-09-07: task o12 closed ("what is next, in order" item 2 — the
   synthesis route). Compose y's arch-units directly from a
@@ -245,13 +296,13 @@ status: living
   made the machine-type-key bucket itself the sort filter, holder
   class/width no longer excluding admissible wires) rather than
   re-running, then wrote the report and this entry. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md`.
-  Log: `PseudoCoupHQ/DevComms/log_230_task_o12_synthesis_route.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/synthesis/synthesis_report.md`.
+  Log: `PRIVATE/PseudoCoupHQ/DevComms/log_230_task_o12_synthesis_route.md`.
   Status: closed, verifier zero DIFFERS (10 MATCHES, 11 UNVERIFIABLE, 3
   NOT_RERUNNABLE), instance `o12` down.
 - 2026-09-09: task h1 closed — a handful of `find_emulation` runs from
   the arch-opcode model table, run on the TOWER. Ten cells of
-  `PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`
+  `PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`
   (`add` gpr_gpr 32, `sub` imm_gpr 64, `imul` gpr_gpr 32, `sar` cl_gpr
   32, `shr` cl_gpr 64, `idiv` gpr_one 32, `cmovne` gpr_gpr 32, `setne`
   gpr_one 8, `addss` xmm_xmm 32, `cvtsi2sd` gpr_xmm 64), all present at
@@ -271,9 +322,9 @@ status: living
   arrival read above bit 63. Unasked-for finding: clang at `-O1` and
   rustc at `opt-level=1` emitted byte-identical bodies in all 12 places
   both compiled. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_238_task_h1_handful_of_find_emulation_runs.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_238_task_h1_handful_of_find_emulation_runs.md`.
   Status: closed, instance `h1` down.
 - 2026-09-09: task h1b closed — the composition column, closing task
   h1's brief §5 (added after h1 ran). For every one of the twenty
@@ -292,9 +343,9 @@ status: living
   composition is exactly one cell, the run's own target, checked
   rather than asserted. `handful.md`'s twenty-row table gained the
   `composition` column. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_239_task_h1b_composition_column.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_239_task_h1b_composition_column.md`.
   Status: closed, instance `h1b` down.
 - 2026-09-09: task h2 closed — the same ten cells and two targets task
   h1 ran, re-run after two printing fixes in the DRIVER (neither
@@ -319,9 +370,9 @@ status: living
   nothing else. Regression: task o8's per-opcode check re-run unchanged
   over its 243 rows into a scratch copy returns 243 / 197 / 155 / 216,
   the proof that the renderers were not changed. Reports:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful2.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful2.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_240_task_h2_two_printing_fixes.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_240_task_h2_two_printing_fixes.md`.
   Status: closed, instance `h2` down.
 - 2026-09-09: task g1 closed by task g1b — the same ten cells tasks h1
   and h2 ran, now on FOUR targets (c, rust, go, swift) and by a route
@@ -348,9 +399,9 @@ status: living
   instructions under the narrow rule — so it went by the term route, 51
   instructions after the strip in c and rust and 85 in go, UNDECIDED at
   3,000 ms and again at 300,000 ms on all six of its places. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_241_task_g1_find_emulation_go_and_swift.md`
+  `PRIVATE/PseudoCoupHQ/DevComms/log_241_task_g1_find_emulation_go_and_swift.md`
   (9 MATCHES, 0 DIFFERS, 0 REFUSED, 0 NOT_RERUNNABLE). Status: closed;
   the instance stays up for task g1b, which re-runs swift on the rebuilt
   image and widens the lookup.
@@ -396,9 +447,9 @@ status: living
   returning a DISPROVED about a comparison nobody posed; measured per
   place, the fix moves 0 of `handful3b.json`'s 8 re-posed places and
   both of `handful3c.json`'s. Reports:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md`
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3b.md`
   and `.../handful3c.md`. Log:
-  `PseudoCoupHQ/DevComms/log_242_task_g1b_swift_and_the_widened_lookup.md`
+  `PRIVATE/PseudoCoupHQ/DevComms/log_242_task_g1b_swift_and_the_widened_lookup.md`
   (26 claims: 13 MATCHES, 0 DIFFERS, 9 UNVERIFIABLE, 1 REFUSED, 3
   NOT_RERUNNABLE, each non-matching outcome named with its cause in its
   section 11). Status: closed, instance `g1` down.
@@ -435,9 +486,9 @@ status: living
   counterexample, and the largest finding among them is that the cell key
   carries no immediate, so `mov` imm_gpr is not one mapping — the single
   awaiting-the owner item. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly4.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly4.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_246_task_ap4_autopoly_fourth_pass.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_246_task_ap4_autopoly_fourth_pass.md`.
   Status: closed, guard PASS on all three json products, instance `ap4`
   down.
 - 2026-09-09: task ap3 closed — AutoPoly's loop, THIRD PASS. Two more of
@@ -491,9 +542,9 @@ status: living
   every `sat` were NOT touched: 38 places over the same 12 cells, `sat`
   152 places at the plain comparison and 67 surviving the caller-extension
   re-pose. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly3.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly3.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_245_task_ap3_autopoly_third_pass.md`
+  `PRIVATE/PseudoCoupHQ/DevComms/log_245_task_ap3_autopoly_third_pass.md`
   (32 claims: 8 MATCHES, 0 DIFFERS, 24 UNVERIFIABLE, 0 REFUSED, 0
   NOT_RERUNNABLE). Status: closed, guard PASS on all three json products,
   instance `ap3` down.
@@ -547,7 +598,7 @@ status: living
   Products: `.../emulation/autopoly/autopoly2.{py,json,md}`,
   `autopoly2_cells.json`, `autopoly2_runs.jsonl`, `src2/`, `lanes_ap2/`
   (twenty lanes). Log:
-  `PseudoCoupHQ/DevComms/log_244_task_ap2_autopoly_second_pass.md`
+  `PRIVATE/PseudoCoupHQ/DevComms/log_244_task_ap2_autopoly_second_pass.md`
   (20 claims: 6 MATCHES, 0 DIFFERS, 14 UNVERIFIABLE, 0 REFUSED, 0
   NOT_RERUNNABLE, at its fixed point over four passes). FLAGGED: the
   brief's `LAW.md` and `task_ap1_brief.md` were never staged, so the
@@ -559,7 +610,7 @@ status: living
   (`for arch_opcode_i in set_of_unique_arch_opcodes: for lang_i in {c,
   rust, go, swift}: find_emulation(arch_opcode_i)`) run over its whole
   measured outer set for the first time: the 253 attested cells of
-  `PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`
+  `PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`
   (a distinct (`mnem`, shape, `key_width`) triple with a TRANSLATED row
   whose attestation records at least one ledger row — task m1b's 253,
   counted again from the table and agreeing in both directions with task
@@ -607,7 +658,46 @@ status: living
   the table carry `key_width: null`, six of them attested, which the
   driver's `%d` label format cannot take (24 runs, recorded as a result by
   cause and not worked around). Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
   Log:
-  `PseudoCoupHQ/DevComms/log_243_task_ap1_autopoly_first_full_loop.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_243_task_ap1_autopoly_first_full_loop.md`.
   Status: closed, guard PASS on both json products, instance `ap1` down.
+
+- **2026-09-10 — task t2, THE SECOND TIER: what a target lacks, constructed
+  from what it has.** The driver gains ONE unconditional call site
+  (`handful.find_emulation` is now the native route plus that call; the
+  driver as task ap6 left it is under its own name,
+  `handful.the_native_route`, byte for byte). Where a place's term carries
+  a node WIDER THAN THE TARGET'S OWN WIDEST HOLDER — the word, read off
+  that target's own renderer table and measured to be 128 on c, cpp and
+  rust and 64 on go and swift — `construct/schemas.py` rebuilds the
+  mapping out of operations at the word: a ripple adder, a funnel shifter,
+  a schoolbook product whose high half is four HALF-word products
+  (smallest width first, literally), a restoring divider, lexicographic
+  comparisons, and the widening plumbing. Eight schemas, every one general
+  in (width, word), no case per opcode name, every branch on a z3
+  declaration kind. TWO OBLIGATIONS, not one: the gate proves the carved
+  body equals the CONSTRUCTED mapping, and a separate EQUALITY proves the
+  constructed mapping equals the CELL's — canonical form, then the
+  schema's Lean lemma, then z3 at a hard 30 s ceiling — and a place whose
+  gate proves and whose equality does not is refused BY CAUSE, never
+  banked. MEASURED: the bank held 149 width-or-kind refusals over 51 cells
+  on the five compiled targets; the tier constructed 24 places and proved
+  14 end to end (go 7, swift 7 — `adc`, `sbb` at three shapes, `shld`,
+  `shrd`), and every one of the 14 by `proof = lemma+gate`, so the solver
+  was the audit and not the workhorse. The three readings move: the bank
+  2,003 → 2,007 strict, 2,251 → 2,265 destination-only, 2,213 → 2,221
+  corpus-needed; cells on all four and all five, destination, 147 → 154
+  (73.11% → 75.21%). NOT REACHED, each with its cause on the record: the
+  x87 family (129 of the 149) is refused at the ARRIVAL or the ANSWER
+  HOME and needs a change to the arrival contract; the high half of a
+  product is a miter of two multipliers that neither `bv_decide` nor z3
+  closes; the divider cannot be rendered or stated at any real width
+  because the renderer emits one nested expression and names no
+  intermediate, so a step that reads its own previous step three times is
+  written out 3^width times (measured, not asserted). Reports:
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/construct/construct.md`
+  and `.../construct/lean/OWED.md`. Log:
+  `PRIVATE/PseudoCoupHQ/DevComms/log_257_task_t2_the_second_tier_constructs_what_a_target_lacks.md`.
+  Status: closed, spelling guard PASS on 5 of 5, verifier 5 MATCHES / 0
+  DIFFERS, instance `t2` down.

@@ -1,7 +1,7 @@
 """Build the phase-1 ledger (one record per named source node) and serialize it deterministically.
 
 Phase-1 record per the settled schema
-(PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_ur_ast.md):
+(PRIVATE/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_ur_ast.md):
 id / file / node_kind / span / anchor / semantic.type — where a
 declaration-kind node with no resolved type carries the EXPLICIT
 value "unresolvable" (never a guess, never an omission), and

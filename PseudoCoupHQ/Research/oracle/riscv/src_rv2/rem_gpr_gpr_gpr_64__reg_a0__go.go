@@ -1,0 +1,26 @@
+// task g1 emulation -- rendered by go_render.py
+// GoRenderer from the layer-4 term of rem_gpr_gpr_gpr_64__reg_a0__go.
+// The term's layer-5 text, LITERAL:
+//   If(v0 == 0, v1, If(And(v0 == 18446744073709551615, v1 == 9223372036854775808), 0, bvsrem_i(v1, v0)))
+package main
+
+func sel64(c bool, x uint64, y uint64) uint64 {
+	if c {
+		return x
+	}
+	return y
+}
+
+//go:noinline
+func emu_rem_gpr_gpr_gpr_64__reg_a0__go(a uint64, b uint64) uint64 {
+	return uint64(sel64(((uint64(uint64(a))) == (uint64(uint64(0x0)))), uint64(uint64(b)), uint64(sel64(((((uint64(uint64(a))) == (uint64(uint64(0xffffffffffffffff))))) && (((uint64(uint64(b))) == (uint64(uint64(0x8000000000000000)))))), uint64(uint64(0x0)), uint64((uint64(uint64((int64(uint64(b))) % (int64(uint64(a)))))))))))
+}
+
+var g0 uint64
+var g1 uint64
+var sink interface{}
+
+func main() {
+	sink = emu_rem_gpr_gpr_gpr_64__reg_a0__go(g0, g1)
+	_ = sink
+}

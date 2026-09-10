@@ -23,15 +23,15 @@ A copy was made where a feature was required.
 
 | superseded | replaced by |
 |---|---|
-| `bash trickle_up.sh` | `bash Airlock/up.sh --instance trickle --cpus 6` |
-| `bash trickle_down.sh` | `bash Airlock/down.sh --instance trickle` |
+| `bash trickle_up.sh` | `bash PUBLIC/Airlock/up.sh --instance trickle --cpus 6` |
+| `bash trickle_down.sh` | `bash PUBLIC/Airlock/down.sh --instance trickle` |
 | `bash trickle_down.sh --pause` | `podman stop trickle-runner`, or just `down.sh` — an instance is cheap to recreate |
-| `bash trickle_doctor.sh` | `Airlock/airlock doctor` — it lists every instance and whether each is running |
+| `bash trickle_doctor.sh` | `PUBLIC/Airlock/airlock doctor` — it lists every instance and whether each is running |
 | `trickle.py --run` (`podman exec`) | `python3 trickle2.py --run` — submits through `airlock submit`, polls the status file, reads `agent/out` |
 
 The instance's settings — 6 cores, 8g, no proxy, the default instance's
 `sandbox-persist` volume mounted read-only — live in
-`Airlock/instances/trickle.conf`. Nothing about the instance
+`PUBLIC/Airlock/instances/trickle.conf`. Nothing about the instance
 lives in this repository.
 
 ## The standing rule this enforces

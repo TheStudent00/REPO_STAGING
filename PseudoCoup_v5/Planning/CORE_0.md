@@ -12,7 +12,7 @@ node:
     remote: https://github.com/<owner>/PseudoCoup_v5.git
 super_node:
     name: projects
-    path: PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
+    path: PRIVATE/PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md
     repo: PseudoCoupHQ
     remote: https://github.com/<owner>/PseudoCoupHQ.git
 sub_nodes:
@@ -37,7 +37,7 @@ sub_nodes:
 
 ## super_node
 
-- [projects](PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md)
+- [projects](PRIVATE/PseudoCoupHQ/Planning/node_0_0_projects/CORE_0_0_projects.md)
 
 ## sub_nodes
 
@@ -66,7 +66,7 @@ FOR right now, not about what it can do.
 
 versions of PseudoCoup are turns of the bootstrap cycle, not different
 products. the cycle is settled at
-`PseudoCoupHQ/Planning/node_0_1_exchange/CORE_0_1_exchange.md`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_1_exchange/CORE_0_1_exchange.md`
 and that is where it is stated; what belongs here is only which turn
 this is.
 

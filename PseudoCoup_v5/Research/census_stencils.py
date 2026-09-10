@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The stencil/variant census — the automation, saved as an artifact.
 
-    python3 PseudoCoup_v5/Research/census_stencils.py <src_dir>...
+    python3 PRIVATE/PseudoCoup_v5/Research/census_stencils.py <src_dir>...
 
 Ran ephemerally in chat 2026-08-07 (produced the 95/58, 91/14, and
 120/33 numbers); saved at the owner's push that the pipeline must be

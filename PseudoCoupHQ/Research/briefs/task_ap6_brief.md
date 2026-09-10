@@ -1,13 +1,13 @@
 # Task ap6 — one versioned driver: the task-name gates stripped, consumers over every attested setter, the lookup with holders, and re-attempts by code version
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it (waits in short
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it (waits in short
 calls). Then `task_bank1_brief.md` and its log `DevComms/log_253` (the bank,
 bank mode, its §"Awaiting the owner" items 1–2), `task_hub2_brief.md` and
 `log_254` (§"Awaiting the owner" items 1–3), `log_252` §6, the driver
 `.../emulation/handful/handful.py` (its nine `use_task_*` gates and
 `fixes_are_on`), `.../autopoly/autopoly.py` (bank mode), the bank
 `certificates.jsonl`. Instance `ap6.conf` (copy from
-`Airlock/instances/ap6.conf`; mounts `sandbox-persist` ro).
+`PUBLIC/Airlock/instances/ap6.conf`; mounts `sandbox-persist` ro).
 Artifact folder: `.../emulation/`; lanes under `autopoly/lanes_ap6/`.
 
 ## 1. What this is (the owner, 2026-09-10)
@@ -37,6 +37,6 @@ gain `code_version`. Guard over every json/jsonl; log (next free number);
 verifier lane; PROGRESS on the autopoly node; sync-back; instance down.
 Memory bound 6g, sample 20, peak RSS, abort `ABORT_MEMORY_AP6`. No
 shared-file change outside the emulation folder. Never delete anything
-under `<runs>/` or `Airlock/`. Reply with the gate
+under `<runs>/` or `PUBLIC/Airlock/`. Reply with the gate
 count before/after (expected 9 → 0), the audit's result, the pair-level
 before/after, the cost line, the three readings, the tally, the two lists.

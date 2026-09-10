@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The one place bash logic lives for the PseudoCoup line.
 #
-#   bash PseudoCoupHQ/hq.sh
+#   bash PRIVATE/PseudoCoupHQ/hq.sh
 #
 # That is the whole normal usage. With no arguments it does everything
 # that needs doing: regenerates the dashboards, checks every planning
@@ -16,7 +16,7 @@
 #   hq.sh sources     fetch every upstream language source (host only)
 #   hq.sh tree        print the planning trees as text
 #   hq.sh explore     write the card explorer for the whole line, then
-#                     open PseudoCoupHQ/plan_explorer.html
+#                     open PRIVATE/PseudoCoupHQ/plan_explorer.html
 #   hq.sh unlock      clear stale .git/index.lock files only
 #   hq.sh list        show what is configured and what is missing
 #   hq.sh help        this text
@@ -30,33 +30,33 @@
 # something a routine commit should ever start.
 #
 # This script holds sequencing and nothing else — every step is a call
-# into PlanPlan/framework/ or into a repo's own
+# into PRIVATE/PlanPlan/framework/ or into a repo's own
 # git_commit_push.sh, so each piece still works on its own.
 #
 # Run it as `bash <path>`: the sandbox cannot set the executable bit.
 
 set -uo pipefail
 
-FRAMEWORK=PlanPlan/framework
+FRAMEWORK=PRIVATE/PlanPlan/framework
 
 # Planning roots the checks and dashboards run over.
 ROOTS=(
-    PseudoCoupHQ/Planning
-    PseudoCoup_v5/Planning
-    PseudoCoup_v6/Planning
-    PseudoIR/Planning
+    PRIVATE/PseudoCoupHQ/Planning
+    PRIVATE/PseudoCoup_v5/Planning
+    PRIVATE/PseudoCoup_v6/Planning
+    PRIVATE/PseudoIR/Planning
 )
-# NOT here: PlanPlan/Planning. It has a planning
+# NOT here: PRIVATE/PlanPlan/Planning. It has a planning
 # tree of its own as of 2026-08-01, but this script WRITES (it
 # regenerates projections and dashboards), and HQ does not write into
 # PlanPlan — same reason PlanPlan is absent from
 # git_commit_push_all.sh. Check that tree with its own invocation:
-#   python3 PlanPlan/framework/generate_nodes.py \
-#       PlanPlan/Planning --projections --apply
-#   python3 PlanPlan/framework/generate_dashboards.py \
-#       PlanPlan/Planning
-#   python3 PlanPlan/framework/check_plans.py \
-#       PlanPlan/Planning
+#   python3 PRIVATE/PlanPlan/framework/generate_nodes.py \
+#       PRIVATE/PlanPlan/Planning --projections --apply
+#   python3 PRIVATE/PlanPlan/framework/generate_dashboards.py \
+#       PRIVATE/PlanPlan/Planning
+#   python3 PRIVATE/PlanPlan/framework/check_plans.py \
+#       PRIVATE/PlanPlan/Planning
 
 usage() {
     sed -n '2,32p' "$0" | sed 's/^# \{0,1\}//'
@@ -66,14 +66,14 @@ usage() {
 # not fetch anything itself — it calls the script in the repo that owns
 # that research, the same way `commit` calls each repo's own
 # git_commit_push.sh.
-SOURCES_SCRIPT=PseudoCoup_v5/Research/fetch_all_sources.sh
+SOURCES_SCRIPT=PRIVATE/PseudoCoup_v5/Research/fetch_all_sources.sh
 
 # The framework's own bash entry point. HQ calls it rather than calling
 # python directly, so which interpreter runs the tools is decided in ONE
 # place — PlanPlan's — and not repeated here (the owner, 2026-08-05: a bash
 # call is preferable to a python call, because the environment is where
 # these go wrong).
-PLAN_SH=PlanPlan/plan.sh
+PLAN_SH=PRIVATE/PlanPlan/plan.sh
 
 # Resolve a repo NAME to its planning root, so the caller types
 # `PseudoCoup_v5`, not a path.
@@ -90,7 +90,7 @@ root_of() {
 do_sources() {
     if [ ! -f "$SOURCES_SCRIPT" ]; then
         echo "missing: $SOURCES_SCRIPT" >&2
-        echo "  is PseudoCoup_v5 checked out?" >&2
+        echo "  is PRIVATE/PseudoCoup_v5 checked out?" >&2
         return 2
     fi
     bash "$SOURCES_SCRIPT" "$@"
@@ -100,7 +100,7 @@ do_sources() {
 require_tool() {
     if [ ! -f "$1" ]; then
         echo "missing tool: $1" >&2
-        echo "  the framework lives in PlanPlan/ — is it checked out?" >&2
+        echo "  the framework lives in PRIVATE/PlanPlan/ — is it checked out?" >&2
         exit 2
     fi
 }
@@ -140,12 +140,12 @@ do_check() {
 # not write into it. Clearing sandbox debris is not development of that
 # repo; leaving it would just break the next commit made there.
 LOCK_REPOS=(
-    PseudoCoupHQ
-    PseudoCoup_v5
-    PseudoCoup_v6
-    PseudoIR
-    PlanPlan
-    DevComms
+    PRIVATE/PseudoCoupHQ
+    PRIVATE/PseudoCoup_v5
+    PRIVATE/PseudoCoup_v6
+    PRIVATE/PseudoIR
+    PRIVATE/PlanPlan
+    PRIVATE/DevComms
 )
 
 do_unlock() {
@@ -212,12 +212,12 @@ case "$CMD" in
                 echo "=== NOTHING WAS COMMITTED ===" >&2
                 echo "  the consistency checks above failed (exit $rc)." >&2
                 echo "  fix them, or push anyway with:" >&2
-                echo "    bash PseudoCoupHQ/hq.sh --force" >&2
+                echo "    bash PRIVATE/PseudoCoupHQ/hq.sh --force" >&2
                 exit 1
             fi
         fi
 
-        bash PseudoCoupHQ/git_commit_push_all.sh
+        bash PRIVATE/PseudoCoupHQ/git_commit_push_all.sh
         exit $?
         ;;
 
@@ -255,7 +255,7 @@ case "$CMD" in
         # Every tree in the line, one page, one fixed place. No flags to
         # remember and no path to type: the whole point is that it is
         # one word and then you open the file.
-        out=PseudoCoupHQ/plan_explorer.html
+        out=PRIVATE/PseudoCoupHQ/plan_explorer.html
         bash "$PLAN_SH" explore "${ROOTS[@]}" --title "PseudoCoup line" -o "$out"
         exit $?
         ;;
@@ -278,7 +278,7 @@ case "$CMD" in
         done
         echo
         echo "repos committed (from git_commit_push_all.sh):"
-        bash PseudoCoupHQ/git_commit_push_all.sh --list | tail -n +2
+        bash PRIVATE/PseudoCoupHQ/git_commit_push_all.sh --list | tail -n +2
         echo
         echo "upstream sources fetcher:"
         if [ -f "$SOURCES_SCRIPT" ]; then

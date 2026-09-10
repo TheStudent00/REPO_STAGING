@@ -205,7 +205,11 @@ FULL_RUNS = os.path.join(HERE, "%s_runs.jsonl" % FULL_LABEL)
 FULL_SRC_DIR = os.path.join(HERE, "src_%s" % FULL_LABEL)
 
 ABORT_KB = 6 * 1024 * 1024
-ABORT_NAME = "ABORT_MEMORY_BANK1"
+ABORT_NAME = "ABORT_MEMORY_AP6"
+"""the named abort of the pass RUNNING, which is this task's.
+It is a label on a stop, not a rule: the bound is 6 GB either
+way, and every earlier pass's log records the name its own lanes
+ran under."""
 
 SOLVER_MS = 3000
 REPOSE_MS = 30000
@@ -291,7 +295,7 @@ def configure(store, src):
     H.PRIMITIVE = PRIMITIVE
     H.SPELLINGS = SPELLINGS
     H.CELLS = CELLS
-    H.HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
+    H.HOST_FOLDER = ("PRIVATE/PseudoCoupHQ/Research/oracle/"
                      "cross_construction/emulation/autopoly")
     H.ABORT_KB = ABORT_KB
     H.ABORT_NAME = ABORT_NAME
@@ -462,6 +466,8 @@ def bank_preflight_command():
     say("")
     say("pairs never attempted by any pass on this store: %d"
         % plan["pairs_never_attempted"])
+    say("pairs carrying a setter cell no pass ever ran: %d"
+        % plan["pairs_with_a_setter_cell_no_pass_ran"])
     say("peak resident: %d kB" % check_memory("preflight"))
     return 0
 
@@ -521,9 +527,14 @@ def bank_report_command():
     say("| pass | certified before | attempted | newly certified | "
         "audited | alarms |")
     say("|---|---|---|---|---|---|")
-    say("| `bank1_delta` | %d | %d | %d | %d | %d |"
-        % (held["certified_before"], held["attempted"],
-           held["newly_certified"], held["audited"], held["alarms"]))
+    # THE ROW NAMES THE PASS THE AGGREGATE IS ABOUT, and no longer a
+    # literal `bank1_delta`: the label is a parameter (`--pass`) and a
+    # row that says one pass while it prints another's counts is a
+    # misattribution.
+    say("| `%s` | %d | %d | %d | %d | %d |"
+        % (document["meta"]["pass"], held["certified_before"],
+           held["attempted"], held["newly_certified"], held["audited"],
+           held["alarms"]))
     say("")
     say("Table D3 -- what the pass cost against a full pass over the "
         "same five targets.")
@@ -947,6 +958,8 @@ def the_delta():
     attempt = []
     held_by_version = 0
     never = 0
+    unrun_setters = 0
+    setters_of = setter_cells_of_asked(cells)
     for asked, lang, ledger in pairs:
         pair = (asked[0], asked[1], asked[2], lang)
         places = known.get(pair)
@@ -955,6 +968,17 @@ def the_delta():
             attempt.append((pair, None, None))
             continue
         if not places:
+            attempt.append((pair, None, None))
+            continue
+        # A SETTER CELL NO PASS EVER RAN IS A PAIR NO PASS EVER RAN.
+        # The delta's other rules ask about keys the bank already holds;
+        # a held cell the driver answers now and no pass ever wrote a
+        # record for has no certificate to be certified, refused or
+        # held by a code version, so it is attempted whole -- which is
+        # the same rule as a pair no pass ever ran, read at the setter.
+        ran_setters = set(setter for _place, setter in places)
+        if setters_of.get(asked, set()) - ran_setters:
+            unrun_setters = unrun_setters + 1
             attempt.append((pair, None, None))
             continue
         for place, setter in sorted(places,
@@ -1008,9 +1032,27 @@ def the_delta():
         "runs_list": order,
         "pairs_total": len(pairs),
         "pairs_never_attempted": never,
+        "pairs_with_a_setter_cell_no_pass_ran": unrun_setters,
         "known_triples": known_triples,
         "code_version": current,
     }
+
+
+def setter_cells_of_asked(cells):
+    """{the asked cell: the setter cells the driver answers held cells
+    for}, computed ONCE for the whole plan because a held cell is a
+    reading of the outer set and does not depend on the target."""
+    out = {}
+    for record in cells["asked"]:
+        asked = (record["asked"]["mnem"], record["asked"]["shape"],
+                 record["asked"]["key_width"])
+        held = set()
+        for one in H.cell_inputs(cells, asked):
+            held.add(setter_key(one.get("setter")))
+            continue
+        out[asked] = held
+        continue
+    return out
 
 
 def the_audit_sample(certified):
@@ -1021,7 +1063,7 @@ def the_audit_sample(certified):
     first and the seeded generator draws over that, so this pass's
     sample can be re-derived by anyone with the same bank and the same
     date."""
-    held = sorted(certified, key=lambda k: tuple("%s" % p for p in k))
+    held = sorted(certified, key=lambda k: tuple(str(part) for part in k))
     if not held:
         return []
     many = int(round(len(held) * AUDIT_SHARE))
@@ -1031,7 +1073,7 @@ def the_audit_sample(certified):
         many = len(held)
     chooser = random.Random(AUDIT_DATE)
     return sorted(chooser.sample(held, many),
-                  key=lambda k: tuple("%s" % p for p in k))
+                  key=lambda k: tuple(str(part) for part in k))
 
 
 def certificates_for(keys):
@@ -1350,8 +1392,9 @@ def audited_rows_of(record, asked, lang, certificates):
     for place in record.get("places") or []:
         places[place.get("writes")] = place
         continue
+    here = setter_key(record.get("setter"))
     for key in sorted(certificates,
-                      key=lambda k: tuple("%s" % p for p in k)):
+                      key=lambda k: tuple(str(part) for part in k)):
         if key[0] != asked[0]:
             continue
         if key[1] != asked[1]:
@@ -1359,6 +1402,21 @@ def audited_rows_of(record, asked, lang, certificates):
         if key[2] != asked[2]:
             continue
         if key[3] != lang:
+            continue
+        # THE SETTER IS PART OF THE KEY AND SO IT IS PART OF THE MATCH
+        # (2026-09-10).  A certificate's key is six-part -- (cell,
+        # target, written place, SETTER CELL) -- and this matcher
+        # compared four of the parts, which was harmless while the loop
+        # wrote ONE run per (cell, target) and is not harmless now that
+        # it writes one per setter cell: without this line a run over
+        # `cmp gpr_mem 8` is read against a certificate about
+        # `cmp gpr_gpr 8`, and lane 10 stopped on three such rows.  They
+        # are not the same obligation: the two cell terms PRINT the same
+        # (the printer canonicalises a free symbol to `v0`, `v1`) and
+        # render to the same source, and their arrival contracts differ,
+        # which is what the two verdicts are about.  An audit compares a
+        # key with itself.
+        if key[5] != here:
             continue
         out.append(one_audited_row(record, key, places.get(key[4]),
                                    certificates[key]))

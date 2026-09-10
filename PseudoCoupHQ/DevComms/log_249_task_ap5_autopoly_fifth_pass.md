@@ -1,17 +1,17 @@
 # log 249 — task ap5: the two mechanical remainders of the four languages — the x87 stack read end to end, the immediate as an input of the mapping, and AutoPoly's loop, fifth pass
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the rulings of
 2026-09-08 and 2026-09-09 in
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
-Law: `PseudoCoupHQ/Research/LAW.md`, read in full including its
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, read in full including its
 tower section. Brief:
-`PseudoCoupHQ/Research/briefs/task_ap5_brief.md`.
+`PRIVATE/PseudoCoupHQ/Research/briefs/task_ap5_brief.md`.
 Date: 2026-09-09. Instance `ap5`, on the tower guest.
 
 Artifact folder:
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
 writing `autopoly5_*`; tasks ap1 to ap4's products are not overwritten. Lane
 scripts: `.../autopoly/lanes_ap5/`, twenty-four of them, each kept in the repo
 as the standing rule of 2026-09-07 requires. Every lane log named below is on
@@ -23,10 +23,10 @@ implementer was stopped by a usage limit after lane `ap5_l16`; lanes `ap5_l1`
 to `ap5_l16` are its work and `ap5_l17` to `ap5_l24` are this one's. Lanes
 `ap5_l17` to `ap5_l21` were already on disk, written by the first implementer
 and never submitted; they were read against the state and submitted unchanged.
-Nothing under `<runs>/` or `Airlock/` was deleted.
+Nothing under `<runs>/` or `PUBLIC/Airlock/` was deleted.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into the
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into the
 instance. Every rendering is labelled per the protocol's
 `object.literal-gloss-analogy`: **LITERAL** is the object itself, quoted;
 **GLOSS** is a plain-words reading beside a literal. Where a pasted block shows
@@ -103,10 +103,10 @@ files:
 
 | file | function | what it does now |
 |---|---|---|
-| `PseudoCoupHQ/Research/op_pipeline/reference.py` | `answer_of` | an answer home spelled `X87_<k>` is read off the reference's own `MachineState.x87` through its own `x87_at`, under the same `fpToIEEEBV` the model table's builder puts on an x87 place |
-| `PseudoCoupHQ/Research/op_pipeline/pool100_entry_equivalence.py` | `align_by_row` | an arrival whose family is spelled `X87_<k>` or `x87_<operand>` is aligned by its IN row like any other, at `reference.X87_SORT` instead of a `BitVec` |
-| `PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py` | `shapes_for` | §2.2 |
-| `PseudoCoupHQ/Research/oracle/cross_construction/emulation/emulate.py` | `x87_answer_for_unit` REMOVED | task ap4's driver-side stand-in for `answer_of`, called from one line of `body_answer` and nowhere else; the docstring left in `body_answer` says why it is gone |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/reference.py` | `answer_of` | an answer home spelled `X87_<k>` is read off the reference's own `MachineState.x87` through its own `x87_at`, under the same `fpToIEEEBV` the model table's builder puts on an x87 place |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/pool100_entry_equivalence.py` | `align_by_row` | an arrival whose family is spelled `X87_<k>` or `x87_<operand>` is aligned by its IN row like any other, at `reference.X87_SORT` instead of a `BitVec` |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/model_translate.py` | `shapes_for` | §2.2 |
+| `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/emulate.py` | `x87_answer_for_unit` REMOVED | task ap4's driver-side stand-in for `answer_of`, called from one line of `body_answer` and nowhere else; the docstring left in `body_answer` says why it is gone |
 
 **WHY THE `BitVec` WAS THE DEFECT, LITERAL** — lane `ap5_l15`, asking
 `align_by_row` itself under both spellings:

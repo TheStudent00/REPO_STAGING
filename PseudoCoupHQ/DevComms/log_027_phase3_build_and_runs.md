@@ -1,8 +1,8 @@
 # log 027 — layer 3 phase 3: the builds, proven, and the runs, launched
 
 Date: 2026-08-18. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 Phase 3 of that node's plan of record, under the layer-3 design the owner
 ruled 2026-08-18.
 
@@ -1173,9 +1173,9 @@ agent should know how the existing files were made.
    cp SandboxDesign/agent/out/ac_*.txt \
       SandboxDesign/agent/out/rc_*.txt \
       SandboxDesign/agent/out/lift_b.txt \
-      PseudoCoupHQ/Research/\
+      PRIVATE/PseudoCoupHQ/Research/\
 kind_fuzz_clustering/raw/
-   cd PseudoCoupHQ/Research/kind_fuzz_clustering
+   cd PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering
    python3 l3_read.py
    ```
 
@@ -1211,7 +1211,7 @@ the two unbuilt harnesses.
 ## record
 
 Everything is in
-`PseudoCoupHQ/Research/kind_fuzz_clustering/`:
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`:
 
 - `progress.py` — the shared instrument, python face and shell twin.
 - `l3_accept.py` -> `space_<lang>.json`, `space_summary.json`,

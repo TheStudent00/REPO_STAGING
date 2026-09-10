@@ -1,6 +1,6 @@
 # Task ap5 — the two mechanical remainders of the four languages: the x87 stack read end to end, and the immediate as an input of the mapping
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it. Then
 `task_ap4_brief.md` beside this file and its log `DevComms/log_246`
 (§"Decided" item 5 and §"Awaiting the owner" item 1: exactly the two things this
 task does), `log_245` §4 (the x87 probe: `long double` LANDS on c), the
@@ -9,7 +9,7 @@ task ex1 left them (ex1 runs before this task), `Research/op_pipeline/reference.
 (`answer_of`), `pool100_entry_equivalence.py` (`align_by_row`),
 `Research/op_pipeline/lean/model_translate.py` (`shapes_for`: the `imm_*`
 shapes spell `$0x3`). Instance `ap5.conf` (copy from
-`Airlock/instances/ap5.conf`). Artifact folder:
+`PUBLIC/Airlock/instances/ap5.conf`). Artifact folder:
 `.../emulation/autopoly/`, writing `autopoly5_*`; lanes under `lanes_ap5/`.
 
 ## 1. The x87 stack — 114 runs / 6,284 rows, unchanged through ap4
@@ -55,7 +55,7 @@ sync-back; instance down. Memory bound 6g, sample 20, peak RSS, abort
 `ABORT_MEMORY_AP5`. Shared files this brief authorises, and no others:
 `reference.py` (`answer_of` only), `pool100_entry_equivalence.py`
 (`align_by_row` only), `model_translate.py` (`shapes_for` only). Never
-delete anything under `<runs>/` or `Airlock/`. Reply
+delete anything under `<runs>/` or `PUBLIC/Airlock/`. Reply
 with the per-target table, the five-pass all-four line, the change table,
 the x87 verdicts by count, the immediate cells' before/after, the four
 guard tallies, the tally, the two lists.

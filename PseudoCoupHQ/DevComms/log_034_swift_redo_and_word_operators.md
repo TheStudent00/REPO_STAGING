@@ -1,8 +1,8 @@
 # log 034 — the swift redo and the word-spelled operations
 
 Date: 2026-08-19. Node:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
-Artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/CORE_0_3_2_kind_fuzz_clustering.md`.
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 **Rewritten 2026-08-19 for readability at the owner's instruction. The content
 is identical — same facts, same numbers, same findings, same section
@@ -882,7 +882,7 @@ candidates it named are now measured out.
   projection.
 - The instructions for collecting all of this and rebuilding the
   clustering are in
-  `PseudoCoupHQ/Research/kind_fuzz_clustering/HARVEST.md`,
+  `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/HARVEST.md`,
   written before this log and kept current.
 
 ---
@@ -1015,7 +1015,7 @@ the state of it is.
 ## §7 — artifacts
 
 All paths are inside
-`PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+`PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 
 | file | what it is |
 |---|---|

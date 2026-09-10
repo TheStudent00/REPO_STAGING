@@ -1,7 +1,7 @@
 # log_144 — TASK 50(b): the assignment-run re-capture
 
 Dated 2026-09-02. TASK 50 part (b) from
-`PseudoCoupHQ/DevComms/log_142_claude_code_task_briefs_round10.md`:
+`PRIVATE/PseudoCoupHQ/DevComms/log_142_claude_code_task_briefs_round10.md`:
 re-capture the 118 assignment-run testimony findings through the
 verbatim path.
 
@@ -60,7 +60,7 @@ and polls the instance's own status file — never `podman exec`.
 ### 2.3 The run
 
 ```
-$ bash Airlock/up.sh --instance trickle --cpus 6
+$ bash PUBLIC/Airlock/up.sh --instance trickle --cpus 6
   trickle-runner already existed; started (bound to .../instances/trickle/agent/drop)
   trickle-runner  Up 55 seconds  localhost/sandbox-runner:latest
 
@@ -149,7 +149,7 @@ same record log 126 §3.2 walked:
 ## 4. Instance down
 
 ```
-$ bash Airlock/down.sh --instance trickle
+$ bash PUBLIC/Airlock/down.sh --instance trickle
   removed trickle-runner
 done.
 ```
@@ -183,7 +183,7 @@ line MUST paste this paragraph verbatim."
 
 ## 6. Full file inventory
 
-All paths under `PseudoCoupHQ/Research/op_pipeline/`
+All paths under `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`
 unless noted. All NEW files; nothing pre-existing was opened for
 writing.
 
@@ -218,4 +218,4 @@ writing.
   supersede.
 - The daemon commits; this session made no manual commit.
 
-Report path: `PseudoCoupHQ/DevComms/log_144_task50b_assignment_recapture.md`.
+Report path: `PRIVATE/PseudoCoupHQ/DevComms/log_144_task50b_assignment_recapture.md`.

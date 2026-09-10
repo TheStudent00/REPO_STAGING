@@ -3,7 +3,7 @@
 read off its own emission, for every rule the go renderer will need.
 
 Node: hq.research.arch_unit_oracle.cross_construction
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
 FROZEN for term-level composition; task o7 opened the emulation route
 with c as the target, task o11 added rust, and this task adds go and
 swift, which asks the same question of two more compilers and does not

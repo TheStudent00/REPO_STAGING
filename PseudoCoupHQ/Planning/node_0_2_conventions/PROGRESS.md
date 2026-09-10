@@ -8,7 +8,7 @@ status: living
 - 2026-08-02 **standing prohibition, the owner**: a Rust code generation
   backend is BANNED from every repo in the line, with the consequence
   the owner stated — permanent firing of Anthropic from any of his work.
-  `PseudoCoupHQ/CRANELIFT_IS_BANNED.md` is the authority
+  `PRIVATE/PseudoCoupHQ/CRANELIFT_IS_BANNED.md` is the authority
   and the only file that names it. It OVERRIDES every older document
   in any repo that endorses it: those are historical record under the
   annotate-don't-delete rule, and a citation to one is not
@@ -16,16 +16,16 @@ status: living
   and no single project can own it.
 
 - 2026-08-02 **done** (the owner's instruction): the framework repo is now
-  `PlanPlan`, renamed from `PlanningPlan`. Every path in
-  this node's CORE, in `PseudoCoupHQ/hq.sh` and in
-  `PseudoCoupHQ/plan_and_code.md` was updated with it.
+  `PRIVATE/PlanPlan`, renamed from `PlanningPlan`. Every path in
+  this node's CORE, in `PRIVATE/PseudoCoupHQ/hq.sh` and in
+  `PRIVATE/PseudoCoupHQ/plan_and_code.md` was updated with it.
   The full account of the rename, including what was deliberately not
-  edited, is in `PlanPlan/Planning/PROGRESS.md`.
+  edited, is in `PRIVATE/PlanPlan/Planning/PROGRESS.md`.
   - The hats rule in this node's CORE is unaffected in substance: HQ
     is still only a USER of that repo and can only request framework
     changes of it. Only the name changed.
 - 2026-08-01 **done and exercised**: `generate_nodes.py` built in
-  `PlanPlan/framework/` — the register realizer the
+  `PRIVATE/PlanPlan/framework/` — the register realizer the
   `nodes` field was designed for. exercised on a synthetic tree:
   dry-run listed without writing; `--apply` created two level-1 nodes
   and then a level-2 node under one of them (correct chain, id, and
@@ -39,12 +39,12 @@ status: living
   governs what, not a restatement of any of it.
 - 2026-07-31: **no arguments now means do everything** (the owner: "i just
   want to run the script ... i want to simplify this"). Bare
-  `bash PseudoCoupHQ/hq.sh` regenerates dashboards,
+  `bash PRIVATE/PseudoCoupHQ/hq.sh` regenerates dashboards,
   checks, and pushes; `--force` works with or without the word
   `commit`. The previous behaviour — no arguments printed usage —
   made the common case the one you had to read instructions for.
   Re-tested all three paths after the change.
-- 2026-07-31 **done and exercised**: `PseudoCoupHQ/hq.sh`
+- 2026-07-31 **done and exercised**: `PRIVATE/PseudoCoupHQ/hq.sh`
   built with check / dashboard / commit / list, checks blocking
   commits per the owner's ruling.
   - `check`, `dashboard`, `list`, no-args usage and unknown-subcommand
@@ -61,7 +61,7 @@ status: living
     `git_commit_push_all.sh` calling four real `git_commit_push.sh`
     scripts has never run end to end. That is the one part of the
     chain whose first real run will be the owner's. `check_plans.py` and `generate_dashboards.py` built
-  in `PlanPlan/framework/`; `render_plan.py` and
+  in `PRIVATE/PlanPlan/framework/`; `render_plan.py` and
   PROTOCOL.md §1 updated so `DASHBOARD.md` is grammar, not a stray.
 - 2026-07-31: the checker paid for itself on first run — six dangling
   cross-repo references in PseudoIR's SUPPORT files, all left by the
@@ -88,13 +88,13 @@ status: living
     text the two project trees carry as declared dependents of HQ —
     the check surfacing them is correct behaviour, not a defect to
     silence.
-- open, carried from `PseudoCoupHQ/plan_and_code.md` §6:
+- open, carried from `PRIVATE/PseudoCoupHQ/plan_and_code.md` §6:
   the renderer does not yet require `designation`. one line to add;
   waits for the project trees' conformance pass so it does not report
   every existing node as defective.
 - raised 2026-07-31 as "open, and sharper than first recorded",
   **closed 2026-08-01** (see the closing sub-bullet):
-  `DevComms/` was not a git repo, so
+  `PRIVATE/DevComms/` was not a git repo, so
   `LLM_communication_protocol.md` and `plan_and_code.md` were not
   version controlled anywhere.
   - first stated 2026-07-31 as "the authority is the only
@@ -113,20 +113,20 @@ status: living
   - upside, and the reason not to just replace them with copies:
     symlinks cannot drift. four real copies could, and keeping them
     in step would be a new job.
-  - `PseudoCoupHQ/DevComms/LLM_communication_protocol.md`
+  - `PRIVATE/PseudoCoupHQ/DevComms/LLM_communication_protocol.md`
     was briefly a real copy when HQ was founded; made a symlink
     2026-07-31 for consistency with the other three.
-  - the ruling asked for was: version control `DevComms/`
+  - the ruling asked for was: version control `PRIVATE/DevComms/`
     as its own repo, or move the authority into PseudoCoupHQ, or leave
     as is.
   - 2026-08-01 **done**: the owner ruled for its own repo and pushed it.
-    Verified on disk: `DevComms/` is a git repo with
+    Verified on disk: `PRIVATE/DevComms/` is a git repo with
     remote `github.com/<owner>/DevComms_root`, working tree
     clean, commit "DevComms founding: communication protocol,
     plan_and_code, vocabulary analysis." — so the authority the
     symlinks point at is now version controlled. `plan_and_code.md`
     is gone from DevComms, completing its recorded move to
-    `PseudoCoupHQ/plan_and_code.md`.
+    `PRIVATE/PseudoCoupHQ/plan_and_code.md`.
   - still true after the closure: cloning any one line repo alone
     yields a dangling protocol symlink, since the target resolves
     outside that repo. the difference is that the target now has a

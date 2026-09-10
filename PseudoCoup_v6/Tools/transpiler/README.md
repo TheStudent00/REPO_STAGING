@@ -1,11 +1,11 @@
 # transpiler (T3) — ingress framework increment
 
 The generalized four-stage ingress pipeline. Plan node:
-`PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/`
+`PRIVATE/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_1_transpiler/`
 (id `pcv6.tools.t3_transpiler`).
 
 - `ur_ast.py` — the Universal Rich AST node vocabulary
-  (transplanted from `PseudoCoup/pseudocoup/core/ur_ast.py`;
+  (transplanted from `PUBLIC/PseudoCoup/pseudocoup/core/ur_ast.py`;
   UI-specific nodes deliberately not carried yet). Every built node
   records its ledger id in `metadata["ledger_id"]`.
 - `ingest_source.py` — the framework: parse (T1) → census GATE
@@ -29,7 +29,7 @@ The generalized four-stage ingress pipeline. Plan node:
 Run acceptance:
 
 ```bash
-python3 -m pytest PseudoCoup_v6/Tools/transpiler/ -q
+python3 -m pytest PRIVATE/PseudoCoup_v6/Tools/transpiler/ -q
 ```
 
 A Rust ingestor increment was built here pointing at a retired

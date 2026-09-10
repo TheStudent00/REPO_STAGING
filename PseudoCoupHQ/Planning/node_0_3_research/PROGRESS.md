@@ -6,19 +6,19 @@ status: living
 # PROGRESS — research
 
 - 2026-08-12: node founded (the owner's ruling, PCv5 session — state
-  record `PseudoCoup_v5/DevComms/log_020_session_state_2026_08_12.md`).
-  `PseudoCoupHQ/Research/` created beside it.
+  record `PRIVATE/PseudoCoup_v5/DevComms/log_020_session_state_2026_08_12.md`).
+  `PRIVATE/PseudoCoupHQ/Research/` created beside it.
 - 2026-08-12: kind-signature-clustering landscape survey launched — fetch and
   compare `node-types.json` across rust, python, kotlin, dart, c,
   cpp; measure feature uniformity; report what clustering machinery
   would consume. done — report at
-  `PseudoCoupHQ/DevComms/log_008_kind_clustering_landscape.md`
+  `PRIVATE/PseudoCoupHQ/DevComms/log_008_kind_clustering_landscape.md`
   (log_007 was already taken).
 - 2026-08-12: kind-signature-clustering first pass built and validated — features.py /
   cluster.py / validate.py over five languages (kotlin held out); known
   overlap re-emerged partially (purity 0.685, 1 fully + 14 partially of 15
   ground-truth rows). Report at
-  `PseudoCoupHQ/DevComms/log_009_clustering_first_pass.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_009_clustering_first_pass.md`.
 - 2026-08-12: kind-signature-clustering second pass per the owner's three rulings — merge-tree
   spectrum replaces the single cut (spectrum.py + similarity_matrix.npz,
   clusters as queries), full-population hold-out validation against
@@ -26,7 +26,7 @@ status: living
   hand key demoted to secondary check, AUC 0.804), cluster_by_language.md +
   best_counterparts.json over all 800 kinds. Interpretation decisions 9 and
   10 dissolved, 9 remain. Report at
-  `PseudoCoupHQ/DevComms/log_010_clustering_spectrum.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_010_clustering_spectrum.md`.
 
 - 2026-08-12: dendrogram_explorer.html shipped (Research/kind_signature_clustering/): interactive icicle of the full merge tree, draggable threshold slice with live cluster count, entropy-colored cross-language merges, search+zoom. Export via export_tree.py -> merge_tree.json. See DevComms/log_012_dendrogram_explorer.md.
 - 2026-08-12: kind-signature-clustering enumeration survey (plan-of-record step 1) —
@@ -35,7 +35,7 @@ status: living
   quality signals and provisional category tags in
   `Research/kind_signature_clustering/grammar_inventory.json`; 31,858 named kinds total;
   25.3% of grammars are kotlin-like zero-role. Report at
-  `PseudoCoupHQ/DevComms/log_011_grammar_enumeration.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_011_grammar_enumeration.md`.
 - 2026-08-12: kind-signature-clustering plan-of-record step 2 (decision-6 counts fix)
   + archetype measurement — features v2 (log2-bucketed distinct-host counts
   on derived output positions; versioned `features_v2.json`): 711 of the
@@ -46,7 +46,7 @@ status: living
   dedup; matrix 487.1M -> 34.7M pairs, 14x); dense-over-archetypes with
   multiplicity weights recommended for step 3, sparse demoted to optional.
   Artifacts: `Research/kind_signature_clustering/{features_all.json,archetypes.json}`.
-  Report at `PseudoCoupHQ/DevComms/log_013_counts_and_archetypes.md`.
+  Report at `PRIVATE/PseudoCoupHQ/DevComms/log_013_counts_and_archetypes.md`.
 - 2026-08-12: kind-signature-clustering plan-of-record step 3 (full-ecosystem spectrum)
   — multiplicity-weighted average linkage over the 8,329 archetypes (exactly
   full-population UPGMA over 31,212 kinds; 34.7M-pair dense matrix, whole
@@ -58,7 +58,7 @@ status: living
   headlessly). Artifacts: `Research/kind_signature_clustering/{spectrum_all.npz,
   merge_tree_all.json,top_counterparts_all.json,holdout_validation_all.json,
   report_all.json,dendrogram_explorer_all.html}`. Report at
-  `PseudoCoupHQ/DevComms/log_014_ecosystem_spectrum.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_014_ecosystem_spectrum.md`.
 - 2026-08-12: kind-signature-clustering plan-of-record step 4 (basis report) — the
   spectrum cross-referenced against the intentions vocabulary (11 objects +
   A–J + form tier): all objects but `service call` empirically realized
@@ -69,7 +69,7 @@ status: living
   coverage incl. the kotlin zero-role evaluation (0.640 in ≥10-lang
   clusters, via shape-poverty affinity). Artifacts:
   `Research/kind_signature_clustering/{basis_xref.py,basis_xref_out.json}`. Report at
-  `PseudoCoupHQ/DevComms/log_015_basis_report.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_015_basis_report.md`.
 - 2026-08-17: kind_fuzz_clustering phases 1 and 2 — layer 3, python only.
   Probe design written down first as
   `Research/kind_fuzz_clustering/probe_design.md`, eleven numbered judgment
@@ -86,7 +86,7 @@ status: living
   operator NESTS over its plain form inside one language; `<>`/`print`/
   `exec` as statements survive in the grammar and refuse to compile.
   Phase 3 (the other ten) is gated on the owner's review. Report at
-  `PseudoCoupHQ/DevComms/log_024_layer3_python_fuzz.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_024_layer3_python_fuzz.md`.
 
 - 2026-08-18: the owner's note on egress polyfill, recorded verbatim
   for the record (design remark, not a ruling): "polyfill could
@@ -104,7 +104,7 @@ status: living
   census fold-back, and seven logs rewritten into the readable
   register.** Neither ran a probe; neither changed a number.
   - **Fold-back.** The five census pages in
-    `PseudoCoupHQ/Research/dominant_intentions/` were
+    `PRIVATE/PseudoCoupHQ/Research/dominant_intentions/` were
     hand-drafted 2026-08-13 and say on their face that every fact is
     UNVERIFIED — they were the harness's work order. Logs 024 to 037
     then answered them and the pages were never updated. Each page now
@@ -129,7 +129,7 @@ status: living
     missing**, and log 027's finding 11, log 029's decisions 1 to 11,
     log 031's decisions 18 to 30, log 032's eight numbered surprises
     and log 033's decisions 31 to 42 all survive at their numbers.
-    `bash PseudoCoupHQ/hq.sh check` reports 0 errors,
+    `bash PRIVATE/PseudoCoupHQ/hq.sh check` reports 0 errors,
     unchanged.
   - **Two things left open by choice.** Small internal
     inconsistencies were found in five of the seven logs and were
@@ -141,12 +141,12 @@ status: living
     fourteen cells against twelve columns and would not render; the
     two duplicated cells were dropped and no value changed.
   - Record:
-    `PseudoCoupHQ/DevComms/log_039_census_foldback_and_log_rewrites.md`.
+    `PRIVATE/PseudoCoupHQ/DevComms/log_039_census_foldback_and_log_rewrites.md`.
 - 2026-09-05: sub-node `arch_unit_oracle` (node_0_3_8) founded by the owner
   as a parallel line — compilers as unit subjects, our own Hub-like
   compiler as oracle, cross-language construction of units. Isolated
   from compiler_graph by folder, instance prefix and node. Founding
-  log `PseudoCoupHQ/DevComms/log_206_arch_unit_oracle_founding.md`. planned.
+  log `PRIVATE/PseudoCoupHQ/DevComms/log_206_arch_unit_oracle_founding.md`. planned.
 - 2026-09-06: RESTRUCTURED on the owner's ruling — each research project is
   its own realized sub-node holding its own sub-nodes, and this node
   becomes the master plan. Three projects: `intentions` (the five
@@ -160,7 +160,7 @@ status: living
   objective (dominant operators and types for the Hub), each
   project's contribution, the state table, the dependency table, the
   agreed order of work, the shared rulings and the open rulings.
-  Record: `PseudoCoupHQ/DevComms/log_212_research_restructure_and_master_plan.md`.
+  Record: `PRIVATE/PseudoCoupHQ/DevComms/log_212_research_restructure_and_master_plan.md`.
   done.
 - 2026-09-06: steps 1–3 of the master order opened in parallel on
   four Airlock instances, one implementer each, coordinator reviewing:
@@ -738,3 +738,220 @@ status: living
   bank's `certificates.json` are held out of git by the repo-daemon's
   high-entropy guard (sha256 strings); the `.md` is in git and the json
   rebuilds in a second. Verifier 22 claims, 0 differ; peak 123 MB.
+- 2026-09-10 (task ap6, log_255, on the tower; cut off once, resumed from
+  disk): ONE VERSIONED DRIVER. Task-name gates in the driver 9 → 0 (75
+  branches switched on a task label → 0; opcode-name branches: the one
+  `ret` of the carver); the driver's and each renderer's sha256 recorded
+  on every run and certificate; `handful_frozen.py` keeps the pre-strip
+  driver so the closed passes still reproduce. The 100% re-derivation
+  audit through the gate-free driver: 1,227 certified triples, 0 alarms.
+  Flag consumers rendered over EVERY attested setter cell: distinct
+  (consumer, setter) pairs 39 → 397, pair-level certificates 2,623 →
+  7,519; the audit's matcher now keys on the setter (its first pass
+  raised three false alarms by comparing `cmp gpr_mem 8` against `cmp
+  gpr_gpr 8`, same term text, different arrival contract — the term text
+  does not carry the contract, an owed record field). The lookup carries
+  holders: hub1's five unusable entries matched at a real holder, 5 of 5.
+  Re-attempts by code version. The three readings on all four: strict 94
+  cells / 49.4%, destination-only 147 / 73.1%, corpus-needed 137 / 68.0%;
+  all five now equals all four on every reading. Delta pass 2,499 runs /
+  2,172 s — larger than a full pass because a consumer is now one run per
+  posed setter; 1,053 newly certified. Owed: `hub.gate_two_bodies` passes
+  no answer width (one argument); the sweep seeds no consumer row at the
+  setter's width for 102 of hub2's 111 pair holes (`model_translate`).
+  Verifier 30 claims, 0 differ.
+- 2026-09-10 (task ref1, log_256, on the tower): LEVEL 0 CHECKED AGAINST AN
+  INDEPENDENT READING — the K-framework x86-64 semantics (Strata's learned
+  formulas, chip-tested; NCSA licence; read from `/sources`, never copied).
+  A grammar over their ~30-function rule language → z3 per written place;
+  their variant matched to our (mnem, shape, key_width) by the rule HEAD
+  (the file names are in the opposite operand order); Intel's `undefMInt`
+  made a free symbol and the undefined REGION computed. Of our 5,912
+  triples (the table on `key_width`), 368 are reached by their reading:
+  180 agree on every compared place (45,058 attested rows), 144 disagree
+  on at least one (28,523 rows), 44 have nothing comparable (float and
+  divide rules use functions the parser lacks). 1,779 places compared:
+  760 agree, 383 disagree, 0 unknown at 3 s, 197 undefined, 439 refused.
+  THE 383 DISAGREEMENTS REST ON FOUR LINES OF `reference.py`: (1)
+  `full64` zero-extends EVERY sub-64-bit register write, while the
+  hardware (and their reading) keeps the upper bits at 8 and 16 — 116
+  places, 27 mnemonics, `setne gpr_one 8` alone attested by 10,335 rows;
+  (2) `build_carry_binary` (adc/sbb) leaves the flags without the carry
+  it read — 204 places, `sbb` 2,510 rows; (3) `condition_table.cond_to_z3`
+  computes every condition on L−R, right for sub/cmp, wrong-shaped after
+  `add`/`neg`; (4) `sub`/`sbb` are missing from `WIDTH_IS_NOT_A_SUFFIX`,
+  so `sub %esi,(%rax)` is modelled at 8 bits — 12 places. Undefined
+  regions per Intel: `AF` after and/or/xor/test; `AF OF PF SF` after bt;
+  all six after div/idiv; `AF PF SF ZF` after imul/mul; the shifts'
+  `OF`, and `CF OF` on the out-of-range count. Also: the model table on
+  disk has 5,912 triples, not the 8,703 of log_236 (re-keyed by m1b), and
+  ap5's symbolic-immediate spellings have no rows in it (never re-swept).
+  Verifier 19 claims, 0 differ; 4.9 s, 64 MB. NOTHING DECIDED: the
+  reference is the line's ground truth; its correction is the owner's ruling.
+- 2026-09-10: task ref2 STARTED on the owner's word ("oh yeah, go"): the four corrections to `reference.py`/`condition_table.py`, each proved against the K reading, then the table, term store, pool and bank re-derived beside the old.
+- 2026-09-10 (task t2, log_257, on the tower): THE SECOND TIER — construct
+  what a target lacks from `& | ^ ~`, a conditional and variables over the
+  target's widest word (128 on c/cpp/rust, 64 on go/swift), smallest width
+  first; eight schemas general in (width, word); 199 schema obligations
+  to z3, 0 disproved; 147 Lean theorems proved. Of 149 width/kind
+  refusals over 51 cells: 24 places constructed, 14 PROVED — `adc`,
+  `sbb`, `shld`, `shrd` at 64 on go and swift — every one discharged by
+  the schema's lemma inside Lean's kernel (`lemma+gate` 14, `sat` 0,
+  `canonical` 0 by construction: a constructed term never prints the
+  wide operation's text). Bank 19,455 → 24,758 certificates; destination
+  reading on all four 147 → 154 cells (73.1% → 75.2%), strict 94 → 96,
+  corpus-needed 137 → 141. THE COMPILER COLLAPSED NONE OF THEM: LANDED 0
+  of 14, bodies 4–17 instructions against the one the cell names (one
+  swift `mul` collapsed but its equality is not discharged, so not
+  banked) — against 31% of term-rendered emulations landing on their own
+  opcode (ap6): the compiler's peepholes see ordinary arithmetic, not a
+  composition equal to a primitive. What blocks the rest, each a named
+  thing: (1) the x87 family, 129 of 149, refused at the ARRIVAL/ANSWER
+  contract — an 80-bit value must arrive as integer words (a contract
+  statement, in the spirit of the 2026-09-09 ruling); (2) the divider,
+  the softfloats and every schema of that shape cannot be RENDERED: the
+  renderers and `term_to_lean.py` print one nested expression with no
+  named intermediate, so a step reading its previous step three times
+  is written 3^width times — naming intermediates opens all of them at
+  once; (3) the product's high half has no proof at any width (a miter of
+  two multipliers; the algebraic statement is in `construct/lean/OWED.md`);
+  (4) the tier's source is not part of `code_version`, which is why t2
+  re-ran a full pass (669 runs) instead of a delta. Verifier 0 differ.
+- 2026-09-10 (task rv1 started, Opus, on the tower beside ref2): RISC-V as
+  a second architecture, an exploration not a pivot. The image now carries
+  the rust riscv64gc target, Sail 0.20.2 and the sail-riscv C simulator
+  `sail_riscv_sim` (Isla dropped: it builds only against Sail's unreleased
+  master). rv1 = ten handful units compiled for riscv64 with clang and go,
+  carved by llvm-objdump; level 0 for RV64IM in two readings (builders in
+  `reference.py`'s shape; the ratified Sail model run concretely at edge
+  and random points, ≤20,000 per instruction); the claim measured (x86
+  term against RISC-V term by z3); the surface counted per layer. t3
+  (renderer intermediates, x87 as two words, tier in code_version) waits
+  for ref2's corrected terms.
+- 2026-09-10 (task rv1 finished, Opus, on the tower): **the RISC-V
+  exploration has its answer, and it is a number.** Level 0 for RISC-V is
+  free and it agrees with our own reading: 44 instructions, 860,304 points,
+  zero disagreements between `riscv_reference.py` and the ratified Sail
+  model's simulator (a check at points, never an equality). Of the ten
+  handful units compiled for riscv64, 7 of 10 terms are IDENTICAL to their
+  x86 twin after `Term.normalize` and 3 differ on two causes — the two
+  ABIs' narrow-argument extension rule, and x86's trapping division against
+  RISC-V's total one. The per-architecture surface is 2,644 lines, 44% of it
+  the lifter; the term, `Term.normalize`, the term store, the model table
+  and the probe corpus all transferred unchanged, which is the measured form
+  of the owner's hypothesis that the library is keyed by MAPPINGS and not by
+  opcode names. A planning sub-node for the RISC-V line is wanted and is
+  the owner's to create. Task rv2 (transfer by term identity, certificates
+  re-verified on riscv64) is unblocked. Evidence:
+  `PRIVATE/PseudoCoupHQ/DevComms/log_258_task_rv1_riscv_as_a_second_architecture.md`.
+- 2026-09-10 (task rv1 closed, log_258): RISC-V handful. Ten cells' units
+  compiled for riscv64 (clang, go) and carved: `add`→`c.add`, `imul`→
+  `mulw`, `sar`→`sraw`, `idiv`→`divw`, `cmovne`→`czero.eqz`, `setne`→
+  `xor; sltu`, `addss`→`fadd.s`, `cvtsi2sd`→`fcvt.d.w`. Level 0 for
+  RV64IM in `riscv_reference.py` (44 mnemonics, 858 variants) against the
+  ratified Sail model run concretely: 860,304 points, 0 disagree (A CHECK
+  AT POINTS, NOT AN EQUALITY); 54 refused by name (loads/stores/branches
+  19, float family 34, auipc 1). THE CLAIM: of 10, IDENTICAL after
+  `Term.normalize` 7, DIFFER 3, no corpus unit 1 (the `sub` immediate cell:
+  the probe corpus never puts a literal on an operand). The 3 differ for
+  two named causes, both contract, neither meaning: (A) the ABI's narrow-
+  argument rule — x86 reads 32 bits of an int32 argument where riscv64's
+  ABI sign-extends to 64 (`setne`, `cmovne` units); (B) `idiv` traps on a
+  zero divisor where `divw` defines the answer. THE SURFACE: 5 files,
+  2,644 lines (2,174 code): lifter 1,174 (44% of everything), carve 291,
+  convention 326, attestation 303, level-0 check 550. Transferred
+  untouched: the term store, the model table, `Term.normalize`, the bank,
+  the proofs. Flags: no riscv64 glibc headers in the image
+  (`-nostdlibinc`); a planning sub-node for RISC-V is wanted (the owner's to
+  create). Tally 7 MATCHES / 2 UNVERIFIABLE (prose) / 0 DIFFERS; guard
+  PASS on all seven json. rv2 (the transfer by term identity) starts now,
+  beside ref2.
+
+- **2026-09-10 — task rv2 (arch_unit_oracle): the polyfill library's transfer
+  to a second architecture, measured.** THE HYPOTHESIS, the owner's own words: *"if
+  we already know what is proven in x86 ... it should also be true in RISC-V
+  ... it should shrink the workload substantially."* MEASURED: of the 255
+  RISC-V cells, **161 (63.1%) have an x86 cell that computes the same term at
+  the operation's own width**, so the loop had to be run on only 94 (36.9%) —
+  that is the shrinkage the hypothesis asked for. **Every certificate that
+  compiled and walked was PROVED and none was disproved: 103 of them, plus 434
+  interpreted certificates that transfer as they are.** What is smaller than
+  the twin count is what ACTUALLY arrived: only 34 cells had a twin the bank
+  holds a proof for, because the x86 loop has itself proved only part of its
+  own table — a limit on the x86 side, not on the transfer. The three
+  readings of the polyfill-complete set COINCIDE on RISC-V (74 cells) because
+  the architecture has no flags register. Two contract differences, both
+  findings and neither a meaning difference: a 32-bit result is sign-extended
+  into a riscv64 register and zero-extended into an x86 one (20 of the 103
+  proofs hold at the operation's width and not at the whole register), and
+  x86's `idiv` traps where RISC-V's divides are total. Task ref2 is correcting
+  `reference.py` in the same hours, so rv2 read the PRE-correction reference
+  ref2 kept beside its work and reproduced the x86 table's own text on 8,403
+  of 8,403 place rows; when ref2's corrected model table lands, `twins.json`
+  must be re-run against it. Log 259; artifacts under
+  `PRIVATE/PseudoCoupHQ/Research/oracle/riscv/`.
+- 2026-09-10 (task rv2 closed, log_259): THE TRANSFER of the proved
+  library to riscv64, measured. RISC-V's own model table has 255 cells
+  with a written place. A cell has an x86 TWIN when the two terms are
+  equal: 102 (40.0%) at the whole written place, 161 (63.1%) at the
+  cell's own width — the gap is one architecture fact, RISC-V's 32-bit
+  forms sign-extend into the whole register where x86's zero-extend.
+  INHERITANCE: 734 x86 certificates whose cell has a twin were compiled
+  for riscv64 and gated: 103 PROVED, 0 DISPROVED, 0 UNDECIDED (c 32, go
+  71); 434 interpreted agreements transfer as they are; 197 refused for
+  named installs (rust: no std for the freestanding target, 61; c: no
+  riscv64 `string.h`, 15; cpp and swift not attempted). THE LOOP over
+  the 94 untwinned cells: 188 runs, 135 proved, 82 distinct cells. All
+  told 116 of 255 cells (45.5%) hold a proved riscv64 emulation. The
+  three readings coincide on RISC-V (no flags register: one place per
+  cell): 74 cells proved on both compiled targets. Side results: the
+  corpus compiled for riscv64 refuses exactly the probes the x86 build
+  refuses (0 disagreements); 31 riscv64 singletons attested. Flags: the
+  run walked with the PRE-correction x86 reference (hash recorded;
+  8,403 of 8,403 table rows reproduce under it) — twins re-run when
+  ref2's table lands; clang 21 emits Zba/Zbb/Zbs (`c.zext.w add.uw c.mul
+  bseti fsgnjn.d`, 27 rows) which the RISC-V lifter has no entry for;
+  the 734 riscv64 certificates sit in `riscv/certificates_riscv64.jsonl`
+  with `arch: riscv64`, not yet in the bank (ref2 was writing it). Tally
+  7 match / 0 differ / 13 prose. FOR DEE: whether the Hub's dictionary
+  key carries the arrival contract's extension rule (20 of 103 inherited
+  proofs hold at the operation's width, not the whole register).
+- 2026-09-10 (task rv3 PART DONE, log_260): the two rows of the RISC-V
+  transfer that need nobody else. THE LIFTER's missing vocabulary was
+  settled by EVIDENCE: every certificate source on a compiled target was
+  built for riscv64 and carved (244 of 244, zero build refusals) and the
+  mnemonics with no entry counted — `c.zext.w` 12, `add.uw` 8, `c.mul` 6 —
+  with `bseti` and `fsgnjn.d` from rv2's own loop store, five in all, and
+  not one row more than the bodies spell. Each was written in the
+  reference's own shape and checked against the ratified Sail model at
+  points before use: 5 rows, 68 variants, 99,968 points, 99,968 agree, 0
+  disagree, so 0 defects. One finding on the way: the model REFUSED the
+  float row until the harness switched the float unit on (`mstatus.FS` is
+  Off at reset), which is the model being right, not the reference being
+  wrong. THE INHERITANCE re-run with the image's new riscv64 standard
+  libraries: 244 PROVED of 734 (was 103), 0 DISPROVED, 0 UNDECIDED, 56
+  refused (was 197). Per target: c 58 (was 32 proved / 15 build-refused /
+  11 walk-refused), cpp 54 (was not attempted), go 71, rust 61 (was 61
+  build-refused), swift 56 not attempted — the image carries no `swiftc`
+  at all, which is wider than "no riscv64 swift". Of the 244 proved at the
+  cell's own width, 174 also hold at the whole register and 70 do not: the
+  extension rule again. Cells reached by inheritance 35 (was 34); union
+  with rv2's own loop 117 of 255, WITH ITS READING — rv2's loop ran under
+  the pre-correction twins and the old lifter. Closed rv2's flags 2, 3, 4
+  and 7. WAITS FOR ref2, whose DevComms log does not exist: twins against
+  the corrected model table, the riscv64 certificates into the bank with
+  `arch` (bank before: 24,758 records, every one with `arch` absent), and
+  the loop on the new delta. FOR DEE: the extension-rule ruling, and
+  whether swift stays out of the riscv64 column.
+- 2026-09-10 (ruling, the owner; task t4 started, Opus, on the tower beside
+  ref2): THE GENERAL CONSTRUCTION IS THE TOP PRIORITY. "it is meant to
+  be capable of proving as a guarantee." What t2 built was eight
+  schemas for the refused shapes, not the method; the method is one
+  construction per OPERATION KIND (add, mul, div, rem, the shifts, the
+  compares, extend/extract/concat, the float kinds as softfloat), general
+  in width and word, proved once, composed over any term by a renderer
+  that binds every node to a named variable, the native operator winning
+  where it exists. Deliverable: every cell without a proof in a row with
+  a named cause, on both architectures; the readings beside t2's and
+  rv3's; the collapse column; where the gate runs out. t3 shrinks to the
+  x87 arrival and the code version; rv3b follows.

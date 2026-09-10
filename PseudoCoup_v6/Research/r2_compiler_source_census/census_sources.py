@@ -1,12 +1,12 @@
 """Census the compiler sources the Rust/C++ ingestors will ingest, using T1.
 
-R2 of PseudoCoup_v6/Planning/node_0_1_research/.
+R2 of PRIVATE/PseudoCoup_v6/Planning/node_0_1_research/.
 Parses each subject file with the pinned grammars from
-PseudoCoup_v6/Tools/ledgerer/tree_sitter/, writes one
+PRIVATE/PseudoCoup_v6/Tools/ledgerer/tree_sitter/, writes one
 deterministic census JSON per file into outputs/, plus a summary
 table. Run from anywhere:
 
-    python3 PseudoCoup_v6/Research/r2_compiler_source_census/census_sources.py
+    python3 PRIVATE/PseudoCoup_v6/Research/r2_compiler_source_census/census_sources.py
 """
 import glob
 import os
@@ -19,7 +19,7 @@ sys.path.insert(0, T1)
 from parse_source import parse_file          # noqa: E402
 from record_coverage import census, render_census  # noqa: E402
 
-P5 = os.path.expanduser("PseudoCoup_v5")
+P5 = os.path.expanduser("PRIVATE/PseudoCoup_v5")
 # The support crate here belonged to a retired reference backend's
 # assembler crate (since removed as mis-aimed, see the tools PROGRESS);
 # resolved by glob rather than a hardcoded name so this historical

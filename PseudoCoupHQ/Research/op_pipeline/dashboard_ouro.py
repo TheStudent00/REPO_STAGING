@@ -12,7 +12,7 @@ person for the artifact folder, reads the files with the File System
 Access API, and does the join in JavaScript (`dashboard_join.js`).
 
 `dashboard_ouro.html` is the same research, rendered by python inside
-`Ourobrowser`, whose scripting language is python and not
+`PUBLIC/Ourobrowser`, whose scripting language is python and not
 JavaScript.  Python has the filesystem natively, so:
 
   * there is no folder picker, no IndexedDB handle, no opaque-origin

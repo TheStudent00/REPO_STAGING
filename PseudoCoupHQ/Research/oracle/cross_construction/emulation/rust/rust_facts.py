@@ -3,7 +3,7 @@
 its own emission, for every rule the rust renderer will need.
 
 Node: hq.research.arch_unit_oracle.cross_construction
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md`,
 FROZEN for term-level composition; task o7 opened the emulation route
 and this task extends it to a second target language, which does not
 unfreeze the node).

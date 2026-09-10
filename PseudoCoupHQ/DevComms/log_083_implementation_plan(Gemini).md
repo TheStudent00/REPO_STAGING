@@ -23,17 +23,17 @@ We will create a set of bash scripts (modeled after the CPython `interp_*_build.
 
 ### 1. Ruby Interpreter Trace Generation (`interp_ruby.json`)
 
-#### [NEW] [interp_ruby_build.sh](file://Airlock/agent/drop/interp_ruby_build.sh)
+#### [NEW] [interp_ruby_build.sh](file://PUBLIC/Airlock/agent/drop/interp_ruby_build.sh)
 - **Clone & Configure**: Clone `ruby/ruby` repository (pin to a stable version, e.g., `v3.3.0`).
 - **Anchor Build**: Build with `./configure optflags="-O0 -g" cflags="-fwrapv"` for the unoptimized slice.
 - **Ship Build**: Build with `./configure optflags="-O3 -g"` for the optimized release slice.
 - **Coverage Build**: Build with `cflags="--coverage -O0 -g -fwrapv"` and `ldflags="--coverage"`.
 
-#### [NEW] [interp_ruby_dispatch.sh](file://Airlock/agent/drop/interp_ruby_dispatch.sh)
+#### [NEW] [interp_ruby_dispatch.sh](file://PUBLIC/Airlock/agent/drop/interp_ruby_dispatch.sh)
 - **Probes**: Write a baseline loop script and a probe script calling `a + b` with small integers 100,000 times.
 - **Measurement**: Run the probe under the coverage build, parse the `gcov` outputs for the `numeric.c` (or `fixnum`) handlers, and calculate the delta (which should strictly equal 100,000).
 
-#### [NEW] [fold_interp_ruby.py](file://PseudoCoupHQ/Research/op_pipeline/fold_interp_ruby.py)
+#### [NEW] [fold_interp_ruby.py](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/fold_interp_ruby.py)
 - **Extraction**: Extract the `objdump` hex and mnemonics for the targeted C-handler (e.g., `fix_plus`).
 - **Folding**: Output the final `interp_ruby.json` mimicking the exact schema expected by our feeder.
 
@@ -41,15 +41,15 @@ We will create a set of bash scripts (modeled after the CPython `interp_*_build.
 
 ### 2. PHP Interpreter Trace Generation (`interp_php.json`)
 
-#### [NEW] [interp_php_build.sh](file://Airlock/agent/drop/interp_php_build.sh)
+#### [NEW] [interp_php_build.sh](file://PUBLIC/Airlock/agent/drop/interp_php_build.sh)
 - **Clone & Configure**: Clone `php/php-src`.
 - **Anchor/Ship/Coverage Builds**: Configure with `./buildconf` and `./configure CFLAGS="--coverage -O0 -g"` etc.
 
-#### [NEW] [interp_php_dispatch.sh](file://Airlock/agent/drop/interp_php_dispatch.sh)
+#### [NEW] [interp_php_dispatch.sh](file://PUBLIC/Airlock/agent/drop/interp_php_dispatch.sh)
 - **Probes**: Create a PHP script executing `$a + $b` in a tight loop.
 - **Measurement**: Target the Zend engine operators (`Zend/zend_operators.c` e.g., `add_function`) using `gcov`.
 
-#### [NEW] [fold_interp_php.py](file://PseudoCoupHQ/Research/op_pipeline/fold_interp_php.py)
+#### [NEW] [fold_interp_php.py](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/fold_interp_php.py)
 - **Extraction**: Object dump the identified Zend operator.
 - **Folding**: Output `interp_php.json`.
 
@@ -57,15 +57,15 @@ We will create a set of bash scripts (modeled after the CPython `interp_*_build.
 
 ### 3. JavaScript (V8) Trace Generation (`interp_js.json`)
 
-#### [NEW] [interp_js_build.sh](file://Airlock/agent/drop/interp_js_build.sh)
+#### [NEW] [interp_js_build.sh](file://PUBLIC/Airlock/agent/drop/interp_js_build.sh)
 - **Clone & Configure**: Fetch `v8/v8` using Google's `depot_tools`.
 - **Builds**: Compile using `gn gen` and `ninja` with `v8_enable_disassembler=true` and `is_debug=true` vs `is_debug=false` for Ship/Anchor variants.
 
-#### [NEW] [interp_js_dispatch.sh](file://Airlock/agent/drop/interp_js_dispatch.sh)
+#### [NEW] [interp_js_dispatch.sh](file://PUBLIC/Airlock/agent/drop/interp_js_dispatch.sh)
 - **Probes**: Mechanically generate JS test vectors from `operator_arity.json`.
 - **Measurement**: Execute the probes using the `d8` shell with V8's `--trace-turbo` and `--print-opt-code` to dump the TurboFan flow graphs, enabling us to formally trace node lowering and register allocation without guessing.
 
-#### [NEW] [fold_interp_js.py](file://PseudoCoupHQ/Research/op_pipeline/fold_interp_js.py)
+#### [NEW] [fold_interp_js.py](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/fold_interp_js.py)
 - **Extraction**: Parse the TurboFan intermediate flow graph and the resulting JIT stub to construct a formal path from AST variable to register.
 - **Folding**: Output `interp_js.json`.
 
@@ -73,15 +73,15 @@ We will create a set of bash scripts (modeled after the CPython `interp_*_build.
 
 ### 4. C# (CoreCLR) Trace Generation (`interp_cs.json`)
 
-#### [NEW] [interp_cs_build.sh](file://Airlock/agent/drop/interp_cs_build.sh)
+#### [NEW] [interp_cs_build.sh](file://PUBLIC/Airlock/agent/drop/interp_cs_build.sh)
 - **Clone & Configure**: Clone `dotnet/runtime`.
 - **Builds**: Build the CoreCLR runtime (and RyuJIT) using the standard `build.sh` script in Checked and Release modes.
 
-#### [NEW] [interp_cs_dispatch.sh](file://Airlock/agent/drop/interp_cs_dispatch.sh)
+#### [NEW] [interp_cs_dispatch.sh](file://PUBLIC/Airlock/agent/drop/interp_cs_dispatch.sh)
 - **Probes**: Mechanically generate C# assemblies from `operator_arity.json`.
 - **Measurement**: Execute with `COMPlus_JitDump=*` and `COMPlus_JitDisasm=*` to extract RyuJIT's lowering phases and the final native code.
 
-#### [NEW] [fold_interp_cs.py](file://PseudoCoupHQ/Research/op_pipeline/fold_interp_cs.py)
+#### [NEW] [fold_interp_cs.py](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/fold_interp_cs.py)
 - **Extraction**: Parse RyuJIT's lowering logs to trace the argument flow into final registers.
 - **Folding**: Output `interp_cs.json`.
 
@@ -89,15 +89,15 @@ We will create a set of bash scripts (modeled after the CPython `interp_*_build.
 
 ### 5. Dart VM Trace Generation (`interp_dart.json`)
 
-#### [NEW] [interp_dart_build.sh](file://Airlock/agent/drop/interp_dart_build.sh)
+#### [NEW] [interp_dart_build.sh](file://PUBLIC/Airlock/agent/drop/interp_dart_build.sh)
 - **Clone & Configure**: Clone `dart-lang/sdk`.
 - **Builds**: Build the Dart VM using `tools/build.py` (requires fetching dependencies via `gclient`).
 
-#### [NEW] [interp_dart_dispatch.sh](file://Airlock/agent/drop/interp_dart_dispatch.sh)
+#### [NEW] [interp_dart_dispatch.sh](file://PUBLIC/Airlock/agent/drop/interp_dart_dispatch.sh)
 - **Probes**: Mechanically generate Dart scripts from `operator_arity.json`.
 - **Measurement**: Run the Dart VM with `--print-flow-graph-optimized` and `--disassemble` to capture the intermediate graph and map arguments to registers.
 
-#### [NEW] [fold_interp_dart.py](file://PseudoCoupHQ/Research/op_pipeline/fold_interp_dart.py)
+#### [NEW] [fold_interp_dart.py](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/fold_interp_dart.py)
 - **Extraction**: Parse the Dart VM flow graph to prove operand mappings.
 - **Folding**: Output `interp_dart.json`.
 
@@ -105,11 +105,11 @@ We will create a set of bash scripts (modeled after the CPython `interp_*_build.
 
 ### 6. Feeder Integration
 
-#### [MODIFY] [interp_feeder.py](file://PseudoCoupHQ/Research/op_pipeline/interp_feeder.py)
+#### [MODIFY] [interp_feeder.py](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/interp_feeder.py)
 - Expand the `FeederConfig` to iterate over all targets (Ruby, PHP, JS, C#, Dart).
 - Map all identified handlers to the standard operator `+` (`n=1`) using standard ABIs (e.g., `sysv`).
 
-#### [MODIFY] [sem_anchored.py](file://PseudoCoupHQ/Research/op_pipeline/sem_anchored.py)
+#### [MODIFY] [sem_anchored.py](file://PRIVATE/PseudoCoupHQ/Research/op_pipeline/sem_anchored.py)
 - Ensure all languages are added to the active `LANGS` list for automated PyVEX and Z3 lifting during the pipeline execution.
 
 ## Verification Plan

@@ -123,7 +123,7 @@ artifact.
 ## 2.6 Task 82 — Airlock's cross-instance view, and the dashboard's tabs
 
 ```
-$ grep -n "def known_instances\|def other_busy_instances_line" Airlock/airlock
+$ grep -n "def known_instances\|def other_busy_instances_line" PUBLIC/Airlock/airlock
 223:def known_instances(paths):
 266:def other_busy_instances_line(paths):
 $ grep -n "retireDraftStats" Research/op_pipeline/dashboard_pane5.js | head -1
@@ -235,7 +235,7 @@ exists.
 # 4. `check_plans.py`, pasted
 
 ```
-$ python3 PlanPlan/framework/check_plans.py PseudoCoupHQ/Planning
+$ python3 PRIVATE/PlanPlan/framework/check_plans.py PRIVATE/PseudoCoupHQ/Planning
 ...
 [WARN] edge-register: `super_node`/`sub_nodes` missing on 14 of 69 nodes (PROTOCOL §1, 2026-08-02; brought in chain by chain, not by a sweep)
     - PseudoCoupHQ/Planning: 14 of 69

@@ -3,7 +3,7 @@
 arch-opcode model table.  Ten cells, two targets, twenty runs.
 
 Node: hq.research.arch_unit_oracle
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08).
 
 THE OBJECTS, one sentence each, in relation.
@@ -353,7 +353,7 @@ RESULTS_G1C = os.path.join(HERE, "handful3c.json")
 REPORT_G1C = os.path.join(HERE, "handful3c.md")
 SRC_G1C = os.path.join(HERE, "src3c")
 PRIMITIVE_G1C = os.path.join(HERE, "handful3c_primitive.json")
-HOST_FOLDER = ("PseudoCoupHQ/Research/oracle/"
+HOST_FOLDER = ("PRIVATE/PseudoCoupHQ/Research/oracle/"
                "cross_construction/emulation/handful")
 
 # WHICH TASK IS RUNNING, and what it changes. `h1` is the run of record

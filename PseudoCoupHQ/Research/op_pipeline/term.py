@@ -2,7 +2,7 @@
 """term.py -- THE NODE `term`, node 0_3_5_6 of the compiler graph.
 
 CORE:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_6_term/CORE_0_3_5_6_term.md`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_6_term/CORE_0_3_5_6_term.md`
 and its four sub-node COREs: `transcribe`, `normalize`, `census`,
 `render_back`.
 

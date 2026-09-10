@@ -19,10 +19,10 @@ whose visibility changed goes where the query says.
 | what | fix |
 |---|---|
 | `~/.config/repo-daemon/config.json` roots and excludes; the daemon's discovery depth (check `repo_daemon.py`: if it lists one level below each root, add `PUBLIC` and `PRIVATE` as roots; the REPO_STAGING exclude glob moves with it) | edit, `systemctl --user restart repo-daemon`, then `repo-daemon repos` pasted: every repo found exactly once |
-| `Airlock/mounts.conf` (host side of every bind) | rewrite paths; the CONTAINER side (`PseudoCoupHQ`, `/sources`) stays exactly as it is, so every command inside a lane and every verifier claim keeps working |
+| `PUBLIC/Airlock/mounts.conf` (host side of every bind) | rewrite paths; the CONTAINER side (`PseudoCoupHQ`, `/sources`) stays exactly as it is, so every command inside a lane and every verifier claim keeps working |
 | `remote_lane.sh`: `AIRLOCK_REMOTE_ROOT=Programming/Airlock` and every `sync-to` / `sync-back` relative path | the tower mirrors the SAME layout: move the tower's `<repo>` into `PUBLIC/` and `PRIVATE/` over ssh with `mv` (never `rm`), rewrite the tower's `mounts.conf`, re-create its instances (`down` then `up` for each that will run again; the default `sandbox` included) |
-| `REPO_STAGING/stage.sh` SOURCES paths | rewrite |
-| `PseudoCoupHQ/Research/LAW.md`, `CLAUDE.md`, `DevComms/note_server_session_start_here.md`, the briefs under `Research/briefs/` | rewrite the host paths; container paths unchanged |
+| `PUBLIC/REPO_STAGING/stage.sh` SOURCES paths | rewrite |
+| `PRIVATE/PseudoCoupHQ/Research/LAW.md`, `CLAUDE.md`, `DevComms/note_server_session_start_here.md`, the briefs under `Research/briefs/` | rewrite the host paths; container paths unchanged |
 | the systemd unit `repo-daemon.service` | check its `WorkingDirectory`/paths; rewrite if any |
 | `~/.claude-home-<user>-Programming-<repo>/` memory and session directories, keyed by the working directory | for every repo that moves, COPY (not move) its directory to the new key (`-home-<user>-Programming-PUBLIC-<repo>` / `-home-<user>-Programming-PRIVATE-<repo>`), so the next session opened in the new path finds its memory; leave the old directory in place |
 | symlinks at the old paths | NONE: the daemon would discover a repo twice through a symlink |

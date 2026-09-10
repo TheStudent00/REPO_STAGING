@@ -20,7 +20,7 @@ Initialized.
   fixed two defects in `interp/interp_check.py` (an unsanitised `.` or `-`
   in a rendered function name, masked on csharp alone by a reused build
   folder's stale binary) — see the autopoly node's PROGRESS.md and
-  `PseudoCoupHQ/DevComms/log_250_task_ex2_the_interpreted_loop.md`
+  `PRIVATE/PseudoCoupHQ/DevComms/log_250_task_ex2_the_interpreted_loop.md`
   for the full account; nothing here duplicates it.
 
 - 2026-09-09: task ex1 — THE FIRST TIME THIS NODE'S LANGUAGES ARE RUN
@@ -52,7 +52,7 @@ Initialized.
   ("arch-units on disk: 0", "route status: designed only"). Building a
   reader for those formats is a new instrument and is the
   coordinator's. Report:
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand1.md`
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand1.md`
   §4 and §5. Log:
-  `PseudoCoupHQ/DevComms/log_248_task_ex1_cpp_and_the_interpreted_check.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_248_task_ex1_cpp_and_the_interpreted_check.md`.
   Status: closed.

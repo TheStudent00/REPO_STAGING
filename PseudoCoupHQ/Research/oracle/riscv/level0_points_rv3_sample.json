@@ -1,0 +1,336 @@
+{
+ "meta": {
+  "abort_name": "ABORT_MEMORY_RV1",
+  "edge_values": 192,
+  "march_for_the_rv1_rows": "rv64gc_zicond",
+  "march_for_the_rv3_rows": "rv64gc_zba_zbb_zbs_zcb_zicond",
+  "memory_ceiling_mb": 6144,
+  "peak_rss_mb": 47.5,
+  "point_cap_per_mnem": 200,
+  "reset_address": "0x80000000",
+  "rows_added_by_task_rv3": [
+   "add.uw",
+   "bseti",
+   "c.mul",
+   "c.zext.w",
+   "fsgnjn.d"
+  ],
+  "simulator": "/usr/local/bin/sail_riscv_sim",
+  "task": "rv1",
+  "this_is": "A CHECK AT POINTS, NOT AN EQUALITY",
+  "what": "the RISC-V reference's term for each base-integer instruction, evaluated at concrete points, against the ratified Sail model's own simulator run over a bare-metal program executing that instruction at the same points"
+ },
+ "refused_by_name": [
+  {
+   "cause": "its second input is the program counter, which this harness cannot present as an input",
+   "mnem": "auipc"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "beq"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "bge"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "bgeu"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "blt"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "bltu"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "bne"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fadd.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fadd.s"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.d.l"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.d.lu"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.d.s"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.d.w"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.d.wu"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.s.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.s.l"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.s.lu"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.s.w"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fcvt.s.wu"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fdiv.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fdiv.s"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "feq.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "feq.s"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fld"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fle.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fle.s"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "flt.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "flt.s"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "flw"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fmul.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fmul.s"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fmv.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fmv.d.x"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fmv.s"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fmv.w.x"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fmv.x.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fmv.x.w"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fsd"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fsub.d"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fsub.s"
+  },
+  {
+   "cause": "the brief's section 3 names the base integer set; this instruction is in the reference because the handful's float bodies spell it",
+   "mnem": "fsw"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "jal"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "jalr"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "lb"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "lbu"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "ld"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "lh"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "lhu"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "lw"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "lwu"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "sb"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "sd"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "sh"
+  },
+  {
+   "cause": "its effect is not a value the harness can store from a register: the brief's shape is one instruction between loads of its inputs and a store of its outputs",
+   "mnem": "sw"
+  }
+ ],
+ "rows": [
+  {
+   "agree": 200,
+   "disagree": 0,
+   "examples": [],
+   "homes": {
+    "destination": "a2",
+    "first": "a0",
+    "mode": "integer",
+    "second": "a1"
+   },
+   "march": "rv64gc_zba_zbb_zbs_zcb_zicond",
+   "mnem": "add.uw",
+   "outcome": "AGREES_AT_EVERY_POINT",
+   "peak_rss_mb": 47.2,
+   "points": 200,
+   "unevaluated": 0,
+   "variants": 1
+  },
+  {
+   "agree": 192,
+   "disagree": 0,
+   "examples": [],
+   "homes": {
+    "destination": "a2",
+    "first": "a0",
+    "mode": "integer",
+    "second": "a1"
+   },
+   "march": "rv64gc_zba_zbb_zbs_zcb_zicond",
+   "mnem": "bseti",
+   "outcome": "AGREES_AT_EVERY_POINT",
+   "peak_rss_mb": 47.5,
+   "points": 192,
+   "unevaluated": 0,
+   "variants": 64
+  },
+  {
+   "agree": 200,
+   "disagree": 0,
+   "examples": [],
+   "harness_note": "the compressed form names two registers and its destination is also its first source, so the answer is read from a0",
+   "homes": {
+    "destination": "a0",
+    "first": "a0",
+    "mode": "integer",
+    "second": "a1"
+   },
+   "march": "rv64gc_zba_zbb_zbs_zcb_zicond",
+   "mnem": "c.mul",
+   "outcome": "AGREES_AT_EVERY_POINT",
+   "peak_rss_mb": 47.5,
+   "points": 200,
+   "unevaluated": 0,
+   "variants": 1
+  },
+  {
+   "agree": 200,
+   "disagree": 0,
+   "examples": [],
+   "harness_note": "the compressed form names one register, which is both the destination and the only source; the second input is presented and ignored",
+   "homes": {
+    "destination": "a0",
+    "first": "a0",
+    "mode": "integer",
+    "second": "a1"
+   },
+   "march": "rv64gc_zba_zbb_zbs_zcb_zicond",
+   "mnem": "c.zext.w",
+   "outcome": "AGREES_AT_EVERY_POINT",
+   "peak_rss_mb": 47.5,
+   "points": 200,
+   "unevaluated": 0,
+   "variants": 1
+  },
+  {
+   "agree": 200,
+   "disagree": 0,
+   "examples": [],
+   "harness_note": "a COMPOSITE ROW: the harness moves the two inputs into the float file with `fmv.d.x` and the answer back out with `fmv.x.d`, so an agreement here is an agreement about those two instructions as well",
+   "homes": {
+    "destination": "fa2",
+    "first": "fa0",
+    "mode": "float",
+    "second": "fa1"
+   },
+   "march": "rv64gc_zba_zbb_zbs_zcb_zicond",
+   "mnem": "fsgnjn.d",
+   "outcome": "AGREES_AT_EVERY_POINT",
+   "peak_rss_mb": 47.5,
+   "points": 200,
+   "unevaluated": 0,
+   "variants": 1
+  }
+ ]
+}

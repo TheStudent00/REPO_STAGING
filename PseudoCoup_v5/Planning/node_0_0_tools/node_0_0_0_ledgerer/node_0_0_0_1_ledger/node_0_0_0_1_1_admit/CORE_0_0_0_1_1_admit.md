@@ -59,7 +59,7 @@ purpose: the function is small; the RULES it enforces are the point.
 ## harvest
 
 - **the refusing write path** — the only one in the lineage:
-  `PseudoCoup_v5/Research/rust_routing/ledger.py`, 56
+  `PRIVATE/PseudoCoup_v5/Research/rust_routing/ledger.py`, 56
   lines, "the only rejecting write path and raising `type_of`"
   (ledger survey §2). **the one harvest source inside the material
   the gutting removes** — harvest before gutting or read from
@@ -70,6 +70,6 @@ purpose: the function is small; the RULES it enforces are the point.
   (`0_Archive/PseudoIR/DevComms/.planning/specifications/02_ledger/`),
   marked by the survey as more advanced than any implementation.
 - **the phase discipline** — the R1 refusal pattern carried through
-  `PseudoIR/Tools/intentions/build_intentions.py`
+  `PRIVATE/PseudoIR/Tools/intentions/build_intentions.py`
   ("REFUSES to emit on incomplete data"), the same posture at
   another store.

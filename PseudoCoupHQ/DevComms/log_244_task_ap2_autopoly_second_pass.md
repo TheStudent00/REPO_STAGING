@@ -1,14 +1,14 @@
 # log 244 — task ap2: AutoPoly's loop, second pass, after the mechanical causes task ap1 counted were fixed
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the ruling of
 2026-09-08 in
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
 Date: 2026-09-09. Instance `ap2`, on the tower guest.
 
 Artifact folder:
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
 writing `autopoly2_*`; task ap1's products are not overwritten.
 Lane scripts: `.../autopoly/lanes_ap2/`, sixteen of them, each kept in the
 repo as the standing rule of 2026-09-07 requires. Every lane log named
@@ -16,7 +16,7 @@ below is on the TOWER (`<user>@<tower>`), under
 `<runs>/ap2/agent/logs/`.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into the
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into the
 instance. Every rendering is labelled per the protocol's
 `object.literal-gloss-analogy`: **LITERAL** is the object itself, quoted;
 **GLOSS** is a plain-words reading beside a literal.
@@ -37,10 +37,10 @@ sources that carry them, and no rule was invented to fill a gap:
 
 | what the brief calls for | where it was read from |
 |---|---|
-| the standing rules, including the tower, the memory bound, the flag rule on a limit, the verifier and the spelling ban | `PseudoCoupHQ/DevComms/note_server_session_start_here.md` §2, whose own heading is "The standing rules. These bind every session on this line" |
-| the project's settled rules and the two-list report shape | `PseudoCoupHQ/CLAUDE.md` |
-| what task ap1 did, its loop, its by-cause table and its awaiting-the owner list | `PseudoCoupHQ/DevComms/log_243_task_ap1_autopoly_first_full_loop.md` |
-| the exact tower commands | `Airlock/remote_lane.sh`'s own usage block |
+| the standing rules, including the tower, the memory bound, the flag rule on a limit, the verifier and the spelling ban | `PRIVATE/PseudoCoupHQ/DevComms/note_server_session_start_here.md` §2, whose own heading is "The standing rules. These bind every session on this line" |
+| the project's settled rules and the two-list report shape | `PRIVATE/PseudoCoupHQ/CLAUDE.md` |
+| what task ap1 did, its loop, its by-cause table and its awaiting-the owner list | `PRIVATE/PseudoCoupHQ/DevComms/log_243_task_ap1_autopoly_first_full_loop.md` |
+| the exact tower commands | `PUBLIC/Airlock/remote_lane.sh`'s own usage block |
 
 The one thing that could not be reconstructed is whatever `LAW.md` says
 under "stop rules", which the brief's §4 refers to by name. Nothing in
@@ -654,7 +654,7 @@ rather than answers.
 
 # 12. Memory
 
-The bound stated in `Airlock/instances/ap2.conf`, in every
+The bound stated in `PUBLIC/Airlock/instances/ap2.conf`, in every
 lane header and in `autopoly2.py`'s own constants is 6 GB resident on the
 one collecting process, named abort `ABORT_MEMORY_AP2`, checked after
 every run. The sample the law asks for is the first twenty runs, printed
@@ -681,7 +681,7 @@ different amounts of z3 work, and it is left as the measurement it is.
 # 13. The deliverables
 
 Under
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
 
 | file | what it is |
 |---|---|

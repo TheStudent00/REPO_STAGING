@@ -524,7 +524,7 @@ only" stop rule's boundary.
 
 ## 5. Lanes, guard, tally
 
-Airlock instance `o4`, config `Airlock/instances/o4.conf`
+Airlock instance `o4`, config `PUBLIC/Airlock/instances/o4.conf`
 (copied from `o3.conf` per this task's own brief instruction; header
 comment states each size's reason, `ABORT_MEMORY_O4` in place of
 `ABORT_MEMORY_O3`). Mounts unchanged from o3 (`Sources` read-only at
@@ -532,7 +532,7 @@ comment states each size's reason, `ABORT_MEMORY_O4` in place of
 mount edit needed.
 
 ```
-$ python3 Airlock/airlock up --instance o4
+$ python3 PUBLIC/Airlock/airlock up --instance o4
 ...
   o4-runner  Up Less than a second  localhost/sandbox-runner:latest
 ```
@@ -599,9 +599,9 @@ PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.py:0
 PseudoCoupHQ/Research/oracle/compiler_units/operator_variants_by_search.md:0
 ```
 
-(`Airlock/instances/o4.conf` is outside the sandbox
+(`PUBLIC/Airlock/instances/o4.conf` is outside the sandbox
 mount and outside this repo, checked once from the host:
-`grep -c exempt Airlock/instances/o4.conf` → `0`.)
+`grep -c exempt PUBLIC/Airlock/instances/o4.conf` → `0`.)
 
 No exempt annotation was added anywhere to route around a finding —
 the one real finding (lane 2) was fixed at its actual cause (a type
@@ -611,7 +611,7 @@ type spelling a genuine per-unit label object, not by renaming a field
 to slip past the check.
 
 ```
-$ python3 Airlock/airlock down --instance o4
+$ python3 PUBLIC/Airlock/airlock down --instance o4
   removed o4-runner
 done.
 ```
@@ -1087,7 +1087,7 @@ per this log's own §5). Lane numbers continue from §5's own `o4_l3c`,
 used once each, per convention.
 
 ```
-$ python3 Airlock/airlock up --instance o4
+$ python3 PUBLIC/Airlock/airlock up --instance o4
 ...
   o4-runner  Up Less than a second  localhost/sandbox-runner:latest
 ```
@@ -1361,7 +1361,7 @@ Machine-checked claims json:
 (itself passes the spelling-key guard, per its own last line above).
 
 ```
-$ python3 Airlock/airlock down --instance o4
+$ python3 PUBLIC/Airlock/airlock down --instance o4
 time="2026-09-05T23:52:37-04:00" level=warning msg="StopSignal SIGTERM failed to stop container o4-runner in 10 seconds, resorting to SIGKILL"
   removed o4-runner
 done.

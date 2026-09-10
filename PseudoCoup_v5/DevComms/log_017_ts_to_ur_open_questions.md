@@ -8,7 +8,7 @@ deep-dive, in weight order, each question stating what is already
 settled around it and what remains the owner's to rule.
 
 Context: `ur.py` and `ledger.py` are complete and exercised
-(`PseudoCoup_v5/Tools/ledgerer/`). The unbuilt trio is
+(`PRIVATE/PseudoCoup_v5/Tools/ledgerer/`). The unbuilt trio is
 `ts_to_ur`, `ur_to_ledger`, `builder` — and `ts_to_ur` is where the
 plan is thinnest.
 
@@ -17,7 +17,7 @@ plan is thinnest.
 ## 1. the rust map itself
 
 the mapper's heart is the ts_kind -> ur_kind table for rust: 163
-rows. `PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
+rows. `PRIVATE/PseudoCoup_v5/DevComms/log_008_kinds_coarse_tagging_draft.md`
 drafted it, and the owner's later rulings — coupled (log_015), the three
 constructs (log_014), the three form buckets incl. `proof-form` —
 resolved the five uncertain families. **but nobody has applied
@@ -53,12 +53,12 @@ things whose boundaries are undrawn:
 - mark each `token_tree` opaque — RULED (the opacity form, node's
   CORE).
 - re-parse contents under the per-macro shape table —
-  `PseudoCoup_v5/DevComms/log_010_token_tree_reparse_coverage.md`:
+  `PRIVATE/PseudoCoup_v5/DevComms/log_010_token_tree_reparse_coverage.md`:
   20 shapes -> 82.98% measured coverage; a seventh
   "match-arm-pattern" shape would close most of the residue (44% of
   failures were `matches!`-style pattern+guard). table UNRATIFIED.
 - run the kind-one engine
-  (`PseudoCoup_v5/Research/macro_engine.py`, pulled
+  (`PRIVATE/PseudoCoup_v5/Research/macro_engine.py`, pulled
   into ledgerer scope by log_005 §2) producing `GeneratedOrigin`
   sub-trees. WHERE it sits relative to the mapper is undrawn.
 - mint sub-addressed ids for injected nodes — ruled yes in
@@ -88,7 +88,7 @@ vendored pinned grammars; the runtime pin check
 discipline — unknown kind at ingest -> refuse, or a WFL-style
 justified baseline. one yes makes it plan (the `tree_sitter_base`
 design, projected at
-`PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`).
+`PRIVATE/PseudoCoup_v6/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_tree_sitter.md`).
 
 ## 6. what a language pack IS
 

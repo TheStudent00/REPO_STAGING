@@ -8,13 +8,13 @@ unless a dependency is named.
 
 ## STANDING REQUIREMENTS — every task, every sub-agent
 
-- Read FIRST, in full: `PseudoCoupHQ/AgentMemory.md`
+- Read FIRST, in full: `PRIVATE/PseudoCoupHQ/AgentMemory.md`
   (all rulings; especially THE CANONICAL FORM IS ENFORCED,
   CANONICALIZATION INCLUDES THE TRANSFORM-AND-RETURN STEP,
   SEEDED GROUPING UNDER CONDITIONS, THE REPRESENTATIVE RULE,
   TEMP REGISTERS ARE STANDARDIZED NOT LIMITED, FIX A CAUSE AT
   FIRST OBSERVATION, THE SPELLING BAN, the evidence doctrine)
-  and `DevComms/LLM_communication_protocol_v2.md`.
+  and `PRIVATE/DevComms/LLM_communication_protocol_v2.md`.
 - PASTE THE SPELLING BAN VERBATIM into every sub-agent brief
   (AgentMemory requires this; the paragraph is in AgentMemory
   under "THE SPELLING BAN, ABSOLUTE").
@@ -27,13 +27,13 @@ unless a dependency is named.
   previously-converged unit keeps byte-identical newest text.
 - New files only; defective artifacts stay on disk as records.
 - Update the node PROGRESS
-  (`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`)
+  (`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`)
   with a dated entry per completed task: what changed, measured
   before/after, honest remainders. One `# PROGRESS` heading only.
 - Evidence class stated on every claim. Refuse honestly rather
   than fabricate; a diagnosed dead-end is a valid result.
 - Working directory for pipeline tasks:
-  `PseudoCoupHQ/Research/op_pipeline`.
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline`.
 - Current state: 1,457 of 1,779 units converged; table
   926/135/26/23 on the dominant_table23 lineage (also see the
   919/139/26/23 full-population lineage of dominant_table22 —
@@ -54,7 +54,7 @@ built cpp graph over 6 files; its build_graph_cpp_probe.py is a
 starting point), the node CORE's standing rules (graph not prose;
 language-agnostic by construction: extension -> grammar
 dispatch), and PCv5's language-pack shape
-(`PseudoCoup_v5/Tools/ledgerer/ts_to_ur.py` —
+(`PRIVATE/PseudoCoup_v5/Tools/ledgerer/ts_to_ur.py` —
 LanguagePack: per-language DATA, one universal mapper; reuse the
 design, not necessarily the code).
 
@@ -142,7 +142,7 @@ only if proofs land. Report tallies per chunk.
 ## TASK 5 — reconnect the parallel language branch (java,
 ## cpython, ruby, php)
 
-CONTEXT: `PseudoCoupHQ/DevComms/log_082_state_of_research_and_parallel_branch.md`
+CONTEXT: `PRIVATE/PseudoCoupHQ/DevComms/log_082_state_of_research_and_parallel_branch.md`
 PART 2 — six findings, read all. The three joints and the
 correctness defect, in order:
 
@@ -160,7 +160,7 @@ measured deopt-continue-elsewhere row into guards2/exception
 families with its weaker-provenance mark. (d) fold ruby and php
 (finding 5): write fold_interp_ruby.py / fold_interp_php.py in
 the pilots' own .md+.json format from the Airlock outputs
-(`Airlock/agent/out/interp_ruby_b/`,
+(`PUBLIC/Airlock/agent/out/interp_ruby_b/`,
 `interp_php_b/`), recording pins (ruby 3.3.0; php 7.4.33 — a
 compromise pin after 8.3/8.2 build failures, record that), guard
 runs, and what was NOT done. (e) the auto-derived planning nodes

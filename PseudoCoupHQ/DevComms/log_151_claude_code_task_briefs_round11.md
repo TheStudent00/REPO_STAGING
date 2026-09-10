@@ -150,7 +150,7 @@ many of pool2's 4,499 symbolic-target members now merge on layer-3
 identity. Guard as above.
 
 ## TASK 55 — AIRLOCK: ruling 6 (Opus for the code; the repo is
-## `Airlock`)
+## `PUBLIC/Airlock`)
 
 WORK: (a) `down.sh` reads the instance's status folder and refuses
 with the running lane's name when any status is `running`;

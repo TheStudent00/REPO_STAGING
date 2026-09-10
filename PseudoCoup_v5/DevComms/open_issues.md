@@ -12,8 +12,8 @@ reason it fell is worth preserving.
 
 Settled elsewhere, listed only so they are not re-opened:
 
-- **The basis layer is not defined by egress.** The hub dominates intentions; a destination language's shortfall is recorded as a shortfall. See Issue 1 and [HANDOFF_2026-07-25.md](file://PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md) §8.1.
-- **Dominance vs primitiveness** — closed. See [two_layer_program.md](file://PseudoCoup_v5/Designing/two_layer_program.md) §1. Dominance selects semantics, primitiveness orders egress work; they answer different questions. Decisive reason: the hub must dominate intentions because that is what makes ingress trivial.
+- **The basis layer is not defined by egress.** The hub dominates intentions; a destination language's shortfall is recorded as a shortfall. See Issue 1 and [HANDOFF_2026-07-25.md](file://PRIVATE/PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md) §8.1.
+- **Dominance vs primitiveness** — closed. See [two_layer_program.md](file://PRIVATE/PseudoCoup_v5/Designing/two_layer_program.md) §1. Dominance selects semantics, primitiveness orders egress work; they answer different questions. Decisive reason: the hub must dominate intentions because that is what makes ingress trivial.
 - **Ingress memory model** — closed, measured. The C++ pulled into the hub needs none. See Issue 3 below for the three memory questions kept apart.
 - **Parser-level qualifiers** — closed as a decision, reduced to scheduling. See Issue 2.
 
@@ -37,9 +37,9 @@ as part of the record.
 
 - **Why it dissolves (the owner, 2026-07-27).** Intent is captured at ingress and lives in the Ledger; a source declaring a hash map records that type, a source declaring a list of pairs records a different one. The hub satisfies the intent by feature insertion — the mechanism already proven by inserting Rust's routing into CPython. A target language without fast retrieval renders a program without fast retrieval, which is a **recorded shortfall of the destination**, not a loss in the hub. Improving destinations later by feature insertion is possible and unscheduled. Ingress is the current priority.
   - This applies identically to hashing, the string builder, and the executor. None of them needs adjudicating.
-  - The type identity is Ledger data. **Corrected 2026-07-27:** an earlier version of this bullet called [PseudoCoup/pseudocoup/core/ledger.py](file://PseudoCoup/pseudocoup/core/ledger.py) "the Ledger" — it is the most advanced ledger in the PCv3 type-ledger lineage (289 lines, fed by the tree-sitter ingressors), but the hub's ledger does not exist yet. the owner's intent: the hub ledger starts from the most advanced existing ledger and grows past it. Survey and the choice it leaves open are recorded in [HANDOFF_2026-07-25.md](file://PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md) §5 case 7 and [plan_llvm_rust_2026-07-27.md](file://PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md).
+  - The type identity is Ledger data. **Corrected 2026-07-27:** an earlier version of this bullet called [PseudoCoup/pseudocoup/core/ledger.py](file://PUBLIC/PseudoCoup/pseudocoup/core/ledger.py) "the Ledger" — it is the most advanced ledger in the PCv3 type-ledger lineage (289 lines, fed by the tree-sitter ingressors), but the hub's ledger does not exist yet. the owner's intent: the hub ledger starts from the most advanced existing ledger and grows past it. Survey and the choice it leaves open are recorded in [HANDOFF_2026-07-25.md](file://PRIVATE/PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md) §5 case 7 and [plan_llvm_rust_2026-07-27.md](file://PRIVATE/PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md).
 
-- **Tail calls are resolved separately and need no category.** The hub performs the transformation itself, so every target language gets constant stack regardless of its own compiler. Self-recursion rewrites to a `while` loop at no cost; mutual recursion uses a wrapper that returns a description of the next call to a driver loop, at one allocation per step. Both preconditions — every call in tail position, and one step leading to at most one next step — are visible in the source, so the hub chooses without asking. Full mechanism with code in [HANDOFF_2026-07-25.md](file://PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md) §8.1.
+- **Tail calls are resolved separately and need no category.** The hub performs the transformation itself, so every target language gets constant stack regardless of its own compiler. Self-recursion rewrites to a `while` loop at no cost; mutual recursion uses a wrapper that returns a description of the next call to a driver loop, at one allocation per step. Both preconditions — every call in tail position, and one step leading to at most one next step — are visible in the source, so the hub chooses without asking. Full mechanism with code in [HANDOFF_2026-07-25.md](file://PRIVATE/PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md) §8.1.
 
 - **Historical record of the closed argument, kept because the reasoning fell rather than merely ending.**
 
@@ -96,7 +96,7 @@ performance-primitive
 
 - **The record, since the first draft misrepresented it.** the owner asked "why wouldn't we be inserting into the interpreter?"; the answer given was that insertion is where this road ends on purpose, and the import hook was explicitly framed as measuring everything except the fork. the owner accepted that sequencing. The direction was never in question.
 
-- **What exists now is a text rewrite, not grammar — a deliberate stepping stone.** [pc_import.py](file://PseudoCoup_v5/Research/rust_routing/pc_import.py) is a meta-path finder: it reads the `.pc` file, rewrites `r./` into `|_r_div|` before Python parses it, then compiles normally.
+- **What exists now is a text rewrite, not grammar — a deliberate stepping stone.** [pc_import.py](file://PRIVATE/PseudoCoup_v5/Research/rust_routing/pc_import.py) is a meta-path finder: it reads the `.pc` file, rewrites `r./` into `|_r_div|` before Python parses it, then compiles normally.
   - This runs on stock CPython with no fork, which is why it was cheap and why it shipped first.
 
 - **It costs three things, all real, and all three are what the fork buys back.**
@@ -118,7 +118,7 @@ performance-primitive
 - **Question A — ingress. Does the C++ we pull into the hub need a memory model? CLOSED, measured: no.**
   - Across `X86MCCodeEmitter.cpp`, `SelectionDAGISel.cpp`, `X86ISelDAGToDAG.cpp`: zero pointer-expression dereferences, and zero `memcpy` / `memset` / `reinterpret_cast` / `new[]`.
   - Every `->` is object navigation, free in Python because Python objects are already references. Every site flagged as pointer arithmetic is an integer counter (`CurOp++`), which is what an earlier 0.2–5% estimate was actually counting before it was retracted.
-  - Recorded in [HANDOFF_2026-07-25.md](file://PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md) §3.3 and [plan_2026-07-25.md](file://PseudoCoup_v5/DevComms/plan_2026-07-25.md).
+  - Recorded in [HANDOFF_2026-07-25.md](file://PRIVATE/PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md) §3.3 and [plan_2026-07-25.md](file://PRIVATE/PseudoCoup_v5/DevComms/plan_2026-07-25.md).
 
 - **Question B — egress. Can pointer infrastructure be rendered into a language that has no addresses? CLOSED in principle, priced, dormant in practice.**
   - Answer: yes. Simulate the address space rather than mapping pointers to references — one large byte array in the target language, a pointer becomes an integer index into it, `*p` becomes a read at that index, `p + 4` stays integer addition. Arena allocators transpile untouched, because an arena is pointer arithmetic over a region and that is now honest integer arithmetic over the array. Emscripten is the existence proof.

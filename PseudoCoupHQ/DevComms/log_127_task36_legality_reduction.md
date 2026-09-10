@@ -421,7 +421,7 @@ Score before those two fixes: 44 misses, 98.8% in-scope agreement. After:
 ## 6.1 The spelling-key check, all three artifacts
 
 ```
-$ cd PseudoCoupHQ/Research/op_pipeline
+$ cd PRIVATE/PseudoCoupHQ/Research/op_pipeline
 $ /tmp/reconnect_venv/bin/python3 legality_rules.py
 wrote .../legality_rules.json: 55 rules, 185 operator units
 operator inventory: 91 tokens read from probe_manifest_*.json
@@ -490,7 +490,7 @@ same total for all five languages.
 # 7. Zero regressions, verified programmatically
 
 ```
-$ cd PseudoCoupHQ && git status --porcelain
+$ cd PRIVATE/PseudoCoupHQ && git status --porcelain
 ?? Research/compiler_graph/graph_cpp2.json
 ?? Research/compiler_graph/graph_cpp3.json
 ```
@@ -521,16 +521,16 @@ Created this session, all new:
 
 | path | what it is |
 |---|---|
-| `PseudoCoupHQ/Research/op_pipeline/legality_rules.py` | the rule extractor; searches each source for the quoted fragment and refuses to write if it is absent |
-| `PseudoCoupHQ/Research/op_pipeline/legality_rules.json` | 55 rules with file+line+pin provenance, 185 operator units with their rule joins |
-| `PseudoCoupHQ/Research/op_pipeline/legality_filter.py` | applies the rules; writes the reduction and the validation |
-| `PseudoCoupHQ/Research/op_pipeline/legality_reduction.json` | per language and per operator unit: naive, legal, no-rule residue, factor |
-| `PseudoCoupHQ/Research/op_pipeline/legality_validation.json` | the corpus scoring, the corpus-sized compile budget, and every miss |
-| `PseudoCoupHQ/DevComms/log_127_task36_legality_reduction.md` | this log |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/legality_rules.py` | the rule extractor; searches each source for the quoted fragment and refuses to write if it is absent |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/legality_rules.json` | 55 rules with file+line+pin provenance, 185 operator units with their rule joins |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/legality_filter.py` | applies the rules; writes the reduction and the validation |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/legality_reduction.json` | per language and per operator unit: naive, legal, no-rule residue, factor |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/legality_validation.json` | the corpus scoring, the corpus-sized compile budget, and every miss |
+| `PRIVATE/PseudoCoupHQ/DevComms/log_127_task36_legality_reduction.md` | this log |
 
 Modified this session: one dated entry appended under the single
 `# PROGRESS` heading of
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
 
 Read but not modified: `op_units_<lang>.json` (five),
 `probe_manifest_<lang>.json` (five), `type_inventory2.json`,

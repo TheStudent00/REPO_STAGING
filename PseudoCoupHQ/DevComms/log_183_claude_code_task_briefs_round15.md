@@ -19,7 +19,7 @@ What that changes, and it binds every task below:
   the task's own report, never decided, exactly as if the owner had written
   the brief.
 - **The one exception the owner stated himself**, and the round's second
-  headline: `Ourobrowser` — "the browser allows python
+  headline: `PUBLIC/Ourobrowser` — "the browser allows python
   to be run locally natively within the browser. id like to see the
   dashboard written to run in it." That is task 77.
 
@@ -72,7 +72,7 @@ super_ops_go 9,809 candidates; chronology 39 steps.
 
 ## TASK 77 — the dashboard in Ourobrowser (Opus; the owner's own request)
 
-CONTEXT: `Ourobrowser` — `browser_engine.py` (the
+CONTEXT: `PUBLIC/Ourobrowser` — `browser_engine.py` (the
 scheme handler: `<script type="text/python">` is exec'd natively at
 request time into a shared context and then REMOVED from the HTML
 Chromium sees; every other `<script>` is stripped, so there is no
@@ -103,11 +103,11 @@ WORK:
    AND ARCHITECTURE ARE DEE'S: implement under working names, put
    every name and every shape choice in a "for the owner's ruling" section
    of your report, each changeable in one place.
-2. Implement in `Ourobrowser` (the owner's project, and this
+2. Implement in `PUBLIC/Ourobrowser` (the owner's project, and this
    capability is what he asked for). Keep `test_page.html` working —
    run it before and after and paste both.
 3. Build the dashboard for Ourobrowser in
-   `PseudoCoupHQ/Research/op_pipeline`: a page plus a
+   `PRIVATE/PseudoCoupHQ/Research/op_pipeline`: a page plus a
    Python module that reads the artifacts with `open()` and renders
    the panes. REUSE the existing join — state which functions of
    `viewer_build.py` / the pane builders are called rather than
@@ -225,7 +225,7 @@ it realizes; and the header's arch-opcode count differs between
 captures (122 vs 162) because `dashboard_join.js:1088` counts the live
 index at render time, before or after the background load lands.
 
-WORK: (a) in `Airlock` — a one-line header on
+WORK: (a) in `PUBLIC/Airlock` — a one-line header on
 `progress.sh` naming any OTHER instance with a queued or running lane
 (and `airlock status` likewise), so the default view can never say
 "nothing running" while another instance is busy; prove it by bringing

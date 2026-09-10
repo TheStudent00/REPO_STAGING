@@ -1,16 +1,16 @@
 # log 246 — task ap4: closing the four languages — the contract for a value that is not in a register, and AutoPoly's loop, fourth pass
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the rulings
 of 2026-09-08 and 2026-09-09 in
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
-Law: `PseudoCoupHQ/Research/LAW.md`, read in full including
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, read in full including
 its tower section.
 Date: 2026-09-09. Instance `ap4`, on the tower guest.
 
 Artifact folder:
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`,
 writing `autopoly4_*`; tasks ap1's, ap2's and ap3's products are not
 overwritten. Lane scripts: `.../autopoly/lanes_ap4/`, fifteen of them,
 each kept in the repo as the standing rule of 2026-09-07 requires. Every
@@ -18,7 +18,7 @@ lane log named below is on the TOWER (`<user>@<tower>`) under
 `<runs>/ap4/agent/logs/`.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into
 the instance. Every rendering is labelled per the protocol's
 `object.literal-gloss-analogy`: **LITERAL** is the object itself, quoted;
 **GLOSS** is a plain-words reading beside a literal.
@@ -325,7 +325,7 @@ something and one says something else.**
 
 ## 6.1 The ledger, which is the shared half the brief authorises
 
-**LITERAL**, `PseudoCoupHQ/Research/op_pipeline/ledger.py`,
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/op_pipeline/ledger.py`,
 `build_epilogue`:
 
 ```python
@@ -766,7 +766,7 @@ every case.
 
 # 12. Memory
 
-The bound stated in `Airlock/instances/ap4.conf`, in every
+The bound stated in `PUBLIC/Airlock/instances/ap4.conf`, in every
 lane header and in `autopoly4.py`'s own constants is 6 GB resident on the
 one collecting process, named abort `ABORT_MEMORY_AP4`, checked after
 every run. The sample the law asks for is the first twenty runs, printed
@@ -799,7 +799,7 @@ own collector printed `collector peak 82468 kB`).
 # 13. The deliverables
 
 Under
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
 
 | file | what it is |
 |---|---|
@@ -907,7 +907,7 @@ are its own two lines, exactly as task ap3's were.
     is for: the matched corpus row is the `%` probe, so the operator
     answers the remainder.
 11. **Nothing was deleted under `<runs>/` or
-    `Airlock/`** on either machine. One lane name
+    `PUBLIC/Airlock/`** on either machine. One lane name
     collided and took a new name (`ap4_l10_measure_the_three_changes_b.sh`
     after `ap4_l9`'s two defects, which are recorded in §2 rather than
     hidden); `check_command`'s 178 files were copied aside and copied

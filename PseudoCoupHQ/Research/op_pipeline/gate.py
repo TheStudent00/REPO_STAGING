@@ -3,7 +3,7 @@
 discharges them.
 
 The code of node `hq.research.compiler_graph.gate`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_5_gate/CORE_0_3_5_5_gate.md`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_5_gate/CORE_0_3_5_5_gate.md`).
 Its class is `Gate`; its methods are the CORE's `methods:`
 (`prove_wrapped`, `prove_term_against_ship`, `prove_term_against_text`,
 `structural_checks`, `zero_regression`); its sub-node `verdict` is the

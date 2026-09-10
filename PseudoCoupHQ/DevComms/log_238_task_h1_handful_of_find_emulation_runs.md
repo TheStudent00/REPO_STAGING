@@ -1,7 +1,7 @@
 # log 238 — task h1: a handful of `find_emulation` runs from the arch-opcode model table
 
 Node: `hq.research.arch_unit_oracle`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08). The
 PROGRESS entry is on the autopoly sub-node
 (`.../node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/PROGRESS.md`),
@@ -9,13 +9,13 @@ beside tasks o12 and o13.
 
 Date: 2026-09-09. Instance `h1`, on the TOWER, brought down at the end
 of this log. Artifact folder:
-[`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
+[`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
 The deliverables are
-[`handful.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
+[`handful.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
 (the driver; it wires the existing pieces and adds nothing project-new),
-[`handful.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json)
+[`handful.json`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.json)
 (the twenty runs, every intermediate object on the record) and
-[`handful.md`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md)
+[`handful.md`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.md)
 (one section per run, then the twenty-row table, then what did not work
 by cause). This log carries the conclusion and points into them.
 
@@ -25,7 +25,7 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into
 the instance. Prose names host paths. **The lane logs are on the
 TOWER** (`<user>@<tower>`), under
 `<runs>/h1/agent/logs/`, and every attribution
@@ -45,7 +45,7 @@ below names one of them.
 | `h1_l9_evidence2.sh` | EVERY transcript this log pastes, plus the guard and `grep -c exempt`, with both fixes: the `sed` anchors spell `.` where the table's `|` sits, and `handful.py` is named by its full path so the command runs from any working directory | `20260909T052457Z__h1_l9_evidence2.sh.log` |
 
 Every lane script is kept in the repo at
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1/`
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h1/`
 and was submitted from there.
 
 ---
@@ -54,7 +54,7 @@ and was submitted from there.
 
 - **a cell** — one (`mnem`, operand shape, `key_width`) row of the
   arch-opcode model table
-  (`PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
+  (`PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
   tasks m1/m1b, log 236 and log 237), which holds, per PLACE the opcode
   writes, the z3 term the reference simulator's own builder puts there.
   The triple is the key the ruling of 2026-09-08 states is machine form.
@@ -323,7 +323,7 @@ Concat(0, Extract(31, 0, v0)*Extract(31, 0, v1))
 ```
 
 The rendered source, **LITERAL**
-([`src/imul_gpr_gpr_32__reg_rdi__c.c`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/src/imul_gpr_gpr_32__reg_rdi__c.c)):
+([`src/imul_gpr_gpr_32__reg_rdi__c.c`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/src/imul_gpr_gpr_32__reg_rdi__c.c)):
 
 ```c
 uint64_t

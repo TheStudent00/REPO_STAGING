@@ -1,9 +1,9 @@
 # Task pub1 — the public record: finish the scrub of REPO_STAGING under the protocol's cardinal rule, and audit every other public repository against it (read-only)
 
-Read first, ALL of it: `DevComms/LLM_communication_protocol.md`
+Read first, ALL of it: `PRIVATE/DevComms/LLM_communication_protocol.md`
 — its first card, "CARDINAL SIN: NEVER PUT SENSITIVE INFORMATION IN A
 PUBLIC REPO", outranks everything else in this brief. Then
-`REPO_STAGING/stage.sh` and `scrub_patterns.tsv` (how the
+`PUBLIC/REPO_STAGING/stage.sh` and `scrub_patterns.tsv` (how the
 public snapshot is scrubbed: tracked files copied into a private area,
 patterns applied, a survivor stops the run), and the memory of the rule's
 classes: real names / account names / handles; network identity; absolute
@@ -21,7 +21,7 @@ INSIDE the sandbox image (`rustc 1.96.1`, `Swift 6.0.3`, `go1.26`,
 `Python 3.13.15`, `Lean 4.24.0`) are KEPT — they are measured facts the
 research depends on and fingerprint the published image, not a machine;
 `/opt/elan`, `/opt/venv` are the image's paths and are kept.
-1. In `REPO_STAGING/.stage_tmp/` (run `bash stage.sh --no-push`
+1. In `PUBLIC/REPO_STAGING/.stage_tmp/` (run `bash stage.sh --no-push`
    once to fill it; it will REFUSE at the check if the new patterns are not
    yet complete — that is fine, the private area is what you inspect),
    find every file that carries a fingerprint of a MACHINE: OS names and
@@ -56,8 +56,8 @@ its output beside your greps. Do not change any of these repositories:
 what to do about a finding is the owner's, not this task's.
 
 ## 3. Deliverable
-One report at `PseudoCoupHQ/DevComms/log_<next free number>_task_pub1_public_record_scrub_and_audit.md`
-(check `ls PseudoCoupHQ/DevComms | tail` right before
+One report at `PRIVATE/PseudoCoupHQ/DevComms/log_<next free number>_task_pub1_public_record_scrub_and_audit.md`
+(check `ls PRIVATE/PseudoCoupHQ/DevComms | tail` right before
 writing; the tower may be writing logs too): §1 what the objects are;
 §2 REPO_STAGING before/after with the patterns; §3 the audit per public
 repo, a table repo × class with counts, then the examples; §4 by cause

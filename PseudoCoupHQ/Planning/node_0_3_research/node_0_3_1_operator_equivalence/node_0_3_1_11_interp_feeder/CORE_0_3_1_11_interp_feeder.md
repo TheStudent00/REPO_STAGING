@@ -53,8 +53,8 @@ sub_nodes:
 - [invoke_normalizer](node_0_3_1_11_3_invoke_normalizer/CORE_0_3_1_11_3_invoke_normalizer.md) — The hand-off from the feeder's records to the canonical-form stage: the written op_units records are given to the same normalizer the compiled units go through (today `canon40_interp.py`, producing `canon40_interp.json`).
 - [run_pipeline](node_0_3_1_11_4_run_pipeline/CORE_0_3_1_11_4_run_pipeline.md) — The lane that runs one interpreted language end to end: parse the pilot's dump, format it to op_units, invoke the normalizer, and leave the canonical records where the gate reads them.
 - [run_jvm](node_0_3_1_11_5_run_jvm/CORE_0_3_1_11_5_run_jvm.md) — The java route, the one where the unit does not exist in any binary until run time: the probe method is warmed until HotSpot's C2 tier compiles it, the emitted machine code is dumped, and the method's body is carved as the unit.
-- [target](node_0_3_1_11_6_target/CORE_0_3_1_11_6_target.md) — Which build of each interpreter is read, so a unit is attributed to a named binary and not to "php": the instrumented php builds (`Airlock/php-{7.4.33,8.2.13,8.3.0}.tar.gz`), the instrumented ruby 3.3.0 build, the image's cpython and openjdk 25.
-- [output](node_0_3_1_11_7_output/CORE_0_3_1_11_7_output.md) — The records the feeder writes and where: per pilot, `canon_interp_units_{java,cpython}.json` and `canon_interp_units_ruby_php.json`; after the normalizer, `canon40_interp.json` (eleven units, ten with bodies), all under `PseudoCoupHQ/Research/op_pipeline/`.
+- [target](node_0_3_1_11_6_target/CORE_0_3_1_11_6_target.md) — Which build of each interpreter is read, so a unit is attributed to a named binary and not to "php": the instrumented php builds (`PUBLIC/Airlock/php-{7.4.33,8.2.13,8.3.0}.tar.gz`), the instrumented ruby 3.3.0 build, the image's cpython and openjdk 25.
+- [output](node_0_3_1_11_7_output/CORE_0_3_1_11_7_output.md) — The records the feeder writes and where: per pilot, `canon_interp_units_{java,cpython}.json` and `canon_interp_units_ruby_php.json`; after the normalizer, `canon40_interp.json` (eleven units, ten with bodies), all under `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`.
 
 ## definition
 
@@ -95,7 +95,7 @@ sixth co-node.
 
 ## 2. What the feeder is, mechanically
 
-`PseudoCoupHQ/Research/op_pipeline/interp_feeder.py`,
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/interp_feeder.py`,
 "Translates parsed interpreter/JIT output logs into the schema
 expected by the active Z3 normalization pipeline." Its parts are the
 sub-nodes, each a function or class of that file:
@@ -154,7 +154,7 @@ task o2).
 
 ## record
 
-- artifacts: `PseudoCoupHQ/Research/op_pipeline/`
+- artifacts: `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`
   (`interp_feeder.py`, `canon_interp_*.py`, `canon40_interp.json`,
   `build_interp_join*.py`, `interp_php.md`).
 - logs: 095, 101, 107, 113, 119, 124, 199, 201.

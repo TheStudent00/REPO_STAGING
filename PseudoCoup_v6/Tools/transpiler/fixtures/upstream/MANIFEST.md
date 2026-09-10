@@ -9,7 +9,7 @@ One file, 66 KB. **Not this project's code.**
 sha256 at vendoring, 2026-07-31: `9322e2dd4bc19764...`
 
 This is the same file as the copy in
-`PseudoCoup_v6/Tools/ledgerer/fixtures/upstream/`, and
+`PRIVATE/PseudoCoup_v6/Tools/ledgerer/fixtures/upstream/`, and
 the duplication is deliberate: the standing rule is that a tool's
 oracle assets live beside the tool they check, so each suite is
 self-contained and neither breaks if the other is moved. 66 KB is a
@@ -17,7 +17,7 @@ cheap price for that.
 
 ## Why it is here
 
-Until 2026-07-31 it was read out of `PseudoCoup_v5`
+Until 2026-07-31 it was read out of `PRIVATE/PseudoCoup_v5`
 through a `PCV5_ROOT` environment variable, which made this suite
 unable to run without another repo on disk. That was a dependency on
 a past project rather than a transplant from one. It is now a
@@ -41,7 +41,7 @@ the SHA is the part that matters, since llvm-project is the only place
 it resolves.
 
 This is the good case. The three Rust files vendored under
-`PseudoCoup_v6/Tools/ledgerer/fixtures/upstream/` are
+`PRIVATE/PseudoCoup_v6/Tools/ledgerer/fixtures/upstream/` are
 the bad one: they came from a `git clone --depth 1` with nothing
 pinned, so their revision is unrecoverable. See that manifest.
 

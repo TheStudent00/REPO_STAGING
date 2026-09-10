@@ -43,7 +43,7 @@ sub_nodes:
 
 ## sub_nodes
 
-- [node](node_0_0_0_0_0_node/CORE_0_0_0_0_0_node.md) — the UR node — one node shape in four layers, each layer owned by a different writer, none replacing the one beneath it (drafted in `PseudoCoup_v5/DevComms/log_002_ur_brainstorm.md` §7.1).
+- [node](node_0_0_0_0_0_node/CORE_0_0_0_0_0_node.md) — the UR node — one node shape in four layers, each layer owned by a different writer, none replacing the one beneath it (drafted in `PRIVATE/PseudoCoup_v5/DevComms/log_002_ur_brainstorm.md` §7.1).
 - [connector](node_0_0_0_0_1_connector/CORE_0_0_0_0_1_connector.md) — the static graph object joining two nodes by id — the typed node-connector entry of the owner's carrying capacity, made first-class.
 - [id](node_0_0_0_0_2_id/CORE_0_0_0_0_2_id.md) — the identity value — the third form beside `node` and `connector` (registered 2026-08-05, the owner: "we are aligned.
 - tree — code (class) *(realize: false)*
@@ -103,7 +103,7 @@ they have no folder:
     the ruling: "one part is ensuring that the source intention is
     saved but also properly classified into the dominant intention."
     the decision is unpacked in
-    `PseudoCoup_v5/DevComms/log_015_coupled_or_decoupled.md`.
+    `PRIVATE/PseudoCoup_v5/DevComms/log_015_coupled_or_decoupled.md`.
   - **the ecosystem additions, RULED 2026-08-12** (the kind-
     clustering research, PCHQ logs 008–016 — 411 grammars, 31,212
     kinds; adoption walk in PCHQ log_016 §6 and the P1–P9 rulings):
@@ -150,9 +150,9 @@ is in this file's git history.
 ## harvest
 
 which Frankenstein parts land here. part numbers are
-`PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
+`PRIVATE/PseudoCoup_v5/DevComms/log_001_ledgerer_harvest_findings.md`
 §2; "addendum" is
-`PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`.
+`PRIVATE/PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`.
 placements are draft commentary, not settled.
 
 - **no part transplants here whole.** every surveyed implementation
@@ -188,8 +188,8 @@ placements are draft commentary, not settled.
   it makes sense that mechanisms and structures would be spread
   across components."
 - the prior implementation is
-  `PseudoCoup/pseudocoup/core/ur_ast.py` and its two
+  `PUBLIC/PseudoCoup/pseudocoup/core/ur_ast.py` and its two
   diverged copies (v3, WFL) — see
-  `PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`
+  `PRIVATE/PseudoCoup_v5/DevComms/ledger_survey_2026-08-02_tree_sitter_ur_ast.md`
   §2.2. no copy is the authority; this node supersedes rather than
   ports.

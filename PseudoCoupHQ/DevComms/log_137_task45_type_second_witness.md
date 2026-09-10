@@ -187,7 +187,7 @@ compile_probe`, anchor mode: c `-std=c17 -O0 -g -c`; cpp `-std=c++20
 HOST path check:
 <user>
 ls: cannot access '/persist': No such file or directory
-  PseudoCoupHQ exists -> HOST side
+  PRIVATE/PseudoCoupHQ exists -> HOST side
 ```
 
 The generator, the fold and every count ran on the host. Only the 416

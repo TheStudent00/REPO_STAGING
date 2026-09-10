@@ -23,7 +23,7 @@ touches. Nothing else constructs a parser. Plan node:
 Run acceptance:
 
 ```bash
-python3 -m pytest PseudoCoup_v6/Tools/ledgerer/tree_sitter/ -q
+python3 -m pytest PRIVATE/PseudoCoup_v6/Tools/ledgerer/tree_sitter/ -q
 ```
 
 Registered grammars: python, rust, cpp. Adding one = register in

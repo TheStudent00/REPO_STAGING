@@ -11,9 +11,9 @@ supersedes: pcv6.planning.plan_llvm_rust_flat
 The intermediate goal as a campaign: Rust transpiling and slicing
 via the compiler Rust actually uses. Re-derived on the component
 frame; the PCv5-era chain plan
-(`PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`)
+(`PRIVATE/PseudoCoup_v5/DevComms/plan_llvm_rust_2026-07-27.md`)
 is superseded reference. Work happens in
-`PseudoCoup_v6/Application/` and graduates general
+`PRIVATE/PseudoCoup_v6/Application/` and graduates general
 machinery into Tools.
 
 ## Where the campaign already stands (from the tools wave)

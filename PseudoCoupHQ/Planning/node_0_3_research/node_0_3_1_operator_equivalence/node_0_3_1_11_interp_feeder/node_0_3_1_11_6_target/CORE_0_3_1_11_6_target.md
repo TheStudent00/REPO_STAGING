@@ -37,7 +37,7 @@ sub_nodes: []
 
 Which build of each interpreter is read, so a unit is attributed to a
 named binary and not to "php": the instrumented php builds
-(`Airlock/php-{7.4.33,8.2.13,8.3.0}.tar.gz`), the
+(`PUBLIC/Airlock/php-{7.4.33,8.2.13,8.3.0}.tar.gz`), the
 instrumented ruby 3.3.0 build, the image's cpython and openjdk 25.
 The target is recorded on every unit; a body from a different build
 is a different unit.

@@ -19,7 +19,7 @@ status: living
   + identity-marked shapes), then the per-language representation
   enumeration and the load-audit.
 - 2026-08-15: layer-2 step 1 DONE — the shared data file written by
-  hand: `PseudoCoupHQ/Research/data_representation/data_layer1.json`
+  hand: `PRIVATE/PseudoCoupHQ/Research/data_representation/data_layer1.json`
   (parses clean; ~87 leaf values across the seven forms + identity
   shapes). Conventions documented in its `__spec__`: `#special` for
   NaN/inf/-0.0 (JSON cannot hold them), `#int` for beyond-double
@@ -34,7 +34,7 @@ status: living
   with the superseded union extraction as raw reference; then the
   load-audit.
 - 2026-08-17: layer-2 steps 2 and 3 DONE, reported in
-  `PseudoCoupHQ/DevComms/log_023_layer2_representations.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_023_layer2_representations.md`.
   ENUMERATION: 328 (form, representation) cells across the 12
   languages, one file per language
   (`Research/data_representation/representations_<language>.json`),

@@ -1,8 +1,8 @@
 # log_009 — kind-clustering first pass: features, clustering, validation
 
 Date: 2026-08-12. Author: clustering agent for the owner's PseudoCoup research node (PCHQ).
-Inputs: `PseudoCoupHQ/Research/kind_signature_clustering/raw/` (five languages: rust, python, dart, c, cpp; kotlin deliberately excluded from this pass — it declares no roles/supertypes and will be evaluated against the validated clusters later, per §7).
-Outputs on disk: `features.json`, `clusters.json`, `validation.txt`, all under `PseudoCoupHQ/Research/kind_signature_clustering/`.
+Inputs: `PRIVATE/PseudoCoupHQ/Research/kind_signature_clustering/raw/` (five languages: rust, python, dart, c, cpp; kotlin deliberately excluded from this pass — it declares no roles/supertypes and will be evaluated against the validated clusters later, per §7).
+Outputs on disk: `features.json`, `clusters.json`, `validation.txt`, all under `PRIVATE/PseudoCoupHQ/Research/kind_signature_clustering/`.
 
 Vocabulary: super-node / sub-node / co-node / sub-tree only; tree-sitter's JSON key `children` is quoted solely as its key name for what we call the sub-node spec.
 
@@ -12,7 +12,7 @@ Partially — the known cross-language overlap re-emerges but with per-row stray
 
 ## §2 Pipeline
 
-Three scripts under `PseudoCoupHQ/Research/kind_signature_clustering/`:
+Three scripts under `PRIVATE/PseudoCoupHQ/Research/kind_signature_clustering/`:
 
 | script | consumes | emits |
 |---|---|---|

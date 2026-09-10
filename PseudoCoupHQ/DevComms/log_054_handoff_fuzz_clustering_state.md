@@ -8,11 +8,11 @@ which files and what is settled, open, and next.
 
 ## read these first, in this order
 
-1. `PseudoCoupHQ/CLAUDE.md` — settled vocabulary,
+1. `PRIVATE/PseudoCoupHQ/CLAUDE.md` — settled vocabulary,
    canonical form, probe design, scoring rules, explorer requirements,
    how the owner works. Written 2026-08-21 precisely because rulings kept
    getting re-litigated.
-2. `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/SUPPORT_ontology.md`
+2. `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_kind_fuzz_clustering/SUPPORT_ontology.md`
    — the settled ontology: language → operator → profile → cell; key =
    a cell's address; contract vs group; what merging is NOT. the owner's
    verbatim ruling on contraction is quoted there.

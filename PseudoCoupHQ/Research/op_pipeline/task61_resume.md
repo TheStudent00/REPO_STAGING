@@ -1,7 +1,7 @@
 # task61_resume.md — TASK 61 (`term.py`, `pool.py`) resume state
 
 Node home:
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_6_term/`
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_6_term/`
 and `node_0_3_5_7_pool/`. Report: `DevComms/log_163_task61_term_pool.md`.
 
 ## reading done (2026-09-03)
@@ -85,7 +85,7 @@ restarted as a single process. Recorded in log_163 rather than hidden.
 
 ## how to resume
 
-`cd PseudoCoupHQ/Research/op_pipeline` and run, in
+`cd PRIVATE/PseudoCoupHQ/Research/op_pipeline` and run, in
 order, with `/tmp/reconnect_venv/bin/python3`:
 `term61_run.py 30000` (resumes from `term61_state.json`),
 `name_census5.py`, `audit61.py`, `pool61_run.py`.

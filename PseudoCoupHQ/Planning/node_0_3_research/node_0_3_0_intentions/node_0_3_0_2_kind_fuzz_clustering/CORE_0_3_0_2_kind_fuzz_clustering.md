@@ -117,7 +117,7 @@ until the owner opens it.
    dominant-typed inputs. Generation, never collection; there is no
    corpus and none is wanted.
 2. **run** — through the Airlock agent lane
-   (`python3 Airlock/airlock submit <lane.sh> --batch
+   (`python3 PUBLIC/Airlock/airlock submit <lane.sh> --batch
    <label> --weight <n>`; `airlock status` to poll), on the 11 target
    languages installed 2026-08-14 (+ swift bonus). Record the
    answer, the raise, or the **compile refusal** — refusal is a
@@ -376,7 +376,7 @@ which is the measurement wanted anyway.
 
 ## record
 
-- artifacts: `PseudoCoupHQ/Research/kind_fuzz_clustering/`
+- artifacts: `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`
   (created at phase 0). The harness skeleton to reuse is
   `Research/dominant_intentions/harness/` (vectors → runners → lane
   → compare), with GENERATED probes replacing hand-written vectors.

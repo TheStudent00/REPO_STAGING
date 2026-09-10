@@ -1,12 +1,12 @@
 # log_227 — task L1: Lean 4 as a second discharger — install verified, eight of ten edges certified, the renderer's preservation theorem proved for the integer subset, and a scope estimate
 
 Node: `hq.research.compiler_graph.gate.lean`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`).
 Its super-node is the gate
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/CORE_0_3_1_5_gate.md`).
-Artifacts: `PseudoCoupHQ/Research/op_pipeline/lean/`.
-Instance: `Airlock/instances/L1.conf`. Lanes: 24, all kept at
-`PseudoCoupHQ/Research/op_pipeline/lean/lanes_L1/`.
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/CORE_0_3_1_5_gate.md`).
+Artifacts: `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/`.
+Instance: `PUBLIC/Airlock/instances/L1.conf`. Lanes: 24, all kept at
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/lanes_L1/`.
 
 ---
 
@@ -73,11 +73,11 @@ and that correction is in section 5.
   answer sits above a solver's answer in the evidence doctrine.
 - **`term_to_lean.py`** — the program that turns one printed layer-5 text into
   one Lean `BitVec` expression:
-  `PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py`.
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py`.
 - **`Render.lean`** — the file holding the term language, a C integer
   expression language, the rendering between them, and the preservation
   theorem:
-  `PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`.
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`.
 
 ---
 
@@ -435,7 +435,7 @@ info: Archproof/Api.lean:48:0: 0x00#8      -- (128#8) >>> (200#8)
 ### 5.1 What is stated, and why it is not a restatement of itself
 
 The file is
-`PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`,
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`,
 374 lines. It holds five things: an inductive `Term` indexed by width, an
 `eval` from a term and an environment to a `BitVec w`, an inductive `CExpr`
 for the C integer expressions the renderer emits, an `evalC`, a `render`
@@ -627,7 +627,7 @@ more room is not known and was not measured.
 The `lean` child's peak went 6,800 MB at an 8g container and 12,462 MB at a
 12g container, on the same theorems. That is the same pattern task 83 measured
 for the term transcription (log_189 §2.6): the peak follows whatever ceiling
-it is given. `Airlock/instances/L1.conf` states this, states
+it is given. `PUBLIC/Airlock/instances/L1.conf` states this, states
 that `/tmp` is RAM so raising it raises the instance's memory need by the same
 amount, and states that the per-lane named abort `ABORT_MEMORY_L1` watches
 only the lane's own parent process — the `lean` child is governed by the
@@ -981,16 +981,16 @@ itself a command the checker can re-issue.
 
 ## 14. See also
 
-- `PseudoCoupHQ/Research/op_pipeline/lean/README.md` — what is
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/README.md` — what is
   in the artifact folder and what the first runs found.
-- `PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/archproof/Archproof/Render.lean`
   — the preservation theorem and everything it rests on.
-- `PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py` — the
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/term_to_lean.py` — the
   translator, with its refusal causes documented in its header.
-- `PseudoCoupHQ/Research/op_pipeline/lean/lanes_L1/` — all 24
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lean/lanes_L1/` — all 24
   lane scripts, in submission order.
-- `PseudoCoupHQ/DevComms/log_224_task_t100_pool_entry_equivalence_closure.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_224_task_t100_pool_entry_equivalence_closure.md`
   §6 — t100's own account of the 1,099 UNDECIDED pairs and the 120-second
   runner limit that produced them.
-- `PseudoCoupHQ/DevComms/log_221_opcode_signature_algebra.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_221_opcode_signature_algebra.md`
   §7 — the claim this task's §5 is the source-level half of.

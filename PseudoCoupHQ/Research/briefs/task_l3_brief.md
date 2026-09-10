@@ -1,6 +1,6 @@
 # Task l3 — the proof system's owed items: the L2 check's composer names arrivals by ledger order, and the 61 native-evaluation proofs re-proved by bv_decide
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it. Node:
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it. Node:
 `Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/`
 (CORE and PROGRESS). Read `DevComms/log_227` (L1) and `log_232` (L2: the
 model translator, 160 mnemonics, 153 STATED + 19 DISCREPANCY + 87 REFUSED
@@ -11,7 +11,7 @@ over the 259 single-opcode rows), `Research/op_pipeline/lean/model_translate.py`
 `bv_decide`, its 10 s SAT ceiling), and the L1 rows whose proof used
 native evaluation (`Lean.ofReduceBool` / `native_decide` in their
 theorem: count them; log_227 recorded 61). Instance `l3.conf` (copy from
-`Airlock/instances/l3.conf`; memory 8g is enough: L1's
+`PUBLIC/Airlock/instances/l3.conf`; memory 8g is enough: L1's
 bv_decide peaked under 500 MB; the one 16-bit division took 12 GB and is
 NOT re-posed here). Artifact folder: `Research/op_pipeline/lean/`; lanes
 under `lanes_l3/`. Task ap5 must have CLOSED before this task submits a
@@ -49,6 +49,6 @@ before writing); verifier lane; PROGRESS on the lean node; sync-back;
 instance down. Memory bound 6g, named abort `ABORT_MEMORY_L3`; no
 Mathlib, no network in lanes. Shared file this brief authorises:
 `model_translate.py` (the composer only). Never delete anything under
-`<runs>/` or `Airlock/`. Reply with the check's
+`<runs>/` or `PUBLIC/Airlock/`. Reply with the check's
 before/after tally, the per-row fate of the 19, the count moved to
 `bv_decide`, the tally, the two lists.

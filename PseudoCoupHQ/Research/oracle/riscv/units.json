@@ -1,0 +1,392 @@
+{
+ "meta": {
+  "ship_flags_riscv64": {
+   "c": "clang -std=c17 -O1 --target=riscv64-unknown-linux-gnu -c",
+   "go": "GOARCH=riscv64 GOOS=linux go build"
+  },
+  "ship_flags_x86": {
+   "c": "clang -std=c17 -O1 -c",
+   "go": "go build"
+  },
+  "task": "rv1",
+  "term_store": "PseudoCoupHQ/Research/op_pipeline/term66_store",
+  "what": "the ten cells of the brief's handful, each with the corpus unit that attests it, that unit's own probe source, and its x86 term from the term store"
+ },
+ "rows": [
+  {
+   "attests_cell": {
+    "key_width": 32,
+    "mnem": "add",
+    "shape": "gpr_gpr"
+   },
+   "expression": "a + b",
+   "key_width": 32,
+   "lang": "go",
+   "lhs_type": "int32",
+   "mnem": "add",
+   "operator": "+",
+   "outcome": "PICKED",
+   "probe_number": 312,
+   "rhs_type": "int32",
+   "shape": "gpr_gpr",
+   "source": "// probe 312 -- binary +\npackage main\n\n//go:noinline\nfunc op_312(a int32, b int32) int32 {\n\treturn a + b\n}\n\nvar ga int32\nvar gb int32\nvar sink interface{}\n\nfunc main() {\n\tsink = op_312(ga, gb)\n\t_ = sink\n}\n",
+   "symbol": "main.op_312",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_go.json",
+   "unit": "go/op_312",
+   "why": "the cell's own attested unit; c's int32 addition lowers to lea, not to this cell",
+   "x86_arrival_families": [
+    "rax",
+    "rbx"
+   ],
+   "x86_result_family": "rax",
+   "x86_result_width": 32,
+   "x86_ship_body": [
+    "add %ebx,%eax",
+    "ret"
+   ],
+   "x86_term": "Extract(31, 0, v0) + Extract(31, 0, v1)",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  },
+  {
+   "attests_cell": null,
+   "key_width": 64,
+   "mnem": "sub",
+   "outcome": "NO_CORPUS_UNIT",
+   "shape": "imm_gpr",
+   "unit": null,
+   "why": "NO CORPUS UNIT: the probe corpus is (operator x holder pair) and never puts a literal on an operand, so no body spells an immediate-form subtract at 64. The row is a flag, not a substitution."
+  },
+  {
+   "attests_cell": {
+    "key_width": 32,
+    "mnem": "imul",
+    "shape": "gpr_gpr"
+   },
+   "expression": "a * b",
+   "key_width": 32,
+   "lang": "c",
+   "lhs_type": "int32_t",
+   "mnem": "imul",
+   "operator": "*",
+   "outcome": "PICKED",
+   "probe_number": 174,
+   "rhs_type": "int32_t",
+   "shape": "gpr_gpr",
+   "source": "/* probe 174 -- binary * */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} * (int32_t){0})\nop_174(int32_t a, int32_t b)\n{\n    return a * b;\n}\n",
+   "symbol": "op_174",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_c.json",
+   "unit": "c/op_174",
+   "why": "the cell's own attested unit, first c example",
+   "x86_arrival_families": [
+    "rdi",
+    "rsi"
+   ],
+   "x86_result_family": "rax",
+   "x86_result_width": 32,
+   "x86_ship_body": [
+    "mov %edi,%eax",
+    "imul %esi,%eax",
+    "ret"
+   ],
+   "x86_term": "Extract(31, 0, v0)*Extract(31, 0, v1)",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  },
+  {
+   "attests_cell": {
+    "key_width": 32,
+    "mnem": "sar",
+    "shape": "cl_gpr"
+   },
+   "expression": "a >> b",
+   "key_width": 32,
+   "lang": "c",
+   "lhs_type": "int32_t",
+   "mnem": "sar",
+   "operator": ">>",
+   "outcome": "PICKED",
+   "probe_number": 714,
+   "rhs_type": "int32_t",
+   "shape": "cl_gpr",
+   "source": "/* probe 714 -- binary >> */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} >> (int32_t){0})\nop_714(int32_t a, int32_t b)\n{\n    return a >> b;\n}\n",
+   "symbol": "op_714",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_c.json",
+   "unit": "c/op_714",
+   "why": "the cell's own attested unit, first c example",
+   "x86_arrival_families": [
+    "rdi",
+    "rsi"
+   ],
+   "x86_result_family": "rax",
+   "x86_result_width": 32,
+   "x86_ship_body": [
+    "mov %esi,%ecx",
+    "mov %edi,%eax",
+    "sar %cl,%eax",
+    "ret"
+   ],
+   "x86_term": "Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1))",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  },
+  {
+   "attests_cell": {
+    "key_width": 64,
+    "mnem": "shr",
+    "shape": "cl_gpr"
+   },
+   "expression": "a >> b",
+   "key_width": 64,
+   "lang": "c",
+   "lhs_type": "uint64_t",
+   "mnem": "shr",
+   "operator": ">>",
+   "outcome": "PICKED",
+   "probe_number": 726,
+   "rhs_type": "int32_t",
+   "shape": "cl_gpr",
+   "source": "/* probe 726 -- binary >> */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((uint64_t){0} >> (int32_t){0})\nop_726(uint64_t a, int32_t b)\n{\n    return a >> b;\n}\n",
+   "symbol": "op_726",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_c.json",
+   "unit": "c/op_726",
+   "why": "the cell's own attested unit, first c example",
+   "x86_arrival_families": [
+    "rdi",
+    "rsi"
+   ],
+   "x86_result_family": "rax",
+   "x86_result_width": 64,
+   "x86_ship_body": [
+    "mov %esi,%ecx",
+    "mov %rdi,%rax",
+    "shr %cl,%rax",
+    "ret"
+   ],
+   "x86_term": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  },
+  {
+   "attests_cell": {
+    "key_width": 32,
+    "mnem": "idiv",
+    "shape": "gpr_one"
+   },
+   "expression": "a / b",
+   "key_width": 32,
+   "lang": "c",
+   "lhs_type": "int32_t",
+   "mnem": "idiv",
+   "operator": "/",
+   "outcome": "PICKED",
+   "probe_number": 210,
+   "rhs_type": "int32_t",
+   "shape": "gpr_one",
+   "source": "/* probe 210 -- binary / */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} / (int32_t){0})\nop_210(int32_t a, int32_t b)\n{\n    return a / b;\n}\n",
+   "symbol": "op_210",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_c.json",
+   "unit": "c/op_210",
+   "why": "the cell's own attested unit, first c example",
+   "x86_arrival_families": [
+    "rdi",
+    "rsi"
+   ],
+   "x86_result_family": "rax",
+   "x86_result_width": 32,
+   "x86_ship_body": [
+    "mov %edi,%eax",
+    "cltd",
+    "idiv %esi",
+    "ret"
+   ],
+   "x86_term": "Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0) >> 31, Extract(31, 0, v0)), Concat(Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 0, v1))))",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  },
+  {
+   "attests_cell": {
+    "key_width": 64,
+    "mnem": "cmovne",
+    "shape": "gpr_gpr"
+   },
+   "expression": "a * b",
+   "key_width": 32,
+   "lang": "c",
+   "lhs_type": "int64_t",
+   "mnem": "cmovne",
+   "operator": "*",
+   "outcome": "PICKED",
+   "probe_number": 185,
+   "rhs_type": "bool",
+   "shape": "gpr_gpr",
+   "source": "/* probe 185 -- binary * */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int64_t){0} * (bool){0})\nop_185(int64_t a, bool b)\n{\n    return a * b;\n}\n",
+   "symbol": "op_185",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_c.json",
+   "unit": "c/op_185",
+   "why": "the 32-bit cell is attested only by swift units, and the image has no swift for riscv64; c/op_185 is the nearest attested c unit of the same mnemonic and is the brief's 'a select' -- its ship body is xor, test, cmovne. The cell it attests is the 64-bit one and is recorded here.",
+   "x86_arrival_families": [
+    "rdi",
+    "rsi"
+   ],
+   "x86_result_family": "rax",
+   "x86_result_width": 64,
+   "x86_ship_body": [
+    "xor %eax,%eax",
+    "test %esi,%esi",
+    "cmovne %rdi,%rax",
+    "ret"
+   ],
+   "x86_term": "If(Extract(31, 0, v0) == 0, 0, v1)",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  },
+  {
+   "attests_cell": {
+    "key_width": 8,
+    "mnem": "setne",
+    "shape": "gpr_one"
+   },
+   "expression": "a != b",
+   "key_width": 8,
+   "lang": "c",
+   "lhs_type": "int32_t",
+   "mnem": "setne",
+   "operator": "!=",
+   "outcome": "PICKED",
+   "probe_number": 498,
+   "rhs_type": "int32_t",
+   "shape": "gpr_one",
+   "source": "/* probe 498 -- binary != */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} != (int32_t){0})\nop_498(int32_t a, int32_t b)\n{\n    return a != b;\n}\n",
+   "symbol": "op_498",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_c.json",
+   "unit": "c/op_498",
+   "why": "the brief's 'a compare': the c unit whose ship body is xor, cmp, setne",
+   "x86_arrival_families": [
+    "rdi",
+    "rsi"
+   ],
+   "x86_result_family": "rax",
+   "x86_result_width": 8,
+   "x86_ship_body": [
+    "xor %eax,%eax",
+    "cmp %esi,%edi",
+    "setne %al",
+    "ret"
+   ],
+   "x86_term": "If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1)",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  },
+  {
+   "attests_cell": {
+    "key_width": 32,
+    "mnem": "addss",
+    "shape": "xmm_xmm"
+   },
+   "expression": "a + b",
+   "key_width": 32,
+   "lang": "c",
+   "lhs_type": "int32_t",
+   "mnem": "addss",
+   "operator": "+",
+   "outcome": "PICKED",
+   "probe_number": 105,
+   "rhs_type": "float",
+   "shape": "xmm_xmm",
+   "source": "/* probe 105 -- binary + */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} + (float){0})\nop_105(int32_t a, float b)\n{\n    return a + b;\n}\n",
+   "symbol": "op_105",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_c.json",
+   "unit": "c/op_105",
+   "why": "the cell's own attested unit, first c example",
+   "x86_arrival_families": [
+    "rdi",
+    "xmm0",
+    "xmm1"
+   ],
+   "x86_result_family": "xmm0",
+   "x86_result_width": 32,
+   "x86_ship_body": [
+    "cvtsi2ss %edi,%xmm1",
+    "addss %xmm1,%xmm0",
+    "ret"
+   ],
+   "x86_term": "Concat(Extract(63, 32, v1), fp.to_ieee_bv(fpToFP(Extract(31, 0, v1)) + fpToFP(fp.to_ieee_bv(fpToFP(RNE(), Extract(31, 0, v0))))))",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  },
+  {
+   "attests_cell": {
+    "key_width": 64,
+    "mnem": "cvtsi2sd",
+    "shape": "gpr_xmm"
+   },
+   "expression": "a + b",
+   "key_width": 64,
+   "lang": "c",
+   "lhs_type": "int32_t",
+   "mnem": "cvtsi2sd",
+   "operator": "+",
+   "outcome": "PICKED",
+   "probe_number": 106,
+   "rhs_type": "double",
+   "shape": "gpr_xmm",
+   "source": "/* probe 106 -- binary + */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} + (double){0})\nop_106(int32_t a, double b)\n{\n    return a + b;\n}\n",
+   "symbol": "op_106",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_c.json",
+   "unit": "c/op_106",
+   "why": "the cell's own attested unit, first c example",
+   "x86_arrival_families": [
+    "rdi",
+    "xmm0",
+    "xmm1"
+   ],
+   "x86_result_family": "xmm0",
+   "x86_result_width": 64,
+   "x86_ship_body": [
+    "cvtsi2sd %edi,%xmm1",
+    "addsd %xmm1,%xmm0",
+    "ret"
+   ],
+   "x86_term": "fp.to_ieee_bv(fpToFP(Extract(63, 0, v1)) + fpToFP(fp.to_ieee_bv(fpToFP(RNE(), Extract(31, 0, v0)))))",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  },
+  {
+   "attests_cell": {
+    "key_width": 32,
+    "mnem": "lea",
+    "shape": "mem_gpr"
+   },
+   "beside_the_ten": true,
+   "expression": "a + b",
+   "key_width": 32,
+   "lang": "c",
+   "lhs_type": "int32_t",
+   "mnem": "add",
+   "operator": "+",
+   "outcome": "PICKED",
+   "probe_number": 102,
+   "rhs_type": "int32_t",
+   "shape": "gpr_gpr",
+   "source": "/* probe 102 -- binary + */\n#include <stdint.h>\n#include <stdbool.h>\n\n__typeof__((int32_t){0} + (int32_t){0})\nop_102(int32_t a, int32_t b)\n{\n    return a + b;\n}\n",
+   "symbol": "op_102",
+   "symbol_exact": true,
+   "term_store_shard": "canon40_wrapped_c.json",
+   "unit": "c/op_102",
+   "why": "the c body of the same int32 addition the go unit carries; clang lowers it to lea, which is a finding of section 4 and not a defect. It fills the tenth slot the immediate-form subtract cell leaves empty.",
+   "x86_arrival_families": [
+    "rdi",
+    "rsi"
+   ],
+   "x86_result_family": "rax",
+   "x86_result_width": 32,
+   "x86_ship_body": [
+    "lea (%rdi,%rsi,1),%eax",
+    "ret"
+   ],
+   "x86_term": "Extract(31, 0, v0) + Extract(31, 0, v1)",
+   "x86_term_outcome": "PROVED_ON_SHIP"
+  }
+ ]
+}

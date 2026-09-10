@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# add-commit-push for DevComms. Run by the owner on the host
+# add-commit-push for PRIVATE/DevComms. Run by the owner on the host
 # machine; the Cowork sandbox cannot push (and can leave stale .git
 # locks the sandbox itself is denied deleting — cleared here).
 #
 # This repo is deliberately NOT driven by
-# PseudoCoupHQ/git_commit_push_all.sh. `DevComms`
+# PRIVATE/PseudoCoupHQ/git_commit_push_all.sh. `PRIVATE/DevComms`
 # is its own thing and not under PseudoCoupHQ's authority (the owner,
 # 2026-07-31), so it is committed on its own. Say the word if you want
 # HQ to call it for convenience — that would be a convenience, not a
@@ -14,10 +14,10 @@
 # > "update". The file is emptied after use so a stale message never
 # labels a later commit.
 #
-# Usage:  bash DevComms/git_commit_push.sh ["commit message"]
+# Usage:  bash PRIVATE/DevComms/git_commit_push.sh ["commit message"]
 
 set +e
-REPO=DevComms
+REPO=PRIVATE/DevComms
 MSGFILE="$REPO/next_commit_message.txt"
 if [ -n "$1" ]; then
     MSG="$1"

@@ -190,7 +190,7 @@ lanes of 2026-08-25 and 2026-08-26 carry them, and `regen_cost.py` reads
 them rather than timing anything:
 
 ```
-$ tail -3 Airlock/agent/logs/20260825T055219Z__op_c.sh.log
+$ tail -3 PUBLIC/Airlock/agent/logs/20260825T055219Z__op_c.sh.log
 # exit 0 in 42.4s
 ```
 
@@ -308,7 +308,7 @@ reusing any of them would collide with both. So every name here is new:
 |---|---|---|
 | container | `trickle-runner` | `sandbox-runner`, `va-runner` |
 | network | `trickle-internal` | `sandbox-internal`, `va-internal` |
-| agent tree | `AirlockTrickle/agent/{drop,out,logs,status}` | `Airlock/agent` |
+| agent tree | `AirlockTrickle/agent/{drop,out,logs,status}` | `PUBLIC/Airlock/agent` |
 
 `trickle_doctor.sh` checks this and prints it:
 
@@ -819,7 +819,7 @@ written as a `podman exec`.
 
 # 11. Complete file inventory
 
-## 11.1 New programs, in `PseudoCoupHQ/Research/op_pipeline/`
+## 11.1 New programs, in `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`
 
 | file | what it is |
 |---|---|
@@ -870,7 +870,7 @@ written as a `podman exec`.
 copy's own tree, deliberately outside the repositories so the 30-second
 daemon is not asked to commit the container's scratch.
 
-## 11.5 New in `PseudoCoupHQ/DevComms/`
+## 11.5 New in `PRIVATE/PseudoCoupHQ/DevComms/`
 
 `log_131_task40_regeneration_trickle.md` — this log.
 
@@ -951,8 +951,8 @@ in `DevComms/log_138_airlock_instances_feature.md`. A second sandbox is now
 one settings file and one flag:
 
 ```
-Airlock/instances/trickle.conf
-bash Airlock/up.sh --instance trickle --cpus 6
+PUBLIC/Airlock/instances/trickle.conf
+bash PUBLIC/Airlock/up.sh --instance trickle --cpus 6
 ```
 
 `trickle_up.sh`, `trickle_down.sh` and `trickle_doctor.sh` are superseded
@@ -967,7 +967,7 @@ something else. Its material survives in this repository as
 `Research/op_pipeline/trickle_lanes/` (334 lane scripts),
 `trickle_raw/` (668 raw products and consoles) and `trickle_store/`
 (334 folded stores). This is recorded in
-`Airlock/instances/trickle/agent/README.md`.
+`PUBLIC/Airlock/instances/trickle/agent/README.md`.
 
 ## C.2 The inotify diagnosis was the right conclusion from the wrong number
 

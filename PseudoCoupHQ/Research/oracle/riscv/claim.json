@@ -1,0 +1,361 @@
+{
+ "meta": {
+  "solver_timeout_ms": 3000,
+  "task": "rv1",
+  "what": "each unit's riscv64 term against its own x86-64 term, per written place, at the unit's own answer width",
+  "x86_term_note": "re-derived by walking the unit's recorded ship body with op_pipeline/reference.py; the term store's recorded text is on every row as `x86_term_from_the_store`"
+ },
+ "rows": [
+  {
+   "answer_width": 32,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rax"
+    },
+    {
+     "kind": "integer",
+     "riscv": "a1",
+     "x86": "rbx"
+    }
+   ],
+   "counterexample": null,
+   "expression": "a + b",
+   "identical_after_normalize": true,
+   "key_width": 32,
+   "lang": "go",
+   "mnem": "add",
+   "operator": "+",
+   "outcome": "IDENTICAL_AFTER_NORMALIZE",
+   "rederivation_matches_the_store": true,
+   "riscv_body": "c.add a0, a1 ; jalr zero, 0x0(ra)",
+   "riscv_term": "Extract(31, 0, v0) + Extract(31, 0, v1)",
+   "shape": "gpr_gpr",
+   "unit": "go/op_312",
+   "x86_arrivals_beyond_the_arguments": [],
+   "x86_body": "add %ebx,%eax ; ret",
+   "x86_term_from_the_store": "Extract(31, 0, v0) + Extract(31, 0, v1)",
+   "x86_term_rederived": "Extract(31, 0, v0) + Extract(31, 0, v1)",
+   "z3_outcome": "EQUAL_BY_Z3"
+  },
+  {
+   "key_width": 64,
+   "mnem": "sub",
+   "outcome": "NO_CORPUS_UNIT",
+   "shape": "imm_gpr",
+   "unit": null,
+   "why": "NO CORPUS UNIT: the probe corpus is (operator x holder pair) and never puts a literal on an operand, so no body spells an immediate-form subtract at 64. The row is a flag, not a substitution."
+  },
+  {
+   "answer_width": 32,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rdi"
+    },
+    {
+     "kind": "integer",
+     "riscv": "a1",
+     "x86": "rsi"
+    }
+   ],
+   "counterexample": null,
+   "expression": "a * b",
+   "identical_after_normalize": true,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "imul",
+   "operator": "*",
+   "outcome": "IDENTICAL_AFTER_NORMALIZE",
+   "rederivation_matches_the_store": true,
+   "riscv_body": "mulw a0, a1, a0 ; c.jr ra",
+   "riscv_term": "Extract(31, 0, v0)*Extract(31, 0, v1)",
+   "shape": "gpr_gpr",
+   "unit": "c/op_174",
+   "x86_arrivals_beyond_the_arguments": [],
+   "x86_body": "mov %edi,%eax ; imul %esi,%eax ; ret",
+   "x86_term_from_the_store": "Extract(31, 0, v0)*Extract(31, 0, v1)",
+   "x86_term_rederived": "Extract(31, 0, v0)*Extract(31, 0, v1)",
+   "z3_outcome": "EQUAL_BY_Z3"
+  },
+  {
+   "answer_width": 32,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rdi"
+    },
+    {
+     "kind": "integer",
+     "riscv": "a1",
+     "x86": "rsi"
+    }
+   ],
+   "counterexample": null,
+   "expression": "a >> b",
+   "identical_after_normalize": true,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "sar",
+   "operator": ">>",
+   "outcome": "IDENTICAL_AFTER_NORMALIZE",
+   "rederivation_matches_the_store": true,
+   "riscv_body": "sraw a0, a0, a1 ; c.jr ra",
+   "riscv_term": "Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1))",
+   "shape": "cl_gpr",
+   "unit": "c/op_714",
+   "x86_arrivals_beyond_the_arguments": [],
+   "x86_body": "mov %esi,%ecx ; mov %edi,%eax ; sar %cl,%eax ; ret",
+   "x86_term_from_the_store": "Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1))",
+   "x86_term_rederived": "Extract(31, 0, v0) >> Concat(0, Extract(4, 0, v1))",
+   "z3_outcome": "EQUAL_BY_Z3"
+  },
+  {
+   "answer_width": 64,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rdi"
+    },
+    {
+     "kind": "integer",
+     "riscv": "a1",
+     "x86": "rsi"
+    }
+   ],
+   "counterexample": null,
+   "expression": "a >> b",
+   "identical_after_normalize": true,
+   "key_width": 64,
+   "lang": "c",
+   "mnem": "shr",
+   "operator": ">>",
+   "outcome": "IDENTICAL_AFTER_NORMALIZE",
+   "rederivation_matches_the_store": true,
+   "riscv_body": "srl a0, a0, a1 ; c.jr ra",
+   "riscv_term": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "shape": "cl_gpr",
+   "unit": "c/op_726",
+   "x86_arrivals_beyond_the_arguments": [],
+   "x86_body": "mov %esi,%ecx ; mov %rdi,%rax ; shr %cl,%rax ; ret",
+   "x86_term_from_the_store": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "x86_term_rederived": "LShR(v0, Concat(0, Extract(5, 0, v1)))",
+   "z3_outcome": "EQUAL_BY_Z3"
+  },
+  {
+   "answer_width": 32,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rdi"
+    },
+    {
+     "kind": "integer",
+     "riscv": "a1",
+     "x86": "rsi"
+    }
+   ],
+   "counterexample": {
+    "arg0": "2147483648",
+    "arg1": "0"
+   },
+   "expression": "a / b",
+   "identical_after_normalize": false,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "idiv",
+   "operator": "/",
+   "outcome": "DIFFER",
+   "rederivation_matches_the_store": true,
+   "riscv_body": "divw a0, a0, a1 ; c.jr ra",
+   "riscv_term": "If(Extract(31, 0, v1) == 0, 4294967295, If(And(Extract(31, 0, v0) == 2147483648, Extract(31, 0, v1) == 4294967295), 2147483648, bvsdiv_i(Extract(31, 0, v0), Extract(31, 0, v1))))",
+   "shape": "gpr_one",
+   "unit": "c/op_210",
+   "x86_arrivals_beyond_the_arguments": [],
+   "x86_body": "mov %edi,%eax ; cltd ; idiv %esi ; ret",
+   "x86_term_from_the_store": "Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0) >> 31, Extract(31, 0, v0)), Concat(Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 0, v1))))",
+   "x86_term_rederived": "Extract(31, 0, bvsdiv_i(Concat(Extract(31, 0, v0) >> 31, Extract(31, 0, v0)), Concat(Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 0, v1))))",
+   "z3_outcome": "DIFFER"
+  },
+  {
+   "answer_width": 64,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rdi"
+    },
+    {
+     "kind": "integer",
+     "riscv": "a1",
+     "x86": "rsi"
+    }
+   ],
+   "counterexample": {
+    "arg0": "18446744073709551607",
+    "arg1": "16390304541154738176"
+   },
+   "expression": "a * b",
+   "identical_after_normalize": false,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "cmovne",
+   "operator": "*",
+   "outcome": "DIFFER",
+   "rederivation_matches_the_store": true,
+   "riscv_body": "czero.eqz a0, a0, a1 ; c.jr ra",
+   "riscv_term": "If(v0 == 0, 0, v1)",
+   "shape": "gpr_gpr",
+   "unit": "c/op_185",
+   "x86_arrivals_beyond_the_arguments": [],
+   "x86_body": "xor %eax,%eax ; test %esi,%esi ; cmovne %rdi,%rax ; ret",
+   "x86_term_from_the_store": "If(Extract(31, 0, v0) == 0, 0, v1)",
+   "x86_term_rederived": "If(Extract(31, 0, v0) == 0, 0, v1)",
+   "z3_outcome": "DIFFER"
+  },
+  {
+   "answer_width": 8,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rdi"
+    },
+    {
+     "kind": "integer",
+     "riscv": "a1",
+     "x86": "rsi"
+    }
+   ],
+   "counterexample": {
+    "arg0": "16500306186977935360",
+    "arg1": "0"
+   },
+   "expression": "a != b",
+   "identical_after_normalize": false,
+   "key_width": 8,
+   "lang": "c",
+   "mnem": "setne",
+   "operator": "!=",
+   "outcome": "DIFFER",
+   "rederivation_matches_the_store": true,
+   "riscv_body": "c.xor a0, a1 ; sltu a0, zero, a0 ; c.jr ra",
+   "riscv_term": "If(v0 ^ v1 == 0, 0, 1)",
+   "shape": "gpr_one",
+   "unit": "c/op_498",
+   "x86_arrivals_beyond_the_arguments": [],
+   "x86_body": "xor %eax,%eax ; cmp %esi,%edi ; setne %al ; ret",
+   "x86_term_from_the_store": "If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1)",
+   "x86_term_rederived": "If(Extract(31, 0, v0) == Extract(31, 0, v1), 0, 1)",
+   "z3_outcome": "DIFFER"
+  },
+  {
+   "answer_width": 32,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rdi"
+    },
+    {
+     "kind": "float",
+     "riscv": "fa0",
+     "x86": "xmm0"
+    }
+   ],
+   "counterexample": null,
+   "expression": "a + b",
+   "identical_after_normalize": true,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "addss",
+   "operator": "+",
+   "outcome": "IDENTICAL_AFTER_NORMALIZE",
+   "rederivation_matches_the_store": false,
+   "riscv_body": "fcvt.s.w fa5, a0, dyn ; fadd.s fa0, fa0, fa5, dyn ; c.jr ra",
+   "riscv_term": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v1)) + fpToFP(fp.to_ieee_bv(fpToFP(RNE(), Extract(31, 0, v0)))))",
+   "shape": "xmm_xmm",
+   "unit": "c/op_105",
+   "x86_arrivals_beyond_the_arguments": [
+    "xmm1"
+   ],
+   "x86_body": "cvtsi2ss %edi,%xmm1 ; addss %xmm1,%xmm0 ; ret",
+   "x86_term_from_the_store": "Concat(Extract(63, 32, v1), fp.to_ieee_bv(fpToFP(Extract(31, 0, v1)) + fpToFP(fp.to_ieee_bv(fpToFP(RNE(), Extract(31, 0, v0))))))",
+   "x86_term_rederived": "fp.to_ieee_bv(fpToFP(Extract(31, 0, v1)) + fpToFP(fp.to_ieee_bv(fpToFP(RNE(), Extract(31, 0, v0)))))",
+   "z3_outcome": "EQUAL_BY_Z3"
+  },
+  {
+   "answer_width": 64,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rdi"
+    },
+    {
+     "kind": "float",
+     "riscv": "fa0",
+     "x86": "xmm0"
+    }
+   ],
+   "counterexample": null,
+   "expression": "a + b",
+   "identical_after_normalize": true,
+   "key_width": 64,
+   "lang": "c",
+   "mnem": "cvtsi2sd",
+   "operator": "+",
+   "outcome": "IDENTICAL_AFTER_NORMALIZE",
+   "rederivation_matches_the_store": true,
+   "riscv_body": "fcvt.d.w fa5, a0 ; fadd.d fa0, fa0, fa5, dyn ; c.jr ra",
+   "riscv_term": "fp.to_ieee_bv(fpToFP(Extract(63, 0, v1)) + fpToFP(fp.to_ieee_bv(fpToFP(RNE(), Extract(31, 0, v0)))))",
+   "shape": "gpr_xmm",
+   "unit": "c/op_106",
+   "x86_arrivals_beyond_the_arguments": [
+    "xmm1"
+   ],
+   "x86_body": "cvtsi2sd %edi,%xmm1 ; addsd %xmm1,%xmm0 ; ret",
+   "x86_term_from_the_store": "fp.to_ieee_bv(fpToFP(Extract(63, 0, v1)) + fpToFP(fp.to_ieee_bv(fpToFP(RNE(), Extract(31, 0, v0)))))",
+   "x86_term_rederived": "fp.to_ieee_bv(fpToFP(Extract(63, 0, v1)) + fpToFP(fp.to_ieee_bv(fpToFP(RNE(), Extract(31, 0, v0)))))",
+   "z3_outcome": "EQUAL_BY_Z3"
+  },
+  {
+   "answer_width": 32,
+   "argument_places": [
+    {
+     "kind": "integer",
+     "riscv": "a0",
+     "x86": "rdi"
+    },
+    {
+     "kind": "integer",
+     "riscv": "a1",
+     "x86": "rsi"
+    }
+   ],
+   "counterexample": null,
+   "expression": "a + b",
+   "identical_after_normalize": true,
+   "key_width": 32,
+   "lang": "c",
+   "mnem": "add",
+   "operator": "+",
+   "outcome": "IDENTICAL_AFTER_NORMALIZE",
+   "rederivation_matches_the_store": true,
+   "riscv_body": "c.addw a0, a1 ; c.jr ra",
+   "riscv_term": "Extract(31, 0, v0) + Extract(31, 0, v1)",
+   "shape": "gpr_gpr",
+   "unit": "c/op_102",
+   "x86_arrivals_beyond_the_arguments": [],
+   "x86_body": "lea (%rdi,%rsi,1),%eax ; ret",
+   "x86_term_from_the_store": "Extract(31, 0, v0) + Extract(31, 0, v1)",
+   "x86_term_rederived": "Extract(31, 0, v0) + Extract(31, 0, v1)",
+   "z3_outcome": "EQUAL_BY_Z3"
+  }
+ ]
+}

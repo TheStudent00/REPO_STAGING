@@ -592,7 +592,7 @@ an unrelated file in a different project:
 
 ```
 $ find ~/Programming -name "*log_121*"
-StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_121_reactivity_model.md
+PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_121_reactivity_model.md
 $ podman exec sandbox-runner find / -maxdepth 6 -name "log_121*"
 (no output)
 ```
@@ -612,7 +612,7 @@ Evidence class: verified absence, both sides of the wall.
 # 10. Complete file inventory
 
 Created by this task, all of them new, all under
-`PseudoCoupHQ/Research/op_pipeline/` except the last
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/` except the last
 two:
 
 | file | bytes | what it is |

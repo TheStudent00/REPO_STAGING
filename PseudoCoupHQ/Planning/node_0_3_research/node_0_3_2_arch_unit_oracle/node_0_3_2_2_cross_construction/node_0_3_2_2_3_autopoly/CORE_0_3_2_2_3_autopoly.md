@@ -69,5 +69,5 @@ Adopted 2026-09-07 as the research's route to the Hub
 
 ## artifacts
 
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/`
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/`
 (`emulate.py`, `per_opcode/`, `rust/`, `src/`, lane folders).

@@ -1,6 +1,6 @@
 # log 155 — Task 55: Airlock, ruling 6 implemented and verified end to end
 
-Date: 2026-09-02. Repository worked on: `Airlock`, as a
+Date: 2026-09-02. Repository worked on: `PUBLIC/Airlock`, as a
 DEVELOPER of Airlock (the standing rule that a project never modifies
 Airlock is about callers; the owner ruled these changes into the tool itself).
 
@@ -50,7 +50,7 @@ rename but a deletion the same ruling ordered (§5).
 GLOSS: no `workers` key was added, and `daemon/watcher.py` was not edited at
 all in this task. The daemon's own words on the matter are unchanged.
 
-LITERAL — `Airlock/daemon/watcher.py`, module docstring:
+LITERAL — `PUBLIC/Airlock/daemon/watcher.py`, module docstring:
 
 ```
 EXECUTION IS SERIAL. run_script() is called synchronously from the single
@@ -69,7 +69,7 @@ file with `state=done` when it ends. So one scan of that one folder answers
 per instance — which is the same reason one instance per task is the rule
 (§4.4).
 
-LITERAL — the new block in `Airlock/down.sh`:
+LITERAL — the new block in `PUBLIC/Airlock/down.sh`:
 
 ```bash
 RUNNING_LANES=()
@@ -122,8 +122,8 @@ The verification run of §6, step by step with the real values:
 LITERAL — the whole of what `airlock --instance r11check down` printed:
 
 ```
-running: bash Airlock/down.sh --instance r11check
-(this CLI delegates so container flags have one source of truth: Airlock/down.sh)
+running: bash PUBLIC/Airlock/down.sh --instance r11check
+(this CLI delegates so container flags have one source of truth: PUBLIC/Airlock/down.sh)
 
 === airlock down ===
   instance: r11check   runner: r11check-runner   agent: <runs>/r11check/agent
@@ -133,7 +133,7 @@ running: bash Airlock/down.sh --instance r11check
     Removing the runner now stops that lane mid-flight, and the
     submitter sees no error — only a run that stopped.
     Wait for it, or override deliberately:
-      bash Airlock/down.sh --instance r11check --force
+      bash PUBLIC/Airlock/down.sh --instance r11check --force
 ```
 
 GLOSS: the second and third lines of the refusal are the lane's name and the
@@ -147,7 +147,7 @@ GLOSS: the CLI does not reimplement `down`; it runs the shell script. So the
 refusal is written once and both front doors have it. The transcript above
 is the CLI's, and its first line is the command it ran.
 
-LITERAL — `Airlock/airlock`, `delegate()`:
+LITERAL — `PUBLIC/Airlock/airlock`, `delegate()`:
 
 ```python
     command = ["bash", target, "--instance", paths.instance] + list(args)
@@ -167,7 +167,7 @@ LITERAL — `Airlock/airlock`, `delegate()`:
 
 ## 4.1 The derivation
 
-LITERAL — the changed lines of `Airlock/instance.sh`
+LITERAL — the changed lines of `PUBLIC/Airlock/instance.sh`
 (`git diff`, the hunk at line 147):
 
 ```
@@ -189,11 +189,11 @@ LITERAL — the three derivations, asked of `instance.sh` itself
 
 ```
 $ bash -c 'source ./instance.sh; airlock_instance_load; echo "$AL_AGENT_DIR"'
-Airlock/agent
+PUBLIC/Airlock/agent
 $ bash -c 'source ./instance.sh; AIRLOCK_INSTANCE=r11check airlock_instance_load; echo "$AL_AGENT_DIR"'
 <runs>/r11check/agent
 $ bash -c 'source ./instance.sh; AIRLOCK_INSTANCE=trickle airlock_instance_load; echo "$AL_AGENT_DIR"'
-Airlock/instances/trickle/agent
+PUBLIC/Airlock/instances/trickle/agent
 ```
 
 GLOSS: the third line is the legacy case of §4.2, pinned on purpose.
@@ -208,7 +208,7 @@ The instance names its own tree in its own conf file, which is per-machine
 and gitignored (so no real path enters a tracked file, and the value used is
 repo-relative in any case).
 
-LITERAL — the block added to `Airlock/instances/trickle.conf`:
+LITERAL — the block added to `PUBLIC/Airlock/instances/trickle.conf`:
 
 ```
 # LEGACY TREE, kept in place (2026-09-02). The default home for a
@@ -224,7 +224,7 @@ agent_dir         = instances/trickle/agent
 The `instances/*/` ignore stanza is kept for these trees, and its comment
 now says so.
 
-LITERAL — `Airlock/.gitignore`, the changed comment:
+LITERAL — `PUBLIC/Airlock/.gitignore`, the changed comment:
 
 ```
 # tree is a run record, not a tool file, and since 2026-09-02 it lives
@@ -242,7 +242,7 @@ a default — and such an instance appears only under `AirlockRuns`, so
 listing `instances/` alone would miss it. Each row now says which of the two
 it was found in.
 
-LITERAL — the new listing code in `Airlock/airlock`:
+LITERAL — the new listing code in `PUBLIC/Airlock/airlock`:
 
 ```python
         runs = runs_home()
@@ -264,7 +264,7 @@ library.
 Two sections were added to the README's Instances section. The second is the
 ruled paragraph.
 
-LITERAL — `Airlock/README.md`, the new section
+LITERAL — `PUBLIC/Airlock/README.md`, the new section
 "One instance per task, and why a jam stays local":
 
 ```
@@ -378,7 +378,7 @@ throughout.
 
 ```
 $ echo "host: /projects exists? $( [ -d /projects ] && echo yes || echo no ) ; cwd $(pwd)"
-host: /projects exists? no ; cwd Airlock
+host: /projects exists? no ; cwd PUBLIC/Airlock
 $ podman run --rm --network none localhost/sandbox-runner:latest bash -c \
     'echo "container: /drop exists? $( [ -d /drop ] && echo yes || echo no ) ; /out exists? $( [ -d /out ] && echo yes || echo no )"'
 container: /drop exists? yes ; /out exists? yes
@@ -405,7 +405,7 @@ EOF
 $ bash ./up.sh --instance r11check
 === airlock up ===
   instance: r11check   runner: r11check-runner   agent: <runs>/r11check/agent
-  config:   Airlock/instances/r11check.conf
+  config:   PUBLIC/Airlock/instances/r11check.conf
 r11check-internal
   proxy: none (instance is configured 'proxy = no' — no route out at all)
 3625ec3eeb29634185b7968621bd780bd314540b33f1ce3116bf8b6378d71060
@@ -417,7 +417,7 @@ r11check-internal
     drop:     <runs>/r11check/agent/drop      (write x.sh here to run it)
     status:   <runs>/r11check/agent/status    (x.sh.status — poll this)
     out/logs: <runs>/r11check/agent/{out,logs}
-    mounts:   from Airlock/mounts.conf —
+    mounts:   from PUBLIC/Airlock/mounts.conf —
       [five read-only/read-write host mounts, per-machine; elided]
 
   r11check-runner  Up Less than a second  localhost/sandbox-runner:latest
@@ -490,8 +490,8 @@ changes nothing.
 
 ```
 $ ./airlock --instance r11check down --force
-running: bash Airlock/down.sh --instance r11check --force
-(this CLI delegates so container flags have one source of truth: Airlock/down.sh)
+running: bash PUBLIC/Airlock/down.sh --instance r11check --force
+(this CLI delegates so container flags have one source of truth: PUBLIC/Airlock/down.sh)
 
 === airlock down ===
   instance: r11check   runner: r11check-runner   agent: <runs>/r11check/agent
@@ -517,7 +517,7 @@ were already up are the same three.
 
 ```
 $ ./airlock doctor
-| NOTE | instances | 3 known, from instances/*.conf and <runs>/*: r11check (r11check-runner: absent; conf+runs); sandbox (sandbox-runner: running; built-in+conf) <- this command; trickle (trickle-runner: absent; conf) | airlock --instance <name> <command>, or bash Airlock/up.sh --instance <name>; a new instance is a new instances/<name>.conf (see instances/sandbox.conf.example), and its run tree is made under ~/AirlockRuns on the first up |
+| NOTE | instances | 3 known, from instances/*.conf and <runs>/*: r11check (r11check-runner: absent; conf+runs); sandbox (sandbox-runner: running; built-in+conf) <- this command; trickle (trickle-runner: absent; conf) | airlock --instance <name> <command>, or bash PUBLIC/Airlock/up.sh --instance <name>; a new instance is a new instances/<name>.conf (see instances/sandbox.conf.example), and its run tree is made under ~/AirlockRuns on the first up |
 ```
 
 (the full run printed 1 WARN, 4 NOTE, 9 OK and exited 0; the row above is
@@ -656,7 +656,7 @@ derivation uses `$HOME`, expanded at run time.
 
 # 10. Complete file inventory
 
-## 10.1 Files changed in `Airlock` (all tracked)
+## 10.1 Files changed in `PUBLIC/Airlock` (all tracked)
 
 `git diff --stat` from the last commit before this task
 (`5baaf98`) to the current head:
@@ -673,49 +673,49 @@ derivation uses `$HOME`, expanded at run time.
 
 | file | what changed |
 |---|---|
-| `Airlock/down.sh` | the running-lane refusal, `--force`, loop-based flag parsing, and the header comment recording why |
-| `Airlock/instance.sh` | `default_agent` for a non-default instance; `AL_DAEMON_FILE` removed from the load and the export |
-| `Airlock/up.sh` | the `DAEMON_ARGS` block and its `podman run` line removed |
-| `Airlock/airlock` | `tilde()` and `runs_home()` added; `check_instances` lists `<runs>/*` and says where each instance was found; the `Paths` agent fallback; the `down` help row and docstring |
-| `Airlock/README.md` | two new sections; three table rows updated; the `daemon_file` configuration row and key-list entry removed |
-| `Airlock/.gitignore` | the `instances/*/` stanza's comment now says the rule is for legacy trees |
+| `PUBLIC/Airlock/down.sh` | the running-lane refusal, `--force`, loop-based flag parsing, and the header comment recording why |
+| `PUBLIC/Airlock/instance.sh` | `default_agent` for a non-default instance; `AL_DAEMON_FILE` removed from the load and the export |
+| `PUBLIC/Airlock/up.sh` | the `DAEMON_ARGS` block and its `podman run` line removed |
+| `PUBLIC/Airlock/airlock` | `tilde()` and `runs_home()` added; `check_instances` lists `<runs>/*` and says where each instance was found; the `Paths` agent fallback; the `down` help row and docstring |
+| `PUBLIC/Airlock/README.md` | two new sections; three table rows updated; the `daemon_file` configuration row and key-list entry removed |
+| `PUBLIC/Airlock/.gitignore` | the `instances/*/` stanza's comment now says the rule is for legacy trees |
 
-## 10.2 File created in `Airlock`
+## 10.2 File created in `PUBLIC/Airlock`
 
 | file | what it is |
 |---|---|
-| `Airlock/DevComms/log_003_down_refuses_and_run_trees_move.md` | Airlock's own record of this change set, next in its sequence after `log_002` |
+| `PUBLIC/Airlock/DevComms/log_003_down_refuses_and_run_trees_move.md` | Airlock's own record of this change set, next in its sequence after `log_002` |
 
 ## 10.3 Per-machine files changed (gitignored, never committed)
 
 | file | what changed |
 |---|---|
-| `Airlock/instances/sandbox.conf.example` | the `agent_dir` block documents the new derivation; a note records that `daemon_file` is gone (this one IS tracked — it is the committed template) |
-| `Airlock/instances/trickle.conf` | `agent_dir` pins the legacy tree; the `daemon_file` key removed and replaced with a note |
+| `PUBLIC/Airlock/instances/sandbox.conf.example` | the `agent_dir` block documents the new derivation; a note records that `daemon_file` is gone (this one IS tracked — it is the committed template) |
+| `PUBLIC/Airlock/instances/trickle.conf` | `agent_dir` pins the legacy tree; the `daemon_file` key removed and replaced with a note |
 
 ## 10.4 Files created and then removed
 
 | file | why |
 |---|---|
-| `Airlock/instances/r11check.conf` | the verification instance; removed in §6.7 |
+| `PUBLIC/Airlock/instances/r11check.conf` | the verification instance; removed in §6.7 |
 | `<runs>/r11check/agent/**` (4 files) | that instance's run tree; removed in §6.7 |
 | the verification lane, in this session's scratch directory | not in any repository |
 
 ## 10.5 Files read, not written
 
-`Airlock/README.md`, `instance.sh`, `up.sh`, `down.sh`,
+`PUBLIC/Airlock/README.md`, `instance.sh`, `up.sh`, `down.sh`,
 `airlock`, `daemon/watcher.py`, `build.sh`, `Containerfile`, `.gitignore`,
 `instances/sandbox.conf.example`, `instances/sandbox.conf`,
 `instances/trickle.conf`;
-`PseudoCoupHQ/DevComms/log_151_claude_code_task_briefs_round11.md`,
+`PRIVATE/PseudoCoupHQ/DevComms/log_151_claude_code_task_briefs_round11.md`,
 `log_138_airlock_instances_feature.md`,
 `log_145_task50c_airlock_calls_for_dee.md`,
 `log_143_task50a_swift_emitter_fix.md`;
-`DevComms/LLM_communication_protocol.md`.
+`PRIVATE/DevComms/LLM_communication_protocol.md`.
 
 ## 10.6 This report
 
-`PseudoCoupHQ/DevComms/log_155_task55_airlock_ruling6.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_155_task55_airlock_ruling6.md`.
 
 # 11. Open points
 

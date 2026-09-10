@@ -82,7 +82,7 @@ Attribution: `Research/oracle/cross_construction/cross1_length_one.py`, run as
 lane `o1_l2_cross1.sh`, log
 `<runs>/o1/agent/logs/20260906T002436Z__o1_l2_cross1.sh.log`
 (o1's own run dir -- the daemon writes there per instance, distinct
-from the default instance's `Airlock/agent/logs/`).
+from the default instance's `PUBLIC/Airlock/agent/logs/`).
 Peak RSS (children, `resource.getrusage`) 95,620 KB = 93.4 MB,
 against the 2 GB bound (`ABORT_MEMORY_O1`, not raised).
 

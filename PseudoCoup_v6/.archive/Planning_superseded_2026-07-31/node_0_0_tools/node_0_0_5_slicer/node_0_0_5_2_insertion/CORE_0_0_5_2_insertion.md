@@ -39,7 +39,7 @@ time, so a mismatch fails loudly instead of executing wrong code.
 ## Work items
 
 1. Harvest mounting and the typed-cell border into
-   `PseudoCoup_v6/Tools/slicer/`, with the platform
+   `PRIVATE/PseudoCoup_v6/Tools/slicer/`, with the platform
    assumptions asserted rather than assumed.
 2. Cache keyed by (intention, language, type-tuple) with the
    plan's identity in the key, so a plan change invalidates

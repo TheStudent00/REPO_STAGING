@@ -135,7 +135,7 @@ Entry `E01831`, x unit `swift/regen_2633`. The term (layer-5 text), **LITERAL**:
 Concat(0, Extract(7, 0, v0), Extract(7, 0, v1))
 ```
 
-The rendered source, **LITERAL** (`PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E01831__swift_regen_2633.rs`):
+The rendered source, **LITERAL** (`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E01831__swift_regen_2633.rs`):
 
 ```rust
 #![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
@@ -176,7 +176,7 @@ Entry `E00338`, x unit `swift/op_446`. The term (layer-5 text), **LITERAL**:
 If(v0 == v1, 0, 1) | If(0 <= v0, 0, 1)
 ```
 
-The rendered source, **LITERAL** (`PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E00338__swift_op_446.rs`):
+The rendered source, **LITERAL** (`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E00338__swift_op_446.rs`):
 
 ```rust
 #![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
@@ -209,7 +209,7 @@ Entry `E01532`, x unit `go/regen_146`. The term (layer-5 text), **LITERAL**:
 Concat(0, Extract(15, 0, bvudiv_i(Concat(0, Extract(7, 0, v0)), Concat(0, Extract(7, 0, v1)))))
 ```
 
-The rendered source, **LITERAL** (`PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E01532__go_regen_146.rs`):
+The rendered source, **LITERAL** (`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E01532__go_regen_146.rs`):
 
 ```rust
 #![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
@@ -244,7 +244,7 @@ After the caller-extension re-pose: `DISPROVED`, seeds **LITERAL** `[IN_1 = 0, I
 
 ## 4. Three rendered sources from the sample of 40
 
-**LITERAL**, `PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E00104__c_op_252.rs`, from the term `Extract(63, 0, bvsrem_i(Concat(v0 >> 63, v0), Concat(Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 0, v1))))`:
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E00104__c_op_252.rs`, from the term `Extract(63, 0, bvsrem_i(Concat(v0 >> 63, v0), Concat(Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 31, v1), Extract(31, 0, v1))))`:
 
 ```rust
 #![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
@@ -260,7 +260,7 @@ pub extern "C" fn emu_E00104__c_op_252(a: u64, b: u32, c: u64) -> u64
 }
 ```
 
-**LITERAL**, `PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E00128__c_op_336.rs`, from the term `Concat(0, ~(~(If(fpIsNaN(fpToFP(Extract(31, 0, v0))), 1, 0) | If(Or(fpIsNaN(fpToFP(Extract(31, 0, v0))), Not(fpEQ(fpToFP(Extract(31, 0, v0)), +0.0))), 1, 0)) | If(Extract(31, 0, v1) == 0, 255, 254)))`:
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E00128__c_op_336.rs`, from the term `Concat(0, ~(~(If(fpIsNaN(fpToFP(Extract(31, 0, v0))), 1, 0) | If(Or(fpIsNaN(fpToFP(Extract(31, 0, v0))), Not(fpEQ(fpToFP(Extract(31, 0, v0)), +0.0))), 1, 0)) | If(Extract(31, 0, v1) == 0, 255, 254)))`:
 
 ```rust
 #![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
@@ -276,7 +276,7 @@ pub extern "C" fn emu_E00128__c_op_336(a: u32, b: u64, c: f32, d: f64) -> u32
 }
 ```
 
-**LITERAL**, `PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E00169__c_op_508.rs`, from the term `Concat(0, If(And(fpEQ(fpToFP(fp.to_ieee_bv(fpToFP(RNE(), v0))), fpToFP(Extract(63, 0, v1))), Not(Or(fpIsNaN(fpToFP(fp.to_ieee_bv(fpToFP(RNE(), v0)))), fpIsNaN(fpToFP(Extract(63, 0, v1)))))), 0, 1))`:
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/rust/src/E00169__c_op_508.rs`, from the term `Concat(0, If(And(fpEQ(fpToFP(fp.to_ieee_bv(fpToFP(RNE(), v0))), fpToFP(Extract(63, 0, v1))), Not(Or(fpIsNaN(fpToFP(fp.to_ieee_bv(fpToFP(RNE(), v0)))), fpIsNaN(fpToFP(Extract(63, 0, v1)))))), 0, 1))`:
 
 ```rust
 #![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]

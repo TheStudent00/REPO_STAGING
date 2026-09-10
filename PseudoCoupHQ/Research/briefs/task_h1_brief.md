@@ -2,14 +2,14 @@
 
 Law: `LAW.md` beside this file, ALL of it including the tower section.
 Then: the arch_unit_oracle CORE's "goal" and "Ruling, 2026-09-08" sections
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`);
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`);
 `DevComms/log_220` (task o8, the per-opcode emulation as it ran) and
 `log_226` (o11, rust); `Research/oracle/cross_construction/emulation/per_opcode/per_opcode.py`
 and `.../emulation/emulate.py` (the c renderer) and `.../emulation/rust/rust_render.py`;
 `Research/oracle/arch_opcodes/model/model_table.md` §1 (five rows in full)
 and the row shape in `model_table.json`. Instance `h1.conf` (on the tower;
 bring it up). Artifact folder:
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`;
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`;
 lanes under `lanes_h1/` there.
 
 ## 1. What this is

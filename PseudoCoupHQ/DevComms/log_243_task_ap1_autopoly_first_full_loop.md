@@ -1,14 +1,14 @@
 # log 243 — task ap1: AutoPoly's first full loop, every attested cell of the model table on four compiled targets
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the ruling of
 2026-09-08 in
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`.
 Date: 2026-09-09. Instance `ap1`, on the tower guest.
 
 Artifact folder:
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`.
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`.
 Lane scripts: `.../autopoly/lanes_ap1/`, nineteen of them, each kept in
 the repo as the standing rule of 2026-09-07 requires. Every lane log named
 below is on the TOWER, under
@@ -20,13 +20,13 @@ below is on the TOWER, under
 
 - **A CELL** is one (`mnem`, operand shape, `key_width`) row of the
   arch-opcode model table
-  (`PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
+  (`PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
   tasks m1/m1b), which holds, per place the opcode writes, the z3 term the
   reference simulator's own builder puts there.
 - **THE OUTER SET** is every cell that the canon40 corpus actually
   attests: a distinct triple with a `TRANSLATED` row whose
   `attestation.ledger_rows` is greater than zero. Task m1b measured it at
-  253 (log_237 §8, `PseudoCoupHQ/DevComms/log_237_task_m1b_model_table_join_closer.md`);
+  253 (log_237 §8, `PRIVATE/PseudoCoupHQ/DevComms/log_237_task_m1b_model_table_join_closer.md`);
   this task counted it again from the table itself and got 253.
 - **A RUN** is `find_emulation(cell, lang)` for one of the four compiled
   targets (c, rust, go, swift): the target's own operator where it has one
@@ -34,11 +34,11 @@ below is on the TOWER, under
   target's operators where it has not; then compiled at the corpus's ship
   flags, carved, and put back to z3 against the cell's own term.
 - **THE DRIVER** is
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`
   as task g1b left it (log_242). It is imported and called; not one line
   of it was edited by this task.
 - **THIS TASK'S OWN PROGRAM** is
-  `PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py`,
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.py`,
   the loop around that driver and the bookkeeping, and nothing that
   decides an answer.
 - **THE ATTESTED LEDGER ROWS** of a cell are how many rows of the canon40
@@ -448,7 +448,7 @@ order, item 4).
 
 The whole list of 110, each with its counterexample and whether it
 survives the re-pose, is section 5 of
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
 
 ---
 
@@ -459,7 +459,7 @@ survives the re-pose, is section 5 of
 12.77%. Two: 14, 7.47%. One: 6, 1.86%. None: 96 cells, 27,011 rows,
 20.3%. The 120 in full, and the 96 in full with the cause on each of the
 four targets, are sections 4.1 and 4.2 of
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`.
 
 **THE RE-POSE.** The law's rule on a time limit is that it is a FLAG:
 re-run with more room and report whether the answer changed.
@@ -498,7 +498,7 @@ which no ceiling can move because the reason is structural.
 `<runs>/ap1/agent/logs/20260909T111309Z__ap1_l11_claims2.sh.log`
 under its `===== reproduce =====` heading. The whole forty-row table is
 section 6 of
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/autopoly.md`,
 and the three counts under it are the last line of the `tables` transcript
 in section 5 of this log, which re-runs.
 
@@ -651,7 +651,7 @@ closers, so tasks g1b, g1c and this task all render from
 from the normalised term. Task h2 measured that fix as a NO-OP on its own
 population: all 24 rendered places produced a source character for
 character identical both ways (log_240, and
-`PseudoCoupHQ/DevComms/log_240_task_h2_two_printing_fixes.md`).
+`PRIVATE/PseudoCoupHQ/DevComms/log_240_task_h2_two_printing_fixes.md`).
 So this is a fact about what ran, not a claim that a result is wrong, and
 it is REPORTED rather than fixed: this brief's own instruction is the
 driver as task g1b left it, unchanged, and changing which term the
@@ -662,7 +662,7 @@ standing rule forbids. It is in the awaiting-the owner list.
 
 # 12. Memory
 
-The bound stated in `Airlock/instances/ap1.conf`, in
+The bound stated in `PUBLIC/Airlock/instances/ap1.conf`, in
 `autopoly.py`'s own docstring and in every lane header is 6 GB resident on
 the one collecting process, named abort `ABORT_MEMORY_AP1`, checked after
 every run. The peaks the programs printed:
@@ -688,7 +688,7 @@ what the incremental store was for.
 # 13. The deliverables
 
 Under
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`:
 
 | file | what it is |
 |---|---|

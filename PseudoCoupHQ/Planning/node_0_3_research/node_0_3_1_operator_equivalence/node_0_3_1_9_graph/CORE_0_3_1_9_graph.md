@@ -365,7 +365,7 @@ its cause and stays **planned**.
 ## realization (what exists on disk, 2026-09-03, after task 71)
 
 Home of the PROGRAMS and the small summaries:
-`PseudoCoupHQ/Research/compiler_graph/`. Home of the
+`PRIVATE/PseudoCoupHQ/Research/compiler_graph/`. Home of the
 ARTIFACTS since 2026-09-04 (task 93): `PseudoCoupGraphs`,
 a companion folder with NO REMOTE by design, holding
 `graph_<lang>.json`, `coverage_<lang>*.json`, `super_ops_<lang>.json`,

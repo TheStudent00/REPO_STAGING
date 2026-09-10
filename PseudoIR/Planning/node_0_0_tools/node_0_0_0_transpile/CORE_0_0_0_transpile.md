@@ -44,10 +44,10 @@ lineage — and the ledgerer it runs is the Frankenstein ledgerer.
 PseudoIR does not build a transpiler of its own.
 
 neither Frankenstein exists yet. building them is the PCv5 rebuild:
-`PseudoCoup_v5/` is gutted and commandeered as PCv6's
+`PRIVATE/PseudoCoup_v5/` is gutted and commandeered as PCv6's
 precursor, and the two composed tools become version 5. the parts
 list is
-`PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`;
+`PRIVATE/PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`;
 the decision is in that repo's `AgentMemory/02_decisions.md` under
 Direction.
 

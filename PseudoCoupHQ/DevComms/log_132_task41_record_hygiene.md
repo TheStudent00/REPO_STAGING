@@ -1,7 +1,7 @@
 # log_132 — TASK 41: record hygiene
 
 Date: 2026-09-02. Author: Claude Code (implementer), no sub-agents.
-Working directory: `PseudoCoupHQ/Research/op_pipeline`.
+Working directory: `PRIVATE/PseudoCoupHQ/Research/op_pipeline`.
 
 THE SPELLING BAN, ABSOLUTE (the owner, restated in anger 2026-08-25 after a
 second violation). No operator token may appear in ANY key, grouping,
@@ -37,7 +37,7 @@ I VERIFIED the correct figure is 158 (not 168), with rust at 48 (not
 any correction:
 
 ```
-$ cd PseudoCoupHQ/Research/op_pipeline
+$ cd PRIVATE/PseudoCoupHQ/Research/op_pipeline
 $ python3 -c "
 import json, collections
 d = json.load(open('audit_altered_testimony.json'))
@@ -124,7 +124,7 @@ Checked the version-control system rather than ruling this from the
 log text alone:
 
 ```
-$ cd PseudoCoupHQ
+$ cd PRIVATE/PseudoCoupHQ
 $ git log --all --format="%H %ad %s" --date=short | grep "round 7 banked"
 a68e4a55c8a7fcfeb1e0a55685e44f04451bf351 2026-09-01 round 7 banked: ...
   testimony defect audited (168 altered captures found via the "|"->"/"
@@ -166,7 +166,7 @@ log in `DevComms/` mentions `pycache` at all except log_129's own
 brief text repeating the instruction:
 
 ```
-$ cd PseudoCoupHQ/DevComms
+$ cd PRIVATE/PseudoCoupHQ/DevComms
 $ grep -rln "pycache" *.md
 log_129_claude_code_task_briefs_round8.md
 $ grep -n "pycache" log_129_claude_code_task_briefs_round8.md
@@ -181,7 +181,7 @@ now and reports what is actually on disk, evidence-classed as MINE
 ## b.2 The sweep
 
 ```
-$ cd PseudoCoupHQ
+$ cd PRIVATE/PseudoCoupHQ
 $ find Research/op_pipeline Research/compiler_graph -path "*__pycache__*" -type f | wc -l
 177
 ```
@@ -247,7 +247,7 @@ precisely; absent that, this sweep is the record.
 ```
 $ date
 Wed Sep  2 01:30:06 AM EDT 2026
-$ find PseudoCoupHQ/Research/op_pipeline PseudoCoupHQ/Research/compiler_graph \
+$ find PRIVATE/PseudoCoupHQ/Research/op_pipeline PRIVATE/PseudoCoupHQ/Research/compiler_graph \
     -maxdepth 2 -type f -newermt "2026-09-02 00:00" ! -path "*__pycache__*"
 (no output)
 ```
@@ -265,7 +265,7 @@ round-8 output yet), I swept round 7's date too, so this task does
 not silently skip the window it actually inherited:
 
 ```
-$ find PseudoCoupHQ/Research/op_pipeline PseudoCoupHQ/Research/compiler_graph \
+$ find PRIVATE/PseudoCoupHQ/Research/op_pipeline PRIVATE/PseudoCoupHQ/Research/compiler_graph \
     -maxdepth 1 -type f -newermt "2026-09-01 00:00" ! -newermt "2026-09-02 00:00" | wc -l
 153
 ```
@@ -277,7 +277,7 @@ confirmed by name-search that each traces to an EARLIER task's own
 log, not round 7's tasks 34-38:
 
 ```
-$ cd PseudoCoupHQ/DevComms
+$ cd PRIVATE/PseudoCoupHQ/DevComms
 $ grep -ln "build_guards5.py\|canon29.py\|canon_interp_cpython.py\|sret_gate.py\|dwarf_typed_key.py" log_*.md
 log_105_task22_unconverged_fourth.md
 log_111_task24_typed_key_regen.md

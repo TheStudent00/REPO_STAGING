@@ -5,7 +5,7 @@ right frame on the wrong scale.
 
 The page changed is the PYTHON route — the one the owner opens:
 `Research/op_pipeline/dashboard_ouro.html` + `dashboard_ouro.py`,
-rendered by `Ourobrowser`. The JavaScript route is
+rendered by `PUBLIC/Ourobrowser`. The JavaScript route is
 untouched and its `git diff` is pasted in §8.4.
 
 ---
@@ -510,7 +510,7 @@ chose — so the rule was implemented and the stale sentence is flagged in
 
 # 7. What the page looks like — the fourteen screenshots
 
-`PseudoCoupHQ/DevComms/screens/log_192/`. All 1867×1177,
+`PRIVATE/PseudoCoupHQ/DevComms/screens/log_192/`. All 1867×1177,
 grabbed out of the real Ourobrowser by `t86_ouro_shots.py`.
 
 | file | what it shows |
@@ -632,13 +632,13 @@ dashboard_pane5.js
 dashboard_pane6.js
 ```
 
-## 8.5 `Ourobrowser` untouched
+## 8.5 `PUBLIC/Ourobrowser` untouched
 
 LITERAL, on the host (that repository is not mounted into the sandbox, so
 this could not be a lane; §9 names the boundary):
 
 ```
-$ cd Ourobrowser
+$ cd PUBLIC/Ourobrowser
 $ git diff | wc -l
 0
 $ git log --format='%h %cI %s' --since='2026-09-04T17:33:00-04:00' | head
@@ -696,7 +696,7 @@ mechanism.
 | the full pass, 205 renders, twice | Airlock lanes `t86_l4_all_panes.sh`, `t86_l7_all_panes2.sh` | recomputation at a past commit |
 | every guard, and the `git diff` over the JavaScript route | Airlock lanes `t86_l5_guards.sh`, `t86_l6_js_guard.sh`, `t86_l8_guards_final.sh`, `t86_l9_data_guard.sh`, `t86_l10_final_check.sh` | a check is a computation |
 | rendering the page in Ourobrowser to LOOK at it | the host, `t86_ouro_shots.py` | the browser IS the viewer of the deliverable |
-| `git diff` over `Ourobrowser` | the host | that repository is **not mounted** into the sandbox (`Airlock/mounts.conf` carries PseudoCoupHQ, PseudoCoup_v5/v6, Sources and PlanPlan). Named here rather than crossed silently; nothing was installed or built to do it |
+| `git diff` over `PUBLIC/Ourobrowser` | the host | that repository is **not mounted** into the sandbox (`Airlock/mounts.conf` carries PseudoCoupHQ, PseudoCoup_v5/v6, Sources and PlanPlan). Named here rather than crossed silently; nothing was installed or built to do it |
 
 Every lane name was used once (`t86_l1` … `t86_l10`). No host venv was
 built, nothing was pip-installed, and every import the lanes needed was
@@ -706,7 +706,7 @@ already in the image.
 
 # 10. Complete file inventory
 
-## 10.1 `PseudoCoupHQ` — edited
+## 10.1 `PRIVATE/PseudoCoupHQ` — edited
 
 | file | the whole of the edit |
 |---|---|
@@ -717,7 +717,7 @@ already in the image.
 | `Planning/.../node_0_3_5_10_dashboard/CORE_...md` | realization rows: the task-85 chronology rows marked superseded, three new rows |
 | `Planning/.../node_0_3_5_10_dashboard/PROGRESS.md` | the dated entries for this task |
 
-## 10.2 `PseudoCoupHQ` — new
+## 10.2 `PRIVATE/PseudoCoupHQ` — new
 
 | file | what it is |
 |---|---|
@@ -747,7 +747,7 @@ already in the image.
 | `Research/op_pipeline/dashboard.html`, `dashboard_join.js`, `dashboard_loader.js`, `dashboard_pane1.js`, `dashboard_pane23.js`, `dashboard_pane4.js`, `dashboard_pane5.js`, `dashboard_pane6.js` | the JavaScript route. `git diff` empty both ways, §8.4 |
 | `Research/op_pipeline/chronology.json` | the superseded product, kept as a record; `dashboard_pane6.js` still reads it |
 | `Research/op_pipeline/check_no_spelling_keys.py` | the guard, unmodified, sha256 `a377462b…` |
-| `Ourobrowser` | the owner's engine; §8.5 |
+| `PUBLIC/Ourobrowser` | the owner's engine; §8.5 |
 
 ---
 

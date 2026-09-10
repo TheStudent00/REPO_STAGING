@@ -1,7 +1,7 @@
 # log_217 — task t101b: dominant types, the join over the compiler's own DWARF (closing task t101)
 
 Node: `hq.research.compiler_graph.probes.type_inventory`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_0_probes/node_0_3_1_0_1_type_inventory/CORE_0_3_1_0_1_type_inventory.md`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_0_probes/node_0_3_1_0_1_type_inventory/CORE_0_3_1_0_1_type_inventory.md`).
 Master plan: `CORE_0_3_research` §4.2 step 3. Prior record: log_213
 (task t101's flag — the stored DWARF tables carried no byte size or
 encoding). This session closed task t101b: the anchor-DWARF re-read
@@ -24,7 +24,7 @@ inventory.
 ## 1. The instance and its lane history
 
 ```
-$ python3 Airlock/airlock --instance t101b status
+$ python3 PUBLIC/Airlock/airlock --instance t101b status
 ```
 
 ```
@@ -163,7 +163,7 @@ because it was never incremented. `main()`'s summary print then reads
 `ptot["members_compiled_without_rows"]` on that plain dict and gets
 `KeyError` instead of the `0` a `Counter` would have given.
 
-**Fix, one line**, `PseudoCoupHQ/Research/op_pipeline/types101_join.py`:
+**Fix, one line**, `PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_join.py`:
 
 ```
 $ git show ea856a8c -- Research/op_pipeline/types101_join.py
@@ -198,7 +198,7 @@ converting; return the `Counter`), no other line touched.
 ## 4. The clean run
 
 ```
-$ python3 Airlock/airlock --instance t101b submit PseudoCoupHQ/Research/op_pipeline/types101_lanes/t101b_l5_join.sh --batch t101b --weight 1
+$ python3 PUBLIC/Airlock/airlock --instance t101b submit PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_lanes/t101b_l5_join.sh --batch t101b --weight 1
 ```
 
 `t101b_l5_join.sh`'s log
@@ -309,13 +309,13 @@ used but not a holder-table row ['DW_TAG_pointer_type|no_size']
 The full per-holder, per-language spelling breakdown (`types101_report.md`
 §5) is the same `types101_holders.json`'s `holders[*].spellings_by_language`
 field, read in full rather than summarized; the file itself
-(`PseudoCoupHQ/Research/op_pipeline/types101_holders.json`)
+(`PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_holders.json`)
 is the LITERAL source for every row in that table.
 
 ## 6. The spelling-ban guard
 
 ```
-$ python3 Airlock/airlock --instance t101b submit PseudoCoupHQ/Research/op_pipeline/types101_lanes/t101b_l6_guard.sh --batch t101b --weight 1
+$ python3 PUBLIC/Airlock/airlock --instance t101b submit PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_lanes/t101b_l6_guard.sh --batch t101b --weight 1
 ```
 
 `t101b_l6_guard.sh`'s log tail
@@ -365,7 +365,7 @@ Pass 2, after adding §5 and fixing the `git show` invocations to drop
 a `-C` flag that made the checker misread the diff's own subcommand:
 2 MATCHES, but 3 DIFFERS — all three `python3 -c` snippets in §5 had
 opened their json by the HOST path
-(`PseudoCoupHQ/...`), which does not resolve
+(`PRIVATE/PseudoCoupHQ/...`), which does not resolve
 inside the sandbox this checker runs in (mounted at
 `PseudoCoupHQ`); fixed to the path relative to the lane's
 own work directory (`Research/op_pipeline/...`). One of those three
@@ -404,7 +404,7 @@ and §3's `git show` diffs and all four of §5's `python3 -c` snippets
 plus the guard's `grep -c exempt`; the 2 REFUSED and remaining 4
 `out_of_sandbox` NOT_RERUNNABLE are every `airlock` call and the one
 lane-log `grep` against a path outside the sandbox mount (expected —
-`Airlock` and `~/AirlockRuns` are not Airlock-mounted
+`PUBLIC/Airlock` and `~/AirlockRuns` are not Airlock-mounted
 paths, the same shape log_215 §"VERDICT" records); the 7
 UNVERIFIABLE are prose sentences and citations of a lane's own log by
 name with no fresh command beside them (the lane logs themselves are
@@ -412,16 +412,16 @@ quoted LITERAL in §2–§4 and §6, just not as a re-runnable claim).
 
 ## 8. See also
 
-- `PseudoCoupHQ/Research/op_pipeline/types101_report.md`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_report.md`
   — the narrative deliverable, all tables.
-- `PseudoCoupHQ/Research/op_pipeline/types101_join.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_join.py`
   — the join, both fixes.
-- `PseudoCoupHQ/Research/op_pipeline/types101_anchor_dwarf.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_anchor_dwarf.py`
   — the DWARF re-read (not changed this session).
-- `PseudoCoupHQ/Research/op_pipeline/types101_holders.json`,
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/types101_holders.json`,
   `types101_spellings.json`, `types101_entry_holders.json` — the three
   artifacts.
-- `PseudoCoupHQ/DevComms/log_213_task_t101_dominant_types_dwarf_flag.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_213_task_t101_dominant_types_dwarf_flag.md`
   — task t101's flag, closed by this task.
 - `<scratch>/close_t101b.md`
   — the closing note this session worked from.

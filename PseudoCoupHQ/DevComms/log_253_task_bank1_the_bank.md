@@ -1,15 +1,15 @@
 # log 253 — task bank1: the polyfill library as banked certificates, and the loop reshaped to delta plus audit
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the rulings of
-2026-09-08 and 2026-09-09. Law: `PseudoCoupHQ/Research/LAW.md`,
+2026-09-08 and 2026-09-09. Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`,
 read in full including its tower section. Brief:
-`PseudoCoupHQ/Research/briefs/task_bank1_brief.md`.
+`PRIVATE/PseudoCoupHQ/Research/briefs/task_bank1_brief.md`.
 Date: 2026-09-10. Instance `bank1`, on the tower guest.
 
 Artifact folder:
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`;
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/`;
 new files `certificates.jsonl`, `certificates.json`, `bank.py`, the driver
 change in `autopoly.py`, `autopoly1.py`, `bank1_delta_runs.jsonl`,
 `bank1_delta.json`, `bank1_full_runs.jsonl`, `bank1.md`, `src_bank1/`,
@@ -19,7 +19,7 @@ log named below is on the TOWER (`<user>@<tower>`) under
 `<runs>/bank1/agent/logs/`.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into the
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into the
 instance. Every rendering is labelled per the protocol's
 `object.literal-gloss-analogy`: **LITERAL** is the object itself, quoted;
 **GLOSS** is a plain-words reading beside a literal. `grep -v 'peak
@@ -600,7 +600,7 @@ pieces for exactly that reason and reads 0 everywhere.
 
 # 11. Memory
 
-The bound stated in `Airlock/instances/bank1.conf`, in every
+The bound stated in `PUBLIC/Airlock/instances/bank1.conf`, in every
 lane header and in both programs' own constants is 6 GB resident on the one
 collecting process, named abort `ABORT_MEMORY_BANK1`, checked after every
 store in `bank.py` and after every run in `autopoly.py`. The sample the law

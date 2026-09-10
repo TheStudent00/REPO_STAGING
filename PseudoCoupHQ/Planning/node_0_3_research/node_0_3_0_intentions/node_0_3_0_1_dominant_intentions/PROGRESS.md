@@ -23,7 +23,7 @@ status: living
   census drafted, then REFACTORED to the owner format ruled by the owner
   (every fact files under structure / operation / border; border
   facts billed to the other party):
-  `PseudoCoupHQ/Research/dominant_intentions/census_boolean_float.md`
+  `PRIVATE/PseudoCoupHQ/Research/dominant_intentions/census_boolean_float.md`
   (draft 2). Post-refactor: bool featureless as the seed order
   assumed (its apparent fractures were `choice`'s and the truth()
   conversion's, misfiled); float has ONE genuine operation
@@ -76,7 +76,7 @@ status: living
   — deferred to the skill-save mechanism, not done here.
 - 2026-08-14: WP2 CALIBRATION RUN DONE (phase 1 first light) —
   harness built fresh under
-  `PseudoCoupHQ/Research/dominant_intentions/harness/`
+  `PRIVATE/PseudoCoupHQ/Research/dominant_intentions/harness/`
   (vectors → per-language runners → one lane script → compare);
   boolean/float census executed across 13 columns (11 targets +
   rust in BOTH build modes per record-both + swift bonus).
@@ -89,7 +89,7 @@ status: living
   types) while comparing bool VALUES fine — proposed as a new
   border fact (boolean, checker) in the log; census page
   untouched pending the owner. Report:
-  `PseudoCoupHQ/DevComms/log_019_calibration_run.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_019_calibration_run.md`.
 - 2026-08-14: WP2 FULL CENSUS RUN DONE (phase 1 complete) — the
   four heavy pages (integer, string, list, dict) executed across
   14 columns, now including dart in BOTH modes (SDK installed once
@@ -104,7 +104,7 @@ status: living
   iteration-order anti-guarantee verified as UNSTABLE; cpp's
   insert-on-read confirmed by the map size. Residue still EMPTY
   after six objects. Report:
-  `PseudoCoupHQ/DevComms/log_020_full_census_run.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_020_full_census_run.md`.
 - 2026-08-14: the owner RULED. log_020 §3 corrections 1-11 and log_019
   §3's typescript border fact APPLIED to the census pages
   (`census_integer.md`, `census_string.md`, `census_list.md`,
@@ -177,7 +177,7 @@ status: living
   condition while accepting whole and fractional — the sharpest
   evidence that coercion-to-bool is a per-STRUCTURE decision inside a
   language rather than a per-language camp. Record:
-  `PseudoCoupHQ/DevComms/log_039_census_foldback_and_log_rewrites.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_039_census_foldback_and_log_rewrites.md`.
 - 2026-08-29 — LANGUAGE-UPDATE DRILL, rust 1.98.0 (shipped 2026-08-20,
   five algebraic float methods stabilised). Measured, not asserted: the
   shape layer correctly did nothing (pin check 12/12, rust kind map
@@ -197,5 +197,5 @@ status: living
   both required — measured). Proposed to the owner, not decided: a fourth
   guaranteed arithmetic mode beside `wrapping`/`growing`/`approximating`,
   candidate name `rearranging`; ingress records it, never `unspecified`.
-  Record: `PseudoCoupHQ/DevComms/log_076_rust_198_update_drill.md`.
+  Record: `PRIVATE/PseudoCoupHQ/DevComms/log_076_rust_198_update_drill.md`.
 - next: WP3/WP4, or a new census object if the owner opens one.

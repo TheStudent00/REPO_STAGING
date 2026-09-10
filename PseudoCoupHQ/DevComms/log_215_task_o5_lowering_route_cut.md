@@ -386,7 +386,7 @@ token.
 **LITERAL**:
 
 ```
-$ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l2b_spelling_guard.sh --instance o5 --no-batch
+$ python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l2b_spelling_guard.sh --instance o5 --no-batch
 ```
 
 ```
@@ -418,10 +418,10 @@ example) — the fix in section 2.2, re-run here clean.
 **LITERAL**:
 
 ```
-$ bash Airlock/up.sh --instance o5
+$ bash PUBLIC/Airlock/up.sh --instance o5
 === airlock up ===
   instance: o5   runner: o5-runner   agent: <runs>/o5/agent
-  config:   Airlock/instances/o5.conf
+  config:   PUBLIC/Airlock/instances/o5.conf
   proxy: none (instance is configured 'proxy = no' — no route out at all)
   o5-runner already existed; started (bound to <runs>/o5/agent/drop)
 
@@ -434,7 +434,7 @@ no `mounts_file` override): `PseudoCoupHQ:rw`, `/sources:ro`,
 covering every path this task reads; no mount edit was needed.
 
 ```
-$ bash Airlock/down.sh --instance o5
+$ bash PUBLIC/Airlock/down.sh --instance o5
 ```
 
 (run at the close of this log, output not pasted — see the verifier
@@ -453,7 +453,7 @@ yet)
 **LITERAL**, first pass (`o5_l3_claims_verify.sh`):
 
 ```
-$ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l3_claims_verify.sh --instance o5 --no-batch
+$ python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l3_claims_verify.sh --instance o5 --no-batch
 ```
 
 ```
@@ -478,7 +478,7 @@ output order (`clang_llvm_cpp` then `go_compiler`); no value changed.
 **LITERAL**, second pass (`o5_l3b_claims_verify.sh`), after that fix:
 
 ```
-$ python3 Airlock/airlock submit PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l3b_claims_verify.sh --instance o5 --no-batch
+$ python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/oracle/compiler_units/lanes_o5/o5_l3b_claims_verify.sh --instance o5 --no-batch
 ```
 
 ```

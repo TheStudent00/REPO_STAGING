@@ -80,7 +80,7 @@ path). This lap replaces the computed boundary with a read one.
 
 ## 1.2 What was read, per binary
 
-Lane log: `Airlock/agent/logs/20260905T060329Z__t94_l12_transcripts2.sh.log`.
+Lane log: `PUBLIC/Airlock/agent/logs/20260905T060329Z__t94_l12_transcripts2.sh.log`.
 These three come back REFUSED from `check_conventions_log_claims.py`
 with the rule `head_not_on_the_read_only_allowlist` — `readelf` is not
 on its allowlist. They are kept because they are the primary evidence;
@@ -909,7 +909,7 @@ and the modules `region36.py`, `canon36_universal.py`, `canon.py`,
 | `t94_l12_transcripts2.sh` | `20260905T060329Z__t94_l12_transcripts2.sh.log` (the transcripts this log now pastes, re-run with absolute paths) |
 | `t94_l13_verify_log199.sh` | `20260905T060614Z__t94_l13_verify_log199.sh.log` (the log verifier's second pass; §11) |
 
-All under `Airlock/agent/logs/`. The two failed lanes are
+All under `PUBLIC/Airlock/agent/logs/`. The two failed lanes are
 listed rather than hidden; both were program defects fixed the same lap.
 
 ---

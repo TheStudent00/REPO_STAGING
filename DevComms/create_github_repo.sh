@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# One-time setup: create the PRIVATE GitHub repo for DevComms
+# One-time setup: create the PRIVATE GitHub repo for PRIVATE/DevComms
 # and push the initial state. Run by the owner on the host machine
 # (requires the `gh` CLI, authenticated: `gh auth status`).
 #
-# WHAT THIS REPO IS. `DevComms` is its own thing (the owner,
+# WHAT THIS REPO IS. `PRIVATE/DevComms` is its own thing (the owner,
 # 2026-07-31) — NOT under PseudoCoupHQ's authority and not part of the
 # PseudoCoup line. It holds the communication protocol, plan_and_code,
 # and the vocabulary analysis: documents that govern how work is done
@@ -22,13 +22,13 @@
 # Idempotent-ish: safe to re-run if a step failed; it skips what
 # already exists.
 #
-# Usage:  bash DevComms/create_github_repo.sh
+# Usage:  bash PRIVATE/DevComms/create_github_repo.sh
 #
 # Invoked as `bash <path>` so the executable bit is never needed — the
 # sandbox cannot set it.
 
 set -e
-REPO=DevComms
+REPO=PRIVATE/DevComms
 cd "$REPO"
 
 # 1. local git repo

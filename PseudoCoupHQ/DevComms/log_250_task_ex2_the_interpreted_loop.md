@@ -1,17 +1,17 @@
 # log 250 — task ex2: the interpreted loop, every attested cell of the model table on the seven interpreted targets
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 Also serves `hq.research.operator_equivalence.remaining_languages`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_12_remaining_languages/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_12_remaining_languages/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the rulings of
-2026-09-08 and 2026-09-09. Law: `PseudoCoupHQ/Research/LAW.md`,
+2026-09-08 and 2026-09-09. Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`,
 read in full including its tower section. Brief:
-`PseudoCoupHQ/Research/briefs/task_ex2_brief.md`.
+`PRIVATE/PseudoCoupHQ/Research/briefs/task_ex2_brief.md`.
 Date: 2026-09-09/10. Instance `ex2`, on the tower guest.
 
 Artifact folder:
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/`,
 results under `autopoly/` as `expand2_*`; lane scripts:
 `.../emulation/handful/lanes_ex2/`, six of them, each kept in the repo as
 the standing rule of 2026-09-07 requires. Every lane log named below is on
@@ -361,7 +361,7 @@ full table is §6 of `expand2.md`.
 
 # 11. Memory
 
-The bound stated in `Airlock/instances/ex2.conf`, in every
+The bound stated in `PUBLIC/Airlock/instances/ex2.conf`, in every
 lane header and in `expand2.py`'s own constants is 6 GB resident on the
 one collecting process, named abort `ABORT_MEMORY_EX2`, checked after
 every run. The sample the law asks for is the first twenty runs of lane

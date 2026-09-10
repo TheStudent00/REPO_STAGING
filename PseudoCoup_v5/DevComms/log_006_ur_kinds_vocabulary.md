@@ -55,7 +55,7 @@ essentially hot-swap with zero loss of functionality — since unused
 intentions are inert." The intentions artifact exists as validated
 data (`pc_verdicts.json` — intent_categories, t1_realizations,
 108/108 probe agreement; now at
-`PseudoIR/Tools/intentions/`), and the owner figured `ur`
+`PRIVATE/PseudoIR/Tools/intentions/`), and the owner figured `ur`
 would be based on it. The claim as first stated used "intent" in
 the everyday consumer-role sense, which is a THIRD thing. The
 walk-through of this item is untangling the three senses; the

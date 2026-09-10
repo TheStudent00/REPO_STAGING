@@ -4,7 +4,7 @@ the per-language ts_kind -> ur_kind PROPOSAL machinery.
 
 Consumes the ecosystem basis (spectrum_all + archetypes + basis_xref
 anchors + top_counterparts_all) plus the RULED vocabulary
-(PseudoCoup_v5/Tools/ledgerer/ur.py KINDS, 2026-08-12:
+(PRIVATE/PseudoCoup_v5/Tools/ledgerer/ur.py KINDS, 2026-08-12:
 15 objects incl. import/try/pair/interpolation; forms incl.
 container-form) and emits, for one language:
 

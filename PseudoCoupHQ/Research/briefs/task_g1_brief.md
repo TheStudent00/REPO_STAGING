@@ -9,7 +9,7 @@ second-language renderer was built on top of the c one — `rust_render.py`'s
 own compiler behaviour was MEASURED rather than assumed), and
 `Research/oracle/arch_opcodes/single_opcode_units.json` (per language, the
 operators whose whole body is one opcode: the PRIMITIVE lookup). Instance
-`g1.conf` (copy from `Airlock/instances/g1.conf`, bring it
+`g1.conf` (copy from `PUBLIC/Airlock/instances/g1.conf`, bring it
 up). Artifact folder: `Research/oracle/cross_construction/emulation/`, new
 sub-folders `go/` and `swift/`, the driver extended in `handful/`; lanes
 under `handful/lanes_g1/`.

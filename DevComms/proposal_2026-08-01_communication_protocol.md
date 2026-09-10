@@ -7,7 +7,7 @@
 
 **ADOPTED IN FULL, 2026-08-01.** the owner: "there are proposals changes in
 DevComms. i want those implemented also." All five are now live in
-`DevComms/LLM_communication_protocol.md`:
+`PRIVATE/DevComms/LLM_communication_protocol.md`:
 
 | this proposal | where it landed |
 |---|---|
@@ -101,7 +101,7 @@ command exists. the owner tried it:
 > hq.sh check. idk what that is. ive tried running it in the
 > terminal. doesnt work.
 
-The runnable form is `bash PseudoCoupHQ/hq.sh check`.
+The runnable form is `bash PRIVATE/PseudoCoupHQ/hq.sh check`.
 
 Proposed text:
 

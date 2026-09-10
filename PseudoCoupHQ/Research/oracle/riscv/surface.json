@@ -1,0 +1,707 @@
+{
+ "by_layer": [
+  {
+   "code_lines": 921,
+   "files": [
+    "riscv_reference.py"
+   ],
+   "layer": "lifter (the reference)",
+   "total_lines": 1174
+  },
+  {
+   "code_lines": 253,
+   "files": [
+    "riscv_carve.py"
+   ],
+   "layer": "carve",
+   "total_lines": 291
+  },
+  {
+   "code_lines": 286,
+   "files": [
+    "claim_check.py"
+   ],
+   "layer": "calling convention / canonical form",
+   "total_lines": 326
+  },
+  {
+   "code_lines": 263,
+   "files": [
+    "pick_units.py"
+   ],
+   "layer": "attestation",
+   "total_lines": 303
+  },
+  {
+   "code_lines": 451,
+   "files": [
+    "sail_points.py"
+   ],
+   "layer": "level 0 check (beside the four layers the brief names)",
+   "total_lines": 550
+  }
+ ],
+ "meta": {
+  "layers": [
+   {
+    "layer": "lifter (the reference)",
+    "what": "one z3 term per place an instruction writes, read off the instruction's own text"
+   },
+   {
+    "layer": "carve",
+    "what": "compile at the corpus's ship optimisation level and read the function's instructions back out of the object"
+   },
+   {
+    "layer": "calling convention / canonical form",
+    "what": "which place each argument arrives in and which place the answer leaves in, per language, per architecture"
+   },
+   {
+    "layer": "attestation",
+    "what": "which corpus unit stands for which cell of the model table"
+   },
+   {
+    "layer": "level 0 check (beside the four layers the brief names)",
+    "what": "the bare-metal harness that runs the ratified model's simulator over one instruction at many points, and the evaluation of the reference's own term at the same points"
+   }
+  ],
+  "task": "rv1",
+  "what": "every file and function that had to be written to carry the pipeline from x86-64 to riscv64 for the handful's ten units, by layer, with the x86 counterpart beside it and the objects that were read unchanged listed"
+ },
+ "read_unchanged": [
+  {
+   "count": 332,
+   "counted_as": "shards",
+   "path": "op_pipeline/term66_store",
+   "what": "the term store: every unit's proved z3 term"
+  },
+  {
+   "count": 71778,
+   "counted_as": "rows",
+   "path": "oracle/arch_opcodes/model/model_table.json",
+   "what": "the arch-opcode model table: the reference's mapping per (mnem, shape, key_width) with the corpus's attestation"
+  },
+  {
+   "count": 750,
+   "counted_as": "probes",
+   "path": "op_pipeline/probe_manifest_c.json",
+   "what": "the c probe corpus's own sources"
+  },
+  {
+   "count": 744,
+   "counted_as": "probes",
+   "path": "op_pipeline/probe_manifest_go.json",
+   "what": "the go probe corpus's own sources"
+  },
+  {
+   "count": 750,
+   "counted_as": "probes",
+   "path": "op_pipeline/op_units_c.json",
+   "what": "the c units' recorded x86 ship bodies"
+  },
+  {
+   "count": 744,
+   "counted_as": "probes",
+   "path": "op_pipeline/op_units_go.json",
+   "what": "the go units' recorded x86 ship bodies"
+  },
+  {
+   "count": 3093,
+   "counted_as": "lines",
+   "path": "op_pipeline/reference.py",
+   "what": "the x86 reference, called to re-derive each unit's own x86 term"
+  },
+  {
+   "count": 2348,
+   "counted_as": "lines",
+   "path": "op_pipeline/term.py",
+   "what": "`Term.normalize`, called to put both architectures' terms in one comparison form"
+  }
+ ],
+ "written": [
+  {
+   "code_lines": 286,
+   "file": "claim_check.py",
+   "layer": "calling convention / canonical form",
+   "path": "PseudoCoupHQ/Research/oracle/riscv/claim_check.py",
+   "pieces": [
+    {
+     "kind": "FunctionDef",
+     "lines": 6,
+     "name": "kind_of"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 21,
+     "name": "argument_places"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 19,
+     "name": "x86_term"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 17,
+     "name": "riscv_term"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 6,
+     "name": "at_width"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 15,
+     "name": "decide"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 124,
+     "name": "main"
+    }
+   ],
+   "total_lines": 326
+  },
+  {
+   "code_lines": 263,
+   "file": "pick_units.py",
+   "layer": "attestation",
+   "path": "PseudoCoupHQ/Research/oracle/riscv/pick_units.py",
+   "pieces": [
+    {
+     "kind": "FunctionDef",
+     "lines": 3,
+     "name": "read_manifest"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 3,
+     "name": "read_units"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 18,
+     "name": "read_term_store"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 28,
+     "name": "row_for"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 73,
+     "name": "main"
+    }
+   ],
+   "total_lines": 303
+  },
+  {
+   "code_lines": 253,
+   "file": "riscv_carve.py",
+   "layer": "carve",
+   "path": "PseudoCoupHQ/Research/oracle/riscv/riscv_carve.py",
+   "pieces": [
+    {
+     "kind": "FunctionDef",
+     "lines": 13,
+     "name": "sh"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 47,
+     "name": "extract"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 15,
+     "name": "symbol_size"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 24,
+     "name": "disassemble"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 7,
+     "name": "compile_c"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 7,
+     "name": "compile_go"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 27,
+     "name": "carve_one"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 46,
+     "name": "main"
+    }
+   ],
+   "total_lines": 291
+  },
+  {
+   "code_lines": 921,
+   "file": "riscv_reference.py",
+   "layer": "lifter (the reference)",
+   "path": "PseudoCoupHQ/Research/oracle/riscv/riscv_reference.py",
+   "pieces": [
+    {
+     "kind": "ClassDef",
+     "lines": 2,
+     "name": "NotModeled"
+    },
+    {
+     "kind": "ClassDef",
+     "lines": 7,
+     "name": "LeavesTheUnit"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 5,
+     "name": "sign_extend_w"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 6,
+     "name": "bits_of"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "as_float"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "from_float"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 5,
+     "name": "nan_box"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 6,
+     "name": "memory_symbol_name"
+    },
+    {
+     "kind": "ClassDef",
+     "lines": 96,
+     "name": "MachineState"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 22,
+     "name": "split_operands"
+    },
+    {
+     "kind": "ClassDef",
+     "lines": 82,
+     "name": "Operands"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 6,
+     "name": "shift_amount"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 27,
+     "name": "build_r_type"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 18,
+     "name": "build_r_type_w"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 19,
+     "name": "build_i_type"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 11,
+     "name": "build_shift_i"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 4,
+     "name": "build_i_type_w"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 11,
+     "name": "build_shift_i_w"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 13,
+     "name": "build_upper"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 14,
+     "name": "build_multiply"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 4,
+     "name": "build_multiply_w"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 29,
+     "name": "build_divide"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 23,
+     "name": "build_divide_w"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 16,
+     "name": "build_conditional_zero"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 11,
+     "name": "build_load"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 10,
+     "name": "build_store"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 17,
+     "name": "build_branch"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 8,
+     "name": "build_jump"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "build_no_operation"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "build_trap"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 3,
+     "name": "float_of"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 5,
+     "name": "placed_float"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 13,
+     "name": "build_float_binary"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 10,
+     "name": "build_float_from_integer"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 5,
+     "name": "build_float_widen"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 17,
+     "name": "build_float_move"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 12,
+     "name": "build_float_compare"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 7,
+     "name": "build_float_load"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 10,
+     "name": "build_float_store"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "_same"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "_destination_is_also_source"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "_from_zero"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "_jump_no_link"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "_jump_and_link"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "_branch_against_zero"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "_jump_target"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "_jump_target_linked"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 8,
+     "name": "expand_compressed"
+    },
+    {
+     "kind": "ClassDef",
+     "lines": 14,
+     "name": "Entry"
+    },
+    {
+     "kind": "ClassDef",
+     "lines": 70,
+     "name": "OpcodeTable"
+    },
+    {
+     "kind": "ClassDef",
+     "lines": 96,
+     "name": "RiscvReference"
+    }
+   ],
+   "total_lines": 1174
+  },
+  {
+   "code_lines": 451,
+   "file": "sail_points.py",
+   "layer": "level 0 check (beside the four layers the brief names)",
+   "path": "PseudoCoupHQ/Research/oracle/riscv/sail_points.py",
+   "pieces": [
+    {
+     "kind": "FunctionDef",
+     "lines": 2,
+     "name": "peak_rss_mb"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 7,
+     "name": "check_memory"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 20,
+     "name": "edge_values"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 12,
+     "name": "paired_points"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 6,
+     "name": "single_points"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 53,
+     "name": "variants_of"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 11,
+     "name": "sh"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 48,
+     "name": "run_variant"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 10,
+     "name": "reference_term"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 9,
+     "name": "evaluate"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 59,
+     "name": "check_mnemonic"
+    },
+    {
+     "kind": "FunctionDef",
+     "lines": 77,
+     "name": "main"
+    }
+   ],
+   "total_lines": 550
+  }
+ ],
+ "x86_counterpart": {
+  "attestation": [
+   {
+    "file": "oracle/arch_opcodes/model/model_table.py",
+    "lines": 174,
+    "pieces": [
+     {
+      "lines": 80,
+      "name": "attestation"
+     },
+     {
+      "lines": 41,
+      "name": "place_row"
+     },
+     {
+      "lines": 10,
+      "name": "arch_opcode_rows"
+     },
+     {
+      "lines": 9,
+      "name": "lines_of_unit"
+     },
+     {
+      "lines": 34,
+      "name": "attest_command"
+     }
+    ]
+   }
+  ],
+  "calling convention / canonical form": [
+   {
+    "file": "canonical_form.py",
+    "lines": 154,
+    "pieces": [
+     {
+      "lines": 98,
+      "name": "Prelude"
+     },
+     {
+      "lines": 30,
+      "name": "Epilogue"
+     },
+     {
+      "lines": 26,
+      "name": "Labels"
+     }
+    ]
+   },
+   {
+    "file": "ledger.py",
+    "lines": 372,
+    "pieces": [
+     {
+      "lines": 8,
+      "name": "register_text"
+     },
+     {
+      "lines": 9,
+      "name": "pick_scratch"
+     },
+     {
+      "lines": 29,
+      "name": "weave"
+     },
+     {
+      "lines": 79,
+      "name": "DESTINATION_RULES"
+     },
+     {
+      "lines": 247,
+      "name": "answer_registers_of_body"
+     }
+    ]
+   }
+  ],
+  "carve": [
+   {
+    "file": "lane_gen.py",
+    "lines": 116,
+    "pieces": [
+     {
+      "inside": "DRIVER",
+      "lines": 45,
+      "name": "extract"
+     },
+     {
+      "inside": "DRIVER",
+      "lines": 7,
+      "name": "disasm"
+     },
+     {
+      "inside": "DRIVER",
+      "lines": 49,
+      "name": "compile_probe"
+     },
+     {
+      "inside": "DRIVER",
+      "lines": 15,
+      "name": "write_unit"
+     }
+    ]
+   }
+  ],
+  "level 0 check (beside the four layers the brief names)": [
+   {
+    "file": "(none: level 0 on x86 is held as the reference itself, and its independent check is task ref1's K-framework reading)",
+    "lines": 0,
+    "pieces": []
+   }
+  ],
+  "lifter (the reference)": [
+   {
+    "code_lines": 2526,
+    "file": "reference.py",
+    "lines": 3093,
+    "pieces": []
+   },
+   {
+    "code_lines": 375,
+    "file": "condition_table.py",
+    "lines": 464,
+    "pieces": []
+   }
+  ]
+ }
+}

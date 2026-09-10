@@ -233,7 +233,7 @@ All seven present, sizes matching the log (103.6 MB / 515 MB as
 claimed). `super_ops_go.json` and `coverage_go2.json` are gitignored,
 per §8.3a — confirmed:
 ```
-$ grep -n "super_ops_go.json\|coverage_go2.json" PseudoCoupHQ/.gitignore
+$ grep -n "super_ops_go.json\|coverage_go2.json" PRIVATE/PseudoCoupHQ/.gitignore
 44:Research/compiler_graph/super_ops_go.json
 45:Research/compiler_graph/coverage_go2.json
 ```
@@ -361,7 +361,7 @@ $ git log --oneline --since="2026-09-03 19:30" -- Research/compiler_graph/graph_
 ## 3.5 The plan checker
 
 ```
-$ python3 PlanPlan/framework/check_plans.py PseudoCoupHQ/Planning
+$ python3 PRIVATE/PlanPlan/framework/check_plans.py PRIVATE/PseudoCoupHQ/Planning
 ...
 [WARN] edge-register: `super_node`/`sub_nodes` missing on 14 of 69 nodes (PROTOCOL §1, 2026-08-02; brought in chain by chain, not by a sweep)
     - PseudoCoupHQ/Planning: 14 of 69
@@ -526,7 +526,7 @@ $ /tmp/reconnect_venv/bin/python3 chronology_build.py --append
 append: 1 step(s) to build (38 carried forward unchanged)
   2026-09-03 45beecd9 round    {"census_producers": 49, "families": 34, "no_term": 419, ...}
 ...
-wrote PseudoCoupHQ/Research/op_pipeline/chronology.json  (39 steps: 13 with a recomputed number, 1 with a testimony number, 26 with no tracked artifact; 60621 bytes)
+wrote PRIVATE/PseudoCoupHQ/Research/op_pipeline/chronology.json  (39 steps: 13 with a recomputed number, 1 with a testimony number, 26 with no tracked artifact; 60621 bytes)
 ```
 
 38 steps before, 39 after — the bank commit `45beecd` joined

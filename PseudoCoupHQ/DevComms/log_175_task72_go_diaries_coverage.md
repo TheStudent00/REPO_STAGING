@@ -359,7 +359,7 @@ Task 71's `graph.py` spells a node `<file>:<line>:<name>` with kind
 diary line carries both keys, so no recompile is needed:
 
 ```sh
-cd PseudoCoupHQ/Research/compiler_graph
+cd PRIVATE/PseudoCoupHQ/Research/compiler_graph
 /tmp/reconnect_venv/bin/python3 coverage.py join \
     --graph graph_go.json --graph-form task71 \
     --diaries diaries/go --out coverage_go.json
@@ -731,8 +731,8 @@ Everything is resumable and nothing needs a rerun to be re-derived.
 ## 8.2 To redo the lap from nothing
 
 ```sh
-bash Airlock/up.sh --instance t72
-cd Airlock
+bash PUBLIC/Airlock/up.sh --instance t72
+cd PUBLIC/Airlock
 ./airlock --instance t72 submit <repo>/Research/compiler_graph/lanes_t72/t72_l1_build.sh       --no-batch
 ./airlock --instance t72 submit <repo>/Research/compiler_graph/lanes_t72/t72_l2_inject_build.sh --no-batch
 ./airlock --instance t72 submit <repo>/Research/compiler_graph/lanes_t72/t72_l4b_diaries.sh     --batch t72 --weight 60
@@ -753,7 +753,7 @@ and no new diaries.
 ## 8.4 The instance
 
 `t72` was brought DOWN at the end of this task. Its settings live in
-`Airlock/instances/t72.conf` — gitignored per-machine
+`PUBLIC/Airlock/instances/t72.conf` — gitignored per-machine
 caller config, Airlock's own source untouched. It takes its OWN
 `t72-persist` volume read-write rather than `trickle`'s read-only view
 of `sandbox-persist`, because this lap had to re-inject and rebuild the
@@ -822,13 +822,13 @@ go version go1.28-devel-pseudocoup linux/amd64
 | `Research/compiler_graph/lanes_t72/t72_l5_costpage.sh` | cost page, first pass |
 | `Research/compiler_graph/lanes_t72/t72_l6_costpage2.sh` | cost page, second pass |
 | `Research/compiler_graph/lanes_t72/t72_l7_clang_hook.sh` | clang emission hook + full build timing |
-| `Airlock/instances/t72.conf` | the instance's settings; gitignored caller config, Airlock source untouched |
+| `PUBLIC/Airlock/instances/t72.conf` | the instance's settings; gitignored caller config, Airlock source untouched |
 
 **Files edited, this task:**
 
 | path | change |
 |---|---|
-| `PseudoCoupHQ/.gitignore` | one rule for `Research/compiler_graph/diaries/`, with the reason and the regeneration command |
+| `PRIVATE/PseudoCoupHQ/.gitignore` | one rule for `Research/compiler_graph/diaries/`, with the reason and the regeneration command |
 | `Planning/.../node_0_3_5_9_graph/CORE_0_3_5_9_graph.md` | realization table rows for `diary (go)` and `coverage over the corpus`; one new settled rule (an uninstrumented node is a frontier, never a never-visited node) |
 | `Planning/.../node_0_3_5_9_graph/PROGRESS.md` | four entries, at the moment of progress |
 
@@ -838,7 +838,7 @@ go version go1.28-devel-pseudocoup linux/amd64
 **Files deliberately NOT touched:** `Research/compiler_graph/graph.py`
 (task 71's, running in parallel), `Research/compiler_graph/inject_diary.py`
 and every August artifact beside it, `Research/op_pipeline/check_no_spelling_keys.py`,
-and anything under `Airlock` except the gitignored
+and anything under `PUBLIC/Airlock` except the gitignored
 `instances/t72.conf`.
 
 ## 9.3 Lane record
@@ -846,7 +846,7 @@ and anything under `Airlock` except the gitignored
 All lanes ran in the `t72` instance except `t72_l0_pathcheck.sh`, which
 ran in the default instance because that is where `sandbox-persist` is
 mounted. Logs: `<runs>/t72/agent/logs/`, and
-`Airlock/agent/logs/` for lane 0.
+`PUBLIC/Airlock/agent/logs/` for lane 0.
 
 | lane | exit | wall clock |
 |---|---|---|

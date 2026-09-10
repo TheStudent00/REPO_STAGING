@@ -397,7 +397,7 @@ inside a fifteen-hour window.
 
 ### the batch
 
-`Airlock/agent/batch.json` already carries
+`PUBLIC/Airlock/agent/batch.json` already carries
 **`pygo-emitters-log061`** with log_061's three queued lanes. Every
 command in the runbook **joins** that batch rather than replacing it, so
 those three keep their denominator. `--new-batch` is never used.
@@ -547,9 +547,9 @@ budget, shard count or lane of theirs was edited, and `l3_cart_read.py`,
 ## awaiting the owner
 
 1. **Restart Airlock, then run the one command.**
-   `bash Airlock/down.sh && bash Airlock/up.sh`,
+   `bash PUBLIC/Airlock/down.sh && bash PUBLIC/Airlock/up.sh`,
    then
-   `bash PseudoCoupHQ/Research/kind_fuzz_clustering/run_all_languages.sh`.
+   `bash PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/run_all_languages.sh`.
    Everything else in this log follows from that.
 2. **The excluded decimal and bignum holders** (section 2). Restoring
    them means correcting four encodings in the shared `l3_exec.RT_*`

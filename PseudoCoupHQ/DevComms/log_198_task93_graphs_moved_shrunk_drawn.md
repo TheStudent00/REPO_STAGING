@@ -413,11 +413,11 @@ FAIL graph_go.compact.json -- 7 spelling-keyed place(s)
 ### the JavaScript route and Ourobrowser, untouched
 
 ```
-$ cd PseudoCoupHQ
+$ cd PRIVATE/PseudoCoupHQ
 $ git diff -- Research/op_pipeline/dashboard.html \
       'Research/op_pipeline/dashboard_pane*.js' | wc -l
 0
-$ cd Ourobrowser && git diff | wc -l
+$ cd PUBLIC/Ourobrowser && git diff | wc -l
 0
 ```
 
@@ -462,7 +462,7 @@ engine and not editing it. Peak resident of the python side **465 MB**.
 `Research/op_pipeline/viewer_build.py`,
 `Research/op_pipeline/dashboard_ouro.py`,
 `Research/op_pipeline/dashboard_ouro.html`,
-`Airlock/mounts.conf` (the companion folder, read-write).
+`PUBLIC/Airlock/mounts.conf` (the companion folder, read-write).
 
 **Lanes** — `Research/compiler_graph/lanes_t93/`:
 `t93_l1_sample.sh`, `t93_l2_compact_go_rust.sh` (ABORTED, kept as the

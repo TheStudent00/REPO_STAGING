@@ -14,15 +14,15 @@ without ever being explained.
 ## The trees that exist
 
 Four, all conforming to the same framework
-(`PlanPlan/framework/PROTOCOL.md`):
+(`PRIVATE/PlanPlan/framework/PROTOCOL.md`):
 
-- `PseudoCoupHQ/Planning` — this one. the frame.
-- `PseudoCoup_v5/Planning` — the Frankenstein rebuild;
+- `PRIVATE/PseudoCoupHQ/Planning` — this one. the frame.
+- `PRIVATE/PseudoCoup_v5/Planning` — the Frankenstein rebuild;
   the turn of the cycle where the hub is still empty. founded
   2026-07-31 (the section below records the gap it closed).
-- `PseudoCoup_v6/Planning` — the transpiler into the
+- `PRIVATE/PseudoCoup_v6/Planning` — the transpiler into the
   hub.
-- `PseudoIR/Planning` — the system the hub is
+- `PRIVATE/PseudoIR/Planning` — the system the hub is
   constructed with.
 
 ## Why more than one
@@ -67,7 +67,7 @@ high-first. Across trees that reads as:
   project copy that is wrong.
 - HQ does NOT govern anything inside a project's own subject. HQ has
   no opinion on how the ledgerer is structured.
-- `DevComms/` governs all of them and is under none of
+- `PRIVATE/DevComms/` governs all of them and is under none of
   them. It is its own thing (the owner, 2026-07-31), holding the
   communication protocol and `plan_and_code.md` — rules about how
   work is done, not about what is being built. HQ points at it and
@@ -81,7 +81,7 @@ settles its own subject.
 ## PseudoCoup_v5 had no planning tree — a gap, closed 2026-07-31
 
 **CLOSED.** The tree now exists at
-`PseudoCoup_v5/Planning/` (verified 2026-08-01: CORE_0
+`PRIVATE/PseudoCoup_v5/Planning/` (verified 2026-08-01: CORE_0
 with a definition line confirmed by the owner, PROGRESS, CHECK, DASHBOARD,
 and three nodes — tools, research, api — all carrying `designation`),
 and it is in `hq.sh`'s ROOTS. The item is closed in this node's
@@ -90,7 +90,7 @@ annotate-don't-delete rule.
 
 It was absent from every list of planning trees in this repo and in
 the tools' configuration. The reason was only that
-`PseudoCoup_v5/` contained no `Planning/` folder —
+`PRIVATE/PseudoCoup_v5/` contained no `Planning/` folder —
 checked 2026-07-31, its top level was `Designing/`, `DevComms/`,
 `Research/`, `README.md` and `git_commit_push.sh`.
 
@@ -103,7 +103,7 @@ a few files is not planning" failure.
 
 The PCv5 decision itself was never what was missing — it is written
 down in the gutting and annotate-don't-delete rule in
-`PseudoCoup_v6/AgentMemory/02_decisions.md` under
+`PRIVATE/PseudoCoup_v6/AgentMemory/02_decisions.md` under
 Direction, the `Frankenstein` and `PCv5-archived-research` glossary
 entries in that repo's `01_vocabulary.md`, and the roster entry in
 [node_0_0_projects](node_0_0_projects/CORE_0_0_projects.md). What was

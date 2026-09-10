@@ -2,11 +2,11 @@
 """hub.py -- task hub1: Hub v1, first form.
 
 Node: hq.research.arch_unit_oracle.hub_compiler
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/`),
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/`),
 its CORE's "definition" of 2026-09-07 (SOURCE COMPOSITION) and its four
 sub-nodes front_end, dictionary, joiner, oracle_test.  Brief:
-`PseudoCoupHQ/Research/briefs/task_hub1_brief.md`.  Law:
-`PseudoCoupHQ/Research/LAW.md`.
+`PRIVATE/PseudoCoupHQ/Research/briefs/task_hub1_brief.md`.  Law:
+`PRIVATE/PseudoCoupHQ/Research/LAW.md`.
 
 THE OBJECTS, one sentence each, in relation.
 

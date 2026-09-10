@@ -11,9 +11,9 @@ documents each section points at.
 **The metaprogramming model** — representation always and losslessly;
 evaluation as a separate, optional, derived operation. Three kinds of
 Rust macro, split by where the definition lives. The full statement is
-`PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`;
+`PRIVATE/PseudoCoup_v5/Planning/node_0_0_tools/node_0_0_0_ledgerer/SUPPORT_metaprogramming.md`;
 the measurements and wrong turns are in
-`PseudoCoup_v5/DevComms/log_003_metaprogramming_model.md`.
+`PRIVATE/PseudoCoup_v5/DevComms/log_003_metaprogramming_model.md`.
 
 **Churn, measured** (log_003 §6): across 1.56 -> 1.97 (five years, both
 recent editions), no stable macro was ever removed; built-ins only grew
@@ -34,7 +34,7 @@ in the target is 149 derive uses, six names, all rustc-internal,
 two-thirds `Diagnostic`.
 
 **The syn-shim spike** (log_004 §6,
-`PseudoCoup_v5/Research/syn_shim/`): a syn-shaped API
+`PRIVATE/PseudoCoup_v5/Research/syn_shim/`): a syn-shaped API
 backed by tree-sitter works — demonstrated by reproducing the real
 `TryFromU32` expansion for the real `CovmapVersion` enum, output
 re-parsing as valid Rust. `rustc_macros` touches ~50 syn types; the
@@ -66,7 +66,7 @@ transpilable.
   state either way; the owner leans toward not postponing macros to PCv6 but
   is flexible.
 - The kind-one engine (pattern/template expansion,
-  `PseudoCoup_v5/Research/macro_engine.py`) is pulled
+  `PRIVATE/PseudoCoup_v5/Research/macro_engine.py`) is pulled
   INTO the ledgerer's scope: small, data-driven, and it covers the
   structure-generating macros whose absence leaves dangling names
   (`sdiv`).
@@ -108,7 +108,7 @@ definition text. Checks 0 errors after the renames.
 ## 4. Standing constraints carried forward
 
 - The prohibition recorded in
-  `PseudoCoupHQ/CRANELIFT_IS_BANNED.md` stands; the
+  `PRIVATE/PseudoCoupHQ/CRANELIFT_IS_BANNED.md` stands; the
   checkout still contains the banned crate's directory (sparse-checkout
   config predates the ban; removal command is in log_003 §1a's context
   and is the owner's to run).
@@ -120,4 +120,4 @@ definition text. Checks 0 errors after the renames.
 - The communication protocol gained §5a (contrast must be visible) and
   §5b (one idea per sentence; the walkthrough test) during this
   stretch. Both are in
-  `DevComms/LLM_communication_protocol.md`.
+  `PRIVATE/DevComms/LLM_communication_protocol.md`.

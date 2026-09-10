@@ -8,13 +8,13 @@ plain words. Every figure names its population (§3.4a). Nothing here
 decides anything; the decisions are the owner's.
 
 Sources, by full path:
-- `PseudoCoupHQ/DevComms/log_135_task43_universal_form_redone.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_135_task43_universal_form_redone.md`
   (calls 1, 2, 3)
-- `PseudoCoupHQ/DevComms/log_137_task45_type_second_witness.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_137_task45_type_second_witness.md`
   (call 4)
-- `PseudoCoupHQ/DevComms/log_138_airlock_instances_feature.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_138_airlock_instances_feature.md`
   (calls 5, 6, 7)
-- `PseudoCoupHQ/DevComms/log_126_task37_testimony_defect.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_126_task37_testimony_defect.md`
   and `log_131_task40_regeneration_trickle.md` (call 8)
 
 Glossary, for the terms that carry weight below:

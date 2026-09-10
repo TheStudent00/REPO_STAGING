@@ -3,7 +3,7 @@
 Written 2026-07-31.
 
 **This file does not restate the plan.** The plan is at
-`PseudoIR/Planning/`, starting from `CORE_0.md`. If a
+`PRIVATE/PseudoIR/Planning/`, starting from `CORE_0.md`. If a
 fact belongs in a node's CORE, it goes there and not here — two
 stores of the same fact drift apart, and that has already cost this
 project once.
@@ -16,16 +16,16 @@ the failures worth not repeating.
 
 ## 1. Read these first, in this order
 
-1. `DevComms/LLM_communication_protocol.md` — the owner's
+1. `PRIVATE/DevComms/LLM_communication_protocol.md` — the owner's
    communication protocol. Not optional. A local copy sits at
-   `PseudoIR/DevComms/LLM_communication_protocol.md`;
-   the one in `DevComms/` is the authority.
-2. `PseudoCoupHQ/plan_and_code.md` — plan names ARE code
+   `PRIVATE/PseudoIR/DevComms/LLM_communication_protocol.md`;
+   the one in `PRIVATE/DevComms/` is the authority.
+2. `PRIVATE/PseudoCoupHQ/plan_and_code.md` — plan names ARE code
    names; code is written top-down with logic last; every node
    carries a `designation`. **This plan does not conform yet.**
    Bringing it into conformance is the next job, and nothing below
    describes the conforming state.
-3. `PseudoIR/Planning/CORE_0.md` — what this project
+3. `PRIVATE/PseudoIR/Planning/CORE_0.md` — what this project
    is, what it exchanges with the other one, and why the bootstrap
    cycle closes.
 4. This file.
@@ -33,8 +33,8 @@ the failures worth not repeating.
 To see the plan as a tree rather than as folders:
 
 ```
-python3 PlanPlan/framework/render_plan.py \
-    PseudoIR/Planning -o /tmp/pir.html
+python3 PRIVATE/PlanPlan/framework/render_plan.py \
+    PRIVATE/PseudoIR/Planning -o /tmp/pir.html
 ```
 
 ---
@@ -44,8 +44,8 @@ python3 PlanPlan/framework/render_plan.py \
 PseudoIR does not stand alone, and an agent working only in this
 repo will not otherwise know that.
 
-- **PseudoCoup** lives at `PseudoCoup_v6/`. Its plan is
-  at `PseudoCoup_v6/Planning/`. It is the tool that
+- **PseudoCoup** lives at `PRIVATE/PseudoCoup_v6/`. Its plan is
+  at `PRIVATE/PseudoCoup_v6/Planning/`. It is the tool that
   transpiles from source languages into the hub.
 - **PseudoIR** is the system the hub is constructed with.
 
@@ -115,12 +115,12 @@ agent sees them without walking the tree.
   2026-07-31): no.** PseudoIR uses the Frankenstein transpiler and
   the Frankenstein ledgerer — tools composed from the best parts
   already scattered across the PseudoCoup lineage (the parts list is
-  `PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`).
+  `PRIVATE/PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`).
   Neither exists yet; building them is what the PCv5 rebuild is.
-  - The rebuild: `PseudoCoup_v5/` is gutted and
+  - The rebuild: `PRIVATE/PseudoCoup_v5/` is gutted and
     commandeered as PCv6's precursor, and the two Frankensteins
     become version 5. Recorded in
-    `PseudoCoup_v6/AgentMemory/02_decisions.md`
+    `PRIVATE/PseudoCoup_v6/AgentMemory/02_decisions.md`
     under Direction, superseding the 2026-07-28 "PCv5 is archived
     research" decision.
   - The old open question at
@@ -153,17 +153,17 @@ agent sees them without walking the tree.
 
 | What | Where |
 |---|---|
-| This plan | `PseudoIR/Planning/` |
-| PseudoCoup's plan | `PseudoCoup_v6/Planning/` |
-| PseudoCoup's previous plan, superseded but intact | `PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/` |
-| The planning framework and its renderer | `PlanPlan/framework/` |
-| Communication protocol | `DevComms/LLM_communication_protocol.md` |
-| Research reports (R1–R4) referenced by the plan | `PseudoCoup_v6/Research/` |
-| This project's code, such as it is | `PseudoIR/pseudoir/` |
-| Retired PseudoIR contents | `PseudoIR/archive/`, `0_Archive/PseudoIR/` |
+| This plan | `PRIVATE/PseudoIR/Planning/` |
+| PseudoCoup's plan | `PRIVATE/PseudoCoup_v6/Planning/` |
+| PseudoCoup's previous plan, superseded but intact | `PRIVATE/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/` |
+| The planning framework and its renderer | `PRIVATE/PlanPlan/framework/` |
+| Communication protocol | `PRIVATE/DevComms/LLM_communication_protocol.md` |
+| Research reports (R1–R4) referenced by the plan | `PRIVATE/PseudoCoup_v6/Research/` |
+| This project's code, such as it is | `PRIVATE/PseudoIR/pseudoir/` |
+| Retired PseudoIR contents | `PRIVATE/PseudoIR/archive/`, `0_Archive/PseudoIR/` |
 | Sandbox for unattended shell runs | `SandboxDesign/` |
 
-**`PseudoCoup_v6/AgentMemory/` currently holds material
+**`PRIVATE/PseudoCoup_v6/AgentMemory/` currently holds material
 that is more relevant to this project than to that one** — the
 lineage map, the purge record, the vocabulary. It has not been split
 yet. Read it, but expect the PseudoIR-relevant parts to migrate here.
@@ -198,7 +198,7 @@ yet. Read it, but expect the PseudoIR-relevant parts to migrate here.
 The plan says PseudoIR borrows PseudoCoup's toolchain. In code that is
 one environment variable.
 
-- `PSEUDOCOUP_ROOT`, defaulting to `PseudoCoup_v6`.
+- `PSEUDOCOUP_ROOT`, defaulting to `PRIVATE/PseudoCoup_v6`.
 - Two modules use it today: `Tools/insert/cross_border.py` (the i64
   range, from PseudoCoup's polyfill) and `Tools/intentions/validate_form.py`
   (the parser, from PseudoCoup's ledgerer).
@@ -208,5 +208,5 @@ one environment variable.
 
 Run PseudoIR's suite with:
 
-    PSEUDOCOUP_ROOT=PseudoCoup_v6 \
-        python3 -m pytest PseudoIR/Tools -q
+    PSEUDOCOUP_ROOT=PRIVATE/PseudoCoup_v6 \
+        python3 -m pytest PRIVATE/PseudoIR/Tools -q

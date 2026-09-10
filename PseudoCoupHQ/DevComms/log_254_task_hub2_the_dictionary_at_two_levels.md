@@ -1,32 +1,32 @@
 # log 254 — task hub2: Hub v2, the dictionary at two levels — the cells read from the bank, the comparison and its consumer as one pair entry, the operator body as a pool entry, and the holders on every entry
 
 Node: `hq.research.arch_unit_oracle.hub_compiler`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/`),
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/`),
 its CORE's "definition" of 2026-09-07 (SOURCE COMPOSITION) and its four
 sub-nodes front_end, dictionary, joiner, oracle_test. Line: steps 4 and 5
 of the master order,
-`PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
-§4.2. Law: `PseudoCoupHQ/Research/LAW.md`, read in full
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/CORE_0_3_research.md`
+§4.2. Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, read in full
 including its tower section. Brief:
-`PseudoCoupHQ/Research/briefs/task_hub2_brief.md`.
+`PRIVATE/PseudoCoupHQ/Research/briefs/task_hub2_brief.md`.
 Inputs: task hub1's report `log_252` (its §5 decisions and §6 "Awaiting
 the owner" are this task's three holes) and task bank1's `log_253` (the
 certificates the dictionary is now read from).
 Date: 2026-09-10. Instance `hub2`, on the tower guest.
 
-Artifact folder: `PseudoCoupHQ/Research/oracle/hub/` —
+Artifact folder: `PRIVATE/PseudoCoupHQ/Research/oracle/hub/` —
 new files `hub2.py`, `dictionary2.json` / `.md`, `oracle_test2.json` /
 `.md`, `measure2.json`, `hub2_paste_a_pair.py`, and under `handful/` the
 four composed files `composed2_c.c`, `composed2_rust.rs`,
 `composed2_go.go`, `composed2_go_inlinable.go`. Lane scripts:
-`PseudoCoupHQ/Research/oracle/hub/lanes_hub2/`, sixteen of
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/lanes_hub2/`, sixteen of
 them, each kept in the repo as the standing rule of 2026-09-07 requires.
 Every lane log named below is on the TOWER
 (`<user>@<tower>`) under
 `<runs>/hub2/agent/logs/`.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into
 the instance. Every rendering is labelled per the protocol's
 `object.literal-gloss-analogy`: **LITERAL** is the object itself,
 quoted; **GLOSS** is a plain-words reading beside a literal.
@@ -44,7 +44,7 @@ quoted; **GLOSS** is a plain-words reading beside a literal.
   (cell, target, written place) with the term it was posed on, the
   rendered source and its sha256, the compiler and its flags, the carved
   body and the gate's verdict. **THE BANK**
-  (`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/certificates.jsonl`)
+  (`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/certificates.jsonl`)
   holds every certificate of every pass with the strongest per key
   marked `preferred`, and from this task on the dictionary is READ FROM
   IT.
@@ -55,7 +55,7 @@ quoted; **GLOSS** is a plain-words reading beside a literal.
   rendered function is the comparison then the select, so no flag state
   crosses a node: the pair IS the node.
 * A **POOL ENTRY** is one distinct computation of
-  `PseudoCoupHQ/Research/op_pipeline/the_pool5.json`, the
+  `PRIVATE/PseudoCoupHQ/Research/op_pipeline/the_pool5.json`, the
   units proved equal collapsed to one entry. Task o7 (log 218) rendered
   an emulation of an entry in c, task o11 (log 226) in rust, and task
   o13 (log 230) re-rendered the disproved ones with the MODE — the guard
@@ -152,7 +152,7 @@ brief's third answer applied on the node's side rather than the entry's.
 
 # 3. The dictionary, at two levels (step 4 of the master order)
 
-`PseudoCoupHQ/Research/oracle/hub/dictionary2.json` and its
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/dictionary2.json` and its
 reading `dictionary2.md`, both written by
 `python3 PseudoCoupHQ/Research/oracle/hub/hub2.py dictionary`
 (lane `hub2_l7_dictionary_again.sh`).
@@ -323,7 +323,7 @@ f5_u64_shift(uint64_t a, uint64_t n)
 ```
 
 **LITERAL**, the two bodies the gate then compared, off
-`PseudoCoupHQ/Research/oracle/hub/oracle_test2.json`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/oracle_test2.json`,
 `results[*]` for `f5_u64_shift` on c:
 
 | side | the body, LITERAL |
@@ -345,7 +345,7 @@ and no cell names it.
 # 6. The handful (step 5 of the master order), hub1 beside hub2
 
 The file is unchanged: the same
-`PseudoCoupHQ/Research/oracle/hub/handful/handful.go` task
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/handful/handful.go` task
 hub1 wrote, eight explicitly typed functions. 13 operator nodes, all 13
 typed by go/types, and — this is new — all 13 resolved to a corpus unit,
 where task hub1 resolved 9: the four the narrow rule does not hold are
@@ -494,7 +494,7 @@ Two causes, three sightings, and both are results rather than defects.
 **CAUSE 1 — a go `bool` operand carried through the target's own truth
 holder (2 sightings: `go/op_491` and `go/regen_471`, both on c and on
 rust).** LITERAL, the composition and the two bodies, off
-`PseudoCoupHQ/Research/oracle/hub/measure2.json`:
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/measure2.json`:
 
 | what | the object |
 |---|---|
@@ -591,14 +591,14 @@ lane at **96,944 kB**. No lane hit a time or memory limit, so nothing is
 re-run for room.
 
 **THE LANES**, sixteen, all kept in
-`PseudoCoupHQ/Research/oracle/hub/lanes_hub2/`: `l1` to
+`PRIVATE/PseudoCoupHQ/Research/oracle/hub/lanes_hub2/`: `l1` to
 `l5` the two levels explored (the bank's own counts, the corpus's
 attested pairs, tasks o7/o11/o13's populations, and the pair key at full
 cell granularity), `l6` and `l7` the dictionary, `l8` the handful, `l9`
 the measure sampled, `l10` the measure whole, `l11` the tables, `l12`
 the handful and the measure again after §9's two fixes, `l13` the
 guards, `l14` the pastes of this log, `l15` and `l16` the verifier. Nothing under
-`<runs>/` or `Airlock/` was deleted, and no shared
+`<runs>/` or `PUBLIC/Airlock/` was deleted, and no shared
 file was changed: `hub.py`, `emulate.py`, `go_render.py`,
 `rust_render.py`, `handful.py`, `model_table.py`, `ledger.py`,
 `pool100_entry_equivalence.py`, `gate.py`, `reference.py`,

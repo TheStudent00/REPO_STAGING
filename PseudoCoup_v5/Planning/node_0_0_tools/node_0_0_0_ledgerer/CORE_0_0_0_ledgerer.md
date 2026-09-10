@@ -60,9 +60,9 @@ side, joined by id equality.
 an independent tool: PseudoCoup is a module of tools, and the ledger
 stands on its own. built by composition from the lineage's best
 parts — the harvest is mapped in
-`PseudoCoupHQ/DevComms/log_003_harvest_reminder.md` and
+`PRIVATE/PseudoCoupHQ/DevComms/log_003_harvest_reminder.md` and
 in detail in
-`PseudoCoup_v5/DevComms/ledger_survey_2026-07-27.md`.
+`PRIVATE/PseudoCoup_v5/DevComms/ledger_survey_2026-07-27.md`.
 
 ## support
 

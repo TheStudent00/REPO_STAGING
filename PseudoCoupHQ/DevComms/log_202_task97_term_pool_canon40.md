@@ -1245,12 +1245,12 @@ compared 302 | identical 302 | differ 0 | ceiling MB 4096 | wall clock s 1800.0
 
 ## 10.1 Every computation ran in Airlock, instance `t97`
 
-Instance `t97` was created by copying `Airlock/instances/t87.conf`
+Instance `t97` was created by copying `PUBLIC/Airlock/instances/t87.conf`
 to `instances/t97.conf` and rewriting its header, as the brief
 required. Every lane was dropped with
 `./airlock submit <lane.sh> --instance t97 --batch t97 --weight <n>`.
 Lane scripts live in the project's own repo at
-`PseudoCoupHQ/Research/op_pipeline/lanes_t97/`.
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_t97/`.
 
 | lane | what it ran | elapsed |
 |---|---|---|
@@ -1317,7 +1317,7 @@ Every file this task wrote is NEW and is named in §11.
 
 ## 11.1 Written by this task — code, all NEW files
 
-| path (under `PseudoCoupHQ/Research/op_pipeline/`) | what it is |
+| path (under `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`) | what it is |
 |---|---|
 | `probe97a_unit_cost.py` | the sample: one shard walked unit by unit, one forked sub-process per unit, each unit's wall time and peak resident size read by the parent through `wait4` |
 | `probe97b_flag_reason.py` | which token fired and on which FIELD, and the same unit at a ladder of ceilings with the whole record read back at each |
@@ -1327,7 +1327,7 @@ Every file this task wrote is NEW and is named in §11.
 
 ## 11.2 Written by this task — lanes
 
-All under `PseudoCoupHQ/Research/op_pipeline/lanes_t97/`:
+All under `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_t97/`:
 `t97_l1_sample.sh`, `t97_l2_flag_reason.sh`, `t97_l3_pass1.sh`,
 `t97_l4_pass2.sh`, `t97_l5_downstream.sh`, `t97_l6_pass2_residue.sh`,
 `t97_l7_finalize_and_control.sh`, `t97_l8_numbers.sh`,
@@ -1336,7 +1336,7 @@ All under `PseudoCoupHQ/Research/op_pipeline/lanes_t97/`:
 `t97_l13_evidence.sh`, `t97_l14_ladder.sh`, `t97_l15_claims.sh`,
 `t97_l16_claims.sh`, `t97_l17_guard.sh`, `t97_l18_claims.sh`.
 The instance's own configuration file,
-`Airlock/instances/t97.conf`, was created by copying
+`PUBLIC/Airlock/instances/t97.conf`, was created by copying
 `t87.conf` and rewriting its header; it is Airlock's file, not this
 project's, and it is named here because it carries the memory
 arithmetic §10.2 states.

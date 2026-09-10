@@ -1,6 +1,6 @@
 # Task hub1 — Hub v1, first form: the dictionary read off the polyfill-complete set, and one typed go file lowered as source composition of proved emulations, gated against go's own output
 
-Law: `PseudoCoupHQ/Research/LAW.md`, ALL of it. Node:
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, ALL of it. Node:
 `Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_1_hub_compiler/`
 — read its CORE's "definition" (source composition, ruled 2026-09-07)
 and the four sub-nodes' CORE definitions (front_end, dictionary, joiner,
@@ -11,7 +11,7 @@ oracle_test) — this task is steps 4 and 5 of the master order
 `autopoly/src*/`), `DevComms/log_246`, and the go front-end artifacts
 (`Research/oracle/compiler_units/go_types_oracle.go`, `go_types_join.py`,
 log_216: go/types as the type oracle, 77% of sites typed at 541 MB per
-package). Instance `hub1.conf` (copy from `Airlock/instances/hub1.conf`;
+package). Instance `hub1.conf` (copy from `PUBLIC/Airlock/instances/hub1.conf`;
 mounts `sandbox-persist` read-only). Artifact folder:
 `Research/oracle/hub/`; lanes under `lanes_hub1/`.
 
@@ -73,6 +73,6 @@ its four sub-nodes (append, dated); sync-back; instance down. Memory
 bound 6g (go/types per package ran at 541 MB), sample first, peak RSS,
 abort `ABORT_MEMORY_HUB1`. No shared-file change is authorised; the
 renderers and the loop's driver are READ. Never delete anything under
-`<runs>/` or `Airlock/`. Reply with the handful's
+`<runs>/` or `PUBLIC/Airlock/`. Reply with the handful's
 eight-function table, the §3 counts, the dictionary's entry and hole
 counts per target, the tally, the two lists.

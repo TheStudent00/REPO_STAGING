@@ -106,7 +106,7 @@ The causes the six logs actually produced, each with its own name:
 | cause | how many | what it means |
 |---|---:|---|
 | `moving_reference` | 8 | reads `HEAD`, the working tree, or a wall-clock `--since=` |
-| `out_of_sandbox` | 3 | names `Airlock` or `Ourobrowser`, which Airlock does not mount |
+| `out_of_sandbox` | 3 | names `PUBLIC/Airlock` or `PUBLIC/Ourobrowser`, which Airlock does not mount |
 | `redirects_into_a_path` | 3 | an unquoted `>` — a refusal, listed here because it is a cause too |
 | `writes_the_tree__generator` | 2 | `bash hq.sh dashboard` |
 | `host_specific_output` | 1 | an `ls -l` listing carries the owner name and the LOCAL clock of the machine it ran on; inside Airlock those are `root` and UTC. Applied ONLY when the sizes and names agree line for line; a changed count, size, name or order falls through to DIFFERS |
@@ -415,7 +415,7 @@ log_191 and log_192 do carry eight commands between them. Every one is
 `NOT_RERUNNABLE`: four read `HEAD` or the working tree (`git diff
 37d8a5db..HEAD`, `git diff | wc -l`, `git log --format=… -1`), one names a
 wall-clock instant (`--since='2026-09-04T17:33:00-04:00'`), and three name
-`Ourobrowser`, which Airlock does not mount.
+`PUBLIC/Ourobrowser`, which Airlock does not mount.
 
 ## 4.4 What was REFUSED, by name
 
@@ -507,11 +507,11 @@ writes_the_tree__generator
 # 7. How the owner runs it
 
 ```
-cd PseudoCoupHQ/Research/op_pipeline
+cd PRIVATE/PseudoCoupHQ/Research/op_pipeline
 python3 check_conventions_log_claims.py --emit-lane lanes_t90/<new_name>.sh \
   ../../DevComms/log_195_task89_bank_round15.md
-cd Airlock && ./airlock submit \
-  PseudoCoupHQ/Research/op_pipeline/lanes_t90/<new_name>.sh --no-batch
+cd PUBLIC/Airlock && ./airlock submit \
+  PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_t90/<new_name>.sh --no-batch
 ```
 
 The lane name must be new each time — Airlock's rule, not the tool's. The
@@ -543,7 +543,7 @@ log to be present, and nothing about it needs me.
 | `agent/out/t90_l6_verify_six.json`, `t90_l8_verify_this_log.json`, `t90_l9_verify_six.json`, `t90_l11_verify_this_log.json` | lane products |
 | `DevComms/log_197_task90_report_verifier.md` | this log |
 | `Research/op_pipeline/check_no_spelling_keys.py` | READ AND RUN, UNMODIFIED |
-| `Airlock/mounts.conf` | READ ONLY, for the sandbox map baked into the tool |
+| `PUBLIC/Airlock/mounts.conf` | READ ONLY, for the sandbox map baked into the tool |
 
 ---
 

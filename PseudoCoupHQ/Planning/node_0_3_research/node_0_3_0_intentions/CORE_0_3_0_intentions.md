@@ -152,7 +152,7 @@ holders the probes are generated over.
   agreement (the owner's edge criterion).
 - The canonical value form `[sign, mant, expo]` with a decimal
   mantissa in [1,2); no fractions in a visible column.
-(All recorded in full in `PseudoCoupHQ/CLAUDE.md`.)
+(All recorded in full in `PRIVATE/PseudoCoupHQ/CLAUDE.md`.)
 
 ## 6. Open, the owner's
 
@@ -163,5 +163,5 @@ holders the probes are generated over.
 
 ## 7. Record
 
-- artifacts: `PseudoCoupHQ/Research/{kind_signature_clustering,dominant_intentions,kind_fuzz_clustering,data_representation,type_vocabulary}/`
+- artifacts: `PRIVATE/PseudoCoupHQ/Research/{kind_signature_clustering,dominant_intentions,kind_fuzz_clustering,data_representation,type_vocabulary}/`
 - logs: PCHQ DevComms 008 to 039 and 052 to 062.

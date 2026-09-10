@@ -78,6 +78,10 @@ echo "  clean: no pattern remains in the private area"
 for s in "${refreshed[@]}"; do
     rsync -a --delete "$TMP/$s/" "$s/"
 done
+# ---- 3b. size guard: nothing at or over 95 MB may enter the tip (GitHub's
+# hard limit is 100 MB); a file that large is a generated table, not the record
+big=$(git ls-files -z --others --modified --exclude-standard . | xargs -0 -r du -b 2>/dev/null | awk '$1 >= 95000000 {print $2}')
+if [ -n "$big" ]; then echo "  refusing: file(s) at or over 95 MB would enter the tip:"; printf '%s\n' "$big" | sed 's/^/      /'; exit 1; fi
 git add -A
 if git diff --cached --quiet; then echo "  nothing changed since the last staging"; exit 0; fi
 n_files=$(git diff --cached --name-only | wc -l)

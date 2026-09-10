@@ -1,7 +1,7 @@
 # log 240 — task h2: the same handful after two printing fixes
 
 Node: `hq.research.arch_unit_oracle`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08). The
 PROGRESS entry is on the autopoly sub-node
 (`.../node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/PROGRESS.md`),
@@ -9,13 +9,13 @@ beside tasks o12, o13, h1 and h1b.
 
 Date: 2026-09-09. Instance `h2`, on the TOWER, brought down at the end
 of this log. Artifact folder (the same one tasks h1 and h1b wrote):
-[`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
+[`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/).
 The deliverables are
-[`handful.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
+[`handful.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
 extended with a second entry point (section 2c and the `*2` commands),
-[`handful2.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful2.json)
+[`handful2.json`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful2.json)
 and
-[`handful2.md`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful2.md)
+[`handful2.md`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful2.md)
 (the twenty runs again, every intermediate object on the record).
 **Task h1's own `handful.json` and `handful.md` were not written by any
 lane of this task**; the new products sit beside them, and the rendered
@@ -27,7 +27,7 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into
 the instance. Prose names host paths. **The lane logs are on the
 TOWER** (`<user>@<tower>`), under
 `<runs>/h2/agent/logs/`, and every attribution
@@ -48,7 +48,7 @@ below names one of them.
 | `h2_l11_verify3.sh` | the verifier a third time, after both were fixed in the LOG: 9 MATCHES, 0 DIFFERS, 0 REFUSED, 0 NOT_RERUNNABLE | `20260909T064252Z__h2_l11_verify3.sh.log` |
 
 Every lane script is kept in the repo at
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h2/`
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_h2/`
 and was submitted from there.
 
 ---
@@ -57,7 +57,7 @@ and was submitted from there.
 
 - **a cell** (recap, task h1) — one (`mnem`, operand shape, `key_width`)
   row of the arch-opcode model table
-  (`PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
+  (`PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
   tasks m1/m1b), holding, per PLACE the opcode writes, the z3 term the
   reference simulator's own builder puts there.
 - **a run** (recap, task h1) — `find_emulation(cell, lang)`: the cell's
@@ -228,7 +228,7 @@ fp.to_ieee_bv(fpToFP(Extract(31, 0, v0)) + fpToFP(Extract(31, 0, v1)))
 3. **The renderer plans a 32-bit float holder by its own rule**, because
    the projected term reads each arrival only at `Extract(31, 0, ...)`
    and the answer home is 32 bits wide. The source, **LITERAL**
-   ([`src2/addss_xmm_xmm_32__reg_xmm0__c.c`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/src2/addss_xmm_xmm_32__reg_xmm0__c.c)):
+   ([`src2/addss_xmm_xmm_32__reg_xmm0__c.c`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/src2/addss_xmm_xmm_32__reg_xmm0__c.c)):
 
 ```c
 float
@@ -242,7 +242,7 @@ The carved body, **LITERAL**: `addss %xmm1,%xmm0; ret`. Chaff-stripped:
 `addss %xmm1,%xmm0`. Landing: **LANDED**. The gate: **PROVED_ON_SHIP**.
 
 The rust side of the same cell, **LITERAL**
-([`src2/addss_xmm_xmm_32__reg_xmm0__rust.rs`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/src2/addss_xmm_xmm_32__reg_xmm0__rust.rs)):
+([`src2/addss_xmm_xmm_32__reg_xmm0__rust.rs`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/src2/addss_xmm_xmm_32__reg_xmm0__rust.rs)):
 
 ```rust
 pub extern "C" fn emu_addss_xmm_xmm_32__reg_xmm0__rust(a: f32, b: f32) -> f32
@@ -272,7 +272,7 @@ about the PLACE and not about the operation.
 ## 3.3 Change 3: the zero-operand width rule, and what it moves
 
 THE RULE, **LITERAL**, as it now stands in
-`PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py`
+`PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.py`
 (`classify_line`, the last decision before its refusal):
 
 ```python
@@ -494,7 +494,7 @@ the same c for the same 243 proved terms after this task as before it.
 The 16 skipped rows and the 243 valid ones are the same populations too.
 
 HOW TASK o8's OWN ARTIFACT STAYED UNTOUCHED.
-[`o8_regression.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py)
+[`o8_regression.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/o8_regression.py)
 imports `per_opcode.py` from its own folder — not forked, not edited —
 and points the five paths it WRITES at
 `handful/o8_regression/` before calling its `main`. Its inputs

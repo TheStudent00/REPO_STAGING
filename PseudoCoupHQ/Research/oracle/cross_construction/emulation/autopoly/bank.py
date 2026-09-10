@@ -122,6 +122,12 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 EMULATION = os.path.normpath(os.path.join(HERE, ".."))
+MODEL = os.path.normpath(os.path.join(EMULATION, "..", "..",
+                                      "arch_opcodes", "model"))
+sys.path.insert(0, MODEL)
+"""the model table's own folder, so `setter_cell_of` can call the
+classifier task m1b's attestation pass used.  Nothing under
+`arch_opcodes` is written."""
 
 CELLS = os.path.join(HERE, "autopoly5_cells.json")
 """the outer set as task ap5 left it -- 253 cells, the current one, and
@@ -131,7 +137,11 @@ BANK = os.path.join(HERE, "certificates.jsonl")
 AGGREGATE = os.path.join(HERE, "certificates.json")
 
 ABORT_KB = 6 * 1024 * 1024
-ABORT_NAME = "ABORT_MEMORY_BANK1"
+ABORT_NAME = "ABORT_MEMORY_AP6"
+"""the named abort of the pass RUNNING, which is this task's.
+It is a label on a stop, not a rule: the bound is 6 GB either
+way, and every earlier pass's log records the name its own lanes
+ran under."""
 
 COMPILED = ["c", "cpp", "rust", "go", "swift"]
 INTERPRETED = ["cpython", "php", "ruby", "java", "javascript", "dart",
@@ -430,10 +440,10 @@ def build_command():
     os.remove(BANK + ".first_walk")
     aggregate = {
         "meta": {
-            "task": "bank1",
             "what": "one certificate per (cell key, target, written "
-                    "place): the artifact it is about and the verdict "
-                    "on it, banked from every AutoPoly run on disk",
+                    "place, setter cell): the artifact it is about and "
+                    "the verdict on it, banked from every AutoPoly run "
+                    "on disk, with the code version that produced each",
             "cells_source": CELLS,
             "bank": BANK,
             "certificates": total,

@@ -2,9 +2,9 @@
 
 Lean 4 as a second discharger of the gate's proof obligations, beside z3.
 Node: `hq.research.compiler_graph.gate.lean`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_5_gate/node_0_3_1_5_6_lean/CORE_0_3_1_5_6_lean.md`).
 Opened 2026-09-07; task L1 filled it. The full account is
-`PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_227_task_L1_lean_second_discharger.md`.
 
 ## what is in here
 

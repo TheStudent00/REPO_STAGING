@@ -1,7 +1,7 @@
 # log 241 — task g1: `find_emulation` for go and swift, primitive-first
 
 Node: `hq.research.arch_unit_oracle`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`,
 the "goal" section of 2026-09-07 and the ruling of 2026-09-08). The
 PROGRESS entry is on the autopoly sub-node
 (`.../node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/PROGRESS.md`),
@@ -9,7 +9,7 @@ beside tasks o12, o13, h1, h1b and h2.
 
 Date: 2026-09-09. Instance `g1`, on the TOWER. Artifact folder (the same
 one tasks h1, h1b and h2 wrote, plus two new sub-folders):
-[`PseudoCoupHQ/Research/oracle/cross_construction/emulation/`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/).
+[`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/).
 
 **WHO WROTE THIS LOG, said plainly.** Task g1's own session ended on a
 usage limit after its run of record (lane `g1_l12_run_of_record2.sh`)
@@ -24,24 +24,24 @@ image, and the widened primitive lookup — is a separate log.
 
 The deliverables:
 
-- [`go/go_facts.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py)
+- [`go/go_facts.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.py)
   and
-  [`go/go_facts.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.json)
+  [`go/go_facts.json`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_facts.json)
   — go's own compiler behaviour, MEASURED by probe before any spelling
   was written (task o11 §3.1's shape).
-- [`go/go_render.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_render.py)
+- [`go/go_render.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/go/go_render.py)
   — `GoRenderer(E.Renderer)`.
-- [`swift/swift_render.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/swift/swift_render.py)
+- [`swift/swift_render.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/swift/swift_render.py)
   — `SwiftRenderer(E.Renderer)`, written but UNMEASURED (§9).
-- [`handful/handful.py`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
+- [`handful/handful.py`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py)
   extended with section 2d and the `*3` commands.
-- [`handful/handful3.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.json)
+- [`handful/handful3.json`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.json)
   and
-  [`handful/handful3.md`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md)
+  [`handful/handful3.md`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3.md)
   — the forty runs.
-- [`handful/handful3_primitive.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_primitive.json)
+- [`handful/handful3_primitive.json`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_primitive.json)
   — the primitive lookup's own evidence, before any run.
-- [`handful/handful3_spellings.json`](file://PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_spellings.json)
+- [`handful/handful3_spellings.json`](file://PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful3_spellings.json)
   — the two new targets' spelling tables.
 
 **Tasks h1's, h1b's and h2's products were not written by any lane of
@@ -54,7 +54,7 @@ quoted; **GLOSS** is a plain-words reading beside a literal. No gloss
 appears without its literal.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into
 the instance. Prose names host paths. **The lane logs are on the
 TOWER** (`<user>@<tower>`), under
 `<runs>/g1/agent/logs/`, and every attribution
@@ -76,7 +76,7 @@ below names one of them.
 | `g1b_l3_evidence_g1_2.sh` (task g1b's, read-only) | **the lane that printed every transcript this log pastes**, each with its own command printed above it by `printf %q`; lane `g1b_l1` unchanged but for that one step, which is now a `grep` over the json itself | `20260909T092546Z__g1b_l3_evidence_g1_2.sh.log` |
 
 Every lane script is kept in the repo at
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1/`
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/lanes_g1/`
 (task g1b's at `.../lanes_g1b/`) and was submitted from there.
 
 ---
@@ -85,7 +85,7 @@ Every lane script is kept in the repo at
 
 - **a cell** (recap, task h1) — one (`mnem`, operand shape, `key_width`)
   row of the arch-opcode model table
-  (`PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
+  (`PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/model/model_table.json`,
   tasks m1/m1b), holding, per PLACE the opcode writes, the z3 term the
   reference simulator's own builder puts there.
 - **a run** (recap, task h1) — `find_emulation(cell, lang)`: one
@@ -100,7 +100,7 @@ Every lane script is kept in the repo at
   z3 term written in the target's operators by the existing renderer,
   with task h2's two printing fixes still on.
 - **a single-opcode row** (task o2's own artifact,
-  `PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json`)
+  `PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/single_opcode_units.json`)
   — a group of corpus units whose body, with task o2's chaff rule
   applied, is exactly ONE instruction. It is the lookup the primitive
   route reads.
@@ -161,7 +161,7 @@ second route. That recorded fact is what task g1b's §3 acts on.
 
 # 3. The primitive lookup, LITERAL
 
-**LITERAL**, `PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`,
+**LITERAL**, `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/handful/handful.py`,
 `primitive_rows` -- the rule that decides whether a single-opcode row
 is at a cell:
 

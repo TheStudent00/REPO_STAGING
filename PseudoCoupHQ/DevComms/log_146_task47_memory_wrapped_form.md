@@ -1,7 +1,7 @@
 # log 146 — TASK 47: the memory-wrapped form and the provenance ledger
 
 Date: 2026-09-02. Author: Claude Code (implementer), no sub-agents.
-Working directory: `PseudoCoupHQ/Research/op_pipeline`.
+Working directory: `PRIVATE/PseudoCoupHQ/Research/op_pipeline`.
 Python: `/tmp/reconnect_venv/bin/python3` (pyvex 9.3.4, z3 5.1.0,
 capstone installed this lap). Assembly on the host: `as --64`,
 `objdump -d`, `objdump -r`.
@@ -730,7 +730,7 @@ the field the rule is about, and it is empty.
 
 # 10. Complete file inventory
 
-## 10.1 New this lap, all in `PseudoCoupHQ/Research/op_pipeline`
+## 10.1 New this lap, all in `PRIVATE/PseudoCoupHQ/Research/op_pipeline`
 
 | file | what it is |
 |---|---|

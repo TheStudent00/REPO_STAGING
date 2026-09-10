@@ -36,17 +36,17 @@ THE SPELLING BAN, pasted verbatim per the brief's law:
 
 ## Appendix B — numbered tree of everything this task touched
 
-1. `Airlock/instances/o2.conf` — new Airlock instance
+1. `PUBLIC/Airlock/instances/o2.conf` — new Airlock instance
    (copied from `o1.conf`, memory dropped to the brief's stated 2g
    bound, reasons stated in its own header).
-2. `PseudoCoupHQ/Research/oracle/arch_opcodes/`
+2. `PRIVATE/PseudoCoupHQ/Research/oracle/arch_opcodes/`
    1. `single_opcode_units.py` — deliverable 1 script.
    2. `single_opcode_units.json` — deliverable 1 data.
    3. `single_opcode_units.md` — deliverable 1 rendering (full tables).
    4. `unique_opcodes.py` — deliverable 2 script.
    5. `unique_opcodes.json` — deliverable 2 data.
    6. `unique_opcodes.md` — deliverable 2 rendering (full tables).
-3. `PseudoCoupHQ/Research/op_pipeline/lanes_o2/` — lane
+3. `PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_o2/` — lane
    scripts (below). Nothing under `Research/op_pipeline/` outside
    this new sub-folder was touched; the population files there were
    only read.
@@ -332,14 +332,14 @@ a language-complexity signal without the population behind it.
 
 ## §6. Lane logs, guard output, verifier tally
 
-Airlock instance `o2`, config `Airlock/instances/o2.conf`
+Airlock instance `o2`, config `PUBLIC/Airlock/instances/o2.conf`
 (copied from `o1.conf`, memory dropped to 2g per this brief; reasons
 in the conf's own header comment).
 
 ```
 (not re-run here: submits/moves the sandbox itself, by design outside
 this verifier's scope)
-$ bash Airlock/up.sh --instance o2
+$ bash PUBLIC/Airlock/up.sh --instance o2
 ...
 o2-runner  Up Less than a second  localhost/sandbox-runner:latest
 ```
@@ -385,7 +385,7 @@ Both well under the 2 GB bound (`ABORT_MEMORY_O2` never fired).
 ```
 (not re-run here: submits/moves the sandbox itself, by design outside
 this verifier's scope)
-$ python3 Airlock/airlock submit PseudoCoupHQ/Research/op_pipeline/lanes_o2/o2_l7_spelling_guard_final.sh --instance o2 --no-batch
+$ python3 PUBLIC/Airlock/airlock submit PRIVATE/PseudoCoupHQ/Research/op_pipeline/lanes_o2/o2_l7_spelling_guard_final.sh --instance o2 --no-batch
 $ cat PseudoCoupHQ/Research/oracle/arch_opcodes/lane_logs/o2_l7_spelling_guard_final.log
 ...
 FAIL single_opcode_units.json -- 183 spelling-keyed place(s)

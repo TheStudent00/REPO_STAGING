@@ -19,6 +19,8 @@ sub_nodes:
       path: node_0_3_2_1_hub_compiler/CORE_0_3_2_1_hub_compiler.md
     - name: cross_construction
       path: node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md
+    - name: architectures
+      path: node_0_3_2_3_architectures/CORE_0_3_2_3_architectures.md
 ---
 
 # CORE 0_3_2 — arch_unit_oracle
@@ -41,6 +43,7 @@ sub_nodes:
 - [compiler_units](node_0_3_2_0_compiler_units/CORE_0_3_2_0_compiler_units.md) — The operators a compiler's OWN SOURCE uses, each taken as an arch-unit, set against the operators that compiler OFFERS to the programs it compiles — the existing corpus — so that the difference between what a compiler offers and what it uses is measured.
 - [hub_compiler](node_0_3_2_1_hub_compiler/CORE_0_3_2_1_hub_compiler.md) — Our own Hub-like compiler: a lowering that reads a source file through tree-sitter, types each operator node by the language's own front end run once as a type oracle (ruled 2026-09-07 on o6's measurement: go/types typed 79,799 of 103,475 sites at 541 MB and 160 s), resolves each node to its dominant operator, and emits target SOURCE composed from AutoPoly's proved emulations, one per node, so that the target's own compiler lowers and optimizes ACROSS the operators; its output is compared by the gate against what the original compiler emits for the same file.
 - [cross_construction](node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md) — Language x's arch-units as the ONLY building blocks from which every arch-unit of language y is constructed, each construction proved by the gate, so that the set of y's operators that x can express is measured rather than assumed.
+- [architectures](node_0_3_2_3_architectures/CORE_0_3_2_3_architectures.md) — The architectures the oracle runs on, one sub-node each, so that the part of the line that touches the machine is kept apart from the part that does not.
 
 ## definition
 
@@ -78,7 +81,7 @@ Founded by the owner, 2026-09-05, verbatim:
 ## goal, added 2026-09-07: full modelling of `set_of_unique_arch_opcodes`, and the owner's loop
 
 the owner's names, 2026-09-07 (verbatim definitions in
-`DevComms/LLM_communication_protocol_cases.md` Appendix C.1),
+`PRIVATE/DevComms/LLM_communication_protocol_cases.md` Appendix C.1),
 adopted as this node's names:
 
 | name | definition | what holds it today |
@@ -115,7 +118,7 @@ those interpolations could be added/combined/composed
 (function-composition f(g(x)) and whatever else) to match (emulate) the
 arch-opcode regression-fitting." The coordinator's reading of that idea,
 with the bases in which each opcode class is an exact fit, is
-`PseudoCoupHQ/DevComms/log_234_arch_opcode_mappings_as_fits.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_234_arch_opcode_mappings_as_fits.md`.
 
 **Ruling, 2026-09-08 (the owner, after the spelling guard flagged `and`/`or`/`xor`
 in the o2 artifacts): a mnemonic alone is a spelling; the machine-form key
@@ -163,7 +166,7 @@ server (the owner, 2026-09-07).
   2026-09-05), and the compiler graphs. This node reads them and
   never writes them.
 - **Own, and never written by the main line:** everything under
-  `PseudoCoupHQ/Research/oracle/`, every sub-node
+  `PRIVATE/PseudoCoupHQ/Research/oracle/`, every sub-node
   below this CORE, and every Airlock instance named `o<N>.conf`.
   the owner, 2026-09-05: "i dont want either to interfere with the other."
 - **Shared by repo, not by line:** the DevComms log numbering, which
@@ -217,7 +220,7 @@ order now follows the research master plan.
 | hub_compiler | steps 4–5 of the master order | the Hub v1 dictionary read; one explicitly typed go file lowered by lookup and join, gated against go's output | after steps 2–3 |
 
 The master order is [research](../CORE_0_3_research.md) §4.2. The
-review that set it: `PseudoCoupHQ/DevComms/log_211_review_paths_to_the_hub.md`.
+review that set it: `PRIVATE/PseudoCoupHQ/DevComms/log_211_review_paths_to_the_hub.md`.
 
 ## what this node does not decide
 

@@ -1,7 +1,7 @@
 # R2 Report — Tree-sitter Census of the Compiler Sources
 
 Date: 2026-07-28. Run in-session with T1
-(`PseudoCoup_v6/Tools/ledgerer/tree_sitter/`, pinned
+(`PRIVATE/PseudoCoup_v6/Tools/ledgerer/tree_sitter/`, pinned
 grammars). Script: `census_sources.py` in this folder; per-file
 censuses in `outputs/`.
 
@@ -24,7 +24,7 @@ measured, not estimated.
 | x86_mc_code_emitter (LLVM, hand-written C++) | cpp | 2,033 lines | 94 | 16,918 | no |
 
 Subject paths are recorded in
-`PseudoCoup_v6/Planning/node_0_1_research/PROGRESS.md`.
+`PRIVATE/PseudoCoup_v6/Planning/node_0_1_research/PROGRESS.md`.
 The full support crate has 15 `.rs` files (incl. `vex.rs`,
 `evex.rs` — the stubbed SIMD surface); only the two
 transpiled-in-PCv5 files were censused here, the rest join when

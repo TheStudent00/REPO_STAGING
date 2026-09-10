@@ -1,7 +1,7 @@
 # Communication Protocol — cases
 
 The account behind every rule in
-`DevComms/LLM_communication_protocol.md` (v3). Each
+`PRIVATE/DevComms/LLM_communication_protocol.md` (v3). Each
 v2 section is reproduced here VERBATIM — its rule text, its dated
 failure, and every quote — under the card or cards it now feeds.
 Nothing from v2 was dropped; the rulebook carries the distilled
@@ -10,8 +10,8 @@ card, this file carries how the rule was reached. Per
 is the working record of why.
 
 Built 2026-09-06 from
-`DevComms/0_Archive/LLM_communication_protocol_v2.md`
-by `DevComms/0_Archive/build_cases_2026-09-06.py`. To add a case: append
+`PRIVATE/DevComms/0_Archive/LLM_communication_protocol_v2.md`
+by `PRIVATE/DevComms/0_Archive/build_cases_2026-09-06.py`. To add a case: append
 a dated entry under the card's section; do not edit the verbatim
 v2 text.
 
@@ -749,8 +749,8 @@ provisional — or not shown.
 
 → cards: `media.structural-overview, scope.code-shape (family heading)`
 → §6.1 within: `media.structural-overview`; `media.call-flow-arrows`
-→ §6.2 within: `scope.code-shape — text lives in PseudoCoupHQ/plan_and_code.md §1–§2`
-→ §6.3 within: `scope.code-shape — text moved to PseudoCoupHQ/plan_and_code.md §7`
+→ §6.2 within: `scope.code-shape — text lives in PRIVATE/PseudoCoupHQ/plan_and_code.md §1–§2`
+→ §6.3 within: `scope.code-shape — text moved to PRIVATE/PseudoCoupHQ/plan_and_code.md §7`
 
 
 #### 6.1 Structural overviews
@@ -806,7 +806,7 @@ ClassA.method_x() --> ClassB.method_y()
 
 #### 6.2 Plan and code share names; code is written top-down
 
-Full statement: `PseudoCoupHQ/plan_and_code.md`. In
+Full statement: `PRIVATE/PseudoCoupHQ/plan_and_code.md`. In
 short:
 
 - A plan node describing a code object carries that object's NAME —
@@ -925,13 +925,13 @@ work.
   can click and view.
 - **Commands appear exactly as typed, with full path** (2026-08-01).
   Wrong: `bash run_checks.sh`. Right:
-  `bash PseudoCoup_v6/Research/r1_intentions_validation/run_checks.sh`.
+  `bash PRIVATE/PseudoCoup_v6/Research/r1_intentions_validation/run_checks.sh`.
   If a run genuinely needs a working directory, one copy-pasteable
   line: `cd ~/path/to/folder && bash run_checks.sh`. If a shorter
   form is being proposed, say it does not exist yet and give the
   line that would create it. The failure: `hq.sh check` referred to
   repeatedly as though it were a command; the form that runs is
-  `bash PseudoCoupHQ/hq.sh check`.
+  `bash PRIVATE/PseudoCoupHQ/hq.sh check`.
 - Anything not local to the workspace: say so, and provide the means
   to acquire it if relevant.
 
@@ -964,14 +964,14 @@ and confirmations do NOT get logs — a log per exchange is its own
 pollution.
 
 - Location: the project's own `DevComms/`; line-wide work in
-  `PseudoCoupHQ/DevComms/`.
+  `PRIVATE/PseudoCoupHQ/DevComms/`.
 - Naming: `log_<nnn>_<topic>.md`, three digits, lower case with
   underscores; numbering restarts per repo.
 - The chat still carries the conclusion, the decision it forces, and
   anything I must act on — §4.2's shape governs it. Never "I've
   explained this in log 3" and stop.
 - Referencing a log later: repo, number, section, full path —
-  "`PseudoIR/DevComms/log_001_activation_slice_closure.md`
+  "`PRIVATE/PseudoIR/DevComms/log_001_activation_slice_closure.md`
   §6" — never "as discussed earlier".
 
 **Three stores, three jobs** — a plan node says what a thing IS;
@@ -1031,7 +1031,7 @@ for is inspectable instead of a matter of taste.
 
 #### The files
 
-Beside this document in `DevComms/`; each is a
+Beside this document in `PRIVATE/DevComms/`; each is a
 frequency list (rank, count, root, folded surface forms):
 
 | file | contents |
@@ -1074,7 +1074,7 @@ and `analysis/prefixes_review.txt` (120 prefix families) there.
 #### What to do with it
 
 - Choosing between a plain word and a specialist synonym: choose the
-  one already in `DevComms/vocabulary_dictionary.txt`.
+  one already in `PRIVATE/DevComms/vocabulary_dictionary.txt`.
 - A word absent from all lists is one I have never used with you —
   not banned, but define it on the spot (§1.2).
 - Do not imitate the lists mechanically or narrow your precision to
@@ -1422,3 +1422,231 @@ loop in pseudo-code over those names; the ask last.
 - The earlier long message is compressed to three sentences, marked
   as what it was.
 - Cards produced: `names.fill-my-sets`, `scope.length-matches-ask`.
+
+### v3 Appendix D — the failures of 2026-09-08 to 2026-09-10, and what each produced
+
+#### D.1 The prose block (`shape.tables-and-bullets-not-prose`)
+the owner, 2026-09-10, after a five-paragraph answer to "what is this
+algorithm": "did you just give me a giant block of fucking prose. FUCK
+YOU". The same content resent as three tables and a four-line list
+passed without comment. The ask was one line; the answer's medium, not
+its content, was the failure.
+
+#### D.2 "What is the algorithm" answered as history (`shape.algorithm-as-algorithm`, `names.sets-and-loops`)
+the owner, 2026-09-10: "SO WHAT THE FUCK IS THIS FUCKING ALGORITHM YOU HAVE
+RUNNING? and what ever the fuck it is, it better actually be fucking
+working and not be you editing things so its effectively you solving
+everything by hand." A branch conversation had described the running
+route as "a hand-written translator that grew a case per pass" — a
+history of the code. The answer that landed: input / render / compile
+and carve / decide as four rows; "no search; one candidate, printed from
+the term; z3 decides"; then the grep proving no branch was keyed on an
+opcode name; then the one thing genuinely wrong (nine task-name gates).
+
+#### D.3 Floating statements (`order.anchor-to-who-and-what`)
+the owner, 2026-09-08, on a bring-up status: "idu what youre saying. meaning
+idu what this means in relation to what i need to do, what you need to
+do, what the tower side needs to do, how it impacts the research. it
+feels like the statements are just floating freely without any
+anchoring." The reply that passed was four numbered parts: the research
+(unchanged), what I was doing (moving data into the VM because the
+intended route did not exist), what the owner had to do (nothing), what the
+tower side had to do (attach the share, no longer urgent).
+
+#### D.4 One reading reported as the number (`object.number-carries-its-reading`)
+For four loop passes the coordinator reported "cells proved on all four
+targets" as 120 → 144 → 151 → 162 → 165 and "80.25% of rows". A branch
+conversation, counting every written place including flags, found the
+strict union was 93 cells and 45.5%. Neither number was wrong; reporting
+one as THE number was. From then on: strict / destination-only /
+corpus-needed, every time.
+
+#### D.5 A ground-truth finding, left for the ruling (`scope.ground-truth-changes-are-mine`)
+Task ref1, 2026-09-10, checked the reference simulator against an
+independent chip-tested reading and located 383 disagreements in four
+lines of `reference.py`. The log quoted both readings and every
+counterexample and decided nothing; the coordinator's report ended:
+"the reference is the line's ground truth; its correction is the owner's
+ruling." That is the shape for anything ratified.
+
+#### D.6 The cold telegraph (`shape.plain-words-loudly-defined`)
+the owner, 2026-09-10, on the reply that over-corrected D.1 into tables of
+clipped fragments: "the words are too cold. the comms protocol has an
+example of how i communicate with a very basic vocabulary and loudly
+defined terms (in the example, i describe the loops in a pseudocode
+style with strategically chosen prose. it is minimal but i would argue
+powerful.). and concise. and with the bigger picture in full view so
+everything can be easily anchored." The card that had produced the
+telegraph (a four-line cap on prose) was replaced the same hour by one
+that points at C.1 instead.
+
+### v3 Appendix E — the correction of 2026-09-10: the same report twice, cold then declared (the owner: "please make this the second example of what is correct ... and what is less correct")
+
+Context: task rv1 (RISC-V as a second architecture) had closed. The
+coordinator reported it (E.1). the owner: "it would be great if i knew what a
+cell and a tier and all the other words mean. you started it out okay
+but you used inline for the loop instead of just having the markdown's
+raw coding with the actual pseudocode. itd be great if you could think
+more abstractly about my example for communication style, instead of
+only using that instance that i used. tables are not bad but the cold
+words make it almost useless." The coordinator replied again (E.2).
+the owner: "yes. thank you." Both are kept verbatim because the pair isolates
+the variable: same facts, same tables, same author, one hour apart; only
+the declarations, the code block and the voice changed.
+
+#### E.1 The less correct reply, verbatim
+
+> rv1 closed. RISC-V now has a level 0 and the first measurement of "does solving one architecture solve the rest".
+>
+> **The big picture.** A certificate says "this source computes this term". The term is architecture-neutral. So moving to RISC-V should only cost the layers that touch the machine: the lifter (opcode → term), the carve, and the calling convention. rv1 measured exactly that on ten units.
+>
+> **Level 0 for RISC-V.** The new lifter covers RV64I + M, and was checked against the ratified Sail model run concretely. This is a check at points, not an equality proof, because Isla could not be built against a released Sail.
+>
+> | what | count |
+> |---|---|
+> | mnemonics lifted | 44 |
+> | operand variants | 858 |
+> | points checked against Sail | 860,304 |
+> | disagreements | 0 |
+> | refused by name | 54 (loads/stores/branches 19, floats 34, auipc 1) |
+>
+> **The claim, on the ten units.** Each unit's x86 body term against its riscv64 body term, by z3.
+>
+> | verdict | count | cause |
+> |---|---|---|
+> | identical after normalize | 7 | the compilers agree on the meaning |
+> | differ | 3 | two contract causes: the riscv64 ABI sign-extends an int32 argument to 64 where x86 reads 32 bits; `idiv` traps on zero where `divw` defines an answer |
+> | no corpus unit | 1 | the `sub` immediate cell: the probe corpus never puts a literal on an operand |
+>
+> So the three differences are contracts, not meanings. That is what your hypothesis predicted: the compiler knows the equivalence, and where it diverges it is the ABI or a trap rule, both statable as constraints.
+>
+> **The surface, counted.** What had to be written to carry the pipeline to RISC-V.
+>
+> | layer | lines |
+> |---|---|
+> | lifter | 1,174 (44% of everything) |
+> | level 0 check | 550 |
+> | calling convention | 326 |
+> | attestation | 303 |
+> | carve | 291 |
+> | **all** | **2,644 in 5 files** |
+>
+> Transferred untouched: the term store, the model table, `Term.normalize`, the bank, and the proofs. The lifter dominates, and a lifter is exactly what a formal ISA model gives for free. Guard passed on all seven json; verifier 7 match / 0 differ / 2 unverifiable prose lines.
+>
+> **What is yours.** A planning sub-node for the RISC-V line is wanted. rv1 did not create it, because the node tree is yours.
+>
+> **Running now**
+>
+> | lane | state |
+> |---|---|
+> | ref2: correct the four reference defects, re-derive the stores | running, about an hour in |
+> | rv2: RISC-V model table, cells twinned to x86 by term, inherited certificates re-verified on riscv64, the loop only over what has no twin | just started beside ref2 |
+> | t3: renderer intermediates, x87 as two words, tier in the code version | starts when ref2 closes |
+
+(The reply before this one, on the same day, had described the loop
+as one inline line: `for arch_opcode in unique_arch_opcodes: for lang in
+langs: find_emulation(arch_opcode, lang)` in backticks inside a
+sentence. E.1 inherits that, and uses `level 0`, `lifter`, `carve`,
+`certificate`, `term`, `cell`, `normalize`, `attestation`, `guard`,
+`verifier`, `tier` without declaring one of them.)
+
+#### E.2 The correct reply, verbatim
+
+> You're right, and I see what I did. I described your style as "names, bullets, a loop, the ask", then used every word of mine cold and wrote the loop inline. The abstraction is: a message is a small program the reader runs in their head. Declarations first, each with a bullet that says how to build the thing. The process as real code in a block. One or two plain sentences on top for the why. The ask last. A word that was not declared is a bug, in a table as much as in prose. That is now in the protocol card and in a glossary file in the repo, in your form, so every session holds it.
+>
+> Here is the line again, declared.
+>
+> `arch_opcode`
+> - one machine instruction the compiler can write, keyed by three things: its mnemonic (the name, like `add`), its operand form (what it reads: two registers, a register and a constant, memory), and its width (how many bits it works on: 8, 16, 32, 64, 128).
+> - if we put every arch-unit of every language in one file, list every instruction line, keep those three fields, and reduce to one instance per triple, that is the set of arch_opcodes.
+>
+> `cell`
+> - one `arch_opcode` as a row of the model table. The table is mnemonics down and (form, width) across, so one box of that grid is one cell. Same thing as an arch_opcode, seen as a table entry.
+> - 253 cells are attested (some real compiled unit contains them). 205 of those have units in all four compiled languages, and that is the population the three readings below count over.
+>
+> `term`
+> - the meaning of a body or an opcode as one formula: for every output bit, a formula over the input bits.
+> - built by giving the inputs unknown values, applying each instruction's mapping in order, and reading the outputs. Two things with equal terms compute the same function, whatever they are spelled like.
+>
+> `reference simulator`, `level 0`
+> - `reference.py`: for every arch_opcode, its mapping written as a z3 function from input bits to output bits. Everything rests on it, so it is level 0.
+> - a `level 0 check` compares the reference against a formal model of the ISA written by other people (x86: the K-framework semantics; RISC-V: the Sail model). A disagreement is a defect in our reference.
+>
+> `lifter`
+> - the piece that walks an instruction list through the reference and returns its term. `reference.py` does it for x86, `riscv_reference.py` for RISC-V.
+>
+> `carve`
+> - cutting the compiled function's body out of the binary at its symbol: the instruction list from entry to return.
+>
+> `emulation`, `find_emulation(cell, lang)`
+> - a piece of source in `lang` which, compiled at ship flags, computes the cell's term.
+> - built in two tiers. `tier 1`: print the term in the language's own operators. `tier 2`: when the language has no operator at that width or kind (go has no 128-bit integer), build it from `& | ^ ~`, a conditional and variables at the language's widest word. A `schema` is one such construction pattern, general in (width, word), proved once in Lean for every width and word.
+>
+> `gate`
+> - the z3 question "does the carved body's term equal the cell's term?", budget 3,000 ms, asked per output. Answers: equal, differ (with a counterexample), undecided (budget ran out).
+>
+> `certificate`, `bank`
+> - a certificate is one emulation with its cell, language, source, compiler and flags, verdict, and the version of the code that made it. The bank is the file of all of them.
+> - a banked cell is never re-proved unless the code changed. A 5% sample re-runs each pass as an audit, and a differing verdict is an alarm.
+>
+> `readings` (three, always together)
+> - strict: a cell counts when every output of its emulation is proved, flags included.
+> - destination-only: the cell counts when the destination register's value is proved.
+> - corpus-needed: the cell counts when the outputs that some real unit in the corpus goes on to read are proved.
+>
+> `collapse`
+> - whether the compiler turned a source emulation back into the one instruction the cell names (LANDED), or left it as several instructions (NOT COLLAPSED).
+>
+> The process, as it actually runs:
+>
+> ```
+> set_of_cells        # every (mnemonic, form, width) any compiler emitted: 253 attested
+> set_of_languages    # c cpp rust go swift, and the interpreted ones
+> bank                # every emulation already proved or refused, with its verdict
+>
+> for cell in set_of_cells:
+>     for lang in set_of_languages:
+>         if bank.has(cell, lang) and code_unchanged(cell, lang):
+>             continue                                  # banked, never re-proved
+>         source = render(cell.term, lang)              # tier 1: print the term in lang
+>         if source is None:                            # lang has no operator at this width or kind
+>             source = construct(cell.term, lang)       # tier 2: build it from & | ^ ~, if, variables
+>         body = carve(compile(source, lang, ship_flags))
+>         verdict = gate(term_of(body) == cell.term)    # z3 decides, per output
+>         bank.add(cell, lang, source, verdict)
+> ```
+>
+> Now the two results in those words.
+>
+> **t2 was the first run of tier 2.** It went to the 149 places tier 1 refused for lack of a wide enough operator. It constructed 24 of them and proved 14 (`adc`, `sbb`, `shld`, `shrd` at 64 bits, on go and swift), each by a schema lemma in Lean. Your question was whether the c compiler simplifies these constructions back to the native instruction. Collapse says no: 0 of the 14 LANDED. Each body stays 4 to 17 instructions where the cell names one. The compiler's rewrite rules see ordinary arithmetic, not "this composition equals a primitive". That gap is your IP claim, measured.
+>
+> **rv1 was RISC-V on ten units.** The bet was: a term does not know its architecture, so moving to RISC-V should cost only the layers that touch the machine (lifter, carve, calling convention). It measured that.
+>
+> | what rv1 built | what it is, in the words above | result |
+> |---|---|---|
+> | a RISC-V lifter | the reference for RV64I + M, 44 mnemonics, 858 operand variants | written, 1,174 lines |
+> | its level 0 check | the lifter's mappings run beside the ratified Sail model at concrete inputs (edge values first, then random), because the symbolic tool would not build | 860,304 points, 0 disagreements. A check at points, not a proof of equality |
+> | the claim | for each of the ten units, the x86 body's term against the riscv64 body's term, by z3 | 7 equal, 3 differ, 1 had no unit (the corpus never puts a constant on an operand) |
+> | the 3 that differ | both are contracts, not meanings: the riscv64 calling convention sign-extends an int32 argument to 64 bits where x86 reads 32; `idiv` traps on a zero divisor where `divw` defines an answer | statable as constraints, like the x86 flag contracts |
+> | the surface | every line that had to be written to run the pipeline on the new architecture | 2,644 lines in 5 files, the lifter 44% of it; the term store, the table, the bank and the proofs moved untouched |
+>
+> That last row is the answer to your question about one architecture solving the rest: what does not transfer is the lifter, and a lifter is exactly what a formal ISA model hands you.
+>
+> Running now: ref2 (correcting four defects in the x86 reference, then re-deriving everything above it), and rv2 (the RISC-V model table, its cells twinned to x86 cells by term, the banked certificates re-verified on riscv64, the loop run only over cells with no twin). t3 starts when ref2 closes; it names intermediates in the printed source so the divider and the float constructions become statable, and it states an 80-bit x87 value as two integer words so that family stops refusing.
+>
+> Yours: a planning node for the RISC-V line, if you want one.
+
+#### E.3 What changed between E.1 and E.2, each difference named
+
+| in E.1 (less correct) | in E.2 (correct) | the principle (`shape.plain-words-loudly-defined`, PRINCIPLES) |
+|---|---|---|
+| eleven terms used cold: level 0, lifter, carve, certificate, term, cell, normalize, attestation, guard, verifier, tier | every term declared before use: a name in backticks, one bullet for what it is, one for how it is built ("if we put every arch-unit of every language in one file ...") | 2, declarations; 5, an undeclared word is a bug |
+| the loop inline, in backticks inside a sentence (the reply before) or absent (E.1) | the loop as a fenced code block over the declared names, comments carrying the why | 3, main as real code |
+| the picture in one bolded paragraph of undeclared words ("A certificate says ... The term is architecture-neutral") | two plain sentences of purpose, then the declarations that make the picture readable | 1, the comment on top |
+| table cells as fragments: "mnemonics lifted / 44", "verdict / count / cause" | table cells as phrases in declared words: "the lifter's mappings run beside the ratified Sail model at concrete inputs ..., because the symbolic tool would not build" | 5, applies inside tables |
+| a report | a person talking: "You're right, and I see what I did", "That last row is the answer to your question" | 6, voice |
+| the same numbers | the same numbers | correctness was never the variable; readability was |
+
+The same facts, the same author, one hour apart. E.1 is not wrong; it
+is unusable by its reader. That is the whole difference the card
+protects.

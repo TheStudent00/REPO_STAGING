@@ -2,7 +2,7 @@
 
 Date: 2026-09-02. Auditor: the coordinating session, not a sub-agent.
 Every number below was recomputed from the artifacts in
-`PseudoCoupHQ/Research/op_pipeline/` this session; the
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/` this session; the
 commands and outputs are pasted. Renderings are labelled per protocol
 §5.1a.
 
@@ -75,7 +75,7 @@ made no row. Log 147 §5 reports exactly this; confirmed.
 ## 2.3 The version control system
 
 LITERAL — `git status --porcelain | wc -l` and `git log --oneline -4`
-in `PseudoCoupHQ`:
+in `PRIVATE/PseudoCoupHQ`:
 
 ```
 0

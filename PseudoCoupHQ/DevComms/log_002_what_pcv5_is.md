@@ -44,11 +44,11 @@ Nothing above is new. Each clause traces to something recorded.
   same day: "we will gather all the PseudoCoup research and
   Frankenstein them together to build version 5." The parts list
   already exists as the harvest maps in
-  `PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`.
+  `PRIVATE/PseudoCoup_v6/AgentMemory/03_lineage_and_harvest.md`.
 - **"Precursor" and "runs before a hub exists."** the owner: "we can safely
   commandeer it to be the pre-cursor to PCv6." And the cycle recorded
   at
-  `PseudoCoupHQ/Planning/node_0_1_exchange/CORE_0_1_exchange.md`
+  `PRIVATE/PseudoCoupHQ/Planning/node_0_1_exchange/CORE_0_1_exchange.md`
   opens: "a hub-less PseudoCoup builds the first PseudoIR." **That
   hub-less PseudoCoup had no name until now.** This proposal is that
   it is version 5.
@@ -97,7 +97,7 @@ Different:
   follow-the-calls rule; application-script transpiling does NOT
   chase imported modules, because that is "often logically and/or
   legally impossible" (the owner, 2026-07-28, recorded in
-  `PseudoCoup_v6/AgentMemory/02_decisions.md`). **That
+  `PRIVATE/PseudoCoup_v6/AgentMemory/02_decisions.md`). **That
   one recorded rule is the sharpest line between the two versions,
   and it was written before this split was proposed.**
 - **What is targeted.** A stub hub surface versus the finished hub.
@@ -110,9 +110,9 @@ Different:
   home of the Frankenstein transpiler and Frankenstein ledgerer.
 - PseudoIR's borrow re-points at PCv5. Its
   `PSEUDOCOUP_ROOT` currently defaults to
-  `PseudoCoup_v6` — under this proposal it would come
+  `PRIVATE/PseudoCoup_v6` — under this proposal it would come
   to mean version 5. That was already flagged as unsettled in
-  `PseudoIR/Agent_Memory.md` §4 and this would settle
+  `PRIVATE/PseudoIR/Agent_Memory.md` §4 and this would settle
   it.
 - PCv6 keeps the goal it already states — the 12 languages into the
   hub — and stops being the place compiler ingestion lives.
@@ -158,7 +158,7 @@ in.
 
 **What happens to PCv6's existing tools.**
 
-`PseudoCoup_v6/Tools/` holds `ledgerer` (with
+`PRIVATE/PseudoCoup_v6/Tools/` holds `ledgerer` (with
 `tree_sitter` inside it), `transpiler`, and `polyfill`, green at 95
 tests. All of that is compiler-facing: the transpiler's live ingestor
 is the LLVM C++ encoder, which eats compiler source.

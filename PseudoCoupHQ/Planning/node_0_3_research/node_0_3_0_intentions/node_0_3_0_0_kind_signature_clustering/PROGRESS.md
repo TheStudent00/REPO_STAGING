@@ -10,15 +10,15 @@ status: living
   super-node's PROGRESS for the per-step record and the reports
   (PCHQ DevComms logs 008–015).
 - 2026-08-12: basis-report proposals P1–P9 ALL RULED by the owner (walk in
-  `PseudoCoupHQ/DevComms/log_016_ingress_egress_asymmetry.md`
+  `PRIVATE/PseudoCoupHQ/DevComms/log_016_ingress_egress_asymmetry.md`
   §6 and the conversation following): vocabulary additions adopted
   (`import`, `try`, `pair`, `interpolation`, `container-form`),
   Python-naming rule, two-layer classification, shape-invisibility
   standing fact, split mapping strategy. carried into
-  `PseudoCoup_v5/Tools/ledgerer/ur.py` (KINDS) and the
+  `PRIVATE/PseudoCoup_v5/Tools/ledgerer/ur.py` (KINDS) and the
   ur CORE the same day.
 - 2026-08-13: P-a BUILT and run on rust —
-  `PseudoCoupHQ/Research/kind_signature_clustering/pack_generator.py`
+  `PRIVATE/PseudoCoupHQ/Research/kind_signature_clustering/pack_generator.py`
   (language-agnostic; anchors from basis_xref + ruled additions,
   seven-slice threshold band, four-part dilution guard, counterpart
   and labeled name-only channels, mechanical confidence). Output:
@@ -50,12 +50,12 @@ status: living
 - 2026-08-15: ARTIFACT DIRECTORY RENAMED to match — the `Research/`
   folder `kind_clustering` became `kind_signature_clustering`,
   finishing the 2026-08-14 refactor above. Done with PlanPlan's new
-  `PlanPlan/framework/rename_node.py` (JOB 1 of the same
+  `PRIVATE/PlanPlan/framework/rename_node.py` (JOB 1 of the same
   piece of work that did this rename: `python3 rename_node.py
   <planning_root> kind_clustering kind_signature_clustering --apply
   --also-artifacts <old research dir>=<new research dir>
-  --scan-root PseudoCoupHQ --scan-root
-  PseudoCoup_v5`). The tool found the node already at its
+  --scan-root PRIVATE/PseudoCoupHQ --scan-root
+  PRIVATE/PseudoCoup_v5`). The tool found the node already at its
   new name (2026-08-14's manual rename), so it did the node-level steps
   as a no-op and ran only its reference sweep + the artifact rename:
   25 files edited across PseudoCoupHQ and PseudoCoup_v5 (DevComms logs

@@ -1,20 +1,20 @@
 # log 248 — task ex1: beyond the four — cpp as a fifth compiled target, and the check for the interpreted languages, each on the handful first
 
 Node: `hq.research.arch_unit_oracle.cross_construction.autopoly`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/node_0_3_2_2_cross_construction/node_0_3_2_2_3_autopoly/`).
 The interpreted half also serves
 `hq.research.remaining_languages`
-(`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_12_remaining_languages/`).
+(`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_12_remaining_languages/`).
 Line: arch_unit_oracle, the "goal" section of 2026-09-07 and the rulings
 of 2026-09-08 and 2026-09-09; the research CORE's §4.2 item 3, which
 names "`find_emulation` printers for go, swift and the interpreted
 languages and a check for interpreted targets".
-Law: `PseudoCoupHQ/Research/LAW.md`, read in full
+Law: `PRIVATE/PseudoCoupHQ/Research/LAW.md`, read in full
 including its tower section.
 Date: 2026-09-09. Instance `ex1`, on the tower guest.
 
 Artifact folder:
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/`,
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/`,
 new sub-folders `cpp/` and `interp/`, results under `autopoly/` as
 `expand1_*`; tasks ap1's to ap4's products are never written. Lane
 scripts: `.../emulation/handful/lanes_ex1/`, sixteen of them, each kept
@@ -23,7 +23,7 @@ named below is on the TOWER (`<user>@<tower>`) under
 `<runs>/ex1/agent/logs/`.
 
 Paths inside a pasted command are the ones the lane sees:
-`PseudoCoupHQ` IS `PseudoCoupHQ`, mounted into
+`PseudoCoupHQ` IS `PRIVATE/PseudoCoupHQ`, mounted into
 the instance. Every rendering is labelled per the protocol's
 `object.literal-gloss-analogy`: **LITERAL** is the object itself,
 quoted; **GLOSS** is a plain-words reading beside a literal.
@@ -614,7 +614,7 @@ brief asks for is on the record:
 ```
 
 The full 70-row table is §4 of
-`PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand1.md`
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/autopoly/expand1.md`
 and is reproduced by
 `python3 .../autopoly/expand1.py interp_table`.
 
@@ -720,7 +720,7 @@ without their correction.
 
 # 8. Memory
 
-The bound stated in `Airlock/instances/ex1.conf`, in every
+The bound stated in `PUBLIC/Airlock/instances/ex1.conf`, in every
 lane header and in `expand1.py`'s and `interp_check.py`'s own constants
 is 6 GB resident on the one collecting process, named abort
 `ABORT_MEMORY_EX1`, checked after every run. The sample the law asks for
@@ -833,7 +833,7 @@ file edited outside `.../emulation/` is none, and inside it the driver
     (§7's sixth item), after a re-derivation gave a different all-four
     line. `autopoly4.outcome_of` is the rule and it is called.
 11. **Nothing was deleted under `<runs>/` or
-    `Airlock/`** on either machine, and no store of any
+    `PUBLIC/Airlock/`** on either machine, and no store of any
     pass was overwritten: `expand1_interp_smoke.jsonl`,
     `_pass1`, `_pass2`, `_pass3` and `_pass4` are all on disk beside the
     run of record.

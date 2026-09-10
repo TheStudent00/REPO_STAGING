@@ -43,16 +43,16 @@ In short: in v3, "discipline" IS a fixed, prose-form checklist of 8 source-code 
 
 ## 2. What the fidelity doctrine IS
 
-`PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`, §4 ("Synthesis"), lines ~117-121 (git: commit `8c6ea51`, 2026-07-31), states it as a cross-validated finding:
+`PRIVATE/PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md`, §4 ("Synthesis"), lines ~117-121 (git: commit `8c6ea51`, 2026-07-31), states it as a cross-validated finding:
 
 > "The fidelity doctrine appears twice independently — PCv5's uniform-polyfill rule and PseudoIR's `compiler_transpilation_experiment.md` boundary rule ('every operator on the polyfilled type routes through the simulator, or none do') — same law, derived from different bugs. Cross-validated."
 
 Source A — PCv5's uniform-polyfill rule. Stated as a bare standing rule in two places:
 
-- `PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md`, line 625: "Uniform polyfill wrapping; no proof-as-exemption."
-- `PseudoCoup_v5/DevComms/plan_2026-07-25.md`, line 149 (under "Standing rules"): "Uniform polyfill wrapping; no proof-as-exemption."
+- `PRIVATE/PseudoCoup_v5/DevComms/HANDOFF_2026-07-25.md`, line 625: "Uniform polyfill wrapping; no proof-as-exemption."
+- `PRIVATE/PseudoCoup_v5/DevComms/plan_2026-07-25.md`, line 149 (under "Standing rules"): "Uniform polyfill wrapping; no proof-as-exemption."
 
-And with rationale in `PseudoCoup_v5/Research/cpp_ingress/transpile_cpp.py`, lines 40-45:
+And with rationale in `PRIVATE/PseudoCoup_v5/Research/cpp_ingress/transpile_cpp.py`, lines 40-45:
 
 > "MANDATORY POLICY (uniform polyfill wrapping, the owner 2026-07-25, restated from vocab_support.py's header for this second source language): every arithmetic node (|, ^, &, <<, >>, +, -) in a uint8_t-typed C++ expression is wrapped in u8(), with NO exemptions — not even where overflow is provably impossible (e.g. W/R/X/B are always single bits here). Uniform depth is what makes an unwrapped node unambiguously a transpiler bug instead of a 'proof-based' omission that can't be told apart from a miss. Comparison (<, <=, ==, ...) and logical (&&, ||) operators are NOT arithmetic and are therefore never wrapped — same rule the Rust transpiler already applies (see transpile_support.py's parse_cmp)."
 
@@ -83,19 +83,19 @@ Reading: these read as two different scopes of the same underlying value — "ma
 | Sense | Path |
 |---|---|
 | "Universal Discipline" as 3 abstract principles (Intent not Mechanism; Concrete Constructs; Map→Wrap→Fail) | `0_Archive/PseudoCoup_v1/README.md` |
-| Same 3-principle "Universal Discipline" restated, v4/live-twin copies | `0_Archive/PseudoCoup_v4/README.md`, `PseudoCoup/README.md` |
-| Discipline as a pre-transpile CLI gate flag ("pseudoir.gate pre-transpile discipline check"; "--no-gate ... discipline should be opt-out, not opt-in") | `0_Archive/PseudoCoup_v4/pseudocoup/cli.py`, `PseudoCoup/pseudocoup/cli.py` (byte-identical), `0_Archive/PseudoCoup_v4/.planning/21_two_gates.md`, `PseudoCoup/.planning/21_two_gates.md`, `0_Archive/PseudoCoup_v4/.planning/00_Upgrade_Plan.md`, `PseudoCoup/.planning/00_Upgrade_Plan.md` |
+| Same 3-principle "Universal Discipline" restated, v4/live-twin copies | `0_Archive/PseudoCoup_v4/README.md`, `PUBLIC/PseudoCoup/README.md` |
+| Discipline as a pre-transpile CLI gate flag ("pseudoir.gate pre-transpile discipline check"; "--no-gate ... discipline should be opt-out, not opt-in") | `0_Archive/PseudoCoup_v4/pseudocoup/cli.py`, `PUBLIC/PseudoCoup/pseudocoup/cli.py` (byte-identical), `0_Archive/PseudoCoup_v4/.planning/21_two_gates.md`, `PUBLIC/PseudoCoup/.planning/21_two_gates.md`, `0_Archive/PseudoCoup_v4/.planning/00_Upgrade_Plan.md`, `PUBLIC/PseudoCoup/.planning/00_Upgrade_Plan.md` |
 | Discipline mechanized as a gate module with a relaxation policy (kwargs/tuple-unpacking/operator-overloading/null-handling relaxed via "registered ops," generators/exceptions/multi-inheritance/static-typing still hard rules) | `0_Archive/PseudoIR_(retired)/v2/gate/DISCIPLINE_CHECK.md`, `0_Archive/PseudoIR_(retired)/v2/discipline_relaxation.md` |
 | Memory-model discipline: "The Universal Discipline mandates that the Python Hub acts as a memory-abstracted environment," forbidding explicit pointers/addresses/pass-by-reference in Hub source | `0_Archive/PseudoIR/DevComms/.planning/specifications/02_ledger/memory_erasure_schema.md` |
 | Discipline as enforced by the Ledger's type registry across language boundaries | `0_Archive/PseudoIR/DevComms/.planning/specifications/02_ledger/type_registry_schema.md` |
-| "discipline" defined explicitly as a floor, not dogma: "a Python subset chosen so translation is mechanical... a lighter target (Dart) gets a lighter discipline" | `StressBot/RelevantProjects/PseudoCoup_v0/README.md` |
-| "MAIN-SOURCE DISCIPLINE" — an unrelated app-hygiene sense: disciplining a WFL Kotlin app's source so a Kotlin↔Python transpile pair agrees, not the Oracle Discipline matrix | `StressBot/RelevantProjects/PseudoCoup_v0/DevComms/main_source_discipline.md` |
-| "Discipline-checker gauge first" — treated as a measuring instrument analogous to a test gauge | `StressBot/RelevantProjects/PseudoCoup_v0/HANDOFF.md` |
-| "Retraction discipline" — generic session-conduct sense, unrelated to transpilation | `StressBot/RelevantProjects/PseudoCoup_v0/Agent_Memory.md` |
-| "One discipline, two directions" thesis for forward/backward PseudoDart translation | `StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_0_pseudodart_forward_backward_discipline.md` |
-| "Discipline reminders" as a named section in a handoff report | `StressBot/RelevantProjects/PseudoCoup_v0/DevComms/PseudoCoup_handoff_report.md` |
-| "disciplined Kotlin→Python transpiler" as a tool tagline | `StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/README.md` |
-| Doctrine as a citation label for old design docs plus failure post-mortems, bundled together | `PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md` ("Doctrine + post-mortems \| old-PseudoIR design docs; PyHaxe failure notes \| `0_Archive/PseudoIR/DevComms/.planning/design/`, `0_Archive/PyHaxe/docs/DEVELOPMENT_NOTES.md`") |
+| "discipline" defined explicitly as a floor, not dogma: "a Python subset chosen so translation is mechanical... a lighter target (Dart) gets a lighter discipline" | `PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/README.md` |
+| "MAIN-SOURCE DISCIPLINE" — an unrelated app-hygiene sense: disciplining a WFL Kotlin app's source so a Kotlin↔Python transpile pair agrees, not the Oracle Discipline matrix | `PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/DevComms/main_source_discipline.md` |
+| "Discipline-checker gauge first" — treated as a measuring instrument analogous to a test gauge | `PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/HANDOFF.md` |
+| "Retraction discipline" — generic session-conduct sense, unrelated to transpilation | `PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/Agent_Memory.md` |
+| "One discipline, two directions" thesis for forward/backward PseudoDart translation | `PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/DevComms/log_0_pseudodart_forward_backward_discipline.md` |
+| "Discipline reminders" as a named section in a handoff report | `PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/DevComms/PseudoCoup_handoff_report.md` |
+| "disciplined Kotlin→Python transpiler" as a tool tagline | `PRIVATE/StressBot/RelevantProjects/PseudoCoup_v0/tools/pseudokotlin/README.md` |
+| Doctrine as a citation label for old design docs plus failure post-mortems, bundled together | `PRIVATE/PseudoCoup_v5/DevComms/transpiler_survey_2026-07-27.md` ("Doctrine + post-mortems \| old-PseudoIR design docs; PyHaxe failure notes \| `0_Archive/PseudoIR/DevComms/.planning/design/`, `0_Archive/PyHaxe/docs/DEVELOPMENT_NOTES.md`") |
 
 ## open questions for the owner
 
@@ -103,4 +103,4 @@ Reading: these read as two different scopes of the same underlying value — "ma
 - The retired-PseudoIR ledger's "halt-on-unresolvable Discipline Violation" is the only literal use of that phrase found — is that the intended enforcement mechanism for the fidelity doctrine going forward, or a v2-era artifact that should not be treated as binding?
 - StressBot's `PseudoCoup_v0/README.md` defines discipline explicitly as "a floor, not dogma... a lighter target gets a lighter discipline" — does that graduated-strictness model apply to PCv5's uniform-polyfill rule, which currently states "no exemptions" without qualification?
 - Several PCv5-internal files (`hub/__init__.py`, `project_state.md`, `log_002_ur_brainstorm.md`, `log_001_ledgerer_harvest_findings.md`, `dev_plan_log.md`, `language_divergence_study_log.md`, `log_006_ur_kinds_vocabulary.md`, `ledger_survey_2026-07-27.md`, `README.md`, `Research/vocab_transpiler/transpile_support.py`, `Research/divergence_suite/README.md`) use "discipline" in passing but were not individually quote-extracted for this log — worth a follow-up pass if any of them state a rule not captured above.
-- Three separate repos are all named "PseudoIR" (`0_Archive/PseudoIR/`, `0_Archive/PseudoIR_(retired)/`, `PseudoIR/` live) — is the live PseudoIR repo's planning tree (which also has "discipline" hits, e.g. `Planning/CORE_0.md`, `Planning/node_0_2_hub/SUPPORT_hub.md`) a continuation of either archived lineage's discipline concept, or a fresh redefinition? Not checked in this pass.
+- Three separate repos are all named "PseudoIR" (`0_Archive/PseudoIR/`, `0_Archive/PseudoIR_(retired)/`, `PRIVATE/PseudoIR/` live) — is the live PseudoIR repo's planning tree (which also has "discipline" hits, e.g. `Planning/CORE_0.md`, `Planning/node_0_2_hub/SUPPORT_hub.md`) a continuation of either archived lineage's discipline concept, or a fresh redefinition? Not checked in this pass.

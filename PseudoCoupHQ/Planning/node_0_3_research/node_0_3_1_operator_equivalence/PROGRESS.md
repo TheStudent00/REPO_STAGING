@@ -754,7 +754,7 @@ status: living
   argument-lowering region + coverage tally of a probe compile +
   the join. Result: 8-step path found and confirmed executed;
   register leg stops at the follow-the-dot frontier. Record:
-  `PseudoCoupHQ/DevComms/log_072_compiler_graph_tracing.md`
+  `PRIVATE/PseudoCoupHQ/DevComms/log_072_compiler_graph_tracing.md`
   §7.
 - 2026-08-24: the coverage tally RULED a stopgap (order lost =
   opaque). The diary (inject_emitid pattern, order preserved) is
@@ -870,7 +870,7 @@ status: living
   `algebraic_add` on f64 is the same five bytes as its ordinary
   `+`, so it would merge into class C0338 unseen — a probe-shape
   limit, not a table gap. Report:
-  `PseudoCoupHQ/DevComms/log_078_arch_unit_automation_audit.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_078_arch_unit_automation_audit.md`.
 - 2026-08-31 (TASK 1, generalized graph builder, log_086): the
   probe's hand-written 6-function/1-regex script replaced by a
   dispatched builder, `Research/compiler_graph/build_graph2.py`
@@ -929,7 +929,7 @@ status: living
   .json — TASK 7's own brief reserves the table24/dom_ops22 names
   for THE single reconciled lineage, which this lap's proof-merged
   continuation of table23 is not. Report:
-  `PseudoCoupHQ/DevComms/log_085_task4_prover_sweep_6401.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_085_task4_prover_sweep_6401.md`.
 - 2026-08-31 (TASK 5, parallel branch reconnect, log_087): (a) fixed
   the cpython type key — `interp_feeder.py`'s new
   `cpython_type_key()` reads `ptr64,ptr64` off `long_add`'s own ship
@@ -961,7 +961,7 @@ status: living
   `node_0_3_1_11_interp_feeder` sub-nodes were listed for the owner's ruling,
   not edited — Planning is his. All new artifacts pass
   `check_no_spelling_keys.py`. Report:
-  `PseudoCoupHQ/DevComms/log_087_task5_parallel_branch_reconnect.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_087_task5_parallel_branch_reconnect.md`.
 - 2026-08-31 (TASK 6, join the graph to the miner, log_088): new
   `op_pipeline/build_super_ops.py` reads `idiom_candidates.json`
   (2,144 rows) and Task 1's `compiler_graph/graph_cpp2.json`, and for
@@ -992,7 +992,7 @@ status: living
   gap — 10 rows with zero overlap at all). Output:
   `op_pipeline/super_ops.json`, passes
   `check_no_spelling_keys.py`. Report:
-  `PseudoCoupHQ/DevComms/log_088_task6_super_op_provenance.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_088_task6_super_op_provenance.md`.
 - 2026-08-31 (TASK 3, the 34 c/cpp branching seeds, log_089): new
   `op_pipeline/seed_extract2.py` resolves all 34 of `seeds1.json`'s
   unresolved c/cpp branching units (the u64->float halving/doubling
@@ -1037,7 +1037,7 @@ status: living
   pre-existing table23b classes/members verified byte-identical in
   table23c, programmatically. Output: `dominant_table23c.json` /
   `dom_ops21c.json`, both pass `check_no_spelling_keys.py`. Report:
-  `PseudoCoupHQ/DevComms/log_089_task3_branching_seeds.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_089_task3_branching_seeds.md`.
 
 - 2026-08-31 (TASK 7, lineage reconciliation, log_090): new
   `op_pipeline/build_table24.py` merges the two divergent table
@@ -1075,7 +1075,7 @@ status: living
   (table23c's own named remainder). Both outputs pass
   `check_no_spelling_keys.py` -- table24 with no exemption (task
   requirement), dom_ops22 needed none in practice. Report:
-  `PseudoCoupHQ/DevComms/log_090_task7_lineage_reconciliation.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_090_task7_lineage_reconciliation.md`.
 
 - **2026-08-31 (Task 8, log_092).** guards3.json (undocumented from
   round 1) determined to be a fold on guards2.json carrying all 8 of
@@ -1101,7 +1101,7 @@ status: living
   `check_no_spelling_keys.py` only WITH the generator-provenance
   exemption, verified by re-running the guard). All new artifacts
   pass `check_no_spelling_keys.py` with no exemption. Report:
-  `PseudoCoupHQ/DevComms/log_092_task8_guards_record.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_092_task8_guards_record.md`.
 
 - **2026-08-31 (Task 11, log_094).** Graph widened from Task 1's
   4-file region to 11 files (`build_graph3.py` -> `graph_cpp3.json`:
@@ -1130,7 +1130,7 @@ status: living
   since log_086/log_088) is the actual fix, not attempted this lap.
   Both new artifacts pass `check_no_spelling_keys.py` with no
   exemption. Report:
-  `PseudoCoupHQ/DevComms/log_094_task11_graph_widening.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_094_task11_graph_widening.md`.
 
 - **2026-08-31 (Task 9, log_093).** Fresh census of the 322
   unconverged units built from the CURRENT newest generation
@@ -1156,7 +1156,7 @@ status: living
   languages. `tree_units`/`clusters`/`dominant_table24`/`dom_ops22`
   not touched (no convergence this lap; table ownership is another
   task's this round). Report:
-  `PseudoCoupHQ/DevComms/log_093_task9_unconverged_322.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_093_task9_unconverged_322.md`.
 
 - **2026-08-31 (Task 10, log_096).** Extended `dominant_table24.json`'s
   branching-seed join with a second pass: for each of the 28
@@ -1187,7 +1187,7 @@ status: living
   remains un-ratified and undecided here, per the task's STOP RULE;
   both the original `cause_table24` text and this pass's diagnosis
   are carried side by side per unit. Report:
-  `PseudoCoupHQ/DevComms/log_096_task10_unreconciled_28.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_096_task10_unreconciled_28.md`.
 
 - **2026-09-01 (Task 12, log_095).** Ruby and php: from round-1
   dispatch measurements (tally only) to handler slices (the arch-unit
@@ -1224,7 +1224,7 @@ status: living
   `check_no_spelling_keys.py` with no exemption; every row on both
   carries `provenance_is_weaker: true`. No round-1 artifact was
   modified. Report:
-  `PseudoCoupHQ/DevComms/log_095_task12_ruby_php_handler_slices.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_095_task12_ruby_php_handler_slices.md`.
 
 ## 2026-08-31 — Task 14: record hygiene (round 3)
 
@@ -1246,7 +1246,7 @@ stdout capture from round 2's Task 10 honest zero. (d) mtime sweep of
 `op_pipeline` and `compiler_graph` for the round-2 window (Aug 31
 21:00-22:00): 34 + 2 files respectively, every one accounted for by
 some round-2 log (092/093/094/095/096) — nothing unlisted found.
-Report: `PseudoCoupHQ/DevComms/log_098_task14_record_hygiene.md`.
+Report: `PRIVATE/PseudoCoupHQ/DevComms/log_098_task14_record_hygiene.md`.
 
 ## 2026-08-31 -- Task 15: the 322 unconverged, third attempt (+84,
 ## first non-zero)
@@ -1278,7 +1278,7 @@ literal, `CF_SUB` render rule) re-checked for new precedent and
 re-confirmed the owner-reserved, not re-decided. `tree_units`/`clusters`
 rebuild not located/run this lap -- named as an open item;
 `dominant_table24.json`/`dom_ops22.json` untouched, per the brief.
-Report: `PseudoCoupHQ/DevComms/log_099_task15_unconverged_third.md`.
+Report: `PRIVATE/PseudoCoupHQ/DevComms/log_099_task15_unconverged_third.md`.
 
 ## 2026-08-31 -- Task 17: interpreter units into the table question (ruby/php/cpython), posed not forced
 
@@ -1318,7 +1318,7 @@ the same three shapes -- struct-pointer, tagged-value, dispatcher --
 recur across all three languages; option C (bridges/relations only,
 no table entry) is the safest relative to the zero-regressions
 requirement and needs no new ontology ratified first. Report:
-`PseudoCoupHQ/DevComms/log_101_task17_interp_relations.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_101_task17_interp_relations.md`.
 
 ## 2026-08-31 -- Task 16: provenance tie-breaking by reachability (reopens Task 11)
 
@@ -1344,7 +1344,7 @@ candidates reached (named frontier: dispatch structures beyond the
 two parsed switches, e.g. the type-legalizer's own routing, are not
 covered this lap). 0 rows landed with >1 candidate still tied.
 `check_no_spelling_keys.py` passes on `super_ops3.json`. Full report:
-`PseudoCoupHQ/DevComms/log_100_task16_reachability_tiebreak.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_100_task16_reachability_tiebreak.md`.
 
 ## 2026-08-31 -- Task 18: bank and re-baseline (round 3 close-out)
 
@@ -1378,7 +1378,7 @@ had the run succeeded: `tree_units3.json` is upstream of canon28
 writes to. Staged `op_pipeline/next_commit_message.txt` naming every
 round-3 artifact (tasks 14-18); not committed, not pushed. Full
 report, including the one-page state-of-the-line reading-form
-summary: `PseudoCoupHQ/DevComms/log_102_task18_bank_rebaseline.md`.
+summary: `PRIVATE/PseudoCoupHQ/DevComms/log_102_task18_bank_rebaseline.md`.
 
 ## 2026-09-01 -- Task 20: block cutter fixes + slice extractor fix
 
@@ -1423,7 +1423,7 @@ own closing instruction: `interp_relations.json`,
 `fix_cpython_type_key.py` produced remain built on the PRE-FIX
 `op_units_cpython*.json` files, not regenerated by this task (out of
 scope; named as the gate on future ruby/php/jvm branching work). Full
-report: `PseudoCoupHQ/DevComms/log_104_task20_block_cutter.md`.
+report: `PRIVATE/PseudoCoupHQ/DevComms/log_104_task20_block_cutter.md`.
 
 - 2026-09-01 (TASK 22, the remaining 238 unconverged, fourth round,
   log_105): built a new z3-simulator WRAPPER module,
@@ -1461,7 +1461,7 @@ report: `PseudoCoupHQ/DevComms/log_104_task20_block_cutter.md`.
   units await `tree_units`/`clusters`/`dominant_table24.json`/
   `dom_ops22.json` incorporation, not rebuilt this lap, per the
   brief. Full report:
-  `PseudoCoupHQ/DevComms/log_105_task22_unconverged_fourth.md`.
+  `PRIVATE/PseudoCoupHQ/DevComms/log_105_task22_unconverged_fourth.md`.
 
 ## 2026-09-01 -- Task 19: the representation dimension, as a measured proposal
 
@@ -1505,7 +1505,7 @@ id field added before its per-handler `operator` label qualified for
 the per-unit exemption; fixed by adding the field, not by weakening
 the check). Zero regressions: `git diff --stat` empty on every
 pre-existing file read this task. Full report:
-`PseudoCoupHQ/DevComms/log_106_task19_representation_dimension.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_106_task19_representation_dimension.md`.
 
 ## 2026-09-01 -- TASK 21: canonicalize the interpreter units
 
@@ -1550,7 +1550,7 @@ pre-existing file this task read (canon29_units_*.json, interp_
 fastpath.json, add_java.json, interp_relations.json, jvm_canon.py,
 block_cutter.py, canon9_behaviour_check.py, canon8_behaviour_check.
 py, canon.py, canon2.py). No table membership changed. Full report:
-`PseudoCoupHQ/DevComms/log_107_task21_interp_
+`PRIVATE/PseudoCoupHQ/DevComms/log_107_task21_interp_
 canonicalization.md`.
 
 ## 2026-09-01 -- TASK 23: bank and re-baseline, round 4
@@ -1578,7 +1578,7 @@ commit_message.txt` naming round 4's artifacts and decisions; `git
 log` read directly and quoted -- the daemon had already committed
 every round-4 artifact through commit `9145752`. Full report,
 including the state-of-the-line page:
-`PseudoCoupHQ/DevComms/log_108_task23_bank_round4.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_108_task23_bank_round4.md`.
 
 ## 2026-09-01 -- RETRACTION of a claim in the TASK 23 entry above
 
@@ -1592,7 +1592,7 @@ The facts, read off disk 2026-09-01 (evidence class: tool testimony,
 reproducible):
 
 ```
-$ cd PseudoCoupHQ
+$ cd PRIVATE/PseudoCoupHQ
 $ wc -c DevComms/next_commit_message.txt
 0 DevComms/next_commit_message.txt
 $ git log --format="%h %ad %s" --date=short -- DevComms/next_commit_message.txt
@@ -1615,7 +1615,7 @@ Two things follow, and they are different in kind:
   re-writing the file by shell heredoc and confirming it at 4,180
   bytes. That readback DID happen. Evidence class: the coordinating
   session's own transcript, held by that session -- `wc -c` returned
-  `4180 PseudoCoupHQ/DevComms/next_commit_
+  `4180 PRIVATE/PseudoCoupHQ/DevComms/next_commit_
   message.txt` and `head -5` showed the round-4 posterity text
   beginning "Round 4 banking message (Task 23, log_108)...". An earlier
   draft of this retraction, written minutes ago in this same lap,
@@ -1692,7 +1692,7 @@ text has been consumed out of it -- and must paste its `wc -c` and
 first five lines immediately after writing it, before the driver can
 consume it.
 
-Full record: `PseudoCoupHQ/DevComms/log_110_task25_
+Full record: `PRIVATE/PseudoCoupHQ/DevComms/log_110_task25_
 record_repairs.md`.
 
 ## 2026-09-01 -- TASK 25: record repairs from the round-4 audit
@@ -1724,7 +1724,7 @@ neither does), written in a Python-shaped notation that does not parse
 or artifact. Its content is quoted in full in log_110 and the ruling it
 illustrates is already in AgentMemory.md, so **the owner may delete it**; it
 was not moved or renamed, because naming is the owner's call. Full report:
-`PseudoCoupHQ/DevComms/log_110_task25_record_repairs.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_110_task25_record_repairs.md`.
 
 ## 2026-09-01 -- TASK 24: the representation-dimension proposal, regenerated with the DWARF-typed key
 
@@ -1769,7 +1769,7 @@ ready for the owner's ratification of option B / option B-with-A.** New
 files: `dwarf_typed_key.py`, `dwarf_typed_key.json`,
 `build_proposal_representation_dimension2.py`,
 `proposal_representation_dimension2.json`. Full report:
-`PseudoCoupHQ/DevComms/log_111_task24_typed_key_regen.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_111_task24_typed_key_regen.md`.
 
 ## 2026-09-01 — TASK 26: the caller-destination family, the float
 ## family, and a CIRCULAR GATE found in the branching checker
@@ -1845,7 +1845,7 @@ New files: `canon10_behaviour_check.py`, `real_blocks.py`,
 JSON outputs (`canon30_units_*.json`, `canon30_negative_control.json`,
 `canon31_units_*.json`, `canon31_branching_audit.json`,
 `canon31_controls.json`, `diag_caller_destination.json`). Full report:
-`PseudoCoupHQ/DevComms/log_112_task26_new_bucket_remainder.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_112_task26_new_bucket_remainder.md`.
 
 ## 2026-09-01 — task 27: ruby and php handler slices, carved and proved
 
@@ -1905,7 +1905,7 @@ New files: `t27_ruby_dump.sh`, `t27_php_clean_build.sh`,
 `prove_interp_computation.py`, `prove_interp_computation.json`,
 `build_proposal_representation_dimension3.py`,
 `proposal_representation_dimension3.json`. Full report:
-`PseudoCoupHQ/DevComms/log_113_task27_ruby_php_slices.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_113_task27_ruby_php_slices.md`.
 
 ## 2026-09-01 -- TASK 28 (round 5 banking)
 
@@ -1943,7 +1943,7 @@ the 1,561/1,635 baseline is restated to 1,622; ratification of
 contract, ontology); where posterity messages should live (the file,
 in its pre-consumption window, or the commit message it becomes).
 
-Full report: `PseudoCoupHQ/DevComms/log_114_task28_bank_round5.md`.
+Full report: `PRIVATE/PseudoCoupHQ/DevComms/log_114_task28_bank_round5.md`.
 
 ## 2026-09-01 — TASK 31, the result-destination seat (round 6)
 
@@ -1989,7 +1989,7 @@ takes a list, but `meta`'s lhs/rhs fields, `real_arg_families`'s
 register standard all count to two. First expected failure: a third
 input silently unseeded, showing up as spurious counterexamples.
 
-Full report: `PseudoCoupHQ/DevComms/log_117_task31_result_destination_seat.md`.
+Full report: `PRIVATE/PseudoCoupHQ/DevComms/log_117_task31_result_destination_seat.md`.
 
 ## 2026-09-01 — TASK 29, the extracted type inventory (round 6)
 
@@ -2044,7 +2044,7 @@ if the guard fails. Files created: `type_inventory.py`,
 `type_inventory_validation.md`.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_116_task29_type_inventory.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_116_task29_type_inventory.md`.
 
 ## 2026-09-01 — TASK 30: designated memory, the park-reload idiom,
 ## and the arrival-mode dimension
@@ -2119,7 +2119,7 @@ form carry a prologue — six go units need more than 16 designated
 locations.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_118_task30_designated_memory.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_118_task30_designated_memory.md`.
 
 ## 2026-09-01 — TASK 32: the interpreter table, the join, and the union view
 
@@ -2185,7 +2185,7 @@ a simulator — its absence is why `java/op_2`'s 50 candidate pairs all
 returned UNDECIDED.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_119_task32_interp_table_union.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_119_task32_interp_table_union.md`.
 
 ## 2026-09-01 — TASK 33, banking round 6
 
@@ -2214,7 +2214,7 @@ Posterity message written to `DevComms/next_commit_message.txt`
 (4340 bytes) for the daemon's next commit-push cycle.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_120_task33_bank_round6.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_120_task33_bank_round6.md`.
 
 ## 2026-09-01 — TASK 37, the verbatim-testimony defect
 
@@ -2252,7 +2252,7 @@ FOR DEE, not acted on: re-capture the six affected lanes (measured
 records in place with a suspected original.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_126_task37_testimony_defect.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_126_task37_testimony_defect.md`.
 
 ## 2026-09-01 — TASK 35, swift's extracted type authority
 
@@ -2323,7 +2323,7 @@ both sides of the wall. The routes were taken from the brief's own
 inline descriptions.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_125_task35_swift_authority.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_125_task35_swift_authority.md`.
 
 ## 2026-09-01 — TASK 34: the interpreter table, the join and the union, rebuilt on the universal canonical form
 
@@ -2397,7 +2397,7 @@ Checked on the host side of the container wall. Citations go to
 log_116 / log_118 / log_119 instead.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_124_task34_interp_union_relaunch.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_124_task34_interp_union_relaunch.md`.
 
 ## 2026-09-01 — TASK 36: the legality reduction, measured before any compiling
 
@@ -2440,7 +2440,7 @@ files modified anywhere in op_pipeline since this task's first commit are
 this task's own new files.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_127_task36_legality_reduction.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_127_task36_legality_reduction.md`.
 
 ## 2026-09-01 — TASK 38: round 7 banked
 
@@ -2474,7 +2474,7 @@ Posterity message written to `DevComms/next_commit_message.txt`
 (1,561 bytes) for the repo-daemon's next commit sweep to consume.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_128_task38_bank_round7.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_128_task38_bank_round7.md`.
 
 - 2026-09-02 (TASK 41, record hygiene, log_132): recounted the
   round-7 testimony-audit figure directly from
@@ -2500,7 +2500,7 @@ Full report:
   spot-checked, nothing unlisted found.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_132_task41_record_hygiene.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_132_task41_record_hygiene.md`.
 
 - 2026-09-02 (TASK 39, the universal-form migration, log_130):
   every compiled unit re-rendered into THE UNIVERSAL CANONICAL FORM
@@ -2550,7 +2550,7 @@ Full report:
   without any exemption at all.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_130_task39_universal_migration.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_130_task39_universal_migration.md`.
 
 - 2026-09-02 (TASK 40, the regeneration trickle, log_131): **the probe
   residue is compiled — all of it.** 129,553 candidates submitted,
@@ -2604,7 +2604,7 @@ Full report:
   file read last changed before today; new files only.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_131_task40_regeneration_trickle.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_131_task40_regeneration_trickle.md`.
 
 ## 2026-09-02 — Task 42, bank round 8
 
@@ -2645,13 +2645,13 @@ keep distinct); F40-2 fixed-point dialect question; the 118
 assignment-run findings.
 
 Posterity message rewritten at
-`PseudoCoupHQ/DevComms/next_commit_message.txt` (3,449
+`PRIVATE/PseudoCoupHQ/DevComms/next_commit_message.txt` (3,449
 bytes) carrying both corrections and the regeneration headline; the
 repo-daemon consumes it automatically on its next 30s commit-push
 cycle, no separate action needed.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_133_task42_bank_round8.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_133_task42_bank_round8.md`.
 
 ## 2026-09-02 — TASK 45: the type inventory's second witness
 
@@ -2703,7 +2703,7 @@ trickle container was left paused; Airlock's sandbox-* containers were
 up throughout and untouched.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_137_task45_type_second_witness.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_137_task45_type_second_witness.md`.
 
 ## 2026-09-02 — TASK 43: the universal form redone to the owner's statement (no designated registers at all)
 
@@ -2764,7 +2764,7 @@ the compiler's own choice of scratch register is what merges texts
 that round 8's form kept apart.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_135_task43_universal_form_redone.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_135_task43_universal_form_redone.md`.
 
 ## 2026-09-02 — TASK 44: THE MERGED POOL
 
@@ -2828,7 +2828,7 @@ or granted. ZERO REGRESSION: all fifteen watched sha256 records SAME,
 superseded record. New files only.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_136_task44_the_pool.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_136_task44_the_pool.md`.
 
 ## 2026-09-02 — round 9 banked (Task 46)
 
@@ -2857,7 +2857,7 @@ lineage materialization, 1,479 vector-upper-lane refusals, the swift
 emitter fix behind 276 misses, Airlock's ten naming choices, and the
 118 assignment-run testimony findings.
 
-Full report: `PseudoCoupHQ/DevComms/log_139_task46_bank_round9.md`.
+Full report: `PRIVATE/PseudoCoupHQ/DevComms/log_139_task46_bank_round9.md`.
 
 ## 2026-09-02 — Task 50(b): the 118 assignment-run findings re-captured
 
@@ -2875,7 +2875,7 @@ unresolved. All 336 altered-testimony findings from log 126 are now
 accounted for (218 round-8 + 118 now). `check_no_spelling_keys.py`
 PASSES every new output. Trickle instance brought down after the run.
 
-Full report: `PseudoCoupHQ/DevComms/log_144_task50b_assignment_recapture.md`.
+Full report: `PRIVATE/PseudoCoupHQ/DevComms/log_144_task50b_assignment_recapture.md`.
 
 ## 2026-09-02 — Task 50(a): the swift emitter's `@_cdecl` test fixed
 
@@ -2921,7 +2921,7 @@ co-agent's `down.sh` and re-ran clean); and when to re-run the swift
 regeneration against the corrected emitter.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_143_task50a_swift_emitter_fix.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_143_task50a_swift_emitter_fix.md`.
 
 ## 2026-09-02 — TASK 47: the memory-wrapped form and the provenance ledger (round 10)
 
@@ -2990,12 +2990,12 @@ missing `mul` and the x87 comparison family, which left 1,156 guard
 rows with a half-empty producer pair.
 
 Full report:
-`PseudoCoupHQ/DevComms/log_146_task47_memory_wrapped_form.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_146_task47_memory_wrapped_form.md`.
 
 ## 2026-09-02 — TASK 48: layer 4 read off the ledger, and the census as a filter (round 10)
 
 Full report:
-`PseudoCoupHQ/DevComms/log_147_task48_layer4_ledger_census.md`.
+`PRIVATE/PseudoCoupHQ/DevComms/log_147_task48_layer4_ledger_census.md`.
 
 LAYER 4 IS NOW A TRANSCRIPTION OF THE PROVENANCE LEDGER, exactly as
 ruling 3 states: start at OUT-0, read the producer and the operand

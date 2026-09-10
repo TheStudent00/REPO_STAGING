@@ -738,7 +738,7 @@ below.
 `t87_l12_verify_report_claims.sh`,
 `t87_l13_zero_regression_and_plan_check.sh`. Thirteen lanes, all exit 0.
 Logs: `<runs>/t87/agent/logs/20260904T*__t87_l*.log`.
-Instance config: `Airlock/instances/t87.conf`.
+Instance config: `PUBLIC/Airlock/instances/t87.conf`.
 
 ## 11.4 Tree
 

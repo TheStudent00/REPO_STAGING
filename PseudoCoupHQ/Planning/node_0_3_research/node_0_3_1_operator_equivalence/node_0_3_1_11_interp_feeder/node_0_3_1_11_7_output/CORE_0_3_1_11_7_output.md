@@ -39,5 +39,5 @@ The records the feeder writes and where: per pilot,
 `canon_interp_units_{java,cpython}.json` and
 `canon_interp_units_ruby_php.json`; after the normalizer,
 `canon40_interp.json` (eleven units, ten with bodies), all under
-`PseudoCoupHQ/Research/op_pipeline/`. From there the
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/`. From there the
 units are ordinary members of the term store and the pool.

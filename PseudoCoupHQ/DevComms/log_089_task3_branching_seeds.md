@@ -2,7 +2,7 @@
 
 Date: 2026-08-31. Session: Claude Code, TASK 3 of
 `log_083_claude_code_task_briefs.md`. Worked alone in
-`PseudoCoupHQ/Research/op_pipeline`, new files only.
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline`, new files only.
 
 ## Plain-words walkthrough
 

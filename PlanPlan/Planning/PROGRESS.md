@@ -23,15 +23,15 @@ status: living
     changed back when he ruled "its fine. refactor them" — so the
     repo has ONE name everywhere, in quotations as well as in prose.
     The sites are in
-    `PlanPlan/DevComms/log_001_readiness_and_tree.md`,
-    `PlanPlan/Planning/CORE_0.md`,
-    `PlanPlan/framework/generate_nodes.py`,
-    `PseudoCoupHQ/DevComms/log_005_session_state_2026_08_01.md`
+    `PRIVATE/PlanPlan/DevComms/log_001_readiness_and_tree.md`,
+    `PRIVATE/PlanPlan/Planning/CORE_0.md`,
+    `PRIVATE/PlanPlan/framework/generate_nodes.py`,
+    `PRIVATE/PseudoCoupHQ/DevComms/log_005_session_state_2026_08_01.md`
     and
-    `DevComms/proposal_2026-08-01_communication_protocol.md`.
+    `PRIVATE/DevComms/proposal_2026-08-01_communication_protocol.md`.
     The only two places the old name survives are this bullet and the
     matching one in
-    `PseudoCoupHQ/Planning/node_0_2_conventions/PROGRESS.md`,
+    `PRIVATE/PseudoCoupHQ/Planning/node_0_2_conventions/PROGRESS.md`,
     which record the rename itself.
   - Verified after: `check_plans.py` gives 0 errors over the four line
     trees and 0 errors over this one, `hq.sh check` runs end to end,
@@ -51,7 +51,7 @@ status: living
   was written by hand with its `nodes` register; the three node
   folders, their skeleton COREs, PROGRESS and CHECK files were
   created by
-  `python3 PlanPlan/framework/generate_nodes.py PlanPlan/Planning --apply`.
+  `python3 PRIVATE/PlanPlan/framework/generate_nodes.py PRIVATE/PlanPlan/Planning --apply`.
 - **open, the owner's to settle**: the level-0 definition line, the three
   node names, and the count. all are currently drawn from the README
   rather than settled, and are marked as such in the CORE.
@@ -61,7 +61,7 @@ status: living
   the missing-designation warning names them until then.
 - **open**: readiness items for the framework itself, recorded with
   evidence in
-  `PlanPlan/DevComms/log_001_readiness_and_tree.md`.
+  `PRIVATE/PlanPlan/DevComms/log_001_readiness_and_tree.md`.
 - 2026-08-01 **done** (the owner: "if its not already in an archive, put it
   there"): `install_silverbullet.sh` moved to
   `framework/.archive/install_silverbullet_superseded_2026-07-31/`.
@@ -99,6 +99,6 @@ status: living
   `Research/kind_clustering` -> `Research/kind_signature_clustering`
   artifact-directory finish of PseudoCoupHQ's 2026-08-14 node rename
   (see that node's PROGRESS at
-  `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_kind_signature_clustering/PROGRESS.md`),
+  `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_0_kind_signature_clustering/PROGRESS.md`),
   25 files rewritten across PseudoCoupHQ and PseudoCoup_v5, `hq.sh
   check` still 0 errors afterward.

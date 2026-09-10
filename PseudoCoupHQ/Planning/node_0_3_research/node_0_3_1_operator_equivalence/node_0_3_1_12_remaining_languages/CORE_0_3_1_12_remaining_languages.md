@@ -85,7 +85,7 @@ directly ([interp_feeder](../node_0_3_1_11_interp_feeder/CORE_0_3_1_11_interp_fe
 
 | language | shape | toolchain in Airlock | arch-units on disk | route status |
 |---|---|---|---|---|
-| ruby | interpreter | ruby 3.3.0 instrumented build (`Airlock/ruby-3.3.0.tar.gz`) | 4 (`rb_fix_plus`, `rb_int_plus` with bodies; `rb_big_plus`, `vm_opt_plus` without) | handler slices (logs 095, 113); operator set not generated |
+| ruby | interpreter | ruby 3.3.0 instrumented build (`PUBLIC/Airlock/ruby-3.3.0.tar.gz`) | 4 (`rb_fix_plus`, `rb_int_plus` with bodies; `rb_big_plus`, `vm_opt_plus` without) | handler slices (logs 095, 113); operator set not generated |
 | php | interpreter | php 8.3.0 / 8.2.13 / 7.4.33 builds | 4 (`ZEND_ADD_*_HANDLER` ×3, `add_function`) | as ruby |
 | v8 (javascript, typescript) | JIT | node in the image; typescript checker in `/persist` | 0 | designed only (§3) |
 | csharp | JIT | .NET SDK 10.0.400 in the persist volume (`/persist/dotnet`, log_062 §1) | 0 | designed only (§3) |
@@ -117,9 +117,9 @@ the emitted method's body.
 
 ## record
 
-- artifacts: `PseudoCoupHQ/Research/op_pipeline/`
+- artifacts: `PRIVATE/PseudoCoupHQ/Research/op_pipeline/`
   (`build_op_units_{php,ruby}.py`, `canon_interp_units_ruby_php.json`,
   `interp_php.md`); emitters for the fuzz census in
-  `PseudoCoupHQ/Research/kind_fuzz_clustering/`.
+  `PRIVATE/PseudoCoupHQ/Research/kind_fuzz_clustering/`.
 - logs: 062 (the remaining eight emitters, fuzz line), 095, 113
   (ruby and php handler slices).

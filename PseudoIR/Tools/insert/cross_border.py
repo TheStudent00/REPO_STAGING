@@ -2,14 +2,14 @@
 
 PROVENANCE (harvested, not invented):
   The refusing-border discipline is ported from
-  PseudoCoup_v5/Research/rust_routing/rust_cell.py (61
+  PRIVATE/PseudoCoup_v5/Research/rust_routing/rust_cell.py (61
   lines, read-and-verified): `int(x)` is the explicit outbound crossing;
   every unqualified Python operator (+, -, *, /, //, %, ...) is REFUSED
   so a qualified operand never silently re-enters Python arithmetic; an
   out-of-range literal raises OverflowError ("trap canon").
 
 POLYFILL RECONCILIATION (decision, flagged for the owner):
-  PseudoCoup_v6/Tools/polyfill/wrap_fixed_width.py already
+  PRIVATE/PseudoCoup_v6/Tools/polyfill/wrap_fixed_width.py already
   has a FixedWidthInt/I64 wrapper, but its border policy is the OPPOSITE
   of what insertion needs: there the operator IS the routing
   (`a + b` on two I64 runs Rust-matching add), so it deliberately does
@@ -32,7 +32,7 @@ import sys
 # toolchain; this is one of the borrow points. Same env-var pattern the
 # ledger and intentions suites used before their fixtures were vendored.
 _PSEUDOCOUP = os.environ.get(
-    "PSEUDOCOUP_ROOT", os.path.expanduser("PseudoCoup_v6"))
+    "PSEUDOCOUP_ROOT", os.path.expanduser("PRIVATE/PseudoCoup_v6"))
 _POLYFILL = os.path.join(_PSEUDOCOUP, "Tools", "polyfill")
 if not os.path.isdir(_POLYFILL):
     raise RuntimeError(

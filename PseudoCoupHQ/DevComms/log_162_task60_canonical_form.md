@@ -89,7 +89,7 @@ a false claim, so they are not quoted.
 
 ## 2.1 The class, against the CORE's `## design`
 
-`PseudoCoupHQ/Research/op_pipeline/canonical_form.py`.
+`PRIVATE/PseudoCoupHQ/Research/op_pipeline/canonical_form.py`.
 
 | the CORE says | the file has |
 |---|---|
@@ -466,8 +466,8 @@ already answer.
 
 | file | what it is |
 |---|---|
-| `PseudoCoupHQ/Research/op_pipeline/canonical_form.py` | the node's module: `CanonicalForm`, `Prelude`, `Epilogue`, `Labels`, `Refuse`, and the drivers for the three populations, the assembler, the defect census, the `c/op_105` print and the zero-regression comparison |
-| `PseudoCoupHQ/Research/op_pipeline/guard60.py` | the unmodified guard over every canon39 artifact, one process |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/canonical_form.py` | the node's module: `CanonicalForm`, `Prelude`, `Epilogue`, `Labels`, `Refuse`, and the drivers for the three populations, the assembler, the defect census, the `c/op_105` print and the zero-regression comparison |
+| `PRIVATE/PseudoCoupHQ/Research/op_pipeline/guard60.py` | the unmodified guard over every canon39 artifact, one process |
 
 ## 10.2 Data written this task
 
@@ -499,7 +499,7 @@ already answer.
 ## 10.4 PROGRESS and CORE files touched (five nodes)
 
 All under
-`PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_2_canonical_form/`.
+`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/node_0_3_5_2_canonical_form/`.
 
 | file | what changed |
 |---|---|

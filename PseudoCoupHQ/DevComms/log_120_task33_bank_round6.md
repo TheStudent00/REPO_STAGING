@@ -237,7 +237,7 @@ that commit predates round 6. Untouched, verified two ways
 
 ## 3. Posterity message (TASK 33c)
 
-Written to `PseudoCoupHQ/DevComms/next_commit_message.txt`.
+Written to `PRIVATE/PseudoCoupHQ/DevComms/next_commit_message.txt`.
 Pasted immediately after writing, before the daemon's next cycle
 could consume it:
 

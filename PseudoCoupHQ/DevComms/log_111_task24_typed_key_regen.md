@@ -270,7 +270,7 @@ Verified: the proposal was regenerated and the tally re-run.
 
 ```
 $ /tmp/reconnect_venv/bin/python3 build_proposal_representation_dimension2.py
-wrote PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension2.json
+wrote PRIVATE/PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension2.json
 proof re-run: {'rerun_by': 'build_proposal_representation_dimension2.py (not copied from round 4 -- the checks were executed again)', 'z3_version': '5.1.0', 'bounded_domain_check': 'unsat', 'unbounded_check': 'unsat', 'verdict': 'PROVED'}
 summary: {
  "handlers_considered": 9,
@@ -348,20 +348,20 @@ any program written here — table membership stays the owner's ratification.
 
 Created this session (all new; nothing existing was edited):
 
-- `PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.py`
   — the DWARF parameter-type reader, with its refusal policy in the
   module docstring. 16258 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.json`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/dwarf_typed_key.json`
   — its output: nine per-handler records, the cross-check at the ship
   build, the tally. 12204 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/build_proposal_representation_dimension2.py`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/build_proposal_representation_dimension2.py`
   — the regenerator. 15124 bytes.
-- `PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension2.json`
+- `PRIVATE/PseudoCoupHQ/Research/op_pipeline/proposal_representation_dimension2.json`
   — **the artifact for the owner's ratification.** 48669 bytes.
-- `PseudoCoupHQ/DevComms/log_111_task24_typed_key_regen.md`
+- `PRIVATE/PseudoCoupHQ/DevComms/log_111_task24_typed_key_regen.md`
   — this log.
 - A dated entry appended to
-  `PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
+  `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_5_compiler_graph/PROGRESS.md`.
 
 Inside the sandbox container, not in any repo:
 `/persist/dwarf_typed_key.json` (the write target, copied out).

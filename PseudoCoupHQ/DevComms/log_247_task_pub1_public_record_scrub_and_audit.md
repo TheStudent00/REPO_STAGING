@@ -87,8 +87,8 @@ grep -rnEi '<class-regex>' .stage_tmp/<would-be-tracked files>
 | core count | `log_131_task40_regeneration_trickle.md:34,342`, `Planning/.../PROGRESS.md:2560`, `Research/op_pipeline/regen_cost.md:45` | `capped at 6 of this machine's <cores>`, `cpu cap: 6 of <cores>` |
 | container id (hostname-shaped hex) | `log_138_airlock_instances_feature.md:434,514`, `log_175_task72_go_diaries_coverage.md:779`, `canon39_callee_swift_lane_printed.txt:10,11` | `hostname: <container-id>`, `hostname: <container-id>`, `hostname: <container-id>` |
 | account handle / real name (`<user>`, bare) | 556 occurrences, e.g. `log_195_task89_bank_round15.md:70` | `-rw-rw-r-- 1 <user> <user> 5811 Sep 3 23:17 check_dashboard_py_no_spelling.py` (an `ls -l` paste) |
-| account handle / real name (`<user>`, bare) | 84 occurrences, e.g. `log_239_task_h1b_composition_column.md:27` | `<runs>/h1b/agent/logs/` |
-| absolute home path | 316 occurrences of `~/Programming` + 204 of `~(airlock)?/AirlockRuns`, e.g. `log_124_task34_interp_union_relaunch.md:97` | ``shell's `hostname` is `<user>` and `PRIVATE/PseudoCoupHQ` `` |
+| account handle / real name (`<tower-user>`, bare) | 84 occurrences, e.g. `log_239_task_h1b_composition_column.md:27` | `/home/<tower-user>/AirlockRuns/h1b/agent/logs/` |
+| absolute home path | 316 occurrences of `/home/<user>/Programming` + 204 of `/home/<user>(airlock)?/AirlockRuns`, e.g. `log_124_task34_interp_union_relaunch.md:97` | ``shell's `hostname` is `<user>` and `/home/<user>/Programming/PRIVATE/PseudoCoupHQ` `` |
 | working name (`the owner`) | 7,352 occurrences across 1,338 files (this is the whole corpus's normal use of his working name, not a special case) | e.g. `PseudoCoupHQ/AgentMemory.md:8` — `Created 2026-08-12 at the owner's instruction` |
 
 Checked and confirmed **absent** everywhere in the current corpus (no
@@ -130,9 +130,9 @@ this brief). I found the forensic cause of the `~␉~` line in
 `PseudoCoup_v6/Research/r2_compiler_source_census/census_sources.py`,
 whose real (private, unscrubbed) content reads
 `"Research/rust_routing/sources/encoder/asm~/.cargo/"` — that `asm~`
-is exactly what you get if `~` → `~` had been run across
+is exactly what you get if `/home/<user>` → `~` had been run across
 this project's files INCLUDING `scrub_patterns.tsv` itself, which
-turned the pattern's own left-hand side `~` into `~`,
+turned the pattern's own left-hand side `/home/<user>` into `~`,
 producing the broken `~␉~`. I replaced it with the working line that
 evidence points to:
 
@@ -141,8 +141,8 @@ evidence points to:
 ```
 
 placed at its original position (before the later `` →
-empty block), so `...` and
-`<runs>/...` both convert to `~/...` first and
+empty block), so `/home/<user>/Programming/...` and
+`/home/<tower-user>/AirlockRuns/...` both convert to `~/...` first and
 then get stripped project-relative by the existing rules below it.
 
 **New lines added** (LITERAL, in the order they now appear in
@@ -217,7 +217,7 @@ checked, none found.
 | class | Airlock | GraphModel | Ourobrowser | PseudoCoup | ZSpectralCompression |
 |---|---|---|---|---|---|
 | `the owner` (working name) | 0:0 | 0:0 | 77:180 | 5:35 | 98:218 |
-| `<user>`/`<user>` (account) | 0:0 | 0:0 | 0:0 | 0:0 | 0:0 |
+| `<user>`/`<tower-user>` (account) | 0:0 | 0:0 | 0:0 | 0:0 | 0:0 |
 | `<owner>` (public identity — see note) | 2:11 | 0:0 | 3:3 | 0:0 | 1:1 |
 | email address | 1:4 (the public noreply address, see note) | 0:0 | 0:0 | 0:0 | 0:0 |
 | IPv4 address | 1:1 (`127.0.0.1`, a proxy default, not personal) | 0:0 | 0:0 | 0:0 | 0:0 |
@@ -389,7 +389,7 @@ authority the brief gave: scrub_patterns.tsv edits and `bash stage.sh
 2. Added 15 new fingerprint patterns (§2) covering OS version, kernel
    string, kernel build tag, tower RAM, core count, vCPU, CPU model,
    podman version, Unraid version, MAC address, container-id hostname
-   (two phrasings), and the two real names (`the owner`, `<user>`/`<user>`).
+   (two phrasings), and the two real names (`the owner`, `<user>`/`<tower-user>`).
 3. Found and fixed a bug in my own first draft (a `#`-leading pattern
    silently skipped by `stage.sh`'s own comment filter).
 4. Converged, via three `--no-push` runs plus a forced-text

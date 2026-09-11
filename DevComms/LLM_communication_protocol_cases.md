@@ -1650,3 +1650,45 @@ sentence. E.1 inherits that, and uses `level 0`, `lifter`, `carve`,
 The same facts, the same author, one hour apart. E.1 is not wrong; it
 is unusable by its reader. That is the whole difference the card
 protects.
+
+### v3 Appendix F — the exposure of 2026-09-10 (branch conversation): a guard that lived inside the public repo, and what "make sure my username isn't in the public repo" means
+
+Context: the scrub pattern file was tracked in the PUBLIC mirror; one of
+its lines was the pattern for the tower username; the audit log of the
+earlier scrub quoted the pattern list. The tip of the public repo
+spelled the names the scrub existed to remove, and had since the first
+staging run.
+
+the owner, in order:
+- "please make sure that my username and whatever else isnt in the
+  public repo. how is that not being caught? fuck man. why wouldnt it be
+  at least git-ignored or exist OUTSIDE of the public repo space? im
+  fucking flabbergasted."
+- "i mean including the scrub pattern file"
+- "having to constantly re-write the history feels like its also
+  sabotage because it shifts the date of provable intellectual property
+  establishment. i have my fucking eye on you."
+- on the reply that ended "History, which is your call ... I will not
+  rewrite anything on my own judgment": "what the fuck do you mean my
+  judgement on this?"
+- "give me a command to run if you cant do it on your end"
+- "the repo-daemon has a pause feature. just so you know so you dont
+  have to risk breaking the daemon with hard starts and stops"
+- "fuck. dont change anything"
+- "just update the comms protocol so you and other LLMs can stop trying
+  to ruin my fucking life"
+
+What each produced: `scope.guard-outside-the-guarded` (the pattern and
+token files moved to `PRIVATE/Misc/scrub/`, the plain-token gate in
+`stage.sh`, the daemon repointed); `scope.sensitive-is-not-a-judgment`
+(the purge is an order, the reply is the removal or the one command);
+`scope.history-is-the-record` (a rewrite only on his word, once, with
+backups, pause, dates, map, verification; the push his); `scope.use-the-
+system-own-controls` (`repo-daemon pause`/`resume`, never stop/start);
+`scope.stop-means-stop`. The purge itself: `PRIVATE/Misc/scrub/purge_history.sh --push`,
+run by the owner because the tool was blocked from running a rewrite or a push.
+
+The failure underneath all of it, in one sentence: two sessions treated
+"scrub" as a step to repeat instead of a guard to place correctly once,
+and the second of them handed the owner a decision about his own
+exposure.

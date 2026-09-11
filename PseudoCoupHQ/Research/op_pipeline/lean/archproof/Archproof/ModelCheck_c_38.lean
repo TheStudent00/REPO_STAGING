@@ -15,10 +15,11 @@ namespace Archproof
     by running the reference simulator's builder for that one opcode.
     So this theorem is the two readings of one unit, and a failure is a
     discrepancy between them. -/
-theorem ModelCheck_c_38  :
+theorem ModelCheck_c_38 (v0 : BitVec 64) :
     (1#8)
-  = (model_mov_22.extractLsb 7 0) := by
-  rfl
+  = ((model_mov_24 v0).extractLsb 7 0) := by
+  simp only [model_mov_24]
+  bv_decide
 
 #print axioms ModelCheck_c_38
 

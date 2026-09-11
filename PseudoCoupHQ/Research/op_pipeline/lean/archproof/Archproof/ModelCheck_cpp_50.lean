@@ -17,7 +17,7 @@ namespace Archproof
     discrepancy between them. -/
 theorem ModelCheck_cpp_50 (v0 : BitVec 64) (v1 : BitVec 64) :
     (v0 ||| v1)
-  = (model_or_49 (model_mov_20 v0) v1) := by
+  = (model_or_49 (model_mov_22 v0) v1) := by
   rfl
 
 #print axioms ModelCheck_cpp_50

@@ -1692,3 +1692,7 @@ The failure underneath all of it, in one sentence: two sessions treated
 "scrub" as a step to repeat instead of a guard to place correctly once,
 and the second of them handed the owner a decision about his own
 exposure.
+
+The full record of the remedy, every action and the checks that prove
+the state: `PRIVATE/DevComms/log_002_sensitive_exposure_remedied_2026-09-10.md`.
+Read its §0 before raising the topic again.

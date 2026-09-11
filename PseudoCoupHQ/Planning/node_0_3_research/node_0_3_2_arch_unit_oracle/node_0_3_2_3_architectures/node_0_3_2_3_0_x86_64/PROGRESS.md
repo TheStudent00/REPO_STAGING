@@ -12,3 +12,17 @@ status: living
 - 2026-09-10: node created; the line's history to here is on the
   autopoly node and the research PROGRESS. ref1 found four lifter
   defects; ref2 (running) corrects them.
+
+- 2026-09-11 — **task t4: the general construction tier run over the x86
+  cells with no proved certificate.** The three readings over cells on
+  all four compiled targets do not move — 96 strict / 154
+  destination-only / 141 corpus-needed of 205, as task t2 left them —
+  and the bank's pairs do: 2,007 → 2,015 / 2,265 → 2,273 / 2,221 →
+  2,229, this pass contributing 21 / 79 / 64 over 93 pairs and 12 cells
+  on all four. WHY THE CELL READINGS DO NOT MOVE, measured rather than
+  guessed: a cell counts only when all four targets have it, and the
+  eight new pairs land on cells where another target is still refused at
+  the ARRIVAL or the ANSWER HOME — 239 written places over the five
+  targets where the native route never reached the term at all, which is
+  a question about the arrival contract and not about any operation. Log:
+  `PRIVATE/PseudoCoupHQ/DevComms/log_262_t4_the_general_construction_tier.md`.

@@ -20,7 +20,13 @@ THE CEILING is the brief's hard 30 seconds and is never raised.
 usage:
   check_constructions.py smoke              a handful at tiny widths
   check_constructions.py narrow             every kind at widths a solver answers
-  check_constructions.py store              every (kind, width) the stores use
+  check_constructions.py census             every (kind, width) the two stores use
+  check_constructions.py store [<i> <n>]    the census posed, part i of n
+  check_constructions.py store_rest [<i> <n>]
+                                            the instances no Lean lemma closed
+  check_constructions.py one <mode> <i> <n> <entry> <shape>
+                                            ONE obligation, in a process of
+                                            its own, printed as one json line
   check_constructions.py float <mode>       the float kinds: tiny / store
 
 Coding discipline: no compound one-liner statements.
@@ -29,6 +35,7 @@ Coding discipline: no compound one-liner statements.
 import json
 import os
 import resource
+import subprocess
 import sys
 import time
 
@@ -42,6 +49,21 @@ import softfloat as SF                                           # noqa: E402
 CEILING_MS = 30000
 ABORT_KB = 6 * 1024 * 1024
 ABORT_NAME = "ABORT_MEMORY_T4"
+
+Z3_MEMORY_MB = 4096
+"""the solver's OWN memory bound, under this task's 6 GB.
+
+MEASURED, lane `t4_l10` step [5/6]: one obligation -- the multiplier at
+128 bits over a word of 128 -- took 218.984 s against a ceiling of
+30,000 ms and 1,236,272 kB resident.  z3's `timeout` is checked between
+propagations and not during bit-blasting, so a wide multiply overshoots
+it; nothing here raises the ceiling, and the seconds ACTUALLY TAKEN are
+what the row records.  What this bound does is keep a solver that grows
+past the task's own memory from being stopped by the operating system
+with no row: z3 answers `unknown` with reason `memout`, which is an
+UNDECIDED row with a cause."""
+
+z3.set_param("memory_max_size", Z3_MEMORY_MB)
 
 
 def say(text):
@@ -122,6 +144,81 @@ def wiring_obligations(width, word):
                 "extend_sign_w%d_t%d" % (width, 2 * width)))
     out.append((B.CONDITIONAL, z3.If(z3.Bool("t"), left, right),
                 "conditional_w%d" % width))
+    return out
+
+
+def wiring_producing(width, word):
+    """the WIRING obligations whose ANSWER is exactly `width` bits.
+
+    `wiring_obligations` above states its rows by the width of the
+    SOURCE, which is the shape a ladder of doubling widths wants; the
+    proof table is keyed by the width of the ANSWER, because that is
+    what `build.node_width` reads off the node the render constructed.
+    So this function states the same mechanism the other way round: a
+    narrowing out of twice the width at three offsets (the low slice,
+    the high slice and one that lines up with no limb), a joining of two
+    halves, the two widenings from a half, and the conditional."""
+    out = []
+    source = 2 * width
+    wide = z3.BitVec("a", source)
+    out.append((B.WIRING, z3.Extract(width - 1, 0, wide),
+                "extract_from%d_h%d_l0" % (source, width - 1)))
+    out.append((B.WIRING, z3.Extract(source - 1, width, wide),
+                "extract_from%d_h%d_l%d" % (source, source - 1, width)))
+    if width > 2:
+        out.append((B.WIRING, z3.Extract(width + 2, 3, wide),
+                    "extract_from%d_h%d_l3" % (source, width + 2)))
+    half = width // 2
+    if half >= 1:
+        piece = z3.BitVec("b", half)
+        other = z3.BitVec("c", width - half)
+        out.append((B.WIRING, z3.Concat(other, piece),
+                    "concat_%d_%d" % (width - half, half)))
+        out.append((B.WIRING, z3.ZeroExt(width - half, piece),
+                    "extend_zero_from%d_t%d" % (half, width)))
+        out.append((B.WIRING, z3.SignExt(width - half, piece),
+                    "extend_sign_from%d_t%d" % (half, width)))
+    left = z3.BitVec("d", width)
+    right = z3.BitVec("e", width)
+    out.append((B.CONDITIONAL, z3.If(z3.Bool("t"), left, right),
+                "conditional_w%d" % width))
+    return out
+
+
+THE_FLOAT_FORMATS = {16: (5, 11), 32: (8, 24), 64: (11, 53),
+                     79: (15, 64), 80: (15, 64), 128: (15, 113)}
+"""the (exponent bits, significand bits) of each float width the stores
+carry.  79 is z3's own `FPSort(15, 64)`, which is what the reference
+gives an x87 value -- IEEE's double-extended without its explicit
+integer bit."""
+
+
+def obligations_of_kind(kind, width, word):
+    """every obligation of ONE operation kind whose proof row would be
+    keyed (kind, width, word) -- which is how the render looks one up."""
+    if kind in (B.WIRING, B.CONDITIONAL):
+        out = []
+        for row in wiring_producing(width, word):
+            if row[0] == kind:
+                out.append(row)
+            continue
+        return out
+    if kind in (B.FLOAT_ARITHMETIC, B.FLOAT_COMPARE, B.FLOAT_CLASS,
+                B.FLOAT_CONVERT, B.FLOAT_WIRING):
+        format_of = THE_FLOAT_FORMATS.get(width)
+        if format_of is None:
+            return []
+        out = []
+        for row in float_obligations(format_of[0], format_of[1]):
+            if row[0] == kind:
+                out.append(row)
+            continue
+        return out
+    out = []
+    for row in obligations_at(width, word):
+        if row[0] == kind:
+            out.append(row)
+        continue
     return out
 
 
@@ -237,10 +334,15 @@ def constructed(node, word, bindings):
 
 
 def pose(kind, node, shape, word, bindings=None):
-    """one obligation put to z3 at the brief's ceiling."""
+    """one obligation put to z3 at the brief's ceiling.
+
+    THE ROW CARRIES ITS WIDTH, and the width is `build.node_width`'s --
+    the same function the render keys what it CONSTRUCTED by -- so the
+    proof table can be looked up by (kind, width, word) and answer."""
     if bindings is None:
         bindings = {}
-    row = {"kind": kind, "shape": shape, "word": word}
+    row = {"kind": kind, "shape": shape, "word": word,
+           "width": B.node_width(node)}
     started = time.time()
     try:
         made = constructed(node, word, bindings)
@@ -268,8 +370,22 @@ def pose(kind, node, shape, word, bindings=None):
         built = z3.fpBVToFP(built, node.sort())
     solver = z3.Solver()
     solver.set("timeout", CEILING_MS)
-    solver.add(left != built)
-    answer = solver.check()
+    try:
+        solver.add(left != built)
+        answer = solver.check()
+    except Exception as problem:                              # noqa: BLE001
+        # THE SOLVER'S OWN MEMORY BOUND, ANSWERED.  z3 raises
+        # `Z3Exception: out of memory` at `memory_max_size` and its C++
+        # side then calls `terminate` if nothing catches it: lane
+        # `t4_l15` part 1 was ABORTED that way (exit 134, core dumped)
+        # and lost the two rows it had.  Caught, it is an UNDECIDED row
+        # with the solver's own sentence on it.
+        row["outcome"] = "UNDECIDED"
+        row["cause"] = "the solver stopped: %s" % problem
+        row["solver_memory_bound_mb"] = Z3_MEMORY_MB
+        row["seconds"] = round(time.time() - started, 3)
+        row["solver_timeout_ms"] = CEILING_MS
+        return row
     row["seconds"] = round(time.time() - started, 3)
     row["solver_timeout_ms"] = CEILING_MS
     if answer == z3.unsat:
@@ -292,16 +408,17 @@ def run(pairs, floats, label, out_path):
     counts = {}
     total = len(pairs) + len(floats)
     index = 0
-    say("| kind | shape | word | outcome | nodes | seconds | note |")
-    say("|---|---|---|---|---|---|---|")
+    say("| kind | shape | width | word | outcome | nodes | seconds | "
+        "note |")
+    say("|---|---|---|---|---|---|---|---|")
     for width, word in pairs:
         for kind, node, shape in obligations_at(width, word):
             index = index + 1
             row = pose(kind, node, shape, word)
             rows.append(row)
             counts[row["outcome"]] = counts.get(row["outcome"], 0) + 1
-            say("| %s | %s | %d | %s | %s | %s | %s |"
-                % (kind, shape, word, row["outcome"],
+            say("| %s | %s | %d | %d | %s | %s | %s | %s |"
+                % (kind, shape, row["width"], word, row["outcome"],
                    row.get("nodes", "--"), row["seconds"],
                    note_of(row)))
             check_memory(shape)
@@ -315,8 +432,8 @@ def run(pairs, floats, label, out_path):
             row = pose(kind, node, name, word, bindings)
             rows.append(row)
             counts[row["outcome"]] = counts.get(row["outcome"], 0) + 1
-            say("| %s | %s | %d | %s | %s | %s | %s |"
-                % (kind, name, word, row["outcome"],
+            say("| %s | %s | %d | %d | %s | %s | %s | %s |"
+                % (kind, name, row["width"], word, row["outcome"],
                    row.get("nodes", "--"), row["seconds"],
                    note_of(row)))
             check_memory(name)
@@ -354,6 +471,355 @@ def note_of(row):
     return ""
 
 
+# ==================================================================
+# section 3a: the census -- which (kind, width) the stores actually use
+# ==================================================================
+
+CENSUS = os.path.join(HERE, "kind_census.json")
+
+
+def walk_kinds(term, counts, seen):
+    """one term walked, every node that HAS a construction counted at
+    the width its proof row is keyed by.
+
+    This is the brief's own definition of `operation kind` -- "every
+    kind that occurs, with the widths it occurs at, counted" -- read
+    through `build.kind_of`, which is a mapping from z3's own
+    declaration kind, and `build.node_width`."""
+    stack = [term]
+    while stack:
+        node = stack.pop()
+        key = node.get_id()
+        if key in seen:
+            continue
+        seen.add(key)
+        kind = B.kind_of(node)
+        if kind is not None:
+            width = B.node_width(node)
+            if width > 0:
+                label = "%s|%d" % (kind, width)
+                counts[label] = counts.get(label, 0) + 1
+        for index in range(node.num_args()):
+            stack.append(node.arg(index))
+            continue
+        continue
+    return counts
+
+
+def census_x86(counts):
+    EMULATION = os.path.normpath(os.path.join(HERE, "..", ".."))
+    sys.path.insert(0, os.path.join(EMULATION, "handful"))
+    sys.path.insert(0, os.path.join(EMULATION, "autopoly"))
+    import handful as H
+    import model_table as MTAB
+    MTAB._install_gpr_widths()
+    cells = H.read_json(os.path.join(EMULATION, "autopoly",
+                                     "autopoly5_cells.json"))
+    places = 0
+    for record in cells["asked"]:
+        asked = (record["asked"]["mnem"], record["asked"]["shape"],
+                 record["asked"]["key_width"])
+        try:
+            held_list = H.cell_inputs(cells, asked)
+        except Exception as problem:                          # noqa: BLE001
+            say("  REFUSED at %s: %s: %s"
+                % (asked, type(problem).__name__, problem))
+            continue
+        for held in held_list:
+            for place in held.get("places") or []:
+                term = place.get("term")
+                if term is None:
+                    continue
+                places = places + 1
+                walk_kinds(term, counts, set())
+                continue
+            continue
+        check_memory("%s" % (asked,))
+        continue
+    return places
+
+
+def census_riscv(counts):
+    REPO = os.path.normpath(os.path.join(HERE, "..", "..", "..", "..",
+                                         "..", ".."))
+    RV = os.path.join(REPO, "Research", "oracle", "riscv")
+    sys.path.insert(0, RV)
+    sys.path.insert(0, os.path.join(REPO, "Research", "op_pipeline"))
+    import rv_loop as RL
+    terms, _operands = RL.riscv_terms(os.path.join(RV,
+                                                   "model_table_rv.json"))
+    for key in terms:
+        walk_kinds(terms[key], counts, set())
+        continue
+    return len(terms)
+
+
+def census_command():
+    """every (operation kind, width) the two architectures' stores use,
+    counted.  It is what `store` below poses, so the obligations are the
+    population's and not a list somebody chose."""
+    counts = {}
+    x86_places = census_x86(counts)
+    say("x86 written places walked: %d" % x86_places)
+    rv_places = census_riscv(counts)
+    say("RISC-V written places walked: %d" % rv_places)
+    say("")
+    rows = []
+    for label in sorted(counts):
+        kind, width = label.rsplit("|", 1)
+        rows.append({"kind": kind, "width": int(width),
+                     "nodes": counts[label]})
+        continue
+    rows.sort(key=lambda row: (B.KIND_ORDER.index(row["kind"])
+                               if row["kind"] in B.KIND_ORDER else 99,
+                               row["width"]))
+    say("| operation kind | width | nodes over both architectures |")
+    say("|---|---|---|")
+    for row in rows:
+        say("| %s | %d | %d |" % (row["kind"], row["width"],
+                                  row["nodes"]))
+        continue
+    say("")
+    say("distinct (kind, width): %d" % len(rows))
+    document = {
+        "meta": {"what": "every (operation kind, width) the x86 and "
+                         "riscv64 stores use, keyed as "
+                         "`build.node_width` keys a proof row",
+                 "x86_places": x86_places, "riscv_places": rv_places,
+                 "peak_kb": peak_kb()},
+        "rows": rows,
+    }
+    handle = open(CENSUS, "w")
+    json.dump(document, handle, indent=1, sort_keys=True)
+    handle.close()
+    say("written: %s" % CENSUS)
+    say("peak resident: %d kB" % check_memory("census"))
+    return 0
+
+
+# ==================================================================
+# section 3b: the census posed
+# ==================================================================
+
+def instances_the_lemma_closed():
+    """every (kind, width, word) a Lean theorem closed, off
+    `lemmas_t4*.json`.
+
+    THE BRIEF'S OWN ORDER: "proved ONCE per kind ... as a Lean lemma ...;
+    where a lemma does not close in the task's budget, the instantiation
+    is proved by z3 at every width the store uses".  So z3 is the
+    fallback and is not asked where the lemma already answered."""
+    import glob
+    out = set()
+    for path in sorted(glob.glob(os.path.join(HERE, "lemmas_t4*.json"))):
+        handle = open(path)
+        document = json.load(handle)
+        handle.close()
+        for row in document.get("rows") or []:
+            if row.get("outcome") != "PROVED_BY_LEAN":
+                continue
+            out.add((row["kind"], int(row["width"]), int(row["word"])))
+            continue
+        continue
+    return out
+
+
+def the_plan_for(mode):
+    """the plan one mode poses, DETERMINISTIC, so the parent and the
+    child derive the same list from the same files."""
+    plan = store_plan()
+    if mode != "store_rest":
+        return plan
+    closed = instances_the_lemma_closed()
+    kept = []
+    for entry in plan:
+        key = (entry["kind"], entry["width"], entry["word"])
+        if key in closed:
+            continue
+        kept.append(entry)
+        continue
+    return kept
+
+
+def store_plan():
+    """one (kind, width, word) per obligation the census names.
+
+    THE WORD IS POSED ONCE WHERE THE CONSTRUCTION DOES NOT DEPEND ON IT.
+    `build.unit_for` gives a value of `n` bits a unit of `n` where
+    `n <= W` and of `W` where it is wider, so for every width at or
+    under 64 the construction over a word of 64 and over a word of 128
+    is the SAME term; it is posed once, at 64, and the row it writes is
+    recorded for both words with that reason on it.  Above 64 the two
+    differ and both are posed."""
+    handle = open(CENSUS)
+    document = json.load(handle)
+    handle.close()
+    plan = []
+    for row in document["rows"]:
+        width = int(row["width"])
+        kind = row["kind"]
+        words = [64]
+        if width > 64:
+            words.append(128)
+        for word in words:
+            plan.append({"kind": kind, "width": width, "word": word,
+                         "covers": [64, 128] if width <= 64 else [word]})
+            continue
+        continue
+    return plan
+
+
+CAUSE_THE_CHILD_STOPPED = ("the solver's own memory bound stopped the "
+                           "process posing this obligation, so what the "
+                           "row records is the bound and not the "
+                           "question")
+
+
+def one_in_a_child(mode, part, of, entry_index, shape_index):
+    """ONE obligation posed in a process of its own.
+
+    WHY EACH OBLIGATION GETS ITS OWN PROCESS, and it is measured rather
+    than anticipated: z3's `memory_max_size` raises once and then
+    REFUSES EVERYTHING AFTER IT in the same process.  Lane `t4_l15` part
+    3 shows what that does to a measurement -- after the divider at 32
+    bits exhausted the bound, `fp_neg` at 79 bits came back UNDECIDED in
+    0.0 s, and the same obligation at the tiny formats is PROVED (lane
+    `t4_l5`).  Those rows would say the solver could not decide when
+    what happened is that the solver was already out of memory.  One
+    process per obligation is the only way a row means what it says."""
+    command = [sys.executable, os.path.abspath(__file__), "one", mode,
+               "%d" % part, "%d" % of, "%d" % entry_index,
+               "%d" % shape_index]
+    started = time.time()
+    answer = subprocess.run(command, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+    printed = answer.stdout.decode("utf-8", "replace").strip()
+    for line in printed.splitlines():
+        if not line.startswith("{"):
+            continue
+        try:
+            return json.loads(line)
+        except ValueError:
+            continue
+        continue
+    return {"outcome": "UNDECIDED", "cause": CAUSE_THE_CHILD_STOPPED,
+            "child_exit": answer.returncode,
+            "child_stderr": answer.stderr.decode("utf-8",
+                                                 "replace")[-400:],
+            "seconds": round(time.time() - started, 3)}
+
+
+def obligation_rows(plan):
+    """(entry index, shape index, entry, kind, shape) for every
+    obligation the plan carries, in one deterministic order -- the order
+    the child re-derives from the same census."""
+    out = []
+    for entry_index, entry in enumerate(plan):
+        posed = obligations_of_kind(entry["kind"], entry["width"],
+                                    entry["word"])
+        if not posed:
+            out.append((entry_index, -1, entry, entry["kind"], "--"))
+            continue
+        for shape_index, item in enumerate(posed):
+            out.append((entry_index, shape_index, entry, item[0],
+                        item[2]))
+            continue
+        continue
+    return out
+
+
+def one_command(mode, part, of, entry_index, shape_index):
+    """the child: ONE obligation, posed, printed as one json line."""
+    plan = the_plan_for(mode)
+    mine = []
+    for index, entry in enumerate(plan):
+        if index % of == (part - 1):
+            mine.append(entry)
+        continue
+    entry = mine[entry_index]
+    posed = obligations_of_kind(entry["kind"], entry["width"],
+                                entry["word"])
+    item = posed[shape_index]
+    bindings = None
+    if len(item) == 4:
+        kind, node, shape, bindings = item
+    else:
+        kind, node, shape = item
+    row = pose(kind, node, shape, entry["word"], bindings)
+    sys.stdout.write(json.dumps(row, sort_keys=True) + "\n")
+    sys.stdout.flush()
+    return 0
+
+
+def run_plan(plan, label, out_path, mode="store", part=1, of=1):
+    rows = []
+    counts = {}
+    total = len(plan)
+    say("| kind | shape | width | word | outcome | nodes | seconds | "
+        "note |")
+    say("|---|---|---|---|---|---|---|---|")
+    for entry_index, shape_index, entry, kind, shape in \
+            obligation_rows(plan):
+        if shape_index < 0:
+            row = {"kind": entry["kind"], "width": entry["width"],
+                   "word": entry["word"], "shape": "--",
+                   "outcome": "NO_OBLIGATION_STATED",
+                   "covers": entry["covers"],
+                   "cause": "this file states no obligation of this "
+                            "kind at this width",
+                   "seconds": 0.0}
+        else:
+            got = one_in_a_child(mode, part, of, entry_index,
+                                 shape_index)
+            row = dict(got)
+            row.setdefault("kind", kind)
+            row.setdefault("shape", shape)
+            row.setdefault("width", entry["width"])
+            row.setdefault("word", entry["word"])
+            row["covers"] = entry["covers"]
+            row["census_width"] = entry["width"]
+        rows.append(row)
+        counts[row["outcome"]] = counts.get(row["outcome"], 0) + 1
+        say("| %s | %s | %s | %s | %s | %s | %s | %s |"
+            % (row["kind"], row["shape"], row["width"], row["word"],
+               row["outcome"], row.get("nodes", "--"),
+               row.get("seconds"), note_of(row)))
+        check_memory("%s" % row["shape"])
+        # WRITTEN AFTER EVERY OBLIGATION.  One obligation here can take
+        # minutes -- the multiplier at 128 bits took 223.29 s against a
+        # 30,000 ms ceiling, and a divider at 32 grows to gigabytes
+        # before the solver's own memory bound answers -- so a part cut
+        # by its lane's wall clock leaves every row it already has.
+        write_plan_rows(out_path, rows, label, counts, total)
+        continue
+    say("")
+    say("| outcome | rows |")
+    say("|---|---|")
+    for outcome in sorted(counts):
+        say("| %s | %d |" % (outcome, counts[outcome]))
+        continue
+    say("")
+    say("peak resident: %d kB" % peak_kb())
+    write_plan_rows(out_path, rows, label, counts, total)
+    say("written: %s" % out_path)
+    return 0
+
+
+def write_plan_rows(out_path, rows, label, counts, total):
+    document = {
+        "meta": {"what": "every construction the census names, put to "
+                         "z3 on its own",
+                 "label": label, "ceiling_ms": CEILING_MS,
+                 "peak_kb": peak_kb(), "counts": counts,
+                 "plan_entries": total},
+        "rows": rows,
+    }
+    handle = open(out_path, "w")
+    json.dump(document, handle, indent=1, sort_keys=True)
+    handle.close()
+    return
+
+
 def widths_from(path):
     """every (kind, width) the stores use, off the census this task's
     lane 1 wrote."""
@@ -382,15 +848,32 @@ def main(argv):
                  (16, 8), (16, 16)]
         return run(pairs, [], "narrow",
                    os.path.join(HERE, "constructions_narrow.json"))
-    if what == "store":
-        widths = [8, 9, 16, 32, 33, 48, 56, 64, 65, 96, 128]
-        pairs = []
-        for width in widths:
-            pairs.append((width, 64))
-            pairs.append((width, 128))
+    if what == "census":
+        return census_command()
+    if what == "one":
+        return one_command(argv[2], int(argv[3]), int(argv[4]),
+                           int(argv[5]), int(argv[6]))
+    if what in ("store", "store_rest"):
+        plan = the_plan_for(what)
+        part = 1
+        of = 1
+        if len(argv) > 3:
+            part = int(argv[2])
+            of = int(argv[3])
+        mine = []
+        for index, entry in enumerate(plan):
+            if index % of == (part - 1):
+                mine.append(entry)
             continue
-        return run(pairs, [], "store",
-                   os.path.join(HERE, "constructions_store.json"))
+        say("this run poses %d (kind, width, word) obligations; this "
+            "part is %d of %d and carries %d of them"
+            % (len(plan), part, of, len(mine)))
+        say("")
+        return run_plan(mine, "%s %d of %d" % (what, part, of),
+                        os.path.join(HERE,
+                                     "constructions_%s_%d_of_%d.json"
+                                     % (what, part, of)),
+                        what, part, of)
     if what == "float":
         mode = argv[2] if len(argv) > 2 else "tiny"
         if mode == "tiny":

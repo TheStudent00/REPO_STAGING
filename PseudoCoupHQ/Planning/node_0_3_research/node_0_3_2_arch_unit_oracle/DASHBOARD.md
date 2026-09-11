@@ -16,23 +16,24 @@ A rollup over this node's own sub-tree (itself plus everything beneath it). Rege
 
 ## sub-tree
 
-sub-node count: 17
+sub-node count: 44
 
 ### status breakdown
 
 | status | count |
 | --- | --- |
-| draft | 18 |
+| draft | 45 |
 
 ### designation breakdown
 
 | designation | count |
 | --- | --- |
-| code (class) | 1 |
-| code (function) | 1 |
-| code (module) | 7 |
-| grouping | 5 |
-| work | 4 |
+| code (class) | 9 |
+| code (function) | 12 |
+| code (module) | 12 |
+| grouping | 6 |
+| rule | 1 |
+| work | 5 |
 
 ## blocked
 
@@ -44,9 +45,9 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 | status word | bullet count |
 | --- | --- |
-| planned | 0 |
+| planned | 27 |
 | in-progress | 0 |
-| done | 13 |
+| done | 14 |
 | blocked | 0 |
 | deferred | 0 |
 

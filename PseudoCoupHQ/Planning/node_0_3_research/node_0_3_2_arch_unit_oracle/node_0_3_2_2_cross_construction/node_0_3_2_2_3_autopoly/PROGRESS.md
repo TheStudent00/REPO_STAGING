@@ -701,3 +701,38 @@ status: living
   `PRIVATE/PseudoCoupHQ/DevComms/log_257_task_t2_the_second_tier_constructs_what_a_target_lacks.md`.
   Status: closed, spelling guard PASS on 5 of 5, verifier 5 MATCHES / 0
   DIFFERS, instance `t2` down.
+
+- 2026-09-11 — **task t4: the general construction tier, ONE construction
+  per OPERATION KIND, general in the width `n` and the target's widest
+  word `W`.** It carries out the owner's ruling of 2026-09-10 ("why isn't
+  everything proven at least via the method I've described with the
+  primitives"): task t2 wrote eight hand-written schemas for eight
+  shapes, and this writes the METHOD — `construct/general/build.py`, one
+  function per z3 declaration kind over `& | ^ ~`, shifts by constants,
+  a conditional and variables and nothing else, with no case per opcode
+  name anywhere in it. `render_general.py` composes it over a whole term
+  as one NAMED INTERMEDIATE PER NODE in every target, which is task t3's
+  own item done here because this task could not proceed without it.
+  MEASURED: the two stores use 98 distinct (operation kind, width), 196
+  (kind, width, word) instances; the pass ran 304 general-tier runs over
+  970 store lines and CONSTRUCTED 268 written places, of which 246 are
+  PROVED — and every one of the 246 by the KIND'S OWN LEAN LEMMA, the
+  solver deciding none of them. The 22 that are not sit in four causes
+  and no fifth: the equality not discharged by any of the three forms
+  (7), the carved body above the 4,000 instructions this task's gate is
+  offered (9), a gate that did not answer inside 5 s (5), and one place
+  with no verdict. The three readings over CELLS do not move (96 / 154 /
+  141 of 205, as task t2 left them); the bank's pairs do, 2,007 → 2,015
+  strict, 2,265 → 2,273 destination-only, 2,221 → 2,229 corpus-needed.
+  The collapse column, the owner's compiler question on the general tier:
+  LANDED 27, LANDED_ELSEWHERE 37, IDENTITY 2, NOT_COLLAPSED 269 — and go's
+  eight NOT_COLLAPSED places carry 154,395 instructions between them,
+  because those are the 128-bit divides written out of the primitives on
+  a target whose widest word is 64. NOT REACHED, with its cause: the
+  FLAG-CONSUMER shape (one written place per setter cell, seventeen for
+  `setl` and its kin, about 2,000 s per (cell, target)), four of which
+  are named in `t4_general_left_behind.json`. Report:
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/construct/general/general.md`.
+  Log: `PRIVATE/PseudoCoupHQ/DevComms/log_262_t4_the_general_construction_tier.md`.
+  Status: closed, spelling guard PASS on 23 of 23, verifier 6 MATCHES /
+  0 DIFFERS, instance `t4` down.

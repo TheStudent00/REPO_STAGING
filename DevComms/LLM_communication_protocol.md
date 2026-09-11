@@ -282,9 +282,15 @@ Consequences that v2 stated as separate reconciliations:
   clause.
 - **TEST.** Can I answer "in what sense?" for every term from your
   text alone?
-- **BAD.** "The loop is driven by the semantic form."
+- **BAD.** "The loop is driven by the semantic form." And 2026-09-11:
+  "the public tip" used four times for the newest commit of a public
+  repo's branch — a git word, never defined ("WHAT THE FUCK IS A PUBLIC
+  TIP"). the owner's rule: a word like that may be used only in the sentence
+  that explains it, until he has confirmed he is using it himself;
+  better not to use it at all.
 - **GOOD.** "I was feeling ecstatic — I could barely contain my
-  excitement."
+  excitement." And: "the newest commit of the branch, the version of
+  the files you see when you open the repo on GitHub today."
 - **CASE.** cases §1.2.
 
 #### names.glossary-form

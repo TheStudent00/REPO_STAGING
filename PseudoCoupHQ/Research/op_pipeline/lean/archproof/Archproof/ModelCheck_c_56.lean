@@ -17,8 +17,8 @@ namespace Archproof
     discrepancy between them. -/
 theorem ModelCheck_c_56 (v0 : BitVec 64) (v1 : BitVec 64) :
     ((v0.extractLsb 31 0).sshiftRight' ((0#27) ++ (v1.extractLsb 4 0)))
-  = ((model_sar_8 (model_mov_16 v0) (model_mov_16 v1)).extractLsb 31 0) := by
-  simp only [model_mov_16, model_sar_8]
+  = ((model_sar_8 (model_mov_18 v0) (model_mov_18 v1)).extractLsb 31 0) := by
+  simp only [model_mov_18, model_sar_8]
   bv_decide
 
 #print axioms ModelCheck_c_56

@@ -1,0 +1,82 @@
+// task t4 emulation -- rendered by render_general.py, one named
+// intermediate per node of the term of setp_gpr_one_8__reg_rdi__swift__all_constructed.
+//   Concat(Extract(63, 8, v2), If(Extract(1, 1, Extract(7, 0, v0) + Extract(7, 0, v1)) == If(Extract(2, 2, Extract(7, 0, v0) + Extract(7, 0, v1)) == If(Extract(3, 3, Extract(7, 0, v0) + Extract(7, 0, v1)) == If(Extract(4, 4, Extract(7, 0, v0) + Extract(7, 0, v1)) == If(Extract(5, 5, Extract(7, 0, v0) + Extract(7, 0, v1)) == If(Extract(6, 6, Extract(7, 0, v0) + Extract(7, 0, v1)) == If(Extract(7, 7, Extract(7, 0, v0) + Extract(7, 0, v1)) == If(Extract(0, 0, v0) + 1 == Extract(0, 0, v1), 1, 0), 1, 0), 1, 0), 1, 0), 1, 0), 1, 0), 1, 0), 1, 0))
+@_cdecl("emu_setp_gpr_one_8__reg_rdi__swift__all_constructed")
+public func emu_setp_gpr_one_8__reg_rdi__swift__all_constructed(_ a: UInt8, _ b: UInt8, _ c: UInt64) -> UInt64
+{
+    let v0: UInt32 = ((UInt32(truncatingIfNeeded: ((UInt32(a))) &>> 0)) & UInt32(0x1))
+    let v1: UInt32 = ((UInt32(truncatingIfNeeded: ((UInt32(b))) &>> 0)) & UInt32(0x1))
+    let v2: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v1)) ^ (UInt32(truncatingIfNeeded: UInt32(0x1))))) & UInt32(0x1))
+    let v3: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v2)) ^ (UInt32(truncatingIfNeeded: UInt32(0x0))))) & UInt32(0x1))
+    let v4: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v3)) ^ (UInt32(truncatingIfNeeded: v0)))) & UInt32(0x1))
+    let v5: UInt32 = v4
+    let v6: Bool = ((UInt32(truncatingIfNeeded: UInt32(0x1))) == (UInt32(truncatingIfNeeded: v5)))
+    let v7: Bool = (!(v6))
+    let v8: UInt32 = ((v7) ? (UInt32(0x1)) : (UInt32(0x0)))
+    let v9: UInt32 = (UInt32(a))
+    let v10: UInt32 = (UInt32(b))
+    let v11: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v10)) & (UInt32(truncatingIfNeeded: v9)))) & UInt32(0xff))
+    let v12: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v11)) &<< (UInt32(truncatingIfNeeded: UInt32(0x1))))) & UInt32(0xff))
+    let v13: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v10)) ^ (UInt32(truncatingIfNeeded: v9)))) & UInt32(0xff))
+    let v14: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v13)) & (UInt32(truncatingIfNeeded: v12)))) & UInt32(0xff))
+    let v15: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v11)) | (UInt32(truncatingIfNeeded: v14)))) & UInt32(0xff))
+    let v16: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v15)) &<< (UInt32(truncatingIfNeeded: UInt32(0x2))))) & UInt32(0xff))
+    let v17: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v13)) &<< (UInt32(truncatingIfNeeded: UInt32(0x1))))) & UInt32(0xff))
+    let v18: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v13)) & (UInt32(truncatingIfNeeded: v17)))) & UInt32(0xff))
+    let v19: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v18)) & (UInt32(truncatingIfNeeded: v16)))) & UInt32(0xff))
+    let v20: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v15)) | (UInt32(truncatingIfNeeded: v19)))) & UInt32(0xff))
+    let v21: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v20)) &<< (UInt32(truncatingIfNeeded: UInt32(0x4))))) & UInt32(0xff))
+    let v22: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v18)) &<< (UInt32(truncatingIfNeeded: UInt32(0x2))))) & UInt32(0xff))
+    let v23: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v18)) & (UInt32(truncatingIfNeeded: v22)))) & UInt32(0xff))
+    let v24: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v23)) & (UInt32(truncatingIfNeeded: v21)))) & UInt32(0xff))
+    let v25: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v20)) | (UInt32(truncatingIfNeeded: v24)))) & UInt32(0xff))
+    let v26: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v25)) &<< (UInt32(truncatingIfNeeded: UInt32(0x1))))) & UInt32(0xff))
+    let v27: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v13)) ^ (UInt32(truncatingIfNeeded: v26)))) & UInt32(0xff))
+    let v28: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v27)) &>> 7)) & UInt32(0x1))
+    let v29: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v28)) ^ (UInt32(truncatingIfNeeded: v8)))) & UInt32(0x1))
+    let v30: UInt32 = v29
+    let v31: Bool = ((UInt32(truncatingIfNeeded: UInt32(0x1))) == (UInt32(truncatingIfNeeded: v30)))
+    let v32: Bool = (!(v31))
+    let v33: UInt32 = ((v32) ? (UInt32(0x1)) : (UInt32(0x0)))
+    let v34: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v27)) &>> 6)) & UInt32(0x1))
+    let v35: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v34)) ^ (UInt32(truncatingIfNeeded: v33)))) & UInt32(0x1))
+    let v36: UInt32 = v35
+    let v37: Bool = ((UInt32(truncatingIfNeeded: UInt32(0x1))) == (UInt32(truncatingIfNeeded: v36)))
+    let v38: Bool = (!(v37))
+    let v39: UInt32 = ((v38) ? (UInt32(0x1)) : (UInt32(0x0)))
+    let v40: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v27)) &>> 5)) & UInt32(0x1))
+    let v41: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v40)) ^ (UInt32(truncatingIfNeeded: v39)))) & UInt32(0x1))
+    let v42: UInt32 = v41
+    let v43: Bool = ((UInt32(truncatingIfNeeded: UInt32(0x1))) == (UInt32(truncatingIfNeeded: v42)))
+    let v44: Bool = (!(v43))
+    let v45: UInt32 = ((v44) ? (UInt32(0x1)) : (UInt32(0x0)))
+    let v46: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v27)) &>> 4)) & UInt32(0x1))
+    let v47: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v46)) ^ (UInt32(truncatingIfNeeded: v45)))) & UInt32(0x1))
+    let v48: UInt32 = v47
+    let v49: Bool = ((UInt32(truncatingIfNeeded: UInt32(0x1))) == (UInt32(truncatingIfNeeded: v48)))
+    let v50: Bool = (!(v49))
+    let v51: UInt32 = ((v50) ? (UInt32(0x1)) : (UInt32(0x0)))
+    let v52: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v27)) &>> 3)) & UInt32(0x1))
+    let v53: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v52)) ^ (UInt32(truncatingIfNeeded: v51)))) & UInt32(0x1))
+    let v54: UInt32 = v53
+    let v55: Bool = ((UInt32(truncatingIfNeeded: UInt32(0x1))) == (UInt32(truncatingIfNeeded: v54)))
+    let v56: Bool = (!(v55))
+    let v57: UInt32 = ((v56) ? (UInt32(0x1)) : (UInt32(0x0)))
+    let v58: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v27)) &>> 2)) & UInt32(0x1))
+    let v59: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v58)) ^ (UInt32(truncatingIfNeeded: v57)))) & UInt32(0x1))
+    let v60: UInt32 = v59
+    let v61: Bool = ((UInt32(truncatingIfNeeded: UInt32(0x1))) == (UInt32(truncatingIfNeeded: v60)))
+    let v62: Bool = (!(v61))
+    let v63: UInt32 = ((v62) ? (UInt32(0x1)) : (UInt32(0x0)))
+    let v64: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v27)) &>> 1)) & UInt32(0x1))
+    let v65: UInt32 = ((UInt32(truncatingIfNeeded: (UInt32(truncatingIfNeeded: v64)) ^ (UInt32(truncatingIfNeeded: v63)))) & UInt32(0x1))
+    let v66: UInt32 = v65
+    let v67: Bool = ((UInt32(truncatingIfNeeded: UInt32(0x1))) == (UInt32(truncatingIfNeeded: v66)))
+    let v68: Bool = (!(v67))
+    let v69: UInt32 = ((v68) ? (UInt32(0x1)) : (UInt32(0x0)))
+    let v70: UInt64 = ((UInt64(truncatingIfNeeded: ((UInt64(c))) &>> 8)) & UInt64(0xffffffffffffff))
+    let v71: UInt32 = v69
+    let v72: UInt64 = v70
+    let v73: UInt64 = (UInt64(truncatingIfNeeded: ((UInt64(truncatingIfNeeded: v72)) &<< 8) | (UInt64(truncatingIfNeeded: v71))))
+    return UInt64(truncatingIfNeeded: v73)
+}

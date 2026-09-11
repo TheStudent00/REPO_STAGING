@@ -955,3 +955,52 @@ status: living
   a named cause, on both architectures; the readings beside t2's and
   rv3's; the collapse column; where the gate runs out. t3 shrinks to the
   x87 arrival and the code version; rv3b follows.
+- 2026-09-10 (task ref2 closed, log_261): LEVEL 0 CORRECTED. Four
+  defects in `reference.py`/`condition_table.py`, each a hardware fact
+  (a write below 32 bits leaves the register's other bits alone; adc/sbb
+  add the carry INTO the destination and the flags read that sum; a
+  condition is a reading of CF ZF SF OF PF as the setter's own builder
+  computed them, not always a subtraction; `sub`/`sbb` in the no-suffix
+  list so `sub %esi,(%rax)` is 32 bits). Before: the K-framework reading
+  disagreed at 383 of 1,779 written places; after: NONE. Undefined 197
+  and unstatable 439 unmoved (the corrections closed disagreements
+  rather than hiding them). Lean model check 259/172/87/0 after each
+  correction. Re-derived: the model table swept five times, 2,370 of
+  14,534 places moved, attributed per correction, no attempt changed
+  outcome; the term store re-printed beside the old (27,682 records,
+  4,874 texts changed, 0 s-expression disagreements, 0 operand-order
+  disagreements over 27,642 units); 200 canon40 proofs all hold. Flags:
+  the bank's re-attempt rule hashes the driver/loop/renderer, NOT the
+  reference (widened in-process; permanent = one line, t3 takes it); 184
+  term-store records do not converge at 10,240 MB; the guard refused
+  three json files (bare mnemonic lists) — right, fixed to `mnem` rows.
+  Instance brought down by the coordinator; artifacts synced back.
+- 2026-09-11 (task t4 closed, log_262, 18 h on the tower): THE GENERAL
+  CONSTRUCTION TIER — one construction per operation kind (bitwise,
+  complement, equality, conditional, wiring, add, multiply, divide,
+  remainder, the float kinds as softfloat), general in width and word,
+  composed over any term with every node bound to a name; the native
+  operator first, the construction where none exists. MEASURED: 268
+  places constructed, 246 PROVED — every one by the kind's own Lean
+  lemma (proof by structure; z3 needed for none), 22 refused (go and
+  swift where the arrival is wider than the 64-bit word). The proved
+  kinds: bitwise, complement, equality, conditional and wiring at 8, 56
+  and 64 bits on c, cpp and rust. THE EDGE, measured: multiply, divide,
+  remainder and the float kinds at 16 bits and above CONSTRUCT but do not
+  PROVE — Lean's bit-level decision times out at 16-bit multiply, z3 runs
+  from 30 s to 3,000 s and answers by its 4 GB memory bound; the form
+  actually used on those rows is NONE (196 construction instances: lemma
+  132, sat 8, none 56). go's constructions over a 64-bit word run to
+  19,299 instructions on average and were not gated (cap 4,000). THE
+  PASS IS PARTIAL: 304 of 654 planned (cell, target) runs executed; the
+  rest left behind by name in `t4_general_left_behind.json` after
+  z3 out-of-memory aborts and one segfault. READINGS on x86 unchanged
+  (96 / 154 / 141 of 205; +8 bank pairs); RISC-V 117 → 119 of 255 (`divw`,
+  `remw` reached only by this tier). COLLAPSE: LANDED 27, LANDED_ELSEWHERE
+  37, NOT_COLLAPSED 269 — the compiler folds a minority of constructions
+  back to the instruction. OWED, in order: the general Lean lemma over
+  every width (bv_decide decides at a fixed width only); an algebraic
+  lemma for multiply/divide (the structure route, since bit-level
+  deciders cannot); the delta pass over the 350 unreached places; the
+  word-64 blow-up on go/swift. Guard 23/23 PASS; verifier 6 MATCHES / 0
+  DIFFERS.

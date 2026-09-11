@@ -21,6 +21,8 @@ sub_nodes:
       path: node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md
     - name: architectures
       path: node_0_3_2_3_architectures/CORE_0_3_2_3_architectures.md
+    - name: simplification
+      path: node_0_3_2_4_simplification/CORE_0_3_2_4_simplification.md
 ---
 
 # CORE 0_3_2 — arch_unit_oracle
@@ -44,6 +46,7 @@ sub_nodes:
 - [hub_compiler](node_0_3_2_1_hub_compiler/CORE_0_3_2_1_hub_compiler.md) — Our own Hub-like compiler: a lowering that reads a source file through tree-sitter, types each operator node by the language's own front end run once as a type oracle (ruled 2026-09-07 on o6's measurement: go/types typed 79,799 of 103,475 sites at 541 MB and 160 s), resolves each node to its dominant operator, and emits target SOURCE composed from AutoPoly's proved emulations, one per node, so that the target's own compiler lowers and optimizes ACROSS the operators; its output is compared by the gate against what the original compiler emits for the same file.
 - [cross_construction](node_0_3_2_2_cross_construction/CORE_0_3_2_2_cross_construction.md) — Language x's arch-units as the ONLY building blocks from which every arch-unit of language y is constructed, each construction proved by the gate, so that the set of y's operators that x can express is measured rather than assumed.
 - [architectures](node_0_3_2_3_architectures/CORE_0_3_2_3_architectures.md) — The architectures the oracle runs on, one sub-node each, so that the part of the line that touches the machine is kept apart from the part that does not.
+- [simplification](node_0_3_2_4_simplification/CORE_0_3_2_4_simplification.md) — Leveraging the `backstop`'s emulator arch-units: finding, and proving, the shorter form the compiler did not find.
 
 ## definition
 

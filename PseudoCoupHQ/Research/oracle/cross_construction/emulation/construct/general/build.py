@@ -101,8 +101,36 @@ class Refused(Exception):
         self.detail = detail
 
 
+WATCH = None
+"""A CALLABLE THE CALLER MAY INSTALL, called once per ROUND of every
+construction whose round count is the width -- the multiplier's n
+rounds, the divider's n rounds, the barrel's log2(n) stages.
+
+WHY IT EXISTS, measured and not anticipated: task t4's lane `t4_l6`
+step [2/6] (`div gpr_one 64` on c, a divide at 128 bits over a word of
+128) was stopped by the operating system with no language-level error --
+`Killed`, exit 137 -- so the construction's cost was not a row with a
+cause but an ABORT with nothing in it.  A watch called per round lets
+the caller state its own bound and refuse BY NAME with the round it
+reached, which is a result; the operating system's ABORT is not.
+
+The callable takes one string naming where it was called and raises
+whatever refusal the caller states.  `None` means no watch, which is
+this file's default and what every check lane runs under."""
+
+
+def watched(where):
+    if WATCH is None:
+        return
+    WATCH(where)
+    return
+
+
 CAUSE_NO_CONSTRUCTION = ("no construction is written for a node of this "
                          "kind")
+CAUSE_TOO_COSTLY = ("the construction's own cost passed the bound the "
+                    "caller stated, counted as resident bytes at a "
+                    "round of the construction")
 CAUSE_ARRIVAL = ("an arrival wider than the target's widest holder: the "
                  "value cannot be received at all, which is a question "
                  "about the arrival contract and not about the "
@@ -739,6 +767,7 @@ def multiply(left, right, width, unit):
     accumulator = Value("bv", width=width, unit=unit,
                         limbs=zeros(width, unit))
     for position in range(width):
+        watched("multiply round %d of %d" % (position + 1, width))
         chosen = spread(bit_of_value(right, position), unit)
         moved = shift_left_constant(left.limbs, position, width, unit)
         partial = []
@@ -772,6 +801,7 @@ def divide_unsigned(left, right, width, unit, word):
     divisor = relimb(segments_of(right), wide_width, word)
     quotient = zeros(width, unit)
     for position in range(width - 1, -1, -1):
+        watched("divide round %d of %d" % (width - position, width))
         moved = shift_left_constant(remainder.limbs, 1, wide_width,
                                     wide_unit)
         moved[0] = moved[0] | z3.ZeroExt(wide_unit - 1,
@@ -851,6 +881,7 @@ def shift_by_count(value, count, width, unit, direction, arithmetic):
     stages = rounds_for(width)
     running = value
     for stage in range(stages):
+        watched("barrel stage %d of %d" % (stage + 1, stages))
         chosen = bit_of_value(count, stage)
         amount = 1 << stage
         if direction == "up":
@@ -1177,6 +1208,70 @@ def joined(value):
     if value.sort == "other":
         return value.passthrough
     return gather(segments_of(value), 0, value.width)
+
+
+def unfolded_size(term, ceiling):
+    """how many nodes the term carries WRITTEN OUT -- a step read three
+    times counted three times, which is what printing it does.
+
+    It is `schemas.unfolded_size`'s own measure and its own ceiling,
+    written iteratively here because a construction's term is a thousand
+    levels deep and the recursive form meets Python's own limit."""
+    sizes = {}
+    order = []
+    seen = set()
+    stack = [(term, False)]
+    while stack:
+        node, expanded = stack.pop()
+        key = node.get_id()
+        if expanded:
+            order.append(node)
+            continue
+        if key in seen:
+            continue
+        seen.add(key)
+        stack.append((node, True))
+        for index in range(node.num_args()):
+            stack.append((node.arg(index), False))
+            continue
+        continue
+    for node in order:
+        total = 1
+        for index in range(node.num_args()):
+            total = total + sizes[node.arg(index).get_id()]
+            if total >= ceiling:
+                total = ceiling
+                break
+            continue
+        sizes[node.get_id()] = total
+        continue
+    return sizes[term.get_id()]
+
+
+def node_width(node):
+    """THE WIDTH A PROOF ROW FOR THIS NODE IS KEYED BY.
+
+    A bit-vector node's own size; a float node's exponent plus
+    significand; and for a node whose sort is a TRUTH VALUE -- every
+    comparison and every equality -- its FIRST ARGUMENT's width, because
+    a comparison at 64 bits is a fact about 64-bit operands and a row
+    keyed at the truth's own one bit would not say which operands it was
+    proved over.
+
+    It is one function so that the render's record of what it
+    constructed and the check's record of what it proved are keyed the
+    same way; they were keyed differently once and the proof table then
+    answered nothing."""
+    sort = node.sort()
+    if sort.kind() == z3.Z3_BV_SORT:
+        return node.size()
+    if z3.is_fp(node):
+        return sort.ebits() + sort.sbits()
+    if sort.kind() == z3.Z3_BOOL_SORT:
+        for index in range(node.num_args()):
+            return node_width(node.arg(index))
+        return 1
+    return 0
 
 
 def node_count(term, ceiling=None, seen=None):

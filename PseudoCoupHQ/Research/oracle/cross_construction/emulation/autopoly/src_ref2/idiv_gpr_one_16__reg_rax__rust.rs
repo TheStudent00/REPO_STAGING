@@ -1,0 +1,11 @@
+#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
+
+// task o11 emulation -- rendered by rust_render.py
+// RustRenderer from the layer-4 term of idiv_gpr_one_16__reg_rax__rust.
+// The term's layer-5 text, LITERAL:
+//   Concat(Extract(63, 16, v1), Extract(15, 0, bvsdiv_i(Concat(Extract(15, 0, v0), Extract(15, 0, v1)), Concat(Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 15, v2), Extract(15, 0, v2)))))
+#[no_mangle]
+pub extern "C" fn emu_idiv_gpr_one_16__reg_rax__rust(a: u16, b: u64, c: u16) -> u64
+{
+    ((((((((((((b as u64)) >> 16) as u64) & 0xffffffffffffu64)) as u64) << 16) | (((((((((({ let n1: i32 = ((((((((((a as u32)) as u32) << 16) | (((((((b as u64)) >> 0) as u32) & 0xffffu32)) as u32)) as u32)) as i32)) as i32); let d1: i32 = ((((((((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 31) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 30) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 29) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 28) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 27) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 26) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 25) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 24) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 23) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 22) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 21) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 20) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 19) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 18) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 17) | ((((((((c as u32)) >> 15) as u32) & 0x1u32)) as u32) << 16) | (((c as u32)) as u32)) as u32)) as i32)) as i32); unsafe { if d1 == 0 || (n1 == i32::MIN && d1 == -1) { core::hint::unreachable_unchecked(); } } n1 / d1 })) as u32)) as u32) >> 0) as u32) & 0xffffu32)) as u64)) as u64)) as u64)
+}

@@ -36,3 +36,18 @@ status: living
   reading — rv2's loop has not been re-run. WAITS FOR ref2 (its DevComms
   log does not exist): twins against the corrected table, the certificates
   into the bank with `arch`, and the loop on the new delta.
+
+- 2026-09-11 — **task t4: the general construction tier on riscv64, and
+  the count beside task rv3's 117 of 255.** The tier ran over the 94
+  RISC-V cells `twins.json` leaves untwinned, 188 runs on c and go under
+  both policies, against the CORRECTED x86 reference (sha256
+  `40df3b55455f8d7a6e35ef04b7219701b957af65ad08f4d81fd550d911525e72`,
+  task ref2's; task rv2's own loop read the pre-correction one). Census:
+  proved 144, refused 23, undecided 13, sat 8. The tier PROVES 84 cells;
+  the union of the inheritance (35), task rv2's loop (82) and this tier
+  is **119 of 255 (46.7%)**, beside rv3's 117 (45.9%). THE TWO CELLS ONLY
+  THE GENERAL TIER REACHES ARE DIVISIONS — `divw gpr_gpr_gpr 32` and
+  `remw gpr_gpr_gpr 32` — which is the point of the whole task: nothing
+  before it could construct a divide at a real width. Rows:
+  `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/construct/general/rv_general.jsonl`.
+  Log: `PRIVATE/PseudoCoupHQ/DevComms/log_262_t4_the_general_construction_tier.md`.

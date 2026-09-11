@@ -43,7 +43,7 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 | --- | --- |
 | planned | 0 |
 | in-progress | 0 |
-| done | 2 |
+| done | 3 |
 | blocked | 0 |
 | deferred | 0 |
 

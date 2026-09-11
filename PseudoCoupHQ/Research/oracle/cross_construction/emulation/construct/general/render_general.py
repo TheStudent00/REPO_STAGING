@@ -73,6 +73,7 @@ the target, and by nothing that is written anywhere as a token.
 Coding discipline: no compound one-liner statements.
 """
 
+import os
 import re
 
 import z3
@@ -94,6 +95,61 @@ STATEMENT_CEILING = 400000
 """how many named intermediates a rendered source may carry.  It is a
 MEASURED ceiling on the thing that is actually written -- one statement
 per distinct node -- and not a rule about which operation is allowed."""
+
+RESIDENT_CEILING_KB = 4 * 1024 * 1024
+"""how much RESIDENT memory ONE render may hold while it is building.
+
+WHY IT IS CURRENT RESIDENT AND NOT THE PEAK.  `resource.getrusage`
+answers the peak, which never falls, so a bound read off it would refuse
+every render after the first costly one.  `/proc/self/statm` answers
+what is resident NOW, which is the quantity a bound on ONE render is
+about.
+
+WHY IT IS HERE AT ALL, measured: task t4's lane `t4_l6` step [2/6] --
+`div gpr_one 64` on c, a divide at 128 bits over a word of 128 -- was
+stopped by the operating system with no language-level error (`Killed`,
+exit 137) and left no row.  The ceiling below is UNDER the task's own
+6 GB bound so the refusal is this file's, by name and with the round it
+reached, and the named abort ABORT_MEMORY_T4 stays where it is as the
+bound on the pass."""
+
+PAGE_BYTES = os.sysconf("SC_PAGE_SIZE")
+
+
+def resident_kb():
+    """what is resident NOW, off `/proc/self/statm` field 2 (resident
+    pages).  `/usr/bin/time` is absent from the image and `getrusage`
+    answers the peak, so this is the reading."""
+    handle = open("/proc/self/statm")
+    text = handle.read()
+    handle.close()
+    pages = int(text.split()[1])
+    return (pages * PAGE_BYTES) // 1024
+
+
+def install_the_watch(record):
+    """the construction's per-round watch, set to refuse at this file's
+    stated ceiling.  `record` is filled in with where it got to, so a
+    refusal carries the round and the reading."""
+
+    def watch(where):
+        resident = resident_kb()
+        record["where"] = where
+        record["resident_kb"] = resident
+        if resident < RESIDENT_CEILING_KB:
+            return
+        raise B.Refused(B.CAUSE_TOO_COSTLY,
+                        "%s: %d kB resident, at or above the %d kB this "
+                        "render is bounded at"
+                        % (where, resident, RESIDENT_CEILING_KB))
+
+    B.WATCH = watch
+    return watch
+
+
+def clear_the_watch():
+    B.WATCH = None
+    return
 
 
 # ==================================================================
@@ -294,6 +350,18 @@ class General(object):
             raise B.Refused(CAUSE_TOO_LARGE,
                             "at or above %d statements"
                             % STATEMENT_CEILING)
+        if len(self.statements) % 256 == 0:
+            # THE SAME BOUND AS THE CONSTRUCTION'S, read here because
+            # the statements are the second place a render grows: one
+            # string and one memo entry per distinct node.
+            resident = resident_kb()
+            if resident >= RESIDENT_CEILING_KB:
+                raise B.Refused(B.CAUSE_TOO_COSTLY,
+                                "naming statement %d: %d kB resident, "
+                                "at or above the %d kB this render is "
+                                "bounded at"
+                                % (len(self.statements), resident,
+                                   RESIDENT_CEILING_KB))
         text, kind, width = self.renderer.emit(node)
         name = self.fresh()
         line = declaration(self.lang, self.renderer, name, kind, width,
@@ -445,12 +513,8 @@ class General(object):
     def record(self, kind, node):
         self.constructed_kinds[kind] = \
             self.constructed_kinds.get(kind, 0) + 1
-        width = 0
         try:
-            if node.sort().kind() == z3.Z3_BV_SORT:
-                width = node.size()
-            elif z3.is_fp(node):
-                width = fp_width(node.sort())
+            width = B.node_width(node)
         except Exception:
             width = 0
         self.widths_of_kind.setdefault(kind, {})
@@ -569,7 +633,12 @@ def render(term, lang, families, home, bits, label, word, policy,
     renderer.plan_parameters(term)
     renderer.check_symbols(term)
     walker = General(lang, renderer, word, policy)
-    root = walker.walk(term)
+    reached = {}
+    install_the_watch(reached)
+    try:
+        root = walker.walk(term)
+    finally:
+        clear_the_watch()
     single = root.native()
     if single is None:
         raise B.Refused(CAUSE_ANSWER_WIDE,
@@ -606,6 +675,8 @@ def render(term, lang, families, home, bits, label, word, policy,
         "constructed_kinds": dict(walker.constructed_kinds),
         "constructed_widths": dict(walker.widths_of_kind),
         "policy": policy,
+        "resident_kb_at_the_last_round": reached.get("resident_kb"),
+        "the_last_round_reached": reached.get("where"),
     }
 
 
@@ -688,7 +759,15 @@ def assemble(lang, renderer, label, return_type, statements,
         lines.append("\t_ = sink")
         lines.append("}")
         lines.append("")
-        return "\n".join(lines), symbol
+        # THE CARVE ASKS objdump FOR THE SYMBOL BY NAME, and go's
+        # linked executable spells a package function `main.<name>`.
+        # `go_render.render` returns that spelling and this file
+        # returned the bare one, so every go source this render wrote
+        # BUILT and then carved to nothing: task t4's lane `t4_l7`
+        # step [1/4], "objdump found no symbol emu_adc_gpr_gpr_64__
+        # reg_rdi__go__all_constructed".  Every other target's own
+        # renderer returns the bare name and keeps it.
+        return "\n".join(lines), "main.%s" % symbol
     if lang == "swift":
         params = []
         for param in renderer.params:

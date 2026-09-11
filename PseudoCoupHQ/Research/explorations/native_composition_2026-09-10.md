@@ -108,3 +108,43 @@ source, any language, any OS, into one native application.
 - proved fraction / tested fraction / hand-written fraction per program
 - differential-test pass rate on real inputs vs the original tool
 - performance ratio vs original
+
+## 9. Redundancy via proved equivalence (the owner, 2026-09-11)
+
+- Idea: run K proved-equivalent variants of a unit; disagreement = a
+  tamper signal; an attacker must compromise all K consistently.
+- Prior art: N-version programming (Avizienis 1985; failed on
+  correlated bugs, Knight & Leveson 1986); N-Variant Systems (Cox et
+  al. 2006) and Orchestra: artificially diversified variants run in
+  lockstep, syscalls compared; ~2x cost for K=2. Byzantine voting for
+  masking (K=3 tolerates 1).
+- What the line adds: variants are PROVED equivalent, so a divergence
+  cannot be a benign bug in the proved span; and AutoPoly emits the
+  same unit per target language, i.e. diversity (different runtime,
+  different exploit surface) for free with the proof attached.
+- Unit of redundancy = a span with a comparable output: a floor-1
+  pure function, or a seam-bounded unit compared at the seam table.
+  Nondeterminism (time, random, interleaving) must be fed as input
+  to all variants (record/replay) — the main engineering cost, as in
+  MVEE work.
+- Three failure points:
+  F1. Common input. Tampering upstream of the span is invisible; the
+      span boundary is the detection boundary.
+  F2. The comparator. Single point; must be minimal, proved, in the
+      outermost trusted layer, unreachable from variants; variants
+      commit a hash before any reveal.
+  F3. Fake diversity. Same binary, same layout = one exploit hits all.
+      Real axes: target language, isolation tier (variant per sandbox
+      layer), compiler. Shared kernel and shared hardware are NOT
+      diversified.
+- Modes and cost (p = sample rate):
+  lockstep: latency = slowest variant, compute K.
+  async audit: latency ~1, compute 1 + p(K-1); detection delayed.
+  majority mask (K>=3): continue on majority; attacker needs 2 of 3.
+- Detection probability: persistent compromise caught with
+  1-(1-p)^n over n checks; one-shot compromise caught with p only.
+  These are the first CALCULABLE edges on the security graph.
+- Divergence triage: frontier bug (memory/loops, unproved) /
+  nondeterminism leak / hardware fault / compromise. Early on mostly
+  the first, which makes the harness the Hub's continuous
+  differential tester at no extra cost.

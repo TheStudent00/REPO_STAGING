@@ -135,3 +135,32 @@ for cell in set_of_cells:
         verdict = gate(term_of(body) == cell.term)    # z3, per output
         bank.add(cell, lang, source, verdict)
 ```
+
+`backstop` (name proposed 2026-09-11 for the owner's method; his words: "proof back-stop method")
+- the guaranteed route: any cell's term built from `& | ^ ~`, constant
+  shifts, a conditional and variables, one construction per operation
+  kind, proved once; the language's own operator wins where it exists
+  ("whoever gets there first"), the backstop catches everything else.
+- built: task t4. A `backstop construction` is one such emulation; a
+  `backstop proof` is its certificate.
+
+`emulator arch-unit`
+- the compiled body of an emulation, any tier: the machine code the
+  compiler produced for the emulation's source. It is an arch-unit of
+  that language like any other, so it joins `set_of_arch_units_for_each_lang`.
+- built: compile the emulation at ship flags, carve at the symbol.
+
+`segment`, `live interface`
+- a segment: a contiguous run of instructions inside an emulator
+  arch-unit, from instruction i to instruction j.
+- its live interface: the registers and flags it READS that were set
+  before i, and the registers and flags it WRITES that are read after j
+  (or answered). A replacement must match the segment on that interface
+  and nowhere else.
+
+`rewrite rule`
+- a proved statement "this segment's term on its live interface equals
+  this arch-unit's term", with the certificate that proved it. Applying
+  the rule shortens the emulator arch-unit by swapping the segment for
+  the unit. The set of rules is the simplification the compiler did not
+  find.

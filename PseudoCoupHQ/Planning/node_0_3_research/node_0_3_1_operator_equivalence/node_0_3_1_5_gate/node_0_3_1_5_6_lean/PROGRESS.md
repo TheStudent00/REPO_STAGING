@@ -124,3 +124,32 @@ status: living
   unification cannot pin a numeral whose width only a sibling fixes. No
   `.lean` file this task added carries `sorry`. Log:
   `PRIVATE/PseudoCoupHQ/DevComms/log_257_task_t2_the_second_tier_constructs_what_a_target_lacks.md`.
+
+- 2026-09-11 — **task t4: a construction can be STATED as a theorem at
+  all, which is task t2's own owed item closed.** `construct/lean/OWED.md`
+  §3 recorded what was owed: "a theorem's statement is the term WRITTEN
+  OUT, a printed term names no intermediate, and restoring division reads
+  its own previous remainder three times per step — so the statement
+  grows like 3^width", and what was owed was "a way to STATE it — a
+  translation to Lean that names intermediates (`let`)".
+  `construct/general/lean_general.py` is that translation: it walks the
+  z3 node and writes one Lean `let` per DISTINCT node, in the project's
+  own spellings. MEASURED, and it is the whole difference: the multiplier
+  at 8 bits is 190 distinct nodes and at or above 200,000 nodes WRITTEN
+  OUT; the divider at 64 is 8,839 distinct and past the same ceiling.
+  With the `let` form, `run_lemmas_t4.py` closed 132 of the 196 (kind,
+  width, word) instances the two stores use, 263 theorems run, one `lean`
+  process each at a 90-second budget bounded at 4 GB of address space —
+  the barrel shifter at 128 bits over a word of 128 in 3.301 s with 102
+  bindings, the adder at 65 over 64 in 1.219 s with 122. EVERY INTEGER
+  KIND the census names is proved at every width it uses, except multiply
+  and the four divide/remainder kinds, where `bv_decide`'s SAT solver
+  times out; the float kinds are not stated in Lean at all, because
+  `BitVec` carries no float operation. STILL OWED and unchanged: the
+  GENERAL statement over `BitVec w` for every `w`, which needs an
+  induction over the limb count because `bv_decide` decides at a fixed
+  width. Toolchain: `Lean (version 4.24.0, x86_64-unknown-linux-gnu,
+  commit 797c613eb9b6d4ec95db23e3e00af9ac6657f24b, Release)`. Theorems:
+  `.../construct/general/lean_t4/`, rows `.../lemmas_t4_1_of_2.json` and
+  `.../lemmas_t4_2_of_2.json`. Log:
+  `PRIVATE/PseudoCoupHQ/DevComms/log_262_t4_the_general_construction_tier.md`.

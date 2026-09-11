@@ -17,8 +17,8 @@ namespace Archproof
     discrepancy between them. -/
 theorem ModelCheck_rust_21 (v0 : BitVec 64) :
     ((v0.extractLsb 7 0) * (255#8))
-  = ((model_neg_0 (model_mov_16 v0)).extractLsb 7 0) := by
-  simp only [model_mov_16, model_neg_0]
+  = ((model_neg_0 (model_mov_18 v0)).extractLsb 7 0) := by
+  simp only [model_mov_18, model_neg_0]
   bv_decide
 
 #print axioms ModelCheck_rust_21

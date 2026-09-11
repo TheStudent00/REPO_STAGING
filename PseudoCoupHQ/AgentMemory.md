@@ -967,6 +967,24 @@ verdict = z3(walk(body) == term)            # per written place; no search anywh
   every unproved cell with a named cause. Runs from 2026-09-10 evening,
   ahead of t3 and rv3b.
 
+`the general tier, closed 2026-09-11 (t4, log_262)` — THE GUARANTEE, MEASURED
+- constructions exist for every kind; 246 places proved by Lean lemma
+  alone (bitwise/complement/equality/conditional/wiring at 8–64 bits on
+  c/cpp/rust). The edge: multiply/divide/remainder/floats at ≥16 bits
+  construct but no prover closes (Lean SAT times out at 16-bit multiply;
+  z3 30–3,000 s then memory). go/swift: word 64 → constructions of
+  ~19k instructions, not gated. Pass partial: 304 of 654 runs. Readings
+  x86 unchanged 96/154/141; RISC-V 119/255. Collapse: LANDED 27 of 335.
+  OWED: Lean lemma general in width (bv_decide is fixed-width);
+  algebraic lemma for mul/div; delta pass over the 350 left behind.
+
+`level 0 corrected, 2026-09-10 (ref2, log_261)`
+- four hardware-fact defects fixed; the independent K-framework reading
+  now disagrees at NONE of 1,779 places (was 383); table, term store,
+  canon40 proofs re-derived beside the old (nothing overwritten). The
+  bank's re-attempt rule must hash the reference too (t3 takes it).
+  The corrected stores are what t4 measures on.
+
 `the second tier, closed 2026-09-10 (t2, log_257)`
 - 14 constructed places proved (adc/sbb/shld/shrd at 64 on go and
   swift), every one by the schema's Lean lemma; the compiler collapsed

@@ -1025,3 +1025,9 @@ status: living
   (`setne` and the flag pairs). Length view: units of 1–5 instructions
   mostly expressible; over 10, almost none (one blocker sinks a unit).
   Four x86 cells attested with no bank record (pcmpeqb/pcmpeqd/pmovmskb).
+- 2026-09-12 (bb1, log_267): the bit-blast route — z3's own circuits,
+  no authored arithmetic — proves 203 of 255 RISC-V arch-opcodes on go,
+  202 on rust, 136 on c/c++ (the lifter lacks the bit-manipulation
+  instructions clang writes for gate code). Three routes together: 251
+  of 255 on at least one language, 235 on all four. The divide family
+  compiles to 100k–250k instructions and is over the check's ceiling.

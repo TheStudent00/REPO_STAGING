@@ -628,9 +628,10 @@ def verify(term, milliseconds=10000):
 #
 # THE FOUR OPERATOR TEXTS BELOW ARE OUTPUT SPELLINGS, written into the
 # rendered source, and are never a key, a grouping or a comparison
-# scope.  They are identical in c, cpp, go and rust, over a local of the
-# target's own unsigned word holding 0 or 1, which is the whole reason
-# this render has one shape and not four.
+# scope.  They are identical in c, cpp, go, rust and swift (task bb2
+# added the fifth and measured it), over a local of the target's own
+# unsigned word holding 0 or 1, which is the whole reason this render
+# has one shape and not five.
 
 GATE_TEXT = {
     AND: "(%s & %s)",
@@ -654,6 +655,18 @@ def word_of(lang, bits):
     if lang == "go":
         import go_render as GR
         return GR.gu(promoted), promoted
+    if lang == "swift":
+        # ADDED BY TASK bb2, 2026-09-12, and it changes NOTHING for the
+        # four targets above or for c and cpp below: it is a branch on a
+        # target name task bb1 never ran (there is no riscv64 Swift SDK
+        # in the image), and without it a swift render would fall
+        # through to c's holder table and write `uint64_t` into a swift
+        # source.  The holders are `swift_render.SU`, that renderer's
+        # own table and not a second one.
+        import swift_render as SR
+        if promoted not in SR.SU:
+            raise E.Refused(E.CAUSE_WIDTH, "%d bits" % promoted)
+        return SR.SU[promoted], promoted
     if promoted not in E.UNSIGNED:
         raise E.Refused(E.CAUSE_WIDTH, "%d bits" % promoted)
     return E.UNSIGNED[promoted], promoted
@@ -665,6 +678,9 @@ def local(lang, holder, name, text):
         return "let %s: %s = %s;" % (name, holder, text)
     if lang == "go":
         return "var %s %s = %s" % (name, holder, text)
+    if lang == "swift":
+        # ADDED BY TASK bb2: swift's own binding, and no semicolon.
+        return "let %s: %s = %s" % (name, holder, text)
     return "%s %s = %s;" % (holder, name, text)
 
 
@@ -676,6 +692,13 @@ def widened(lang, holder, text):
         return "((%s) as %s)" % (text, holder)
     if lang == "go":
         return "%s(%s)" % (holder, text)
+    if lang == "swift":
+        # ADDED BY TASK bb2: swift's plain `UInt64(x)` TRAPS where x does
+        # not fit, and every read here is a widening of an arrival whose
+        # own holder may be signed, so the conversion that keeps the
+        # bits is the one named.  It is `swift_render.answer`'s own
+        # spelling.
+        return "%s(truncatingIfNeeded: %s)" % (holder, text)
     return "(%s)(%s)" % (holder, text)
 
 
@@ -696,7 +719,7 @@ def render_gates(circuit, lang, families, home, bits, label, text=""):
     renderer.plan_parameters(circuit.term)
     renderer.check_symbols(circuit.term)
     holder, promoted = word_of(lang, bits)
-    statements = []
+    statements = []                     # (depth, line): a gate never sits inside a conditional, so depth is 0 (render_general.assemble, since rd1)
 
     # -- the arrivals, unpacked one bit at a time ------------------
     for name, symbol_index, bit in circuit.inputs:
@@ -712,20 +735,20 @@ def render_gates(circuit, lang, families, home, bits, label, text=""):
                             % (bit, symbol_name, param["bits"]))
         read = "(%s >> %d) & 1" % (widened(lang, holder, param["name"]),
                                    bit)
-        statements.append((name, local(lang, holder, name, read)))
+        statements.append((0, local(lang, holder, name, read)))
         continue
 
     # -- the gates, one named local each ---------------------------
     for name, kind, arguments in circuit.gates:
         if kind == CONST:
-            statements.append((name, local(lang, holder, name,
+            statements.append((0, local(lang, holder, name,
                                            arguments[0])))
             continue
         if kind == NOT:
             body = GATE_TEXT[NOT] % arguments[0]
         else:
             body = GATE_TEXT[kind] % (arguments[0], arguments[1])
-        statements.append((name, local(lang, holder, name, body)))
+        statements.append((0, local(lang, holder, name, body)))
         continue
 
     # -- the answer, the output bits packed into it ----------------
@@ -737,15 +760,15 @@ def render_gates(circuit, lang, families, home, bits, label, text=""):
         name = "w%d" % counter
         counter = counter + 1
         if packed is None:
-            statements.append((name, local(lang, holder, name, piece)))
+            statements.append((0, local(lang, holder, name, piece)))
         else:
-            statements.append((name, local(lang, holder, name,
+            statements.append((0, local(lang, holder, name,
                                            "%s | %s" % (packed, piece))))
         packed = name
         continue
     if packed is None:
         packed = "w0"
-        statements.append((packed, local(lang, holder, packed, "0")))
+        statements.append((0, local(lang, holder, packed, "0")))
     made = renderer.answer(packed, "bv", bits)
     return_type = made[0]
     body = made[1]

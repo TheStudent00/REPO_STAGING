@@ -110,3 +110,30 @@ status: living
   itself; all three routes together: 251 of 255 on some language, 235
   on all four. Left: mulh/mulhsu 64. Lifter rows owed: bexti, orn,
   c.not, binvi, fsgnjn.s.
+- 2026-09-12: rd1 (log_268) — THE DEFECT OF 05:20Z IS CLOSED, and it was
+  the queue's first item. One rule in `render_general.py`: a conditional
+  whose branch transitively holds a trapping node (division and
+  remainder on go and swift; the float-to-integer conversion on swift;
+  rust, c and c++ are not in the set, each by a reading of that target's
+  own renderer) is written as control flow, so the guard dominates the
+  operation. `div_gpr_gpr_gpr_64__reg_a0__go__native_first` now reads
+  `if a == 0 { ... } else { ... b / a ... }` and compiles to 14
+  instructions with ONE `div` and no `runtime.panicdivide` — go dropped
+  its own checks once the zero case and the extreme case were excluded
+  upstream, which is what the owner's question of this morning predicted. rv6
+  re-run whole under the new render (1,020 runs, one process, 2,589 s,
+  peak 1,138 MB): go 238 -> 240 proved, disproved 7 -> 5 of 255; c 242,
+  c++ 242, rust 246 unmoved; 251 of 255 on at least one language and 231
+  on all four, both unchanged. The two verdicts that moved are `div
+  gpr_gpr_gpr 64` and `rem gpr_gpr_gpr 64` on go. Store:
+  `construct/general/rd1_all.jsonl` beside log_265's `rv6_all.jsonl`;
+  `emulations_riscv64/` deliberately still holds the PRE-rd1 render, so
+  the defect's own evidence stands. THE DISPROVED COLUMN IS NOW THE
+  QUEUE'S SECOND ITEM ALONE: of the 13 left, 8 are the `gpr_gpr_same`
+  divides on c, c++ and rust, whose sources this task did not touch (a
+  compiled `if` walked in text order); no divide or remainder cell is
+  disproved on go any more. Queue after this: (1) the walk that follows
+  branches; (2) the lifter's missing mnemonics `binvi`, `fsgnjn.s`,
+  `bexti`, `orn`, `c.not`; (3) the backstop's float bit-cast node;
+  (4) the `remu gpr_gpr_gpr 64` BUILD_REFUSED with the empty message,
+  still empty.

@@ -26,3 +26,28 @@ status: living
   targets where the native route never reached the term at all, which is
   a question about the arrival contract and not about any operation. Log:
   `PRIVATE/PseudoCoupHQ/DevComms/log_262_t4_the_general_construction_tier.md`.
+
+- 2026-09-12 — **task bb2: the bit-blast route on every attested x86
+  cell, five compiled languages, of 253 on every row.** z3's own
+  `bit-blast` tactic turns a cell's term into an and-or-not-xor circuit
+  and the renderer writes one named local per gate; no adder, multiplier
+  or divider is authored by anyone. Of 1,199 written places 618 blast
+  (494 of the rest are the flag state a preseeded row ARRIVED with, 75
+  are float terms, 8 read state that is not an arrival register, 4 are
+  above the 200,000-gate ceiling); gates per definition median 64, mean
+  1,015, largest 74,786 (`idiv gpr_one 32`). PROVED, destination-only, of
+  253: c 122, c++ 122, rust 122, go 126, swift 13, against the native
+  route's 205 / 227 / 176 / 157 / 160 and the backstop's 9 / 9 / 8 / 7 /
+  12; `any route` 207 / 229 / 176 / 164 / 167 and 154 cells on all five.
+  Strict: 91 / 91 / 91 / 95 / 13, `any route` 168 / 197 / 138 / 119 /
+  124 and 111 on all five. The three readings over cells on all four
+  MOVE for the first time since task ap6: 96 → 107 strict, 154 → 163
+  destination-only, 141 → 150 corpus-needed. 505 attempts of 3,069 are
+  NOT GATED — 431 because the gate did not come back inside the ten
+  seconds this task allows it on a wall clock that stops it, 74 because
+  the carved body is above the 4,000 instructions the gate is offered —
+  and the gate that ANSWERS answers in 0.084 s at the median. Swift is a
+  flag and not a result: `swiftc` emits the `@_cdecl` name as a THUNK
+  and the carve at the C symbol gets one instruction at every circuit
+  size. Log:
+  `PRIVATE/PseudoCoupHQ/DevComms/log_269_bb2_the_bit_blast_route_on_x86_and_the_interpreted_seven.md`.

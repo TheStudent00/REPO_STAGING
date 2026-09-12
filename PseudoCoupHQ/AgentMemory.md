@@ -1001,6 +1001,20 @@ verdict = z3(walk(body) == term)            # per written place; no search anywh
   source outside code_version (full pass instead of delta). Task t3
   (brief written) does those three, after ref2.
 
+`bit-blast on x86 + the interpreted seven, 2026-09-12 (bb2, log_269)`
+- x86 of 253: any route c 207, c++ 229, rust 176, go 164, swift 167;
+  233 on some language, 154 on all five. Readings on all four now
+  107 / 163 / 150 of 205. Bank 39,980. Interpreted seven AGREE
+  (never proved) 162–166 of 253. Swift's x86 entry is a thunk (carve
+  must follow one jmp: owed since ap5). 32 audit alarms to examine.
+  `code_version` must include the render's hash (t3).
+
+`the guarded render, 2026-09-12 (rd1, log_268)`
+- a conditional with a trapping branch renders as an `if` (go, swift);
+  go's RISC-V div/rem now proved: go 240 of 255. The eager-select
+  defect is closed. Open: `remu` empty build refusal; swift x86 divide
+  compile timeouts; the text-order walk.
+
 `the bit-blast route, 2026-09-12 (bb1, log_267)`
 - z3's own circuits, no authored arithmetic: go 203, rust 202, c/c++
   136 of 255 (the lifter lacks bexti/orn/c.not). Three routes together

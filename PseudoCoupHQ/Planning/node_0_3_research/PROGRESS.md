@@ -1031,3 +1031,32 @@ status: living
   instructions clang writes for gate code). Three routes together: 251
   of 255 on at least one language, 235 on all four. The divide family
   compiles to 100k–250k instructions and is over the check's ceiling.
+- 2026-09-12 (rd1, log_268): THE GUARD DOMINATES THE OPERATION. One
+  rule in the general render: a conditional whose branch holds a
+  trapping node is printed as an `if`, not a select. Where it fires: go
+  only (16 cells, 34 conditionals); c/c++/rust sources byte-identical.
+  RISC-V four-language run again: go 238 → 240 of 255 (div and rem now
+  proved; the divide body 14 instructions, one `div`, no panic call);
+  every other row unchanged; disproved on go 7 → 5. x86: the divide
+  cells carry no conditional (the term is one bvudiv over a concat), so
+  nothing changed there; swift's x86 divide compiles time out at 600 s
+  (t4's flag, unchanged). `remu` still refuses its build with an empty
+  message on c/c++/go (a driver reporting defect, queued).
+- 2026-09-12 (bb2, log_269): THE BIT-BLAST ROUTE ON x86 AND THE
+  INTERPRETED SEVEN. x86, of 253 attested arch-opcodes, destination-only:
+  any route c 207, c++ 229, rust 176, go 164, swift 167; on at least one
+  language 233; on all five 154. Bit-blast alone: 122–126 on c/c++/
+  rust/go, 13 on swift (its entry is a thunk the carve does not follow:
+  527 attempts without a body — the thunk-following carve, owed since
+  ap5). The three readings on all four moved: strict 96 → 107,
+  destination-only 154 → 163, corpus-needed 141 → 150 of 205; the bank
+  26,684 → 39,980 certificates. The interpreted seven by AGREEMENT at
+  points (never proved): 162–166 of 253 each, 162 on all seven, 0
+  disagreements. Swift for riscv64: the compiler names the target and a
+  runtime path that does not exist; an SDK install, not measured (no
+  network in the instance). Flags: rd1's change to `assemble` broke
+  `bitblast.render_gates` (repaired by the coordinator the same hour,
+  sample lane bb1_l7 identical to bb1's rows); 32 audit alarms of 2,383
+  re-derived places (21 go at a 128-bit xmm place) TO BE EXAMINED — the
+  render changed under the run (rd1) and `code_version` does not yet
+  carry the render's hash (t3's item).

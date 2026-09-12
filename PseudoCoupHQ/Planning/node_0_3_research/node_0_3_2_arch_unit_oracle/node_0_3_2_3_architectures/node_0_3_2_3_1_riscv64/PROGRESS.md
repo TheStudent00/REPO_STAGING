@@ -51,3 +51,16 @@ status: living
   before it could construct a divide at a real width. Rows:
   `PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/construct/general/rv_general.jsonl`.
   Log: `PRIVATE/PseudoCoupHQ/DevComms/log_262_t4_the_general_construction_tier.md`.
+- 2026-09-12: task rv4 (log_263) — the timed round with optimization
+  off: 188 runs in 120 s; proved 36 / undecided 81 / sat 48 (ship flags:
+  144 / 13 / 8): optimization off spills to the stack and the lifter has
+  no memory model. FINDING: of 136 unproved cells, 42 were never
+  attempted (twinned cells whose twin holds no proof were skipped by
+  both routes), 7 are the hard checks, 84 are loads/stores (memory
+  frontier). Next: the loop over the 52 attemptable cells.
+- 2026-09-12: rv5 (log_264) — EVERY RISC-V arch-opcode through both
+  routes at ship flags, 510 runs in 5 min: 244 of 255 proved (95.7%),
+  from 117; c 217, go 238; the backstop route alone proves 195. The 12
+  left: divides, multiply-high, float subtraction, unsigned-64 to float.
+  Flags: 36 backstop disproofs and 77 walk refusals to measure. The
+  coordinator's "no memory model" claim of log_263 retracted.

@@ -1001,6 +1001,14 @@ verdict = z3(walk(body) == term)            # per written place; no search anywh
   source outside code_version (full pass instead of delta). Task t3
   (brief written) does those three, after ref2.
 
+`the reach of the proofs, 2026-09-12 (cov1, log_266)`
+- expressible = every arch-opcode of a unit proved on the target.
+  RISC-V: c→rust 369/369, go→rust 105/105. x86: c→c 44%, rust→rust
+  71%, go→go 27%, swift→swift 19% of units; the blockers everywhere are
+  `cmp`, `test`, `push`, `movslq` — flags-only, stack and widening
+  cells, not arithmetic. The worklist is those few cells; each unblocks
+  thousands of units. `Research/oracle/coverage/`.
+
 `RISC-V, 2026-09-12: 251 of 255 arch-opcodes proved on at least one of c, c++, rust, go; 231 on all four (rv6, log_265)`
 - every table row carries "of 255" (the owner). The four left are mulh/mulhsu
   64 (the 128-bit product's high half). bb1 = the bit-blast route

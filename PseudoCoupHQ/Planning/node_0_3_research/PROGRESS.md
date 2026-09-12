@@ -1011,3 +1011,17 @@ status: living
   proved (95.7%) in five minutes, from 117 — the population filter,
   not the method, was the gap. 12 remain, all divide / multiply-high /
   float subtraction / unsigned-to-float.
+- 2026-09-12 (task cov1, log_266): THE REACH OF THE PROVED EMULATIONS.
+  A unit of x is expressible in y when every arch-opcode it holds has a
+  proved emulation on y. RISC-V: c→rust 369 of 369, go→rust 105 of 105,
+  c→c 351 of 369, go→go 102 of 105; the only blockers are the divide
+  and remainder family and `czero.eqz` on go. x86 (destination-only):
+  c→c 4,578 of 10,367 (44%), c++→c++ 7,631 of 17,569 (43%), rust→rust
+  489 of 685 (71%), go→go 153 of 577 (27%), swift→swift 237 of 1,229
+  (19%); the blockers are the SAME handful in every pair — `cmp`
+  (flags only, no destination), `test`, `push` (the stack), `movslq`
+  (the widening move) — structural instructions, not arithmetic: a
+  few cells hold thousands of units back. Strict reading lower again
+  (`setne` and the flag pairs). Length view: units of 1–5 instructions
+  mostly expressible; over 10, almost none (one blocker sinks a unit).
+  Four x86 cells attested with no bank record (pcmpeqb/pcmpeqd/pmovmskb).

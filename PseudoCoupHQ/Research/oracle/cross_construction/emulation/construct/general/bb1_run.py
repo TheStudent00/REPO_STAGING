@@ -415,7 +415,7 @@ def one_attempt(H, RL_, INH, reference, cell, place_name, term, target,
     if got is None:
         out["compiled"] = False
         out["verdict"] = {"outcome": "BUILD_REFUSED",
-                          "reason": (diagnostic or "").strip()[:600]}
+                          "reason": the_diagnostic(diagnostic)}
         return out
     out["compiled"] = True
     raw, body = got
@@ -457,6 +457,26 @@ def one_attempt(H, RL_, INH, reference, cell, place_name, term, target,
                                          "compared_on_bits": whole,
                                          "counterexample": counter_whole}
     return out
+
+
+def the_diagnostic(diagnostic):
+    """what the build said, and where it said NOTHING, a sentence saying
+    that rather than an empty string.
+
+    WHY, measured in lane `bb1_l5_the_build_refusal_with_no_words.sh`:
+    lane 4 recorded `remu gpr_gpr_gpr 64` as BUILD_REFUSED on c, cpp and
+    go with an empty diagnostic; the same source, the same command and
+    the same carve, re-run by hand on a quiet instance, gave exit 0 and
+    97,756 instructions.  `inherit_rv3._clang_route` answers with
+    `(stderr or stdout)`, so an empty answer is exactly the case where
+    the compiler wrote neither -- a process stopped with no
+    language-level error.  The row now says so."""
+    text = (diagnostic or "").strip()
+    if text:
+        return text[:600]
+    return ("the build refused and the compiler wrote no diagnostic at "
+            "all, on neither stream: the case where the process is "
+            "stopped with no language-level error")
 
 
 def the_body_text(body):

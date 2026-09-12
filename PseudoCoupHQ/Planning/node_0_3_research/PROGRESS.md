@@ -1004,3 +1004,10 @@ status: living
   deciders cannot); the delta pass over the 350 unreached places; the
   word-64 blow-up on go/swift. Guard 23/23 PASS; verifier 6 MATCHES / 0
   DIFFERS.
+- 2026-09-12 (rv4, rv5; logs 263, 264): the owner's timed rounds on RISC-V.
+  Optimization off made the check worse (cause not yet measured;
+  log_263's stated cause retracted in log_264). Running the loop over
+  EVERY RISC-V arch-opcode instead of the untwinned ones: 244 of 255
+  proved (95.7%) in five minutes, from 117 — the population filter,
+  not the method, was the gap. 12 remain, all divide / multiply-high /
+  float subtraction / unsigned-to-float.

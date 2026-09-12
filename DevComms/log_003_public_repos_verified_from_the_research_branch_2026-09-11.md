@@ -209,3 +209,35 @@ account, not intellectual property), and the run was repeated. For the
 other conversation: rename that log so its file name carries no token,
 and either add the new name to the pattern list or keep the log out of
 every staged source.
+
+## 9. The daemon now scans everything under PUBLIC/, and the mirror went out by its own path (2026-09-11 evening)
+
+the owner: "the repo-daemon should be scrubbing EVERYTHING in the PUBLIC folder.
+the exclusion from automatic git-commit-pushing is fine but it shouldnt be
+excluded from the scanning and scrubbing."
+
+- `repo_daemon.py` gained SCAN-ONLY coverage: every repository under
+  `scan_only_roots` (`PUBLIC`) is scanned every pass with
+  the same classes and tokens, content and file names, whether or not
+  the commit/push path watches it. A hit is an `EXPOSED` event, a
+  desktop notification and a block in `repo-daemon status`; nothing is
+  edited, staged, committed or pushed by that path. Tested on a planted
+  token in a throwaway repository held in memory: EXPOSED, then CLEARED
+  after the fix, no duplicate events. Deployed by a service restart
+  (the pause file governs commits, not code). RepoDaemon README has the
+  section.
+- The first pass: the mirror (REPO_STAGING) is scanned and CLEAN. The
+  one other scan-only repository, the upstream qutebrowser clone inside
+  the public Ourobrowser tree, raised 98 files: upstream test fixtures
+  (a test TLS key, high-entropy test strings) and a backers list that
+  happens to contain a five-letter name. Upstream content, not the owner's;
+  reported so the events are understood, not acted on.
+- The mirror after task t4: my earlier held-back local commits were
+  undone (soft, files untouched) and `stage.sh` ran its own full path:
+  4,858 replacements, no pattern and no plain token anywhere in content
+  or names, commit `185bbf76` (2,431 files), pushed by the script through
+  the pre-push gate. On GitHub now: t4's code, lanes and 23 result files
+  (283 files under `construct/general/`), log_262, the updated bank
+  (53 MB; GitHub warns above 50 MB, the hard limit is 100). The bare
+  `git push` I had offered earlier skips the script's own gate and is not
+  the way; the script is.

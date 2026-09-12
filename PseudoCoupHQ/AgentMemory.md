@@ -1001,6 +1001,17 @@ verdict = z3(walk(body) == term)            # per written place; no search anywh
   source outside code_version (full pass instead of delta). Task t3
   (brief written) does those three, after ref2.
 
+`RISC-V, 2026-09-12: 244 of 255 arch-opcodes proved (rv5, log_264)`
+- the loop over EVERY RISC-V cell, both routes, ship flags, one process,
+  five minutes. From 117: the earlier loop skipped every cell that had
+  an x86 twin, proved or not — a population filter, not a method limit.
+  NEVER filter a loop's population by bookkeeping again; run it over
+  the whole set and let refusals be rows. The 12 left are divide,
+  multiply-high, float subtraction and unsigned-64-to-float.
+- rv4 (log_263): optimization OFF made the check WORSE (36 proved of
+  188 vs 144 at ship flags); the cause I wrote ("no memory model") is
+  retracted; the lifter models loads and stores on named cells.
+
 `RISC-V` (exploration, not a pivot; rv1 CLOSED 2026-09-10, log_258; rv2 running)
 - rv1: ten units carved on riscv64; level 0 for RV64IM = `riscv_reference.py`
   checked at 860,304 points against the ratified Sail simulator, 0

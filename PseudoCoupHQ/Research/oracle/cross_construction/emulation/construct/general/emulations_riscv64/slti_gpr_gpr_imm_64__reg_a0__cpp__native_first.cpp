@@ -1,0 +1,13 @@
+/* task t4 emulation -- rendered by render_general.py, one named
+   intermediate per node of the term of slti_gpr_gpr_imm_64__reg_a0__cpp__native_first.  The term's text, LITERAL:
+   If(3 <= v0, 0, 1) */
+#include <cstdint>
+
+extern "C"
+uint64_t
+emu_slti_gpr_gpr_imm_64__reg_a0__cpp__native_first(uint64_t a)
+{
+    int v0 = (((int64_t)(UINT64_C(0x3)) <= (int64_t)((uint64_t)a))) ? 1 : 0;
+    uint64_t v1 = ((v0) ? (uint64_t)(UINT64_C(0x0)) : (uint64_t)(UINT64_C(0x1)));
+    return (uint64_t)(v1);
+}

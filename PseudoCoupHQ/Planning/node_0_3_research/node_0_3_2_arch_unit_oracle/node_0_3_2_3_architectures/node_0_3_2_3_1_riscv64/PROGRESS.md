@@ -64,3 +64,25 @@ status: living
   left: divides, multiply-high, float subtraction, unsigned-64 to float.
   Flags: 36 backstop disproofs and 77 walk refusals to measure. The
   coordinator's "no memory model" claim of log_263 retracted.
+- 2026-09-12: queue, in the owner's order: (1) the walk that follows branches
+  (a RISC-V body with an `if` is walked in text order today, so any
+  compiled division is read wrong — the go `div` disproof is this, not
+  the language); (2) the lifter's missing mnemonics `binvi`, `fsgnjn.s`;
+  (3) the backstop's float bit-cast node (wiring); (4) the `remu`
+  refusal with the empty message; then (5) task bb1, the bit-blast
+  route (brief written), "just behind the rest of work".
+- 2026-09-12: rv6 (log_265) — every RISC-V arch-opcode on c, c++, rust,
+  go: 251 of 255 on at least one language, 231 on all four; c 242, c++
+  242, rust 246, go 238 of 255. The four left are the multiply-high
+  family. bb1 (the bit-blast route) launched on the owner's word.
+- 2026-09-12 05:20Z: DEFECT FOUND, first in the queue: the general
+  render evaluates every node eagerly and renders a conditional as a
+  select over already-computed values, so a division the definition
+  GUARDS is executed unguarded (`v0 = b / a` before `sel64(a == 0, ...)`,
+  in `emulations_riscv64/div_gpr_gpr_gpr_64__reg_a0__go__native_first.go`).
+  On go and swift that division traps at a = 0 where the definition
+  answers all ones: the go divide disproof is REAL there, not only the
+  text-order walk (coordinator's earlier reading corrected). Fix: render
+  a conditional whose branch holds a trapping node as an `if`, the guard
+  dominating the operation. All 1,960 rendered RISC-V emulations are now
+  saved as files in `construct/general/emulations_riscv64/` (59 MB).

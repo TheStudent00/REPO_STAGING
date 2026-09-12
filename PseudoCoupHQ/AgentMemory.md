@@ -1001,6 +1001,14 @@ verdict = z3(walk(body) == term)            # per written place; no search anywh
   source outside code_version (full pass instead of delta). Task t3
   (brief written) does those three, after ref2.
 
+`RISC-V, 2026-09-12: 251 of 255 arch-opcodes proved on at least one of c, c++, rust, go; 231 on all four (rv6, log_265)`
+- every table row carries "of 255" (the owner). The four left are mulh/mulhsu
+  64 (the 128-bit product's high half). bb1 = the bit-blast route
+  (z3's own tactic, no authored arithmetic), running; then the other
+  PCHQ languages. The compiled go divide (lane rv7) shows the compiler
+  DOES simplify our emulations: the upstream zero case removed go's own
+  check and panic call.
+
 `RISC-V, 2026-09-12: 244 of 255 arch-opcodes proved (rv5, log_264)`
 - the loop over EVERY RISC-V cell, both routes, ship flags, one process,
   five minutes. From 117: the earlier loop skipped every cell that had

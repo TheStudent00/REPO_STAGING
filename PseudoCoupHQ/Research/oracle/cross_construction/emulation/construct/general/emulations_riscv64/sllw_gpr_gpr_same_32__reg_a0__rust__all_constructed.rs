@@ -1,0 +1,124 @@
+#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
+#![allow(unused_variables, unused_mut)]
+
+// task t4 emulation -- rendered by render_general.py, one named
+// intermediate per node of the term of sllw_gpr_gpr_same_32__reg_a0__rust__all_constructed.
+//   Concat(Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0))), Extract(31, 31, Extract(31, 0, v0) << Concat(0, Extract(4, 0, v0)
+#[no_mangle]
+pub extern "C" fn emu_sllw_gpr_gpr_same_32__reg_a0__rust__all_constructed(a: u32) -> u64
+{
+    let v0: u32 = (((((a as u32)) >> 0) as u32) & 0x1fu32);
+    let v1: u32 = v0;
+    let v2: u32 = 0x0u32;
+    let v3: u32 = (((((v2) as u32) << 5) | ((v1) as u32)) as u32);
+    let v4: u32 = (a as u32);
+    let v5: u32 = (((((v3) as u32) >> 4) as u32) & 0x1u32);
+    let v6: bool = (((0x1u32) as u32) == ((v5) as u32));
+    let v7: u32 = (if (v6) { ((0xffffffffu32) as u32) } else { ((0x0u32) as u32) });
+    let v8: u32 = ((!((v7) as u32)) as u32);
+    let v9: u32 = (((((v3) as u32) >> 3) as u32) & 0x1u32);
+    let v10: bool = (((0x1u32) as u32) == ((v9) as u32));
+    let v11: u32 = (if (v10) { ((0xffffffffu32) as u32) } else { ((0x0u32) as u32) });
+    let v12: u32 = ((!((v11) as u32)) as u32);
+    let v13: u32 = (((((v3) as u32) >> 2) as u32) & 0x1u32);
+    let v14: bool = (((0x1u32) as u32) == ((v13) as u32));
+    let v15: u32 = (if (v14) { ((0xffffffffu32) as u32) } else { ((0x0u32) as u32) });
+    let v16: u32 = ((!((v15) as u32)) as u32);
+    let v17: u32 = (((((v3) as u32) >> 1) as u32) & 0x1u32);
+    let v18: bool = (((0x1u32) as u32) == ((v17) as u32));
+    let v19: u32 = (if (v18) { ((0xffffffffu32) as u32) } else { ((0x0u32) as u32) });
+    let v20: u32 = ((!((v19) as u32)) as u32);
+    let v21: u32 = (((((v3) as u32) >> 0) as u32) & 0x1u32);
+    let v22: bool = (((0x1u32) as u32) == ((v21) as u32));
+    let v23: u32 = (if (v22) { ((0xffffffffu32) as u32) } else { ((0x0u32) as u32) });
+    let v24: u32 = ((!((v23) as u32)) as u32);
+    let v25: u32 = ((((v4) as u32) & ((v24) as u32)) as u32);
+    let v26: u32 = ((((v4) as u32).wrapping_shl((((0x1u32) as u32) as u32))) as u32);
+    let v27: u32 = ((((v26) as u32) & ((v23) as u32)) as u32);
+    let v28: u32 = ((((v27) as u32) | ((v25) as u32)) as u32);
+    let v29: u32 = ((((v28) as u32) & ((v20) as u32)) as u32);
+    let v30: u32 = ((((v28) as u32).wrapping_shl((((0x2u32) as u32) as u32))) as u32);
+    let v31: u32 = ((((v30) as u32) & ((v19) as u32)) as u32);
+    let v32: u32 = ((((v31) as u32) | ((v29) as u32)) as u32);
+    let v33: u32 = ((((v32) as u32) & ((v16) as u32)) as u32);
+    let v34: u32 = ((((v32) as u32).wrapping_shl((((0x4u32) as u32) as u32))) as u32);
+    let v35: u32 = ((((v34) as u32) & ((v15) as u32)) as u32);
+    let v36: u32 = ((((v35) as u32) | ((v33) as u32)) as u32);
+    let v37: u32 = ((((v36) as u32) & ((v12) as u32)) as u32);
+    let v38: u32 = ((((v36) as u32).wrapping_shl((((0x8u32) as u32) as u32))) as u32);
+    let v39: u32 = ((((v38) as u32) & ((v11) as u32)) as u32);
+    let v40: u32 = ((((v39) as u32) | ((v37) as u32)) as u32);
+    let v41: u32 = ((((v40) as u32) & ((v8) as u32)) as u32);
+    let v42: u32 = ((((v40) as u32).wrapping_shl((((0x10u32) as u32) as u32))) as u32);
+    let v43: u32 = ((((v42) as u32) & ((v7) as u32)) as u32);
+    let v44: u32 = ((((v43) as u32) | ((v41) as u32)) as u32);
+    let v45: u32 = ((0x1u32) as u32);
+    let v46: u32 = ((!((0x20u32) as u32)) as u32);
+    let v47: u32 = ((((v3) as u32) ^ ((v46) as u32)) as u32);
+    let v48: u32 = ((((v47) as u32) & ((v45) as u32)) as u32);
+    let v49: u32 = ((((v3) as u32) & ((v46) as u32)) as u32);
+    let v50: u32 = ((((v49) as u32) | ((v48) as u32)) as u32);
+    let v51: u32 = ((((v50) as u32).wrapping_shl((((0x1u32) as u32) as u32))) as u32);
+    let v52: u32 = ((((v47) as u32) & ((v51) as u32)) as u32);
+    let v53: u32 = ((((v50) as u32) | ((v52) as u32)) as u32);
+    let v54: u32 = ((((v53) as u32).wrapping_shl((((0x2u32) as u32) as u32))) as u32);
+    let v55: u32 = ((((v47) as u32).wrapping_shl((((0x1u32) as u32) as u32))) as u32);
+    let v56: u32 = ((((v47) as u32) & ((v55) as u32)) as u32);
+    let v57: u32 = ((((v56) as u32) & ((v54) as u32)) as u32);
+    let v58: u32 = ((((v53) as u32) | ((v57) as u32)) as u32);
+    let v59: u32 = ((((v58) as u32).wrapping_shl((((0x4u32) as u32) as u32))) as u32);
+    let v60: u32 = ((((v56) as u32).wrapping_shl((((0x2u32) as u32) as u32))) as u32);
+    let v61: u32 = ((((v56) as u32) & ((v60) as u32)) as u32);
+    let v62: u32 = ((((v61) as u32) & ((v59) as u32)) as u32);
+    let v63: u32 = ((((v58) as u32) | ((v62) as u32)) as u32);
+    let v64: u32 = ((((v63) as u32).wrapping_shl((((0x8u32) as u32) as u32))) as u32);
+    let v65: u32 = ((((v61) as u32).wrapping_shl((((0x4u32) as u32) as u32))) as u32);
+    let v66: u32 = ((((v61) as u32) & ((v65) as u32)) as u32);
+    let v67: u32 = ((((v66) as u32) & ((v64) as u32)) as u32);
+    let v68: u32 = ((((v63) as u32) | ((v67) as u32)) as u32);
+    let v69: u32 = ((((v68) as u32).wrapping_shl((((0x10u32) as u32) as u32))) as u32);
+    let v70: u32 = ((((v66) as u32).wrapping_shl((((0x8u32) as u32) as u32))) as u32);
+    let v71: u32 = ((((v66) as u32) & ((v70) as u32)) as u32);
+    let v72: u32 = ((((v71) as u32) & ((v69) as u32)) as u32);
+    let v73: u32 = ((((v68) as u32) | ((v72) as u32)) as u32);
+    let v74: u32 = (((((v73) as u32) >> 31) as u32) & 0x1u32);
+    let v75: bool = (((0x0u32) as u32) == ((v74) as u32));
+    let v76: bool = (!(v75));
+    let v77: u32 = (if (v76) { ((0x0u32) as u32) } else { ((v44) as u32) });
+    let v78: u32 = (((((v77) as u32) >> 31) as u32) & 0x1u32);
+    let v79: u32 = v77;
+    let v80: u32 = v78;
+    let v81: u32 = ((((((v80) as u32) << 1) | ((v80) as u32)) as u32) & 0x3u32);
+    let v82: u32 = ((((((v81) as u32) << 1) | ((v80) as u32)) as u32) & 0x7u32);
+    let v83: u32 = ((((((v82) as u32) << 1) | ((v80) as u32)) as u32) & 0xfu32);
+    let v84: u32 = ((((((v83) as u32) << 1) | ((v80) as u32)) as u32) & 0x1fu32);
+    let v85: u32 = ((((((v84) as u32) << 1) | ((v80) as u32)) as u32) & 0x3fu32);
+    let v86: u32 = ((((((v85) as u32) << 1) | ((v80) as u32)) as u32) & 0x7fu32);
+    let v87: u32 = ((((((v86) as u32) << 1) | ((v80) as u32)) as u32) & 0xffu32);
+    let v88: u32 = ((((((v87) as u32) << 1) | ((v80) as u32)) as u32) & 0x1ffu32);
+    let v89: u32 = ((((((v88) as u32) << 1) | ((v80) as u32)) as u32) & 0x3ffu32);
+    let v90: u32 = ((((((v89) as u32) << 1) | ((v80) as u32)) as u32) & 0x7ffu32);
+    let v91: u32 = ((((((v90) as u32) << 1) | ((v80) as u32)) as u32) & 0xfffu32);
+    let v92: u32 = ((((((v91) as u32) << 1) | ((v80) as u32)) as u32) & 0x1fffu32);
+    let v93: u32 = ((((((v92) as u32) << 1) | ((v80) as u32)) as u32) & 0x3fffu32);
+    let v94: u32 = ((((((v93) as u32) << 1) | ((v80) as u32)) as u32) & 0x7fffu32);
+    let v95: u32 = ((((((v94) as u32) << 1) | ((v80) as u32)) as u32) & 0xffffu32);
+    let v96: u32 = ((((((v95) as u32) << 1) | ((v80) as u32)) as u32) & 0x1ffffu32);
+    let v97: u32 = ((((((v96) as u32) << 1) | ((v80) as u32)) as u32) & 0x3ffffu32);
+    let v98: u32 = ((((((v97) as u32) << 1) | ((v80) as u32)) as u32) & 0x7ffffu32);
+    let v99: u32 = ((((((v98) as u32) << 1) | ((v80) as u32)) as u32) & 0xfffffu32);
+    let v100: u32 = ((((((v99) as u32) << 1) | ((v80) as u32)) as u32) & 0x1fffffu32);
+    let v101: u32 = ((((((v100) as u32) << 1) | ((v80) as u32)) as u32) & 0x3fffffu32);
+    let v102: u32 = ((((((v101) as u32) << 1) | ((v80) as u32)) as u32) & 0x7fffffu32);
+    let v103: u32 = ((((((v102) as u32) << 1) | ((v80) as u32)) as u32) & 0xffffffu32);
+    let v104: u32 = ((((((v103) as u32) << 1) | ((v80) as u32)) as u32) & 0x1ffffffu32);
+    let v105: u32 = ((((((v104) as u32) << 1) | ((v80) as u32)) as u32) & 0x3ffffffu32);
+    let v106: u32 = ((((((v105) as u32) << 1) | ((v80) as u32)) as u32) & 0x7ffffffu32);
+    let v107: u32 = ((((((v106) as u32) << 1) | ((v80) as u32)) as u32) & 0xfffffffu32);
+    let v108: u32 = ((((((v107) as u32) << 1) | ((v80) as u32)) as u32) & 0x1fffffffu32);
+    let v109: u32 = ((((((v108) as u32) << 1) | ((v80) as u32)) as u32) & 0x3fffffffu32);
+    let v110: u32 = ((((((v109) as u32) << 1) | ((v80) as u32)) as u32) & 0x7fffffffu32);
+    let v111: u32 = (((((v110) as u32) << 1) | ((v80) as u32)) as u32);
+    let v112: u64 = (((((v111) as u64) << 32) | ((v79) as u64)) as u64);
+    ((v112) as u64)
+}

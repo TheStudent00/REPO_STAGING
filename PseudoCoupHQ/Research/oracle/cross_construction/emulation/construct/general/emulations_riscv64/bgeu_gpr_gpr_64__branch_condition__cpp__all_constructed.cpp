@@ -1,0 +1,49 @@
+/* task t4 emulation -- rendered by render_general.py, one named
+   intermediate per node of the term of bgeu_gpr_gpr_64__branch_condition__cpp__all_constructed.  The term's text, LITERAL:
+   If(ULE(v0, v1), 1, 0) */
+#include <cstdint>
+
+extern "C"
+uint64_t
+emu_bgeu_gpr_gpr_64__branch_condition__cpp__all_constructed(uint64_t a, uint64_t b)
+{
+    uint64_t v0 = (uint64_t)(UINT32_C(0x1));
+    uint64_t v1 = (uint64_t)(~(uint64_t)((uint64_t)b));
+    uint64_t v2 = (uint64_t)((uint64_t)((uint64_t)a) ^ (uint64_t)(v1));
+    uint64_t v3 = (uint64_t)((uint64_t)(v2) & (uint64_t)(v0));
+    uint64_t v4 = (uint64_t)((uint64_t)((uint64_t)a) & (uint64_t)(v1));
+    uint64_t v5 = (uint64_t)((uint64_t)(v4) | (uint64_t)(v3));
+    uint64_t v6 = (uint64_t)((uint64_t)(v5) << (unsigned)(uint64_t)(UINT64_C(0x1)));
+    uint64_t v7 = (uint64_t)((uint64_t)(v2) & (uint64_t)(v6));
+    uint64_t v8 = (uint64_t)((uint64_t)(v5) | (uint64_t)(v7));
+    uint64_t v9 = (uint64_t)((uint64_t)(v8) << (unsigned)(uint64_t)(UINT64_C(0x2)));
+    uint64_t v10 = (uint64_t)((uint64_t)(v2) << (unsigned)(uint64_t)(UINT64_C(0x1)));
+    uint64_t v11 = (uint64_t)((uint64_t)(v2) & (uint64_t)(v10));
+    uint64_t v12 = (uint64_t)((uint64_t)(v11) & (uint64_t)(v9));
+    uint64_t v13 = (uint64_t)((uint64_t)(v8) | (uint64_t)(v12));
+    uint64_t v14 = (uint64_t)((uint64_t)(v13) << (unsigned)(uint64_t)(UINT64_C(0x4)));
+    uint64_t v15 = (uint64_t)((uint64_t)(v11) << (unsigned)(uint64_t)(UINT64_C(0x2)));
+    uint64_t v16 = (uint64_t)((uint64_t)(v11) & (uint64_t)(v15));
+    uint64_t v17 = (uint64_t)((uint64_t)(v16) & (uint64_t)(v14));
+    uint64_t v18 = (uint64_t)((uint64_t)(v13) | (uint64_t)(v17));
+    uint64_t v19 = (uint64_t)((uint64_t)(v18) << (unsigned)(uint64_t)(UINT64_C(0x8)));
+    uint64_t v20 = (uint64_t)((uint64_t)(v16) << (unsigned)(uint64_t)(UINT64_C(0x4)));
+    uint64_t v21 = (uint64_t)((uint64_t)(v16) & (uint64_t)(v20));
+    uint64_t v22 = (uint64_t)((uint64_t)(v21) & (uint64_t)(v19));
+    uint64_t v23 = (uint64_t)((uint64_t)(v18) | (uint64_t)(v22));
+    uint64_t v24 = (uint64_t)((uint64_t)(v23) << (unsigned)(uint64_t)(UINT64_C(0x10)));
+    uint64_t v25 = (uint64_t)((uint64_t)(v21) << (unsigned)(uint64_t)(UINT64_C(0x8)));
+    uint64_t v26 = (uint64_t)((uint64_t)(v21) & (uint64_t)(v25));
+    uint64_t v27 = (uint64_t)((uint64_t)(v26) & (uint64_t)(v24));
+    uint64_t v28 = (uint64_t)((uint64_t)(v23) | (uint64_t)(v27));
+    uint64_t v29 = (uint64_t)((uint64_t)(v28) << (unsigned)(uint64_t)(UINT64_C(0x20)));
+    uint64_t v30 = (uint64_t)((uint64_t)(v26) << (unsigned)(uint64_t)(UINT64_C(0x10)));
+    uint64_t v31 = (uint64_t)((uint64_t)(v26) & (uint64_t)(v30));
+    uint64_t v32 = (uint64_t)((uint64_t)(v31) & (uint64_t)(v29));
+    uint64_t v33 = (uint64_t)((uint64_t)(v28) | (uint64_t)(v32));
+    uint32_t v34 = ((uint32_t)((uint64_t)(v33) >> 63) & UINT32_C(0x1));
+    int v35 = (((uint32_t)(UINT32_C(0x0)) == (uint32_t)(v34))) ? 1 : 0;
+    int v36 = ((!(v35))) ? 1 : 0;
+    uint64_t v37 = ((v36) ? (uint64_t)(UINT64_C(0x1)) : (uint64_t)(UINT64_C(0x0)));
+    return (uint64_t)(v37);
+}

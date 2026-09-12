@@ -1,0 +1,104 @@
+/* task t4 emulation -- rendered by render_general.py, one named
+   intermediate per node of the term of slliw_gpr_gpr_imm_32__reg_a0__c__bit_blast.  The term's text, LITERAL:
+   Concat(Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 28, v0), Extract(28, 0, v0), 0) */
+#include <stdint.h>
+
+uint64_t
+emu_slliw_gpr_gpr_imm_32__reg_a0__c__bit_blast(uint32_t a)
+{
+    uint64_t x0_0 = ((uint64_t)(a) >> 0) & 1;
+    uint64_t x0_1 = ((uint64_t)(a) >> 1) & 1;
+    uint64_t x0_2 = ((uint64_t)(a) >> 2) & 1;
+    uint64_t x0_3 = ((uint64_t)(a) >> 3) & 1;
+    uint64_t x0_4 = ((uint64_t)(a) >> 4) & 1;
+    uint64_t x0_5 = ((uint64_t)(a) >> 5) & 1;
+    uint64_t x0_6 = ((uint64_t)(a) >> 6) & 1;
+    uint64_t x0_7 = ((uint64_t)(a) >> 7) & 1;
+    uint64_t x0_8 = ((uint64_t)(a) >> 8) & 1;
+    uint64_t x0_9 = ((uint64_t)(a) >> 9) & 1;
+    uint64_t x0_10 = ((uint64_t)(a) >> 10) & 1;
+    uint64_t x0_11 = ((uint64_t)(a) >> 11) & 1;
+    uint64_t x0_12 = ((uint64_t)(a) >> 12) & 1;
+    uint64_t x0_13 = ((uint64_t)(a) >> 13) & 1;
+    uint64_t x0_14 = ((uint64_t)(a) >> 14) & 1;
+    uint64_t x0_15 = ((uint64_t)(a) >> 15) & 1;
+    uint64_t x0_16 = ((uint64_t)(a) >> 16) & 1;
+    uint64_t x0_17 = ((uint64_t)(a) >> 17) & 1;
+    uint64_t x0_18 = ((uint64_t)(a) >> 18) & 1;
+    uint64_t x0_19 = ((uint64_t)(a) >> 19) & 1;
+    uint64_t x0_20 = ((uint64_t)(a) >> 20) & 1;
+    uint64_t x0_21 = ((uint64_t)(a) >> 21) & 1;
+    uint64_t x0_22 = ((uint64_t)(a) >> 22) & 1;
+    uint64_t x0_23 = ((uint64_t)(a) >> 23) & 1;
+    uint64_t x0_24 = ((uint64_t)(a) >> 24) & 1;
+    uint64_t x0_25 = ((uint64_t)(a) >> 25) & 1;
+    uint64_t x0_26 = ((uint64_t)(a) >> 26) & 1;
+    uint64_t x0_27 = ((uint64_t)(a) >> 27) & 1;
+    uint64_t x0_28 = ((uint64_t)(a) >> 28) & 1;
+    uint64_t k0 = 0;
+    uint64_t w0 = (k0 << 0);
+    uint64_t w1 = w0 | (k0 << 1);
+    uint64_t w2 = w1 | (k0 << 2);
+    uint64_t w3 = w2 | (x0_0 << 3);
+    uint64_t w4 = w3 | (x0_1 << 4);
+    uint64_t w5 = w4 | (x0_2 << 5);
+    uint64_t w6 = w5 | (x0_3 << 6);
+    uint64_t w7 = w6 | (x0_4 << 7);
+    uint64_t w8 = w7 | (x0_5 << 8);
+    uint64_t w9 = w8 | (x0_6 << 9);
+    uint64_t w10 = w9 | (x0_7 << 10);
+    uint64_t w11 = w10 | (x0_8 << 11);
+    uint64_t w12 = w11 | (x0_9 << 12);
+    uint64_t w13 = w12 | (x0_10 << 13);
+    uint64_t w14 = w13 | (x0_11 << 14);
+    uint64_t w15 = w14 | (x0_12 << 15);
+    uint64_t w16 = w15 | (x0_13 << 16);
+    uint64_t w17 = w16 | (x0_14 << 17);
+    uint64_t w18 = w17 | (x0_15 << 18);
+    uint64_t w19 = w18 | (x0_16 << 19);
+    uint64_t w20 = w19 | (x0_17 << 20);
+    uint64_t w21 = w20 | (x0_18 << 21);
+    uint64_t w22 = w21 | (x0_19 << 22);
+    uint64_t w23 = w22 | (x0_20 << 23);
+    uint64_t w24 = w23 | (x0_21 << 24);
+    uint64_t w25 = w24 | (x0_22 << 25);
+    uint64_t w26 = w25 | (x0_23 << 26);
+    uint64_t w27 = w26 | (x0_24 << 27);
+    uint64_t w28 = w27 | (x0_25 << 28);
+    uint64_t w29 = w28 | (x0_26 << 29);
+    uint64_t w30 = w29 | (x0_27 << 30);
+    uint64_t w31 = w30 | (x0_28 << 31);
+    uint64_t w32 = w31 | (x0_28 << 32);
+    uint64_t w33 = w32 | (x0_28 << 33);
+    uint64_t w34 = w33 | (x0_28 << 34);
+    uint64_t w35 = w34 | (x0_28 << 35);
+    uint64_t w36 = w35 | (x0_28 << 36);
+    uint64_t w37 = w36 | (x0_28 << 37);
+    uint64_t w38 = w37 | (x0_28 << 38);
+    uint64_t w39 = w38 | (x0_28 << 39);
+    uint64_t w40 = w39 | (x0_28 << 40);
+    uint64_t w41 = w40 | (x0_28 << 41);
+    uint64_t w42 = w41 | (x0_28 << 42);
+    uint64_t w43 = w42 | (x0_28 << 43);
+    uint64_t w44 = w43 | (x0_28 << 44);
+    uint64_t w45 = w44 | (x0_28 << 45);
+    uint64_t w46 = w45 | (x0_28 << 46);
+    uint64_t w47 = w46 | (x0_28 << 47);
+    uint64_t w48 = w47 | (x0_28 << 48);
+    uint64_t w49 = w48 | (x0_28 << 49);
+    uint64_t w50 = w49 | (x0_28 << 50);
+    uint64_t w51 = w50 | (x0_28 << 51);
+    uint64_t w52 = w51 | (x0_28 << 52);
+    uint64_t w53 = w52 | (x0_28 << 53);
+    uint64_t w54 = w53 | (x0_28 << 54);
+    uint64_t w55 = w54 | (x0_28 << 55);
+    uint64_t w56 = w55 | (x0_28 << 56);
+    uint64_t w57 = w56 | (x0_28 << 57);
+    uint64_t w58 = w57 | (x0_28 << 58);
+    uint64_t w59 = w58 | (x0_28 << 59);
+    uint64_t w60 = w59 | (x0_28 << 60);
+    uint64_t w61 = w60 | (x0_28 << 61);
+    uint64_t w62 = w61 | (x0_28 << 62);
+    uint64_t w63 = w62 | (x0_28 << 63);
+    return (uint64_t)(w63);
+}

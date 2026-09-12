@@ -1001,6 +1001,13 @@ verdict = z3(walk(body) == term)            # per written place; no search anywh
   source outside code_version (full pass instead of delta). Task t3
   (brief written) does those three, after ref2.
 
+`the bit-blast route, 2026-09-12 (bb1, log_267)`
+- z3's own circuits, no authored arithmetic: go 203, rust 202, c/c++
+  136 of 255 (the lifter lacks bexti/orn/c.not). Three routes together
+  251 of 255 on some language, 235 on all four; only mulh/mulhsu 64
+  remain. Divide-family circuits: 75–85k gates, 100k–250k
+  instructions, over the 4,000 ceiling.
+
 `the reach of the proofs, 2026-09-12 (cov1, log_266)`
 - expressible = every arch-opcode of a unit proved on the target.
   RISC-V: c→rust 369/369, go→rust 105/105. x86: c→c 44%, rust→rust

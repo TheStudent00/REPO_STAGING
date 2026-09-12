@@ -105,3 +105,8 @@ status: living
   `remu`, `divw`, `remw`) plus `czero.eqz` for c into go; the
   multiply-high family (log 265's "the four left") never occurs inside
   rv2's own corpus, so it blocks nothing here.
+- 2026-09-12: bb1 (log_267) — the bit-blast route on every RISC-V
+  arch-opcode: rust 202, go 203, c/c++ 136 of 255 by circuits z3 built
+  itself; all three routes together: 251 of 255 on some language, 235
+  on all four. Left: mulh/mulhsu 64. Lifter rows owed: bexti, orn,
+  c.not, binvi, fsgnjn.s.

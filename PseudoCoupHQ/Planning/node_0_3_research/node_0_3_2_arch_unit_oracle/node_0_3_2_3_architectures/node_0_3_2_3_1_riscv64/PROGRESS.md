@@ -86,3 +86,22 @@ status: living
   a conditional whose branch holds a trapping node as an `if`, the guard
   dominating the operation. All 1,960 rendered RISC-V emulations are now
   saved as files in `construct/general/emulations_riscv64/` (59 MB).
+- 2026-09-12: cov1 (log_266) — the riscv64 half of the coverage join:
+  of rv2's 369 c / 105 go `LIFTED` probes, whose arch-units are fully
+  expressible where every cell they contain is proved (`rv6_all.jsonl`,
+  kind == proved). c into c 351/369, c into rust 369/369 (full); go
+  into go 102/105, go into rust 105/105 (full) once a defect was fixed:
+  `rv_attest.py`'s `cells_of()`, reused over the whole go corpus rather
+  than the probes it was built for, classified `c.nop` (a compiler
+  alignment pad, shape `"none"`) as a cell outside twins.json's own
+  255-row population — no x86 operation computes "do nothing", so no
+  twin was ever built for it. That one classification held 18 of 105
+  go units at "inexpressible even into go itself" (87/105) for no other
+  reason; filtering `cells_of(unit)` to the 255-row population fixed
+  it. Strict and destination-only are IDENTICAL on riscv64: no flags
+  register, so every one of the 255 cells has exactly one written
+  place (checked directly, 0 of 255 have more than one `place`).
+  Blockers, both directions: the divide/remainder family (`div`, `rem`,
+  `remu`, `divw`, `remw`) plus `czero.eqz` for c into go; the
+  multiply-high family (log 265's "the four left") never occurs inside
+  rv2's own corpus, so it blocks nothing here.

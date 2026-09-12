@@ -736,3 +736,34 @@ status: living
   Log: `PRIVATE/PseudoCoupHQ/DevComms/log_262_t4_the_general_construction_tier.md`.
   Status: closed, spelling guard PASS on 23 of 23, verifier 6 MATCHES /
   0 DIFFERS, instance `t4` down.
+
+- 2026-09-12 — **task cov1: how far the PROVED emulations reach, per
+  language pair** — the owner's question of 2026-09-12 ("if we had all of
+  them proven, every arch-opcode can be expressed in another language
+  but if only some of the arch-opcodes emulated..."). A DATA JOIN, no
+  compile, no z3: for every x86 arch-unit (31,067 seen across the
+  canon40 corpus, 640 relink-refused and excluded), whether every cell
+  it contains is proved on each target, from the bank
+  (`certificates.jsonl`, 8,196 live of 26,684 records). Two defects
+  found and fixed inside this task's own artifact folder before the
+  reported numbers: (1) the bank's first write keyed `"cells"` by
+  `"mnem|shape|key_width"`, caught by `check_no_spelling_keys.py`
+  itself (27 findings) and rewritten as a list of records; (2) RISC-V's
+  reused `cells_of()` classified `c.nop` (a go-compiler alignment pad)
+  as a cell outside twins.json's 255-row population, undercounting
+  go's own-language coverage by exactly the 18 units that contained it
+  (87 -> 105 of 105 once filtered to the population, verified: zero of
+  the 18 had any other unproved cell). MEASURED (destination-only /
+  strict, N of M): c into c 4578 / 1973 of 10367; cpp into cpp 7631 /
+  5163 of 17569; rust into rust 489 / 373 of 685; go into go 153 / 100
+  of 577; swift into swift 237 / 180 of 1229. c and cpp have IDENTICAL
+  destination-only coverage over every one of the 253 cells both
+  attempt (checked directly). Blocking-cell worklist topped by
+  `cmp/gpr_gpr/64`, `push/gpr_one/64`, `test/gpr_same/32`
+  (destination-only) and `setne/gpr_one/8` (strict, the flag place).
+  Expressibility falls sharply with unit length (c destination-only:
+  92% at 3-5 instructions, 21% at 6-10, 5% over 10). Report:
+  `PRIVATE/PseudoCoupHQ/DevComms/log_266_task_cov1_how_far_the_proved_emulations_reach.md`.
+  Status: closed, spelling guard PASS on 4 of 4, verifier 5 MATCHES /
+  0 DIFFERS (6 UNVERIFIABLE, all glossary-style definition sentences),
+  instance `cov1` down.

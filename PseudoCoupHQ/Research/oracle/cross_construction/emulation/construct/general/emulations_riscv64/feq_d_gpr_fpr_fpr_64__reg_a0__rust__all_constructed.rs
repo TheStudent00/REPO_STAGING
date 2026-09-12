@@ -1,0 +1,120 @@
+#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
+#![allow(unused_variables, unused_mut)]
+
+// task t4 emulation -- rendered by render_general.py, one named
+// intermediate per node of the term of feq_d_gpr_fpr_fpr_64__reg_a0__rust__all_constructed.
+//   If(fpEQ(fpToFP(v0), fpToFP(v1)), 1, 0)
+#[no_mangle]
+pub extern "C" fn emu_feq_d_gpr_fpr_fpr_64__reg_a0__rust__all_constructed(a: u64, b: u64) -> u64
+{
+    let v0: u64 = (((((a as u64)) as u64) ^ (((b as u64)) as u64)) as u64);
+    let v1: u64 = ((((v0) as u64).wrapping_shr((((0x1u64) as u64) as u32))) as u64);
+    let v2: u64 = ((((v0) as u64) | ((v1) as u64)) as u64);
+    let v3: u64 = ((((v2) as u64).wrapping_shr((((0x2u64) as u64) as u32))) as u64);
+    let v4: u64 = ((((v2) as u64) | ((v3) as u64)) as u64);
+    let v5: u64 = ((((v4) as u64).wrapping_shr((((0x4u64) as u64) as u32))) as u64);
+    let v6: u64 = ((((v4) as u64) | ((v5) as u64)) as u64);
+    let v7: u64 = ((((v6) as u64).wrapping_shr((((0x8u64) as u64) as u32))) as u64);
+    let v8: u64 = ((((v6) as u64) | ((v7) as u64)) as u64);
+    let v9: u64 = ((((v8) as u64).wrapping_shr((((0x10u64) as u64) as u32))) as u64);
+    let v10: u64 = ((((v8) as u64) | ((v9) as u64)) as u64);
+    let v11: u64 = ((((v10) as u64).wrapping_shr((((0x20u64) as u64) as u32))) as u64);
+    let v12: u64 = ((((v10) as u64) | ((v11) as u64)) as u64);
+    let v13: u32 = (((((v12) as u64) >> 0) as u32) & 0x1u32);
+    let v14: bool = (((0x1u32) as u32) == ((v13) as u32));
+    let v15: bool = (!(v14));
+    let v16: u64 = (((((b as u64)) >> 0) as u64) & 0xfffffffffffffu64);
+    let v17: u64 = (((((v16) as u64).wrapping_shr((((0x1u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v18: u64 = (((((v16) as u64) | ((v17) as u64)) as u64) & 0xfffffffffffffu64);
+    let v19: u64 = (((((v18) as u64).wrapping_shr((((0x2u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v20: u64 = (((((v18) as u64) | ((v19) as u64)) as u64) & 0xfffffffffffffu64);
+    let v21: u64 = (((((v20) as u64).wrapping_shr((((0x4u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v22: u64 = (((((v20) as u64) | ((v21) as u64)) as u64) & 0xfffffffffffffu64);
+    let v23: u64 = (((((v22) as u64).wrapping_shr((((0x8u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v24: u64 = (((((v22) as u64) | ((v23) as u64)) as u64) & 0xfffffffffffffu64);
+    let v25: u64 = (((((v24) as u64).wrapping_shr((((0x10u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v26: u64 = (((((v24) as u64) | ((v25) as u64)) as u64) & 0xfffffffffffffu64);
+    let v27: u64 = (((((v26) as u64).wrapping_shr((((0x20u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v28: u64 = (((((v26) as u64) | ((v27) as u64)) as u64) & 0xfffffffffffffu64);
+    let v29: u32 = (((((v28) as u64) >> 0) as u32) & 0x1u32);
+    let v30: bool = (((0x1u32) as u32) == ((v29) as u32));
+    let v31: bool = (!(v30));
+    let v32: u32 = (((((b as u64)) >> 52) as u32) & 0x7ffu32);
+    let v33: u32 = (((((v32) as u32).wrapping_shr((((0x1u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v34: u32 = (((((v32) as u32) | ((v33) as u32)) as u32) & 0x7ffu32);
+    let v35: u32 = (((((v34) as u32).wrapping_shr((((0x2u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v36: u32 = (((((v34) as u32) | ((v35) as u32)) as u32) & 0x7ffu32);
+    let v37: u32 = (((((v36) as u32).wrapping_shr((((0x4u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v38: u32 = (((((v36) as u32) | ((v37) as u32)) as u32) & 0x7ffu32);
+    let v39: u32 = (((((v38) as u32).wrapping_shr((((0x8u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v40: u32 = (((((v38) as u32) | ((v39) as u32)) as u32) & 0x7ffu32);
+    let v41: u32 = (((((v40) as u32) >> 0) as u32) & 0x1u32);
+    let v42: bool = (((0x1u32) as u32) == ((v41) as u32));
+    let v43: bool = (!(v42));
+    let v44: bool = ((v43) && (v31));
+    let v45: u64 = (((((a as u64)) >> 0) as u64) & 0xfffffffffffffu64);
+    let v46: u64 = (((((v45) as u64).wrapping_shr((((0x1u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v47: u64 = (((((v45) as u64) | ((v46) as u64)) as u64) & 0xfffffffffffffu64);
+    let v48: u64 = (((((v47) as u64).wrapping_shr((((0x2u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v49: u64 = (((((v47) as u64) | ((v48) as u64)) as u64) & 0xfffffffffffffu64);
+    let v50: u64 = (((((v49) as u64).wrapping_shr((((0x4u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v51: u64 = (((((v49) as u64) | ((v50) as u64)) as u64) & 0xfffffffffffffu64);
+    let v52: u64 = (((((v51) as u64).wrapping_shr((((0x8u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v53: u64 = (((((v51) as u64) | ((v52) as u64)) as u64) & 0xfffffffffffffu64);
+    let v54: u64 = (((((v53) as u64).wrapping_shr((((0x10u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v55: u64 = (((((v53) as u64) | ((v54) as u64)) as u64) & 0xfffffffffffffu64);
+    let v56: u64 = (((((v55) as u64).wrapping_shr((((0x20u64) as u64) as u32))) as u64) & 0xfffffffffffffu64);
+    let v57: u64 = (((((v55) as u64) | ((v56) as u64)) as u64) & 0xfffffffffffffu64);
+    let v58: u32 = (((((v57) as u64) >> 0) as u32) & 0x1u32);
+    let v59: bool = (((0x1u32) as u32) == ((v58) as u32));
+    let v60: bool = (!(v59));
+    let v61: u32 = (((((a as u64)) >> 52) as u32) & 0x7ffu32);
+    let v62: u32 = (((((v61) as u32).wrapping_shr((((0x1u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v63: u32 = (((((v61) as u32) | ((v62) as u32)) as u32) & 0x7ffu32);
+    let v64: u32 = (((((v63) as u32).wrapping_shr((((0x2u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v65: u32 = (((((v63) as u32) | ((v64) as u32)) as u32) & 0x7ffu32);
+    let v66: u32 = (((((v65) as u32).wrapping_shr((((0x4u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v67: u32 = (((((v65) as u32) | ((v66) as u32)) as u32) & 0x7ffu32);
+    let v68: u32 = (((((v67) as u32).wrapping_shr((((0x8u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v69: u32 = (((((v67) as u32) | ((v68) as u32)) as u32) & 0x7ffu32);
+    let v70: u32 = (((((v69) as u32) >> 0) as u32) & 0x1u32);
+    let v71: bool = (((0x1u32) as u32) == ((v70) as u32));
+    let v72: bool = (!(v71));
+    let v73: bool = ((v72) && (v60));
+    let v74: bool = ((v73) && (v44));
+    let v75: bool = ((v74) || (v15));
+    let v76: bool = (!(v31));
+    let v77: u32 = (((((v32) as u32) ^ ((0x7ffu32) as u32)) as u32) & 0x7ffu32);
+    let v78: u32 = (((((v77) as u32).wrapping_shr((((0x1u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v79: u32 = (((((v77) as u32) | ((v78) as u32)) as u32) & 0x7ffu32);
+    let v80: u32 = (((((v79) as u32).wrapping_shr((((0x2u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v81: u32 = (((((v79) as u32) | ((v80) as u32)) as u32) & 0x7ffu32);
+    let v82: u32 = (((((v81) as u32).wrapping_shr((((0x4u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v83: u32 = (((((v81) as u32) | ((v82) as u32)) as u32) & 0x7ffu32);
+    let v84: u32 = (((((v83) as u32).wrapping_shr((((0x8u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v85: u32 = (((((v83) as u32) | ((v84) as u32)) as u32) & 0x7ffu32);
+    let v86: u32 = (((((v85) as u32) >> 0) as u32) & 0x1u32);
+    let v87: bool = (((0x1u32) as u32) == ((v86) as u32));
+    let v88: bool = (!(v87));
+    let v89: bool = ((v88) && (v76));
+    let v90: bool = (!(v89));
+    let v91: bool = (!(v60));
+    let v92: u32 = (((((v61) as u32) ^ ((0x7ffu32) as u32)) as u32) & 0x7ffu32);
+    let v93: u32 = (((((v92) as u32).wrapping_shr((((0x1u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v94: u32 = (((((v92) as u32) | ((v93) as u32)) as u32) & 0x7ffu32);
+    let v95: u32 = (((((v94) as u32).wrapping_shr((((0x2u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v96: u32 = (((((v94) as u32) | ((v95) as u32)) as u32) & 0x7ffu32);
+    let v97: u32 = (((((v96) as u32).wrapping_shr((((0x4u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v98: u32 = (((((v96) as u32) | ((v97) as u32)) as u32) & 0x7ffu32);
+    let v99: u32 = (((((v98) as u32).wrapping_shr((((0x8u32) as u32) as u32))) as u32) & 0x7ffu32);
+    let v100: u32 = (((((v98) as u32) | ((v99) as u32)) as u32) & 0x7ffu32);
+    let v101: u32 = (((((v100) as u32) >> 0) as u32) & 0x1u32);
+    let v102: bool = (((0x1u32) as u32) == ((v101) as u32));
+    let v103: bool = (!(v102));
+    let v104: bool = ((v103) && (v91));
+    let v105: bool = (!(v104));
+    let v106: bool = ((v105) && (v90));
+    let v107: bool = ((v106) && (v75));
+    let v108: u64 = (if (v107) { ((0x1u64) as u64) } else { ((0x0u64) as u64) });
+    ((v108) as u64)
+}

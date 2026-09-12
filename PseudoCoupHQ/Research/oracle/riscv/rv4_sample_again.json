@@ -1,0 +1,258 @@
+{
+ "meta": {
+  "memory_abort": "ABORT_MEMORY_RV4",
+  "memory_bound_kb": 6291456,
+  "pairs": 5,
+  "peak_kb": 66264,
+  "seconds_per_pair_max": 0.166,
+  "seconds_per_pair_mean": 0.097,
+  "setup_seconds": 0.6,
+  "task": "rv4",
+  "what": "the sample before the round: 5 (cell, target) pairs spread over the population"
+ },
+ "rows": [
+  {
+   "arch": "riscv64",
+   "builder": "build_r_type",
+   "cell": {
+    "key_width": 64,
+    "mnem": "add",
+    "places": [
+     "reg_a0"
+    ],
+    "shape": "gpr_gpr_same"
+   },
+   "compile_seconds": 0.032,
+   "compiler": {
+    "command": "clang -std=c17 -O0 --target=riscv64-linux-gnu --gcc-toolchain=/usr -c /work/rv4work2/rv000000_c_native_first/unit.c -o /work/rv4work2/rv000000_c_native_first/unit.o",
+    "target_triple": "riscv64-linux-gnu (clang --target, --gcc-toolchain=/usr, -O0)"
+   },
+   "constructed_nodes": 0,
+   "gate_calls": [],
+   "instructions": 14,
+   "kind": "undecided",
+   "native_nodes": 1,
+   "number": 0,
+   "outcome": "REFUSED",
+   "peak_kb": 66136,
+   "place": "reg_a0",
+   "policy": "native_first",
+   "route": "general_optimization_off",
+   "row_id": "rv00001",
+   "seconds": 0.074,
+   "statements": 1,
+   "target": "c",
+   "verdict": {
+    "outcome": "WALK_REFUSED",
+    "reason": "NotModeled: no entry in the riscv opcode table for 'c.addi4spn' (line 'c.addi4spn s0, sp, 0x20')"
+   },
+   "verdict_at_the_whole_place": null
+  },
+  {
+   "arch": "riscv64",
+   "builder": "build_float_widen",
+   "cell": {
+    "key_width": 64,
+    "mnem": "fcvt.d.s",
+    "places": [
+     "freg_fa0"
+    ],
+    "shape": "fpr_fpr"
+   },
+   "compile_seconds": 0.032,
+   "compiler": {
+    "command": "clang -std=c17 -O0 --target=riscv64-linux-gnu --gcc-toolchain=/usr -c /work/rv4work2/rv000039_c_native_first/unit.c -o /work/rv4work2/rv000039_c_native_first/unit.o",
+    "target_triple": "riscv64-linux-gnu (clang --target, --gcc-toolchain=/usr, -O0)"
+   },
+   "constructed_nodes": 0,
+   "gate_calls": [],
+   "instructions": 24,
+   "kind": "undecided",
+   "native_nodes": 4,
+   "number": 39,
+   "outcome": "REFUSED",
+   "peak_kb": 66136,
+   "place": "freg_fa0",
+   "policy": "native_first",
+   "route": "general_optimization_off",
+   "row_id": "rv00400",
+   "seconds": 0.082,
+   "statements": 4,
+   "target": "c",
+   "verdict": {
+    "outcome": "WALK_REFUSED",
+    "reason": "NotModeled: no entry in the riscv opcode table for 'c.addi4spn' (line 'c.addi4spn s0, sp, 0x30')"
+   },
+   "verdict_at_the_whole_place": null
+  },
+  {
+   "arch": "riscv64",
+   "builder": "build_float_move",
+   "cell": {
+    "key_width": 64,
+    "mnem": "fmv.d",
+    "places": [
+     "freg_fa0"
+    ],
+    "shape": "fpr_fpr"
+   },
+   "compile_seconds": 0.119,
+   "compiler": {
+    "command": "GOARCH=riscv64 GOOS=linux go build -gcflags all=-N -l -o /work/rv4work2/rv000078_go_native_first/bin_rv .",
+    "target_triple": "GOARCH=riscv64 GOOS=linux (go build -gcflags='all=-N -l')"
+   },
+   "constructed_nodes": 0,
+   "gate_calls": [
+    {
+     "cause": null,
+     "left_depth": 2,
+     "left_nodes": 2,
+     "left_printed": 2,
+     "right_depth": 1,
+     "right_nodes": 1,
+     "right_printed": 1,
+     "seconds": 0.001,
+     "text_taken": true
+    },
+    {
+     "cause": null,
+     "left_depth": 2,
+     "left_nodes": 2,
+     "left_printed": 2,
+     "right_depth": 1,
+     "right_nodes": 1,
+     "right_printed": 1,
+     "seconds": 0.001,
+     "text_taken": true
+    }
+   ],
+   "instructions": 15,
+   "kind": "proved",
+   "native_nodes": 0,
+   "number": 78,
+   "outcome": "PROVED_IDENTICAL",
+   "peak_kb": 66264,
+   "place": "freg_fa0",
+   "policy": "native_first",
+   "route": "general_optimization_off",
+   "row_id": "rv00708",
+   "seconds": 0.166,
+   "statements": 0,
+   "target": "go",
+   "verdict": {
+    "compared_on_bits": 64,
+    "counterexample": null,
+    "outcome": "PROVED",
+    "solver_timeout_ms": 3000
+   },
+   "verdict_at_the_whole_place": {
+    "compared_on_bits": 64,
+    "counterexample": null,
+    "outcome": "PROVED"
+   }
+  },
+  {
+   "arch": "riscv64",
+   "builder": "build_jump",
+   "cell": {
+    "key_width": 64,
+    "mnem": "jalr",
+    "places": [
+     "reg_a0"
+    ],
+    "shape": "gpr_gpr_same"
+   },
+   "compile_seconds": 0.039,
+   "compiler": {
+    "command": "rustc --crate-type=lib --emit=obj -C opt-level=0 -C debug-assertions=off --target=riscv64gc-unknown-linux-gnu -o /work/rv4work2/rv000117_rust_native_first/unit_rs.o /work/rv4work2/rv000117_rust_native_first/unit.rs",
+    "target_triple": "riscv64gc-unknown-linux-gnu (rustc --target, --emit=obj, -C opt-level=0)"
+   },
+   "constructed_nodes": 0,
+   "gate_calls": [
+    {
+     "cause": null,
+     "left_depth": 3,
+     "left_nodes": 4,
+     "left_printed": 4,
+     "right_depth": 2,
+     "right_nodes": 3,
+     "right_printed": 3,
+     "seconds": 0.004,
+     "text_taken": true
+    },
+    {
+     "cause": null,
+     "left_depth": 3,
+     "left_nodes": 4,
+     "left_printed": 4,
+     "right_depth": 2,
+     "right_nodes": 3,
+     "right_printed": 3,
+     "seconds": 0.002,
+     "text_taken": true
+    }
+   ],
+   "instructions": 7,
+   "kind": "proved",
+   "native_nodes": 1,
+   "number": 117,
+   "outcome": "PROVED_IDENTICAL",
+   "peak_kb": 66264,
+   "place": "reg_a0",
+   "policy": "native_first",
+   "route": "general_optimization_off",
+   "row_id": "rv00855",
+   "seconds": 0.087,
+   "statements": 1,
+   "target": "rust",
+   "verdict": {
+    "compared_on_bits": 64,
+    "counterexample": null,
+    "outcome": "PROVED",
+    "solver_timeout_ms": 3000
+   },
+   "verdict_at_the_whole_place": {
+    "compared_on_bits": 64,
+    "counterexample": null,
+    "outcome": "PROVED"
+   }
+  },
+  {
+   "arch": "riscv64",
+   "builder": "build_divide",
+   "cell": {
+    "key_width": 64,
+    "mnem": "remu",
+    "places": [
+     "reg_a0"
+    ],
+    "shape": "gpr_gpr_gpr"
+   },
+   "compile_seconds": 0.03,
+   "compiler": {
+    "command": "clang -std=c17 -O0 --target=riscv64-linux-gnu --gcc-toolchain=/usr -c /work/rv4work2/rv000156_c_native_first/unit.c -o /work/rv4work2/rv000156_c_native_first/unit.o",
+    "target_triple": "riscv64-linux-gnu (clang --target, --gcc-toolchain=/usr, -O0)"
+   },
+   "constructed_nodes": 0,
+   "gate_calls": [],
+   "instructions": null,
+   "kind": "refused",
+   "native_nodes": 3,
+   "number": 156,
+   "outcome": "REFUSED",
+   "peak_kb": 66264,
+   "place": "reg_a0",
+   "policy": "native_first",
+   "route": "general_optimization_off",
+   "row_id": "rv01120",
+   "seconds": 0.076,
+   "statements": 3,
+   "target": "c",
+   "verdict": {
+    "outcome": "BUILD_REFUSED",
+    "reason": ""
+   },
+   "verdict_at_the_whole_place": null
+  }
+ ]
+}

@@ -1,0 +1,592 @@
+import struct
+import sys
+
+
+def m(x, w):
+    return x & ((1 << w) - 1)
+
+
+def s(x, w):
+    x = x & ((1 << w) - 1)
+    if x >> (w - 1):
+        return x - (1 << w)
+    return x
+
+
+def add(a, b, w):
+    return m(a + b, w)
+
+
+def sub(a, b, w):
+    return m(a - b, w)
+
+
+def mul(a, b, w):
+    return m(a * b, w)
+
+
+def band(a, b, w):
+    return m(a & b, w)
+
+
+def bor(a, b, w):
+    return m(a | b, w)
+
+
+def bxor(a, b, w):
+    return m(a ^ b, w)
+
+
+def bnot(a, w):
+    return m(~a, w)
+
+
+def bneg(a, w):
+    return m(-a, w)
+
+
+def shl(a, n, w):
+    if n >= w:
+        return 0
+    return m(a << n, w)
+
+
+def lshr(a, n, w):
+    if n >= w:
+        return 0
+    return m(a, w) >> n
+
+
+def ashr(a, n, w):
+    v = s(a, w)
+    k = n
+    if k >= w:
+        k = w - 1
+    return m(v >> k, w)
+
+
+def udiv(a, b, w):
+    return m(m(a, w) // m(b, w), w)
+
+
+def urem(a, b, w):
+    return m(m(a, w) % m(b, w), w)
+
+
+def sdiv(a, b, w):
+    x = s(a, w)
+    y = s(b, w)
+    q = abs(x) // abs(y)
+    if (x < 0) != (y < 0):
+        q = -q
+    return m(q, w)
+
+
+def srem(a, b, w):
+    x = s(a, w)
+    y = s(b, w)
+    r = abs(x) % abs(y)
+    if x < 0:
+        r = -r
+    return m(r, w)
+
+
+def ult(a, b, w):
+    return m(a, w) < m(b, w)
+
+
+def ule(a, b, w):
+    return m(a, w) <= m(b, w)
+
+
+def ugt(a, b, w):
+    return m(a, w) > m(b, w)
+
+
+def uge(a, b, w):
+    return m(a, w) >= m(b, w)
+
+
+def slt(a, b, w):
+    return s(a, w) < s(b, w)
+
+
+def sle(a, b, w):
+    return s(a, w) <= s(b, w)
+
+
+def sgt(a, b, w):
+    return s(a, w) > s(b, w)
+
+
+def sge(a, b, w):
+    return s(a, w) >= s(b, w)
+
+
+def eq(a, b, w):
+    return m(a, w) == m(b, w)
+
+
+def ne(a, b, w):
+    return m(a, w) != m(b, w)
+
+
+def cat(hi, lo, lw):
+    return (hi << lw) | m(lo, lw)
+
+
+def ext(x, hi, lo):
+    return m(x >> lo, hi - lo + 1)
+
+
+def sext(x, fromw, tow):
+    return m(s(x, fromw), tow)
+
+
+def b2f(x, w):
+    if w == 32:
+        return struct.unpack("<f", struct.pack("<I", m(x, 32)))[0]
+    return struct.unpack("<d", struct.pack("<Q", m(x, 64)))[0]
+
+
+def f2b(f, w):
+    if w == 32:
+        try:
+            return struct.unpack("<I", struct.pack("<f", f))[0]
+        except OverflowError:
+            if f > 0:
+                return 0x7f800000
+            return 0xff800000
+    return struct.unpack("<Q", struct.pack("<d", f))[0]
+
+
+def fadd(a, b, w):
+    return f2b(b2f(a, w) + b2f(b, w), w)
+
+
+def fsub(a, b, w):
+    return f2b(b2f(a, w) - b2f(b, w), w)
+
+
+def fmul(a, b, w):
+    return f2b(b2f(a, w) * b2f(b, w), w)
+
+
+def fdiv(a, b, w):
+    return f2b(b2f(a, w) / b2f(b, w), w)
+
+
+def i2f(x, fromw, w):
+    return f2b(float(s(x, fromw)), w)
+
+
+def u2f(x, fromw, w):
+    return f2b(float(m(x, fromw)), w)
+
+
+def fwiden(x, fromw, w):
+    return f2b(b2f(x, fromw), w)
+
+# task bb2 emulation -- the BIT-BLAST route: z3's own circuit,
+# one named local per gate, over the term of neg_gpr_one_64__reg_rdi__cpython.
+# The term's layer-5 text, LITERAL:
+#   v0*18446744073709551615
+def emu_neg_gpr_one_64__reg_rdi__cpython(a):
+    x0_0 = ext(a, 0, 0)
+    x0_1 = ext(a, 1, 1)
+    x0_2 = ext(a, 2, 2)
+    x0_3 = ext(a, 3, 3)
+    x0_4 = ext(a, 4, 4)
+    x0_5 = ext(a, 5, 5)
+    x0_6 = ext(a, 6, 6)
+    x0_7 = ext(a, 7, 7)
+    x0_8 = ext(a, 8, 8)
+    x0_9 = ext(a, 9, 9)
+    x0_10 = ext(a, 10, 10)
+    x0_11 = ext(a, 11, 11)
+    x0_12 = ext(a, 12, 12)
+    x0_13 = ext(a, 13, 13)
+    x0_14 = ext(a, 14, 14)
+    x0_15 = ext(a, 15, 15)
+    x0_16 = ext(a, 16, 16)
+    x0_17 = ext(a, 17, 17)
+    x0_18 = ext(a, 18, 18)
+    x0_19 = ext(a, 19, 19)
+    x0_20 = ext(a, 20, 20)
+    x0_21 = ext(a, 21, 21)
+    x0_22 = ext(a, 22, 22)
+    x0_23 = ext(a, 23, 23)
+    x0_24 = ext(a, 24, 24)
+    x0_25 = ext(a, 25, 25)
+    x0_26 = ext(a, 26, 26)
+    x0_27 = ext(a, 27, 27)
+    x0_28 = ext(a, 28, 28)
+    x0_29 = ext(a, 29, 29)
+    x0_30 = ext(a, 30, 30)
+    x0_31 = ext(a, 31, 31)
+    x0_32 = ext(a, 32, 32)
+    x0_33 = ext(a, 33, 33)
+    x0_34 = ext(a, 34, 34)
+    x0_35 = ext(a, 35, 35)
+    x0_36 = ext(a, 36, 36)
+    x0_37 = ext(a, 37, 37)
+    x0_38 = ext(a, 38, 38)
+    x0_39 = ext(a, 39, 39)
+    x0_40 = ext(a, 40, 40)
+    x0_41 = ext(a, 41, 41)
+    x0_42 = ext(a, 42, 42)
+    x0_43 = ext(a, 43, 43)
+    x0_44 = ext(a, 44, 44)
+    x0_45 = ext(a, 45, 45)
+    x0_46 = ext(a, 46, 46)
+    x0_47 = ext(a, 47, 47)
+    x0_48 = ext(a, 48, 48)
+    x0_49 = ext(a, 49, 49)
+    x0_50 = ext(a, 50, 50)
+    x0_51 = ext(a, 51, 51)
+    x0_52 = ext(a, 52, 52)
+    x0_53 = ext(a, 53, 53)
+    x0_54 = ext(a, 54, 54)
+    x0_55 = ext(a, 55, 55)
+    x0_56 = ext(a, 56, 56)
+    x0_57 = ext(a, 57, 57)
+    x0_58 = ext(a, 58, 58)
+    x0_59 = ext(a, 59, 59)
+    x0_60 = ext(a, 60, 60)
+    x0_61 = ext(a, 61, 61)
+    x0_62 = ext(a, 62, 62)
+    x0_63 = ext(a, 63, 63)
+    g0 = (x0_0 ^ x0_1)
+    g1 = (g0 ^ 1)
+    g2 = (g1 ^ 1)
+    g3 = (x0_1 | x0_0)
+    g4 = (g3 ^ x0_2)
+    g5 = (g4 ^ 1)
+    g6 = (g5 ^ 1)
+    g7 = (x0_2 | g3)
+    g8 = (g7 ^ x0_3)
+    g9 = (g8 ^ 1)
+    g10 = (g9 ^ 1)
+    g11 = (x0_3 | g7)
+    g12 = (g11 ^ x0_4)
+    g13 = (g12 ^ 1)
+    g14 = (g13 ^ 1)
+    g15 = (x0_4 | g11)
+    g16 = (g15 ^ x0_5)
+    g17 = (g16 ^ 1)
+    g18 = (g17 ^ 1)
+    g19 = (x0_5 | g15)
+    g20 = (g19 ^ x0_6)
+    g21 = (g20 ^ 1)
+    g22 = (g21 ^ 1)
+    g23 = (x0_6 | g19)
+    g24 = (g23 ^ x0_7)
+    g25 = (g24 ^ 1)
+    g26 = (g25 ^ 1)
+    g27 = (x0_7 | g23)
+    g28 = (g27 ^ x0_8)
+    g29 = (g28 ^ 1)
+    g30 = (g29 ^ 1)
+    g31 = (x0_8 | g27)
+    g32 = (g31 ^ x0_9)
+    g33 = (g32 ^ 1)
+    g34 = (g33 ^ 1)
+    g35 = (x0_9 | g31)
+    g36 = (g35 ^ x0_10)
+    g37 = (g36 ^ 1)
+    g38 = (g37 ^ 1)
+    g39 = (x0_10 | g35)
+    g40 = (g39 ^ x0_11)
+    g41 = (g40 ^ 1)
+    g42 = (g41 ^ 1)
+    g43 = (x0_11 | g39)
+    g44 = (g43 ^ x0_12)
+    g45 = (g44 ^ 1)
+    g46 = (g45 ^ 1)
+    g47 = (x0_12 | g43)
+    g48 = (g47 ^ x0_13)
+    g49 = (g48 ^ 1)
+    g50 = (g49 ^ 1)
+    g51 = (x0_13 | g47)
+    g52 = (g51 ^ x0_14)
+    g53 = (g52 ^ 1)
+    g54 = (g53 ^ 1)
+    g55 = (x0_14 | g51)
+    g56 = (g55 ^ x0_15)
+    g57 = (g56 ^ 1)
+    g58 = (g57 ^ 1)
+    g59 = (x0_15 | g55)
+    g60 = (g59 ^ x0_16)
+    g61 = (g60 ^ 1)
+    g62 = (g61 ^ 1)
+    g63 = (x0_16 | g59)
+    g64 = (g63 ^ x0_17)
+    g65 = (g64 ^ 1)
+    g66 = (g65 ^ 1)
+    g67 = (x0_17 | g63)
+    g68 = (g67 ^ x0_18)
+    g69 = (g68 ^ 1)
+    g70 = (g69 ^ 1)
+    g71 = (x0_18 | g67)
+    g72 = (g71 ^ x0_19)
+    g73 = (g72 ^ 1)
+    g74 = (g73 ^ 1)
+    g75 = (x0_19 | g71)
+    g76 = (g75 ^ x0_20)
+    g77 = (g76 ^ 1)
+    g78 = (g77 ^ 1)
+    g79 = (x0_20 | g75)
+    g80 = (g79 ^ x0_21)
+    g81 = (g80 ^ 1)
+    g82 = (g81 ^ 1)
+    g83 = (x0_21 | g79)
+    g84 = (g83 ^ x0_22)
+    g85 = (g84 ^ 1)
+    g86 = (g85 ^ 1)
+    g87 = (x0_22 | g83)
+    g88 = (g87 ^ x0_23)
+    g89 = (g88 ^ 1)
+    g90 = (g89 ^ 1)
+    g91 = (x0_23 | g87)
+    g92 = (g91 ^ x0_24)
+    g93 = (g92 ^ 1)
+    g94 = (g93 ^ 1)
+    g95 = (x0_24 | g91)
+    g96 = (g95 ^ x0_25)
+    g97 = (g96 ^ 1)
+    g98 = (g97 ^ 1)
+    g99 = (x0_25 | g95)
+    g100 = (g99 ^ x0_26)
+    g101 = (g100 ^ 1)
+    g102 = (g101 ^ 1)
+    g103 = (x0_26 | g99)
+    g104 = (g103 ^ x0_27)
+    g105 = (g104 ^ 1)
+    g106 = (g105 ^ 1)
+    g107 = (x0_27 | g103)
+    g108 = (g107 ^ x0_28)
+    g109 = (g108 ^ 1)
+    g110 = (g109 ^ 1)
+    g111 = (x0_28 | g107)
+    g112 = (g111 ^ x0_29)
+    g113 = (g112 ^ 1)
+    g114 = (g113 ^ 1)
+    g115 = (x0_29 | g111)
+    g116 = (g115 ^ x0_30)
+    g117 = (g116 ^ 1)
+    g118 = (g117 ^ 1)
+    g119 = (x0_30 | g115)
+    g120 = (g119 ^ x0_31)
+    g121 = (g120 ^ 1)
+    g122 = (g121 ^ 1)
+    g123 = (x0_31 | g119)
+    g124 = (g123 ^ x0_32)
+    g125 = (g124 ^ 1)
+    g126 = (g125 ^ 1)
+    g127 = (x0_32 | g123)
+    g128 = (g127 ^ x0_33)
+    g129 = (g128 ^ 1)
+    g130 = (g129 ^ 1)
+    g131 = (x0_33 | g127)
+    g132 = (g131 ^ x0_34)
+    g133 = (g132 ^ 1)
+    g134 = (g133 ^ 1)
+    g135 = (x0_34 | g131)
+    g136 = (g135 ^ x0_35)
+    g137 = (g136 ^ 1)
+    g138 = (g137 ^ 1)
+    g139 = (x0_35 | g135)
+    g140 = (g139 ^ x0_36)
+    g141 = (g140 ^ 1)
+    g142 = (g141 ^ 1)
+    g143 = (x0_36 | g139)
+    g144 = (g143 ^ x0_37)
+    g145 = (g144 ^ 1)
+    g146 = (g145 ^ 1)
+    g147 = (x0_37 | g143)
+    g148 = (g147 ^ x0_38)
+    g149 = (g148 ^ 1)
+    g150 = (g149 ^ 1)
+    g151 = (x0_38 | g147)
+    g152 = (g151 ^ x0_39)
+    g153 = (g152 ^ 1)
+    g154 = (g153 ^ 1)
+    g155 = (x0_39 | g151)
+    g156 = (g155 ^ x0_40)
+    g157 = (g156 ^ 1)
+    g158 = (g157 ^ 1)
+    g159 = (x0_40 | g155)
+    g160 = (g159 ^ x0_41)
+    g161 = (g160 ^ 1)
+    g162 = (g161 ^ 1)
+    g163 = (x0_41 | g159)
+    g164 = (g163 ^ x0_42)
+    g165 = (g164 ^ 1)
+    g166 = (g165 ^ 1)
+    g167 = (x0_42 | g163)
+    g168 = (g167 ^ x0_43)
+    g169 = (g168 ^ 1)
+    g170 = (g169 ^ 1)
+    g171 = (x0_43 | g167)
+    g172 = (g171 ^ x0_44)
+    g173 = (g172 ^ 1)
+    g174 = (g173 ^ 1)
+    g175 = (x0_44 | g171)
+    g176 = (g175 ^ x0_45)
+    g177 = (g176 ^ 1)
+    g178 = (g177 ^ 1)
+    g179 = (x0_45 | g175)
+    g180 = (g179 ^ x0_46)
+    g181 = (g180 ^ 1)
+    g182 = (g181 ^ 1)
+    g183 = (x0_46 | g179)
+    g184 = (g183 ^ x0_47)
+    g185 = (g184 ^ 1)
+    g186 = (g185 ^ 1)
+    g187 = (x0_47 | g183)
+    g188 = (g187 ^ x0_48)
+    g189 = (g188 ^ 1)
+    g190 = (g189 ^ 1)
+    g191 = (x0_48 | g187)
+    g192 = (g191 ^ x0_49)
+    g193 = (g192 ^ 1)
+    g194 = (g193 ^ 1)
+    g195 = (x0_49 | g191)
+    g196 = (g195 ^ x0_50)
+    g197 = (g196 ^ 1)
+    g198 = (g197 ^ 1)
+    g199 = (x0_50 | g195)
+    g200 = (g199 ^ x0_51)
+    g201 = (g200 ^ 1)
+    g202 = (g201 ^ 1)
+    g203 = (x0_51 | g199)
+    g204 = (g203 ^ x0_52)
+    g205 = (g204 ^ 1)
+    g206 = (g205 ^ 1)
+    g207 = (x0_52 | g203)
+    g208 = (g207 ^ x0_53)
+    g209 = (g208 ^ 1)
+    g210 = (g209 ^ 1)
+    g211 = (x0_53 | g207)
+    g212 = (g211 ^ x0_54)
+    g213 = (g212 ^ 1)
+    g214 = (g213 ^ 1)
+    g215 = (x0_54 | g211)
+    g216 = (g215 ^ x0_55)
+    g217 = (g216 ^ 1)
+    g218 = (g217 ^ 1)
+    g219 = (x0_55 | g215)
+    g220 = (g219 ^ x0_56)
+    g221 = (g220 ^ 1)
+    g222 = (g221 ^ 1)
+    g223 = (x0_56 | g219)
+    g224 = (g223 ^ x0_57)
+    g225 = (g224 ^ 1)
+    g226 = (g225 ^ 1)
+    g227 = (x0_57 | g223)
+    g228 = (g227 ^ x0_58)
+    g229 = (g228 ^ 1)
+    g230 = (g229 ^ 1)
+    g231 = (x0_58 | g227)
+    g232 = (g231 ^ x0_59)
+    g233 = (g232 ^ 1)
+    g234 = (g233 ^ 1)
+    g235 = (x0_59 | g231)
+    g236 = (g235 ^ x0_60)
+    g237 = (g236 ^ 1)
+    g238 = (g237 ^ 1)
+    g239 = (x0_60 | g235)
+    g240 = (g239 ^ x0_61)
+    g241 = (g240 ^ 1)
+    g242 = (g241 ^ 1)
+    g243 = (x0_61 | g239)
+    g244 = (g243 ^ x0_62)
+    g245 = (g244 ^ 1)
+    g246 = (g245 ^ 1)
+    g247 = (x0_62 | g243)
+    g248 = (g247 ^ x0_63)
+    g249 = (g248 ^ 1)
+    g250 = (g249 ^ 1)
+    w0 = g250
+    w1 = cat(w0, g246, 1)
+    w2 = cat(w1, g242, 1)
+    w3 = cat(w2, g238, 1)
+    w4 = cat(w3, g234, 1)
+    w5 = cat(w4, g230, 1)
+    w6 = cat(w5, g226, 1)
+    w7 = cat(w6, g222, 1)
+    w8 = cat(w7, g218, 1)
+    w9 = cat(w8, g214, 1)
+    w10 = cat(w9, g210, 1)
+    w11 = cat(w10, g206, 1)
+    w12 = cat(w11, g202, 1)
+    w13 = cat(w12, g198, 1)
+    w14 = cat(w13, g194, 1)
+    w15 = cat(w14, g190, 1)
+    w16 = cat(w15, g186, 1)
+    w17 = cat(w16, g182, 1)
+    w18 = cat(w17, g178, 1)
+    w19 = cat(w18, g174, 1)
+    w20 = cat(w19, g170, 1)
+    w21 = cat(w20, g166, 1)
+    w22 = cat(w21, g162, 1)
+    w23 = cat(w22, g158, 1)
+    w24 = cat(w23, g154, 1)
+    w25 = cat(w24, g150, 1)
+    w26 = cat(w25, g146, 1)
+    w27 = cat(w26, g142, 1)
+    w28 = cat(w27, g138, 1)
+    w29 = cat(w28, g134, 1)
+    w30 = cat(w29, g130, 1)
+    w31 = cat(w30, g126, 1)
+    w32 = cat(w31, g122, 1)
+    w33 = cat(w32, g118, 1)
+    w34 = cat(w33, g114, 1)
+    w35 = cat(w34, g110, 1)
+    w36 = cat(w35, g106, 1)
+    w37 = cat(w36, g102, 1)
+    w38 = cat(w37, g98, 1)
+    w39 = cat(w38, g94, 1)
+    w40 = cat(w39, g90, 1)
+    w41 = cat(w40, g86, 1)
+    w42 = cat(w41, g82, 1)
+    w43 = cat(w42, g78, 1)
+    w44 = cat(w43, g74, 1)
+    w45 = cat(w44, g70, 1)
+    w46 = cat(w45, g66, 1)
+    w47 = cat(w46, g62, 1)
+    w48 = cat(w47, g58, 1)
+    w49 = cat(w48, g54, 1)
+    w50 = cat(w49, g50, 1)
+    w51 = cat(w50, g46, 1)
+    w52 = cat(w51, g42, 1)
+    w53 = cat(w52, g38, 1)
+    w54 = cat(w53, g34, 1)
+    w55 = cat(w54, g30, 1)
+    w56 = cat(w55, g26, 1)
+    w57 = cat(w56, g22, 1)
+    w58 = cat(w57, g18, 1)
+    w59 = cat(w58, g14, 1)
+    w60 = cat(w59, g10, 1)
+    w61 = cat(w60, g6, 1)
+    w62 = cat(w61, g2, 1)
+    w63 = cat(w62, x0_0, 1)
+    return m(w63, 64)
+
+
+
+def main():
+    for line in sys.stdin:
+        text = line.strip()
+        if not text:
+            continue
+        values = [int(one) for one in text.split()]
+        try:
+            answer = emu_neg_gpr_one_64__reg_rdi__cpython(*values)
+            sys.stdout.write("%d\n" % answer)
+        except Exception as problem:
+            sys.stdout.write("RAISE:%s\n" % type(problem).__name__)
+    sys.stdout.flush()
+
+
+main()

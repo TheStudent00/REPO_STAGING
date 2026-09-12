@@ -43,6 +43,35 @@ THE OBJECTS, one sentence each, in relation.
     offers the construction at EVERY node whose kind has one, and is
     the GUARANTEE's own measurement: it says what the primitive set
     reaches when the language's own operator is not allowed to answer.
+  * A TRAPPING NODE is a node whose operator, in THIS target, can stop
+    the program instead of answering: division and remainder on go and
+    on swift (the zero divisor, and on swift the signed extreme too),
+    and the float-to-integer conversion on swift.  Each one is a node
+    kind the target's OWN renderer already marks as an edge region, and
+    the set is read off those renderers and named by z3's own
+    declaration kinds below; there is no source token in it.
+  * A REGION is one nested scope of the rendered body: region 0 is the
+    function body, and a conditional written as control flow opens one
+    region per arm, whose super-region is the region the conditional
+    itself is written in.
+
+THE ONE RULE ADDED BY TASK rd1, which is that task's brief restated:
+
+    when a conditional's branch (transitively) contains a trapping
+    node, the conditional is written as CONTROL FLOW --
+    `if cond { <the then arm's nodes> } else { <the else arm's
+    nodes> }`, each arm's nodes computed INSIDE its arm -- so the guard
+    DOMINATES the operation.  Otherwise the conditional stays a select
+    over values already computed.  A node whose readers are not all
+    inside one arm stays hoisted above the conditional.
+
+WHY.  Every node used to be evaluated eagerly and a conditional printed
+as a select over values already computed, so a division the term GUARDS
+ran unguarded: `v0 = b / a` was written BEFORE `sel64(a == 0, ...)` in
+`emulations_riscv64/div_gpr_gpr_gpr_64__reg_a0__go__native_first.go`,
+and on go that traps at a = 0 where the cell answers all ones.  THE TERM
+IS UNCHANGED and only the printed ORDER is, so the Lean statement
+(`lean_general.py`) is untouched: it states the term, not the order.
 
 MEMORY: this file holds the term, the statements and one memo; it forks
 nothing and reads no store.  The caller states the bound.
@@ -90,6 +119,222 @@ CAUSE_ANSWER_WIDE = ("the answer home is wider than the target's widest "
                      "not about the operation")
 CAUSE_NO_ROUTE = ("neither the target's own operator nor a construction "
                   "answers this node")
+
+
+# ==================================================================
+# section 0: the trapping node, and the regions a guard opens
+# ==================================================================
+
+def declaration_kinds(*names):
+    """z3's own declaration-kind constants, by z3's own names, skipping
+    any this z3 build does not carry."""
+    out = []
+    for name in names:
+        got = getattr(z3, name, None)
+        if got is None:
+            continue
+        out.append(got)
+        continue
+    return tuple(out)
+
+
+DIVIDING_KINDS = declaration_kinds(
+    "Z3_OP_BUDIV", "Z3_OP_BUDIV_I", "Z3_OP_BUREM", "Z3_OP_BUREM_I",
+    "Z3_OP_BSDIV", "Z3_OP_BSDIV_I", "Z3_OP_BSREM", "Z3_OP_BSREM_I",
+    "Z3_OP_BSMOD", "Z3_OP_BSMOD_I")
+
+FLOAT_TO_INTEGER_KINDS = declaration_kinds("Z3_OP_FPA_TO_SBV",
+                                           "Z3_OP_FPA_TO_UBV")
+
+TRAPPING_KINDS = {
+    "go": DIVIDING_KINDS,
+    "swift": DIVIDING_KINDS + FLOAT_TO_INTEGER_KINDS,
+}
+"""which node kinds the TARGET'S OWN RENDERER writes with an operator
+that can stop the program instead of answering.  Read off those
+renderers, and off nothing else:
+
+  * go (`go_render.emit_division`, measured): the plain operator, and
+    "go checks the zero divisor and branches into runtime.panicdivide
+    -- the EDGE REGION, rendered rather than hidden".
+  * swift (`swift_render.emit_division`): the plain operator, and
+    "swift's `/` and `%` on a fixed-width integer trap on a zero
+    divisor and on the signed extreme by the language's own
+    definition".
+  * swift (`swift_render.emit_fp`, the float-to-integer conversion):
+    "swift's `Int64(_: Double)` TRAPS when the value does not fit ...
+    That is an edge region like division's, recorded, not hidden."
+  * swift's PLAIN ARITHMETIC is not in the set because that renderer
+    never writes it: `swift_render.emit_arith` writes `&+ &- &*`, the
+    wrapping forms, for the three arithmetic kinds, and those do not
+    trap.  The row is here so the absence is a reading of the file and
+    not an omission.
+  * rust is NOT in the set: `rust_render.emit_division` writes the
+    divide under `core::hint::unreachable_unchecked` at exactly the
+    conditions the machine's own divide leaves undefined, which it
+    measured (lanes o11_l1, o11_l3, o11_l4) removes both of rust's
+    checks and the panic route with them.
+  * c and c++ are NOT in the set: neither renderer marks an edge region
+    and neither language defines a trap for the divide -- clang emits
+    the bare instruction."""
+
+
+def traps_here(lang, policy, node):
+    """whether THIS node will be written with a trapping operator.  It
+    is a question about the node's KIND and the target, and under
+    `all_constructed` also about whether a construction answers the
+    kind -- a constructed divide is `& | ^ ~` and a conditional and
+    traps nowhere."""
+    kinds = TRAPPING_KINDS.get(lang)
+    if not kinds:
+        return False
+    if node.decl().kind() not in kinds:
+        return False
+    if policy == "native_first":
+        return True
+    return B.kind_of(node) is None
+
+
+def leaves_first(term):
+    """every distinct node of the term, each after the nodes it reads.
+    The same walk `bind` and `walk` do, without their memos, so the
+    plan below can be made before either runs."""
+    order = []
+    seen = set()
+    stack = [(term, False)]
+    while stack:
+        node, expanded = stack.pop()
+        key = node.get_id()
+        if expanded:
+            order.append(node)
+            continue
+        if key in seen:
+            continue
+        seen.add(key)
+        stack.append((node, True))
+        for index in range(node.num_args()):
+            stack.append((node.arg(index), False))
+            continue
+        continue
+    return order
+
+
+class Regions(object):
+    """the nested scopes of one rendered body.  Region 0 is the function
+    body; every other region is one arm of one conditional written as
+    control flow, and `above` says which region it is written inside."""
+
+    def __init__(self):
+        self.above = [None]
+        self.depth = [0]
+
+    def open(self, inside):
+        self.above.append(inside)
+        self.depth.append(self.depth[inside] + 1)
+        return len(self.above) - 1
+
+    def move(self, region, inside):
+        self.above[region] = inside
+        self.settle()
+        return
+
+    def settle(self):
+        for region in range(len(self.above)):
+            above = self.above[region]
+            if above is None:
+                self.depth[region] = 0
+                continue
+            self.depth[region] = self.depth[above] + 1
+            continue
+        return
+
+    def encloses(self, outer, inner):
+        while inner is not None:
+            if inner == outer:
+                return True
+            inner = self.above[inner]
+            continue
+        return False
+
+    def join(self, one, other):
+        """the innermost region that encloses both -- where a value read
+        in both of them must be written."""
+        while self.depth[one] > self.depth[other]:
+            one = self.above[one]
+            continue
+        while self.depth[other] > self.depth[one]:
+            other = self.above[other]
+            continue
+        while one != other:
+            one = self.above[one]
+            other = self.above[other]
+            continue
+        return one
+
+
+def plan_the_regions(term, lang, policy):
+    """-> (regions, region per node, the conditionals written as control
+    flow, their two arm regions).
+
+    A node is written in the INNERMOST region that encloses every place
+    it is read, which is why "nodes shared by both arms and by the rest
+    stay hoisted" needs no rule of its own: the join of two arms IS the
+    region the conditional itself is written in."""
+    order = leaves_first(term)
+    readers = {}
+    for node in order:
+        for index in range(node.num_args()):
+            key = node.arg(index).get_id()
+            readers.setdefault(key, [])
+            readers[key].append((node, index))
+            continue
+        continue
+    traps_below = {}
+    for node in order:
+        got = traps_here(lang, policy, node)
+        for index in range(node.num_args()):
+            if traps_below.get(node.arg(index).get_id()):
+                got = True
+            continue
+        traps_below[node.get_id()] = got
+        continue
+    branching = set()
+    for node in order:
+        if node.decl().kind() != z3.Z3_OP_ITE:
+            continue
+        if node.num_args() != 3:
+            continue
+        if not traps_below.get(node.arg(1).get_id()):
+            if not traps_below.get(node.arg(2).get_id()):
+                continue
+        branching.add(node.get_id())
+        continue
+    regions = Regions()
+    region_of = {}
+    arms = {}
+    for node in reversed(order):
+        demands = []
+        if node.get_id() == term.get_id():
+            demands.append(0)
+        for reader, index in readers.get(node.get_id(), []):
+            held = arms.get(reader.get_id())
+            if held is not None and index in (1, 2):
+                demands.append(held[index - 1])
+                continue
+            demands.append(region_of.get(reader.get_id(), 0))
+            continue
+        where = 0
+        for demand in demands:
+            where = demand
+            break
+        for demand in demands:
+            where = regions.join(where, demand)
+            continue
+        region_of[node.get_id()] = where
+        if node.get_id() in branching:
+            arms[node.get_id()] = (regions.open(where), regions.open(where))
+        continue
+    return regions, region_of, branching, arms
 
 STATEMENT_CEILING = 400000
 """how many named intermediates a rendered source may carry.  It is a
@@ -263,6 +508,59 @@ def truth_declaration(lang, name, text):
     return "int %s = (%s) ? 1 : 0;" % (name, text)
 
 
+def zero_text(lang, kind, width):
+    """the target's own zero for one holder, which is what a named
+    intermediate two arms ASSIGN holds until an arm writes it."""
+    if kind == "bool":
+        if lang in ("rust", "go", "swift"):
+            return "false"
+        return "0"
+    if kind == "fp":
+        if lang == "rust":
+            return "0.0"
+        return "0"
+    return "0"
+
+
+def assigned_declaration(lang, renderer, name, kind, width):
+    """one named intermediate DECLARED before an `if` and assigned
+    inside both of its arms.  A width the target has no holder for
+    raises the target's own refusal here, exactly as `declaration`
+    does, so the conditional falls back to the select."""
+    if kind == "bool":
+        if lang not in ("rust", "go", "swift"):
+            return "int %s = 0;" % name
+    line = declaration(lang, renderer, name, kind, width,
+                       zero_text(lang, kind, width))
+    if lang == "rust":
+        return "let mut %s" % line[len("let "):]
+    return line
+
+
+def assignment(lang, name, kind, text):
+    """one arm's write of the value the conditional answers with."""
+    if kind == "bool":
+        if lang not in ("rust", "go", "swift"):
+            return "%s = (%s) ? 1 : 0;" % (name, text)
+    if lang in ("rust", "c", "cpp"):
+        return "%s = %s;" % (name, text)
+    return "%s = %s" % (name, text)
+
+
+def guard_opening(lang, condition):
+    if lang in ("rust", "go", "swift"):
+        return "if %s {" % condition
+    return "if (%s) {" % condition
+
+
+def guard_middle(lang):
+    return "} else {"
+
+
+def guard_closing(lang):
+    return "}"
+
+
 def float_declaration(lang, name, width, text):
     import emulate as E
     if lang == "rust":
@@ -301,6 +599,12 @@ class General(object):
         self.native_nodes = 0
         self.constructed_nodes = 0
         self.widths_of_kind = {}
+        self.regions = Regions()
+        self.region_of = {}
+        self.branching = set()
+        self.arms = {}
+        self.current_region = 0
+        self.guards_written = 0
 
     def fresh(self):
         name = "v%d" % self.counter
@@ -366,7 +670,9 @@ class General(object):
         name = self.fresh()
         line = declaration(self.lang, self.renderer, name, kind, width,
                            text)
-        self.statements.append((name, line, node.get_id()))
+        self.statements.append({"what": "statement", "name": name,
+                                "line": line, "key": node.get_id(),
+                                "region": self.current_region})
         self.renderer.bound[node.get_id()] = (name, kind, width)
         return self.renderer.bound[node.get_id()]
 
@@ -375,7 +681,14 @@ class General(object):
     def walk(self, term):
         """the original term, leaves first: each node either kept as the
         target's own operator or replaced by its construction.  Returns
-        the root's Value."""
+        the root's Value.
+
+        THE REGIONS ARE PLANNED FIRST, before one statement is written:
+        which conditionals are written as control flow, and which region
+        every node is written in, are properties of the TERM and the
+        target, so they are settled once and then only read."""
+        self.regions, self.region_of, self.branching, self.arms = \
+            plan_the_regions(term, self.lang, self.policy)
         order = []
         seen = set()
         stack = [(term, False)]
@@ -396,8 +709,10 @@ class General(object):
                 continue
             continue
         for node in order:
+            self.current_region = self.region_of.get(node.get_id(), 0)
             self.values[node.get_id()] = self.one_node(node)
             continue
+        self.current_region = 0
         return self.values[term.get_id()]
 
     def one_node(self, node):
@@ -410,6 +725,10 @@ class General(object):
         kind = B.kind_of(node)
         native = None
         if self.policy == "native_first" or kind is None:
+            guarded = self.try_the_guard(node, children)
+            if guarded is not None:
+                self.native_nodes = self.native_nodes + 1
+                return guarded
             native = self.try_native(node, children)
         if native is not None:
             self.native_nodes = self.native_nodes + 1
@@ -452,12 +771,100 @@ class General(object):
             if not is_a_refusal(problem):
                 raise
             restore(self.renderer, kept)
-            while len(self.statements) > before:
-                _name, _line, key = self.statements.pop()
-                if key in self.renderer.bound:
-                    del self.renderer.bound[key]
-                continue
+            self.roll_back(before)
             return None
+        return self.value_of_term(rebuilt)
+
+    def roll_back(self, before):
+        """every item appended since `before` removed, and the memo with
+        them, so a REFUSED attempt leaves nothing behind."""
+        while len(self.statements) > before:
+            item = self.statements.pop()
+            if item["key"] in self.renderer.bound:
+                del self.renderer.bound[item["key"]]
+            continue
+        return
+
+    def try_the_guard(self, node, children):
+        """the conditional whose arm holds a trapping node, offered to
+        the target as CONTROL FLOW rather than as a select.  Returns the
+        Value where the target answers, and None where it refuses --
+        exactly `try_native`'s contract, and the same fall-back on a
+        refusal, so a target with no holder for the arms' width keeps
+        the select it had."""
+        if node.get_id() not in self.branching:
+            return None
+        arms = self.arms.get(node.get_id())
+        if arms is None:
+            return None
+        rebuilt = self.rebuilt(node, children)
+        if rebuilt is None:
+            return None
+        if rebuilt.num_args() != 3:
+            return None
+        kept = snapshot(self.renderer)
+        before = len(self.statements)
+        try:
+            made = self.the_guarded_block(rebuilt, arms)
+        except Exception as problem:
+            if not is_a_refusal(problem):
+                raise
+            restore(self.renderer, kept)
+            self.roll_back(before)
+            return None
+        if made is None:
+            restore(self.renderer, kept)
+            self.roll_back(before)
+            return None
+        return made
+
+    def the_guarded_block(self, rebuilt, arms):
+        """the three texts of one conditional -- its condition and its
+        two arms -- written as a declaration, an `if`, and one
+        assignment inside each arm.
+
+        Each arm's own nodes were already written INTO that arm: the
+        plan gave every node the innermost region that encloses its
+        readers, and `walk` tagged each statement with the region of
+        the node it was written for.  So nothing is moved here; this
+        method writes the three lines that hold the arms."""
+        condition, ckind, _cwidth = self.renderer.emit(rebuilt.arg(0))
+        if ckind != "bool":
+            return None
+        then_text, then_kind, then_width = \
+            self.renderer.emit(rebuilt.arg(1))
+        else_text, else_kind, else_width = \
+            self.renderer.emit(rebuilt.arg(2))
+        if then_kind != else_kind:
+            return None
+        if then_width != else_width:
+            return None
+        if then_kind not in ("bv", "fp", "bool"):
+            return None
+        if len(self.statements) >= STATEMENT_CEILING:
+            raise B.Refused(CAUSE_TOO_LARGE,
+                            "at or above %d statements"
+                            % STATEMENT_CEILING)
+        name = self.fresh()
+        opening = assigned_declaration(self.lang, self.renderer, name,
+                                       then_kind, then_width)
+        self.statements.append({
+            "what": "guard",
+            "name": name,
+            "key": rebuilt.get_id(),
+            "region": self.current_region,
+            "opening": opening,
+            "condition": condition,
+            "then_region": arms[0],
+            "else_region": arms[1],
+            "then_line": assignment(self.lang, name, then_kind,
+                                    then_text),
+            "else_line": assignment(self.lang, name, then_kind,
+                                    else_text),
+        })
+        self.renderer.bound[rebuilt.get_id()] = (name, then_kind,
+                                                 then_width)
+        self.guards_written = self.guards_written + 1
         return self.value_of_term(rebuilt)
 
     def rebuilt(self, node, children):
@@ -598,8 +1005,74 @@ def rebuild(node, arguments):
 NAME_PATTERN = re.compile(r"\bv(\d+)\b")
 
 
-def live_statements(statements, answer_text):
-    """the statements the answer actually reads, in order.
+def right_of(line):
+    """what one written line READS: everything right of its first `=`,
+    which is the assignment in every target's own spelling."""
+    body = line.split("=", 1)
+    if len(body) > 1:
+        return body[1]
+    return ""
+
+
+def reads_of(item):
+    """(name, the region the read happens in) for every name one item
+    reads.  A conditional written as control flow reads its condition
+    OUTSIDE the `if` and each arm's value INSIDE that arm, which is
+    what makes a value used by one arm alone belong to that arm."""
+    out = []
+    if item["what"] == "statement":
+        for found in NAME_PATTERN.findall(right_of(item["line"])):
+            out.append((found, item["region"]))
+            continue
+        return out
+    for found in NAME_PATTERN.findall(item["condition"]):
+        out.append((found, item["region"]))
+        continue
+    for found in NAME_PATTERN.findall(right_of(item["then_line"])):
+        out.append((found, item["then_region"]))
+        continue
+    for found in NAME_PATTERN.findall(right_of(item["else_line"])):
+        out.append((found, item["else_region"]))
+        continue
+    return out
+
+
+def settle_the_regions(items, regions):
+    """a value written inside an arm but READ outside it is moved out to
+    the innermost region that encloses every read.
+
+    WHY IT IS NEEDED AT ALL, and it is a small number: the plan gives
+    each node of the ORIGINAL term its region, and the statements a node
+    is written as are that node's -- but two nodes' CONSTRUCTIONS can
+    build the same sub-term, z3 hands back the same node for it, and the
+    memo then has one name written in the first node's region and read
+    from the second's.  The pass below is one walk in reverse: every
+    reader of a name is met before the line that writes it, so one pass
+    settles the whole chain."""
+    read_at = {}
+    for item in reversed(items):
+        where = item["region"]
+        seen = read_at.get(item["name"])
+        if seen is not None:
+            where = regions.join(where, seen)
+        if where != item["region"]:
+            if item["what"] == "guard":
+                regions.move(item["then_region"], where)
+                regions.move(item["else_region"], where)
+            item["region"] = where
+        for found, region in reads_of(item):
+            held = read_at.get(found)
+            if held is None:
+                read_at[found] = region
+                continue
+            read_at[found] = regions.join(held, region)
+            continue
+        continue
+    return
+
+
+def live_items(items, answer_text):
+    """the items the answer actually reads, in order.
 
     A node bound and then not used is DEAD -- it happens where the
     native route was tried, refused, and the construction took a
@@ -607,19 +1080,58 @@ def live_statements(statements, answer_text):
     variable, so the dead ones are dropped rather than declared."""
     live = set(NAME_PATTERN.findall(answer_text))
     kept = []
-    for name, line, _key in reversed(statements):
-        number = name[1:]
+    for item in reversed(items):
+        number = item["name"][1:]
         if number not in live:
             continue
-        kept.append((name, line))
-        body = line.split("=", 1)
-        if len(body) > 1:
-            for found in NAME_PATTERN.findall(body[1]):
-                live.add(found)
-                continue
+        kept.append(item)
+        for found, _region in reads_of(item):
+            live.add(found)
+            continue
         continue
     kept.reverse()
     return kept
+
+
+def written_lines(lang, kept, regions):
+    """(depth, line) for every line of the function body, in order: the
+    region 0 items, and inside each conditional written as control flow
+    its declaration, its `if`, its two arms' own items, and the two
+    assignments."""
+    by_region = {}
+    for item in kept:
+        by_region.setdefault(item["region"], [])
+        by_region[item["region"]].append(item)
+        continue
+    return region_lines(lang, by_region, 0, 0)
+
+
+def region_lines(lang, by_region, region, depth):
+    out = []
+    for item in by_region.get(region, []):
+        if item["what"] == "statement":
+            out.append((depth, item["line"]))
+            continue
+        out.append((depth, item["opening"]))
+        out.append((depth, guard_opening(lang, item["condition"])))
+        out.extend(region_lines(lang, by_region, item["then_region"],
+                                depth + 1))
+        out.append((depth + 1, item["then_line"]))
+        out.append((depth, guard_middle(lang)))
+        out.extend(region_lines(lang, by_region, item["else_region"],
+                                depth + 1))
+        out.append((depth + 1, item["else_line"]))
+        out.append((depth, guard_closing(lang)))
+        continue
+    return out
+
+
+def indented(lang, depth, line):
+    """the target's own indentation: go is written with tabs by its own
+    tool and every other target here with four spaces."""
+    if lang == "go":
+        return "\t" * (depth + 1) + line
+    return "    " * (depth + 1) + line
 
 
 def render(term, lang, families, home, bits, label, word, policy,
@@ -658,9 +1170,11 @@ def render(term, lang, families, home, bits, label, word, policy,
     else:
         answer_text = body
         answer_lines = None
-    kept = live_statements(walker.statements, answer_text)
-    source, symbol = assemble(lang, renderer, label, return_type, kept,
-                              answer_lines, body, text)
+    settle_the_regions(walker.statements, walker.regions)
+    kept = live_items(walker.statements, answer_text)
+    body_lines = written_lines(lang, kept, walker.regions)
+    source, symbol = assemble(lang, renderer, label, return_type,
+                              body_lines, answer_lines, body, text)
     return {
         "written_term": B.joined(root),
         "source": source,
@@ -672,6 +1186,7 @@ def render(term, lang, families, home, bits, label, word, policy,
             len(walker.statements),
         "native_nodes": walker.native_nodes,
         "constructed_nodes": walker.constructed_nodes,
+        "guards": walker.guards_written,
         "constructed_kinds": dict(walker.constructed_kinds),
         "constructed_widths": dict(walker.widths_of_kind),
         "policy": policy,
@@ -685,7 +1200,10 @@ def assemble(lang, renderer, label, return_type, statements,
     """the target's own program shape, with the named intermediates in
     the function body.  Every shape below is the one that target's own
     renderer writes; only the body between the signature and the answer
-    is this file's."""
+    is this file's.
+
+    `statements` is (depth, line) per written line, the depth being how
+    many conditionals written as control flow the line sits inside."""
     import emulate as E
     symbol = "emu_%s" % label
     lines = []
@@ -707,8 +1225,8 @@ def assemble(lang, renderer, label, return_type, statements,
         lines.append("pub extern \"C\" fn %s(%s) -> %s"
                      % (symbol, ", ".join(params), return_type))
         lines.append("{")
-        for _name, line in statements:
-            lines.append("    %s" % line)
+        for depth, line in statements:
+            lines.append(indented(lang, depth, line))
             continue
         lines.append("    %s" % body)
         lines.append("}")
@@ -739,8 +1257,8 @@ def assemble(lang, renderer, label, return_type, statements,
         lines.append("//go:noinline")
         lines.append("func %s(%s) %s {" % (symbol, ", ".join(params),
                                            return_type))
-        for _name, line in statements:
-            lines.append("\t%s" % line)
+        for depth, line in statements:
+            lines.append(indented(lang, depth, line))
             continue
         for line in (answer_lines or [body]):
             lines.append("\t%s" % line)
@@ -782,8 +1300,8 @@ def assemble(lang, renderer, label, return_type, statements,
         lines.append("public func %s(%s) -> %s"
                      % (symbol, ", ".join(params), return_type))
         lines.append("{")
-        for _name, line in statements:
-            lines.append("    %s" % line)
+        for depth, line in statements:
+            lines.append(indented(lang, depth, line))
             continue
         lines.append("    return %s" % body)
         lines.append("}")
@@ -820,8 +1338,8 @@ def assemble(lang, renderer, label, return_type, statements,
     lines.append("%s" % return_type)
     lines.append("%s(%s)" % (symbol, ", ".join(params)))
     lines.append("{")
-    for _name, line in statements:
-        lines.append("    %s" % line)
+    for depth, line in statements:
+        lines.append(indented(lang, depth, line))
         continue
     lines.append("    return %s;" % body)
     lines.append("}")

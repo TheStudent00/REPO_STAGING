@@ -1,0 +1,693 @@
+"use strict";
+const view = new DataView(new ArrayBuffer(8));
+
+function m(x, w) { return BigInt.asUintN(w, x); }
+function s(x, w) { return BigInt.asIntN(w, x); }
+function add(a, b, w) { return m(a + b, w); }
+function sub(a, b, w) { return m(a - b, w); }
+function mul(a, b, w) { return m(a * b, w); }
+function band(a, b, w) { return m(a & b, w); }
+function bor(a, b, w) { return m(a | b, w); }
+function bxor(a, b, w) { return m(a ^ b, w); }
+function bnot(a, w) { return m(~a, w); }
+function bneg(a, w) { return m(-a, w); }
+function shl(a, n, w) {
+    if (n >= BigInt(w)) { return 0n; }
+    return m(a << n, w);
+}
+function lshr(a, n, w) {
+    if (n >= BigInt(w)) { return 0n; }
+    return m(a, w) >> n;
+}
+function ashr(a, n, w) {
+    const v = s(a, w);
+    let k = n;
+    if (k >= BigInt(w)) { k = BigInt(w - 1); }
+    return m(v >> k, w);
+}
+function udiv(a, b, w) { return m(m(a, w) / m(b, w), w); }
+function urem(a, b, w) { return m(m(a, w) % m(b, w), w); }
+function sdiv(a, b, w) { return m(s(a, w) / s(b, w), w); }
+function srem(a, b, w) { return m(s(a, w) % s(b, w), w); }
+function ult(a, b, w) { return m(a, w) < m(b, w); }
+function ule(a, b, w) { return m(a, w) <= m(b, w); }
+function ugt(a, b, w) { return m(a, w) > m(b, w); }
+function uge(a, b, w) { return m(a, w) >= m(b, w); }
+function slt(a, b, w) { return s(a, w) < s(b, w); }
+function sle(a, b, w) { return s(a, w) <= s(b, w); }
+function sgt(a, b, w) { return s(a, w) > s(b, w); }
+function sge(a, b, w) { return s(a, w) >= s(b, w); }
+function eq(a, b, w) { return m(a, w) === m(b, w); }
+function ne(a, b, w) { return m(a, w) !== m(b, w); }
+function cat(hi, lo, lw) { return (hi << BigInt(lw)) | m(lo, lw); }
+function ext(x, hi, lo) { return m(x >> BigInt(lo), hi - lo + 1); }
+function sext(x, fromw, tow) { return m(s(x, fromw), tow); }
+function b2f(x, w) {
+    if (w === 32) {
+        view.setUint32(0, Number(m(x, 32)), true);
+        return view.getFloat32(0, true);
+    }
+    view.setBigUint64(0, m(x, 64), true);
+    return view.getFloat64(0, true);
+}
+function f2b(f, w) {
+    if (w === 32) {
+        view.setFloat32(0, f, true);
+        return BigInt(view.getUint32(0, true));
+    }
+    view.setFloat64(0, f, true);
+    return view.getBigUint64(0, true);
+}
+function fadd(a, b, w) { return f2b(b2f(a, w) + b2f(b, w), w); }
+function fsub(a, b, w) { return f2b(b2f(a, w) - b2f(b, w), w); }
+function fmul(a, b, w) { return f2b(b2f(a, w) * b2f(b, w), w); }
+function fdiv(a, b, w) { return f2b(b2f(a, w) / b2f(b, w), w); }
+function i2f(x, fromw, w) { return f2b(Number(s(x, fromw)), w); }
+function u2f(x, fromw, w) { return f2b(Number(m(x, fromw)), w); }
+function fwiden(x, fromw, w) { return f2b(b2f(x, fromw), w); }
+
+// task bb2 emulation -- the BIT-BLAST route: z3's own circuit,
+// one named local per gate, over the term of cmovb_gpr_gpr_32__reg_rdi__javascript.
+// The term's layer-5 text, LITERAL:
+//   Concat(0, If(ULE(Extract(31, 0, v0), Extract(31, 0, v1)), Extract(31, 0, v2), Extract(31, 0, v3)))
+function emu_cmovb_gpr_gpr_32__reg_rdi__javascript(a, b, c, d) {
+    const x3_0 = ext(c, 0, 0);
+    const x0_0 = ext(b, 0, 0);
+    const x1_0 = ext(a, 0, 0);
+    const x1_1 = ext(a, 1, 1);
+    const x0_1 = ext(b, 1, 1);
+    const x1_2 = ext(a, 2, 2);
+    const x0_2 = ext(b, 2, 2);
+    const x1_3 = ext(a, 3, 3);
+    const x0_3 = ext(b, 3, 3);
+    const x1_4 = ext(a, 4, 4);
+    const x0_4 = ext(b, 4, 4);
+    const x1_5 = ext(a, 5, 5);
+    const x0_5 = ext(b, 5, 5);
+    const x1_6 = ext(a, 6, 6);
+    const x0_6 = ext(b, 6, 6);
+    const x1_7 = ext(a, 7, 7);
+    const x0_7 = ext(b, 7, 7);
+    const x1_8 = ext(a, 8, 8);
+    const x0_8 = ext(b, 8, 8);
+    const x1_9 = ext(a, 9, 9);
+    const x0_9 = ext(b, 9, 9);
+    const x1_10 = ext(a, 10, 10);
+    const x0_10 = ext(b, 10, 10);
+    const x1_11 = ext(a, 11, 11);
+    const x0_11 = ext(b, 11, 11);
+    const x1_12 = ext(a, 12, 12);
+    const x0_12 = ext(b, 12, 12);
+    const x1_13 = ext(a, 13, 13);
+    const x0_13 = ext(b, 13, 13);
+    const x1_14 = ext(a, 14, 14);
+    const x0_14 = ext(b, 14, 14);
+    const x1_15 = ext(a, 15, 15);
+    const x0_15 = ext(b, 15, 15);
+    const x1_16 = ext(a, 16, 16);
+    const x0_16 = ext(b, 16, 16);
+    const x1_17 = ext(a, 17, 17);
+    const x0_17 = ext(b, 17, 17);
+    const x1_18 = ext(a, 18, 18);
+    const x0_18 = ext(b, 18, 18);
+    const x1_19 = ext(a, 19, 19);
+    const x0_19 = ext(b, 19, 19);
+    const x1_20 = ext(a, 20, 20);
+    const x0_20 = ext(b, 20, 20);
+    const x1_21 = ext(a, 21, 21);
+    const x0_21 = ext(b, 21, 21);
+    const x1_22 = ext(a, 22, 22);
+    const x0_22 = ext(b, 22, 22);
+    const x1_23 = ext(a, 23, 23);
+    const x0_23 = ext(b, 23, 23);
+    const x1_24 = ext(a, 24, 24);
+    const x0_24 = ext(b, 24, 24);
+    const x1_25 = ext(a, 25, 25);
+    const x0_25 = ext(b, 25, 25);
+    const x1_26 = ext(a, 26, 26);
+    const x0_26 = ext(b, 26, 26);
+    const x1_27 = ext(a, 27, 27);
+    const x0_27 = ext(b, 27, 27);
+    const x1_28 = ext(a, 28, 28);
+    const x0_28 = ext(b, 28, 28);
+    const x1_29 = ext(a, 29, 29);
+    const x0_29 = ext(b, 29, 29);
+    const x1_30 = ext(a, 30, 30);
+    const x0_30 = ext(b, 30, 30);
+    const x1_31 = ext(a, 31, 31);
+    const x0_31 = ext(b, 31, 31);
+    const x2_0 = ext(d, 0, 0);
+    const x3_1 = ext(c, 1, 1);
+    const x2_1 = ext(d, 1, 1);
+    const x3_2 = ext(c, 2, 2);
+    const x2_2 = ext(d, 2, 2);
+    const x3_3 = ext(c, 3, 3);
+    const x2_3 = ext(d, 3, 3);
+    const x3_4 = ext(c, 4, 4);
+    const x2_4 = ext(d, 4, 4);
+    const x3_5 = ext(c, 5, 5);
+    const x2_5 = ext(d, 5, 5);
+    const x3_6 = ext(c, 6, 6);
+    const x2_6 = ext(d, 6, 6);
+    const x3_7 = ext(c, 7, 7);
+    const x2_7 = ext(d, 7, 7);
+    const x3_8 = ext(c, 8, 8);
+    const x2_8 = ext(d, 8, 8);
+    const x3_9 = ext(c, 9, 9);
+    const x2_9 = ext(d, 9, 9);
+    const x3_10 = ext(c, 10, 10);
+    const x2_10 = ext(d, 10, 10);
+    const x3_11 = ext(c, 11, 11);
+    const x2_11 = ext(d, 11, 11);
+    const x3_12 = ext(c, 12, 12);
+    const x2_12 = ext(d, 12, 12);
+    const x3_13 = ext(c, 13, 13);
+    const x2_13 = ext(d, 13, 13);
+    const x3_14 = ext(c, 14, 14);
+    const x2_14 = ext(d, 14, 14);
+    const x3_15 = ext(c, 15, 15);
+    const x2_15 = ext(d, 15, 15);
+    const x3_16 = ext(c, 16, 16);
+    const x2_16 = ext(d, 16, 16);
+    const x3_17 = ext(c, 17, 17);
+    const x2_17 = ext(d, 17, 17);
+    const x3_18 = ext(c, 18, 18);
+    const x2_18 = ext(d, 18, 18);
+    const x3_19 = ext(c, 19, 19);
+    const x2_19 = ext(d, 19, 19);
+    const x3_20 = ext(c, 20, 20);
+    const x2_20 = ext(d, 20, 20);
+    const x3_21 = ext(c, 21, 21);
+    const x2_21 = ext(d, 21, 21);
+    const x3_22 = ext(c, 22, 22);
+    const x2_22 = ext(d, 22, 22);
+    const x3_23 = ext(c, 23, 23);
+    const x2_23 = ext(d, 23, 23);
+    const x3_24 = ext(c, 24, 24);
+    const x2_24 = ext(d, 24, 24);
+    const x3_25 = ext(c, 25, 25);
+    const x2_25 = ext(d, 25, 25);
+    const x3_26 = ext(c, 26, 26);
+    const x2_26 = ext(d, 26, 26);
+    const x3_27 = ext(c, 27, 27);
+    const x2_27 = ext(d, 27, 27);
+    const x3_28 = ext(c, 28, 28);
+    const x2_28 = ext(d, 28, 28);
+    const x3_29 = ext(c, 29, 29);
+    const x2_29 = ext(d, 29, 29);
+    const x3_30 = ext(c, 30, 30);
+    const x2_30 = ext(d, 30, 30);
+    const x3_31 = ext(c, 31, 31);
+    const x2_31 = ext(d, 31, 31);
+    const g0 = (x0_0 ^ 1n);
+    const g1 = (x1_0 | g0);
+    const g2 = (g1 ^ 1n);
+    const g3 = (x1_1 ^ 1n);
+    const g4 = (g3 | g2);
+    const g5 = (g4 ^ 1n);
+    const g6 = (x0_1 | g2);
+    const g7 = (g6 ^ 1n);
+    const g8 = (x0_1 | g3);
+    const g9 = (g8 ^ 1n);
+    const g10 = (g9 | g7);
+    const g11 = (g10 | g5);
+    const g12 = (g11 ^ 1n);
+    const g13 = (x1_2 ^ 1n);
+    const g14 = (g13 | g12);
+    const g15 = (g14 ^ 1n);
+    const g16 = (x0_2 | g12);
+    const g17 = (g16 ^ 1n);
+    const g18 = (x0_2 | g13);
+    const g19 = (g18 ^ 1n);
+    const g20 = (g19 | g17);
+    const g21 = (g20 | g15);
+    const g22 = (g21 ^ 1n);
+    const g23 = (x1_3 ^ 1n);
+    const g24 = (g23 | g22);
+    const g25 = (g24 ^ 1n);
+    const g26 = (x0_3 | g22);
+    const g27 = (g26 ^ 1n);
+    const g28 = (x0_3 | g23);
+    const g29 = (g28 ^ 1n);
+    const g30 = (g29 | g27);
+    const g31 = (g30 | g25);
+    const g32 = (g31 ^ 1n);
+    const g33 = (x1_4 ^ 1n);
+    const g34 = (g33 | g32);
+    const g35 = (g34 ^ 1n);
+    const g36 = (x0_4 | g32);
+    const g37 = (g36 ^ 1n);
+    const g38 = (x0_4 | g33);
+    const g39 = (g38 ^ 1n);
+    const g40 = (g39 | g37);
+    const g41 = (g40 | g35);
+    const g42 = (g41 ^ 1n);
+    const g43 = (x1_5 ^ 1n);
+    const g44 = (g43 | g42);
+    const g45 = (g44 ^ 1n);
+    const g46 = (x0_5 | g42);
+    const g47 = (g46 ^ 1n);
+    const g48 = (x0_5 | g43);
+    const g49 = (g48 ^ 1n);
+    const g50 = (g49 | g47);
+    const g51 = (g50 | g45);
+    const g52 = (g51 ^ 1n);
+    const g53 = (x1_6 ^ 1n);
+    const g54 = (g53 | g52);
+    const g55 = (g54 ^ 1n);
+    const g56 = (x0_6 | g52);
+    const g57 = (g56 ^ 1n);
+    const g58 = (x0_6 | g53);
+    const g59 = (g58 ^ 1n);
+    const g60 = (g59 | g57);
+    const g61 = (g60 | g55);
+    const g62 = (g61 ^ 1n);
+    const g63 = (x1_7 ^ 1n);
+    const g64 = (g63 | g62);
+    const g65 = (g64 ^ 1n);
+    const g66 = (x0_7 | g62);
+    const g67 = (g66 ^ 1n);
+    const g68 = (x0_7 | g63);
+    const g69 = (g68 ^ 1n);
+    const g70 = (g69 | g67);
+    const g71 = (g70 | g65);
+    const g72 = (g71 ^ 1n);
+    const g73 = (x1_8 ^ 1n);
+    const g74 = (g73 | g72);
+    const g75 = (g74 ^ 1n);
+    const g76 = (x0_8 | g72);
+    const g77 = (g76 ^ 1n);
+    const g78 = (x0_8 | g73);
+    const g79 = (g78 ^ 1n);
+    const g80 = (g79 | g77);
+    const g81 = (g80 | g75);
+    const g82 = (g81 ^ 1n);
+    const g83 = (x1_9 ^ 1n);
+    const g84 = (g83 | g82);
+    const g85 = (g84 ^ 1n);
+    const g86 = (x0_9 | g82);
+    const g87 = (g86 ^ 1n);
+    const g88 = (x0_9 | g83);
+    const g89 = (g88 ^ 1n);
+    const g90 = (g89 | g87);
+    const g91 = (g90 | g85);
+    const g92 = (g91 ^ 1n);
+    const g93 = (x1_10 ^ 1n);
+    const g94 = (g93 | g92);
+    const g95 = (g94 ^ 1n);
+    const g96 = (x0_10 | g92);
+    const g97 = (g96 ^ 1n);
+    const g98 = (x0_10 | g93);
+    const g99 = (g98 ^ 1n);
+    const g100 = (g99 | g97);
+    const g101 = (g100 | g95);
+    const g102 = (g101 ^ 1n);
+    const g103 = (x1_11 ^ 1n);
+    const g104 = (g103 | g102);
+    const g105 = (g104 ^ 1n);
+    const g106 = (x0_11 | g102);
+    const g107 = (g106 ^ 1n);
+    const g108 = (x0_11 | g103);
+    const g109 = (g108 ^ 1n);
+    const g110 = (g109 | g107);
+    const g111 = (g110 | g105);
+    const g112 = (g111 ^ 1n);
+    const g113 = (x1_12 ^ 1n);
+    const g114 = (g113 | g112);
+    const g115 = (g114 ^ 1n);
+    const g116 = (x0_12 | g112);
+    const g117 = (g116 ^ 1n);
+    const g118 = (x0_12 | g113);
+    const g119 = (g118 ^ 1n);
+    const g120 = (g119 | g117);
+    const g121 = (g120 | g115);
+    const g122 = (g121 ^ 1n);
+    const g123 = (x1_13 ^ 1n);
+    const g124 = (g123 | g122);
+    const g125 = (g124 ^ 1n);
+    const g126 = (x0_13 | g122);
+    const g127 = (g126 ^ 1n);
+    const g128 = (x0_13 | g123);
+    const g129 = (g128 ^ 1n);
+    const g130 = (g129 | g127);
+    const g131 = (g130 | g125);
+    const g132 = (g131 ^ 1n);
+    const g133 = (x1_14 ^ 1n);
+    const g134 = (g133 | g132);
+    const g135 = (g134 ^ 1n);
+    const g136 = (x0_14 | g132);
+    const g137 = (g136 ^ 1n);
+    const g138 = (x0_14 | g133);
+    const g139 = (g138 ^ 1n);
+    const g140 = (g139 | g137);
+    const g141 = (g140 | g135);
+    const g142 = (g141 ^ 1n);
+    const g143 = (x1_15 ^ 1n);
+    const g144 = (g143 | g142);
+    const g145 = (g144 ^ 1n);
+    const g146 = (x0_15 | g142);
+    const g147 = (g146 ^ 1n);
+    const g148 = (x0_15 | g143);
+    const g149 = (g148 ^ 1n);
+    const g150 = (g149 | g147);
+    const g151 = (g150 | g145);
+    const g152 = (g151 ^ 1n);
+    const g153 = (x1_16 ^ 1n);
+    const g154 = (g153 | g152);
+    const g155 = (g154 ^ 1n);
+    const g156 = (x0_16 | g152);
+    const g157 = (g156 ^ 1n);
+    const g158 = (x0_16 | g153);
+    const g159 = (g158 ^ 1n);
+    const g160 = (g159 | g157);
+    const g161 = (g160 | g155);
+    const g162 = (g161 ^ 1n);
+    const g163 = (x1_17 ^ 1n);
+    const g164 = (g163 | g162);
+    const g165 = (g164 ^ 1n);
+    const g166 = (x0_17 | g162);
+    const g167 = (g166 ^ 1n);
+    const g168 = (x0_17 | g163);
+    const g169 = (g168 ^ 1n);
+    const g170 = (g169 | g167);
+    const g171 = (g170 | g165);
+    const g172 = (g171 ^ 1n);
+    const g173 = (x1_18 ^ 1n);
+    const g174 = (g173 | g172);
+    const g175 = (g174 ^ 1n);
+    const g176 = (x0_18 | g172);
+    const g177 = (g176 ^ 1n);
+    const g178 = (x0_18 | g173);
+    const g179 = (g178 ^ 1n);
+    const g180 = (g179 | g177);
+    const g181 = (g180 | g175);
+    const g182 = (g181 ^ 1n);
+    const g183 = (x1_19 ^ 1n);
+    const g184 = (g183 | g182);
+    const g185 = (g184 ^ 1n);
+    const g186 = (x0_19 | g182);
+    const g187 = (g186 ^ 1n);
+    const g188 = (x0_19 | g183);
+    const g189 = (g188 ^ 1n);
+    const g190 = (g189 | g187);
+    const g191 = (g190 | g185);
+    const g192 = (g191 ^ 1n);
+    const g193 = (x1_20 ^ 1n);
+    const g194 = (g193 | g192);
+    const g195 = (g194 ^ 1n);
+    const g196 = (x0_20 | g192);
+    const g197 = (g196 ^ 1n);
+    const g198 = (x0_20 | g193);
+    const g199 = (g198 ^ 1n);
+    const g200 = (g199 | g197);
+    const g201 = (g200 | g195);
+    const g202 = (g201 ^ 1n);
+    const g203 = (x1_21 ^ 1n);
+    const g204 = (g203 | g202);
+    const g205 = (g204 ^ 1n);
+    const g206 = (x0_21 | g202);
+    const g207 = (g206 ^ 1n);
+    const g208 = (x0_21 | g203);
+    const g209 = (g208 ^ 1n);
+    const g210 = (g209 | g207);
+    const g211 = (g210 | g205);
+    const g212 = (g211 ^ 1n);
+    const g213 = (x1_22 ^ 1n);
+    const g214 = (g213 | g212);
+    const g215 = (g214 ^ 1n);
+    const g216 = (x0_22 | g212);
+    const g217 = (g216 ^ 1n);
+    const g218 = (x0_22 | g213);
+    const g219 = (g218 ^ 1n);
+    const g220 = (g219 | g217);
+    const g221 = (g220 | g215);
+    const g222 = (g221 ^ 1n);
+    const g223 = (x1_23 ^ 1n);
+    const g224 = (g223 | g222);
+    const g225 = (g224 ^ 1n);
+    const g226 = (x0_23 | g222);
+    const g227 = (g226 ^ 1n);
+    const g228 = (x0_23 | g223);
+    const g229 = (g228 ^ 1n);
+    const g230 = (g229 | g227);
+    const g231 = (g230 | g225);
+    const g232 = (g231 ^ 1n);
+    const g233 = (x1_24 ^ 1n);
+    const g234 = (g233 | g232);
+    const g235 = (g234 ^ 1n);
+    const g236 = (x0_24 | g232);
+    const g237 = (g236 ^ 1n);
+    const g238 = (x0_24 | g233);
+    const g239 = (g238 ^ 1n);
+    const g240 = (g239 | g237);
+    const g241 = (g240 | g235);
+    const g242 = (g241 ^ 1n);
+    const g243 = (x1_25 ^ 1n);
+    const g244 = (g243 | g242);
+    const g245 = (g244 ^ 1n);
+    const g246 = (x0_25 | g242);
+    const g247 = (g246 ^ 1n);
+    const g248 = (x0_25 | g243);
+    const g249 = (g248 ^ 1n);
+    const g250 = (g249 | g247);
+    const g251 = (g250 | g245);
+    const g252 = (g251 ^ 1n);
+    const g253 = (x1_26 ^ 1n);
+    const g254 = (g253 | g252);
+    const g255 = (g254 ^ 1n);
+    const g256 = (x0_26 | g252);
+    const g257 = (g256 ^ 1n);
+    const g258 = (x0_26 | g253);
+    const g259 = (g258 ^ 1n);
+    const g260 = (g259 | g257);
+    const g261 = (g260 | g255);
+    const g262 = (g261 ^ 1n);
+    const g263 = (x1_27 ^ 1n);
+    const g264 = (g263 | g262);
+    const g265 = (g264 ^ 1n);
+    const g266 = (x0_27 | g262);
+    const g267 = (g266 ^ 1n);
+    const g268 = (x0_27 | g263);
+    const g269 = (g268 ^ 1n);
+    const g270 = (g269 | g267);
+    const g271 = (g270 | g265);
+    const g272 = (g271 ^ 1n);
+    const g273 = (x1_28 ^ 1n);
+    const g274 = (g273 | g272);
+    const g275 = (g274 ^ 1n);
+    const g276 = (x0_28 | g272);
+    const g277 = (g276 ^ 1n);
+    const g278 = (x0_28 | g273);
+    const g279 = (g278 ^ 1n);
+    const g280 = (g279 | g277);
+    const g281 = (g280 | g275);
+    const g282 = (g281 ^ 1n);
+    const g283 = (x1_29 ^ 1n);
+    const g284 = (g283 | g282);
+    const g285 = (g284 ^ 1n);
+    const g286 = (x0_29 | g282);
+    const g287 = (g286 ^ 1n);
+    const g288 = (x0_29 | g283);
+    const g289 = (g288 ^ 1n);
+    const g290 = (g289 | g287);
+    const g291 = (g290 | g285);
+    const g292 = (g291 ^ 1n);
+    const g293 = (x1_30 ^ 1n);
+    const g294 = (g293 | g292);
+    const g295 = (g294 ^ 1n);
+    const g296 = (x0_30 | g292);
+    const g297 = (g296 ^ 1n);
+    const g298 = (x0_30 | g293);
+    const g299 = (g298 ^ 1n);
+    const g300 = (g299 | g297);
+    const g301 = (g300 | g295);
+    const g302 = (g301 ^ 1n);
+    const g303 = (x1_31 ^ 1n);
+    const g304 = (g303 | g302);
+    const g305 = (g304 ^ 1n);
+    const g306 = (x0_31 | g302);
+    const g307 = (g306 ^ 1n);
+    const g308 = (x0_31 | g303);
+    const g309 = (g308 ^ 1n);
+    const g310 = (g309 | g307);
+    const g311 = (g310 | g305);
+    const g312 = (g311 ^ 1n);
+    const g313 = (g312 & x3_0);
+    const g314 = (g311 & x2_0);
+    const g315 = (g314 | g313);
+    const g316 = (g312 & x3_1);
+    const g317 = (g311 & x2_1);
+    const g318 = (g317 | g316);
+    const g319 = (g312 & x3_2);
+    const g320 = (g311 & x2_2);
+    const g321 = (g320 | g319);
+    const g322 = (g312 & x3_3);
+    const g323 = (g311 & x2_3);
+    const g324 = (g323 | g322);
+    const g325 = (g312 & x3_4);
+    const g326 = (g311 & x2_4);
+    const g327 = (g326 | g325);
+    const g328 = (g312 & x3_5);
+    const g329 = (g311 & x2_5);
+    const g330 = (g329 | g328);
+    const g331 = (g312 & x3_6);
+    const g332 = (g311 & x2_6);
+    const g333 = (g332 | g331);
+    const g334 = (g312 & x3_7);
+    const g335 = (g311 & x2_7);
+    const g336 = (g335 | g334);
+    const g337 = (g312 & x3_8);
+    const g338 = (g311 & x2_8);
+    const g339 = (g338 | g337);
+    const g340 = (g312 & x3_9);
+    const g341 = (g311 & x2_9);
+    const g342 = (g341 | g340);
+    const g343 = (g312 & x3_10);
+    const g344 = (g311 & x2_10);
+    const g345 = (g344 | g343);
+    const g346 = (g312 & x3_11);
+    const g347 = (g311 & x2_11);
+    const g348 = (g347 | g346);
+    const g349 = (g312 & x3_12);
+    const g350 = (g311 & x2_12);
+    const g351 = (g350 | g349);
+    const g352 = (g312 & x3_13);
+    const g353 = (g311 & x2_13);
+    const g354 = (g353 | g352);
+    const g355 = (g312 & x3_14);
+    const g356 = (g311 & x2_14);
+    const g357 = (g356 | g355);
+    const g358 = (g312 & x3_15);
+    const g359 = (g311 & x2_15);
+    const g360 = (g359 | g358);
+    const g361 = (g312 & x3_16);
+    const g362 = (g311 & x2_16);
+    const g363 = (g362 | g361);
+    const g364 = (g312 & x3_17);
+    const g365 = (g311 & x2_17);
+    const g366 = (g365 | g364);
+    const g367 = (g312 & x3_18);
+    const g368 = (g311 & x2_18);
+    const g369 = (g368 | g367);
+    const g370 = (g312 & x3_19);
+    const g371 = (g311 & x2_19);
+    const g372 = (g371 | g370);
+    const g373 = (g312 & x3_20);
+    const g374 = (g311 & x2_20);
+    const g375 = (g374 | g373);
+    const g376 = (g312 & x3_21);
+    const g377 = (g311 & x2_21);
+    const g378 = (g377 | g376);
+    const g379 = (g312 & x3_22);
+    const g380 = (g311 & x2_22);
+    const g381 = (g380 | g379);
+    const g382 = (g312 & x3_23);
+    const g383 = (g311 & x2_23);
+    const g384 = (g383 | g382);
+    const g385 = (g312 & x3_24);
+    const g386 = (g311 & x2_24);
+    const g387 = (g386 | g385);
+    const g388 = (g312 & x3_25);
+    const g389 = (g311 & x2_25);
+    const g390 = (g389 | g388);
+    const g391 = (g312 & x3_26);
+    const g392 = (g311 & x2_26);
+    const g393 = (g392 | g391);
+    const g394 = (g312 & x3_27);
+    const g395 = (g311 & x2_27);
+    const g396 = (g395 | g394);
+    const g397 = (g312 & x3_28);
+    const g398 = (g311 & x2_28);
+    const g399 = (g398 | g397);
+    const g400 = (g312 & x3_29);
+    const g401 = (g311 & x2_29);
+    const g402 = (g401 | g400);
+    const g403 = (g312 & x3_30);
+    const g404 = (g311 & x2_30);
+    const g405 = (g404 | g403);
+    const g406 = (g312 & x3_31);
+    const g407 = (g311 & x2_31);
+    const g408 = (g407 | g406);
+    const k0 = 0n;
+    const w0 = k0;
+    const w1 = cat(w0, k0, 1);
+    const w2 = cat(w1, k0, 1);
+    const w3 = cat(w2, k0, 1);
+    const w4 = cat(w3, k0, 1);
+    const w5 = cat(w4, k0, 1);
+    const w6 = cat(w5, k0, 1);
+    const w7 = cat(w6, k0, 1);
+    const w8 = cat(w7, k0, 1);
+    const w9 = cat(w8, k0, 1);
+    const w10 = cat(w9, k0, 1);
+    const w11 = cat(w10, k0, 1);
+    const w12 = cat(w11, k0, 1);
+    const w13 = cat(w12, k0, 1);
+    const w14 = cat(w13, k0, 1);
+    const w15 = cat(w14, k0, 1);
+    const w16 = cat(w15, k0, 1);
+    const w17 = cat(w16, k0, 1);
+    const w18 = cat(w17, k0, 1);
+    const w19 = cat(w18, k0, 1);
+    const w20 = cat(w19, k0, 1);
+    const w21 = cat(w20, k0, 1);
+    const w22 = cat(w21, k0, 1);
+    const w23 = cat(w22, k0, 1);
+    const w24 = cat(w23, k0, 1);
+    const w25 = cat(w24, k0, 1);
+    const w26 = cat(w25, k0, 1);
+    const w27 = cat(w26, k0, 1);
+    const w28 = cat(w27, k0, 1);
+    const w29 = cat(w28, k0, 1);
+    const w30 = cat(w29, k0, 1);
+    const w31 = cat(w30, k0, 1);
+    const w32 = cat(w31, g408, 1);
+    const w33 = cat(w32, g405, 1);
+    const w34 = cat(w33, g402, 1);
+    const w35 = cat(w34, g399, 1);
+    const w36 = cat(w35, g396, 1);
+    const w37 = cat(w36, g393, 1);
+    const w38 = cat(w37, g390, 1);
+    const w39 = cat(w38, g387, 1);
+    const w40 = cat(w39, g384, 1);
+    const w41 = cat(w40, g381, 1);
+    const w42 = cat(w41, g378, 1);
+    const w43 = cat(w42, g375, 1);
+    const w44 = cat(w43, g372, 1);
+    const w45 = cat(w44, g369, 1);
+    const w46 = cat(w45, g366, 1);
+    const w47 = cat(w46, g363, 1);
+    const w48 = cat(w47, g360, 1);
+    const w49 = cat(w48, g357, 1);
+    const w50 = cat(w49, g354, 1);
+    const w51 = cat(w50, g351, 1);
+    const w52 = cat(w51, g348, 1);
+    const w53 = cat(w52, g345, 1);
+    const w54 = cat(w53, g342, 1);
+    const w55 = cat(w54, g339, 1);
+    const w56 = cat(w55, g336, 1);
+    const w57 = cat(w56, g333, 1);
+    const w58 = cat(w57, g330, 1);
+    const w59 = cat(w58, g327, 1);
+    const w60 = cat(w59, g324, 1);
+    const w61 = cat(w60, g321, 1);
+    const w62 = cat(w61, g318, 1);
+    const w63 = cat(w62, g315, 1);
+    return m(w63, 64);
+}
+
+
+
+const lines = require("fs").readFileSync(0, "utf8").split("\n");
+const out = [];
+for (const line of lines) {
+    const text = line.trim();
+    if (text.length === 0) { continue; }
+    const values = text.split(/\s+/).map((one) => BigInt(one));
+    try {
+        out.push(emu_cmovb_gpr_gpr_32__reg_rdi__javascript(...values).toString());
+    } catch (problem) {
+        out.push("RAISE:" + problem.name);
+    }
+}
+process.stdout.write(out.join("\n") + "\n");

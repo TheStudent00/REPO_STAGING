@@ -767,3 +767,71 @@ status: living
   Status: closed, spelling guard PASS on 4 of 4, verifier 5 MATCHES /
   0 DIFFERS (6 UNVERIFIABLE, all glossary-style definition sentences),
   instance `cov1` down.
+- 2026-09-12 — **task rd1: a conditional whose branch can trap is
+  rendered as an `if` that dominates the operation.** ONE rule in
+  `render_general.py`, the general render's own file and the only file
+  this task changed: when a conditional's branch transitively contains a
+  TRAPPING NODE — a node whose operator, in that target, can stop the
+  program instead of answering (division and remainder on go and swift,
+  the float-to-integer conversion on swift; rust is out of the set
+  because its renderer writes the divide under an unreachable hint, c
+  and c++ because neither language defines a trap) — the conditional is
+  written as control flow, each arm's nodes computed INSIDE its arm, so
+  the guard DOMINATES the operation. The term is unchanged and only the
+  printed ORDER is, so `lean_general.py` is untouched. Placement is one
+  pass before any statement is written: a node is written in the
+  innermost region enclosing every place it is read, which is why nodes
+  shared by both arms stay hoisted with no rule of their own. MEASURED:
+  the rule fires on 16 cells of 255, all on go, all on `native_first`,
+  34 guarded conditionals; under `all_constructed` it fires nowhere
+  (a constructed divide holds no trapping node); c, c++ and rust sources
+  are byte-identical to the pre-rd1 render (36 of 36 checked). rv6 re-run
+  whole (1,020 runs, one process, 2,589 s, peak 1,165,012 kB, abort
+  `ABORT_MEMORY_RD1`): go 238 -> 240 proved and 7 -> 5 disproved of 255,
+  c/c++/rust unmoved; the two verdicts that moved are `div gpr_gpr_gpr
+  64` and `rem gpr_gpr_gpr 64` on go, sat -> proved. Store:
+  `construct/general/rd1_all.jsonl` (rv6_all.jsonl untouched, so before
+  and after are both on disk). THE x86 DELTA IS EMPTY and the reason is
+  architectural: x86 RAISES on the zero divisor where RISC-V DEFINES an
+  answer, so the x86 divide cells' terms carry no conditional at all and
+  the rule has nothing to fire on — every source of the 8-cell x86
+  divide family on go and swift is byte-identical to the one task t4
+  saved, and t4's collapse column stands. Report:
+  `PRIVATE/PseudoCoupHQ/DevComms/log_268_rd1_the_guard_dominates_the_operation.md`.
+  Status: closed, spelling guard PASS on 2 of 2, verifier 5 MATCHES /
+  0 DIFFERS (18 UNVERIFIABLE, attributions and glosses), instance `rd1`
+  down.
+
+- 2026-09-12 — **task bb2: the bit-blast route over every attested x86
+  arch-opcode, on all five compiled languages, and the interpreted seven
+  by agreement.** Task t4's x86 pass with ONE thing swapped, the render:
+  z3's own `bit-blast` tactic turns each cell's term into a circuit and
+  `bitblast.render_gates` writes one named local per gate; the
+  population, the arrival contract, the compile at ship flags, the
+  carve, the gate, the store and the bank registration are `general.py`'s
+  and `autopoly.py`'s own and are CALLED. Two differences from t4 and
+  both deliberate: the tier is offered EVERY place, including the ones
+  the native route proved, and the population is the WHOLE outer set
+  rather than the bank's delta — a third route's column is not
+  comparable unless it is measured over the same 253 cells, and running
+  it over all of them makes the pass a 100% re-derivation of every
+  certified key by an independent route. 1,265 runs, 5,705 store lines,
+  14,855 s, one process, peak 2,427,268 kB under the 6 GB bound. THE
+  THREE ROUTES of 253, destination-only: native 205/227/176/157/160,
+  backstop 9/9/8/7/12, bit-blast 122/122/122/126/13, any route
+  207/229/176/164/167 on c/c++/rust/go/swift; strict: bit-blast
+  91/91/91/95/13. THE READINGS MOVE where task t4's did not: cells on
+  all four 96 → 107 strict, 154 → 163 destination-only, 141 → 150
+  corpus-needed, and the bank's pairs 2,015 → 2,105 / 2,273 → 2,331 /
+  2,229 → 2,303; the bank 26,684 → 39,980 certificates. THE INTERPRETED
+  SEVEN, the same circuit run beside the definition at
+  `interp_check`'s own sample: 166 agreed of 253 on cpython, php, ruby,
+  javascript, dart and csharp and 162 on java, 162 on all seven, ZERO
+  disagreements over 1,771 runs, zero timeouts — `agreed`, never proved.
+  Report:
+  `PRIVATE/PseudoCoupHQ/DevComms/log_269_bb2_the_bit_blast_route_on_x86_and_the_interpreted_seven.md`.
+  Status: closed, spelling guard PASS on 8 of 8 with `grep -c exempt` 0,
+  instance `bb2` down. Four items await the owner: 32 alarms of 2,383 certified
+  places re-derived, swift's `@_cdecl` thunk, the riscv64 Swift SDK
+  probe, and `bitblast.render_gates` broken in the repository against
+  task rd1's new `render_general.assemble` contract.

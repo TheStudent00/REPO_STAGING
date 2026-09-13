@@ -16,13 +16,13 @@ A rollup over this node's own sub-tree (itself plus everything beneath it). Rege
 
 ## sub-tree
 
-sub-node count: 44
+sub-node count: 47
 
 ### status breakdown
 
 | status | count |
 | --- | --- |
-| draft | 45 |
+| draft | 48 |
 
 ### designation breakdown
 
@@ -33,7 +33,7 @@ sub-node count: 44
 | code (module) | 12 |
 | grouping | 6 |
 | rule | 1 |
-| work | 5 |
+| work | 8 |
 
 ## blocked
 

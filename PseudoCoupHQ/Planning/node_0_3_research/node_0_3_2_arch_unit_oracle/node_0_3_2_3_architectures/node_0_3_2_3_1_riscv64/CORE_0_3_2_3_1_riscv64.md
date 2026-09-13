@@ -11,7 +11,13 @@ node:
 super_node:
     name: architectures
     path: ../CORE_0_3_2_3_architectures.md
-sub_nodes: []
+sub_nodes:
+    - name: lifter_from_sail
+      path: node_0_3_2_3_1_0_lifter_from_sail/CORE_0_3_2_3_1_0_lifter_from_sail.md
+    - name: arch_opcode_axis
+      path: node_0_3_2_3_1_1_arch_opcode_axis/CORE_0_3_2_3_1_1_arch_opcode_axis.md
+    - name: language_axis
+      path: node_0_3_2_3_1_2_language_axis/CORE_0_3_2_3_1_2_language_axis.md
 ---
 
 # CORE 0_3_2_3_1 — riscv64
@@ -31,7 +37,9 @@ sub_nodes: []
 
 ## sub_nodes
 
-*(none yet)*
+- [lifter_from_sail](node_0_3_2_3_1_0_lifter_from_sail/CORE_0_3_2_3_1_0_lifter_from_sail.md) — The lifter's table, instruction → definition as a z3 formula per written register, PRODUCED BY A TOOL from the Sail model on every run.
+- [arch_opcode_axis](node_0_3_2_3_1_1_arch_opcode_axis/CORE_0_3_2_3_1_1_arch_opcode_axis.md) — Every RISC-V arch-opcode reached, under the owner's rule of 2026-09-13: the method may know only what every arch-opcode gives it, its definition from Sail and the language's primitive operators; nothing is written because someone knows a cell is a multiply or a divide.
+- [language_axis](node_0_3_2_3_1_2_language_axis/CORE_0_3_2_3_1_2_language_axis.md) — Every language PCHQ covers, against the RISC-V definitions.
 
 ## definition
 

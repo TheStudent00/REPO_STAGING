@@ -1,0 +1,26 @@
+// task t4 emulation -- rendered by render_general.py, one named
+// intermediate per node of the term of czero_eqz_gpr_gpr_same_64__reg_a0__go__native_first.
+//   If(v0 == 0, 0, v0)
+package main
+
+func sel64(c bool, x uint64, y uint64) uint64 {
+	if c {
+		return x
+	}
+	return y
+}
+
+//go:noinline
+func emu_czero_eqz_gpr_gpr_same_64__reg_a0__go__native_first(a uint64) uint64 {
+	var v0 bool = ((uint64(uint64(a))) == (uint64(uint64(0x0))))
+	var v1 uint64 = sel64(v0, uint64(uint64(0x0)), uint64(uint64(a)))
+	return uint64(v1)
+}
+
+var g0 uint64
+var sink interface{}
+
+func main() {
+	sink = emu_czero_eqz_gpr_gpr_same_64__reg_a0__go__native_first(g0)
+	_ = sink
+}

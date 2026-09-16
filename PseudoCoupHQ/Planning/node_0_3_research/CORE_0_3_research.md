@@ -18,6 +18,8 @@ sub_nodes:
       path: node_0_3_1_operator_equivalence/CORE_0_3_1_operator_equivalence.md
     - name: arch_unit_oracle
       path: node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md
+    - name: lean_proof_path_resistant_to_churn
+      path: node_0_3_3_lean_proof_path_resistant_to_churn/CORE_0_3_3_lean_proof_path_resistant_to_churn.md
 ---
 
 # CORE 0_3 — research
@@ -40,6 +42,7 @@ sub_nodes:
 - [intentions](node_0_3_0_intentions/CORE_0_3_0_intentions.md) — The research project that establishes what developers MEAN by a language's features, measured from the language side: what data is, how each language holds it, and what each compiler's operators do to it when run.
 - [operator_equivalence](node_0_3_1_operator_equivalence/CORE_0_3_1_operator_equivalence.md) — The research project that proves which operators of which languages are the same computation at the machine level: every operator of every language, on every operand-type pair its compiler accepts, carved from the compiler's own emission as an ARCH-UNIT, rendered into one canonical form, proved against a reference simulator, and merged into ONE POOL in which units proved equivalent are one entry.
 - [arch_unit_oracle](node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md) — A parallel research line, forked 2026-09-05 from the operator equivalence line ([operator_equivalence](../node_0_3_1_operator_equivalence/CORE_0_3_1_operator_equivalence.md)), that turns the arch-unit machinery on itself in three ways and uses each as an ORACLE — an independent answer that the main line's answers can be checked against.
+- [lean_proof_path_resistant_to_churn](node_0_3_3_lean_proof_path_resistant_to_churn/CORE_0_3_3_lean_proof_path_resistant_to_churn.md) — The proof path for RISC-V that resists churn: Sail's own Lean output is the definition of every arch-opcode, a compiled unit's meaning is Sail's own `execute` applied per instruction with the registers unknown, and every equality is a Lean theorem; nothing in it is written for any opcode, compiler or language release.
 
 ## definition
 

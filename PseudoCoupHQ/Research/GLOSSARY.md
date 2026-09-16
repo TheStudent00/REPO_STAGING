@@ -164,3 +164,43 @@ for cell in set_of_cells:
   the rule shortens the emulator arch-unit by swapping the segment for
   the unit. The set of rules is the simplification the compiler did not
   find.
+
+`meaning of a unit` (the owner's `build_unit_lean`; the lifter with the
+reference file removed; 2026-09-13, log 274)
+- an arch_unit as one Lean expression: apply each instruction's
+  definition in order, thread the registers, leave the inputs unknown.
+- built: decode each word with Sail's own decoder and apply Sail's own
+  `execute`, both as the sail compiler's Lean backend emitted them; a
+  branch forks the walk and the sides join under the branch condition.
+
+`the definitions` (`SailModel.definitions`; log 274)
+- one Lean expression per `execute` clause of the Sail model, the
+  register reads and the write stripped; the key from the assembly
+  clause. Level 0, read by a program.
+- built: `sail --lean` over the leaf modules the compilers target, on
+  the tower, about 45 minutes and 17 GB, once per model commit, cached.
+
+`widening` (log 274)
+- the rule that rewrites a width-free definition as fixed-width
+  operations: every integer in it came from a register, so every
+  intermediate is bounded; pick a width per node that loses nothing and
+  replace each integer operation by the bit-vector one at that width,
+  citing Lean's library fact for the replacement.
+
+`bit-blast`
+- turn an equation between fixed-width expressions into a circuit of
+  and, or, not gates and ask a SAT solver whether any input makes the
+  sides differ; none, with the search exhausted, is the proof. Lean's
+  tactic for it is `bv_decide`; z3 does it inside the gate.
+
+`the swap table` (`Language.operator_for`; the owner's
+`lang_x_arch_unit_lean_primitives`)
+- per language: which of its own compiled units computes each Sail
+  primitive at each width. Filled by pass A by proof, never by hand; an
+  input to `render`.
+
+`written once`, `never written` (the owner, 2026-09-13)
+- written once: part of the system, like the algorithm; it mentions no
+  opcode, compiler or language version, so churn never touches it.
+- never written: anything per opcode, per compiler, per language
+  release. The test of every piece of the Lean proof path.

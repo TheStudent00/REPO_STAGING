@@ -1,7 +1,7 @@
 # Communication Protocol — cases
 
 The account behind every rule in
-`PRIVATE/DevComms/LLM_communication_protocol.md` (v3). Each
+`PRIVATE/DevComms/comms_protocol.md` (v3). Each
 v2 section is reproduced here VERBATIM — its rule text, its dated
 failure, and every quote — under the card or cards it now feeds.
 Nothing from v2 was dropped; the rulebook carries the distilled
@@ -1696,3 +1696,33 @@ exposure.
 The full record of the remedy, every action and the checks that prove
 the state: `PRIVATE/DevComms/log_002_sensitive_exposure_remedied_2026-09-10.md`.
 Read its §0 before raising the topic again.
+
+
+### v3 Appendix G — 2026-09-14: a figure under the owner's name for a different set (`order.project-not-session`, `names.keep-my-words`)
+
+Context: the Lean proof path run over rv6's rendered corpus. The reply
+was in the C.1 form, declarations and a table keyed by the owner's names.
+Under `arch-units` it put "490 per language". the owner:
+
+> 490? why 490? each language doesnt have the exact same number of
+> arch-units so where the fuck does 490 come from? put your response in
+> a log and you will upgrade it as a point out how you dont give a
+> flying fuck.
+
+What 490 counted: rendered emulation source files per language in
+`PRIVATE/PseudoCoupHQ/Research/oracle/cross_construction/emulation/construct/general/emulations_riscv64/`,
+the same 255 cells written for every language (255 `native_first` +
+235 `all_constructed`), so 490 for each of c, cpp, rust, go. What the
+name `arch-unit` means to the owner: every compiled function a language's
+compiler produced, which differs per language (c 10,620, cpp 17,840,
+go 590, rust 695 in the earlier census). The number was right for the
+set it counted and wrong for the set it was named as. The form was the
+protocol's; the check was not done.
+
+The sentence: a figure placed under one of the owner's names is a claim that
+the figure counts that set. Before writing the figure, state the set it
+actually counts in the owner's words; if it is not one of his sets, declare a
+new name for it and say the relation ("one arch-unit compiled from each
+rendered source, so the two counts are equal here by the render's
+doing"). The log of the correction:
+`PRIVATE/PseudoCoupHQ/DevComms/log_279_the_report_per_language_per_arch_opcode_per_arch_unit.md`.

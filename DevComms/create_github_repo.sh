@@ -10,7 +10,7 @@
 # rather than any one project's work.
 #
 # WHY IT NEEDS ONE. Every project repo's
-# DevComms/LLM_communication_protocol.md is a SYMLINK pointing here.
+# DevComms/comms_protocol.md is a SYMLINK pointing here.
 # So the documents that govern everything are currently the only ones
 # under no version control at all, while four repos version control
 # pointers at them. This fixes that without changing who owns what.

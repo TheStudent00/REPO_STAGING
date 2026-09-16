@@ -95,13 +95,13 @@ status: living
 - raised 2026-07-31 as "open, and sharper than first recorded",
   **closed 2026-08-01** (see the closing sub-bullet):
   `PRIVATE/DevComms/` was not a git repo, so
-  `LLM_communication_protocol.md` and `plan_and_code.md` were not
+  `comms_protocol.md` and `plan_and_code.md` were not
   version controlled anywhere.
   - first stated 2026-07-31 as "the authority is the only
     uncontrolled copy, the three in-repo copies are controlled".
     **that was wrong.** measured the same day: each repo's
-    `DevComms/LLM_communication_protocol.md` is a SYMLINK to
-    `../../DevComms/LLM_communication_protocol.md`, confirmed with
+    `DevComms/comms_protocol.md` is a SYMLINK to
+    `../../DevComms/comms_protocol.md`, confirmed with
     `ls -li` (three distinct inodes, each a `l`-mode entry) and
     `readlink`. git tracks the symlink, so what is version
     controlled in each repo is a POINTER, and the pointed-at content
@@ -113,7 +113,7 @@ status: living
   - upside, and the reason not to just replace them with copies:
     symlinks cannot drift. four real copies could, and keeping them
     in step would be a new job.
-  - `PRIVATE/PseudoCoupHQ/DevComms/LLM_communication_protocol.md`
+  - `PRIVATE/PseudoCoupHQ/DevComms/comms_protocol.md`
     was briefly a real copy when HQ was founded; made a symlink
     2026-07-31 for consistency with the other three.
   - the ruling asked for was: version control `PRIVATE/DevComms/`

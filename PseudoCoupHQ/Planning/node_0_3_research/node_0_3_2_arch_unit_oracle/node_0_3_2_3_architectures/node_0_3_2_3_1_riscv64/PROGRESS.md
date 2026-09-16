@@ -137,3 +137,8 @@ status: living
   `bexti`, `orn`, `c.not`; (3) the backstop's float bit-cast node;
   (4) the `remu gpr_gpr_gpr 64` BUILD_REFUSED with the empty message,
   still empty.
+- 2026-09-13: sub-node `lean_proof_path` added (log 274): Sail's Lean
+  output as the definitions, Sail's `execute` composed as the walk, Lean
+  as the prover; built to leaf depth; the emit measured on the tower.
+  lx1 landed (log 272), rv9 landed (log 273, the multiply-high cause
+  named); sl1's session was lost mid-run.

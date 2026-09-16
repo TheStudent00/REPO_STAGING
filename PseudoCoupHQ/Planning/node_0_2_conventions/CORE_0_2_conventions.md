@@ -83,9 +83,9 @@ answers to nothing here.
 ## the documents
 
 - **communication protocol** —
-  `PRIVATE/DevComms/LLM_communication_protocol.md`. how the owner is
+  `PRIVATE/DevComms/comms_protocol.md`. how the owner is
   written to. the one authority: each repo's
-  `DevComms/LLM_communication_protocol.md` is a SYMLINK to it
+  `DevComms/comms_protocol.md` is a SYMLINK to it
   (`../../DevComms/...`), not a copy. so drift between them is not
   possible — but see the fragility recorded in this node's PROGRESS,
   because a symlink pointing outside the repo behaves differently

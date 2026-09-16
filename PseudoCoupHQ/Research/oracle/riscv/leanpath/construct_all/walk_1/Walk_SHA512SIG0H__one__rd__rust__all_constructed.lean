@@ -1,0 +1,381 @@
+import LeanIM
+set_option maxHeartbeats 1_000_000_000
+set_option maxRecDepth 1_000_000
+set_option linter.unusedVariables false
+set_option match.ignoreUnusedAlts true
+open Sail
+open Sail.ConcurrencyInterfaceV1
+noncomputable section
+namespace LeanIM
+open ConcurrencyInterfaceV1
+namespace Functions
+open zvk_vsm4r_funct6
+open zvk_vsha2_funct6
+open zvk_vaesem_funct6
+open zvk_vaesef_funct6
+open zvk_vaesdm_funct6
+open zvk_vaesdf_funct6
+open zvabd_vwabda_func6
+open zvabd_vabd_func6
+open zicondop
+open xRET_type
+open wxfunct6
+open wvxfunct6
+open wvvfunct6
+open wvfunct6
+open wrsop
+open write_kind
+open wmvxfunct6
+open wmvvfunct6
+open vxsgfunct6
+open vxmsfunct6
+open vxmfunct6
+open vxmcfunct6
+open vxfunct6
+open vxcmpfunct6
+open vvmsfunct6
+open vvmfunct6
+open vvmcfunct6
+open vvfunct6
+open vvcmpfunct6
+open vstart_class
+open vregno
+open vregidx
+open vmlsop
+open vlewidth
+open visgfunct6
+open virtaddr
+open vimsfunct6
+open vimfunct6
+open vimcfunct6
+open vifunct6
+open vicmpfunct6
+open vfwunary0
+open vfunary1
+open vfunary0
+open vfnunary0
+open vextfunct6
+open vector_support
+open uop
+open stateen_bit
+open sopw
+open sop
+open seed_opst
+open rounding_mode
+open ropw
+open rop
+open rmvvfunct6
+open rivvfunct6
+open rfwvvfunct6
+open rfvvfunct6
+open regno
+open regidx
+open read_kind
+open pte_check_failure
+open pmpAddrMatch
+open physaddr
+open page_based_mem_type
+open option
+open nxsfunct6
+open nxfunct6
+open nvsfunct6
+open nvfunct6
+open ntl_type
+open nisfunct6
+open nifunct6
+open mvxmafunct6
+open mvxfunct6
+open mvvmafunct6
+open mvvfunct6
+open mmfunct6
+open misaligned_exception
+open mem_payload
+open maskfunct3
+open landing_pad_expectation
+open iop
+open instruction
+open indexed_mop
+open fwvvmafunct6
+open fwvvfunct6
+open fwvfunct6
+open fwvfmafunct6
+open fwvffunct6
+open fwffunct6
+open fvvmfunct6
+open fvvmafunct6
+open fvvfunct6
+open fvfmfunct6
+open fvfmafunct6
+open fvffunct6
+open fregno
+open fregidx
+open float_class
+open f_un_x_op_H
+open f_un_x_op_D
+open f_un_rm_xf_op_S
+open f_un_rm_xf_op_H
+open f_un_rm_xf_op_D
+open f_un_rm_fx_op_S
+open f_un_rm_fx_op_H
+open f_un_rm_fx_op_D
+open f_un_rm_ff_op_S
+open f_un_rm_ff_op_H
+open f_un_rm_ff_op_D
+open f_un_op_x_S
+open f_un_op_f_S
+open f_un_f_op_H
+open f_un_f_op_D
+open f_madd_op_S
+open f_madd_op_H
+open f_madd_op_D
+open f_bin_x_op_H
+open f_bin_x_op_D
+open f_bin_rm_op_S
+open f_bin_rm_op_H
+open f_bin_rm_op_D
+open f_bin_op_x_S
+open f_bin_op_f_S
+open f_bin_f_op_H
+open f_bin_f_op_D
+open extop_zbb
+open extension
+open exception
+open csrop
+open cregidx
+open checked_cbop
+open cfregidx
+open cbop_zicbop
+open cbop_zicbom
+open cbie
+open cacheop
+open bropw_zbb
+open brop_zbs
+open brop_zbkb
+open brop_zbb
+open breakpoint_cause
+open bop
+open biop_zbs
+open biop
+open barrier_kind
+open amoop
+open agtype
+open XtvecModeReservedBehavior
+open XipReadType
+open XenvcfgCbieReservedBehavior
+open WaitReason
+open VectorHalf
+open TrapVectorMode
+open TrapCause
+open Step
+open Splittability
+open Software_Check_Code
+open Signedness
+open SWCheckCodes
+open SATPMode
+open Reservability
+open Register
+open RV32ZdinxOddRegisterReservedBehavior
+open Privileged_ISA_Version
+open Privilege
+open PointerMaskingMode
+open PmpWriteOnlyReservedBehavior
+open PmpAddrMatchType
+open PTW_Error
+open PTE_Check
+open PM_Ext
+open OOBVstartReservedBehavior
+open MemoryRegionType
+open MemoryAccessType
+open InterruptType
+open IllegalVtypeReservedBehavior
+open ISA_Format
+open HartState
+open FflagsDirtyPolicy
+open FetchResult
+open FetchBytes_Result
+open FeatureEnabledResult
+open FcsrRmReservedBehavior
+open Ext_DataAddr_Check
+open ExtStatus
+open ExtContextPolicy
+open ExecutionResult
+open ExceptionType
+open CSRCheckResult
+open CSRAccessType
+open AtomicSupport
+open Architecture
+open AmocasOddRegisterReservedBehavior
+/-- the alias: this clause re-dispatches to another instruction -/
+def alias_C_XOR (rsd : cregidx) (rs2 : cregidx) : instruction :=
+  (RTYPE (((creg2reg_idx rs2)), ((creg2reg_idx rsd)), ((creg2reg_idx rsd)), XOR))
+
+theorem strip_C_XOR (rsd : cregidx) (rs2 : cregidx) :
+    execute_C_XOR rsd rs2 = (ExecuteAs (alias_C_XOR rsd rs2)) := by
+  rfl
+
+/-- the alias: this clause re-dispatches to another instruction -/
+def alias_C_SRLI (shamt : (BitVec 6)) (rsd : cregidx) : instruction :=
+  (SHIFTIOP (shamt, ((creg2reg_idx rsd)), ((creg2reg_idx rsd)), SRLI))
+
+theorem strip_C_SRLI (shamt : (BitVec 6)) (rsd : cregidx) :
+    execute_C_SRLI shamt rsd = (ExecuteAs (alias_C_SRLI shamt rsd)) := by
+  rfl
+
+/-- the alias: this clause re-dispatches to another instruction -/
+def alias_C_SLLI (shamt : (BitVec 6)) (rsd : regidx) : instruction :=
+  (SHIFTIOP (shamt, rsd, rsd, SLLI))
+
+theorem strip_C_SLLI (shamt : (BitVec 6)) (rsd : regidx) :
+    execute_C_SLLI shamt rsd = (ExecuteAs (alias_C_SLLI shamt rsd)) := by
+  rfl
+
+/-- the alias: this clause re-dispatches to another instruction -/
+def alias_C_ANDI (imm : (BitVec 6)) (rsd : cregidx) : instruction :=
+  (ITYPE ((sign_extend (m := 12) imm), ((creg2reg_idx rsd)), ((creg2reg_idx rsd)), ANDI))
+
+theorem strip_C_ANDI (imm : (BitVec 6)) (rsd : cregidx) :
+    execute_C_ANDI imm rsd = (ExecuteAs (alias_C_ANDI imm rsd)) := by
+  rfl
+
+/-- the alias: this clause re-dispatches to another instruction -/
+def alias_C_OR (rsd : cregidx) (rs2 : cregidx) : instruction :=
+  (RTYPE (((creg2reg_idx rs2)), ((creg2reg_idx rsd)), ((creg2reg_idx rsd)), OR))
+
+theorem strip_C_OR (rsd : cregidx) (rs2 : cregidx) :
+    execute_C_OR rsd rs2 = (ExecuteAs (alias_C_OR rsd rs2)) := by
+  rfl
+
+/-- the proposal: the clause's pure form, by the one rule -/
+def pure_SHIFTIOP (v_rs1 : BitVec 64) (shamt : (BitVec 6)) (op : sop) : BitVec 64 :=
+  let shamt := (Sail.BitVec.extractLsb shamt (log2_xlen -i 1) 0)
+  match op with
+    | .SLLI => (shift_bits_left v_rs1 shamt)
+    | .SRLI => (shift_bits_right v_rs1 shamt)
+    | .SRAI => (shift_bits_right_arith v_rs1 shamt)
+
+/-- the certificate: the emitted clause IS read, read, write the proposal, retire -/
+theorem strip_SHIFTIOP (shamt : (BitVec 6)) (rs1 : regidx) (rd : regidx) (op : sop) :
+    execute_SHIFTIOP shamt rs1 rd op =
+    (do
+      let v_rs1 ← rX_bits rs1
+      wX_bits rd (pure_SHIFTIOP v_rs1 shamt op)
+      pure RETIRE_SUCCESS) := by
+  first
+  | rfl
+  | (cases op <;> simp only [execute_SHIFTIOP, pure_SHIFTIOP, bind_assoc, pure_bind])
+  | simp only [execute_SHIFTIOP, pure_SHIFTIOP, bind_assoc, pure_bind]
+
+/-- the proposal: the clause's pure form, by the one rule -/
+def pure_RTYPE (v_rs1 : BitVec 64) (v_rs2 : BitVec 64) (op : rop) : BitVec 64 :=
+
+  match op with
+    | .ADD => (v_rs1 + v_rs2)
+    | .SLT => (zero_extend (m := 64)
+            (bool_to_bit (zopz0zI_s v_rs1 v_rs2)))
+    | .SLTU => (zero_extend (m := 64)
+            (bool_to_bit (zopz0zI_u v_rs1 v_rs2)))
+    | .AND => (v_rs1 &&& v_rs2)
+    | .OR => (v_rs1 ||| v_rs2)
+    | .XOR => (v_rs1 ^^^ v_rs2)
+    | .SLL => (shift_bits_left v_rs1
+            (Sail.BitVec.extractLsb v_rs2 (log2_xlen -i 1) 0))
+    | .SRL => (shift_bits_right v_rs1
+            (Sail.BitVec.extractLsb v_rs2 (log2_xlen -i 1) 0))
+    | .SUB => (v_rs1 - v_rs2)
+    | .SRA => (shift_bits_right_arith v_rs1
+            (Sail.BitVec.extractLsb v_rs2 (log2_xlen -i 1) 0))
+
+/-- the certificate: the emitted clause IS read, read, write the proposal, retire -/
+theorem strip_RTYPE (rs2 : regidx) (rs1 : regidx) (rd : regidx) (op : rop) :
+    execute_RTYPE rs2 rs1 rd op =
+    (do
+      let v_rs1 ← rX_bits rs1
+      let v_rs2 ← rX_bits rs2
+      wX_bits rd (pure_RTYPE v_rs1 v_rs2 op)
+      pure RETIRE_SUCCESS) := by
+  first
+  | rfl
+  | (cases op <;> simp only [execute_RTYPE, pure_RTYPE, bind_assoc, pure_bind])
+  | simp only [execute_RTYPE, pure_RTYPE, bind_assoc, pure_bind]
+
+/-- the proposal: the clause's pure form, by the one rule -/
+def pure_SHIFTIWOP (v_rs1 : BitVec 64) (shamt : (BitVec 5)) (op : sopw) : BitVec 64 :=
+  let rs1_val := (Sail.BitVec.extractLsb v_rs1 31 0)
+  let result : (BitVec 32) := match op with
+      | .SLLIW => (shift_bits_left rs1_val shamt)
+      | .SRLIW => (shift_bits_right rs1_val shamt)
+      | .SRAIW => (shift_bits_right_arith rs1_val shamt)
+  sign_extend (m := 64) result
+
+/-- the certificate: the emitted clause IS read, read, write the proposal, retire -/
+theorem strip_SHIFTIWOP (shamt : (BitVec 5)) (rs1 : regidx) (rd : regidx) (op : sopw) :
+    execute_SHIFTIWOP shamt rs1 rd op =
+    (do
+      let v_rs1 ← rX_bits rs1
+      wX_bits rd (pure_SHIFTIWOP v_rs1 shamt op)
+      pure RETIRE_SUCCESS) := by
+  first
+  | rfl
+  | simp only [execute_SHIFTIWOP, pure_SHIFTIWOP, bind_assoc, pure_bind]
+
+/-- the proposal: the clause's pure form, by the one rule -/
+def pure_ITYPE (v_rs1 : BitVec 64) (imm : (BitVec 12)) (op : iop) : BitVec 64 :=
+  let immext : xlenbits := (sign_extend (m := 64) imm)
+  match op with
+    | .ADDI => (v_rs1 + immext)
+    | .SLTI => (zero_extend (m := 64) (bool_to_bit (zopz0zI_s v_rs1 immext)))
+    | .SLTIU => (zero_extend (m := 64) (bool_to_bit (zopz0zI_u v_rs1 immext)))
+    | .ANDI => (v_rs1 &&& immext)
+    | .ORI => (v_rs1 ||| immext)
+    | .XORI => (v_rs1 ^^^ immext)
+
+/-- the certificate: the emitted clause IS read, read, write the proposal, retire -/
+theorem strip_ITYPE (imm : (BitVec 12)) (rs1 : regidx) (rd : regidx) (op : iop) :
+    execute_ITYPE imm rs1 rd op =
+    (do
+      let v_rs1 ← rX_bits rs1
+      wX_bits rd (pure_ITYPE v_rs1 imm op)
+      pure RETIRE_SUCCESS) := by
+  first
+  | rfl
+  | (cases op <;> simp only [execute_ITYPE, pure_ITYPE, bind_assoc, pure_bind])
+  | simp only [execute_ITYPE, pure_ITYPE, bind_assoc, pure_bind]
+
+set_option linter.unusedVariables false
+
+abbrev St := SequentialState RegisterType trivialChoiceSource
+
+/-- the program ends in a state whose answering register holds v -/
+def runsTo (m : SailM ExecutionResult) (s : St) (v : BitVec 64) : Prop :=
+  match m s with
+  | .ok _ s' => s'.regs.get? .x10 = some v
+  | .error _ _ => False
+
+/-- one instruction through the model's own execute; an ExecuteAs re-dispatches once -/
+def step (i : instruction) : SailM ExecutionResult := do
+  match (← execute i) with
+  | .ExecuteAs j => execute j
+  | r => pure r
+
+def walk : List instruction → SailM ExecutionResult
+  | [] => pure RETIRE_SUCCESS
+  | i :: is => do let _ ← step i; walk is
+
+/-- the unit's meaning: its proposal, certified -/
+theorem meaning_SHA512SIG0H__one__rd__rust__all_constructed (s : St) (a : BitVec 64) (b : BitVec 64) (d : BitVec 64) (h10 : s.regs.get? .x10 = some a) (h11 : s.regs.get? .x11 = some b) (h13 : s.regs.get? .x13 = some d) (hk0 : ∀ {α : Type} (x0 : α) (s : St), (plat_term_write x0) s = EStateM.Result.ok () s) (hk1 : ∀ (x0 : Arch.pa) (x1 : Nat) (s : St), (load_reservation x0 x1) s = EStateM.Result.ok () s) (hk2 : ∀ (x0 : Unit) (s : St), (cancel_reservation x0) s = EStateM.Result.ok () s) :
+    runsTo (walk [LeanIM.instruction.SHIFTIOP (0x07#6, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x11#5, LeanIM.sop.SRLI), LeanIM.instruction.SHIFTIOP (0x01#6, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x05#5, LeanIM.sop.SRLI), LeanIM.instruction.SHIFTIOP (0x20#6, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x10#5, LeanIM.sop.SRLI), LeanIM.instruction.SHIFTIOP (0x1f#6, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x06#5, LeanIM.sop.SRLI), LeanIM.instruction.SHIFTIOP (0x19#6, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x0e#5, LeanIM.sop.SRLI), LeanIM.instruction.SHIFTIOP (0x27#6, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x0c#5, LeanIM.sop.SRLI), LeanIM.instruction.SHIFTIOP (0x26#6, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x0d#5, LeanIM.sop.SRLI), LeanIM.instruction.RTYPE (LeanIM.regidx.Regidx 0x11#5, LeanIM.regidx.Regidx 0x05#5, LeanIM.regidx.Regidx 0x11#5, LeanIM.rop.XOR), LeanIM.instruction.SHIFTIOP (0x39#6, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x0f#5, LeanIM.sop.SRLI), LeanIM.instruction.RTYPE (LeanIM.regidx.Regidx 0x06#5, LeanIM.regidx.Regidx 0x0e#5, LeanIM.regidx.Regidx 0x05#5, LeanIM.rop.XOR), LeanIM.instruction.SHIFTIOP (0x19#6, LeanIM.regidx.Regidx 0x0b#5, LeanIM.regidx.Regidx 0x0e#5, LeanIM.sop.SRLI), LeanIM.instruction.RTYPE (LeanIM.regidx.Regidx 0x0d#5, LeanIM.regidx.Regidx 0x0c#5, LeanIM.regidx.Regidx 0x06#5, LeanIM.rop.XOR), LeanIM.instruction.SHIFTIOP (0x3a#6, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x0d#5, LeanIM.sop.SRLI), LeanIM.instruction.C_XOR (LeanIM.cregidx.Cregidx 0x6#3, LeanIM.cregidx.Cregidx 0x7#3), LeanIM.instruction.SHIFTIWOP (0x1a#5, LeanIM.regidx.Regidx 0x0b#5, LeanIM.regidx.Regidx 0x0f#5, LeanIM.sopw.SRLIW), LeanIM.instruction.C_XOR (LeanIM.cregidx.Cregidx 0x5#3, LeanIM.cregidx.Cregidx 0x7#3), LeanIM.instruction.SHIFTIOP (0x20#6, LeanIM.regidx.Regidx 0x0b#5, LeanIM.regidx.Regidx 0x0f#5, LeanIM.sop.SRLI), LeanIM.instruction.RTYPE (LeanIM.regidx.Regidx 0x0b#5, LeanIM.regidx.Regidx 0x10#5, LeanIM.regidx.Regidx 0x0c#5, LeanIM.rop.XOR), LeanIM.instruction.RTYPE (LeanIM.regidx.Regidx 0x0c#5, LeanIM.regidx.Regidx 0x05#5, LeanIM.regidx.Regidx 0x10#5, LeanIM.rop.XOR), LeanIM.instruction.RTYPE (LeanIM.regidx.Regidx 0x0c#5, LeanIM.regidx.Regidx 0x06#5, LeanIM.regidx.Regidx 0x05#5, LeanIM.rop.XOR), LeanIM.instruction.SHIFTIOP (0x27#6, LeanIM.regidx.Regidx 0x0b#5, LeanIM.regidx.Regidx 0x0c#5, LeanIM.sop.SRLI), LeanIM.instruction.C_XOR (LeanIM.cregidx.Cregidx 0x4#3, LeanIM.cregidx.Cregidx 0x7#3), LeanIM.instruction.C_XOR (LeanIM.cregidx.Cregidx 0x6#3, LeanIM.cregidx.Cregidx 0x7#3), LeanIM.instruction.SHIFTIOP (0x19#6, LeanIM.regidx.Regidx 0x0b#5, LeanIM.regidx.Regidx 0x0f#5, LeanIM.sop.SLLI), LeanIM.instruction.C_SRLI (0x3a#6, LeanIM.cregidx.Cregidx 0x7#3), LeanIM.instruction.RTYPE (LeanIM.regidx.Regidx 0x0f#5, LeanIM.regidx.Regidx 0x0d#5, LeanIM.regidx.Regidx 0x06#5, LeanIM.rop.XOR), LeanIM.instruction.SHIFTIWOP (0x08#5, LeanIM.regidx.Regidx 0x0a#5, LeanIM.regidx.Regidx 0x0f#5, LeanIM.sopw.SRLIW), LeanIM.instruction.C_SRLI (0x3f#6, LeanIM.cregidx.Cregidx 0x2#3), LeanIM.instruction.C_SLLI (0x28#6, LeanIM.regidx.Regidx 0x11#5), LeanIM.instruction.C_SLLI (0x3f#6, LeanIM.regidx.Regidx 0x0c#5), LeanIM.instruction.SHIFTIOP (0x28#6, LeanIM.regidx.Regidx 0x11#5, LeanIM.regidx.Regidx 0x0d#5, LeanIM.sop.SRLI), LeanIM.instruction.C_ANDI (0x01#6, LeanIM.cregidx.Cregidx 0x6#3), LeanIM.instruction.C_SRLI (0x39#6, LeanIM.cregidx.Cregidx 0x4#3), LeanIM.instruction.C_SLLI (0x07#6, LeanIM.regidx.Regidx 0x05#5), LeanIM.instruction.C_XOR (LeanIM.cregidx.Cregidx 0x5#3, LeanIM.cregidx.Cregidx 0x7#3), LeanIM.instruction.C_XOR (LeanIM.cregidx.Cregidx 0x2#3, LeanIM.cregidx.Cregidx 0x6#3), LeanIM.instruction.RTYPE (LeanIM.regidx.Regidx 0x06#5, LeanIM.regidx.Regidx 0x0c#5, LeanIM.regidx.Regidx 0x0c#5, LeanIM.rop.OR), LeanIM.instruction.RTYPE (LeanIM.regidx.Regidx 0x0b#5, LeanIM.regidx.Regidx 0x05#5, LeanIM.regidx.Regidx 0x0b#5, LeanIM.rop.XOR), LeanIM.instruction.C_SLLI (0x21#6, LeanIM.regidx.Regidx 0x0c#5), LeanIM.instruction.C_SLLI (0x20#6, LeanIM.regidx.Regidx 0x0a#5), LeanIM.instruction.SHIFTIWOP (0x07#5, LeanIM.regidx.Regidx 0x0b#5, LeanIM.regidx.Regidx 0x0b#5, LeanIM.sopw.SRLIW), LeanIM.instruction.C_OR (LeanIM.cregidx.Cregidx 0x2#3, LeanIM.cregidx.Cregidx 0x4#3), LeanIM.instruction.C_SLLI (0x07#6, LeanIM.regidx.Regidx 0x0b#5), LeanIM.instruction.C_OR (LeanIM.cregidx.Cregidx 0x2#3, LeanIM.cregidx.Cregidx 0x3#3), LeanIM.instruction.ITYPE (0x07f#12, LeanIM.regidx.Regidx 0x10#5, LeanIM.regidx.Regidx 0x0b#5, LeanIM.iop.ANDI), LeanIM.instruction.C_OR (LeanIM.cregidx.Cregidx 0x2#3, LeanIM.cregidx.Cregidx 0x3#3), LeanIM.instruction.C_SLLI (0x18#6, LeanIM.regidx.Regidx 0x0a#5), LeanIM.instruction.C_OR (LeanIM.cregidx.Cregidx 0x2#3, LeanIM.cregidx.Cregidx 0x5#3)]) s
+      ((pure_RTYPE ((pure_SHIFTIOP ((pure_RTYPE ((pure_RTYPE ((pure_RTYPE ((pure_SHIFTIOP ((pure_RTYPE ((pure_SHIFTIOP (a) ((0x3f#6)) (SRLI))) ((pure_ITYPE ((pure_RTYPE ((pure_RTYPE ((pure_SHIFTIOP (b) (0x19#6) (LeanIM.sop.SRLI))) ((pure_SHIFTIOP (a) (0x39#6) (LeanIM.sop.SRLI))) (XOR))) ((pure_SHIFTIOP (b) (0x20#6) (LeanIM.sop.SRLI))) (XOR))) ((sign_extend (m := 12) (0x01#6))) (ANDI))) (XOR))) ((0x20#6)) (SLLI))) ((pure_SHIFTIOP ((pure_RTYPE ((pure_SHIFTIOP ((pure_SHIFTIOP ((pure_RTYPE ((pure_SHIFTIOP (b) (0x27#6) (LeanIM.sop.SRLI))) ((pure_SHIFTIOP (b) (0x20#6) (LeanIM.sop.SRLI))) (XOR))) ((0x3f#6)) (SLLI))) ((0x39#6)) (SRLI))) ((pure_RTYPE ((pure_RTYPE ((pure_SHIFTIOP (a) (0x3a#6) (LeanIM.sop.SRLI))) ((pure_SHIFTIWOP (b) (0x1a#5) (LeanIM.sopw.SRLIW))) (XOR))) ((pure_SHIFTIOP ((pure_SHIFTIOP (b) (0x19#6) (LeanIM.sop.SLLI))) ((0x3a#6)) (SRLI))) (LeanIM.rop.XOR))) (LeanIM.rop.OR))) ((0x21#6)) (SLLI))) (OR))) ((pure_SHIFTIOP ((pure_SHIFTIWOP ((pure_RTYPE ((pure_SHIFTIOP ((pure_RTYPE ((pure_RTYPE ((pure_SHIFTIOP (a) (0x27#6) (LeanIM.sop.SRLI))) ((pure_SHIFTIOP (a) (0x26#6) (LeanIM.sop.SRLI))) (LeanIM.rop.XOR))) ((pure_RTYPE ((pure_SHIFTIOP (a) (0x20#6) (LeanIM.sop.SRLI))) (b) (LeanIM.rop.XOR))) (LeanIM.rop.XOR))) ((0x07#6)) (SLLI))) (b) (LeanIM.rop.XOR))) (0x07#5) (LeanIM.sopw.SRLIW))) ((0x07#6)) (SLLI))) (OR))) ((pure_ITYPE ((pure_RTYPE ((pure_RTYPE ((pure_SHIFTIOP (a) (0x19#6) (LeanIM.sop.SRLI))) ((pure_SHIFTIOP (a) (0x1f#6) (LeanIM.sop.SRLI))) (LeanIM.rop.XOR))) ((pure_RTYPE ((pure_SHIFTIOP (a) (0x20#6) (LeanIM.sop.SRLI))) (b) (LeanIM.rop.XOR))) (LeanIM.rop.XOR))) (0x07f#12) (LeanIM.iop.ANDI))) (OR))) ((0x18#6)) (SLLI))) ((pure_RTYPE ((pure_SHIFTIOP ((pure_SHIFTIOP ((pure_RTYPE ((pure_SHIFTIOP (a) (0x01#6) (LeanIM.sop.SRLI))) ((pure_SHIFTIOP (a) (0x07#6) (LeanIM.sop.SRLI))) (LeanIM.rop.XOR))) ((0x28#6)) (SLLI))) (0x28#6) (LeanIM.sop.SRLI))) ((pure_SHIFTIWOP (a) (0x08#5) (LeanIM.sopw.SRLIW))) (XOR))) (OR))) := by
+  simp (config := {decide := true}) [runsTo, walk, step, execute, strip_C_XOR, strip_C_SRLI, strip_C_SLLI, strip_C_ANDI, strip_C_OR, strip_SHIFTIOP, strip_RTYPE, strip_SHIFTIWOP, strip_ITYPE, alias_C_XOR, alias_C_SRLI, alias_C_SLLI, alias_C_ANDI, alias_C_OR,
+    rX_bits, rX, wX_bits, wX, regval_from_reg, regval_into_reg, PreSail.readReg, PreSail.writeReg,
+    RETIRE_SUCCESS, reg_name_forwards, to_bits, zero_reg,
+    csr_full_read_callback, csr_full_write_callback, csr_id_read_callback, csr_id_write_callback, csr_name_read_callback, csr_name_write_callback, fetch_callback, freg_write_callback, instret_callback, long_csr_write_callback, mem_exception_callback, mem_read_callback, mem_write_callback, pc_write_callback, ptw_fail_callback, ptw_start_callback, ptw_step_callback, ptw_success_callback, redirect_callback, tlb_add_callback, tlb_flush_begin_callback, tlb_flush_callback, tlb_flush_end_callback, trap_callback, vreg_write_callback, xreg_full_write_callback, xreg_write_callback, xret_callback, RETIRE_SUCCESS, creg2reg_idx, fregidx_to_regidx, rX_bits, ra, regidx_offset_range, sign_extend, sp, t0, wX_bits, zreg, zero_extend, trunc, SailM, rX, wX, RegisterType, readReg, regtype, regval_from_reg, zero_reg, regval_into_reg, to_bits, writeReg, xlenbits, zeros, String, Sail.BitVec.extractLsb, Nat, Sail.Vector, Sail.BitVec.toNatInt, Sail.BitVec.addInt, Sail.BitVec.signExtend, Sail.BitVec.zeroExtend, Sail.BitVec.truncate, Sail.ConcurrencyInterfaceV1.trivialChoiceSource, Sail.ConcurrencyInterfaceV1.PreSailM, Sail.get_slice_int,
+    bind, pure, get, getThe, modify, modifyGet, set, throw,
+    EStateM.bind, EStateM.pure, EStateM.get, EStateM.set, EStateM.modifyGet, EStateM.throw,
+    EStateM.instMonad, EStateM.instMonadStateOf, MonadStateOf.get, MonadStateOf.set,
+    MonadStateOf.modifyGet, MonadState.get, MonadState.set, MonadState.modifyGet,
+    BitVec.toNatInt, Std.ExtDHashMap.get?_insert_self, Std.ExtDHashMap.get?_insert,
+    h10, h11, h13, hk0, hk1, hk2]
+
+end Functions
+end LeanIM
+end

@@ -1,0 +1,15 @@
+import Leanpath
+import LeanpathBase
+open Sail Sail.ConcurrencyInterfaceV1 PreSail LeanIM LeanIM.Functions Leanpath
+set_option maxHeartbeats 1000000000
+set_option maxRecDepth 100000
+set_option pp.maxSteps 10000000
+set_option pp.deepTerms true
+set_option pp.proofs false
+set_option format.width 1000000
+set_option profiler true
+set_option profiler.threshold 0
+theorem def_mulhsu_MUL (h_plat_term_write : ∀ x0  (s : Leanpath.St), (plat_term_write x0) s = EStateM.Result.ok () s) (h_load_reservation : ∀ x0 x1  (s : Leanpath.St), (load_reservation x0 x1) s = EStateM.Result.ok () s) (h_cancel_reservation : ∀ x0  (s : Leanpath.St), (cancel_reservation x0) s = EStateM.Result.ok () s) (a0 : BitVec 64) (a1 : BitVec 64) (a2 : BitVec 64) (a3 : BitVec 64) (a4 : BitVec 64) (a5 : BitVec 64) (a6 : BitVec 64) (a7 : BitVec 64)  : (results (execute (MUL (Regidx 11#5, Regidx 10#5, Regidx 10#5, { result_part := .High, signed_rs1 := .Signed, signed_rs2 := .Unsigned }))) (withRegs S0 [⟨Register.x10, a0⟩, ⟨Register.x11, a1⟩, ⟨Register.x12, a2⟩, ⟨Register.x13, a3⟩, ⟨Register.x14, a4⟩, ⟨Register.x15, a5⟩, ⟨Register.x16, a6⟩, ⟨Register.x17, a7⟩]), answer (execute (MUL (Regidx 11#5, Regidx 10#5, Regidx 10#5, { result_part := .High, signed_rs1 := .Signed, signed_rs2 := .Unsigned }))) (withRegs S0 [⟨Register.x10, a0⟩, ⟨Register.x11, a1⟩, ⟨Register.x12, a2⟩, ⟨Register.x13, a3⟩, ⟨Register.x14, a4⟩, ⟨Register.x15, a5⟩, ⟨Register.x16, a6⟩, ⟨Register.x17, a7⟩]) Register.x10) = (results (execute (MUL (Regidx 11#5, Regidx 10#5, Regidx 10#5, { result_part := .High, signed_rs1 := .Signed, signed_rs2 := .Unsigned }))) (withRegs S0 [⟨Register.x10, a0⟩, ⟨Register.x11, a1⟩, ⟨Register.x12, a2⟩, ⟨Register.x13, a3⟩, ⟨Register.x14, a4⟩, ⟨Register.x15, a5⟩, ⟨Register.x16, a6⟩, ⟨Register.x17, a7⟩]), answer (execute (MUL (Regidx 11#5, Regidx 10#5, Regidx 10#5, { result_part := .High, signed_rs1 := .Signed, signed_rs2 := .Unsigned }))) (withRegs S0 [⟨Register.x10, a0⟩, ⟨Register.x11, a1⟩, ⟨Register.x12, a2⟩, ⟨Register.x13, a3⟩, ⟨Register.x14, a4⟩, ⟨Register.x15, a5⟩, ⟨Register.x16, a6⟩, ⟨Register.x17, a7⟩]) Register.x10) := by
+  conv => lhs; simp (config := {decide := true}) only [leanpath_model, leanpath_run, leanpath_base, simp_sail, Leanpath.decode, Leanpath.walk, Leanpath.results, Leanpath.answer, Leanpath.withRegs, Leanpath.stateOf, EStateM.bind, EStateM.pure, EStateM.get, EStateM.set, EStateM.modifyGet, EStateM.throw, EStateM.map, EStateM.seqRight, EStateM.instMonad, bind, pure, get, getThe, modify, modifyGet, set, throw, throwThe, MonadStateOf.get, MonadStateOf.set, MonadStateOf.modifyGet, MonadState.get, MonadState.set, MonadState.modifyGet, MonadExceptOf.throw, MonadExcept.throw, Functor.map, Seq.seq, SeqRight.seqRight, SeqLeft.seqLeft, ExceptT.run, ExceptT.mk, ExceptT.bind, ExceptT.pure, ExceptT.lift, ExceptT.bindCont, ExceptT.map, ExceptT.instMonad, monadLift, MonadLift.monadLift, MonadLiftT.monadLift, EStateM.instMonadStateOf, EStateM.instMonadExceptOf, EStateM.tryCatch, EStateM.instMonad, h_plat_term_write, h_load_reservation, h_cancel_reservation]
+  leanpath_show_lhs
+  rfl

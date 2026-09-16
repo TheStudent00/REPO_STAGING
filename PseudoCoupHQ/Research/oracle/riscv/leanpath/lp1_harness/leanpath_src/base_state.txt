@@ -1,0 +1,6 @@
+match
+  match sail_model_init () default with
+  | EStateM.Result.ok a s => reset () s
+  | EStateM.Result.error e s => EStateM.Result.error e s with
+| EStateM.Result.ok a s => s
+| EStateM.Result.error a s => s

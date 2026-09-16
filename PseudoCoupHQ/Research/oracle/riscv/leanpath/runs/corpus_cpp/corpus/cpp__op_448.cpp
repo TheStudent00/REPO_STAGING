@@ -1,0 +1,10 @@
+// probe 448 -- binary &
+#include <cstdint>
+#include <compare>
+#include <new>
+
+extern "C" auto
+op_448(float a, double b)
+{
+    return a & b;
+}

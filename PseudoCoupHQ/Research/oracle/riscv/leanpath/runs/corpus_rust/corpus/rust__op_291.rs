@@ -1,0 +1,5 @@
+// probe 291 -- binary !=
+#[no_mangle]
+pub fn op_291(a: i64, b: f32) -> bool {
+    a != b
+}

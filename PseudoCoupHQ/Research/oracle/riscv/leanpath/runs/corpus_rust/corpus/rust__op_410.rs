@@ -1,0 +1,5 @@
+// probe 410 -- binary >
+#[no_mangle]
+pub fn op_410(a: f32, b: u64) -> bool {
+    a > b
+}

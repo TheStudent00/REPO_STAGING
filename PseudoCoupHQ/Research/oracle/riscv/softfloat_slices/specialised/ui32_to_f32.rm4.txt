@@ -1,0 +1,127 @@
+# ui32_to_f32  [rm4]
+# entry symbol: ui32_to_f32
+# linked: source/ui32_to_f32.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm4.c, source/s_normRoundPackToF32.c, source/s_roundPackToF32.c, source/RISCV/softfloat_raiseFlags.c
+# instructions 61 (all symbols 61), branches 3, jumps 2,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/ui32_to_f32/rm4.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <ui32_to_f32>:
+       0:      	beqz	a0, 0xe8 <ui32_to_f32+0xe8>
+       4:      	bltz	a0, 0xb0 <ui32_to_f32+0xb0>
+       8:      	srliw	a1, a0, 0x1
+       c:      	lui	a2, 0x55555
+      10:      	or	a1, a0, a1
+      14:      	addi	a2, a2, 0x555
+      18:      	srliw	a3, a1, 0x2
+      1c:      	or	a1, a1, a3
+      20:      	srliw	a3, a1, 0x4
+      24:      	or	a1, a1, a3
+      28:      	srliw	a3, a1, 0x8
+      2c:      	or	a1, a1, a3
+      30:      	srliw	a3, a1, 0x10
+      34:      	or	a1, a1, a3
+      38:      	not	a1, a1
+      3c:      	srli	a3, a1, 0x1
+      40:      	and	a2, a3, a2
+      44:      	lui	a3, 0x33333
+      48:      	addi	a3, a3, 0x333
+      4c:      	sub	a1, a1, a2
+      50:      	and	a2, a1, a3
+      54:      	srli	a1, a1, 0x2
+      58:      	and	a1, a1, a3
+      5c:      	lui	a3, 0xf0f1
+      60:      	add	a1, a2, a1
+      64:      	srli	a2, a1, 0x4
+      68:      	add	a1, a1, a2
+      6c:      	lui	a2, 0x1010
+      70:      	addi	a3, a3, -0xf1
+      74:      	and	a1, a1, a3
+      78:      	li	a3, 0x9c
+      7c:      	addi	a2, a2, 0x101
+      80:      	mul	a1, a1, a2
+      84:      	srli	a1, a1, 0x18
+      88:      	addi	a1, a1, -0x1
+      8c:      	zext.b	a1, a1
+      90:      	srliw	a4, a0, 0x18
+      94:      	sub	a2, a3, a1
+      98:      	bnez	a4, 0xc8 <ui32_to_f32+0xc8>
+      9c:      	slli	a2, a2, 0x17
+      a0:      	addi	a1, a1, -0x7
+      a4:      	sllw	a0, a0, a1
+      a8:      	add	a0, a0, a2
+      ac:      	j	0xe8 <ui32_to_f32+0xe8>
+      b0:      	srliw	a0, a0, 0x1
+      b4:      	addi	a0, a0, 0x40
+      b8:      	srli	a0, a0, 0x7
+      bc:      	lui	a1, 0x4e800
+      c0:      	add	a0, a0, a1
+      c4:      	j	0xe8 <ui32_to_f32+0xe8>
+      c8:      	sllw	a0, a0, a1
+      cc:      	addiw	a0, a0, 0x40
+      d0:      	srliw	a1, a0, 0x7
+      d4:      	sltiu	a0, a0, 0x80
+      d8:      	slli	a2, a2, 0x17
+      dc:      	addi	a0, a0, -0x1
+      e0:      	and	a0, a0, a2
+      e4:      	add	a0, a1, a0
+      e8:      	slli	a0, a0, 0x20
+      ec:      	srli	a0, a0, 0x20
+      f0:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+There are no relocations in this file.
+
+=== measured ===
+{
+  "entry_symbol": "ui32_to_f32",
+  "instructions": 61,
+  "instructions_all_symbols": 61,
+  "per_symbol_instructions": {
+    "ui32_to_f32": 61
+  },
+  "branches": 3,
+  "jumps": 2,
+  "back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 0,
+  "stores": 0,
+  "memory": 0,
+  "multiply_divide": 1,
+  "muldiv_ops": {
+    "mul": 1
+  },
+  "unreachable_insns": 0,
+  "size_bytes": 244,
+  "surviving_symbols": [
+    "ui32_to_f32"
+  ],
+  "source_files_linked": [
+    "source/ui32_to_f32.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm4.c",
+    "source/s_normRoundPackToF32.c",
+    "source/s_roundPackToF32.c",
+    "source/RISCV/softfloat_raiseFlags.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "c7363ea09297b50a9d015a67050e6aa88ae74062abad0f1588ff4262544fdd3b",
+  "text_sha256": "dba86778c3492783a1ae9c0396f71274ad973e1c184b3efe719b33e8901de0ce",
+  "object_sha256": "57de69d8a1c7dbc92b00945427bd024a93c30c7414c9eff113a3904171bd8d6c"
+}

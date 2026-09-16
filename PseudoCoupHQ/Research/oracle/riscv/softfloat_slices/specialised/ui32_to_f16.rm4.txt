@@ -1,0 +1,188 @@
+# ui32_to_f16  [rm4]
+# entry symbol: ui32_to_f16
+# linked: source/ui32_to_f16.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm4.c, source/s_roundPackToF16.c, source/RISCV/softfloat_raiseFlags.c
+# instructions 104 (all symbols 104), branches 8, jumps 5,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/ui32_to_f16/rm4.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <ui32_to_f16>:
+       0:      	beqz	a0, 0x84 <ui32_to_f16+0x84>
+       4:      	srliw	a1, a0, 0x1
+       8:      	lui	a2, 0x55555
+       c:      	or	a1, a0, a1
+      10:      	addi	a2, a2, 0x555
+      14:      	srliw	a3, a1, 0x2
+      18:      	or	a1, a1, a3
+      1c:      	srliw	a3, a1, 0x4
+      20:      	or	a1, a1, a3
+      24:      	srliw	a3, a1, 0x8
+      28:      	or	a1, a1, a3
+      2c:      	srliw	a3, a1, 0x10
+      30:      	or	a1, a1, a3
+      34:      	not	a1, a1
+      38:      	srli	a3, a1, 0x1
+      3c:      	and	a2, a3, a2
+      40:      	lui	a3, 0x33333
+      44:      	addi	a3, a3, 0x333
+      48:      	sub	a1, a1, a2
+      4c:      	and	a2, a1, a3
+      50:      	srli	a1, a1, 0x2
+      54:      	and	a1, a1, a3
+      58:      	lui	a3, 0xf0f1
+      5c:      	add	a1, a2, a1
+      60:      	srli	a2, a1, 0x4
+      64:      	add	a1, a1, a2
+      68:      	lui	a2, 0x1010
+      6c:      	addi	a3, a3, -0xf1
+      70:      	and	a1, a1, a3
+      74:      	addi	a2, a2, 0x101
+      78:      	mul	a1, a1, a2
+      7c:      	srliw	a3, a1, 0x18
+      80:      	j	0x88 <ui32_to_f16+0x88>
+      84:      	li	a3, 0x20
+      88:      	slli	a1, a3, 0x38
+      8c:      	srai	a1, a1, 0x38
+      90:      	li	a2, 0x15
+      94:      	blt	a1, a2, 0xc4 <ui32_to_f16+0xc4>
+      98:      	beqz	a0, 0x98 <ui32_to_f16+0x98>
+      9c:      	addi	a3, a3, -0x15
+      a0:      	zext.b	a1, a3
+      a4:      	sllw	a0, a0, a3
+      a8:      	slli	a1, a1, 0xa
+      ac:      	subw	a0, a0, a1
+      b0:      	slli	a0, a0, 0x20
+      b4:      	srli	a0, a0, 0x20
+      b8:      	lui	a1, 0x6
+      bc:      	add	a1, a0, a1
+      c0:      	j	0xc0 <ui32_to_f16+0xc0>
+      c4:      	lui	a4, 0x10
+      c8:      	addi	a3, a3, -0x11
+      cc:      	addi	a4, a4, -0x8
+      d0:      	slli	a5, a3, 0x38
+      d4:      	li	a2, 0x10
+      d8:      	srai	a5, a5, 0x38
+      dc:      	blt	a2, a1, 0xf8 <ui32_to_f16+0xf8>
+      e0:      	negw	a2, a5
+      e4:      	srlw	a2, a0, a2
+      e8:      	sllw	a0, a0, a5
+      ec:      	snez	a0, a0
+      f0:      	or	a2, a2, a0
+      f4:      	j	0x104 <ui32_to_f16+0x104>
+      f8:      	addi	a2, a4, 0x7
+      fc:      	and	a0, a0, a2
+     100:      	sllw	a2, a0, a5
+     104:      	zext.b	a6, a3
+     108:      	li	a3, 0x1d
+     10c:      	and	a0, a2, a4
+     110:      	bltu	a6, a3, 0x110 <ui32_to_f16+0x110>
+     114:      	li	a4, 0x10
+     118:      	blt	a1, a4, 0x128 <ui32_to_f16+0x128>
+     11c:      	lui	a1, 0x8
+     120:      	addi	a1, a1, -0x8
+     124:      	bltu	a0, a1, 0x124 <ui32_to_f16+0x124>
+     128:      	lui	a0, 0x0
+     12c:      	lbu	a1, 0x0(a0)
+     130:      	ori	a1, a1, 0x5
+     134:      	sb	a1, 0x0(a0)
+     138:      	li	a1, 0x1f
+     13c:      	slli	a1, a1, 0xa
+     140:      	j	0x140 <ui32_to_f16+0x140>
+     144:      	li	a3, 0x1c
+     148:      	sub	a3, a3, a5
+     14c:      	addi	a1, a0, 0x8
+     150:      	andi	a2, a2, 0xf
+     154:      	srli	a1, a1, 0x4
+     158:      	beqz	a2, 0x158 <ui32_to_f16+0x158>
+     15c:      	lui	a2, 0x0
+     160:      	lbu	a4, 0x0(a2)
+     164:      	ori	a4, a4, 0x1
+     168:      	sb	a4, 0x0(a2)
+     16c:      	seqz	a0, a0
+     170:      	slli	a3, a3, 0xa
+     174:      	lui	a2, 0x4000
+     178:      	addi	a0, a0, -0x1
+     17c:      	addi	a2, a2, -0x400
+     180:      	and	a2, a3, a2
+     184:      	and	a0, a2, a0
+     188:      	add	a1, a1, a0
+     18c:      	j	0x194 <ui32_to_f16+0x194>
+     190:      	li	a1, 0x0
+     194:      	slli	a0, a1, 0x30
+     198:      	srli	a0, a0, 0x30
+     19c:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0x4a8 contains 18 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+0000000000000098  0000000300000010 R_RISCV_BRANCH         0000000000000190 .L0  + 0
+00000000000000c0  0000000400000011 R_RISCV_JAL            0000000000000194 .L0  + 0
+0000000000000110  0000000500000010 R_RISCV_BRANCH         0000000000000144 .L0  + 0
+0000000000000124  0000000600000010 R_RISCV_BRANCH         000000000000014c .L0  + 0
+0000000000000128  000000070000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000128  0000000000000033 R_RISCV_RELAX                     0
+000000000000012c  000000070000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+000000000000012c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000134  000000070000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000134  0000000000000033 R_RISCV_RELAX                     0
+0000000000000140  0000000400000011 R_RISCV_JAL            0000000000000194 .L0  + 0
+0000000000000158  0000000800000010 R_RISCV_BRANCH         000000000000016c .L0  + 0
+000000000000015c  000000070000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+000000000000015c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000160  000000070000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000160  0000000000000033 R_RISCV_RELAX                     0
+0000000000000168  000000070000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000168  0000000000000033 R_RISCV_RELAX                     0
+
+=== measured ===
+{
+  "entry_symbol": "ui32_to_f16",
+  "instructions": 104,
+  "instructions_all_symbols": 104,
+  "per_symbol_instructions": {
+    "ui32_to_f16": 104
+  },
+  "branches": 8,
+  "jumps": 5,
+  "back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 2,
+  "stores": 2,
+  "memory": 4,
+  "multiply_divide": 1,
+  "muldiv_ops": {
+    "mul": 1
+  },
+  "unreachable_insns": 0,
+  "size_bytes": 416,
+  "surviving_symbols": [
+    "ui32_to_f16"
+  ],
+  "source_files_linked": [
+    "source/ui32_to_f16.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm4.c",
+    "source/s_roundPackToF16.c",
+    "source/RISCV/softfloat_raiseFlags.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "0d8305fcee0ea97cda7c3cc2eb779689a7a6eeae0dd95a44e9320c3975711f0a",
+  "text_sha256": "84ac18fa9c5254bcfaa4b9a27966ed81f54e08685ea34b15e5d70ab51dac299f",
+  "object_sha256": "48417ba101857db830c684142a61e76c4ab2de580118d8bb20634de38f9d1d68"
+}

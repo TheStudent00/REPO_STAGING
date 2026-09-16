@@ -1,0 +1,104 @@
+# ui32_to_f64  [rm0]
+# entry symbol: ui32_to_f64
+# linked: source/ui32_to_f64.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm0.c
+# instructions 41 (all symbols 41), branches 1, jumps 0,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/ui32_to_f64/rm0.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <ui32_to_f64>:
+       0:      	beqz	a0, 0xa0 <ui32_to_f64+0xa0>
+       4:      	srliw	a1, a0, 0x1
+       8:      	lui	a2, 0x55555
+       c:      	or	a1, a0, a1
+      10:      	addi	a2, a2, 0x555
+      14:      	srliw	a3, a1, 0x2
+      18:      	or	a1, a1, a3
+      1c:      	srliw	a3, a1, 0x4
+      20:      	or	a1, a1, a3
+      24:      	srliw	a3, a1, 0x8
+      28:      	or	a1, a1, a3
+      2c:      	srliw	a3, a1, 0x10
+      30:      	or	a1, a1, a3
+      34:      	not	a1, a1
+      38:      	srli	a3, a1, 0x1
+      3c:      	and	a2, a3, a2
+      40:      	lui	a3, 0x33333
+      44:      	addi	a3, a3, 0x333
+      48:      	sub	a1, a1, a2
+      4c:      	and	a2, a1, a3
+      50:      	srli	a1, a1, 0x2
+      54:      	and	a1, a1, a3
+      58:      	lui	a3, 0xf0f1
+      5c:      	add	a1, a2, a1
+      60:      	srli	a2, a1, 0x4
+      64:      	add	a1, a1, a2
+      68:      	lui	a2, 0x1010
+      6c:      	addi	a3, a3, -0xf1
+      70:      	and	a1, a1, a3
+      74:      	li	a3, 0x41d
+      78:      	slli	a0, a0, 0x20
+      7c:      	addi	a2, a2, 0x101
+      80:      	srli	a0, a0, 0x20
+      84:      	mul	a1, a1, a2
+      88:      	srliw	a1, a1, 0x18
+      8c:      	addi	a2, a1, 0x15
+      90:      	subw	a3, a3, a1
+      94:      	slli	a3, a3, 0x34
+      98:      	sll	a0, a0, a2
+      9c:      	add	a0, a3, a0
+      a0:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+There are no relocations in this file.
+
+=== measured ===
+{
+  "entry_symbol": "ui32_to_f64",
+  "instructions": 41,
+  "instructions_all_symbols": 41,
+  "per_symbol_instructions": {
+    "ui32_to_f64": 41
+  },
+  "branches": 1,
+  "jumps": 0,
+  "back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 0,
+  "stores": 0,
+  "memory": 0,
+  "multiply_divide": 1,
+  "muldiv_ops": {
+    "mul": 1
+  },
+  "unreachable_insns": 0,
+  "size_bytes": 164,
+  "surviving_symbols": [
+    "ui32_to_f64"
+  ],
+  "source_files_linked": [
+    "source/ui32_to_f64.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm0.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "a3b7300f163ab8b6139734a036d1cbf0df588f345adb5d91fd6633f0b17d6238",
+  "text_sha256": "e326075b8f00a96296107e5fe896f28d67661ff01bc7cd7f740644fce77f0a10",
+  "object_sha256": "45951290b636372d26f0a5e13ace24a1f2c2b427ef4d46a6d993caedc074b53b"
+}

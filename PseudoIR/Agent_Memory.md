@@ -16,9 +16,9 @@ the failures worth not repeating.
 
 ## 1. Read these first, in this order
 
-1. `PRIVATE/DevComms/LLM_communication_protocol.md` — the owner's
+1. `PRIVATE/DevComms/comms_protocol.md` — the owner's
    communication protocol. Not optional. A local copy sits at
-   `PRIVATE/PseudoIR/DevComms/LLM_communication_protocol.md`;
+   `PRIVATE/PseudoIR/DevComms/comms_protocol.md`;
    the one in `PRIVATE/DevComms/` is the authority.
 2. `PRIVATE/PseudoCoupHQ/plan_and_code.md` — plan names ARE code
    names; code is written top-down with logic last; every node
@@ -157,7 +157,7 @@ agent sees them without walking the tree.
 | PseudoCoup's plan | `PRIVATE/PseudoCoup_v6/Planning/` |
 | PseudoCoup's previous plan, superseded but intact | `PRIVATE/PseudoCoup_v6/.archive/Planning_superseded_2026-07-31/` |
 | The planning framework and its renderer | `PRIVATE/PlanPlan/framework/` |
-| Communication protocol | `PRIVATE/DevComms/LLM_communication_protocol.md` |
+| Communication protocol | `PRIVATE/DevComms/comms_protocol.md` |
 | Research reports (R1–R4) referenced by the plan | `PRIVATE/PseudoCoup_v6/Research/` |
 | This project's code, such as it is | `PRIVATE/PseudoIR/pseudoir/` |
 | Retired PseudoIR contents | `PRIVATE/PseudoIR/archive/`, `0_Archive/PseudoIR/` |

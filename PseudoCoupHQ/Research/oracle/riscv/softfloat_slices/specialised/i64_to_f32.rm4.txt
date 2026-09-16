@@ -1,0 +1,159 @@
+# i64_to_f32  [rm4]
+# entry symbol: i64_to_f32
+# linked: source/i64_to_f32.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm4.c, source/s_roundPackToF32.c, source/RISCV/softfloat_raiseFlags.c
+# instructions 94 (all symbols 94), branches 4, jumps 3,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/i64_to_f32/rm4.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <i64_to_f32>:
+       0:      	srai	a1, a0, 0x3f
+       4:      	xor	a2, a0, a1
+       8:      	sub	a1, a2, a1
+       c:      	beqz	a0, 0xb8 <i64_to_f32+0xb8>
+      10:      	srli	a2, a1, 0x1
+      14:      	lui	a3, 0x55555
+      18:      	lui	a4, 0x33333
+      1c:      	lui	a5, 0xf0f1
+      20:      	or	a2, a1, a2
+      24:      	addi	a3, a3, 0x555
+      28:      	addi	a4, a4, 0x333
+      2c:      	addi	a5, a5, -0xf1
+      30:      	srli	a6, a2, 0x2
+      34:      	or	a2, a2, a6
+      38:      	slli	a6, a3, 0x20
+      3c:      	add	a3, a3, a6
+      40:      	slli	a6, a4, 0x20
+      44:      	add	a4, a4, a6
+      48:      	slli	a6, a5, 0x20
+      4c:      	add	a5, a5, a6
+      50:      	srli	a6, a2, 0x4
+      54:      	or	a2, a2, a6
+      58:      	srli	a6, a2, 0x8
+      5c:      	or	a2, a2, a6
+      60:      	srli	a6, a2, 0x10
+      64:      	or	a2, a2, a6
+      68:      	srli	a6, a2, 0x20
+      6c:      	or	a2, a2, a6
+      70:      	not	a2, a2
+      74:      	srli	a6, a2, 0x1
+      78:      	and	a3, a6, a3
+      7c:      	sub	a2, a2, a3
+      80:      	and	a3, a2, a4
+      84:      	srli	a2, a2, 0x2
+      88:      	and	a2, a2, a4
+      8c:      	lui	a4, 0x1010
+      90:      	addi	a4, a4, 0x101
+      94:      	add	a2, a3, a2
+      98:      	srli	a3, a2, 0x4
+      9c:      	add	a2, a2, a3
+      a0:      	slli	a3, a4, 0x20
+      a4:      	and	a2, a2, a5
+      a8:      	add	a3, a4, a3
+      ac:      	mul	a2, a2, a3
+      b0:      	srli	a2, a2, 0x38
+      b4:      	j	0xbc <i64_to_f32+0xbc>
+      b8:      	li	a2, 0x40
+      bc:      	slli	a4, a2, 0x38
+      c0:      	srai	a4, a4, 0x38
+      c4:      	li	a3, 0x28
+      c8:      	blt	a4, a3, 0xfc <i64_to_f32+0xfc>
+      cc:      	beqz	a0, 0x16c <i64_to_f32+0x16c>
+      d0:      	addi	a2, a2, -0x28
+      d4:      	srli	a0, a0, 0x3f
+      d8:      	lui	a3, 0x4a800
+      dc:      	slli	a2, a2, 0x38
+      e0:      	slli	a0, a0, 0x1f
+      e4:      	srai	a2, a2, 0x38
+      e8:      	or	a0, a0, a3
+      ec:      	sllw	a1, a1, a2
+      f0:      	slli	a2, a2, 0x17
+      f4:      	subw	a0, a0, a2
+      f8:      	j	0x168 <i64_to_f32+0x168>
+      fc:      	li	a5, 0x20
+     100:      	addi	a3, a2, -0x21
+     104:      	blt	a5, a4, 0x130 <i64_to_f32+0x130>
+     108:      	li	a4, 0x21
+     10c:      	li	a5, -0x1
+     110:      	subw	a4, a4, a2
+     114:      	srl	a2, a1, a4
+     118:      	sll	a4, a5, a4
+     11c:      	not	a4, a4
+     120:      	and	a1, a1, a4
+     124:      	snez	a1, a1
+     128:      	or	a1, a2, a1
+     12c:      	j	0x134 <i64_to_f32+0x134>
+     130:      	sllw	a1, a1, a3
+     134:      	slli	a3, a3, 0x38
+     138:      	addiw	a1, a1, 0x40
+     13c:      	srli	a0, a0, 0x3f
+     140:      	lui	a2, 0x4e000
+     144:      	srai	a3, a3, 0x38
+     148:      	srliw	a4, a1, 0x7
+     14c:      	sltiu	a1, a1, 0x80
+     150:      	slli	a0, a0, 0x1f
+     154:      	slli	a3, a3, 0x17
+     158:      	addi	a1, a1, -0x1
+     15c:      	subw	a2, a2, a3
+     160:      	and	a1, a1, a2
+     164:      	or	a0, a4, a0
+     168:      	add	a0, a0, a1
+     16c:      	slli	a0, a0, 0x20
+     170:      	srli	a0, a0, 0x20
+     174:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+There are no relocations in this file.
+
+=== measured ===
+{
+  "entry_symbol": "i64_to_f32",
+  "instructions": 94,
+  "instructions_all_symbols": 94,
+  "per_symbol_instructions": {
+    "i64_to_f32": 94
+  },
+  "branches": 4,
+  "jumps": 3,
+  "back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 0,
+  "stores": 0,
+  "memory": 0,
+  "multiply_divide": 1,
+  "muldiv_ops": {
+    "mul": 1
+  },
+  "unreachable_insns": 0,
+  "size_bytes": 376,
+  "surviving_symbols": [
+    "i64_to_f32"
+  ],
+  "source_files_linked": [
+    "source/i64_to_f32.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm4.c",
+    "source/s_roundPackToF32.c",
+    "source/RISCV/softfloat_raiseFlags.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "7a6fddc00929a9b86744d99b62b663cf030749e832a43c4b2c03934e46825c64",
+  "text_sha256": "af9eeb57a8fbf1a0110b39339608797502d89b015c55b0a4dbd2ba563e3e0354",
+  "object_sha256": "ca1471b8a9da32430d1b73ba6e820af1548861c362e4734a0a62f73417f93fff"
+}

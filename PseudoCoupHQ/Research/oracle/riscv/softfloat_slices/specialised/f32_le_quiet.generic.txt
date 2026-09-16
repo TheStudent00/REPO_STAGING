@@ -1,0 +1,123 @@
+# f32_le_quiet  [generic]
+# entry symbol: f32_le_quiet
+# linked: source/f32_le_quiet.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, source/RISCV/softfloat_raiseFlags.c
+# instructions 49 (all symbols 49), branches 9, jumps 1,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/f32_le_quiet/generic.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f32_le_quiet>:
+       0:      	lui	a2, 0x800
+       4:      	lui	a3, 0x7f800
+       8:      	and	a4, a0, a3
+       c:      	addi	a2, a2, -0x1
+      10:      	bne	a4, a3, 0x1c <f32_le_quiet+0x1c>
+      14:      	and	a4, a0, a2
+      18:      	bnez	a4, 0x2c <f32_le_quiet+0x2c>
+      1c:      	and	a4, a1, a3
+      20:      	bne	a4, a3, 0x20 <f32_le_quiet+0x20>
+      24:      	and	a2, a1, a2
+      28:      	beqz	a2, 0x28 <f32_le_quiet+0x28>
+      2c:      	lui	a2, 0x400
+      30:      	lui	a4, 0x7fc00
+      34:      	and	a5, a0, a4
+      38:      	addi	a2, a2, -0x1
+      3c:      	bne	a5, a3, 0x48 <f32_le_quiet+0x48>
+      40:      	and	a0, a0, a2
+      44:      	bnez	a0, 0x5c <f32_le_quiet+0x5c>
+      48:      	and	a4, a1, a4
+      4c:      	li	a0, 0x0
+      50:      	bne	a4, a3, 0x50 <f32_le_quiet+0x50>
+      54:      	and	a1, a1, a2
+      58:      	beqz	a1, 0x58 <f32_le_quiet+0x58>
+      5c:      	li	a0, 0x0
+      60:      	lui	a1, 0x0
+      64:      	lbu	a2, 0x0(a1)
+      68:      	ori	a2, a2, 0x10
+      6c:      	sb	a2, 0x0(a1)
+      70:      	ret
+      74:      	xor	a2, a1, a0
+      78:      	sext.w	a2, a2
+      7c:      	bltz	a2, 0xa0 <f32_le_quiet+0xa0>
+      80:      	sext.w	a1, a1
+      84:      	sext.w	a0, a0
+      88:      	xor	a2, a0, a1
+      8c:      	sltu	a1, a0, a1
+      90:      	slti	a0, a0, 0x0
+      94:      	seqz	a2, a2
+      98:      	xor	a0, a0, a1
+      9c:      	j	0xbc <f32_le_quiet+0xbc>
+      a0:      	sext.w	a2, a0
+      a4:      	slli	a1, a1, 0x21
+      a8:      	slti	a2, a2, 0x0
+      ac:      	srli	a1, a1, 0x21
+      b0:      	or	a0, a1, a0
+      b4:      	sext.w	a0, a0
+      b8:      	seqz	a0, a0
+      bc:      	or	a0, a2, a0
+      c0:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0x2f0 contains 10 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+0000000000000020  0000000300000010 R_RISCV_BRANCH         0000000000000074 .L0  + 0
+0000000000000028  0000000300000010 R_RISCV_BRANCH         0000000000000074 .L0  + 0
+0000000000000050  0000000400000010 R_RISCV_BRANCH         00000000000000c0 .L0  + 0
+0000000000000058  0000000400000010 R_RISCV_BRANCH         00000000000000c0 .L0  + 0
+0000000000000060  0000000b0000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000060  0000000000000033 R_RISCV_RELAX                     0
+0000000000000064  0000000b0000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000064  0000000000000033 R_RISCV_RELAX                     0
+000000000000006c  0000000b0000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+000000000000006c  0000000000000033 R_RISCV_RELAX                     0
+
+=== measured ===
+{
+  "entry_symbol": "f32_le_quiet",
+  "instructions": 49,
+  "instructions_all_symbols": 49,
+  "per_symbol_instructions": {
+    "f32_le_quiet": 49
+  },
+  "branches": 9,
+  "jumps": 1,
+  "back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 1,
+  "stores": 1,
+  "memory": 2,
+  "multiply_divide": 0,
+  "muldiv_ops": {},
+  "unreachable_insns": 0,
+  "size_bytes": 196,
+  "surviving_symbols": [
+    "f32_le_quiet"
+  ],
+  "source_files_linked": [
+    "source/f32_le_quiet.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "source/RISCV/softfloat_raiseFlags.c"
+  ],
+  "unresolved_externals": [
+    "softfloat_exceptionFlags"
+  ],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "f2892577396b36efc593e9e369d7d86db056a7ebc35eaa8fe43b7db52c85a526",
+  "text_sha256": "9c8cdfbd1c04ae6c26a717bf7d668c75f3a589d1d70d994fc005d4dab6294942",
+  "object_sha256": "91d6fd9b568183ff272acf66d995810a330f5636ccd9f92ffc6e6e6aa34587cb"
+}

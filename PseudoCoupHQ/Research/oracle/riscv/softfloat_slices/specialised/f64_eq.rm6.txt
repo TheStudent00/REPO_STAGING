@@ -1,0 +1,113 @@
+# f64_eq  [rm6]
+# entry symbol: f64_eq
+# linked: source/f64_eq.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm6.c, source/RISCV/softfloat_raiseFlags.c
+# instructions 40 (all symbols 40), branches 8, jumps 0,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/f64_eq/rm6.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_eq>:
+       0:      	li	a2, 0x7ff
+       4:      	slli	a2, a2, 0x34
+       8:      	li	a3, -0x1
+       c:      	and	a4, a0, a2
+      10:      	srli	a3, a3, 0xc
+      14:      	bne	a4, a2, 0x20 <f64_eq+0x20>
+      18:      	and	a4, a0, a3
+      1c:      	bnez	a4, 0x30 <f64_eq+0x30>
+      20:      	and	a4, a1, a2
+      24:      	bne	a4, a2, 0x24 <f64_eq+0x24>
+      28:      	and	a3, a1, a3
+      2c:      	beqz	a3, 0x2c <f64_eq+0x2c>
+      30:      	lui	a4, 0xfff
+      34:      	li	a2, -0x1
+      38:      	li	a3, 0x7ff
+      3c:      	slli	a4, a4, 0x27
+      40:      	and	a5, a0, a4
+      44:      	slli	a3, a3, 0x34
+      48:      	srli	a2, a2, 0xd
+      4c:      	bne	a5, a3, 0x58 <f64_eq+0x58>
+      50:      	and	a0, a0, a2
+      54:      	bnez	a0, 0x6c <f64_eq+0x6c>
+      58:      	and	a4, a1, a4
+      5c:      	li	a0, 0x0
+      60:      	bne	a4, a3, 0x60 <f64_eq+0x60>
+      64:      	and	a1, a1, a2
+      68:      	beqz	a1, 0x68 <f64_eq+0x68>
+      6c:      	li	a0, 0x0
+      70:      	lui	a1, 0x0
+      74:      	lbu	a2, 0x0(a1)
+      78:      	ori	a2, a2, 0x10
+      7c:      	sb	a2, 0x0(a1)
+      80:      	ret
+      84:      	xor	a2, a0, a1
+      88:      	or	a0, a1, a0
+      8c:      	seqz	a1, a2
+      90:      	slli	a0, a0, 0x1
+      94:      	seqz	a0, a0
+      98:      	or	a0, a1, a0
+      9c:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0x320 contains 10 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+0000000000000024  0000000300000010 R_RISCV_BRANCH         0000000000000084 .L0  + 0
+000000000000002c  0000000300000010 R_RISCV_BRANCH         0000000000000084 .L0  + 0
+0000000000000060  0000000400000010 R_RISCV_BRANCH         000000000000009c .L0  + 0
+0000000000000068  0000000400000010 R_RISCV_BRANCH         000000000000009c .L0  + 0
+0000000000000070  000000050000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000070  0000000000000033 R_RISCV_RELAX                     0
+0000000000000074  000000050000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000074  0000000000000033 R_RISCV_RELAX                     0
+000000000000007c  000000050000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+000000000000007c  0000000000000033 R_RISCV_RELAX                     0
+
+=== measured ===
+{
+  "entry_symbol": "f64_eq",
+  "instructions": 40,
+  "instructions_all_symbols": 40,
+  "per_symbol_instructions": {
+    "f64_eq": 40
+  },
+  "branches": 8,
+  "jumps": 0,
+  "back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 1,
+  "stores": 1,
+  "memory": 2,
+  "multiply_divide": 0,
+  "muldiv_ops": {},
+  "unreachable_insns": 0,
+  "size_bytes": 160,
+  "surviving_symbols": [
+    "f64_eq"
+  ],
+  "source_files_linked": [
+    "source/f64_eq.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm6.c",
+    "source/RISCV/softfloat_raiseFlags.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "9873f31d8a16bdf141247bacf2ba29b579d42d037f521bceddd2b2b1430d3c0c",
+  "text_sha256": "36a88f4880f82b4d53b5314d49406ddb1c2105f145f3ba2b29003abb21749db8",
+  "object_sha256": "dd188abcaa15ed144533fefeffa2d99a879e2016579a3afa91c2a2b108656f99"
+}

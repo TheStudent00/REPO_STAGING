@@ -1,0 +1,134 @@
+# TRUE SLICE of i32_to_f64  (sail: riscv_i32ToF64)
+# source files linked (1): source/i32_to_f64.c
+# own body 47, upper bound 47, SLICE 47
+# still-undefined externals (data globals / libgcc): none
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/i32_to_f64/slice.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <i32_to_f64>:
+       0:      	beqz	a0, 0xb8 <i32_to_f64+0xb8>
+       4:      	sraiw	a1, a0, 0x1f
+       8:      	lui	a2, 0x55555
+       c:      	xor	a3, a0, a1
+      10:      	addi	a2, a2, 0x555
+      14:      	subw	a3, a3, a1
+      18:      	srliw	a1, a3, 0x1
+      1c:      	or	a1, a3, a1
+      20:      	srliw	a4, a1, 0x2
+      24:      	or	a1, a1, a4
+      28:      	srliw	a4, a1, 0x4
+      2c:      	or	a1, a1, a4
+      30:      	srliw	a4, a1, 0x8
+      34:      	or	a1, a1, a4
+      38:      	srliw	a4, a1, 0x10
+      3c:      	or	a1, a1, a4
+      40:      	not	a1, a1
+      44:      	srli	a4, a1, 0x1
+      48:      	and	a2, a4, a2
+      4c:      	lui	a4, 0x33333
+      50:      	addi	a4, a4, 0x333
+      54:      	sub	a1, a1, a2
+      58:      	and	a2, a1, a4
+      5c:      	srli	a1, a1, 0x2
+      60:      	and	a1, a1, a4
+      64:      	lui	a4, 0xf0f1
+      68:      	add	a1, a2, a1
+      6c:      	srli	a2, a1, 0x4
+      70:      	add	a1, a1, a2
+      74:      	lui	a2, 0x1010
+      78:      	srli	a0, a0, 0x3f
+      7c:      	addi	a4, a4, -0xf1
+      80:      	and	a1, a1, a4
+      84:      	li	a4, 0x41d
+      88:      	addi	a2, a2, 0x101
+      8c:      	slli	a0, a0, 0x3f
+      90:      	slli	a3, a3, 0x20
+      94:      	srli	a3, a3, 0x20
+      98:      	mul	a1, a1, a2
+      9c:      	srliw	a1, a1, 0x18
+      a0:      	addi	a2, a1, 0x15
+      a4:      	subw	a4, a4, a1
+      a8:      	slli	a4, a4, 0x34
+      ac:      	or	a0, a4, a0
+      b0:      	sll	a1, a3, a2
+      b4:      	add	a0, a0, a1
+      b8:      	ret
+
+
+=== resolved relocations (llvm-readelf -r) ===
+
+There are no relocations in this file.
+
+=== measured ===
+{
+  "function": "i32_to_f64",
+  "sail_externals": [
+    "riscv_i32ToF64"
+  ],
+  "own_body": 47,
+  "upper_bound": 47,
+  "slice": 47,
+  "slice_all_symbols": 47,
+  "per_symbol_instructions": {
+    "i32_to_f64": 47
+  },
+  "forced_inline": {
+    "instructions": 47,
+    "all_symbols_instructions": 47,
+    "surviving_symbols": [
+      "i32_to_f64"
+    ],
+    "calls_remaining": 0,
+    "calls_remaining_callees": [],
+    "branches": 1,
+    "jumps": 0,
+    "back_edges": 0,
+    "loop_back_edges": 0,
+    "loads": 0,
+    "stores": 0,
+    "multiply_divide": 1,
+    "indirect_jumps": []
+  },
+  "forced_inline_error": null,
+  "branches": 1,
+  "jumps": 0,
+  "back_edges": 0,
+  "loop_back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "loads": 0,
+  "stores": 0,
+  "memory": 0,
+  "multiply_divide": 1,
+  "muldiv_ops": {
+    "mul": 1
+  },
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": [],
+  "helpers_inlined": 0,
+  "source_files_linked": 1,
+  "helper_sources": [],
+  "transitive_callees_measured": [],
+  "unmeasured_callees": [],
+  "unresolved_externals": [],
+  "surviving_symbols": [
+    "i32_to_f64"
+  ],
+  "extra_surviving_symbols": [],
+  "unreachable_insns": 0,
+  "size_bytes": 188,
+  "reduction_vs_upper_bound": 0,
+  "larger_than_upper_bound": false,
+  "forced_larger_than_upper_bound": false,
+  "clean": true,
+  "opt_passes": "internalize,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globaldce",
+  "used_instcombine_fixpoint_fallback": false
+}

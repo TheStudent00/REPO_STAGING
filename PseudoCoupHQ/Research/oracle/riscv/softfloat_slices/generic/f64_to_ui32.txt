@@ -1,0 +1,190 @@
+# TRUE SLICE of f64_to_ui32  (sail: riscv_f64ToUi32)
+# source files linked (3): source/f64_to_ui32.c, source/s_roundToUI32.c, source/RISCV/softfloat_raiseFlags.c
+# own body 33, upper bound 94, SLICE 79
+# still-undefined externals (data globals / libgcc): softfloat_exceptionFlags
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/f64_to_ui32/slice.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_to_ui32>:
+       0:      	srli	a6, a0, 0x34
+       4:      	li	a3, -0x1
+       8:      	andi	a4, a6, 0x7ff
+       c:      	srli	a3, a3, 0xc
+      10:      	and	a5, a0, a3
+      14:      	seqz	a7, a4
+      18:      	addi	a3, a3, 0x1
+      1c:      	addi	a7, a7, -0x1
+      20:      	and	a3, a7, a3
+      24:      	li	a7, 0x426
+      28:      	or	a3, a5, a3
+      2c:      	bltu	a7, a4, 0x5c <f64_to_ui32+0x5c>
+      30:      	li	a7, 0x3e9
+      34:      	bltu	a4, a7, 0x58 <f64_to_ui32+0x58>
+      38:      	addi	a6, a6, 0x19
+      3c:      	li	a7, 0x427
+      40:      	subw	a7, a7, a4
+      44:      	sll	a6, a3, a6
+      48:      	srl	a3, a3, a7
+      4c:      	snez	a6, a6
+      50:      	or	a3, a3, a6
+      54:      	j	0x5c <f64_to_ui32+0x5c>
+      58:      	snez	a3, a3
+      5c:      	seqz	a5, a5
+      60:      	addi	a4, a4, -0x7ff
+      64:      	slti	a0, a0, 0x0
+      68:      	snez	a4, a4
+      6c:      	or	a5, a5, a4
+      70:      	andi	a4, a1, 0xfb
+      74:      	and	a0, a0, a5
+      78:      	beqz	a4, 0x94 <f64_to_ui32+0x94>
+      7c:      	beqz	a0, 0xa0 <f64_to_ui32+0xa0>
+      80:      	beqz	a3, 0x80 <f64_to_ui32+0x80>
+      84:      	li	a5, 0x2
+      88:      	beq	a4, a5, 0xf4 <f64_to_ui32+0xf4>
+      8c:      	li	a5, 0x0
+      90:      	j	0xb4 <f64_to_ui32+0xb4>
+      94:      	li	a5, 0x1
+      98:      	slli	a5, a5, 0xb
+      9c:      	j	0xb4 <f64_to_ui32+0xb4>
+      a0:      	addi	a4, a1, -0x3
+      a4:      	snez	a4, a4
+      a8:      	addi	a4, a4, -0x1
+      ac:      	slli	a4, a4, 0x34
+      b0:      	srli	a5, a4, 0x34
+      b4:      	add	a5, a5, a3
+      b8:      	srli	a4, a5, 0x2c
+      bc:      	bnez	a4, 0xf4 <f64_to_ui32+0xf4>
+      c0:      	slli	a3, a3, 0x34
+      c4:      	li	a6, 0x1
+      c8:      	srli	a4, a3, 0x34
+      cc:      	slli	a6, a6, 0xb
+      d0:      	xor	a3, a4, a6
+      d4:      	or	a6, a1, a3
+      d8:      	srli	a3, a5, 0xc
+      dc:      	bnez	a6, 0xe4 <f64_to_ui32+0xe4>
+      e0:      	andi	a3, a3, -0x2
+      e4:      	sext.w	a5, a3
+      e8:      	snez	a5, a5
+      ec:      	and	a5, a0, a5
+      f0:      	beqz	a5, 0xf0 <f64_to_ui32+0xf0>
+      f4:      	lui	a1, 0x0
+      f8:      	lbu	a2, 0x0(a1)
+      fc:      	ori	a2, a2, 0x10
+     100:      	sb	a2, 0x0(a1)
+     104:      	addi	a3, a0, -0x1
+     108:      	sext.w	a0, a3
+     10c:      	ret
+     110:      	beqz	a4, 0x108 <f64_to_ui32+0x108>
+     114:      	addi	a1, a1, -0x6
+     118:      	seqz	a0, a1
+     11c:      	or	a3, a3, a0
+     120:      	beqz	a2, 0x108 <f64_to_ui32+0x108>
+     124:      	lui	a0, 0x0
+     128:      	lbu	a1, 0x0(a0)
+     12c:      	ori	a1, a1, 0x1
+     130:      	sb	a1, 0x0(a0)
+     134:      	sext.w	a0, a3
+     138:      	ret
+
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0x328 contains 14 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+0000000000000080  0000000300000010 R_RISCV_BRANCH         0000000000000108 .L0  + 0
+00000000000000f0  0000000400000010 R_RISCV_BRANCH         0000000000000110 .L0  + 0
+00000000000000f4  0000000a0000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000000f4  0000000000000033 R_RISCV_RELAX                     0
+00000000000000f8  0000000a0000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000f8  0000000000000033 R_RISCV_RELAX                     0
+0000000000000100  0000000a0000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000100  0000000000000033 R_RISCV_RELAX                     0
+0000000000000124  0000000a0000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000124  0000000000000033 R_RISCV_RELAX                     0
+0000000000000128  0000000a0000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000128  0000000000000033 R_RISCV_RELAX                     0
+0000000000000130  0000000a0000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000130  0000000000000033 R_RISCV_RELAX                     0
+
+=== measured ===
+{
+  "function": "f64_to_ui32",
+  "sail_externals": [
+    "riscv_f64ToUi32"
+  ],
+  "own_body": 33,
+  "upper_bound": 94,
+  "slice": 79,
+  "slice_all_symbols": 79,
+  "per_symbol_instructions": {
+    "f64_to_ui32": 79
+  },
+  "forced_inline": {
+    "instructions": 79,
+    "all_symbols_instructions": 79,
+    "surviving_symbols": [
+      "f64_to_ui32"
+    ],
+    "calls_remaining": 0,
+    "calls_remaining_callees": [],
+    "branches": 11,
+    "jumps": 3,
+    "back_edges": 2,
+    "loop_back_edges": 0,
+    "loads": 2,
+    "stores": 2,
+    "multiply_divide": 0,
+    "indirect_jumps": []
+  },
+  "forced_inline_error": null,
+  "branches": 11,
+  "jumps": 3,
+  "back_edges": 2,
+  "loop_back_edges": 0,
+  "back_edge_spans": [
+    "0x110->0x108 (3 insns)",
+    "0x120->0x108 (7 insns)"
+  ],
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "loads": 2,
+  "stores": 2,
+  "memory": 4,
+  "multiply_divide": 0,
+  "muldiv_ops": {},
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": [],
+  "helpers_inlined": 2,
+  "source_files_linked": 3,
+  "helper_sources": [
+    "source/s_roundToUI32.c",
+    "source/RISCV/softfloat_raiseFlags.c"
+  ],
+  "transitive_callees_measured": [
+    "softfloat_raiseFlags",
+    "softfloat_roundToUI32"
+  ],
+  "unmeasured_callees": [],
+  "unresolved_externals": [
+    "softfloat_exceptionFlags"
+  ],
+  "surviving_symbols": [
+    "f64_to_ui32"
+  ],
+  "extra_surviving_symbols": [],
+  "unreachable_insns": 0,
+  "size_bytes": 316,
+  "reduction_vs_upper_bound": 15,
+  "larger_than_upper_bound": false,
+  "forced_larger_than_upper_bound": false,
+  "clean": true,
+  "opt_passes": "internalize,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globaldce",
+  "used_instcombine_fixpoint_fallback": false
+}

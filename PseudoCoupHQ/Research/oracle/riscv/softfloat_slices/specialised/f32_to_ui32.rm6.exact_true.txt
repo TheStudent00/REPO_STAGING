@@ -1,0 +1,136 @@
+# f32_to_ui32  [rm6.exact_true]
+# entry symbol: f32_to_ui32_rm6_exact
+# linked: f32_to_ui32_rm6_exact.c, source/f32_to_ui32.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm6.c, source/s_roundToUI32.c, source/RISCV/softfloat_raiseFlags.c
+# instructions 55 (all symbols 55), branches 6, jumps 1,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/f32_to_ui32/rm6_exact.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f32_to_ui32_rm6_exact>:
+       0:      	slli	a2, a0, 0x29
+       4:      	slli	a3, a0, 0x21
+       8:      	lui	a1, 0x7f800
+       c:      	srli	a2, a2, 0x29
+      10:      	srli	a3, a3, 0x38
+      14:      	and	a1, a0, a1
+      18:      	snez	a1, a1
+      1c:      	slli	a1, a1, 0x17
+      20:      	or	a4, a2, a1
+      24:      	li	a5, 0xa9
+      28:      	slli	a1, a4, 0x20
+      2c:      	bltu	a5, a3, 0x60 <f32_to_ui32_rm6_exact+0x60>
+      30:      	li	a5, 0x6c
+      34:      	bltu	a3, a5, 0x5c <f32_to_ui32_rm6_exact+0x5c>
+      38:      	srliw	a4, a0, 0x17
+      3c:      	li	a5, 0xaa
+      40:      	addi	a4, a4, 0x16
+      44:      	subw	a5, a5, a3
+      48:      	srl	a5, a1, a5
+      4c:      	sll	a1, a1, a4
+      50:      	snez	a1, a1
+      54:      	or	a1, a5, a1
+      58:      	j	0x60 <f32_to_ui32_rm6_exact+0x60>
+      5c:      	snez	a1, a4
+      60:      	sext.w	a0, a0
+      64:      	snez	a2, a2
+      68:      	addi	a3, a3, -0xff
+      6c:      	seqz	a3, a3
+      70:      	slti	a0, a0, 0x0
+      74:      	xori	a0, a0, 0x1
+      78:      	and	a2, a2, a3
+      7c:      	or	a0, a0, a2
+      80:      	beqz	a0, 0x80 <f32_to_ui32_rm6_exact+0x80>
+      84:      	srli	a2, a1, 0x2c
+      88:      	bnez	a2, 0x88 <f32_to_ui32_rm6_exact+0x88>
+      8c:      	slli	a2, a1, 0x34
+      90:      	srli	a0, a1, 0xc
+      94:      	beqz	a2, 0x94 <f32_to_ui32_rm6_exact+0x94>
+      98:      	lui	a1, 0x0
+      9c:      	lbu	a2, 0x0(a1)
+      a0:      	ori	a0, a0, 0x1
+      a4:      	ori	a2, a2, 0x1
+      a8:      	sb	a2, 0x0(a1)
+      ac:      	sext.w	a0, a0
+      b0:      	ret
+      b4:      	beqz	a1, 0xb4 <f32_to_ui32_rm6_exact+0xb4>
+      b8:      	lui	a1, 0x0
+      bc:      	lbu	a2, 0x0(a1)
+      c0:      	ori	a2, a2, 0x10
+      c4:      	sb	a2, 0x0(a1)
+      c8:      	neg	a0, a0
+      cc:      	sext.w	a0, a0
+      d0:      	ret
+      d4:      	sext.w	a0, zero
+      d8:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0x408 contains 16 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+0000000000000080  0000000300000010 R_RISCV_BRANCH         00000000000000b4 .L0  + 0
+0000000000000088  0000000400000010 R_RISCV_BRANCH         00000000000000b8 .L0  + 0
+0000000000000094  0000000500000010 R_RISCV_BRANCH         00000000000000cc .L0  + 0
+0000000000000098  000000060000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000098  0000000000000033 R_RISCV_RELAX                     0
+000000000000009c  000000060000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+000000000000009c  0000000000000033 R_RISCV_RELAX                     0
+00000000000000a8  000000060000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000a8  0000000000000033 R_RISCV_RELAX                     0
+00000000000000b4  0000000700000010 R_RISCV_BRANCH         00000000000000d4 .L0  + 0
+00000000000000b8  000000060000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000000b8  0000000000000033 R_RISCV_RELAX                     0
+00000000000000bc  000000060000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000bc  0000000000000033 R_RISCV_RELAX                     0
+00000000000000c4  000000060000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000c4  0000000000000033 R_RISCV_RELAX                     0
+
+=== measured ===
+{
+  "entry_symbol": "f32_to_ui32_rm6_exact",
+  "instructions": 55,
+  "instructions_all_symbols": 55,
+  "per_symbol_instructions": {
+    "f32_to_ui32_rm6_exact": 55
+  },
+  "branches": 6,
+  "jumps": 1,
+  "back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 2,
+  "stores": 2,
+  "memory": 4,
+  "multiply_divide": 0,
+  "muldiv_ops": {},
+  "unreachable_insns": 0,
+  "size_bytes": 220,
+  "surviving_symbols": [
+    "f32_to_ui32_rm6_exact"
+  ],
+  "source_files_linked": [
+    "f32_to_ui32_rm6_exact.c",
+    "source/f32_to_ui32.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm6.c",
+    "source/s_roundToUI32.c",
+    "source/RISCV/softfloat_raiseFlags.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "24eec39ae9e80fddb704e2c4913a4110925a55e4f3349ae7189b8ecb4c99532b",
+  "text_sha256": "81e2c4b7fc57bb59cec3d64bc4c7758e114604236407efaa30eb230a69d7af15",
+  "object_sha256": "7593a5721f6343485369c05c8936280942ab2eb56828cae02540df42c8eb2b4f"
+}

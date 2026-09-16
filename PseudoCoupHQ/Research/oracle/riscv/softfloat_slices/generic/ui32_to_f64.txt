@@ -1,0 +1,128 @@
+# TRUE SLICE of ui32_to_f64  (sail: riscv_ui32ToF64)
+# source files linked (1): source/ui32_to_f64.c
+# own body 41, upper bound 41, SLICE 41
+# still-undefined externals (data globals / libgcc): none
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/ui32_to_f64/slice.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <ui32_to_f64>:
+       0:      	beqz	a0, 0xa0 <ui32_to_f64+0xa0>
+       4:      	srliw	a1, a0, 0x1
+       8:      	lui	a2, 0x55555
+       c:      	or	a1, a0, a1
+      10:      	addi	a2, a2, 0x555
+      14:      	srliw	a3, a1, 0x2
+      18:      	or	a1, a1, a3
+      1c:      	srliw	a3, a1, 0x4
+      20:      	or	a1, a1, a3
+      24:      	srliw	a3, a1, 0x8
+      28:      	or	a1, a1, a3
+      2c:      	srliw	a3, a1, 0x10
+      30:      	or	a1, a1, a3
+      34:      	not	a1, a1
+      38:      	srli	a3, a1, 0x1
+      3c:      	and	a2, a3, a2
+      40:      	lui	a3, 0x33333
+      44:      	addi	a3, a3, 0x333
+      48:      	sub	a1, a1, a2
+      4c:      	and	a2, a1, a3
+      50:      	srli	a1, a1, 0x2
+      54:      	and	a1, a1, a3
+      58:      	lui	a3, 0xf0f1
+      5c:      	add	a1, a2, a1
+      60:      	srli	a2, a1, 0x4
+      64:      	add	a1, a1, a2
+      68:      	lui	a2, 0x1010
+      6c:      	addi	a3, a3, -0xf1
+      70:      	and	a1, a1, a3
+      74:      	li	a3, 0x41d
+      78:      	slli	a0, a0, 0x20
+      7c:      	addi	a2, a2, 0x101
+      80:      	srli	a0, a0, 0x20
+      84:      	mul	a1, a1, a2
+      88:      	srliw	a1, a1, 0x18
+      8c:      	addi	a2, a1, 0x15
+      90:      	subw	a3, a3, a1
+      94:      	slli	a3, a3, 0x34
+      98:      	sll	a0, a0, a2
+      9c:      	add	a0, a3, a0
+      a0:      	ret
+
+
+=== resolved relocations (llvm-readelf -r) ===
+
+There are no relocations in this file.
+
+=== measured ===
+{
+  "function": "ui32_to_f64",
+  "sail_externals": [
+    "riscv_ui32ToF64"
+  ],
+  "own_body": 41,
+  "upper_bound": 41,
+  "slice": 41,
+  "slice_all_symbols": 41,
+  "per_symbol_instructions": {
+    "ui32_to_f64": 41
+  },
+  "forced_inline": {
+    "instructions": 41,
+    "all_symbols_instructions": 41,
+    "surviving_symbols": [
+      "ui32_to_f64"
+    ],
+    "calls_remaining": 0,
+    "calls_remaining_callees": [],
+    "branches": 1,
+    "jumps": 0,
+    "back_edges": 0,
+    "loop_back_edges": 0,
+    "loads": 0,
+    "stores": 0,
+    "multiply_divide": 1,
+    "indirect_jumps": []
+  },
+  "forced_inline_error": null,
+  "branches": 1,
+  "jumps": 0,
+  "back_edges": 0,
+  "loop_back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "loads": 0,
+  "stores": 0,
+  "memory": 0,
+  "multiply_divide": 1,
+  "muldiv_ops": {
+    "mul": 1
+  },
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": [],
+  "helpers_inlined": 0,
+  "source_files_linked": 1,
+  "helper_sources": [],
+  "transitive_callees_measured": [],
+  "unmeasured_callees": [],
+  "unresolved_externals": [],
+  "surviving_symbols": [
+    "ui32_to_f64"
+  ],
+  "extra_surviving_symbols": [],
+  "unreachable_insns": 0,
+  "size_bytes": 164,
+  "reduction_vs_upper_bound": 0,
+  "larger_than_upper_bound": false,
+  "forced_larger_than_upper_bound": false,
+  "clean": true,
+  "opt_passes": "internalize,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globaldce",
+  "used_instcombine_fixpoint_fallback": false
+}

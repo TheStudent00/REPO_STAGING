@@ -1,0 +1,78 @@
+--- cache/RiscvExtras.lean
++++ working_copy/RiscvExtras.lean
+@@ -8,6 +8,7 @@
+ 
+ import Sail.Sail
+ import LeanIM.Defs
++import Kinds
+ 
+ open Sail
+ open ConcurrencyInterfaceV1
+@@ -43,18 +44,18 @@
+ end Effectful
+ 
+ -- Floats
+-axiom riscv_f16Add : BitVec 3 → BitVec 16 → BitVec 16 → (BitVec 5 × BitVec 16)
+-axiom riscv_f16Sub : BitVec 3 → BitVec 16 → BitVec 16 → (BitVec 5 × BitVec 16)
+-axiom riscv_f16Mul : BitVec 3 → BitVec 16 → BitVec 16 → (BitVec 5 × BitVec 16)
+-axiom riscv_f16Div : BitVec 3 → BitVec 16 → BitVec 16 → (BitVec 5 × BitVec 16)
+-axiom riscv_f32Add : BitVec 3 → BitVec 32 → BitVec 32 → (BitVec 5 × BitVec 32)
+-axiom riscv_f32Sub : BitVec 3 → BitVec 32 → BitVec 32 → (BitVec 5 × BitVec 32)
+-axiom riscv_f32Mul : BitVec 3 → BitVec 32 → BitVec 32 → (BitVec 5 × BitVec 32)
+-axiom riscv_f32Div : BitVec 3 → BitVec 32 → BitVec 32 → (BitVec 5 × BitVec 32)
+-axiom riscv_f64Add : BitVec 3 → BitVec 64 → BitVec 64 → (BitVec 5 × BitVec 64)
+-axiom riscv_f64Sub : BitVec 3 → BitVec 64 → BitVec 64 → (BitVec 5 × BitVec 64)
+-axiom riscv_f64Mul : BitVec 3 → BitVec 64 → BitVec 64 → (BitVec 5 × BitVec 64)
+-axiom riscv_f64Div : BitVec 3 → BitVec 64 → BitVec 64 → (BitVec 5 × BitVec 64)
++def riscv_f16Add : BitVec 3 → BitVec 16 → BitVec 16 → (BitVec 5 × BitVec 16) := Kinds.Axioms.riscv_f16Add
++def riscv_f16Sub : BitVec 3 → BitVec 16 → BitVec 16 → (BitVec 5 × BitVec 16) := Kinds.Axioms.riscv_f16Sub
++def riscv_f16Mul : BitVec 3 → BitVec 16 → BitVec 16 → (BitVec 5 × BitVec 16) := Kinds.Axioms.riscv_f16Mul
++def riscv_f16Div : BitVec 3 → BitVec 16 → BitVec 16 → (BitVec 5 × BitVec 16) := Kinds.Axioms.riscv_f16Div
++def riscv_f32Add : BitVec 3 → BitVec 32 → BitVec 32 → (BitVec 5 × BitVec 32) := Kinds.Axioms.riscv_f32Add
++def riscv_f32Sub : BitVec 3 → BitVec 32 → BitVec 32 → (BitVec 5 × BitVec 32) := Kinds.Axioms.riscv_f32Sub
++def riscv_f32Mul : BitVec 3 → BitVec 32 → BitVec 32 → (BitVec 5 × BitVec 32) := Kinds.Axioms.riscv_f32Mul
++def riscv_f32Div : BitVec 3 → BitVec 32 → BitVec 32 → (BitVec 5 × BitVec 32) := Kinds.Axioms.riscv_f32Div
++def riscv_f64Add : BitVec 3 → BitVec 64 → BitVec 64 → (BitVec 5 × BitVec 64) := Kinds.Axioms.riscv_f64Add
++def riscv_f64Sub : BitVec 3 → BitVec 64 → BitVec 64 → (BitVec 5 × BitVec 64) := Kinds.Axioms.riscv_f64Sub
++def riscv_f64Mul : BitVec 3 → BitVec 64 → BitVec 64 → (BitVec 5 × BitVec 64) := Kinds.Axioms.riscv_f64Mul
++def riscv_f64Div : BitVec 3 → BitVec 64 → BitVec 64 → (BitVec 5 × BitVec 64) := Kinds.Axioms.riscv_f64Div
+ axiom riscv_f16MulAdd : BitVec 3 → BitVec 16 → BitVec 16 → BitVec 16 → (BitVec 5 × BitVec 16)
+ axiom riscv_f32MulAdd : BitVec 3 → BitVec 32 → BitVec 32 → BitVec 32 → (BitVec 5 × BitVec 32)
+ axiom riscv_f64MulAdd : BitVec 3 → BitVec 64 → BitVec 64 → BitVec 64 → (BitVec 5 × BitVec 64)
+@@ -92,21 +93,21 @@
+ axiom riscv_f64ToF16 : BitVec 3 → BitVec 64 → (BitVec 5 × BitVec 16)
+ axiom riscv_f64ToF32 : BitVec 3 → BitVec 64 → (BitVec 5 × BitVec 32)
+ axiom riscv_f32ToBF16 : BitVec 3 → BitVec 32 → (BitVec 5 × BitVec 16)
+-axiom riscv_f16Lt : BitVec 16 → BitVec 16 → (BitVec 5 × Bool)
+-axiom riscv_f16Lt_quiet : BitVec 16 → BitVec 16 → (BitVec 5 × Bool)
+-axiom riscv_f16Le : BitVec 16 → BitVec 16 → (BitVec 5 × Bool)
+-axiom riscv_f16Le_quiet : BitVec 16 → BitVec 16 → (BitVec 5 × Bool)
+-axiom riscv_f16Eq : BitVec 16 → BitVec 16 → (BitVec 5 × Bool)
+-axiom riscv_f32Lt : BitVec 32 → BitVec 32 → (BitVec 5 × Bool)
+-axiom riscv_f32Lt_quiet : BitVec 32 → BitVec 32 → (BitVec 5 × Bool)
+-axiom riscv_f32Le : BitVec 32 → BitVec 32 → (BitVec 5 × Bool)
+-axiom riscv_f32Le_quiet : BitVec 32 → BitVec 32 → (BitVec 5 × Bool)
+-axiom riscv_f32Eq : BitVec 32 → BitVec 32 → (BitVec 5 × Bool)
+-axiom riscv_f64Lt : BitVec 64 → BitVec 64 → (BitVec 5 × Bool)
+-axiom riscv_f64Lt_quiet : BitVec 64 → BitVec 64 → (BitVec 5 × Bool)
+-axiom riscv_f64Le : BitVec 64 → BitVec 64 → (BitVec 5 × Bool)
+-axiom riscv_f64Le_quiet : BitVec 64 → BitVec 64 → (BitVec 5 × Bool)
+-axiom riscv_f64Eq : BitVec 64 → BitVec 64 → (BitVec 5 × Bool)
++def riscv_f16Lt : BitVec 16 → BitVec 16 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f16Lt
++def riscv_f16Lt_quiet : BitVec 16 → BitVec 16 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f16Lt_quiet
++def riscv_f16Le : BitVec 16 → BitVec 16 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f16Le
++def riscv_f16Le_quiet : BitVec 16 → BitVec 16 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f16Le_quiet
++def riscv_f16Eq : BitVec 16 → BitVec 16 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f16Eq
++def riscv_f32Lt : BitVec 32 → BitVec 32 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f32Lt
++def riscv_f32Lt_quiet : BitVec 32 → BitVec 32 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f32Lt_quiet
++def riscv_f32Le : BitVec 32 → BitVec 32 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f32Le
++def riscv_f32Le_quiet : BitVec 32 → BitVec 32 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f32Le_quiet
++def riscv_f32Eq : BitVec 32 → BitVec 32 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f32Eq
++def riscv_f64Lt : BitVec 64 → BitVec 64 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f64Lt
++def riscv_f64Lt_quiet : BitVec 64 → BitVec 64 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f64Lt_quiet
++def riscv_f64Le : BitVec 64 → BitVec 64 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f64Le
++def riscv_f64Le_quiet : BitVec 64 → BitVec 64 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f64Le_quiet
++def riscv_f64Eq : BitVec 64 → BitVec 64 → (BitVec 5 × Bool) := Kinds.Axioms.riscv_f64Eq
+ axiom riscv_f16roundToInt : BitVec 3 → BitVec 16 → Bool → (BitVec 5 × BitVec 16)
+ axiom riscv_f32roundToInt : BitVec 3 → BitVec 32 → Bool → (BitVec 5 × BitVec 32)
+ axiom riscv_f64roundToInt : BitVec 3 → BitVec 64 → Bool → (BitVec 5 × BitVec 64)

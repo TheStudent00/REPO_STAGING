@@ -1,0 +1,108 @@
+/* task t4 emulation -- rendered by render_general.py, one named
+   intermediate per node of the term of CLZW__one__rd__cpp__native_first.  The term's text, LITERAL:
+    */
+#include <cstdint>
+
+extern "C"
+uint64_t
+emu_CLZW__one__rd__cpp__native_first(uint32_t a)
+{
+    uint32_t v0 = ((uint32_t)((uint32_t)a >> 0) & UINT32_C(0x1));
+    int v1 = (((uint32_t)(v0) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v2 = ((v1) ? (uint32_t)(UINT32_C(0x1f)) : (uint32_t)(UINT32_C(0x20)));
+    uint32_t v3 = ((uint32_t)((uint32_t)a >> 1) & UINT32_C(0x1));
+    int v4 = (((uint32_t)(v3) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v5 = ((v4) ? (uint32_t)(UINT32_C(0x1e)) : (uint32_t)(v2));
+    uint32_t v6 = ((uint32_t)((uint32_t)a >> 2) & UINT32_C(0x1));
+    int v7 = (((uint32_t)(v6) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v8 = ((v7) ? (uint32_t)(UINT32_C(0x1d)) : (uint32_t)(v5));
+    uint32_t v9 = ((uint32_t)((uint32_t)a >> 3) & UINT32_C(0x1));
+    int v10 = (((uint32_t)(v9) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v11 = ((v10) ? (uint32_t)(UINT32_C(0x1c)) : (uint32_t)(v8));
+    uint32_t v12 = ((uint32_t)((uint32_t)a >> 4) & UINT32_C(0x1));
+    int v13 = (((uint32_t)(v12) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v14 = ((v13) ? (uint32_t)(UINT32_C(0x1b)) : (uint32_t)(v11));
+    uint32_t v15 = ((uint32_t)((uint32_t)a >> 5) & UINT32_C(0x1));
+    int v16 = (((uint32_t)(v15) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v17 = ((v16) ? (uint32_t)(UINT32_C(0x1a)) : (uint32_t)(v14));
+    uint32_t v18 = ((uint32_t)((uint32_t)a >> 6) & UINT32_C(0x1));
+    int v19 = (((uint32_t)(v18) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v20 = ((v19) ? (uint32_t)(UINT32_C(0x19)) : (uint32_t)(v17));
+    uint32_t v21 = ((uint32_t)((uint32_t)a >> 7) & UINT32_C(0x1));
+    int v22 = (((uint32_t)(v21) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v23 = ((v22) ? (uint32_t)(UINT32_C(0x18)) : (uint32_t)(v20));
+    uint32_t v24 = ((uint32_t)((uint32_t)a >> 8) & UINT32_C(0x1));
+    int v25 = (((uint32_t)(v24) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v26 = ((v25) ? (uint32_t)(UINT32_C(0x17)) : (uint32_t)(v23));
+    uint32_t v27 = ((uint32_t)((uint32_t)a >> 9) & UINT32_C(0x1));
+    int v28 = (((uint32_t)(v27) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v29 = ((v28) ? (uint32_t)(UINT32_C(0x16)) : (uint32_t)(v26));
+    uint32_t v30 = ((uint32_t)((uint32_t)a >> 10) & UINT32_C(0x1));
+    int v31 = (((uint32_t)(v30) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v32 = ((v31) ? (uint32_t)(UINT32_C(0x15)) : (uint32_t)(v29));
+    uint32_t v33 = ((uint32_t)((uint32_t)a >> 11) & UINT32_C(0x1));
+    int v34 = (((uint32_t)(v33) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v35 = ((v34) ? (uint32_t)(UINT32_C(0x14)) : (uint32_t)(v32));
+    uint32_t v36 = ((uint32_t)((uint32_t)a >> 12) & UINT32_C(0x1));
+    int v37 = (((uint32_t)(v36) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v38 = ((v37) ? (uint32_t)(UINT32_C(0x13)) : (uint32_t)(v35));
+    uint32_t v39 = ((uint32_t)((uint32_t)a >> 13) & UINT32_C(0x1));
+    int v40 = (((uint32_t)(v39) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v41 = ((v40) ? (uint32_t)(UINT32_C(0x12)) : (uint32_t)(v38));
+    uint32_t v42 = ((uint32_t)((uint32_t)a >> 14) & UINT32_C(0x1));
+    int v43 = (((uint32_t)(v42) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v44 = ((v43) ? (uint32_t)(UINT32_C(0x11)) : (uint32_t)(v41));
+    uint32_t v45 = ((uint32_t)((uint32_t)a >> 15) & UINT32_C(0x1));
+    int v46 = (((uint32_t)(v45) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v47 = ((v46) ? (uint32_t)(UINT32_C(0x10)) : (uint32_t)(v44));
+    uint32_t v48 = ((uint32_t)((uint32_t)a >> 16) & UINT32_C(0x1));
+    int v49 = (((uint32_t)(v48) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v50 = ((v49) ? (uint32_t)(UINT32_C(0xf)) : (uint32_t)(v47));
+    uint32_t v51 = ((uint32_t)((uint32_t)a >> 17) & UINT32_C(0x1));
+    int v52 = (((uint32_t)(v51) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v53 = ((v52) ? (uint32_t)(UINT32_C(0xe)) : (uint32_t)(v50));
+    uint32_t v54 = ((uint32_t)((uint32_t)a >> 18) & UINT32_C(0x1));
+    int v55 = (((uint32_t)(v54) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v56 = ((v55) ? (uint32_t)(UINT32_C(0xd)) : (uint32_t)(v53));
+    uint32_t v57 = ((uint32_t)((uint32_t)a >> 19) & UINT32_C(0x1));
+    int v58 = (((uint32_t)(v57) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v59 = ((v58) ? (uint32_t)(UINT32_C(0xc)) : (uint32_t)(v56));
+    uint32_t v60 = ((uint32_t)((uint32_t)a >> 20) & UINT32_C(0x1));
+    int v61 = (((uint32_t)(v60) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v62 = ((v61) ? (uint32_t)(UINT32_C(0xb)) : (uint32_t)(v59));
+    uint32_t v63 = ((uint32_t)((uint32_t)a >> 21) & UINT32_C(0x1));
+    int v64 = (((uint32_t)(v63) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v65 = ((v64) ? (uint32_t)(UINT32_C(0xa)) : (uint32_t)(v62));
+    uint32_t v66 = ((uint32_t)((uint32_t)a >> 22) & UINT32_C(0x1));
+    int v67 = (((uint32_t)(v66) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v68 = ((v67) ? (uint32_t)(UINT32_C(0x9)) : (uint32_t)(v65));
+    uint32_t v69 = ((uint32_t)((uint32_t)a >> 23) & UINT32_C(0x1));
+    int v70 = (((uint32_t)(v69) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v71 = ((v70) ? (uint32_t)(UINT32_C(0x8)) : (uint32_t)(v68));
+    uint32_t v72 = ((uint32_t)((uint32_t)a >> 24) & UINT32_C(0x1));
+    int v73 = (((uint32_t)(v72) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v74 = ((v73) ? (uint32_t)(UINT32_C(0x7)) : (uint32_t)(v71));
+    uint32_t v75 = ((uint32_t)((uint32_t)a >> 25) & UINT32_C(0x1));
+    int v76 = (((uint32_t)(v75) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v77 = ((v76) ? (uint32_t)(UINT32_C(0x6)) : (uint32_t)(v74));
+    uint32_t v78 = ((uint32_t)((uint32_t)a >> 26) & UINT32_C(0x1));
+    int v79 = (((uint32_t)(v78) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v80 = ((v79) ? (uint32_t)(UINT32_C(0x5)) : (uint32_t)(v77));
+    uint32_t v81 = ((uint32_t)((uint32_t)a >> 27) & UINT32_C(0x1));
+    int v82 = (((uint32_t)(v81) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v83 = ((v82) ? (uint32_t)(UINT32_C(0x4)) : (uint32_t)(v80));
+    uint32_t v84 = ((uint32_t)((uint32_t)a >> 28) & UINT32_C(0x1));
+    int v85 = (((uint32_t)(v84) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v86 = ((v85) ? (uint32_t)(UINT32_C(0x3)) : (uint32_t)(v83));
+    uint32_t v87 = ((uint32_t)((uint32_t)a >> 29) & UINT32_C(0x1));
+    int v88 = (((uint32_t)(v87) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v89 = ((v88) ? (uint32_t)(UINT32_C(0x2)) : (uint32_t)(v86));
+    uint32_t v90 = ((uint32_t)((uint32_t)a >> 30) & UINT32_C(0x1));
+    int v91 = (((uint32_t)(v90) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v92 = ((v91) ? (uint32_t)(UINT32_C(0x1)) : (uint32_t)(v89));
+    uint32_t v93 = ((uint32_t)((uint32_t)a >> 31) & UINT32_C(0x1));
+    int v94 = (((uint32_t)(v93) == (uint32_t)(UINT32_C(0x1)))) ? 1 : 0;
+    uint32_t v95 = ((v94) ? (uint32_t)(UINT32_C(0x0)) : (uint32_t)(v92));
+    uint64_t v96 = (uint64_t)(((uint64_t)(UINT32_C(0x0)) << 32) | (uint64_t)(v95));
+    return (uint64_t)(v96);
+}

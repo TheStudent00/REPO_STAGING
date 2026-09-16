@@ -1,0 +1,82 @@
+// task t4 emulation -- rendered by render_general.py, one named
+// intermediate per node of the term of BREV8__one__rd__go__native_first.
+//   
+package main
+
+//go:noinline
+func emu_BREV8__one__rd__go__native_first(a uint64) uint64 {
+	var v0 uint32 = ((uint32((uint64(a)) >> 7)) & uint32(0x1))
+	var v1 uint32 = ((uint32((uint64(a)) >> 6)) & uint32(0x1))
+	var v2 uint32 = ((uint32((uint64(a)) >> 5)) & uint32(0x1))
+	var v3 uint32 = ((uint32((uint64(a)) >> 4)) & uint32(0x1))
+	var v4 uint32 = ((uint32((uint64(a)) >> 3)) & uint32(0x1))
+	var v5 uint32 = ((uint32((uint64(a)) >> 2)) & uint32(0x1))
+	var v6 uint32 = ((uint32((uint64(a)) >> 1)) & uint32(0x1))
+	var v7 uint32 = ((uint32((uint64(a)) >> 0)) & uint32(0x1))
+	var v8 uint32 = ((uint32((uint64(a)) >> 15)) & uint32(0x1))
+	var v9 uint32 = ((uint32((uint64(a)) >> 14)) & uint32(0x1))
+	var v10 uint32 = ((uint32((uint64(a)) >> 13)) & uint32(0x1))
+	var v11 uint32 = ((uint32((uint64(a)) >> 12)) & uint32(0x1))
+	var v12 uint32 = ((uint32((uint64(a)) >> 11)) & uint32(0x1))
+	var v13 uint32 = ((uint32((uint64(a)) >> 10)) & uint32(0x1))
+	var v14 uint32 = ((uint32((uint64(a)) >> 9)) & uint32(0x1))
+	var v15 uint32 = ((uint32((uint64(a)) >> 8)) & uint32(0x1))
+	var v16 uint32 = ((uint32((uint64(a)) >> 23)) & uint32(0x1))
+	var v17 uint32 = ((uint32((uint64(a)) >> 22)) & uint32(0x1))
+	var v18 uint32 = ((uint32((uint64(a)) >> 21)) & uint32(0x1))
+	var v19 uint32 = ((uint32((uint64(a)) >> 20)) & uint32(0x1))
+	var v20 uint32 = ((uint32((uint64(a)) >> 19)) & uint32(0x1))
+	var v21 uint32 = ((uint32((uint64(a)) >> 18)) & uint32(0x1))
+	var v22 uint32 = ((uint32((uint64(a)) >> 17)) & uint32(0x1))
+	var v23 uint32 = ((uint32((uint64(a)) >> 16)) & uint32(0x1))
+	var v24 uint32 = ((uint32((uint64(a)) >> 31)) & uint32(0x1))
+	var v25 uint32 = ((uint32((uint64(a)) >> 30)) & uint32(0x1))
+	var v26 uint32 = ((uint32((uint64(a)) >> 29)) & uint32(0x1))
+	var v27 uint32 = ((uint32((uint64(a)) >> 28)) & uint32(0x1))
+	var v28 uint32 = ((uint32((uint64(a)) >> 27)) & uint32(0x1))
+	var v29 uint32 = ((uint32((uint64(a)) >> 26)) & uint32(0x1))
+	var v30 uint32 = ((uint32((uint64(a)) >> 25)) & uint32(0x1))
+	var v31 uint32 = ((uint32((uint64(a)) >> 24)) & uint32(0x1))
+	var v32 uint32 = ((uint32((uint64(a)) >> 39)) & uint32(0x1))
+	var v33 uint32 = ((uint32((uint64(a)) >> 38)) & uint32(0x1))
+	var v34 uint32 = ((uint32((uint64(a)) >> 37)) & uint32(0x1))
+	var v35 uint32 = ((uint32((uint64(a)) >> 36)) & uint32(0x1))
+	var v36 uint32 = ((uint32((uint64(a)) >> 35)) & uint32(0x1))
+	var v37 uint32 = ((uint32((uint64(a)) >> 34)) & uint32(0x1))
+	var v38 uint32 = ((uint32((uint64(a)) >> 33)) & uint32(0x1))
+	var v39 uint32 = ((uint32((uint64(a)) >> 32)) & uint32(0x1))
+	var v40 uint32 = ((uint32((uint64(a)) >> 47)) & uint32(0x1))
+	var v41 uint32 = ((uint32((uint64(a)) >> 46)) & uint32(0x1))
+	var v42 uint32 = ((uint32((uint64(a)) >> 45)) & uint32(0x1))
+	var v43 uint32 = ((uint32((uint64(a)) >> 44)) & uint32(0x1))
+	var v44 uint32 = ((uint32((uint64(a)) >> 43)) & uint32(0x1))
+	var v45 uint32 = ((uint32((uint64(a)) >> 42)) & uint32(0x1))
+	var v46 uint32 = ((uint32((uint64(a)) >> 41)) & uint32(0x1))
+	var v47 uint32 = ((uint32((uint64(a)) >> 40)) & uint32(0x1))
+	var v48 uint32 = ((uint32((uint64(a)) >> 55)) & uint32(0x1))
+	var v49 uint32 = ((uint32((uint64(a)) >> 54)) & uint32(0x1))
+	var v50 uint32 = ((uint32((uint64(a)) >> 53)) & uint32(0x1))
+	var v51 uint32 = ((uint32((uint64(a)) >> 52)) & uint32(0x1))
+	var v52 uint32 = ((uint32((uint64(a)) >> 51)) & uint32(0x1))
+	var v53 uint32 = ((uint32((uint64(a)) >> 50)) & uint32(0x1))
+	var v54 uint32 = ((uint32((uint64(a)) >> 49)) & uint32(0x1))
+	var v55 uint32 = ((uint32((uint64(a)) >> 48)) & uint32(0x1))
+	var v56 uint32 = ((uint32((uint64(a)) >> 63)) & uint32(0x1))
+	var v57 uint32 = ((uint32((uint64(a)) >> 62)) & uint32(0x1))
+	var v58 uint32 = ((uint32((uint64(a)) >> 61)) & uint32(0x1))
+	var v59 uint32 = ((uint32((uint64(a)) >> 60)) & uint32(0x1))
+	var v60 uint32 = ((uint32((uint64(a)) >> 59)) & uint32(0x1))
+	var v61 uint32 = ((uint32((uint64(a)) >> 58)) & uint32(0x1))
+	var v62 uint32 = ((uint32((uint64(a)) >> 57)) & uint32(0x1))
+	var v63 uint32 = ((uint32((uint64(a)) >> 56)) & uint32(0x1))
+	var v64 uint64 = (uint64(((uint64(v63)) << 63) | ((uint64(v62)) << 62) | ((uint64(v61)) << 61) | ((uint64(v60)) << 60) | ((uint64(v59)) << 59) | ((uint64(v58)) << 58) | ((uint64(v57)) << 57) | ((uint64(v56)) << 56) | ((uint64(v55)) << 55) | ((uint64(v54)) << 54) | ((uint64(v53)) << 53) | ((uint64(v52)) << 52) | ((uint64(v51)) << 51) | ((uint64(v50)) << 50) | ((uint64(v49)) << 49) | ((uint64(v48)) << 48) | ((uint64(v47)) << 47) | ((uint64(v46)) << 46) | ((uint64(v45)) << 45) | ((uint64(v44)) << 44) | ((uint64(v43)) << 43) | ((uint64(v42)) << 42) | ((uint64(v41)) << 41) | ((uint64(v40)) << 40) | ((uint64(v39)) << 39) | ((uint64(v38)) << 38) | ((uint64(v37)) << 37) | ((uint64(v36)) << 36) | ((uint64(v35)) << 35) | ((uint64(v34)) << 34) | ((uint64(v33)) << 33) | ((uint64(v32)) << 32) | ((uint64(v31)) << 31) | ((uint64(v30)) << 30) | ((uint64(v29)) << 29) | ((uint64(v28)) << 28) | ((uint64(v27)) << 27) | ((uint64(v26)) << 26) | ((uint64(v25)) << 25) | ((uint64(v24)) << 24) | ((uint64(v23)) << 23) | ((uint64(v22)) << 22) | ((uint64(v21)) << 21) | ((uint64(v20)) << 20) | ((uint64(v19)) << 19) | ((uint64(v18)) << 18) | ((uint64(v17)) << 17) | ((uint64(v16)) << 16) | ((uint64(v15)) << 15) | ((uint64(v14)) << 14) | ((uint64(v13)) << 13) | ((uint64(v12)) << 12) | ((uint64(v11)) << 11) | ((uint64(v10)) << 10) | ((uint64(v9)) << 9) | ((uint64(v8)) << 8) | ((uint64(v7)) << 7) | ((uint64(v6)) << 6) | ((uint64(v5)) << 5) | ((uint64(v4)) << 4) | ((uint64(v3)) << 3) | ((uint64(v2)) << 2) | ((uint64(v1)) << 1) | (uint64(v0))))
+	return uint64(v64)
+}
+
+var g0 uint64
+var sink interface{}
+
+func main() {
+	sink = emu_BREV8__one__rd__go__native_first(g0)
+	_ = sink
+}

@@ -1,0 +1,70 @@
+; ModuleID = '<scratch>/fl/run/f16_roundToInt.rm2.value/f16_roundToInt.rm2.value.rv.flat.ll'
+source_filename = "llvm-link"
+target datalayout = "e-m:e-p:64:64-i64:64-i128:128-n32:64-S128"
+target triple = "riscv64-unknown-unknown-elf"
+
+define dso_local i64 @f16_roundToInt_rm2_value_flat(i64 %arg, i1 noundef zeroext %arg1) {
+  %i = and i64 %arg, 65535
+  %i2 = trunc i64 %arg to i16
+  %i3 = trunc i64 %i to i32
+  %i24 = icmp ugt i64 %i, 32767
+  %.m6 = sext i1 %i24 to i16
+  %i4 = lshr i32 %i3, 10
+  %i5 = and i32 %i4, 31
+  %i16 = and i32 %i3, 1023
+  %i17 = icmp eq i32 %i16, 0
+  %i6 = icmp ult i32 %i5, 15
+  %i13 = icmp ugt i32 %i5, 24
+  %i8 = and i64 %arg, 32767
+  %i9 = icmp eq i64 %i8, 0
+  %i15 = icmp ne i32 %i5, 31
+  %i18 = or i1 %i17, %i15
+  %.m1 = sext i1 %i18 to i16
+  %i20 = sub i32 25, %i5
+  %.a2 = and i16 %i2, %.m1
+  %.n3 = xor i16 %.m1, -1
+  %.a4 = and i16 32256, %.n3
+  %spec.select = or i16 %.a2, %.a4
+  %.sh5 = shl i32 1, %i20
+  %i21 = freeze i32 %.sh5
+  %i22 = trunc i32 %i21 to i16
+  %i23 = add i16 %i22, -1
+  %i25 = and i16 %i23, %.m6
+  %i26 = add i16 %i25, %i2
+  %.sh7 = shl i32 65535, %i20
+  %i27 = freeze i32 %.sh7
+  %i28 = trunc i32 %i27 to i16
+  %i29 = and i16 %i26, %i28
+  %.inv = icmp slt i16 %i2, 0
+  %.m8 = sext i1 %.inv to i16
+  %i11 = and i16 -17408, %.m8
+  %.c9 = and i1 %i6, %i9
+  %.m10 = sext i1 %.c9 to i16
+  %.a11 = and i16 %i2, %.m10
+  %.n12 = xor i1 %i9, true
+  %.c13 = and i1 %i6, %.n12
+  %.m14 = sext i1 %.c13 to i16
+  %.a15 = and i16 %i11, %.m14
+  %.o16 = or i16 %.a11, %.a15
+  %.n17 = xor i1 %i6, true
+  %.n18 = xor i1 %i13, true
+  %.c19 = and i1 %.n17, %.n18
+  %.m20 = sext i1 %.c19 to i16
+  %.a21 = and i16 %i29, %.m20
+  %.o22 = or i16 %.o16, %.a21
+  %.m24 = sext i1 %i13 to i16
+  %.a25 = and i16 %spec.select, %.m24
+  %.o26 = or i16 %.o22, %.a25
+  %i31 = zext i16 %.o26 to i64
+  ret i64 %i31
+}
+
+!llvm.ident = !{!0, !0, !0, !0, !0, !0, !0}
+!llvm.module.flags = !{!1, !2, !3, !5}
+
+!0 = !{!"Ubuntu clang version 21.1.8 (6ubuntu1)"}
+!1 = !{i32 1, !"wchar_size", i32 4}
+!2 = !{i32 1, !"target-abi", !"lp64"}
+!3 = distinct !{i32 6, !"riscv-isa", !4}
+!4 = distinct !{!"rv64i2p1_m2p0_zmmul1p0"}
+!5 = !{i32 8, !"SmallDataLimit", i32 0}

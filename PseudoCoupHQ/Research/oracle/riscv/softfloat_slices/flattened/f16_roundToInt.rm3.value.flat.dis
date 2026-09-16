@@ -1,0 +1,67 @@
+# f16_roundToInt  rounding mode 3  variant value
+# entry symbol: f16_roundToInt_rm3_value_flat
+# one basic block: 55 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f16_roundToInt.rm3.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f16_roundToInt_rm3_value_flat>:
+       0:      	slli	a1, a0, 0x30
+       4:      	slli	a2, a0, 0x31
+       8:      	andi	a3, a0, 0x3ff
+       c:      	li	a4, 0x19
+      10:      	lui	a5, 0x8
+      14:      	li	a6, 0x1
+      18:      	lui	a7, 0x10
+      1c:      	not	t0, a0
+      20:      	li	t1, -0x11
+      24:      	srli	a1, a1, 0x3f
+      28:      	srli	t2, a2, 0x3b
+      2c:      	seqz	a3, a3
+      30:      	snez	t3, a2
+      34:      	seqz	a2, a2
+      38:      	addi	t4, a5, -0x200
+      3c:      	addi	a7, a7, -0x1
+      40:      	slli	t0, t0, 0x30
+      44:      	slli	t1, t1, 0xa
+      48:      	addi	a1, a1, -0x1
+      4c:      	srai	t0, t0, 0x3f
+      50:      	and	t0, t0, t1
+      54:      	addi	t1, t2, -0x1f
+      58:      	snez	t1, t1
+      5c:      	or	a3, a3, t1
+      60:      	sltiu	t1, t2, 0xf
+      64:      	subw	a4, a4, t2
+      68:      	sltiu	t2, t2, 0x19
+      6c:      	xor	a5, t0, a5
+      70:      	xor	t0, a0, t4
+      74:      	and	a2, t1, a2
+      78:      	and	t3, t1, t3
+      7c:      	not	t1, t1
+      80:      	sllw	a6, a6, a4
+      84:      	sllw	a4, a7, a4
+      88:      	and	t1, t1, t2
+      8c:      	addi	t2, t2, -0x1
+      90:      	addi	a6, a6, -0x1
+      94:      	neg	a2, a2
+      98:      	neg	t3, t3
+      9c:      	neg	a3, a3
+      a0:      	and	a1, a6, a1
+      a4:      	and	a2, a0, a2
+      a8:      	and	a5, a5, t3
+      ac:      	neg	a6, t1
+      b0:      	and	a3, t0, a3
+      b4:      	add	a0, a1, a0
+      b8:      	or	a2, a2, a5
+      bc:      	and	a1, a4, a6
+      c0:      	xor	a3, a3, t4
+      c4:      	and	a0, a0, a1
+      c8:      	or	a0, a2, a0
+      cc:      	and	a1, a3, t2
+      d0:      	or	a0, a0, a1
+      d4:      	and	a0, a0, a7
+      d8:      	ret

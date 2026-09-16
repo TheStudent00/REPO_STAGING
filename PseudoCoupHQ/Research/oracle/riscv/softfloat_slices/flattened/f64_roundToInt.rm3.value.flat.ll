@@ -1,0 +1,69 @@
+; ModuleID = '<scratch>/fl/run/f64_roundToInt.rm3.value/f64_roundToInt.rm3.value.rv.flat.ll'
+source_filename = "llvm-link"
+target datalayout = "e-m:e-p:64:64-i64:64-i128:128-n32:64-S128"
+target triple = "riscv64-unknown-unknown-elf"
+
+define dso_local i64 @f64_roundToInt_rm3_value_flat(i64 %arg, i1 noundef zeroext %arg1) {
+  %i = lshr i64 %arg, 52
+  %i2 = trunc i64 %i to i32
+  %i3 = and i32 %i2, 2047
+  %i4 = icmp ult i32 %i3, 1023
+  %i12 = icmp ugt i32 %i3, 1074
+  %i6 = and i64 %arg, 9223372036854775807
+  %i7 = icmp eq i64 %i6, 0
+  %i14 = icmp ne i32 %i3, 2047
+  %i19 = sub i32 1075, %i3
+  %i20 = zext i32 %i19 to i64
+  %.sh5 = shl i64 1, %i20
+  %i21 = freeze i64 %.sh5
+  %i15 = and i64 %arg, 4503599627370495
+  %i16 = icmp eq i64 %i15, 0
+  %i17 = or i1 %i16, %i14
+  %.m1 = sext i1 %i17 to i64
+  %.a2 = and i64 %arg, %.m1
+  %.n3 = xor i64 %.m1, -1
+  %.a4 = and i64 9221120237041090560, %.n3
+  %spec.select = or i64 %.a2, %.a4
+  %i22 = add i64 %i21, -1
+  %i25 = sub i64 0, %i21
+  %.inv = icmp slt i64 %arg, 0
+  %.m6 = sext i1 %.inv to i64
+  %.n7 = xor i64 %.m6, -1
+  %i23 = and i64 %i22, %.n7
+  %i24 = add i64 %i23, %arg
+  %i26 = and i64 %i24, %i25
+  %i9 = icmp sgt i64 %arg, -1
+  %.m8 = sext i1 %i9 to i64
+  %.a9 = and i64 4607182418800017408, %.m8
+  %.n10 = xor i64 %.m8, -1
+  %.a11 = and i64 -9223372036854775808, %.n10
+  %i10 = or i64 %.a9, %.a11
+  %.c12 = and i1 %i7, %i4
+  %.m13 = sext i1 %.c12 to i64
+  %.a14 = and i64 %arg, %.m13
+  %.n15 = xor i1 %i7, true
+  %.c16 = and i1 %.n15, %i4
+  %.m17 = sext i1 %.c16 to i64
+  %.a18 = and i64 %i10, %.m17
+  %.o19 = or i64 %.a14, %.a18
+  %.n20 = xor i1 %i4, true
+  %.n21 = xor i1 %i12, true
+  %.c22 = and i1 %.n20, %.n21
+  %.m23 = sext i1 %.c22 to i64
+  %.a24 = and i64 %i26, %.m23
+  %.o25 = or i64 %.o19, %.a24
+  %.m27 = sext i1 %i12 to i64
+  %.a28 = and i64 %spec.select, %.m27
+  %.o29 = or i64 %.o25, %.a28
+  ret i64 %.o29
+}
+
+!llvm.ident = !{!0, !0, !0, !0, !0, !0, !0}
+!llvm.module.flags = !{!1, !2, !3, !5}
+
+!0 = !{!"Ubuntu clang version 21.1.8 (6ubuntu1)"}
+!1 = !{i32 1, !"wchar_size", i32 4}
+!2 = !{i32 1, !"target-abi", !"lp64"}
+!3 = distinct !{i32 6, !"riscv-isa", !4}
+!4 = distinct !{!"rv64i2p1_m2p0_zmmul1p0"}
+!5 = !{i32 8, !"SmallDataLimit", i32 0}

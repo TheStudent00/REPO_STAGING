@@ -1,0 +1,56 @@
+# f64_le  rounding mode 3  variant flags
+# entry symbol: f64_le_rm3_flags_flat
+# one basic block: 44 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f64_le.rm3.flags/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_le_rm3_flags_flat>:
+       0:      	li	a2, 0x7ff
+       4:      	li	a3, -0x1
+       8:      	xor	a4, a1, a0
+       c:      	slti	a5, a0, 0x0
+      10:      	slli	a6, a1, 0x1
+      14:      	sltu	a7, a0, a1
+      18:      	slli	a2, a2, 0x34
+      1c:      	srli	a3, a3, 0xc
+      20:      	srli	a6, a6, 0x1
+      24:      	seqz	t0, a4
+      28:      	xor	a7, a5, a7
+      2c:      	or	a7, t0, a7
+      30:      	and	t0, a0, a2
+      34:      	or	a6, a6, a0
+      38:      	and	a0, a0, a3
+      3c:      	and	a3, a1, a3
+      40:      	and	a1, a1, a2
+      44:      	xor	t0, t0, a2
+      48:      	xor	a1, a1, a2
+      4c:      	slti	a2, a4, 0x0
+      50:      	seqz	a0, a0
+      54:      	seqz	a3, a3
+      58:      	seqz	a4, a6
+      5c:      	snez	a6, t0
+      60:      	snez	a1, a1
+      64:      	or	a4, a5, a4
+      68:      	or	a0, a6, a0
+      6c:      	or	a1, a1, a3
+      70:      	xor	a3, a4, a7
+      74:      	and	a2, a3, a2
+      78:      	not	a3, a1
+      7c:      	not	a4, a0
+      80:      	and	a1, a0, a1
+      84:      	xor	a2, a2, a7
+      88:      	and	a0, a0, a3
+      8c:      	or	a0, a0, a4
+      90:      	and	a1, a2, a1
+      94:      	slli	a0, a0, 0x3f
+      98:      	negw	a1, a1
+      9c:      	srai	a0, a0, 0x3f
+      a0:      	andi	a0, a0, 0x10
+      a4:      	andi	a1, a1, 0x100
+      a8:      	or	a0, a1, a0
+      ac:      	ret

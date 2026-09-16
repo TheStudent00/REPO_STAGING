@@ -1,0 +1,57 @@
+# f16_to_ui32  rounding mode 2  variant value
+# entry symbol: f16_to_ui32_rm2_value_flat
+# one basic block: 45 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f16_to_ui32.rm2.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f16_to_ui32_rm2_value_flat>:
+       0:      	lui	a1, 0x8
+       4:      	srli	a2, a0, 0xa
+       8:      	andi	a3, a0, 0x3ff
+       c:      	and	a0, a0, a1
+      10:      	andi	a1, a2, 0x1f
+      14:      	snez	a4, a3
+      18:      	addi	a3, a3, 0x400
+      1c:      	addi	a5, a2, -0x19
+      20:      	addi	a2, a2, -0xd
+      24:      	srli	a6, a0, 0xf
+      28:      	seqz	a0, a0
+      2c:      	addi	a7, a1, -0x1f
+      30:      	seqz	t0, a1
+      34:      	snez	t1, a1
+      38:      	sltiu	t2, a1, 0x19
+      3c:      	sllw	a5, a3, a5
+      40:      	sltiu	a1, a1, 0xe
+      44:      	sllw	a2, a3, a2
+      48:      	snez	a3, a7
+      4c:      	seqz	a7, a7
+      50:      	or	a4, a4, a0
+      54:      	or	a6, a6, t2
+      58:      	xori	a1, a1, 0x1
+      5c:      	and	t2, t1, a6
+      60:      	and	a4, a4, a7
+      64:      	negw	a7, a3
+      68:      	and	a3, a3, t1
+      6c:      	not	t1, a6
+      70:      	and	a1, t2, a1
+      74:      	negw	a4, a4
+      78:      	and	a2, a2, a7
+      7c:      	and	a7, a3, t1
+      80:      	and	a3, a3, a6
+      84:      	negw	a1, a1
+      88:      	or	a3, a3, t0
+      8c:      	negw	a6, a7
+      90:      	and	a1, a2, a1
+      94:      	and	a0, a0, a3
+      98:      	and	a2, a5, a6
+      9c:      	srliw	a1, a1, 0xc
+      a0:      	or	a2, a4, a2
+      a4:      	negw	a0, a0
+      a8:      	and	a0, a1, a0
+      ac:      	or	a0, a2, a0
+      b0:      	ret

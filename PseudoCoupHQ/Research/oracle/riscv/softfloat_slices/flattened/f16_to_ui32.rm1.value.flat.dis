@@ -1,0 +1,74 @@
+# f16_to_ui32  rounding mode 1  variant value
+# entry symbol: f16_to_ui32_rm1_value_flat
+# one basic block: 62 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f16_to_ui32.rm1.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f16_to_ui32_rm1_value_flat>:
+       0:      	lui	a1, 0x8
+       4:      	srli	a3, a0, 0xa
+       8:      	andi	a4, a0, 0x3ff
+       c:      	and	a0, a0, a1
+      10:      	andi	a5, a3, 0x1f
+      14:      	snez	a6, a4
+      18:      	addiw	a2, a4, 0x400
+      1c:      	addi	a7, a3, -0x19
+      20:      	addi	a3, a3, -0xd
+      24:      	srli	a1, a0, 0xf
+      28:      	seqz	a0, a0
+      2c:      	addi	t0, a5, -0x1f
+      30:      	seqz	t1, a5
+      34:      	snez	t2, a5
+      38:      	sltiu	t3, a5, 0x19
+      3c:      	sllw	a7, a2, a7
+      40:      	sltiu	a5, a5, 0xe
+      44:      	sllw	a3, a2, a3
+      48:      	snez	t4, t0
+      4c:      	seqz	t0, t0
+      50:      	or	a6, a6, a0
+      54:      	or	t3, a1, t3
+      58:      	xori	t5, a5, 0x1
+      5c:      	negw	t6, t1
+      60:      	and	a4, a4, t6
+      64:      	and	t6, t2, t3
+      68:      	and	a6, a6, t0
+      6c:      	negw	t0, t4
+      70:      	and	t2, t4, t2
+      74:      	not	t4, t3
+      78:      	and	t5, t6, t5
+      7c:      	and	a5, t6, a5
+      80:      	negw	a6, a6
+      84:      	and	t4, t2, t4
+      88:      	and	t2, t2, t3
+      8c:      	negw	t3, t5
+      90:      	negw	a5, a5
+      94:      	or	t1, t2, t1
+      98:      	negw	t2, t4
+      9c:      	and	a3, a3, t3
+      a0:      	and	a2, a2, a5
+      a4:      	and	a5, a7, t2
+      a8:      	or	a2, a3, a2
+      ac:      	or	a3, a6, a5
+      b0:      	or	a2, a2, a4
+      b4:      	and	a2, a2, t0
+      b8:      	snez	a4, a2
+      bc:      	srliw	a2, a2, 0xc
+      c0:      	or	a4, a0, a4
+      c4:      	snez	a5, a2
+      c8:      	and	a1, a1, a5
+      cc:      	and	a4, t1, a4
+      d0:      	and	a0, a0, a1
+      d4:      	not	a1, a1
+      d8:      	and	a0, a0, a4
+      dc:      	and	a1, a4, a1
+      e0:      	negw	a0, a0
+      e4:      	negw	a1, a1
+      e8:      	or	a0, a3, a0
+      ec:      	and	a1, a2, a1
+      f0:      	or	a0, a0, a1
+      f4:      	ret

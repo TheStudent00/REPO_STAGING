@@ -1,0 +1,100 @@
+# f16_to_f32  rounding mode 2  variant value
+# entry symbol: f16_to_f32_rm2_value_flat
+# one basic block: 88 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f16_to_f32.rm2.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f16_to_f32_rm2_value_flat>:
+       0:      	lui	a2, 0x8
+       4:      	slli	a4, a0, 0x31
+       8:      	andi	a1, a0, 0x3ff
+       c:      	lui	a5, 0x80000
+      10:      	lui	a6, 0x80400
+      14:      	lui	a7, 0x7fc00
+      18:      	slli	t0, a0, 0x36
+      1c:      	lui	t1, 0x55555
+      20:      	lui	t2, 0x33333
+      24:      	lui	a3, 0xf0f1
+      28:      	and	a2, a0, a2
+      2c:      	srli	a0, a4, 0x3b
+      30:      	srli	a4, a2, 0xf
+      34:      	addi	a4, a4, -0x1
+      38:      	and	a4, a4, a5
+      3c:      	snez	a5, a1
+      40:      	srli	t0, t0, 0x37
+      44:      	addi	t1, t1, 0x555
+      48:      	xor	a4, a4, a6
+      4c:      	addi	a6, a5, -0x1
+      50:      	or	t0, a1, t0
+      54:      	and	a4, a4, a6
+      58:      	srli	a6, t0, 0x2
+      5c:      	or	a6, t0, a6
+      60:      	srli	t0, t0, 0x8
+      64:      	or	t0, a6, t0
+      68:      	srli	a6, a6, 0x4
+      6c:      	or	a6, t0, a6
+      70:      	addi	t0, a0, -0x1f
+      74:      	xor	a4, a4, a7
+      78:      	seqz	a7, a0
+      7c:      	seqz	t0, t0
+      80:      	and	a5, a5, a7
+      84:      	or	a7, t0, a7
+      88:      	negw	t0, t0
+      8c:      	not	a6, a6
+      90:      	and	a4, a4, t0
+      94:      	srli	t0, a6, 0x1
+      98:      	and	t0, t0, t1
+      9c:      	lui	t1, 0x1010
+      a0:      	addi	t2, t2, 0x333
+      a4:      	sub	a6, a6, t0
+      a8:      	and	t0, a6, t2
+      ac:      	srli	a6, a6, 0x2
+      b0:      	and	a6, a6, t2
+      b4:      	li	t2, 0x15
+      b8:      	add	a6, t0, a6
+      bc:      	srli	t0, a6, 0x4
+      c0:      	add	a6, a6, t0
+      c4:      	lui	t0, 0x38000
+      c8:      	addi	a3, a3, -0xf1
+      cc:      	addi	t1, t1, 0x101
+      d0:      	and	a3, a6, a3
+      d4:      	or	a6, a1, a0
+      d8:      	slli	a2, a2, 0x10
+      dc:      	snez	a6, a6
+      e0:      	addi	a6, a6, -0x1
+      e4:      	mul	a3, a3, t1
+      e8:      	neg	t1, a5
+      ec:      	xori	a7, a7, 0x1
+      f0:      	and	a6, a2, a6
+      f4:      	or	a5, a5, a7
+      f8:      	neg	a7, a7
+      fc:      	and	a0, a0, a7
+     100:      	and	a7, a1, a7
+     104:      	negw	a5, a5
+     108:      	srliw	a3, a3, 0x18
+     10c:      	sub	t2, t2, a3
+     110:      	addi	a3, a3, 0xeb
+     114:      	sllw	a1, a1, a3
+     118:      	and	a3, t2, t1
+     11c:      	and	a1, a1, t1
+     120:      	or	a0, a3, a0
+     124:      	or	a1, a1, a7
+     128:      	slli	a0, a0, 0x38
+     12c:      	slli	a1, a1, 0x30
+     130:      	srai	a0, a0, 0x38
+     134:      	srli	a1, a1, 0x23
+     138:      	slli	a0, a0, 0x17
+     13c:      	or	a1, a1, a2
+     140:      	add	a0, a0, t0
+     144:      	add	a0, a1, a0
+     148:      	and	a0, a0, a5
+     14c:      	or	a1, a6, a4
+     150:      	or	a0, a0, a1
+     154:      	slli	a0, a0, 0x20
+     158:      	srli	a0, a0, 0x20
+     15c:      	ret

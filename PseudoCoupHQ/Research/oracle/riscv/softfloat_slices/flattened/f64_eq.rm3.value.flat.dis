@@ -1,0 +1,37 @@
+# f64_eq  rounding mode 3  variant value
+# entry symbol: f64_eq_rm3_value_flat
+# one basic block: 25 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f64_eq.rm3.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_eq_rm3_value_flat>:
+       0:      	li	a2, 0x7ff
+       4:      	li	a3, -0x1
+       8:      	xor	a4, a0, a1
+       c:      	or	a5, a1, a0
+      10:      	slli	a2, a2, 0x34
+      14:      	srli	a3, a3, 0xc
+      18:      	and	a6, a0, a2
+      1c:      	and	a0, a0, a3
+      20:      	and	a3, a1, a3
+      24:      	and	a1, a1, a2
+      28:      	xor	a6, a6, a2
+      2c:      	xor	a1, a1, a2
+      30:      	seqz	a2, a4
+      34:      	slli	a5, a5, 0x1
+      38:      	seqz	a4, a5
+      3c:      	seqz	a0, a0
+      40:      	seqz	a3, a3
+      44:      	snez	a5, a6
+      48:      	snez	a1, a1
+      4c:      	or	a0, a5, a0
+      50:      	or	a1, a1, a3
+      54:      	and	a0, a0, a1
+      58:      	or	a2, a2, a4
+      5c:      	and	a0, a2, a0
+      60:      	ret

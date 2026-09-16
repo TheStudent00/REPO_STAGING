@@ -1,0 +1,127 @@
+# f64_to_f32  rounding mode 4  variant value
+# entry symbol: f64_to_f32_rm4_value_flat
+# one basic block: 115 instructions, 0 branches, 0 jumps, 0 calls,
+# 10 memory (10 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f64_to_f32.rm4.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_to_f32_rm4_value_flat>:
+       0:      	addi	sp, sp, -0x30
+       4:      	sd	s0, 0x28(sp)
+       8:      	sd	s1, 0x20(sp)
+       c:      	sd	s2, 0x18(sp)
+      10:      	sd	s3, 0x10(sp)
+      14:      	sd	s4, 0x8(sp)
+      18:      	slli	a2, a0, 0x1
+      1c:      	slli	a1, a0, 0xc
+      20:      	slli	a3, a0, 0x2a
+      24:      	srli	a5, a0, 0x3f
+      28:      	li	a4, 0x381
+      2c:      	lui	a0, 0x40000
+      30:      	lui	a6, 0x7f800
+      34:      	lui	a7, 0x7fc00
+      38:      	srli	a2, a2, 0x35
+      3c:      	srli	t0, a1, 0xc
+      40:      	snez	t1, a1
+      44:      	seqz	t2, a1
+      48:      	snez	a3, a3
+      4c:      	slli	a5, a5, 0x1f
+      50:      	addi	t3, a0, 0x40
+      54:      	addi	t4, a2, -0x7ff
+      58:      	srli	t0, t0, 0x16
+      5c:      	sltiu	t5, a2, 0x381
+      60:      	addi	t6, a2, -0x381
+      64:      	sub	a4, a4, a2
+      68:      	or	a1, a5, a6
+      6c:      	seqz	a6, t4
+      70:      	snez	t4, t4
+      74:      	or	a3, t0, a3
+      78:      	xori	t0, t5, 0x1
+      7c:      	sltiu	s0, t6, 0xfd
+      80:      	sltiu	s1, a4, 0x1f
+      84:      	addi	s2, t6, -0xfd
+      88:      	negw	s3, a4
+      8c:      	or	a2, a2, a3
+      90:      	or	a0, a3, a0
+      94:      	addw	a3, a3, t3
+      98:      	xori	t3, s0, 0x1
+      9c:      	xori	s4, s1, 0x1
+      a0:      	snez	s2, s2
+      a4:      	and	t2, t2, a6
+      a8:      	and	a6, t1, a6
+      ac:      	neg	t1, s0
+      b0:      	and	t1, t6, t1
+      b4:      	seqz	t6, a2
+      b8:      	snez	a2, a2
+      bc:      	slti	a3, a3, 0x0
+      c0:      	srlw	a4, a0, a4
+      c4:      	sllw	s3, a0, s3
+      c8:      	and	t5, t5, t3
+      cc:      	and	t3, t3, t4
+      d0:      	neg	t2, t2
+      d4:      	neg	a6, a6
+      d8:      	or	a3, s2, a3
+      dc:      	snez	s2, s3
+      e0:      	and	s1, t5, s1
+      e4:      	and	s3, t5, s4
+      e8:      	and	t5, t5, a2
+      ec:      	and	s4, t0, a2
+      f0:      	and	a2, a2, t4
+      f4:      	and	t4, t6, t4
+      f8:      	and	t2, a1, t2
+      fc:      	and	a6, a6, a7
+     100:      	or	a4, a4, s2
+     104:      	xori	a7, a3, 0x1
+     108:      	negw	t6, s1
+     10c:      	and	a3, s4, a3
+     110:      	neg	t4, t4
+     114:      	and	s1, a2, s0
+     118:      	neg	s2, a2
+     11c:      	and	a7, t0, a7
+     120:      	and	a4, a4, t6
+     124:      	and	a3, a3, t3
+     128:      	and	t0, a5, t4
+     12c:      	or	t3, s1, t5
+     130:      	or	t4, s0, a7
+     134:      	negw	t5, a7
+     138:      	or	a4, a4, s3
+     13c:      	and	a2, a2, a7
+     140:      	negw	a3, a3
+     144:      	or	a7, t2, t0
+     148:      	negw	t0, t4
+     14c:      	andi	t2, t5, 0xfd
+     150:      	and	a1, a1, a3
+     154:      	or	a2, t3, a2
+     158:      	and	a0, a0, t0
+     15c:      	or	a3, t1, t2
+     160:      	negw	a2, a2
+     164:      	or	a0, a0, a4
+     168:      	and	a3, a3, s2
+     16c:      	and	a0, a0, s2
+     170:      	slli	a3, a3, 0x17
+     174:      	sext.w	a4, a0
+     178:      	addi	a0, a0, 0x40
+     17c:      	srliw	a0, a0, 0x7
+     180:      	sltiu	a4, a4, 0x40
+     184:      	or	a0, a0, a5
+     188:      	addi	a4, a4, -0x1
+     18c:      	and	a3, a3, a4
+     190:      	add	a0, a0, a3
+     194:      	and	a0, a0, a2
+     198:      	or	a0, a0, a1
+     19c:      	and	a0, a0, s2
+     1a0:      	slli	a0, a0, 0x20
+     1a4:      	srli	a0, a0, 0x20
+     1a8:      	or	a1, a7, a6
+     1ac:      	or	a0, a0, a1
+     1b0:      	ld	s0, 0x28(sp)
+     1b4:      	ld	s1, 0x20(sp)
+     1b8:      	ld	s2, 0x18(sp)
+     1bc:      	ld	s3, 0x10(sp)
+     1c0:      	ld	s4, 0x8(sp)
+     1c4:      	addi	sp, sp, 0x30
+     1c8:      	ret

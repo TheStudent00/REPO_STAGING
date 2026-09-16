@@ -1,0 +1,163 @@
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:390:12: error: The prover found a potentially spurious counterexample:
+- It abstracted the following unsupported expressions as opaque variables: [((BitVec.extractLsb' 0 32 a ^^^
+         2147483648#32) +
+       2147483648#32).sshiftRight
+   (BitVec.toNatInt
+       (~~~(~~~BitVec.extractLsb' 0 5 (BitVec.extractLsb' 0 32 b) &&&
+           ~~~(BitVec.extractLsb' 0 5
+                 (BitVec.extractLsb' 0 32
+                   (0#63 +++
+                     match BitVec.toNatInt b<bBitVec.toNatInt 32#64 with
+                     | true => 1#1
+                     | false => 0#1)) +
+               31#5)))).toNat,
+ shift_bits_right
+   (shift_bits_left (0#32 +++ ((BitVec.extractLsb' 0 32 a ^^^ 2147483648#32) + 2147483648#32)) 0#2 + zero_reg)
+   (bif BitVec.toNatInt b<bBitVec.toNatInt (zero_reg + 31#64) then BitVec.extractLsb' 0 6 b
+   else BitVec.extractLsb' 0 6 zero_reg + 31#6),
+ shift_bits_right
+   (shift_bits_left
+     (shift_bits_left
+       ((bif
+             BitVec.extractLsb' 31 1
+                 (((BitVec.extractLsb' 0 32 a ^^^ 2147483648#32) + 2147483648#32).sshiftRight
+                   (BitVec.toNatInt 31#5).toNat) ==
+               1#1 then
+           4294967295#32
+         else 0#32) +++
+         ((BitVec.extractLsb' 0 32 a ^^^ 2147483648#32) + 2147483648#32).sshiftRight (BitVec.toNatInt 31#5).toNat)
+       ((bif BitVec.toNatInt b<bBitVec.toNatInt (zero_reg + 31#64) then BitVec.extractLsb' 0 6 b
+         else BitVec.extractLsb' 0 6 zero_reg + 31#6) ^^^
+         31#6))
+     33#6)
+   32#6]
+Consider the following assignment:
+((BitVec.extractLsb' 0 32 a ^^^ 2147483648#32) + 2147483648#32).sshiftRight
+  (BitVec.toNatInt
+      (~~~(~~~BitVec.extractLsb' 0 5 (BitVec.extractLsb' 0 32 b) &&&
+          ~~~(BitVec.extractLsb' 0 5
+                (BitVec.extractLsb' 0 32
+                  (0#63 +++
+                    match BitVec.toNatInt b<bBitVec.toNatInt 32#64 with
+                    | true => 1#1
+                    | false => 0#1)) +
+              31#5)))).toNat = 4294967295#32
+shift_bits_right
+  (shift_bits_left
+    (shift_bits_left
+      ((bif
+            BitVec.extractLsb' 31 1
+                (((BitVec.extractLsb' 0 32 a ^^^ 2147483648#32) + 2147483648#32).sshiftRight
+                  (BitVec.toNatInt 31#5).toNat) ==
+              1#1 then
+          4294967295#32
+        else 0#32) +++
+        ((BitVec.extractLsb' 0 32 a ^^^ 2147483648#32) + 2147483648#32).sshiftRight (BitVec.toNatInt 31#5).toNat)
+      ((bif BitVec.toNatInt b<bBitVec.toNatInt (zero_reg + 31#64) then BitVec.extractLsb' 0 6 b
+        else BitVec.extractLsb' 0 6 zero_reg + 31#6) ^^^
+        31#6))
+    33#6)
+  32#6 = 18446744071562067967#64
+shift_bits_right
+  (shift_bits_left (0#32 +++ ((BitVec.extractLsb' 0 32 a ^^^ 2147483648#32) + 2147483648#32)) 0#2 + zero_reg)
+  (bif BitVec.toNatInt b<bBitVec.toNatInt (zero_reg + 31#64) then BitVec.extractLsb' 0 6 b
+  else BitVec.extractLsb' 0 6 zero_reg + 31#6) = 18446744071562067967#64
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:389:143: warning: This simp argument is unused:
+  rotate_bits_left
+
+Hint: Omit it from the simp argument list.
+  simp only [pure_ITYPE, pure_RTYPE, pure_RTYPEW, pure_SHIFTIOP, pure_SHIFTIWOP,
+  ̲  ̲ ̲ ̲pure_ZBA_RTYPEUW, pure_ZBB_RTYPE, bool_to_bit, log2_xlen, rotate_bits_l̵e̵f̵r̲i̲g̲h̲t,
+  ̲ r̵o̵t̵a̵t̵e̵_̵b̵i̵t̵s̵_̵r̵i̵g̵h̵t̵,̵  ̲ ̲shift_bits_right_arith, sign_extend, xlenbits, zero_extend, zopz0zI_s, zopz0zI_u, zopz0zK_s,
+  ̲  ̲ ̲ ̲zopz0zK_u, bool_bit_forwards, xlen, rotatel, rotater, Sail.BitVec.signExtend,
+  ̲  ̲ ̲ ̲Sail.BitVec.zeroExtend, Sail.BitVec.length, Sail.BitVec.extractLsb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:389:161: warning: This simp argument is unused:
+  rotate_bits_right
+
+Hint: Omit it from the simp argument list.
+  simp only [pure_ITYPE, pure_RTYPE, pure_RTYPEW, pure_SHIFTIOP, pure_SHIFTIWOP,
+  ̲  ̲ ̲ ̲pure_ZBA_RTYPEUW, pure_ZBB_RTYPE, bool_to_bit, log2_xlen, rotate_bits_left,
+  ̲ r̵o̵t̵a̵t̵e̵_̵b̵i̵t̵s̵_̵r̵i̵g̵h̵t̵,̵  ̲ ̲shift_bits_right_arith, sign_extend, xlenbits, zero_extend, zopz0zI_s, zopz0zI_u, zopz0zK_s,
+  ̲  ̲ ̲ ̲zopz0zK_u, bool_bit_forwards, xlen, rotatel, rotater, Sail.BitVec.signExtend,
+  ̲  ̲ ̲ ̲Sail.BitVec.zeroExtend, Sail.BitVec.length, Sail.BitVec.extractLsb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:389:240: warning: This simp argument is unused:
+  zopz0zI_s
+
+Hint: Omit it from the simp argument list.
+  simp only [pure_ITYPE, pure_RTYPE, pure_RTYPEW, pure_SHIFTIOP, pure_SHIFTIWOP,
+  ̲  ̲ ̲ ̲pure_ZBA_RTYPEUW, pure_ZBB_RTYPE, bool_to_bit, log2_xlen, rotate_bits_left, rotate_bits_right,
+  ̲  ̲ ̲ ̲shift_bits_right_arith, sign_extend, xlenbits, zero_extend, zopz0zI_s̵,̵ ̵z̵o̵p̵z̵0̵z̵I̵_̵u, zopz0zK_s, zopz0zK_u,
+  ̲  ̲ ̲ ̲bool_bit_forwards, xlen, rotatel, rotater, Sail.BitVec.signExtend, Sail.BitVec.zeroExtend,
+  ̲  ̲ ̲ ̲Sail.BitVec.length, Sail.BitVec.extractLsb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:389:262: warning: This simp argument is unused:
+  zopz0zK_s
+
+Hint: Omit it from the simp argument list.
+  simp only [pure_ITYPE, pure_RTYPE, pure_RTYPEW, pure_SHIFTIOP, pure_SHIFTIWOP,
+  ̲  ̲ ̲ ̲pure_ZBA_RTYPEUW, pure_ZBB_RTYPE, bool_to_bit, log2_xlen, rotate_bits_left, rotate_bits_right,
+  ̲  ̲ ̲ ̲shift_bits_right_arith, sign_extend, xlenbits, zero_extend, zopz0zI_s, zopz0zI_u, zopz0zK_s̵u̲,
+  ̲ z̵o̵p̵z̵0̵z̵K̵_̵u̵,̵  ̲ ̲bool_bit_forwards, xlen, rotatel, rotater, Sail.BitVec.signExtend, Sail.BitVec.zeroExtend,
+  ̲  ̲ ̲ ̲Sail.BitVec.length, Sail.BitVec.extractLsb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:389:273: warning: This simp argument is unused:
+  zopz0zK_u
+
+Hint: Omit it from the simp argument list.
+  simp only [pure_ITYPE, pure_RTYPE, pure_RTYPEW, pure_SHIFTIOP, pure_SHIFTIWOP,
+  ̲  ̲ ̲ ̲pure_ZBA_RTYPEUW, pure_ZBB_RTYPE, bool_to_bit, log2_xlen, rotate_bits_left, rotate_bits_right,
+  ̲  ̲ ̲ ̲shift_bits_right_arith, sign_extend, xlenbits, zero_extend, zopz0zI_s, zopz0zI_u, zopz0zK_s,
+  ̲ z̵o̵p̵z̵0̵z̵K̵_̵u̵,̵  ̲ ̲bool_bit_forwards, xlen, rotatel, rotater, Sail.BitVec.signExtend, Sail.BitVec.zeroExtend,
+  ̲  ̲ ̲ ̲Sail.BitVec.length, Sail.BitVec.extractLsb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:389:303: warning: This simp argument is unused:
+  xlen
+
+Hint: Omit it from the simp argument list.
+  simp only [pure_ITYPE, pure_RTYPE, pure_RTYPEW, pure_SHIFTIOP, pure_SHIFTIWOP,
+  ̲  ̲ ̲ ̲pure_ZBA_RTYPEUW, pure_ZBB_RTYPE, bool_to_bit, log2_xlen, rotate_bits_left, rotate_bits_right,
+  ̲  ̲ ̲ ̲shift_bits_right_arith, sign_extend, xlenbits, zero_extend, zopz0zI_s, zopz0zI_u, zopz0zK_s,
+  ̲  ̲ ̲ ̲zopz0zK_u, bool_bit_forwards, x̵l̵e̵n̵,̵ ̵rotatel, rotater, Sail.BitVec.signExtend, Sail.BitVec.zeroExtend,
+  ̲  ̲ ̲ ̲Sail.BitVec.length, Sail.BitVec.extractLsb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:389:309: warning: This simp argument is unused:
+  rotatel
+
+Hint: Omit it from the simp argument list.
+  simp only [pure_ITYPE, pure_RTYPE, pure_RTYPEW, pure_SHIFTIOP, pure_SHIFTIWOP,
+  ̲  ̲ ̲ ̲pure_ZBA_RTYPEUW, pure_ZBB_RTYPE, bool_to_bit, log2_xlen, rotate_bits_left, rotate_bits_right,
+  ̲  ̲ ̲ ̲shift_bits_right_arith, sign_extend, xlenbits, zero_extend, zopz0zI_s, zopz0zI_u, zopz0zK_s,
+  ̲  ̲ ̲ ̲zopz0zK_u, bool_bit_forwards, xlen, rotatel̵,̵ ̵ro̵t̵a̵t̵e̵r̵, Sail.BitVec.signExtend, Sail.BitVec.zeroExtend,
+  ̲  ̲ ̲ ̲Sail.BitVec.length, Sail.BitVec.extractLsb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:389:318: warning: This simp argument is unused:
+  rotater
+
+Hint: Omit it from the simp argument list.
+  simp only [pure_ITYPE, pure_RTYPE, pure_RTYPEW, pure_SHIFTIOP, pure_SHIFTIWOP,
+  ̲  ̲ ̲ ̲pure_ZBA_RTYPEUW, pure_ZBB_RTYPE, bool_to_bit, log2_xlen, rotate_bits_left, rotate_bits_right,
+  ̲  ̲ ̲ ̲shift_bits_right_arith, sign_extend, xlenbits, zero_extend, zopz0zI_s, zopz0zI_u, zopz0zK_s,
+  ̲  ̲ ̲ ̲zopz0zK_u, bool_bit_forwards, xlen, rotatel, r̵o̵t̵a̵t̵e̵r̵,̵ ̵Sail.BitVec.signExtend, Sail.BitVec.zeroExtend,
+  ̲  ̲ ̲ ̲Sail.BitVec.length, Sail.BitVec.extractLsb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PseudoCoupHQ/Research/oracle/riscv/leanpath/runs/gate_emul/equals/Equals_au_445_go_shr_i32_u64_abi_fixed_width.lean:389:375: warning: This simp argument is unused:
+  Sail.BitVec.length
+
+Hint: Omit it from the simp argument list.
+  simp only [pure_ITYPE, pure_RTYPE, pure_RTYPEW, pure_SHIFTIOP, pure_SHIFTIWOP,
+  ̲  ̲ ̲ ̲pure_ZBA_RTYPEUW, pure_ZBB_RTYPE, bool_to_bit, log2_xlen, rotate_bits_left, rotate_bits_right,
+  ̲  ̲ ̲ ̲shift_bits_right_arith, sign_extend, xlenbits, zero_extend, zopz0zI_s, zopz0zI_u, zopz0zK_s,
+  ̲  ̲ ̲ ̲zopz0zK_u, bool_bit_forwards, xlen, rotatel, rotater, Sail.BitVec.signExtend,
+  ̲  ̲ ̲ ̲Sail.BitVec.zeroExtend, Sail.BitVec.l̵en̵g̵t̵h̵,̵ ̵S̵a̵i̵l̵.̵B̵i̵t̵V̵e̵c̵.̵e̵xtractLsb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

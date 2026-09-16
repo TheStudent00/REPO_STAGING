@@ -1,0 +1,17 @@
+// task t4 emulation -- rendered by render_general.py, one named
+// intermediate per node of the term of sd_gpr_mem_64__mem_MEM_0x0_a1___go__native_first.
+//   v0
+package main
+
+//go:noinline
+func emu_sd_gpr_mem_64__mem_MEM_0x0_a1___go__native_first(a uint64) uint64 {
+	return uint64(uint64(a))
+}
+
+var g0 uint64
+var sink interface{}
+
+func main() {
+	sink = emu_sd_gpr_mem_64__mem_MEM_0x0_a1___go__native_first(g0)
+	_ = sink
+}

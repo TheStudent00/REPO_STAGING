@@ -1,0 +1,37 @@
+# f16_eq  rounding mode 1  variant value
+# entry symbol: f16_eq_rm1_value_flat
+# one basic block: 25 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f16_eq.rm1.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f16_eq_rm1_value_flat>:
+       0:      	li	a2, 0x1f
+       4:      	or	a3, a1, a0
+       8:      	slli	a2, a2, 0xa
+       c:      	and	a4, a0, a2
+      10:      	and	a5, a1, a2
+      14:      	xor	a4, a4, a2
+      18:      	xor	a5, a5, a2
+      1c:      	addiw	a2, a2, 0x3ff
+      20:      	and	a2, a3, a2
+      24:      	andi	a3, a0, 0x3ff
+      28:      	xor	a0, a1, a0
+      2c:      	andi	a1, a1, 0x3ff
+      30:      	seqz	a3, a3
+      34:      	seqz	a1, a1
+      38:      	slli	a0, a0, 0x30
+      3c:      	seqz	a0, a0
+      40:      	snez	a4, a4
+      44:      	snez	a5, a5
+      48:      	seqz	a2, a2
+      4c:      	or	a3, a4, a3
+      50:      	or	a1, a5, a1
+      54:      	and	a1, a3, a1
+      58:      	or	a0, a0, a2
+      5c:      	and	a0, a0, a1
+      60:      	ret

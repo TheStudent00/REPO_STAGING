@@ -1,0 +1,77 @@
+#![allow(non_snake_case, unused_parens, unused_imports, unused_variables, unused_comparisons, clippy::all)]
+use crate::helpers::*;
+
+
+pub fn f16_to_ui64_rm1(v_arg: u64) -> u64 {
+    let v_i: u64 = (v_arg & 0x8000u64);
+    let v_i1: bool = (v_i != 0x0u64);
+    let v_i2: u64 = v_arg.wrapping_shr((0xau64) as u32);
+    let v_i3: u8 = ((v_i2) as u8);
+    let v_i4: u8 = (v_i3 & 0x1fu8);
+    let v_i5: u16 = ((v_arg) as u16);
+    let v_i6: u16 = (v_i5 & 0x3ffu16);
+    let v_i7: bool = (v_i4 == 0x1fu8);
+    let v_i14: u32 = ((v_i6) as u32);
+    let v_i9: bool = (v_i6 != 0x0u16);
+    let v_i15: bool = (v_i4 == 0x0u8);
+    let v_i10: bool = (v_i1 ^ true);
+    let v_i11: bool = (v_i9 | v_i10);
+    let v_i12: u64 = (0u64.wrapping_sub((v_i11) as u64));
+    let v_i17: u32 = (v_i14 | 0x400u32);
+    let v_i18: bool = (v_i4 < 0x19u8);
+    let v_i19: bool = (v_i1 | v_i18);
+    let v_i21: u8 = v_i4.wrapping_add(0xe7u8);
+    let v_i22: u32 = ((v_i21) as u32);
+    let v__sh1: u32 = v_i17.wrapping_shl((v_i22) as u32);
+    let v_i23: u32 = v__sh1;
+    let v_i24: u64 = ((v_i23) as u64);
+    let v_i26: bool = (v_i4 > 0xdu8);
+    let v_i28: u8 = v_i4.wrapping_add(0xf3u8);
+    let v_i29: u32 = ((v_i28) as u32);
+    let v__sh2: u32 = v_i17.wrapping_shl((v_i29) as u32);
+    let v_i30: u32 = v__sh2;
+    let v__n3: bool = (v_i15 ^ true);
+    let v__c5: bool = (v_i26 & v_i19);
+    let v__m6: u32 = (0u32.wrapping_sub((v__c5) as u32));
+    let v__a7: u32 = (v_i30 & v__m6);
+    let v__n8: bool = (v_i26 ^ true);
+    let v__c9: bool = (v__n3 & v__n8);
+    let v__m11: u32 = (0u32.wrapping_sub((v__c9) as u32));
+    let v__a12: u32 = (v_i17 & v__m11);
+    let v__o13: u32 = (v__a7 | v__a12);
+    let v__m14: u32 = (0u32.wrapping_sub((v_i15) as u32));
+    let v__a15: u32 = (v_i14 & v__m14);
+    let v__o16: u32 = (v__o13 | v__a15);
+    let v__n17: bool = (v_i7 ^ true);
+    let v__m22: u64 = (0u64.wrapping_sub((v_i7) as u64));
+    let v__a23: u64 = (v_i12 & v__m22);
+    let v__m18: u32 = (0u32.wrapping_sub((v__n17) as u32));
+    let v__a19: u32 = (v__o16 & v__m18);
+    let v__sh20: u32 = v__a19.wrapping_shr((0xcu32) as u32);
+    let v_i33: u32 = v__sh20;
+    let v_i34: u64 = ((v_i33) as u64);
+    let v_i35: u64 = ((v__a19) as u64);
+    let v__sh21: u64 = v_i35.wrapping_shl((0x34u64) as u32);
+    let v_i36: u64 = v__sh21;
+    let v_i38: u64 = (v_i36 | v_i34);
+    let v_i39: bool = (v_i38 == 0x0u64);
+    let v_i40: bool = (v__a19 > 0xfffu32);
+    let v_or_cond: bool = (v_i39 | v_i40);
+    let v__n36: bool = (v_or_cond ^ true);
+    let v__n24: bool = (v_i19 ^ true);
+    let v__c25: bool = (v__n17 & v__n3);
+    let v__c26: bool = (v__c25 & v__n24);
+    let v__c32: bool = (v__c25 & v_i19);
+    let v__c34: bool = (v__c32 | v_i15);
+    let v__m27: u64 = (0u64.wrapping_sub((v__c26) as u64));
+    let v__a28: u64 = (v_i24 & v__m27);
+    let v__o29: u64 = (v__a23 | v__a28);
+    let v__c35: bool = (v_i10 & v__c34);
+    let v__c37: bool = (v_i1 & v__c34);
+    let v__c38: bool = (v__c37 & v__n36);
+    let v__c39: bool = (v__c35 | v__c38);
+    let v__m40: u64 = (0u64.wrapping_sub((v__c39) as u64));
+    let v__a41: u64 = (v_i34 & v__m40);
+    let v__o42: u64 = (v__o29 | v__a41);
+    v__o42
+}

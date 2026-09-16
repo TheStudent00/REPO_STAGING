@@ -1,0 +1,74 @@
+#![allow(non_snake_case, unused_parens, unused_imports, unused_variables, unused_comparisons, clippy::all)]
+use crate::helpers::*;
+
+
+pub fn f16_roundToInt_rm0(v_arg: u64, v_arg1: bool) -> u64 {
+    let v_i: u16 = ((v_arg) as u16);
+    let v_i2: u32 = ((v_arg) as u32);
+    let v_i3: u32 = (v_i2 & 0xffffu32);
+    let v_i4: u32 = v_i2.wrapping_shr((0xau32) as u32);
+    let v_i5: u32 = (v_i4 & 0x1fu32);
+    let v_i6: bool = (v_i5 < 0xfu32);
+    let v_i18: bool = (v_i5 > 0x18u32);
+    let v_i8: u64 = (v_arg & 0x7fffu64);
+    let v_i9: bool = (v_i8 == 0x0u64);
+    let v_i20: bool = (v_i5 != 0x1fu32);
+    let v_i21: u32 = (v_i2 & 0x3ffu32);
+    let v_i22: bool = (v_i21 == 0x0u32);
+    let v_i23: bool = (v_i22 | v_i20);
+    let v__m1: u16 = (0u16.wrapping_sub((v_i23) as u16));
+    let v_i13: bool = (v_i21 != 0x0u32);
+    let v__a2: u16 = (v_i & v__m1);
+    let v__n3: u16 = (v__m1 ^ 0xffffu16);
+    let v__a4: u16 = (0x7e00u16 & v__n3);
+    let v_spec_select4: u16 = (v__a2 | v__a4);
+    let v_i25: u32 = 0x19u32.wrapping_sub(v_i5);
+    let v_i14: bool = (v_i5 == 0xeu32);
+    let v_i15: bool = (v_i13 & v_i14);
+    let v__m12: u16 = (0u16.wrapping_sub((v_i15) as u16));
+    let v__sh5: u32 = 0x1u32.wrapping_shl((v_i25) as u32);
+    let v_i26: u32 = v__sh5;
+    let v__sh11: u32 = 0xffffu32.wrapping_shl((v_i25) as u32);
+    let v_i36: u32 = v__sh11;
+    let v_i27: u32 = v_i26.wrapping_add(0xffffu32);
+    let v_i31: u32 = (v_i27 & 0xffffu32);
+    let v__sh6: u32 = v_i26.wrapping_shr((0x1u32) as u32);
+    let v_i29: u32 = (v__sh6 & 0x7fffu32);
+    let v_i30: u32 = v_i29.wrapping_add(v_i3);
+    let v_i32: u32 = (v_i30 & v_i31);
+    let v_i33: bool = (v_i32 == 0x0u32);
+    let v_i34: u32 = (v_i26 ^ 0xffffffffu32);
+    let v__m7: u32 = (0u32.wrapping_sub((v_i33) as u32));
+    let v__a8: u32 = (v_i34 & v__m7);
+    let v__n9: u32 = (v__m7 ^ 0xffffffffu32);
+    let v__a10: u32 = (0xfffeu32 & v__n9);
+    let v_i35: u32 = (v__a8 | v__a10);
+    let v_i37: u32 = (v_i35 & v_i36);
+    let v_i38: u32 = (v_i37 & v_i30);
+    let v_i39: u16 = ((v_i38) as u16);
+    let v_i11: u16 = (v_i & 0x8000u16);
+    let v_i16: u16 = (v_i11 | 0x3c00u16);
+    let v__a13: u16 = (v_i16 & v__m12);
+    let v__n14: u16 = (v__m12 ^ 0xffffu16);
+    let v__a15: u16 = (v_i11 & v__n14);
+    let v_spec_select: u16 = (v__a13 | v__a15);
+    let v__c16: bool = (v_i9 & v_i6);
+    let v__m17: u16 = (0u16.wrapping_sub((v__c16) as u16));
+    let v__a18: u16 = (v_i & v__m17);
+    let v__n19: bool = (v_i9 ^ true);
+    let v__c20: bool = (v__n19 & v_i6);
+    let v__m21: u16 = (0u16.wrapping_sub((v__c20) as u16));
+    let v__a22: u16 = (v_spec_select & v__m21);
+    let v__o23: u16 = (v__a18 | v__a22);
+    let v__n24: bool = (v_i6 ^ true);
+    let v__n25: bool = (v_i18 ^ true);
+    let v__c26: bool = (v__n24 & v__n25);
+    let v__m27: u16 = (0u16.wrapping_sub((v__c26) as u16));
+    let v__a28: u16 = (v_i39 & v__m27);
+    let v__o29: u16 = (v__o23 | v__a28);
+    let v__m31: u16 = (0u16.wrapping_sub((v_i18) as u16));
+    let v__a32: u16 = (v_spec_select4 & v__m31);
+    let v__o33: u16 = (v__o29 | v__a32);
+    let v_i41: u64 = ((v__o33) as u64);
+    v_i41
+}

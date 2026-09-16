@@ -1,0 +1,139 @@
+/-
+leanpath -- the Lean side of the proof path, written once. Node
+hq.research.arch_unit_oracle.architectures.riscv64.lean_proof_path.
+
+Every semantic step is here, in Lean, over the model the sail compiler's
+Lean backend emitted (`import LeanIM`): `decode` is Sail's own decoder,
+`walk` composes Sail's own `execute` per word in address order, `init` is
+the model's own init and reset, `answer` reads a register of the final
+state. Nothing here names an instruction: the words of a unit are data,
+the definitions are the model's, and `simp` unfolds them.
+
+This file is generated from Leanpath.lean.in by SailModel.harness_names:
+the attribute block is one `attribute [leanpath_model] <name>` line
+per `def`/value-`abbrev` of the emitted tree (a text LISTING of names),
+and the driver names the support library's axioms of type
+`... -> SailM Unit`, which every theorem assumes leave the state as it is
+(the model's handwritten support declares them and defines nothing).
+-/
+import LeanIM
+import LeanpathAttr
+open Sail Sail.ConcurrencyInterfaceV1 PreSail LeanIM LeanIM.Functions
+
+set_option maxHeartbeats 1000000000
+set_option maxRecDepth 100000
+
+noncomputable section
+namespace Leanpath
+
+/-- the state the emitted model runs in -/
+abbrev St := SequentialState RegisterType trivialChoiceSource
+
+/-- one word of a carved body; the width is the encoding's own -/
+inductive Word where
+  | w32 (w : BitVec 32)
+  | w16 (h : BitVec 16)
+
+/-- decode(word) -> the Sail `instruction`, by the model's own decoders (the
+16-bit decoder's clause follows the emitted signature: monadic or pure) -/
+def decode : Word → SailM instruction
+  | .w32 w => encdec_backwards w
+  | .w16 h => @@DECODE16@@
+
+/-- compose: the words in address order, each decoded and executed by the
+model's own `execute`; the list of every word's ExecutionResult -/
+def walk : List Word → SailM (List ExecutionResult)
+  | [] => pure []
+  | w :: ws => do
+      let i ← decode w
+      let r ← execute i
+      let rs ← walk ws
+      pure (r :: rs)
+
+/-- the model's own init and reset, on the empty state -/
+def init : SailM Unit := do
+  sail_model_init ()
+  reset ()
+
+def stateOf {α : Type} (r : EStateM.Result (Error exception) St α) : St :=
+  match r with
+  | .ok _ s => s
+  | .error _ s => s
+
+/-- the state after the model's own init and reset (its registers are what
+the base facts describe; the harness records it once as S0) -/
+def initState : St := stateOf (init default)
+
+/-- the results of a run, or none on an error of the monad -/
+def results {α : Type} (m : SailM α) (s : St) : Option α :=
+  match m s with
+  | .ok a _ => some a
+  | .error _ _ => none
+
+/-- the value a register holds after a run, or none on an error -/
+def answer {α : Type} (m : SailM α) (s : St) (r : Register) : Option (RegisterType r) :=
+  match m s with
+  | .ok _ s' => s'.regs.get? r
+  | .error _ _ => none
+
+/-- the state with the ABI argument registers set to unknowns -/
+def withRegs (s : St) (rs : List ((r : Register) × RegisterType r)) : St :=
+  match rs with
+  | [] => s
+  | ⟨r, v⟩ :: rest => withRegs { s with regs := s.regs.insert r v } rest
+
+-- the run lemmas: the state monad applied to a state, each by rfl (the
+-- bind itself unfolds by Lean's own EStateM.bind: a match on the run)
+@[leanpath_run] theorem run_pure {α : Type} (a : α) (s : St) :
+    (pure a : SailM α) s = .ok a s := rfl
+@[leanpath_run] theorem run_get (s : St) : (get : SailM St) s = .ok s s := rfl
+@[leanpath_run] theorem run_modify (f : St → St) (s : St) :
+    (modify f : SailM PUnit) s = .ok ⟨⟩ (f s) := rfl
+@[leanpath_run] theorem run_throw {α : Type} (e : Error exception) (s : St) :
+    (throw e : SailM α) s = .error e s := rfl
+
+-- a conditional in function position (an `if` whose branches are runs),
+-- pushed through the state it is applied to; the same for `dite`
+@[leanpath_run] theorem ite_run {α : Type} (c : Prop) [Decidable c] (f g : SailM α) (s : St) :
+    (if c then f else g) s = if c then f s else g s := by
+  split <;> rfl
+@[leanpath_run] theorem dite_run {α : Type} (c : Prop) [Decidable c] (f : c → SailM α) (g : ¬ c → SailM α) (s : St) :
+    (dite c f g) s = dite c (fun h => f h s) (fun h => g h s) := by
+  split <;> rfl
+
+-- the register file: reads after writes, by the extensional map's own facts
+@[leanpath_run] theorem get?_insert_same (m : Std.ExtDHashMap Register RegisterType)
+    (k : Register) (v : RegisterType k) : (m.insert k v).get? k = some v :=
+  Std.ExtDHashMap.get?_insert_self
+@[leanpath_run] theorem get?_insert_other (m : Std.ExtDHashMap Register RegisterType)
+    (k a : Register) (v : RegisterType k) (h : k ≠ a) : (m.insert k v).get? a = m.get? a := by
+  rw [Std.ExtDHashMap.get?_insert]
+  simp [h]
+@[leanpath_run] theorem get?_empty_reg (a : Register) :
+    (∅ : Std.ExtDHashMap Register RegisterType).get? a = none :=
+  Std.ExtDHashMap.get?_empty
+
+-- the emitted model, every definition as an unfold lemma (generated)
+@@MODEL_ATTRS@@
+
+end Leanpath
+end
+
+-- the tactics that show the goal (LITERAL) and the stage that closed it
+open Lean Elab Tactic in
+elab "leanpath_show_lhs" : tactic => do
+  let g ← getMainTarget
+  let g ← instantiateMVars g
+  match g.eq? with
+  | some (_, lhs, _) => logInfo m!"LEANPATH_LHS_BEGIN\n{lhs}\nLEANPATH_LHS_END"
+  | none => logInfo m!"LEANPATH_GOAL_BEGIN\n{g}\nLEANPATH_GOAL_END"
+
+open Lean Elab Tactic in
+elab "leanpath_show_goal" : tactic => do
+  let g ← getMainTarget
+  let g ← instantiateMVars g
+  logInfo m!"LEANPATH_GOAL_BEGIN\n{g}\nLEANPATH_GOAL_END"
+
+open Lean Elab Tactic in
+elab "leanpath_stage " s:str : tactic => do
+  logInfo m!"LEANPATH_STAGE {s.getString}"

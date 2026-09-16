@@ -148,7 +148,7 @@ unaware of.** Therefore:
   CONTEXT: what it is, mechanically, in the owner's terms. A name
   dropped as if known is a dead end.
 - Recorded in the communication protocol
-  (`PRIVATE/DevComms/LLM_communication_protocol.md` §14);
+  (`PRIVATE/DevComms/comms_protocol.md` §14);
   repeated here because forks must load it with the project, not
   discover it by being corrected.
 

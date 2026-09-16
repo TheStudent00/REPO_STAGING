@@ -1,0 +1,146 @@
+# f64_roundToInt  [rm1]
+# entry symbol: f64_roundToInt_rm1
+# linked: f64_roundToInt_rm1.c, source/f64_roundToInt.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm1.c, source/RISCV/s_propagateNaNF64UI.c, source/RISCV/softfloat_raiseFlags.c
+# instructions 53 (all symbols 53), branches 10, jumps 0,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/f64_roundToInt/rm1.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_roundToInt_rm1>:
+       0:      	slli	a3, a0, 0x1
+       4:      	srli	a2, a3, 0x35
+       8:      	li	a4, 0x3fe
+       c:      	bltu	a4, a2, 0xc <f64_roundToInt_rm1+0xc>
+      10:      	beqz	a3, 0x10 <f64_roundToInt_rm1+0x10>
+      14:      	li	a2, -0x1
+      18:      	srli	a2, a2, 0x1
+      1c:      	beqz	a1, 0x1c <f64_roundToInt_rm1+0x1c>
+      20:      	lui	a1, 0x0
+      24:      	lbu	a3, 0x0(a1)
+      28:      	ori	a3, a3, 0x1
+      2c:      	sb	a3, 0x0(a1)
+      30:      	addi	a2, a2, 0x1
+      34:      	and	a0, a0, a2
+      38:      	ret
+      3c:      	li	a3, 0x433
+      40:      	bltu	a2, a3, 0x40 <f64_roundToInt_rm1+0x40>
+      44:      	slli	a1, a0, 0xc
+      48:      	beqz	a1, 0x48 <f64_roundToInt_rm1+0x48>
+      4c:      	li	a3, 0x7ff
+      50:      	bne	a2, a3, 0x50 <f64_roundToInt_rm1+0x50>
+      54:      	lui	a1, 0xfff
+      58:      	slli	a2, a1, 0x27
+      5c:      	mv	a1, a2
+      60:      	and	a2, a0, a2
+      64:      	slli	a3, a3, 0x34
+      68:      	bne	a2, a3, 0x68 <f64_roundToInt_rm1+0x68>
+      6c:      	slli	a0, a0, 0xd
+      70:      	srli	a2, a0, 0xd
+      74:      	mv	a0, a1
+      78:      	beqz	a2, 0x78 <f64_roundToInt_rm1+0x78>
+      7c:      	lui	a0, 0x0
+      80:      	lbu	a1, 0x0(a0)
+      84:      	ori	a1, a1, 0x10
+      88:      	sb	a1, 0x0(a0)
+      8c:      	lui	a0, 0xfff
+      90:      	slli	a0, a0, 0x27
+      94:      	ret
+      98:      	subw	a3, a3, a2
+      9c:      	li	a2, -0x1
+      a0:      	sll	a2, a2, a3
+      a4:      	and	a3, a0, a2
+      a8:      	mv	a2, a3
+      ac:      	beq	a3, a0, 0xac <f64_roundToInt_rm1+0xac>
+      b0:      	beqz	a1, 0xb0 <f64_roundToInt_rm1+0xb0>
+      b4:      	lui	a0, 0x0
+      b8:      	lbu	a1, 0x0(a0)
+      bc:      	ori	a1, a1, 0x1
+      c0:      	sb	a1, 0x0(a0)
+      c4:      	mv	a0, a2
+      c8:      	ret
+      cc:      	mv	a0, a1
+      d0:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0x430 contains 28 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+000000000000000c  0000000300000010 R_RISCV_BRANCH         000000000000003c .L0  + 0
+0000000000000010  0000000400000010 R_RISCV_BRANCH         00000000000000c8 .L0  + 0
+000000000000001c  0000000500000010 R_RISCV_BRANCH         0000000000000030 .L0  + 0
+0000000000000020  000000060000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000020  0000000000000033 R_RISCV_RELAX                     0
+0000000000000024  000000060000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000024  0000000000000033 R_RISCV_RELAX                     0
+000000000000002c  000000060000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+000000000000002c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000040  0000000700000010 R_RISCV_BRANCH         0000000000000098 .L0  + 0
+0000000000000048  0000000400000010 R_RISCV_BRANCH         00000000000000c8 .L0  + 0
+0000000000000050  0000000400000010 R_RISCV_BRANCH         00000000000000c8 .L0  + 0
+0000000000000068  0000000800000010 R_RISCV_BRANCH         00000000000000cc .L0  + 0
+0000000000000078  0000000400000010 R_RISCV_BRANCH         00000000000000c8 .L0  + 0
+000000000000007c  000000060000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+000000000000007c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000080  000000060000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000080  0000000000000033 R_RISCV_RELAX                     0
+0000000000000088  000000060000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000088  0000000000000033 R_RISCV_RELAX                     0
+00000000000000ac  0000000900000010 R_RISCV_BRANCH         00000000000000c4 .L0  + 0
+00000000000000b0  0000000900000010 R_RISCV_BRANCH         00000000000000c4 .L0  + 0
+00000000000000b4  000000060000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000000b4  0000000000000033 R_RISCV_RELAX                     0
+00000000000000b8  000000060000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000b8  0000000000000033 R_RISCV_RELAX                     0
+00000000000000c0  000000060000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000c0  0000000000000033 R_RISCV_RELAX                     0
+
+=== measured ===
+{
+  "entry_symbol": "f64_roundToInt_rm1",
+  "instructions": 53,
+  "instructions_all_symbols": 53,
+  "per_symbol_instructions": {
+    "f64_roundToInt_rm1": 53
+  },
+  "branches": 10,
+  "jumps": 0,
+  "back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 3,
+  "stores": 3,
+  "memory": 6,
+  "multiply_divide": 0,
+  "muldiv_ops": {},
+  "unreachable_insns": 0,
+  "size_bytes": 212,
+  "surviving_symbols": [
+    "f64_roundToInt_rm1"
+  ],
+  "source_files_linked": [
+    "f64_roundToInt_rm1.c",
+    "source/f64_roundToInt.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm1.c",
+    "source/RISCV/s_propagateNaNF64UI.c",
+    "source/RISCV/softfloat_raiseFlags.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "f24c4b9e87d1a30966c2a4ee92d0b78b6421ce01e50171814c2f9d0f627d4987",
+  "text_sha256": "edc3d715465e4872a325a6823d1ff75350b790ab4c25c6f50d7f1785d3177f6a",
+  "object_sha256": "f64bde79addd3a64d8bc96dc1310423db6653d207b67af68407009f21d2907aa"
+}

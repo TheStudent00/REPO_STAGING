@@ -1,0 +1,266 @@
+# TRUE SLICE of f64_roundToInt  (sail: riscv_f64roundToInt)
+# source files linked (3): source/f64_roundToInt.c, source/RISCV/s_propagateNaNF64UI.c, source/RISCV/softfloat_raiseFlags.c
+# own body 92, upper bound 121, SLICE 103
+# still-undefined externals (data globals / libgcc): softfloat_exceptionFlags
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/f64_roundToInt/slice.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_roundToInt>:
+       0:      	slli	a3, a0, 0x1
+       4:      	srli	a4, a3, 0x35
+       8:      	li	a5, 0x3fe
+       c:      	bltu	a5, a4, 0xc <f64_roundToInt+0xc>
+      10:      	beqz	a3, 0x10 <f64_roundToInt+0x10>
+      14:      	li	a3, -0x1
+      18:      	srli	a3, a3, 0x1
+      1c:      	beqz	a2, 0x1c <f64_roundToInt+0x1c>
+      20:      	lui	a2, 0x0
+      24:      	lbu	a5, 0x0(a2)
+      28:      	ori	a5, a5, 0x1
+      2c:      	sb	a5, 0x0(a2)
+      30:      	addi	a3, a3, 0x1
+      34:      	li	a2, 0x6
+      38:      	and	a3, a0, a3
+      3c:      	bltu	a2, a1, 0x3c <f64_roundToInt+0x3c>
+      40:      	slli	a1, a1, 0x2
+      44:      	lui	a2, 0x0
+      48:      	mv	a2, a2
+      4c:      	add	a1, a2, a1
+      50:      	lw	a1, 0x0(a1)
+      54:      	jr	a1
+      58:      	slli	a0, a0, 0xc
+      5c:      	beqz	a0, 0x5c <f64_roundToInt+0x5c>
+      60:      	li	a0, 0x3fe
+      64:      	bne	a4, a0, 0x64 <f64_roundToInt+0x64>
+      68:      	li	a0, 0x3ff
+      6c:      	slli	a0, a0, 0x34
+      70:      	or	a0, a3, a0
+      74:      	ret
+      78:      	li	a3, 0x433
+      7c:      	bltu	a4, a3, 0x7c <f64_roundToInt+0x7c>
+      80:      	slli	a1, a0, 0xc
+      84:      	beqz	a1, 0x84 <f64_roundToInt+0x84>
+      88:      	li	a1, 0x7ff
+      8c:      	bne	a4, a1, 0x8c <f64_roundToInt+0x8c>
+      90:      	lui	a3, 0xfff
+      94:      	slli	a3, a3, 0x27
+      98:      	and	a2, a0, a3
+      9c:      	slli	a1, a1, 0x34
+      a0:      	bne	a2, a1, 0xa0 <f64_roundToInt+0xa0>
+      a4:      	slli	a0, a0, 0xd
+      a8:      	srli	a0, a0, 0xd
+      ac:      	beqz	a0, 0xac <f64_roundToInt+0xac>
+      b0:      	lui	a0, 0x0
+      b4:      	lbu	a1, 0x0(a0)
+      b8:      	ori	a1, a1, 0x10
+      bc:      	sb	a1, 0x0(a0)
+      c0:      	lui	a3, 0xfff
+      c4:      	slli	a0, a3, 0x27
+      c8:      	ret
+      cc:      	subw	a3, a3, a4
+      d0:      	li	a4, 0x1
+      d4:      	sll	a4, a4, a3
+      d8:      	addi	a5, a4, -0x1
+      dc:      	beqz	a1, 0xf0 <f64_roundToInt+0xf0>
+      e0:      	li	a3, 0x4
+      e4:      	bne	a1, a3, 0x10c <f64_roundToInt+0x10c>
+      e8:      	srli	a3, a4, 0x1
+      ec:      	j	0x128 <f64_roundToInt+0x128>
+      f0:      	srli	a3, a4, 0x1
+      f4:      	add	a3, a3, a0
+      f8:      	and	a5, a3, a5
+      fc:      	bnez	a5, 0x12c <f64_roundToInt+0x12c>
+     100:      	not	a5, a4
+     104:      	and	a3, a3, a5
+     108:      	j	0x12c <f64_roundToInt+0x12c>
+     10c:      	slti	a3, a0, 0x0
+     110:      	xori	a3, a3, 0x1
+     114:      	addiw	a3, a3, 0x2
+     118:      	xor	a3, a3, a1
+     11c:      	snez	a3, a3
+     120:      	addi	a3, a3, -0x1
+     124:      	and	a3, a3, a5
+     128:      	add	a3, a3, a0
+     12c:      	neg	a5, a4
+     130:      	and	a3, a3, a5
+     134:      	beq	a3, a0, 0x134 <f64_roundToInt+0x134>
+     138:      	addi	a1, a1, -0x6
+     13c:      	snez	a0, a1
+     140:      	addi	a0, a0, -0x1
+     144:      	and	a0, a0, a4
+     148:      	or	a3, a3, a0
+     14c:      	beqz	a2, 0x14c <f64_roundToInt+0x14c>
+     150:      	lui	a0, 0x0
+     154:      	lbu	a1, 0x0(a0)
+     158:      	ori	a1, a1, 0x1
+     15c:      	sb	a1, 0x0(a0)
+     160:      	mv	a0, a3
+     164:      	ret
+     168:      	seqz	a0, a3
+     16c:      	li	a1, -0x401
+     170:      	addi	a0, a0, -0x1
+     174:      	slli	a1, a1, 0x34
+     178:      	and	a0, a0, a1
+     17c:      	ret
+     180:      	beqz	a3, 0x190 <f64_roundToInt+0x190>
+     184:      	li	a3, -0x1
+     188:      	slli	a0, a3, 0x3f
+     18c:      	ret
+     190:      	li	a3, 0x3ff
+     194:      	slli	a0, a3, 0x34
+     198:      	ret
+
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0x490 contains 35 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+000000000000000c  0000000300000010 R_RISCV_BRANCH         0000000000000078 .L0  + 0
+0000000000000010  0000000400000010 R_RISCV_BRANCH         0000000000000164 .L0  + 0
+000000000000001c  0000000500000010 R_RISCV_BRANCH         0000000000000030 .L0  + 0
+0000000000000020  000000140000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000020  0000000000000033 R_RISCV_RELAX                     0
+0000000000000024  000000140000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000024  0000000000000033 R_RISCV_RELAX                     0
+000000000000002c  000000140000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+000000000000002c  0000000000000033 R_RISCV_RELAX                     0
+000000000000003c  0000000600000010 R_RISCV_BRANCH         0000000000000160 .L0  + 0
+0000000000000044  000000070000001a R_RISCV_HI20           0000000000000000 .LJTI0_0 + 0
+0000000000000044  0000000000000033 R_RISCV_RELAX                     0
+0000000000000048  000000070000001b R_RISCV_LO12_I         0000000000000000 .LJTI0_0 + 0
+0000000000000048  0000000000000033 R_RISCV_RELAX                     0
+000000000000005c  0000000600000010 R_RISCV_BRANCH         0000000000000160 .L0  + 0
+0000000000000064  0000000600000010 R_RISCV_BRANCH         0000000000000160 .L0  + 0
+000000000000007c  0000000b00000010 R_RISCV_BRANCH         00000000000000cc .L0  + 0
+0000000000000084  0000000400000010 R_RISCV_BRANCH         0000000000000164 .L0  + 0
+000000000000008c  0000000400000010 R_RISCV_BRANCH         0000000000000164 .L0  + 0
+00000000000000a0  0000000600000010 R_RISCV_BRANCH         0000000000000160 .L0  + 0
+00000000000000ac  0000000600000010 R_RISCV_BRANCH         0000000000000160 .L0  + 0
+00000000000000b0  000000140000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000000b0  0000000000000033 R_RISCV_RELAX                     0
+00000000000000b4  000000140000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000b4  0000000000000033 R_RISCV_RELAX                     0
+00000000000000bc  000000140000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000bc  0000000000000033 R_RISCV_RELAX                     0
+0000000000000134  0000000600000010 R_RISCV_BRANCH         0000000000000160 .L0  + 0
+000000000000014c  0000000600000010 R_RISCV_BRANCH         0000000000000160 .L0  + 0
+0000000000000150  000000140000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000150  0000000000000033 R_RISCV_RELAX                     0
+0000000000000154  000000140000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000154  0000000000000033 R_RISCV_RELAX                     0
+000000000000015c  000000140000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+000000000000015c  0000000000000033 R_RISCV_RELAX                     0
+
+Relocation section '.rela.rodata' at offset 0x7d8 contains 7 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+0000000000000000  0000000800000001 R_RISCV_32             0000000000000058 .L0  + 0
+0000000000000004  0000000600000001 R_RISCV_32             0000000000000160 .L0  + 0
+0000000000000008  0000000c00000001 R_RISCV_32             0000000000000168 .L0  + 0
+000000000000000c  0000000d00000001 R_RISCV_32             0000000000000180 .L0  + 0
+0000000000000010  0000000900000001 R_RISCV_32             0000000000000060 .L0  + 0
+0000000000000014  0000000600000001 R_RISCV_32             0000000000000160 .L0  + 0
+0000000000000018  0000000a00000001 R_RISCV_32             0000000000000068 .L0  + 0
+
+=== measured ===
+{
+  "function": "f64_roundToInt",
+  "sail_externals": [
+    "riscv_f64roundToInt"
+  ],
+  "own_body": 92,
+  "upper_bound": 121,
+  "slice": 103,
+  "slice_all_symbols": 103,
+  "per_symbol_instructions": {
+    "f64_roundToInt": 103
+  },
+  "forced_inline": {
+    "instructions": 103,
+    "all_symbols_instructions": 103,
+    "surviving_symbols": [
+      "f64_roundToInt"
+    ],
+    "calls_remaining": 0,
+    "calls_remaining_callees": [],
+    "branches": 17,
+    "jumps": 3,
+    "back_edges": 0,
+    "loop_back_edges": 0,
+    "loads": 4,
+    "stores": 3,
+    "multiply_divide": 0,
+    "indirect_jumps": [
+      {
+        "at": "0x54",
+        "table_targets": [
+          "0x58",
+          "0x60",
+          "0x68",
+          "0x160",
+          "0x168",
+          "0x180"
+        ]
+      }
+    ]
+  },
+  "forced_inline_error": null,
+  "branches": 17,
+  "jumps": 3,
+  "back_edges": 0,
+  "loop_back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "loads": 4,
+  "stores": 3,
+  "memory": 7,
+  "multiply_divide": 0,
+  "muldiv_ops": {},
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": [
+    {
+      "at": "0x54",
+      "table_targets": [
+        "0x58",
+        "0x60",
+        "0x68",
+        "0x160",
+        "0x168",
+        "0x180"
+      ]
+    }
+  ],
+  "helpers_inlined": 2,
+  "source_files_linked": 3,
+  "helper_sources": [
+    "source/RISCV/s_propagateNaNF64UI.c",
+    "source/RISCV/softfloat_raiseFlags.c"
+  ],
+  "transitive_callees_measured": [
+    "softfloat_propagateNaNF64UI",
+    "softfloat_raiseFlags"
+  ],
+  "unmeasured_callees": [],
+  "unresolved_externals": [
+    "softfloat_exceptionFlags"
+  ],
+  "surviving_symbols": [
+    "f64_roundToInt"
+  ],
+  "extra_surviving_symbols": [],
+  "unreachable_insns": 0,
+  "size_bytes": 412,
+  "reduction_vs_upper_bound": 18,
+  "larger_than_upper_bound": false,
+  "forced_larger_than_upper_bound": false,
+  "clean": true,
+  "opt_passes": "internalize,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globaldce",
+  "used_instcombine_fixpoint_fallback": false
+}

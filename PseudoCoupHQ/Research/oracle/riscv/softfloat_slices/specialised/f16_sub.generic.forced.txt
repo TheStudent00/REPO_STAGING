@@ -1,0 +1,765 @@
+# f16_sub  [generic.forced]
+# entry symbol: f16_sub
+# linked: source/f16_sub.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, source/s_addMagsF16.c, source/s_subMagsF16.c, source/RISCV/s_propagateNaNF16UI.c, source/RISCV/softfloat_raiseFlags.c, source/s_roundPackToF16.c
+# instructions 526 (all symbols 526), branches 78, jumps 31,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/f16_sub/generic_forced.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f16_sub>:
+       0:      	xor	a2, a1, a0
+       4:      	slli	a2, a2, 0x30
+       8:      	srli	a6, a0, 0xa
+       c:      	srli	a7, a1, 0xa
+      10:      	bltz	a2, 0x40 <f16_sub+0x40>
+      14:      	andi	a5, a6, 0x1f
+      18:      	andi	a3, a0, 0x3ff
+      1c:      	andi	t0, a7, 0x1f
+      20:      	sub	a4, a5, t0
+      24:      	andi	a2, a1, 0x3ff
+      28:      	beqz	a4, 0x80 <f16_sub+0x80>
+      2c:      	bltz	a4, 0x94 <f16_sub+0x94>
+      30:      	li	a6, 0x1f
+      34:      	bne	a5, a6, 0xb4 <f16_sub+0xb4>
+      38:      	bnez	a3, 0x38 <f16_sub+0x38>
+      3c:      	j	0x3c <f16_sub+0x3c>
+      40:      	andi	a4, a0, 0x3ff
+      44:      	andi	a2, a6, 0x1f
+      48:      	andi	a5, a7, 0x1f
+      4c:      	andi	a3, a1, 0x3ff
+      50:      	bne	a2, a5, 0x68 <f16_sub+0x68>
+      54:      	li	a5, 0x1f
+      58:      	beq	a2, a5, 0x58 <f16_sub+0x58>
+      5c:      	bnez	a2, 0x5c <f16_sub+0x5c>
+      60:      	add	a2, a3, a0
+      64:      	j	0x64 <f16_sub+0x64>
+      68:      	sub	t0, a2, a5
+      6c:      	bltz	t0, 0xd4 <f16_sub+0xd4>
+      70:      	li	a6, 0x1f
+      74:      	bne	a2, a6, 0x74 <f16_sub+0x74>
+      78:      	bnez	a4, 0x78 <f16_sub+0x78>
+      7c:      	j	0x7c <f16_sub+0x7c>
+      80:      	li	a4, 0x1f
+      84:      	bne	a5, a4, 0xf4 <f16_sub+0xf4>
+      88:      	or	a2, a2, a3
+      8c:      	bnez	a2, 0x8c <f16_sub+0x8c>
+      90:      	j	0x90 <f16_sub+0x90>
+      94:      	li	t1, 0x1f
+      98:      	slli	a7, a0, 0x30
+      9c:      	bne	t0, t1, 0x9c <f16_sub+0x9c>
+      a0:      	bnez	a2, 0xa0 <f16_sub+0xa0>
+      a4:      	bgez	a7, 0xa4 <f16_sub+0xa4>
+      a8:      	li	a2, 0x1f
+      ac:      	slli	a2, a2, 0xa
+      b0:      	j	0xb0 <f16_sub+0xb0>
+      b4:      	li	a1, 0xd
+      b8:      	blt	a4, a1, 0xb8 <f16_sub+0xb8>
+      bc:      	andi	a1, a7, 0x3f
+      c0:      	andi	a1, a1, 0x1f
+      c4:      	or	a1, a1, a2
+      c8:      	mv	a2, a0
+      cc:      	bnez	a1, 0xcc <f16_sub+0xcc>
+      d0:      	j	0xd0 <f16_sub+0xd0>
+      d4:      	li	a7, 0x1f
+      d8:      	bne	a5, a7, 0xd8 <f16_sub+0xd8>
+      dc:      	bnez	a3, 0xdc <f16_sub+0xdc>
+      e0:      	andi	a0, a0, -0x800
+      e4:      	li	a1, 0x1f
+      e8:      	slli	a1, a1, 0xa
+      ec:      	or	a2, a0, a1
+      f0:      	j	0xf0 <f16_sub+0xf0>
+      f4:      	bne	a3, a2, 0xf4 <f16_sub+0xf4>
+      f8:      	lui	a0, 0x0
+      fc:      	lbu	a0, 0x0(a0)
+     100:      	addi	a0, a0, -0x2
+     104:      	snez	a0, a0
+     108:      	addi	a0, a0, -0x1
+     10c:      	lui	a2, 0xffff8
+     110:      	and	a2, a0, a2
+     114:      	j	0x114 <f16_sub+0x114>
+     118:      	or	a3, a3, a4
+     11c:      	beqz	a3, 0x11c <f16_sub+0x11c>
+     120:      	lui	a2, 0x8
+     124:      	li	a3, 0x1f
+     128:      	addi	a2, a2, -0x200
+     12c:      	and	a4, a0, a2
+     130:      	slli	a3, a3, 0xa
+     134:      	bne	a4, a3, 0x140 <f16_sub+0x140>
+     138:      	andi	a0, a0, 0x1ff
+     13c:      	bnez	a0, 0x150 <f16_sub+0x150>
+     140:      	and	a0, a1, a2
+     144:      	bne	a0, a3, 0x144 <f16_sub+0x144>
+     148:      	andi	a0, a1, 0x1ff
+     14c:      	beqz	a0, 0x14c <f16_sub+0x14c>
+     150:      	lui	a0, 0x0
+     154:      	lbu	a1, 0x0(a0)
+     158:      	ori	a1, a1, 0x10
+     15c:      	sb	a1, 0x0(a0)
+     160:      	lui	a0, 0x8
+     164:      	addi	a2, a0, -0x200
+     168:      	j	0x168 <f16_sub+0x168>
+     16c:      	mv	a2, a0
+     170:      	j	0x170 <f16_sub+0x170>
+     174:      	add	a3, a3, a4
+     178:      	li	a1, 0x1
+     17c:      	slli	a1, a1, 0xb
+     180:      	andi	a4, a3, 0x1
+     184:      	or	a1, a3, a1
+     188:      	bnez	a4, 0x188 <f16_sub+0x188>
+     18c:      	li	a3, 0x1d
+     190:      	bltu	a3, a2, 0x190 <f16_sub+0x190>
+     194:      	srli	a1, a1, 0x1
+     198:      	j	0x198 <f16_sub+0x198>
+     19c:      	li	a1, 0xd
+     1a0:      	blt	t0, a1, 0x1a0 <f16_sub+0x1a0>
+     1a4:      	andi	a1, a7, 0x3f
+     1a8:      	andi	a1, a1, 0x1f
+     1ac:      	or	a1, a1, a3
+     1b0:      	mv	a2, a0
+     1b4:      	bnez	a1, 0x1b4 <f16_sub+0x1b4>
+     1b8:      	j	0x1b8 <f16_sub+0x1b8>
+     1bc:      	srai	a0, a7, 0x30
+     1c0:      	li	a7, -0xd
+     1c4:      	slti	a0, a0, 0x0
+     1c8:      	blt	a7, a4, 0x1c8 <f16_sub+0x1c8>
+     1cc:      	andi	a4, a6, 0x3f
+     1d0:      	xori	a0, a0, 0x1
+     1d4:      	li	a5, 0x1f
+     1d8:      	slli	a0, a0, 0xf
+     1dc:      	slli	a5, a5, 0xa
+     1e0:      	andi	a4, a4, 0x1f
+     1e4:      	and	a1, a1, a5
+     1e8:      	or	a1, a1, a2
+     1ec:      	or	a3, a4, a3
+     1f0:      	or	a2, a0, a1
+     1f4:      	beqz	a3, 0x1f4 <f16_sub+0x1f4>
+     1f8:      	lui	a0, 0x0
+     1fc:      	lbu	a0, 0x0(a0)
+     200:      	beqz	a0, 0x200 <f16_sub+0x200>
+     204:      	li	a1, 0x1
+     208:      	beq	a0, a1, 0x228 <f16_sub+0x228>
+     20c:      	slli	a1, a0, 0x38
+     210:      	slli	a3, a2, 0x30
+     214:      	srai	a1, a1, 0x38
+     218:      	srai	a3, a3, 0x30
+     21c:      	slti	a3, a3, 0x0
+     220:      	addiw	a3, a3, 0x2
+     224:      	bne	a3, a1, 0x224 <f16_sub+0x224>
+     228:      	addi	a2, a2, -0x1
+     22c:      	j	0x22c <f16_sub+0x22c>
+     230:      	slli	a0, a0, 0x30
+     234:      	srai	a0, a0, 0x30
+     238:      	mv	a6, a2
+     23c:      	beqz	t0, 0x244 <f16_sub+0x244>
+     240:      	li	a6, 0x400
+     244:      	add	a6, a6, a2
+     248:      	slti	a0, a0, 0x0
+     24c:      	mv	a5, t0
+     250:      	mv	a2, a3
+     254:      	j	0x254 <f16_sub+0x254>
+     258:      	li	a7, -0xd
+     25c:      	blt	a7, t0, 0x25c <f16_sub+0x25c>
+     260:      	andi	a2, a6, 0x3f
+     264:      	lui	a5, 0xffff8
+     268:      	and	a0, a0, a5
+     26c:      	li	a5, 0x1f
+     270:      	slli	a5, a5, 0xa
+     274:      	andi	a2, a2, 0x1f
+     278:      	and	a1, a1, a5
+     27c:      	or	a0, a0, a3
+     280:      	or	a4, a2, a4
+     284:      	or	a2, a1, a0
+     288:      	beqz	a4, 0x288 <f16_sub+0x288>
+     28c:      	lui	a0, 0x0
+     290:      	lbu	a0, 0x0(a0)
+     294:      	beqz	a0, 0x294 <f16_sub+0x294>
+     298:      	slli	a1, a0, 0x38
+     29c:      	slli	a3, a2, 0x30
+     2a0:      	srai	a1, a1, 0x38
+     2a4:      	srai	a3, a3, 0x30
+     2a8:      	slti	a3, a3, 0x0
+     2ac:      	xori	a3, a3, 0x1
+     2b0:      	addiw	a3, a3, 0x2
+     2b4:      	bne	a3, a1, 0x2b4 <f16_sub+0x2b4>
+     2b8:      	addi	a2, a2, 0x1
+     2bc:      	li	a0, 0x1f
+     2c0:      	slli	a0, a0, 0xa
+     2c4:      	addiw	a1, a0, 0x3ff
+     2c8:      	and	a1, a2, a1
+     2cc:      	bne	a1, a0, 0x2cc <f16_sub+0x2cc>
+     2d0:      	lui	a0, 0x0
+     2d4:      	lbu	a1, 0x0(a0)
+     2d8:      	ori	a1, a1, 0x5
+     2dc:      	sb	a1, 0x0(a0)
+     2e0:      	j	0x2e0 <f16_sub+0x2e0>
+     2e4:      	sub	a3, a3, a2
+     2e8:      	addi	a1, a5, -0x1
+     2ec:      	sltu	a2, a5, a1
+     2f0:      	srai	a4, a3, 0x3f
+     2f4:      	xor	a0, a3, a0
+     2f8:      	addi	a2, a2, -0x1
+     2fc:      	xor	a3, a3, a4
+     300:      	and	a2, a2, a1
+     304:      	sub	a1, a3, a4
+     308:      	srli	a3, a1, 0x1
+     30c:      	or	a3, a1, a3
+     310:      	srli	a4, a3, 0x2
+     314:      	or	a3, a3, a4
+     318:      	slli	a4, a3, 0x34
+     31c:      	srli	a5, a4, 0x38
+     320:      	or	a3, a3, a5
+     324:      	lui	a5, 0x55555
+     328:      	addi	a5, a5, 0x555
+     32c:      	srli	a4, a4, 0x3c
+     330:      	or	a3, a3, a4
+     334:      	not	a3, a3
+     338:      	srli	a4, a3, 0x1
+     33c:      	and	a4, a4, a5
+     340:      	lui	a5, 0x33333
+     344:      	addi	a5, a5, 0x333
+     348:      	sub	a3, a3, a4
+     34c:      	and	a4, a3, a5
+     350:      	srli	a3, a3, 0x2
+     354:      	and	a3, a3, a5
+     358:      	lui	a5, 0xf0f1
+     35c:      	add	a3, a4, a3
+     360:      	srli	a4, a3, 0x4
+     364:      	add	a3, a3, a4
+     368:      	lui	a4, 0x1010
+     36c:      	addi	a5, a5, -0xf1
+     370:      	slli	a0, a0, 0x30
+     374:      	srai	a0, a0, 0x30
+     378:      	and	a3, a3, a5
+     37c:      	addi	a4, a4, 0x101
+     380:      	mul	a3, a3, a4
+     384:      	srliw	a4, a3, 0x18
+     388:      	addi	a4, a4, -0x15
+     38c:      	subw	a3, a2, a4
+     390:      	slli	a5, a3, 0x38
+     394:      	srai	a3, a5, 0x38
+     398:      	bltz	a5, 0x3a0 <f16_sub+0x3a0>
+     39c:      	mv	a2, a4
+     3a0:      	slti	a0, a0, 0x0
+     3a4:      	sgtz	a4, a3
+     3a8:      	neg	a4, a4
+     3ac:      	and	a3, a4, a3
+     3b0:      	sllw	a1, a1, a2
+     3b4:      	j	0x3b4 <f16_sub+0x3b4>
+     3b8:      	slli	a1, a1, 0x3
+     3bc:      	j	0x3bc <f16_sub+0x3bc>
+     3c0:      	mv	a1, a3
+     3c4:      	beqz	a5, 0x3cc <f16_sub+0x3cc>
+     3c8:      	li	a1, 0x400
+     3cc:      	add	a1, a1, a3
+     3d0:      	li	a3, 0x13
+     3d4:      	sub	t0, a3, t0
+     3d8:      	mv	a5, a2
+     3dc:      	mv	a3, a4
+     3e0:      	j	0x3e0 <f16_sub+0x3e0>
+     3e4:      	mv	a6, a3
+     3e8:      	beqz	a5, 0x3f0 <f16_sub+0x3f0>
+     3ec:      	li	a6, 0x400
+     3f0:      	xori	a0, a0, 0x1
+     3f4:      	add	a6, a6, a3
+     3f8:      	neg	a4, a4
+     3fc:      	addi	a1, a2, 0x400
+     400:      	addi	a5, a5, 0x13
+     404:      	sllw	a2, a1, a4
+     408:      	subw	a1, a2, a6
+     40c:      	bne	a2, a6, 0x418 <f16_sub+0x418>
+     410:      	li	a3, 0x1f
+     414:      	j	0x498 <f16_sub+0x498>
+     418:      	srliw	a2, a1, 0x1
+     41c:      	lui	a3, 0x55555
+     420:      	or	a2, a1, a2
+     424:      	addi	a3, a3, 0x555
+     428:      	srliw	a4, a2, 0x2
+     42c:      	or	a2, a2, a4
+     430:      	srliw	a4, a2, 0x4
+     434:      	or	a2, a2, a4
+     438:      	srliw	a4, a2, 0x8
+     43c:      	or	a2, a2, a4
+     440:      	srliw	a4, a2, 0x10
+     444:      	or	a2, a2, a4
+     448:      	not	a2, a2
+     44c:      	srli	a4, a2, 0x1
+     450:      	and	a3, a4, a3
+     454:      	lui	a4, 0x33333
+     458:      	addi	a4, a4, 0x333
+     45c:      	sub	a2, a2, a3
+     460:      	and	a3, a2, a4
+     464:      	srli	a2, a2, 0x2
+     468:      	and	a2, a2, a4
+     46c:      	lui	a4, 0xf0f1
+     470:      	add	a2, a3, a2
+     474:      	srli	a3, a2, 0x4
+     478:      	add	a2, a2, a3
+     47c:      	lui	a3, 0x1010
+     480:      	addi	a4, a4, -0xf1
+     484:      	and	a2, a2, a4
+     488:      	addi	a3, a3, 0x101
+     48c:      	mul	a2, a2, a3
+     490:      	srliw	a3, a2, 0x18
+     494:      	addi	a3, a3, -0x1
+     498:      	sllw	a2, a1, a3
+     49c:      	sub	a3, a5, a3
+     4a0:      	srliw	a1, a2, 0x10
+     4a4:      	slli	a4, a2, 0x30
+     4a8:      	zext.b	a6, a3
+     4ac:      	beqz	a4, 0x4ac <f16_sub+0x4ac>
+     4b0:      	ori	a1, a1, 0x1
+     4b4:      	lui	a2, 0x0
+     4b8:      	lbu	a2, 0x0(a2)
+     4bc:      	seqz	a4, a2
+     4c0:      	addi	a5, a2, -0x4
+     4c4:      	snez	a5, a5
+     4c8:      	slli	a7, a3, 0x38
+     4cc:      	bne	a4, a5, 0x4d8 <f16_sub+0x4d8>
+     4d0:      	li	a4, 0x8
+     4d4:      	j	0x4ec <f16_sub+0x4ec>
+     4d8:      	xori	a3, a0, 0x3
+     4dc:      	xor	a3, a3, a2
+     4e0:      	snez	a3, a3
+     4e4:      	addi	a3, a3, -0x1
+     4e8:      	andi	a4, a3, 0xf
+     4ec:      	srai	a3, a7, 0x38
+     4f0:      	li	t0, 0x1d
+     4f4:      	zext.b	a5, a1
+     4f8:      	bltu	a6, t0, 0x4f8 <f16_sub+0x4f8>
+     4fc:      	bltz	a7, 0x4fc <f16_sub+0x4fc>
+     500:      	srai	a6, a7, 0x38
+     504:      	li	a7, 0x1d
+     508:      	blt	a7, a6, 0x518 <f16_sub+0x518>
+     50c:      	add	a6, a4, a1
+     510:      	srli	a6, a6, 0xf
+     514:      	beqz	a6, 0x514 <f16_sub+0x514>
+     518:      	lui	a1, 0x0
+     51c:      	lbu	a2, 0x0(a1)
+     520:      	ori	a2, a2, 0x5
+     524:      	sb	a2, 0x0(a1)
+     528:      	beqz	a0, 0x528 <f16_sub+0x528>
+     52c:      	li	a0, -0x400
+     530:      	j	0x530 <f16_sub+0x530>
+     534:      	lui	a4, 0xf0
+     538:      	and	a4, a2, a4
+     53c:      	bnez	a4, 0x53c <f16_sub+0x53c>
+     540:      	li	a4, 0x1d
+     544:      	bltu	a4, a6, 0x544 <f16_sub+0x544>
+     548:      	srliw	a1, a2, 0x14
+     54c:      	slli	a0, a0, 0xf
+     550:      	zext.b	a2, a3
+     554:      	slli	a2, a2, 0xa
+     558:      	add	a0, a1, a0
+     55c:      	add	a2, a0, a2
+     560:      	j	0x560 <f16_sub+0x560>
+     564:      	mv	a1, a4
+     568:      	beqz	a2, 0x570 <f16_sub+0x570>
+     56c:      	li	a1, 0x400
+     570:      	add	a1, a1, a4
+     574:      	addi	t0, t0, 0x13
+     578:      	addi	a2, a3, 0x400
+     57c:      	sllw	a1, a1, t0
+     580:      	slli	a2, a2, 0x13
+     584:      	add	a1, a1, a2
+     588:      	srliw	a2, a1, 0x1e
+     58c:      	seqz	a3, a2
+     590:      	sub	a2, a5, a3
+     594:      	sllw	a3, a1, a3
+     598:      	slli	a4, a3, 0x30
+     59c:      	srliw	a1, a3, 0x10
+     5a0:      	beqz	a4, 0x5a0 <f16_sub+0x5a0>
+     5a4:      	ori	a1, a1, 0x1
+     5a8:      	lui	a3, 0x0
+     5ac:      	lbu	a3, 0x0(a3)
+     5b0:      	seqz	a4, a3
+     5b4:      	addi	a5, a3, -0x4
+     5b8:      	snez	a6, a5
+     5bc:      	slli	a5, a0, 0x30
+     5c0:      	bne	a4, a6, 0x5d4 <f16_sub+0x5d4>
+     5c4:      	li	a4, 0x8
+     5c8:      	li	a6, 0x1d
+     5cc:      	bgeu	a2, a6, 0x5f4 <f16_sub+0x5f4>
+     5d0:      	j	0x5d0 <f16_sub+0x5d0>
+     5d4:      	srli	a4, a5, 0x3f
+     5d8:      	xori	a4, a4, 0x3
+     5dc:      	xor	a4, a4, a3
+     5e0:      	snez	a4, a4
+     5e4:      	addi	a4, a4, -0x1
+     5e8:      	andi	a4, a4, 0xf
+     5ec:      	li	a6, 0x1d
+     5f0:      	bltu	a2, a6, 0x5f0 <f16_sub+0x5f0>
+     5f4:      	bltz	a2, 0x5f4 <f16_sub+0x5f4>
+     5f8:      	li	a6, 0x1d
+     5fc:      	blt	a6, a2, 0x60c <f16_sub+0x60c>
+     600:      	add	a6, a4, a1
+     604:      	srli	a6, a6, 0xf
+     608:      	beqz	a6, 0x608 <f16_sub+0x608>
+     60c:      	lui	a0, 0x0
+     610:      	lbu	a1, 0x0(a0)
+     614:      	ori	a1, a1, 0x5
+     618:      	sb	a1, 0x0(a0)
+     61c:      	bltz	a5, 0x61c <f16_sub+0x61c>
+     620:      	li	a0, 0x1f
+     624:      	slli	a0, a0, 0xa
+     628:      	seqz	a1, a4
+     62c:      	sub	a2, a0, a1
+     630:      	j	0x630 <f16_sub+0x630>
+     634:      	lui	a4, 0xf0
+     638:      	and	a4, a3, a4
+     63c:      	bnez	a4, 0x63c <f16_sub+0x63c>
+     640:      	li	a4, 0x1d
+     644:      	blt	a4, a2, 0x644 <f16_sub+0x644>
+     648:      	srliw	a1, a3, 0x14
+     64c:      	lui	a3, 0xffff8
+     650:      	and	a0, a0, a3
+     654:      	slli	a2, a2, 0xa
+     658:      	j	0x658 <f16_sub+0x658>
+     65c:      	li	a6, -0x1
+     660:      	li	a5, 0x1
+     664:      	bne	a2, a6, 0x664 <f16_sub+0x664>
+     668:      	lui	a6, 0x0
+     66c:      	lbu	a6, 0x0(a6)
+     670:      	beqz	a6, 0x680 <f16_sub+0x680>
+     674:      	add	a5, a4, a1
+     678:      	srli	a5, a5, 0xf
+     67c:      	seqz	a5, a5
+     680:      	negw	a6, a2
+     684:      	sllw	a2, a1, a2
+     688:      	srlw	a1, a1, a6
+     68c:      	snez	a2, a2
+     690:      	or	a1, a1, a2
+     694:      	li	a2, 0x0
+     698:      	beqz	a5, 0x698 <f16_sub+0x698>
+     69c:      	andi	a5, a1, 0xf
+     6a0:      	beqz	a5, 0x6a0 <f16_sub+0x6a0>
+     6a4:      	li	a2, 0x0
+     6a8:      	lui	a5, 0x0
+     6ac:      	lbu	a6, 0x0(a5)
+     6b0:      	ori	a6, a6, 0x2
+     6b4:      	sb	a6, 0x0(a5)
+     6b8:      	andi	a5, a1, 0xf
+     6bc:      	slli	a1, a1, 0x30
+     6c0:      	srli	a1, a1, 0x30
+     6c4:      	add	a1, a1, a4
+     6c8:      	srli	a1, a1, 0x4
+     6cc:      	beqz	a5, 0x6cc <f16_sub+0x6cc>
+     6d0:      	lui	a4, 0x0
+     6d4:      	lbu	a6, 0x0(a4)
+     6d8:      	ori	a6, a6, 0x1
+     6dc:      	li	a7, 0x6
+     6e0:      	sb	a6, 0x0(a4)
+     6e4:      	bne	a3, a7, 0x6f0 <f16_sub+0x6f0>
+     6e8:      	ori	a1, a1, 0x1
+     6ec:      	j	0x710 <f16_sub+0x710>
+     6f0:      	xori	a4, a5, 0x8
+     6f4:      	or	a3, a3, a4
+     6f8:      	seqz	a3, a3
+     6fc:      	not	a3, a3
+     700:      	and	a1, a1, a3
+     704:      	seqz	a3, a1
+     708:      	addi	a3, a3, -0x1
+     70c:      	and	a2, a3, a2
+     710:      	lui	a3, 0x8
+     714:      	slli	a2, a2, 0x30
+     718:      	and	a0, a0, a3
+     71c:      	srli	a2, a2, 0x26
+     720:      	j	0x720 <f16_sub+0x720>
+     724:      	addi	a0, a0, -0x6
+     728:      	seqz	a0, a0
+     72c:      	or	a2, a2, a0
+     730:      	j	0x730 <f16_sub+0x730>
+     734:      	li	a5, 0xff
+     738:      	li	a7, 0x1
+     73c:      	bne	a6, a5, 0x73c <f16_sub+0x73c>
+     740:      	lui	a5, 0x0
+     744:      	lbu	a5, 0x0(a5)
+     748:      	beqz	a5, 0x758 <f16_sub+0x758>
+     74c:      	add	a5, a4, a1
+     750:      	srli	a5, a5, 0xf
+     754:      	seqz	a7, a5
+     758:      	negw	a5, a3
+     75c:      	sllw	a3, a1, a3
+     760:      	srlw	a1, a1, a5
+     764:      	snez	a3, a3
+     768:      	or	a1, a1, a3
+     76c:      	zext.b	a5, a1
+     770:      	li	a3, 0x0
+     774:      	beqz	a7, 0x774 <f16_sub+0x774>
+     778:      	andi	a6, a1, 0xf
+     77c:      	beqz	a6, 0x77c <f16_sub+0x77c>
+     780:      	li	a3, 0x0
+     784:      	lui	a6, 0x0
+     788:      	lbu	a7, 0x0(a6)
+     78c:      	ori	a7, a7, 0x2
+     790:      	sb	a7, 0x0(a6)
+     794:      	andi	a5, a5, 0xf
+     798:      	slli	a1, a1, 0x30
+     79c:      	srli	a1, a1, 0x30
+     7a0:      	add	a1, a1, a4
+     7a4:      	srli	a1, a1, 0x4
+     7a8:      	beqz	a5, 0x7a8 <f16_sub+0x7a8>
+     7ac:      	lui	a4, 0x0
+     7b0:      	lbu	a6, 0x0(a4)
+     7b4:      	ori	a6, a6, 0x1
+     7b8:      	li	a7, 0x6
+     7bc:      	sb	a6, 0x0(a4)
+     7c0:      	bne	a2, a7, 0x7cc <f16_sub+0x7cc>
+     7c4:      	ori	a1, a1, 0x1
+     7c8:      	j	0x7ec <f16_sub+0x7ec>
+     7cc:      	xori	a4, a5, 0x8
+     7d0:      	or	a2, a2, a4
+     7d4:      	seqz	a2, a2
+     7d8:      	not	a2, a2
+     7dc:      	and	a1, a1, a2
+     7e0:      	seqz	a2, a1
+     7e4:      	addi	a2, a2, -0x1
+     7e8:      	and	a3, a2, a3
+     7ec:      	slli	a0, a0, 0xf
+     7f0:      	slli	a3, a3, 0x30
+     7f4:      	srli	a2, a3, 0x26
+     7f8:      	or	a0, a1, a0
+     7fc:      	add	a2, a0, a2
+     800:      	j	0x800 <f16_sub+0x800>
+     804:      	li	a2, -0x400
+     808:      	j	0x808 <f16_sub+0x808>
+     80c:      	li	a1, 0x6
+     810:      	bne	a0, a1, 0x81c <f16_sub+0x81c>
+     814:      	addi	a2, a2, -0x1
+     818:      	ori	a2, a2, 0x1
+     81c:      	lui	a0, 0x0
+     820:      	lbu	a1, 0x0(a0)
+     824:      	ori	a1, a1, 0x1
+     828:      	sb	a1, 0x0(a0)
+     82c:      	slli	a0, a2, 0x30
+     830:      	srli	a0, a0, 0x30
+     834:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0xf38 contains 161 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+0000000000000038  0000000300000010 R_RISCV_BRANCH         0000000000000120 .L0  + 0
+000000000000003c  0000000400000011 R_RISCV_JAL            000000000000016c .L0  + 0
+0000000000000058  0000000500000010 R_RISCV_BRANCH         0000000000000118 .L0  + 0
+000000000000005c  0000000600000010 R_RISCV_BRANCH         0000000000000174 .L0  + 0
+0000000000000064  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+0000000000000074  0000000800000010 R_RISCV_BRANCH         000000000000019c .L0  + 0
+0000000000000078  0000000300000010 R_RISCV_BRANCH         0000000000000120 .L0  + 0
+000000000000007c  0000000400000011 R_RISCV_JAL            000000000000016c .L0  + 0
+000000000000008c  0000000300000010 R_RISCV_BRANCH         0000000000000120 .L0  + 0
+0000000000000090  0000000900000011 R_RISCV_JAL            0000000000000150 .L0  + 0
+000000000000009c  0000000a00000010 R_RISCV_BRANCH         00000000000001bc .L0  + 0
+00000000000000a0  0000000300000010 R_RISCV_BRANCH         0000000000000120 .L0  + 0
+00000000000000a4  0000000b00000010 R_RISCV_BRANCH         0000000000000804 .L0  + 0
+00000000000000b0  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+00000000000000b8  0000000c00000010 R_RISCV_BRANCH         0000000000000230 .L0  + 0
+00000000000000cc  0000000d00000010 R_RISCV_BRANCH         00000000000001f8 .L0  + 0
+00000000000000d0  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+00000000000000d8  0000000e00000010 R_RISCV_BRANCH         0000000000000258 .L0  + 0
+00000000000000dc  0000000300000010 R_RISCV_BRANCH         0000000000000120 .L0  + 0
+00000000000000f0  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+00000000000000f4  0000000f00000010 R_RISCV_BRANCH         00000000000002e4 .L0  + 0
+00000000000000f8  000000360000001a R_RISCV_HI20           0000000000000000 softfloat_roundingMode + 0
+00000000000000f8  0000000000000033 R_RISCV_RELAX                     0
+00000000000000fc  000000360000001b R_RISCV_LO12_I         0000000000000000 softfloat_roundingMode + 0
+00000000000000fc  0000000000000033 R_RISCV_RELAX                     0
+0000000000000114  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+000000000000011c  0000000400000010 R_RISCV_BRANCH         000000000000016c .L0  + 0
+0000000000000144  0000000700000010 R_RISCV_BRANCH         000000000000082c .L0  + 0
+000000000000014c  0000000700000010 R_RISCV_BRANCH         000000000000082c .L0  + 0
+0000000000000150  000000370000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000150  0000000000000033 R_RISCV_RELAX                     0
+0000000000000154  000000370000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000154  0000000000000033 R_RISCV_RELAX                     0
+000000000000015c  000000370000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+000000000000015c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000168  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+0000000000000170  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+0000000000000188  0000001000000010 R_RISCV_BRANCH         00000000000003b8 .L0  + 0
+0000000000000190  0000001000000010 R_RISCV_BRANCH         00000000000003b8 .L0  + 0
+0000000000000198  0000001100000011 R_RISCV_JAL            000000000000064c .L0  + 0
+00000000000001a0  0000001200000010 R_RISCV_BRANCH         00000000000003c0 .L0  + 0
+00000000000001b4  0000001300000010 R_RISCV_BRANCH         000000000000028c .L0  + 0
+00000000000001b8  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+00000000000001c8  0000001400000010 R_RISCV_BRANCH         00000000000003e4 .L0  + 0
+00000000000001f4  0000000700000010 R_RISCV_BRANCH         000000000000082c .L0  + 0
+00000000000001f8  000000360000001a R_RISCV_HI20           0000000000000000 softfloat_roundingMode + 0
+00000000000001f8  0000000000000033 R_RISCV_RELAX                     0
+00000000000001fc  000000360000001b R_RISCV_LO12_I         0000000000000000 softfloat_roundingMode + 0
+00000000000001fc  0000000000000033 R_RISCV_RELAX                     0
+0000000000000200  0000001500000010 R_RISCV_BRANCH         000000000000081c .L0  + 0
+0000000000000224  0000001600000010 R_RISCV_BRANCH         000000000000080c .L0  + 0
+000000000000022c  0000001500000011 R_RISCV_JAL            000000000000081c .L0  + 0
+0000000000000254  0000001700000011 R_RISCV_JAL            00000000000003fc .L0  + 0
+000000000000025c  0000001800000010 R_RISCV_BRANCH         0000000000000564 .L0  + 0
+0000000000000288  0000000700000010 R_RISCV_BRANCH         000000000000082c .L0  + 0
+000000000000028c  000000360000001a R_RISCV_HI20           0000000000000000 softfloat_roundingMode + 0
+000000000000028c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000290  000000360000001b R_RISCV_LO12_I         0000000000000000 softfloat_roundingMode + 0
+0000000000000290  0000000000000033 R_RISCV_RELAX                     0
+0000000000000294  0000001500000010 R_RISCV_BRANCH         000000000000081c .L0  + 0
+00000000000002b4  0000001900000010 R_RISCV_BRANCH         0000000000000724 .L0  + 0
+00000000000002cc  0000001500000010 R_RISCV_BRANCH         000000000000081c .L0  + 0
+00000000000002d0  000000370000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000002d0  0000000000000033 R_RISCV_RELAX                     0
+00000000000002d4  000000370000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000002d4  0000000000000033 R_RISCV_RELAX                     0
+00000000000002dc  000000370000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000002dc  0000000000000033 R_RISCV_RELAX                     0
+00000000000002e0  0000001500000011 R_RISCV_JAL            000000000000081c .L0  + 0
+00000000000003b4  0000001a00000011 R_RISCV_JAL            000000000000054c .L0  + 0
+00000000000003bc  0000001b00000011 R_RISCV_JAL            00000000000005a8 .L0  + 0
+00000000000003e0  0000001c00000011 R_RISCV_JAL            0000000000000578 .L0  + 0
+00000000000004ac  0000001d00000010 R_RISCV_BRANCH         0000000000000534 .L0  + 0
+00000000000004b4  000000360000001a R_RISCV_HI20           0000000000000000 softfloat_roundingMode + 0
+00000000000004b4  0000000000000033 R_RISCV_RELAX                     0
+00000000000004b8  000000360000001b R_RISCV_LO12_I         0000000000000000 softfloat_roundingMode + 0
+00000000000004b8  0000000000000033 R_RISCV_RELAX                     0
+00000000000004f8  0000001f00000010 R_RISCV_BRANCH         0000000000000794 .L0  + 0
+00000000000004fc  0000002000000010 R_RISCV_BRANCH         0000000000000734 .L0  + 0
+0000000000000514  0000001f00000010 R_RISCV_BRANCH         0000000000000794 .L0  + 0
+0000000000000518  000000370000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000518  0000000000000033 R_RISCV_RELAX                     0
+000000000000051c  000000370000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+000000000000051c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000524  000000370000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000524  0000000000000033 R_RISCV_RELAX                     0
+0000000000000528  0000002100000010 R_RISCV_BRANCH         0000000000000620 .L0  + 0
+0000000000000530  0000002300000011 R_RISCV_JAL            0000000000000628 .L0  + 0
+000000000000053c  0000001e00000010 R_RISCV_BRANCH         00000000000004b4 .L0  + 0
+0000000000000544  0000001e00000010 R_RISCV_BRANCH         00000000000004b4 .L0  + 0
+0000000000000560  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+00000000000005a0  0000002400000010 R_RISCV_BRANCH         0000000000000634 .L0  + 0
+00000000000005a8  000000360000001a R_RISCV_HI20           0000000000000000 softfloat_roundingMode + 0
+00000000000005a8  0000000000000033 R_RISCV_RELAX                     0
+00000000000005ac  000000360000001b R_RISCV_LO12_I         0000000000000000 softfloat_roundingMode + 0
+00000000000005ac  0000000000000033 R_RISCV_RELAX                     0
+00000000000005d0  0000002500000011 R_RISCV_JAL            00000000000006b8 .L0  + 0
+00000000000005f0  0000002500000010 R_RISCV_BRANCH         00000000000006b8 .L0  + 0
+00000000000005f4  0000002600000010 R_RISCV_BRANCH         000000000000065c .L0  + 0
+0000000000000608  0000002500000010 R_RISCV_BRANCH         00000000000006b8 .L0  + 0
+000000000000060c  000000370000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+000000000000060c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000610  000000370000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000610  0000000000000033 R_RISCV_RELAX                     0
+0000000000000618  000000370000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000618  0000000000000033 R_RISCV_RELAX                     0
+000000000000061c  0000002200000010 R_RISCV_BRANCH         000000000000052c .L0  + 0
+0000000000000630  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+000000000000063c  0000001b00000010 R_RISCV_BRANCH         00000000000005a8 .L0  + 0
+0000000000000644  0000001b00000010 R_RISCV_BRANCH         00000000000005a8 .L0  + 0
+0000000000000658  0000002700000011 R_RISCV_JAL            00000000000007f8 .L0  + 0
+0000000000000664  0000002800000010 R_RISCV_BRANCH         0000000000000680 .L0  + 0
+0000000000000668  000000380000001a R_RISCV_HI20           0000000000000000 softfloat_detectTininess + 0
+0000000000000668  0000000000000033 R_RISCV_RELAX                     0
+000000000000066c  000000380000001b R_RISCV_LO12_I         0000000000000000 softfloat_detectTininess + 0
+000000000000066c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000698  0000002500000010 R_RISCV_BRANCH         00000000000006b8 .L0  + 0
+00000000000006a0  0000002500000010 R_RISCV_BRANCH         00000000000006b8 .L0  + 0
+00000000000006a8  000000370000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000006a8  0000000000000033 R_RISCV_RELAX                     0
+00000000000006ac  000000370000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000006ac  0000000000000033 R_RISCV_RELAX                     0
+00000000000006b4  000000370000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000006b4  0000000000000033 R_RISCV_RELAX                     0
+00000000000006cc  0000002900000010 R_RISCV_BRANCH         00000000000006f0 .L0  + 0
+00000000000006d0  000000370000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000006d0  0000000000000033 R_RISCV_RELAX                     0
+00000000000006d4  000000370000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000006d4  0000000000000033 R_RISCV_RELAX                     0
+00000000000006e0  000000370000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000006e0  0000000000000033 R_RISCV_RELAX                     0
+0000000000000720  0000002700000011 R_RISCV_JAL            00000000000007f8 .L0  + 0
+0000000000000730  0000001500000011 R_RISCV_JAL            000000000000081c .L0  + 0
+000000000000073c  0000002a00000010 R_RISCV_BRANCH         0000000000000758 .L0  + 0
+0000000000000740  000000380000001a R_RISCV_HI20           0000000000000000 softfloat_detectTininess + 0
+0000000000000740  0000000000000033 R_RISCV_RELAX                     0
+0000000000000744  000000380000001b R_RISCV_LO12_I         0000000000000000 softfloat_detectTininess + 0
+0000000000000744  0000000000000033 R_RISCV_RELAX                     0
+0000000000000774  0000001f00000010 R_RISCV_BRANCH         0000000000000794 .L0  + 0
+000000000000077c  0000001f00000010 R_RISCV_BRANCH         0000000000000794 .L0  + 0
+0000000000000784  000000370000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000784  0000000000000033 R_RISCV_RELAX                     0
+0000000000000788  000000370000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000788  0000000000000033 R_RISCV_RELAX                     0
+0000000000000790  000000370000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000790  0000000000000033 R_RISCV_RELAX                     0
+00000000000007a8  0000002b00000010 R_RISCV_BRANCH         00000000000007cc .L0  + 0
+00000000000007ac  000000370000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000007ac  0000000000000033 R_RISCV_RELAX                     0
+00000000000007b0  000000370000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000007b0  0000000000000033 R_RISCV_RELAX                     0
+00000000000007bc  000000370000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000007bc  0000000000000033 R_RISCV_RELAX                     0
+0000000000000800  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+0000000000000808  0000000700000011 R_RISCV_JAL            000000000000082c .L0  + 0
+000000000000081c  000000370000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+000000000000081c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000820  000000370000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000820  0000000000000033 R_RISCV_RELAX                     0
+0000000000000828  000000370000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000828  0000000000000033 R_RISCV_RELAX                     0
+
+=== measured ===
+{
+  "entry_symbol": "f16_sub",
+  "instructions": 526,
+  "instructions_all_symbols": 526,
+  "per_symbol_instructions": {
+    "f16_sub": 526
+  },
+  "branches": 78,
+  "jumps": 31,
+  "back_edges": 5,
+  "back_edge_spans": [
+    "0x53c->0x4b4 (35 insns)",
+    "0x544->0x4b4 (37 insns)",
+    "0x61c->0x52c (61 insns)",
+    "0x63c->0x5a8 (38 insns)",
+    "0x644->0x5a8 (40 insns)"
+  ],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 16,
+  "stores": 9,
+  "memory": 25,
+  "multiply_divide": 2,
+  "muldiv_ops": {
+    "mul": 2
+  },
+  "unreachable_insns": 0,
+  "size_bytes": 2104,
+  "surviving_symbols": [
+    "f16_sub"
+  ],
+  "source_files_linked": [
+    "source/f16_sub.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "source/s_addMagsF16.c",
+    "source/s_subMagsF16.c",
+    "source/RISCV/s_propagateNaNF16UI.c",
+    "source/RISCV/softfloat_raiseFlags.c",
+    "source/s_roundPackToF16.c"
+  ],
+  "unresolved_externals": [
+    "softfloat_detectTininess",
+    "softfloat_exceptionFlags",
+    "softfloat_roundingMode"
+  ],
+  "opt_passes": "internalize,forceattrs,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "46e3ae202454fa90451743774ce5fc4d7db3363d8264ec53a09e97cb98c4dbe2",
+  "text_sha256": "aab33ab63972522d0dc868def68070e5e44ddbeb49bd0bb0647348f5ae4f2dd2",
+  "object_sha256": "35631e582a6db6a152730ee0afffe964c8579efb01c933fd3c6ea7340c1774d2"
+}

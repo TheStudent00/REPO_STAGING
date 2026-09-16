@@ -1,0 +1,110 @@
+# i32_to_f64  [rm2]
+# entry symbol: i32_to_f64
+# linked: source/i32_to_f64.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm2.c
+# instructions 47 (all symbols 47), branches 1, jumps 0,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/i32_to_f64/rm2.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <i32_to_f64>:
+       0:      	beqz	a0, 0xb8 <i32_to_f64+0xb8>
+       4:      	sraiw	a1, a0, 0x1f
+       8:      	lui	a2, 0x55555
+       c:      	xor	a3, a0, a1
+      10:      	addi	a2, a2, 0x555
+      14:      	subw	a3, a3, a1
+      18:      	srliw	a1, a3, 0x1
+      1c:      	or	a1, a3, a1
+      20:      	srliw	a4, a1, 0x2
+      24:      	or	a1, a1, a4
+      28:      	srliw	a4, a1, 0x4
+      2c:      	or	a1, a1, a4
+      30:      	srliw	a4, a1, 0x8
+      34:      	or	a1, a1, a4
+      38:      	srliw	a4, a1, 0x10
+      3c:      	or	a1, a1, a4
+      40:      	not	a1, a1
+      44:      	srli	a4, a1, 0x1
+      48:      	and	a2, a4, a2
+      4c:      	lui	a4, 0x33333
+      50:      	addi	a4, a4, 0x333
+      54:      	sub	a1, a1, a2
+      58:      	and	a2, a1, a4
+      5c:      	srli	a1, a1, 0x2
+      60:      	and	a1, a1, a4
+      64:      	lui	a4, 0xf0f1
+      68:      	add	a1, a2, a1
+      6c:      	srli	a2, a1, 0x4
+      70:      	add	a1, a1, a2
+      74:      	lui	a2, 0x1010
+      78:      	srli	a0, a0, 0x3f
+      7c:      	addi	a4, a4, -0xf1
+      80:      	and	a1, a1, a4
+      84:      	li	a4, 0x41d
+      88:      	addi	a2, a2, 0x101
+      8c:      	slli	a0, a0, 0x3f
+      90:      	slli	a3, a3, 0x20
+      94:      	srli	a3, a3, 0x20
+      98:      	mul	a1, a1, a2
+      9c:      	srliw	a1, a1, 0x18
+      a0:      	addi	a2, a1, 0x15
+      a4:      	subw	a4, a4, a1
+      a8:      	slli	a4, a4, 0x34
+      ac:      	or	a0, a4, a0
+      b0:      	sll	a1, a3, a2
+      b4:      	add	a0, a0, a1
+      b8:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+There are no relocations in this file.
+
+=== measured ===
+{
+  "entry_symbol": "i32_to_f64",
+  "instructions": 47,
+  "instructions_all_symbols": 47,
+  "per_symbol_instructions": {
+    "i32_to_f64": 47
+  },
+  "branches": 1,
+  "jumps": 0,
+  "back_edges": 0,
+  "back_edge_spans": [],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 0,
+  "stores": 0,
+  "memory": 0,
+  "multiply_divide": 1,
+  "muldiv_ops": {
+    "mul": 1
+  },
+  "unreachable_insns": 0,
+  "size_bytes": 188,
+  "surviving_symbols": [
+    "i32_to_f64"
+  ],
+  "source_files_linked": [
+    "source/i32_to_f64.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm2.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "e1462e96f0ad982980ae9f597b607ae9076a3916d32a887f59ce30a4f19b82a7",
+  "text_sha256": "460db8a2fe3e01e5f8e5fca94a6924ececce11708308428b4007861182db76b7",
+  "object_sha256": "cdf7d74c2746e388f85a4096ad5ba3de5fc29e82970d456f562216047e139e1a"
+}

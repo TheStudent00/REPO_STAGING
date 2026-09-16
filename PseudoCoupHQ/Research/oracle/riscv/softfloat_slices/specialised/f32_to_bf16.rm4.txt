@@ -1,0 +1,192 @@
+# f32_to_bf16  [rm4]
+# entry symbol: f32_to_bf16
+# linked: source/f32_to_bf16.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm4.c, source/RISCV/softfloat_raiseFlags.c, source/s_roundPackToBF16.c
+# instructions 87 (all symbols 87), branches 11, jumps 5,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/f32_to_bf16/rm4.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f32_to_bf16>:
+       0:      	slli	a4, a0, 0x21
+       4:      	slli	a1, a0, 0x29
+       8:      	srli	a4, a4, 0x38
+       c:      	li	a3, 0xff
+      10:      	srli	a2, a1, 0x29
+      14:      	bne	a4, a3, 0x14 <f32_to_bf16+0x14>
+      18:      	beqz	a2, 0x18 <f32_to_bf16+0x18>
+      1c:      	lui	a0, 0x8
+      20:      	addi	a0, a0, -0x40
+      24:      	bltz	a1, 0x24 <f32_to_bf16+0x24>
+      28:      	lui	a1, 0x0
+      2c:      	lbu	a2, 0x0(a1)
+      30:      	ori	a2, a2, 0x10
+      34:      	sb	a2, 0x0(a1)
+      38:      	j	0x38 <f32_to_bf16+0x38>
+      3c:      	srli	a2, a2, 0x9
+      40:      	andi	a1, a0, 0x1ff
+      44:      	snez	a1, a1
+      48:      	or	a2, a2, a1
+      4c:      	or	a1, a2, a4
+      50:      	beqz	a1, 0x50 <f32_to_bf16+0x50>
+      54:      	seqz	a3, a4
+      58:      	snez	a5, a4
+      5c:      	addi	a1, a4, -0x1
+      60:      	slli	a5, a5, 0xe
+      64:      	sllw	a2, a2, a3
+      68:      	li	a6, 0xfd
+      6c:      	or	a3, a2, a5
+      70:      	bltu	a1, a6, 0x70 <f32_to_bf16+0x70>
+      74:      	beqz	a4, 0x74 <f32_to_bf16+0x74>
+      78:      	srli	a4, a3, 0x6
+      7c:      	li	a5, 0x1ff
+      80:      	bltu	a4, a5, 0x80 <f32_to_bf16+0x80>
+      84:      	lui	a1, 0x0
+      88:      	lbu	a2, 0x0(a1)
+      8c:      	sext.w	a0, a0
+      90:      	ori	a2, a2, 0x5
+      94:      	sb	a2, 0x0(a1)
+      98:      	bltz	a0, 0x98 <f32_to_bf16+0x98>
+      9c:      	lui	a0, 0x8
+      a0:      	j	0xa0 <f32_to_bf16+0xa0>
+      a4:      	srli	a0, a0, 0x10
+      a8:      	lui	a1, 0x8
+      ac:      	addi	a1, a1, -0x80
+      b0:      	or	a0, a0, a1
+      b4:      	j	0xb4 <f32_to_bf16+0xb4>
+      b8:      	srliw	a0, a0, 0x1f
+      bc:      	slli	a0, a0, 0xf
+      c0:      	j	0xc0 <f32_to_bf16+0xc0>
+      c4:      	li	a1, 0x0
+      c8:      	srli	a4, a3, 0x6
+      cc:      	srli	a3, a3, 0x1
+      d0:      	andi	a2, a2, 0x1
+      d4:      	li	a5, 0x1fe
+      d8:      	or	a2, a3, a2
+      dc:      	bltu	a5, a4, 0xdc <f32_to_bf16+0xdc>
+      e0:      	andi	a3, a2, 0x7f
+      e4:      	beqz	a3, 0xe4 <f32_to_bf16+0xe4>
+      e8:      	li	a1, 0x0
+      ec:      	lui	a3, 0x0
+      f0:      	lbu	a4, 0x0(a3)
+      f4:      	ori	a4, a4, 0x2
+      f8:      	sb	a4, 0x0(a3)
+      fc:      	mv	a3, a2
+     100:      	andi	a3, a3, -0x40
+     104:      	addi	a4, a3, 0x40
+     108:      	andi	a5, a2, 0x7f
+     10c:      	srli	a2, a4, 0x7
+     110:      	beqz	a5, 0x110 <f32_to_bf16+0x110>
+     114:      	lui	a4, 0x0
+     118:      	lbu	a5, 0x0(a4)
+     11c:      	ori	a5, a5, 0x1
+     120:      	sb	a5, 0x0(a4)
+     124:      	seqz	a3, a3
+     128:      	srliw	a0, a0, 0x1f
+     12c:      	slli	a1, a1, 0x7
+     130:      	slli	a0, a0, 0xf
+     134:      	addi	a3, a3, -0x1
+     138:      	and	a1, a3, a1
+     13c:      	or	a0, a2, a0
+     140:      	add	a0, a0, a1
+     144:      	slli	a0, a0, 0x30
+     148:      	srli	a0, a0, 0x30
+     14c:      	ret
+     150:      	lui	a0, 0x10
+     154:      	addi	a0, a0, -0x80
+     158:      	j	0x144 <f32_to_bf16+0x144>
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0x4e0 contains 39 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+0000000000000014  0000000300000010 R_RISCV_BRANCH         000000000000003c .L0  + 0
+0000000000000018  0000000400000010 R_RISCV_BRANCH         00000000000000a4 .L0  + 0
+0000000000000024  0000000500000010 R_RISCV_BRANCH         0000000000000144 .L0  + 0
+0000000000000028  000000060000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000028  0000000000000033 R_RISCV_RELAX                     0
+000000000000002c  000000060000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+000000000000002c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000034  000000060000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000034  0000000000000033 R_RISCV_RELAX                     0
+0000000000000038  0000000500000011 R_RISCV_JAL            0000000000000144 .L0  + 0
+0000000000000050  0000000700000010 R_RISCV_BRANCH         00000000000000b8 .L0  + 0
+0000000000000070  0000000800000010 R_RISCV_BRANCH         0000000000000100 .L0  + 0
+0000000000000074  0000000900000010 R_RISCV_BRANCH         00000000000000c4 .L0  + 0
+0000000000000080  0000000800000010 R_RISCV_BRANCH         0000000000000100 .L0  + 0
+0000000000000084  000000060000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000084  0000000000000033 R_RISCV_RELAX                     0
+0000000000000088  000000060000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000088  0000000000000033 R_RISCV_RELAX                     0
+0000000000000094  000000060000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000094  0000000000000033 R_RISCV_RELAX                     0
+0000000000000098  0000000a00000010 R_RISCV_BRANCH         0000000000000150 .L0  + 0
+00000000000000a0  0000000b00000011 R_RISCV_JAL            0000000000000154 .L0  + 0
+00000000000000b4  0000000500000011 R_RISCV_JAL            0000000000000144 .L0  + 0
+00000000000000c0  0000000500000011 R_RISCV_JAL            0000000000000144 .L0  + 0
+00000000000000dc  0000000c00000010 R_RISCV_BRANCH         00000000000000fc .L0  + 0
+00000000000000e4  0000000c00000010 R_RISCV_BRANCH         00000000000000fc .L0  + 0
+00000000000000ec  000000060000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000000ec  0000000000000033 R_RISCV_RELAX                     0
+00000000000000f0  000000060000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000f0  0000000000000033 R_RISCV_RELAX                     0
+00000000000000f8  000000060000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000f8  0000000000000033 R_RISCV_RELAX                     0
+0000000000000110  0000000d00000010 R_RISCV_BRANCH         0000000000000124 .L0  + 0
+0000000000000114  000000060000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000114  0000000000000033 R_RISCV_RELAX                     0
+0000000000000118  000000060000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000118  0000000000000033 R_RISCV_RELAX                     0
+0000000000000120  000000060000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000120  0000000000000033 R_RISCV_RELAX                     0
+
+=== measured ===
+{
+  "entry_symbol": "f32_to_bf16",
+  "instructions": 87,
+  "instructions_all_symbols": 87,
+  "per_symbol_instructions": {
+    "f32_to_bf16": 87
+  },
+  "branches": 11,
+  "jumps": 5,
+  "back_edges": 1,
+  "back_edge_spans": [
+    "0x158->0x144 (6 insns)"
+  ],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 4,
+  "stores": 4,
+  "memory": 8,
+  "multiply_divide": 0,
+  "muldiv_ops": {},
+  "unreachable_insns": 0,
+  "size_bytes": 348,
+  "surviving_symbols": [
+    "f32_to_bf16"
+  ],
+  "source_files_linked": [
+    "source/f32_to_bf16.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm4.c",
+    "source/RISCV/softfloat_raiseFlags.c",
+    "source/s_roundPackToBF16.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "b84195f820b70f657bd4bf203155ee3e9fdfa6bff6a1b7136e801656c140cfe4",
+  "text_sha256": "ff67195648abc08fdc9d04912b8ecf8653e296fdfe81b3b987a19acf3bc458d7",
+  "object_sha256": "1dd3845b4d012581cb9972694d57bf6252371497080253aec764859924335b60"
+}

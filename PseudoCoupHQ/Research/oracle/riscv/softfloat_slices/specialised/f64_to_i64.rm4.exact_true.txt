@@ -1,0 +1,161 @@
+# f64_to_i64  [rm4.exact_true]
+# entry symbol: f64_to_i64_rm4_exact
+# linked: f64_to_i64_rm4_exact.c, source/f64_to_i64.c, source/s_approxRecipSqrt_1Ks.c, source/s_approxRecip_1Ks.c, softfloat_state_rm4.c, source/RISCV/softfloat_raiseFlags.c, source/s_roundToI64.c
+# instructions 70 (all symbols 70), branches 10, jumps 3,
+# indirect jumps 0, natural loops 0, calls 0 
+#
+# Branch/jump targets in an unlinked .o live in the
+# relocations; the resolved table follows the disassembly.
+
+
+<scratch>/work/spec/f64_to_i64/rm4_exact.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_to_i64_rm4_exact>:
+       0:      	slli	a1, a0, 0x1
+       4:      	li	a2, -0x1
+       8:      	srli	a1, a1, 0x35
+       c:      	srli	a2, a2, 0xc
+      10:      	and	a4, a0, a2
+      14:      	add	a2, a4, a2
+      18:      	addi	a2, a2, 0x1
+      1c:      	mv	a3, a4
+      20:      	beqz	a1, 0x28 <f64_to_i64_rm4_exact+0x28>
+      24:      	mv	a3, a2
+      28:      	li	a6, 0x433
+      2c:      	sub	a5, a6, a1
+      30:      	bltu	a1, a6, 0x30 <f64_to_i64_rm4_exact+0x30>
+      34:      	li	a2, 0x43e
+      38:      	bgeu	a2, a1, 0x38 <f64_to_i64_rm4_exact+0x38>
+      3c:      	slti	a0, a0, 0x0
+      40:      	lui	a2, 0x0
+      44:      	addi	a1, a1, -0x7ff
+      48:      	seqz	a3, a4
+      4c:      	lbu	a4, 0x0(a2)
+      50:      	snez	a1, a1
+      54:      	or	a1, a3, a1
+      58:      	li	a3, -0x1
+      5c:      	srli	a3, a3, 0x1
+      60:      	and	a0, a0, a1
+      64:      	ori	a1, a4, 0x10
+      68:      	sb	a1, 0x0(a2)
+      6c:      	add	a1, a0, a3
+      70:      	mv	a0, a1
+      74:      	ret
+      78:      	li	a4, 0x3f
+      7c:      	bltu	a4, a5, 0xa0 <f64_to_i64_rm4_exact+0xa0>
+      80:      	srl	a1, a3, a5
+      84:      	negw	a2, a5
+      88:      	sll	a2, a3, a2
+      8c:      	j	0xb0 <f64_to_i64_rm4_exact+0xb0>
+      90:      	li	a2, 0x0
+      94:      	negw	a1, a5
+      98:      	sll	a1, a3, a1
+      9c:      	j	0xb0 <f64_to_i64_rm4_exact+0xb0>
+      a0:      	li	a4, 0x3f3
+      a4:      	beq	a1, a4, 0xac <f64_to_i64_rm4_exact+0xac>
+      a8:      	snez	a2, a3
+      ac:      	li	a1, 0x0
+      b0:      	srli	a3, a2, 0x3f
+      b4:      	add	a3, a1, a3
+      b8:      	bltz	a0, 0xc8 <f64_to_i64_rm4_exact+0xc8>
+      bc:      	mv	a1, a3
+      c0:      	bnez	a3, 0xd0 <f64_to_i64_rm4_exact+0xd0>
+      c4:      	j	0xc4 <f64_to_i64_rm4_exact+0xc4>
+      c8:      	neg	a1, a3
+      cc:      	beqz	a3, 0xcc <f64_to_i64_rm4_exact+0xcc>
+      d0:      	xor	a3, a0, a1
+      d4:      	bgez	a3, 0xd4 <f64_to_i64_rm4_exact+0xd4>
+      d8:      	lui	a1, 0x0
+      dc:      	lbu	a2, 0x0(a1)
+      e0:      	srli	a0, a0, 0x3f
+      e4:      	ori	a2, a2, 0x10
+      e8:      	sb	a2, 0x0(a1)
+      ec:      	li	a1, -0x1
+      f0:      	srli	a1, a1, 0x1
+      f4:      	add	a0, a0, a1
+      f8:      	ret
+      fc:      	beqz	a2, 0xfc <f64_to_i64_rm4_exact+0xfc>
+     100:      	lui	a0, 0x0
+     104:      	lbu	a2, 0x0(a0)
+     108:      	ori	a2, a2, 0x1
+     10c:      	sb	a2, 0x0(a0)
+     110:      	mv	a0, a1
+     114:      	ret
+
+=== resolved relocations (llvm-readelf -r) ===
+
+Relocation section '.rela.text' at offset 0x448 contains 24 entries:
+    Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+0000000000000030  0000000300000010 R_RISCV_BRANCH         0000000000000078 .L0  + 0
+0000000000000038  0000000400000010 R_RISCV_BRANCH         0000000000000090 .L0  + 0
+0000000000000040  000000050000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000040  0000000000000033 R_RISCV_RELAX                     0
+000000000000004c  000000050000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+000000000000004c  0000000000000033 R_RISCV_RELAX                     0
+0000000000000068  000000050000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000068  0000000000000033 R_RISCV_RELAX                     0
+00000000000000c4  0000000700000011 R_RISCV_JAL            00000000000000fc .L0  + 0
+00000000000000cc  0000000700000010 R_RISCV_BRANCH         00000000000000fc .L0  + 0
+00000000000000d4  0000000700000010 R_RISCV_BRANCH         00000000000000fc .L0  + 0
+00000000000000d8  000000050000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+00000000000000d8  0000000000000033 R_RISCV_RELAX                     0
+00000000000000dc  000000050000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000dc  0000000000000033 R_RISCV_RELAX                     0
+00000000000000e8  000000050000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+00000000000000e8  0000000000000033 R_RISCV_RELAX                     0
+00000000000000fc  0000000600000010 R_RISCV_BRANCH         0000000000000070 .L0  + 0
+0000000000000100  000000050000001a R_RISCV_HI20           0000000000000000 softfloat_exceptionFlags + 0
+0000000000000100  0000000000000033 R_RISCV_RELAX                     0
+0000000000000104  000000050000001b R_RISCV_LO12_I         0000000000000000 softfloat_exceptionFlags + 0
+0000000000000104  0000000000000033 R_RISCV_RELAX                     0
+000000000000010c  000000050000001c R_RISCV_LO12_S         0000000000000000 softfloat_exceptionFlags + 0
+000000000000010c  0000000000000033 R_RISCV_RELAX                     0
+
+=== measured ===
+{
+  "entry_symbol": "f64_to_i64_rm4_exact",
+  "instructions": 70,
+  "instructions_all_symbols": 70,
+  "per_symbol_instructions": {
+    "f64_to_i64_rm4_exact": 70
+  },
+  "branches": 10,
+  "jumps": 3,
+  "back_edges": 1,
+  "back_edge_spans": [
+    "0xfc->0x70 (36 insns)"
+  ],
+  "loop_back_edges": 0,
+  "loop_back_edge_spans": [],
+  "has_loop": false,
+  "calls_remaining": 0,
+  "calls_remaining_callees": [],
+  "indirect_jumps": 0,
+  "indirect_jump_detail": [],
+  "loads": 3,
+  "stores": 3,
+  "memory": 6,
+  "multiply_divide": 0,
+  "muldiv_ops": {},
+  "unreachable_insns": 0,
+  "size_bytes": 280,
+  "surviving_symbols": [
+    "f64_to_i64_rm4_exact"
+  ],
+  "source_files_linked": [
+    "f64_to_i64_rm4_exact.c",
+    "source/f64_to_i64.c",
+    "source/s_approxRecipSqrt_1Ks.c",
+    "source/s_approxRecip_1Ks.c",
+    "softfloat_state_rm4.c",
+    "source/RISCV/softfloat_raiseFlags.c",
+    "source/s_roundToI64.c"
+  ],
+  "unresolved_externals": [],
+  "opt_passes": "internalize,globalopt,ipsccp,always-inline,inline,globaldce,instcombine,simplifycfg,dce,globalopt,globaldce",
+  "disasm_sha256": "3d5256c9321485da6b85592f91096ee948ee757d454b8b6fb95b0ec33d7550f4",
+  "text_sha256": "ca23611d9e460426f6d4cec5cd29bdb938b86df0c8edf84c25f2dfdbda2e13aa",
+  "object_sha256": "5efcc660d30d936ce7e8a049afad94edc068919439490dd7d8aa65ca6cc83c29"
+}

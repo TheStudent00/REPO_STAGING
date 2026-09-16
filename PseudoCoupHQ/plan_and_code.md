@@ -186,7 +186,7 @@ the code.
 ### The bridge already exists
 
 The structural overview format in
-`PRIVATE/DevComms/LLM_communication_protocol.md` §2 — class
+`PRIVATE/DevComms/comms_protocol.md` §2 — class
 name, attributes, methods, no logic — **is a plan node one level
 above code.** It was never a separate request format. It is what a
 node looks like at the depth where the next descent produces a file.
@@ -282,7 +282,7 @@ from this document.
 - **Shape is aimed at, not enforced.** Trivial mapping is the target;
   1:1 is not required.
 - **The protocol carries the standing instruction**, as card `scope.code-shape` (v1 §2a) of
-  `PRIVATE/DevComms/LLM_communication_protocol.md`, beside the
+  `PRIVATE/DevComms/comms_protocol.md`, beside the
   structural overviews.
 - **The four non-code designation names** — `rule`, `work`,
   `finding`, `grouping` — approved by the owner as proposed, names and

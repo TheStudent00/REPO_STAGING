@@ -1,0 +1,67 @@
+# f64_to_ui32  rounding mode 2  variant value
+# entry symbol: f64_to_ui32_rm2_value_flat
+# one basic block: 55 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f64_to_ui32.rm2.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_to_ui32_rm2_value_flat>:
+       0:      	srli	a1, a0, 0x34
+       4:      	li	a2, -0x1
+       8:      	li	a3, 0x427
+       c:      	slti	a4, a0, 0x0
+      10:      	andi	a5, a1, 0x7ff
+      14:      	addi	a1, a1, 0x19
+      18:      	srli	a2, a2, 0xc
+      1c:      	xori	a4, a4, 0x1
+      20:      	and	a0, a0, a2
+      24:      	snez	a6, a5
+      28:      	addi	a7, a5, -0x7ff
+      2c:      	snez	t0, a0
+      30:      	seqz	a7, a7
+      34:      	and	a7, t0, a7
+      38:      	sltiu	t0, a5, 0x427
+      3c:      	subw	a3, a3, a5
+      40:      	sltiu	a5, a5, 0x3e9
+      44:      	addi	a6, a6, -0x1
+      48:      	add	a2, a0, a2
+      4c:      	or	a4, a4, a7
+      50:      	xori	a7, a5, 0x1
+      54:      	and	a7, t0, a7
+      58:      	addi	t0, t0, -0x1
+      5c:      	neg	a5, a5
+      60:      	addi	a2, a2, 0x1
+      64:      	xor	a0, a0, a2
+      68:      	neg	a7, a7
+      6c:      	and	a0, a0, a6
+      70:      	xor	a0, a0, a2
+      74:      	sll	a1, a0, a1
+      78:      	srl	a2, a0, a3
+      7c:      	snez	a3, a0
+      80:      	and	a0, a0, t0
+      84:      	snez	a1, a1
+      88:      	and	a3, a3, a5
+      8c:      	or	a1, a2, a1
+      90:      	and	a1, a1, a7
+      94:      	or	a0, a0, a1
+      98:      	or	a3, a0, a3
+      9c:      	srli	a1, a0, 0x2c
+      a0:      	srli	a0, a0, 0xc
+      a4:      	snez	a2, a3
+      a8:      	seqz	a3, a1
+      ac:      	snez	a1, a1
+      b0:      	xor	a1, a1, a2
+      b4:      	and	a3, a4, a3
+      b8:      	and	a1, a1, a4
+      bc:      	negw	a3, a3
+      c0:      	xor	a1, a1, a2
+      c4:      	and	a1, a4, a1
+      c8:      	negw	a1, a1
+      cc:      	and	a0, a0, a3
+      d0:      	or	a0, a1, a0
+      d4:      	sext.w	a0, a0
+      d8:      	ret

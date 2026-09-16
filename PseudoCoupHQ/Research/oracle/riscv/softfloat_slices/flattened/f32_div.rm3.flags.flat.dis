@@ -1,0 +1,367 @@
+# f32_div  rounding mode 3  variant flags
+# entry symbol: f32_div_rm3_flags_flat
+# one basic block: 355 instructions, 0 branches, 0 jumps, 0 calls,
+# 26 memory (26 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f32_div.rm3.flags/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f32_div_rm3_flags_flat>:
+       0:      	addi	sp, sp, -0x70
+       4:      	sd	ra, 0x68(sp)
+       8:      	sd	s0, 0x60(sp)
+       c:      	sd	s1, 0x58(sp)
+      10:      	sd	s2, 0x50(sp)
+      14:      	sd	s3, 0x48(sp)
+      18:      	sd	s4, 0x40(sp)
+      1c:      	sd	s5, 0x38(sp)
+      20:      	sd	s6, 0x30(sp)
+      24:      	sd	s7, 0x28(sp)
+      28:      	sd	s8, 0x20(sp)
+      2c:      	sd	s9, 0x18(sp)
+      30:      	sd	s10, 0x10(sp)
+      34:      	sd	s11, 0x8(sp)
+      38:      	slli	a5, a0, 0x21
+      3c:      	lui	t3, 0x800
+      40:      	slli	a3, a1, 0x21
+      44:      	xor	t0, a1, a0
+      48:      	lui	a6, 0x7f800
+      4c:      	lui	a4, 0x7fc00
+      50:      	lui	t5, 0x400
+      54:      	lui	t2, 0x80000
+      58:      	srli	a5, a5, 0x38
+      5c:      	addi	t3, t3, -0x1
+      60:      	srli	a7, a3, 0x38
+      64:      	and	t4, a1, a6
+      68:      	and	t6, a0, a4
+      6c:      	addi	t5, t5, -0x1
+      70:      	and	s0, a1, a4
+      74:      	and	a3, t0, t2
+      78:      	sraiw	t0, t0, 0x1f
+      7c:      	and	t1, a0, t3
+      80:      	and	t3, a1, t3
+      84:      	addi	s1, a5, -0xff
+      88:      	xor	s4, t4, a6
+      8c:      	snez	t4, a7
+      90:      	seqz	s2, a7
+      94:      	xor	t6, t6, a6
+      98:      	and	a0, a0, t5
+      9c:      	xor	s8, s0, a6
+      a0:      	and	t5, a1, t5
+      a4:      	and	s9, t0, t2
+      a8:      	add	s10, t0, a6
+      ac:      	seqz	s3, s1
+      b0:      	snez	s6, s1
+      b4:      	or	s1, a5, t1
+      b8:      	seqz	s0, t1
+      bc:      	seqz	a1, s4
+      c0:      	snez	s7, s4
+      c4:      	snez	s5, t3
+      c8:      	seqz	t2, t3
+      cc:      	snez	t6, t6
+      d0:      	seqz	s4, a0
+      d4:      	srli	s11, t3, 0x1
+      d8:      	snez	s8, s8
+      dc:      	seqz	t5, t5
+      e0:      	srli	ra, t1, 0x1
+      e4:      	add	a2, s10, s9
+      e8:      	snez	s9, s1
+      ec:      	or	s10, t3, s1
+      f0:      	or	s4, t6, s4
+      f4:      	or	s11, t3, s11
+      f8:      	or	s1, s8, t5
+      fc:      	and	t5, s6, s7
+     100:      	and	a0, s3, s0
+     104:      	and	t6, s5, s2
+     108:      	or	s8, t1, ra
+     10c:      	and	ra, s6, a1
+     110:      	and	s6, a0, s7
+     114:      	and	a0, a0, a1
+     118:      	srli	a1, s11, 0x2
+     11c:      	and	s7, t2, s9
+     120:      	seqz	s9, s10
+     124:      	or	s10, s11, a1
+     128:      	and	a1, t5, s2
+     12c:      	and	s2, t5, s2
+     130:      	and	s7, a1, s7
+     134:      	and	s11, t6, t5
+     138:      	and	a1, s2, s9
+     13c:      	and	s2, t5, t4
+     140:      	or	s2, s2, s11
+     144:      	srli	s9, s8, 0x2
+     148:      	or	s8, s8, s9
+     14c:      	and	s9, ra, t2
+     150:      	or	s11, ra, a0
+     154:      	and	t2, a0, t2
+     158:      	seqz	a0, a5
+     15c:      	and	s5, s11, s5
+     160:      	srli	s11, s10, 0x4
+     164:      	or	s10, s10, s11
+     168:      	srli	s11, s8, 0x4
+     16c:      	or	s8, s8, s11
+     170:      	snez	s11, t1
+     174:      	and	ra, s3, s11
+     178:      	and	s3, a0, s11
+     17c:      	and	a0, s2, a0
+     180:      	and	s11, a0, s11
+     184:      	and	a0, a0, s0
+     188:      	or	ra, s5, ra
+     18c:      	snez	s5, a5
+     190:      	and	s0, s2, s5
+     194:      	or	s0, s0, s11
+     198:      	or	a6, a3, a6
+     19c:      	or	a0, s9, a0
+     1a0:      	not	s9, s4
+     1a4:      	and	s9, s9, ra
+     1a8:      	and	s4, s4, ra
+     1ac:      	xori	s11, s1, 0x1
+     1b0:      	or	s6, s6, s7
+     1b4:      	and	s7, s7, s6
+     1b8:      	neg	s6, s6
+     1bc:      	and	a6, a6, s6
+     1c0:      	slli	s6, s10, 0x29
+     1c4:      	and	s11, s4, s11
+     1c8:      	and	s1, s4, s1
+     1cc:      	srli	s4, s6, 0x31
+     1d0:      	or	s4, s10, s4
+     1d4:      	slli	s10, s8, 0x29
+     1d8:      	srli	ra, s10, 0x31
+     1dc:      	or	s8, s8, ra
+     1e0:      	or	s9, s9, s11
+     1e4:      	srli	s6, s6, 0x39
+     1e8:      	or	s4, s4, s6
+     1ec:      	srli	s6, s10, 0x39
+     1f0:      	or	s6, s8, s6
+     1f4:      	lui	s8, 0x55555
+     1f8:      	addi	s8, s8, 0x555
+     1fc:      	negw	s7, s7
+     200:      	neg	a0, a0
+     204:      	andi	s7, s7, 0x8
+     208:      	and	a0, a3, a0
+     20c:      	or	s1, s1, s9
+     210:      	negw	s9, s9
+     214:      	or	a0, a6, a0
+     218:      	not	s4, s4
+     21c:      	not	s6, s6
+     220:      	andi	a6, s9, 0x10
+     224:      	srli	s9, s4, 0x1
+     228:      	or	a6, a6, s7
+     22c:      	srli	s7, s6, 0x1
+     230:      	and	s9, s9, s8
+     234:      	and	s7, s7, s8
+     238:      	neg	s1, s1
+     23c:      	and	s1, s1, a4
+     240:      	or	s1, s1, a0
+     244:      	lui	a0, 0x33333
+     248:      	addi	a0, a0, 0x333
+     24c:      	sub	s4, s4, s9
+     250:      	sub	s6, s6, s7
+     254:      	and	s7, s4, a0
+     258:      	srli	s4, s4, 0x2
+     25c:      	and	s8, s6, a0
+     260:      	srli	s6, s6, 0x2
+     264:      	and	s4, s4, a0
+     268:      	and	a0, s6, a0
+     26c:      	add	s4, s7, s4
+     270:      	add	a0, s8, a0
+     274:      	srli	s6, s4, 0x4
+     278:      	add	s4, s4, s6
+     27c:      	srli	s6, a0, 0x4
+     280:      	add	a0, a0, s6
+     284:      	lui	s6, 0xf0f1
+     288:      	addi	s6, s6, -0xf1
+     28c:      	and	s4, s4, s6
+     290:      	and	a0, a0, s6
+     294:      	lui	s6, 0x1010
+     298:      	addi	s6, s6, 0x101
+     29c:      	neg	t4, t4
+     2a0:      	and	s7, a7, t4
+     2a4:      	and	a7, t3, t4
+     2a8:      	mul	t4, s4, s6
+     2ac:      	mul	a0, a0, s6
+     2b0:      	srliw	t4, t4, 0x18
+     2b4:      	addi	s4, t4, 0xf8
+     2b8:      	sllw	t3, t3, s4
+     2bc:      	li	s4, 0x9
+     2c0:      	neg	s5, s5
+     2c4:      	and	s6, a5, s5
+     2c8:      	and	s5, t1, s5
+     2cc:      	srliw	a0, a0, 0x18
+     2d0:      	subw	t4, s4, t4
+     2d4:      	subw	s4, s4, a0
+     2d8:      	addi	a0, a0, 0xf8
+     2dc:      	sllw	a0, t1, a0
+     2e0:      	not	a5, t0
+     2e4:      	andi	a5, a5, 0x7f
+     2e8:      	neg	t0, t6
+     2ec:      	neg	t1, t5
+     2f0:      	neg	t5, s3
+     2f4:      	neg	t6, s2
+     2f8:      	and	t3, t3, t0
+     2fc:      	or	t3, a7, t3
+     300:      	xori	s2, s0, 0x1
+     304:      	slli	t4, t4, 0x38
+     308:      	srai	a7, t4, 0x38
+     30c:      	and	t0, a7, t0
+     310:      	neg	a7, s0
+     314:      	slli	s4, s4, 0x38
+     318:      	srai	t4, s4, 0x38
+     31c:      	and	a0, a0, t5
+     320:      	or	a0, s5, a0
+     324:      	and	t4, t4, t5
+     328:      	or	t0, s7, t0
+     32c:      	and	t3, t3, t1
+     330:      	and	a0, a0, t6
+     334:      	or	t4, s6, t4
+     338:      	and	t0, t0, t1
+     33c:      	lui	a4, 0x800
+     340:      	or	t1, t3, a4
+     344:      	or	a0, a0, a4
+     348:      	and	a4, t4, t6
+     34c:      	sext.w	t3, t1
+     350:      	sext.w	t4, a0
+     354:      	sub	a4, a4, t0
+     358:      	slli	a0, a0, 0x20
+     35c:      	slli	t1, t1, 0x20
+     360:      	sltu	t0, t4, t3
+     364:      	srli	a0, a0, 0x20
+     368:      	srli	t3, t1, 0x20
+     36c:      	negw	t4, t0
+     370:      	addi	t0, t0, 0x1e
+     374:      	and	t3, t3, a7
+     378:      	andi	t4, t4, 0x3
+     37c:      	sll	a0, a0, t0
+     380:      	or	t0, t3, s2
+     384:      	xori	t3, t4, 0x7e
+     388:      	divu	t4, a0, t0
+     38c:      	add	t3, a4, t3
+     390:      	sltiu	t0, t3, 0xfd
+     394:      	slti	a4, t3, 0x0
+     398:      	addi	t5, t3, -0xfd
+     39c:      	sltiu	t6, t3, -0x1
+     3a0:      	negw	s2, t3
+     3a4:      	xori	s3, a4, 0x1
+     3a8:      	snez	s4, t5
+     3ac:      	seqz	t5, t5
+     3b0:      	slli	s5, s2, 0x30
+     3b4:      	and	s3, s4, s3
+     3b8:      	slli	s4, t4, 0x20
+     3bc:      	mulhu	t1, s4, t1
+     3c0:      	andi	s4, t4, 0x3f
+     3c4:      	seqz	s4, s4
+     3c8:      	xor	a0, t1, a0
+     3cc:      	addi	t1, s4, -0x1
+     3d0:      	snez	a0, a0
+     3d4:      	and	t1, t4, t1
+     3d8:      	or	a0, a0, t4
+     3dc:      	neg	t4, t0
+     3e0:      	srli	s5, s5, 0x30
+     3e4:      	and	t4, t3, t4
+     3e8:      	neg	s4, s4
+     3ec:      	and	a0, a0, s4
+     3f0:      	and	s4, s0, t5
+     3f4:      	sltiu	s5, s5, 0x1f
+     3f8:      	or	a0, t1, a0
+     3fc:      	neg	t1, s5
+     400:      	addi	s5, s5, -0x1
+     404:      	and	a0, a0, a7
+     408:      	srlw	s2, a0, s2
+     40c:      	sllw	t3, a0, t3
+     410:      	snez	t3, t3
+     414:      	or	t3, s2, t3
+     418:      	sext.w	s2, a0
+     41c:      	snez	s2, s2
+     420:      	and	s2, s2, s5
+     424:      	addw	s5, a0, a5
+     428:      	slti	s5, s5, 0x0
+     42c:      	and	t1, t3, t1
+     430:      	xori	t3, s5, 0x1
+     434:      	and	s5, s4, s5
+     438:      	or	t6, t6, t3
+     43c:      	and	t5, t5, t3
+     440:      	and	t3, s4, t3
+     444:      	xori	s4, t0, 0x1
+     448:      	and	s4, s0, s4
+     44c:      	and	s3, s4, s3
+     450:      	or	s3, s3, s5
+     454:      	or	t1, t1, s2
+     458:      	and	s0, s0, t0
+     45c:      	and	s2, s4, a4
+     460:      	or	s0, s0, s2
+     464:      	or	t3, s0, t3
+     468:      	and	t6, t6, s2
+     46c:      	negw	s0, s2
+     470:      	and	t1, t1, s0
+     474:      	or	t0, t5, t0
+     478:      	negw	t0, t0
+     47c:      	and	a0, a0, t0
+     480:      	negw	t0, t5
+     484:      	andi	t0, t0, 0xfd
+     488:      	or	t0, t0, t4
+     48c:      	neg	t4, s3
+     490:      	and	a2, a2, t4
+     494:      	andi	t4, t4, 0x5
+     498:      	or	a6, a6, t4
+     49c:      	or	a2, s1, a2
+     4a0:      	neg	a1, a1
+     4a4:      	negw	a4, a4
+     4a8:      	and	a4, t1, a4
+     4ac:      	or	a0, a0, a4
+     4b0:      	andi	a4, a1, 0x10
+     4b4:      	or	a4, a6, a4
+     4b8:      	lui	t4, 0x7fc00
+     4bc:      	and	a1, a1, t4
+     4c0:      	or	a1, a2, a1
+     4c4:      	andi	a2, t1, 0x7f
+     4c8:      	snez	a2, a2
+     4cc:      	and	a2, t6, a2
+     4d0:      	and	a6, t0, a7
+     4d4:      	and	a0, a0, a7
+     4d8:      	neg	a7, t2
+     4dc:      	and	t0, a7, t4
+     4e0:      	andi	a7, a7, 0x10
+     4e4:      	or	a4, a4, a7
+     4e8:      	or	a1, a1, t0
+     4ec:      	addw	a5, a0, a5
+     4f0:      	srliw	a7, a5, 0x7
+     4f4:      	or	a3, a7, a3
+     4f8:      	slli	a6, a6, 0x17
+     4fc:      	sltiu	a5, a5, 0x80
+     500:      	addi	a5, a5, -0x1
+     504:      	and	a5, a6, a5
+     508:      	negw	a2, a2
+     50c:      	andi	a0, a0, 0x7f
+     510:      	andi	a2, a2, 0x2
+     514:      	snez	a0, a0
+     518:      	addi	a0, a0, -0x1
+     51c:      	add	a3, a3, a5
+     520:      	addi	a5, a2, 0x1
+     524:      	xor	a2, a2, a5
+     528:      	and	a0, a2, a0
+     52c:      	xor	a0, a0, a5
+     530:      	neg	a2, t3
+     534:      	and	a3, a3, a2
+     538:      	and	a0, a0, a2
+     53c:      	or	a1, a1, a3
+     540:      	or	a0, a4, a0
+     544:      	slli	a1, a1, 0x20
+     548:      	zext.b	a0, a0
+     54c:      	or	a0, a1, a0
+     550:      	ld	ra, 0x68(sp)
+     554:      	ld	s0, 0x60(sp)
+     558:      	ld	s1, 0x58(sp)
+     55c:      	ld	s2, 0x50(sp)
+     560:      	ld	s3, 0x48(sp)
+     564:      	ld	s4, 0x40(sp)
+     568:      	ld	s5, 0x38(sp)
+     56c:      	ld	s6, 0x30(sp)
+     570:      	ld	s7, 0x28(sp)
+     574:      	ld	s8, 0x20(sp)
+     578:      	ld	s9, 0x18(sp)
+     57c:      	ld	s10, 0x10(sp)
+     580:      	ld	s11, 0x8(sp)
+     584:      	addi	sp, sp, 0x70
+     588:      	ret

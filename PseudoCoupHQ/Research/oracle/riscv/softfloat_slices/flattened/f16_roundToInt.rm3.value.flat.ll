@@ -1,0 +1,73 @@
+; ModuleID = '<scratch>/fl/run/f16_roundToInt.rm3.value/f16_roundToInt.rm3.value.rv.flat.ll'
+source_filename = "llvm-link"
+target datalayout = "e-m:e-p:64:64-i64:64-i128:128-n32:64-S128"
+target triple = "riscv64-unknown-unknown-elf"
+
+define dso_local i64 @f16_roundToInt_rm3_value_flat(i64 %arg, i1 noundef zeroext %arg1) {
+  %i = and i64 %arg, 65535
+  %i2 = trunc i64 %arg to i16
+  %i3 = trunc i64 %i to i32
+  %i25 = icmp ult i64 %i, 32768
+  %.m6 = sext i1 %i25 to i16
+  %i4 = lshr i32 %i3, 10
+  %i5 = and i32 %i4, 31
+  %i17 = and i32 %i3, 1023
+  %i18 = icmp eq i32 %i17, 0
+  %i6 = icmp ult i32 %i5, 15
+  %i14 = icmp ugt i32 %i5, 24
+  %i8 = and i64 %arg, 32767
+  %i9 = icmp eq i64 %i8, 0
+  %i16 = icmp ne i32 %i5, 31
+  %i19 = or i1 %i18, %i16
+  %.m1 = sext i1 %i19 to i16
+  %i21 = sub i32 25, %i5
+  %.a2 = and i16 %i2, %.m1
+  %.n3 = xor i16 %.m1, -1
+  %.a4 = and i16 32256, %.n3
+  %spec.select = or i16 %.a2, %.a4
+  %.sh5 = shl i32 1, %i21
+  %i22 = freeze i32 %.sh5
+  %i23 = trunc i32 %i22 to i16
+  %i24 = add i16 %i23, -1
+  %i26 = and i16 %i24, %.m6
+  %i27 = add i16 %i26, %i2
+  %.sh7 = shl i32 65535, %i21
+  %i28 = freeze i32 %.sh7
+  %i29 = trunc i32 %i28 to i16
+  %i30 = and i16 %i27, %i29
+  %i11 = icmp sgt i16 %i2, -1
+  %.m8 = sext i1 %i11 to i16
+  %.a9 = and i16 15360, %.m8
+  %.n10 = xor i16 %.m8, -1
+  %.a11 = and i16 -32768, %.n10
+  %i12 = or i16 %.a9, %.a11
+  %.c12 = and i1 %i6, %i9
+  %.m13 = sext i1 %.c12 to i16
+  %.a14 = and i16 %i2, %.m13
+  %.n15 = xor i1 %i9, true
+  %.c16 = and i1 %i6, %.n15
+  %.m17 = sext i1 %.c16 to i16
+  %.a18 = and i16 %i12, %.m17
+  %.o19 = or i16 %.a14, %.a18
+  %.n20 = xor i1 %i6, true
+  %.n21 = xor i1 %i14, true
+  %.c22 = and i1 %.n20, %.n21
+  %.m23 = sext i1 %.c22 to i16
+  %.a24 = and i16 %i30, %.m23
+  %.o25 = or i16 %.o19, %.a24
+  %.m27 = sext i1 %i14 to i16
+  %.a28 = and i16 %spec.select, %.m27
+  %.o29 = or i16 %.o25, %.a28
+  %i32 = zext i16 %.o29 to i64
+  ret i64 %i32
+}
+
+!llvm.ident = !{!0, !0, !0, !0, !0, !0, !0}
+!llvm.module.flags = !{!1, !2, !3, !5}
+
+!0 = !{!"Ubuntu clang version 21.1.8 (6ubuntu1)"}
+!1 = !{i32 1, !"wchar_size", i32 4}
+!2 = !{i32 1, !"target-abi", !"lp64"}
+!3 = distinct !{i32 6, !"riscv-isa", !4}
+!4 = distinct !{!"rv64i2p1_m2p0_zmmul1p0"}
+!5 = !{i32 8, !"SmallDataLimit", i32 0}

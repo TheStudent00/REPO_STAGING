@@ -1,0 +1,61 @@
+# i32_to_f64  rounding mode 2  variant value
+# entry symbol: i32_to_f64_rm2_value_flat
+# one basic block: 49 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/i32_to_f64.rm2.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <i32_to_f64_rm2_value_flat>:
+       0:      	seqz	a1, a0
+       4:      	sraiw	a2, a0, 0x1f
+       8:      	lui	a3, 0x55555
+       c:      	xor	a4, a0, a2
+      10:      	addi	a3, a3, 0x555
+      14:      	subw	a4, a4, a2
+      18:      	srliw	a2, a4, 0x1
+      1c:      	or	a2, a4, a2
+      20:      	srliw	a5, a2, 0x2
+      24:      	or	a2, a2, a5
+      28:      	srliw	a5, a2, 0x4
+      2c:      	or	a2, a2, a5
+      30:      	srliw	a5, a2, 0x8
+      34:      	or	a2, a2, a5
+      38:      	srliw	a5, a2, 0x10
+      3c:      	or	a2, a2, a5
+      40:      	not	a2, a2
+      44:      	srli	a5, a2, 0x1
+      48:      	and	a3, a5, a3
+      4c:      	lui	a5, 0x33333
+      50:      	addi	a5, a5, 0x333
+      54:      	sub	a2, a2, a3
+      58:      	and	a3, a2, a5
+      5c:      	srli	a2, a2, 0x2
+      60:      	and	a2, a2, a5
+      64:      	lui	a5, 0xf0f1
+      68:      	add	a2, a3, a2
+      6c:      	srli	a3, a2, 0x4
+      70:      	add	a2, a2, a3
+      74:      	lui	a3, 0x1010
+      78:      	addi	a5, a5, -0xf1
+      7c:      	and	a2, a2, a5
+      80:      	li	a5, 0x41d
+      84:      	srli	a0, a0, 0x3f
+      88:      	addi	a1, a1, -0x1
+      8c:      	addi	a3, a3, 0x101
+      90:      	slli	a4, a4, 0x20
+      94:      	srli	a4, a4, 0x20
+      98:      	mul	a2, a2, a3
+      9c:      	srliw	a2, a2, 0x18
+      a0:      	addi	a3, a2, 0x15
+      a4:      	subw	a5, a5, a2
+      a8:      	slli	a5, a5, 0x34
+      ac:      	sll	a2, a4, a3
+      b0:      	slli	a0, a0, 0x3f
+      b4:      	or	a0, a5, a0
+      b8:      	add	a0, a0, a2
+      bc:      	and	a0, a0, a1
+      c0:      	ret

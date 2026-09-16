@@ -1,0 +1,67 @@
+# f32_eq  rounding mode 1  variant flags
+# entry symbol: f32_eq_rm1_flags_flat
+# one basic block: 55 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f32_eq.rm1.flags/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f32_eq_rm1_flags_flat>:
+       0:      	sext.w	a2, a0
+       4:      	sext.w	a3, a1
+       8:      	lui	a4, 0x7f800
+       c:      	lui	a5, 0x800
+      10:      	lui	a6, 0x7fc00
+      14:      	lui	a7, 0x400
+      18:      	or	t0, a1, a0
+      1c:      	and	t1, a0, a4
+      20:      	addi	a5, a5, -0x1
+      24:      	and	t2, a1, a4
+      28:      	xor	a2, a2, a3
+      2c:      	and	a3, a0, a6
+      30:      	addi	a7, a7, -0x1
+      34:      	slli	t0, t0, 0x21
+      38:      	and	a6, a1, a6
+      3c:      	xor	t1, t1, a4
+      40:      	xor	t2, t2, a4
+      44:      	xor	a3, a3, a4
+      48:      	xor	a4, a6, a4
+      4c:      	and	a6, a0, a5
+      50:      	and	a5, a1, a5
+      54:      	and	a0, a0, a7
+      58:      	seqz	a2, a2
+      5c:      	seqz	t0, t0
+      60:      	and	a1, a1, a7
+      64:      	snez	a7, t1
+      68:      	seqz	a6, a6
+      6c:      	snez	t1, t2
+      70:      	seqz	a5, a5
+      74:      	snez	a3, a3
+      78:      	seqz	a0, a0
+      7c:      	or	a2, a2, t0
+      80:      	seqz	a4, a4
+      84:      	snez	a1, a1
+      88:      	or	a6, a7, a6
+      8c:      	or	a5, t1, a5
+      90:      	or	a0, a3, a0
+      94:      	and	a1, a4, a1
+      98:      	and	a3, a6, a5
+      9c:      	xori	a4, a5, 0x1
+      a0:      	xori	a5, a6, 0x1
+      a4:      	not	a7, a0
+      a8:      	and	a0, a0, a1
+      ac:      	and	a2, a2, a3
+      b0:      	and	a1, a6, a4
+      b4:      	negw	a2, a2
+      b8:      	or	a1, a1, a5
+      bc:      	andi	a2, a2, 0x100
+      c0:      	and	a3, a1, a7
+      c4:      	and	a0, a1, a0
+      c8:      	or	a0, a3, a0
+      cc:      	negw	a0, a0
+      d0:      	andi	a0, a0, 0x10
+      d4:      	or	a0, a2, a0
+      d8:      	ret

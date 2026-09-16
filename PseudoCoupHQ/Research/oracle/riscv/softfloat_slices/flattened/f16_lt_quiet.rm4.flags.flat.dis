@@ -1,0 +1,76 @@
+# f16_lt_quiet  rounding mode 4  variant flags
+# entry symbol: f16_lt_quiet_rm4_flags_flat
+# one basic block: 64 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f16_lt_quiet.rm4.flags/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f16_lt_quiet_rm4_flags_flat>:
+       0:      	lui	a2, 0x10
+       4:      	li	a3, 0x1f
+       8:      	andi	a4, a0, 0x3ff
+       c:      	andi	a5, a1, 0x3ff
+      10:      	or	a6, a1, a0
+      14:      	slli	a3, a3, 0xa
+      18:      	and	a7, a0, a3
+      1c:      	and	t0, a1, a3
+      20:      	addiw	t1, a3, 0x200
+      24:      	addiw	t2, a3, 0x3ff
+      28:      	xor	a7, a7, a3
+      2c:      	xor	t0, t0, a3
+      30:      	and	a6, a6, t2
+      34:      	and	t2, a0, t1
+      38:      	and	t1, a1, t1
+      3c:      	xor	t2, t2, a3
+      40:      	xor	a3, t1, a3
+      44:      	andi	t1, a0, 0x1ff
+      48:      	addi	a2, a2, -0x1
+      4c:      	and	a0, a0, a2
+      50:      	and	a2, a1, a2
+      54:      	andi	a1, a1, 0x1ff
+      58:      	seqz	a4, a4
+      5c:      	seqz	a5, a5
+      60:      	seqz	t1, t1
+      64:      	snez	a1, a1
+      68:      	snez	a7, a7
+      6c:      	or	a4, a7, a4
+      70:      	srli	a7, a0, 0xf
+      74:      	snez	t0, t0
+      78:      	or	a5, t0, a5
+      7c:      	xor	t0, a0, a2
+      80:      	sltu	a0, a0, a2
+      84:      	srli	a2, a2, 0xf
+      88:      	snez	a6, a6
+      8c:      	seqz	a2, a2
+      90:      	snez	t0, t0
+      94:      	xor	a0, a7, a0
+      98:      	snez	t2, t2
+      9c:      	and	a6, a7, a6
+      a0:      	xor	a2, a7, a2
+      a4:      	seqz	a3, a3
+      a8:      	and	a0, t0, a0
+      ac:      	or	a7, t2, t1
+      b0:      	and	a1, a3, a1
+      b4:      	xor	a0, a0, a6
+      b8:      	xori	a3, a5, 0x1
+      bc:      	and	a5, a4, a5
+      c0:      	xori	t0, a4, 0x1
+      c4:      	and	a0, a0, a2
+      c8:      	and	a3, a4, a3
+      cc:      	xor	a0, a0, a6
+      d0:      	or	a2, a3, t0
+      d4:      	and	a0, a0, a5
+      d8:      	and	a1, a2, a1
+      dc:      	xor	a1, a1, a2
+      e0:      	negw	a0, a0
+      e4:      	and	a1, a1, a7
+      e8:      	xor	a1, a1, a2
+      ec:      	negw	a1, a1
+      f0:      	andi	a1, a1, 0x10
+      f4:      	andi	a0, a0, 0x100
+      f8:      	or	a0, a0, a1
+      fc:      	ret

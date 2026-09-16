@@ -1,0 +1,129 @@
+# f64_to_i64  rounding mode 3  variant flags
+# entry symbol: f64_to_i64_rm3_flags_flat
+# one basic block: 117 instructions, 0 branches, 0 jumps, 0 calls,
+# 8 memory (8 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f64_to_i64.rm3.flags/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_to_i64_rm3_flags_flat>:
+       0:      	addi	sp, sp, -0x20
+       4:      	sd	s0, 0x18(sp)
+       8:      	sd	s1, 0x10(sp)
+       c:      	sd	s2, 0x8(sp)
+      10:      	sd	s3, 0x0(sp)
+      14:      	slti	a1, a0, 0x0
+      18:      	slli	a3, a0, 0x1
+      1c:      	li	a4, -0x1
+      20:      	li	a5, 0x433
+      24:      	srai	a2, a0, 0x3f
+      28:      	srli	a7, a3, 0x35
+      2c:      	srli	a6, a4, 0xc
+      30:      	srli	t0, a4, 0x1
+      34:      	not	a3, a2
+      38:      	and	t1, a0, a6
+      3c:      	sub	t2, a5, a7
+      40:      	sltiu	a5, a7, 0x433
+      44:      	snez	t3, a7
+      48:      	sltiu	a4, a7, 0x43f
+      4c:      	addi	t4, a7, -0x7ff
+      50:      	addi	t5, t0, 0x1
+      54:      	and	t6, a3, t0
+      58:      	add	a6, t1, a6
+      5c:      	sltiu	s0, t2, 0x40
+      60:      	not	s1, a5
+      64:      	addi	t3, t3, -0x1
+      68:      	seqz	s2, t1
+      6c:      	snez	t4, t4
+      70:      	or	t4, s2, t4
+      74:      	negw	s2, t2
+      78:      	and	t5, t5, a2
+      7c:      	addi	s3, a6, 0x1
+      80:      	and	s1, s1, a4
+      84:      	or	a6, t5, t6
+      88:      	xor	t1, t1, s3
+      8c:      	sll	t5, s3, s2
+      90:      	and	t1, t1, t3
+      94:      	neg	t3, s1
+      98:      	and	t3, t5, t3
+      9c:      	neg	t5, a5
+      a0:      	and	t4, a1, t4
+      a4:      	neg	t4, t4
+      a8:      	xor	t0, t4, t0
+      ac:      	neg	t4, s0
+      b0:      	xor	t1, t1, s3
+      b4:      	sll	t6, t1, s2
+      b8:      	and	t4, t6, t4
+      bc:      	and	t6, a5, s0
+      c0:      	neg	t6, t6
+      c4:      	and	t6, t6, t5
+      c8:      	srl	t2, t1, t2
+      cc:      	and	t2, t2, t6
+      d0:      	addi	a7, a7, -0x3f3
+      d4:      	snez	a7, a7
+      d8:      	addi	a7, a7, -0x1
+      dc:      	snez	t1, t1
+      e0:      	xor	t6, s3, t1
+      e4:      	and	a7, t6, a7
+      e8:      	or	t2, t3, t2
+      ec:      	addi	t3, a4, -0x1
+      f0:      	xor	a7, a7, t1
+      f4:      	neg	t1, a4
+      f8:      	addi	s0, s0, -0x1
+      fc:      	and	t0, t0, t3
+     100:      	and	a7, a7, s0
+     104:      	addi	t6, t2, 0x1
+     108:      	or	a7, t4, a7
+     10c:      	seqz	t4, t6
+     110:      	and	a7, a7, t5
+     114:      	snez	t5, t6
+     118:      	seqz	a7, a7
+     11c:      	and	a5, a7, a5
+     120:      	or	a5, s1, a5
+     124:      	or	a1, a5, a1
+     128:      	not	a5, a5
+     12c:      	neg	a7, a1
+     130:      	xori	s0, a1, 0x1
+     134:      	and	a1, a4, a1
+     138:      	and	a7, t2, a7
+     13c:      	and	t2, s0, t5
+     140:      	and	a4, a4, s0
+     144:      	neg	t2, t2
+     148:      	and	t4, a4, t4
+     14c:      	and	a4, a4, t5
+     150:      	and	t2, t6, t2
+     154:      	or	a1, a4, a1
+     158:      	or	a4, a7, t2
+     15c:      	and	a4, a4, t1
+     160:      	neg	a7, a4
+     164:      	and	a3, a4, a3
+     168:      	seqz	a4, a4
+     16c:      	and	a2, a7, a2
+     170:      	or	a2, a2, a3
+     174:      	xor	a0, a0, a2
+     178:      	slti	a0, a0, 0x0
+     17c:      	xori	a0, a0, 0x1
+     180:      	or	a0, a4, a0
+     184:      	not	a3, a0
+     188:      	and	a0, a1, a0
+     18c:      	and	a1, a1, a3
+     190:      	and	a5, a5, a0
+     194:      	neg	a0, a0
+     198:      	or	a1, t4, a1
+     19c:      	and	a0, a2, a0
+     1a0:      	neg	a1, a1
+     1a4:      	or	a0, t0, a0
+     1a8:      	or	a2, t3, a1
+     1ac:      	and	a1, a6, a1
+     1b0:      	or	a1, a0, a1
+     1b4:      	andi	a0, a2, 0x10
+     1b8:      	or	a0, a0, a5
+     1bc:      	ld	s0, 0x18(sp)
+     1c0:      	ld	s1, 0x10(sp)
+     1c4:      	ld	s2, 0x8(sp)
+     1c8:      	ld	s3, 0x0(sp)
+     1cc:      	addi	sp, sp, 0x20
+     1d0:      	ret

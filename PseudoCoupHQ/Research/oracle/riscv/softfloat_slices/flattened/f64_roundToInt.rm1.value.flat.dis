@@ -1,0 +1,52 @@
+# f64_roundToInt  rounding mode 1  variant value
+# entry symbol: f64_roundToInt_rm1_value_flat
+# one basic block: 40 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f64_roundToInt.rm1.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_roundToInt_rm1_value_flat>:
+       0:      	slli	a1, a0, 0x1
+       4:      	li	a2, -0x1
+       8:      	li	a3, 0x433
+       c:      	slli	a4, a0, 0xc
+      10:      	lui	a5, 0xfff
+      14:      	srli	a1, a1, 0x35
+      18:      	srli	a6, a2, 0x1
+      1c:      	seqz	a4, a4
+      20:      	slli	a5, a5, 0x27
+      24:      	sltiu	a7, a1, 0x3ff
+      28:      	and	t0, a0, a6
+      2c:      	addi	a6, a6, 0x1
+      30:      	subw	a3, a3, a1
+      34:      	sll	a2, a2, a3
+      38:      	sltiu	a3, a1, 0x433
+      3c:      	addi	a1, a1, -0x7ff
+      40:      	snez	a1, a1
+      44:      	or	a1, a4, a1
+      48:      	xor	a4, a0, a5
+      4c:      	snez	t0, t0
+      50:      	and	a6, a0, a6
+      54:      	addi	t0, t0, -0x1
+      58:      	and	a2, a0, a2
+      5c:      	xor	a0, a0, a6
+      60:      	and	a0, a0, t0
+      64:      	xori	t0, a7, 0x1
+      68:      	neg	a7, a7
+      6c:      	and	t0, a3, t0
+      70:      	addi	a3, a3, -0x1
+      74:      	neg	a1, a1
+      78:      	neg	t0, t0
+      7c:      	xor	a0, a0, a6
+      80:      	and	a1, a4, a1
+      84:      	and	a2, a2, t0
+      88:      	xor	a1, a1, a5
+      8c:      	and	a0, a0, a7
+      90:      	or	a0, a2, a0
+      94:      	and	a1, a1, a3
+      98:      	or	a0, a0, a1
+      9c:      	ret

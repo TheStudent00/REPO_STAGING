@@ -1,0 +1,46 @@
+# f64_le_quiet  rounding mode 4  variant value
+# entry symbol: f64_le_quiet_rm4_value_flat
+# one basic block: 34 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f64_le_quiet.rm4.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_le_quiet_rm4_value_flat>:
+       0:      	li	a2, 0x7ff
+       4:      	li	a3, -0x1
+       8:      	xor	a4, a1, a0
+       c:      	slti	a5, a0, 0x0
+      10:      	slli	a6, a1, 0x1
+      14:      	sltu	a7, a0, a1
+      18:      	slli	a2, a2, 0x34
+      1c:      	srli	a3, a3, 0xc
+      20:      	srli	a6, a6, 0x1
+      24:      	seqz	t0, a4
+      28:      	xor	a7, a5, a7
+      2c:      	or	a7, t0, a7
+      30:      	and	t0, a0, a2
+      34:      	or	a6, a6, a0
+      38:      	and	a0, a0, a3
+      3c:      	and	a3, a1, a3
+      40:      	and	a1, a1, a2
+      44:      	xor	t0, t0, a2
+      48:      	xor	a1, a1, a2
+      4c:      	seqz	a2, a6
+      50:      	or	a2, a5, a2
+      54:      	slti	a4, a4, 0x0
+      58:      	seqz	a0, a0
+      5c:      	seqz	a3, a3
+      60:      	snez	a5, t0
+      64:      	snez	a1, a1
+      68:      	or	a0, a5, a0
+      6c:      	or	a1, a1, a3
+      70:      	xor	a2, a2, a7
+      74:      	and	a0, a0, a1
+      78:      	and	a2, a2, a4
+      7c:      	xor	a1, a2, a7
+      80:      	and	a0, a1, a0
+      84:      	ret

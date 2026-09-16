@@ -1,0 +1,111 @@
+; ModuleID = '<scratch>/fl/run/ui64_to_f16.rm2.value/ui64_to_f16.rm2.value.rv.flat.ll'
+source_filename = "llvm-link"
+target datalayout = "e-m:e-p:64:64-i64:64-i128:128-n32:64-S128"
+target triple = "riscv64-unknown-unknown-elf"
+
+define dso_local i64 @ui64_to_f16_rm2_value_flat(i64 noundef %arg) {
+  %i = icmp eq i64 %arg, 0
+  %.n13 = xor i1 %i, true
+  %.k1 = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %arg, i1 true)
+  %i2 = freeze i64 %.k1
+  %i3 = trunc i64 %i2 to i8
+  %i18 = sub i64 49, %i2
+  %i19 = and i64 %i18, 255
+  %i4 = icmp ult i64 %arg, 2048
+  %i15 = add i8 %i3, -49
+  %i6 = add i8 %i3, -53
+  %i7 = zext i8 %i6 to i32
+  %i16 = icmp ugt i64 %arg, 32767
+  %.sh2 = shl i32 %i7, 10
+  %i9 = trunc i64 %arg to i32
+  %.sh3 = shl i32 %i9, %i7
+  %i10 = freeze i32 %.sh3
+  %i11 = sub i32 %i10, %.sh2
+  %i12 = zext i32 %i11 to i64
+  %i13 = add i64 %i12, 24576
+  %.sh4 = lshr i64 %arg, %i19
+  %i20 = freeze i64 %.sh4
+  %.sh5 = shl i64 -1, %i19
+  %i21 = freeze i64 %.sh5
+  %i22 = xor i64 %i21, -1
+  %i23 = and i64 %arg, %i22
+  %i24 = icmp ne i64 %i23, 0
+  %i25 = zext i1 %i24 to i64
+  %i26 = or i64 %i20, %i25
+  %i29 = zext i8 %i15 to i32
+  %.sh6 = shl i32 %i9, %i29
+  %i30 = freeze i32 %.sh6
+  %i31 = zext i32 %i30 to i64
+  %.m7 = sext i1 %i16 to i64
+  %.a8 = and i64 %i26, %.m7
+  %.n9 = xor i1 %i16, true
+  %.m10 = sext i1 %.n9 to i64
+  %.a11 = and i64 %i31, %.m10
+  %.o12 = or i64 %.a8, %.a11
+  %.n14 = xor i1 %i4, true
+  %.c31 = and i1 %.n13, %i4
+  %.m32 = sext i1 %.c31 to i64
+  %.a33 = and i64 %i13, %.m32
+  %.m16 = sext i1 %.n14 to i64
+  %.a17 = and i64 %.o12, %.m16
+  %.m25 = sext i1 %.n14 to i32
+  %i34 = trunc i64 %.a17 to i32
+  %i40 = and i64 %.a17, 32768
+  %.not = icmp eq i64 %i40, 0
+  %.sh27 = lshr i32 %i34, 4
+  %i43 = freeze i32 %.sh27
+  %i44 = and i32 %i43, 4095
+  %i35 = sext i8 %i15 to i32
+  %i36 = sub i32 28, %i35
+  %i37 = icmp ugt i8 %i15, 28
+  %i39 = icmp eq i8 %i15, -1
+  %or.cond = and i1 %i39, %.not
+  %.n18 = xor i1 %i37, true
+  %.m19 = sext i1 %.n18 to i32
+  %.a20 = and i32 %i36, %.m19
+  %.c34 = and i1 %.n13, %.n18
+  %.c35 = and i1 %.c34, %.n14
+  %.m22 = sext i1 %or.cond to i32
+  %.a23 = and i32 29, %.m22
+  %.o24 = or i32 %.a20, %.a23
+  %.a26 = and i32 %.o24, %.m25
+  %.sh28 = shl i32 %.a26, 10
+  %i48 = freeze i32 %.sh28
+  %i49 = and i32 %i48, 67107840
+  %i47 = icmp eq i32 %i44, 0
+  %.m29 = sext i1 %i47 to i32
+  %.n30 = xor i32 %.m29, -1
+  %i50 = and i32 %i49, %.n30
+  %i51 = add i32 %i44, %i50
+  %i52 = zext i32 %i51 to i64
+  %.c36 = and i1 %.n13, %i37
+  %.c37 = and i1 %.c36, %or.cond
+  %.c38 = and i1 %.c37, %.n14
+  %.c39 = or i1 %.c35, %.c38
+  %.m40 = sext i1 %.c39 to i64
+  %.a41 = and i64 %i52, %.m40
+  %.o42 = or i64 %.a33, %.a41
+  %.n43 = xor i1 %or.cond, true
+  %.c45 = and i1 %.c36, %.n43
+  %.c46 = and i1 %.c45, %.n14
+  %.m47 = sext i1 %.c46 to i64
+  %.a48 = and i64 31743, %.m47
+  %.o49 = or i64 %.o42, %.a48
+  %i54 = and i64 %.o49, 65535
+  ret i64 %i54
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.ctlz.i64(i64, i1 immarg) #0
+
+attributes #0 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+
+!llvm.ident = !{!0, !0, !0, !0, !0, !0, !0, !0}
+!llvm.module.flags = !{!1, !2, !3, !5}
+
+!0 = !{!"Ubuntu clang version 21.1.8 (6ubuntu1)"}
+!1 = !{i32 1, !"wchar_size", i32 4}
+!2 = !{i32 1, !"target-abi", !"lp64"}
+!3 = distinct !{i32 6, !"riscv-isa", !4}
+!4 = distinct !{!"rv64i2p1_m2p0_zmmul1p0"}
+!5 = !{i32 8, !"SmallDataLimit", i32 0}

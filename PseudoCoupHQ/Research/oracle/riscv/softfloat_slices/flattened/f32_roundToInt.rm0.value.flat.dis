@@ -1,0 +1,76 @@
+# f32_roundToInt  rounding mode 0  variant value
+# entry symbol: f32_roundToInt_rm0_value_flat
+# one basic block: 64 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f32_roundToInt.rm0.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f32_roundToInt_rm0_value_flat>:
+       0:      	srli	a2, a0, 0x17
+       4:      	slli	a3, a0, 0x21
+       8:      	slli	a4, a0, 0x29
+       c:      	lui	a1, 0x7fc00
+      10:      	li	a5, 0x96
+      14:      	li	a6, 0x1
+      18:      	lui	a7, 0x80000
+      1c:      	lui	t0, 0x3f800
+      20:      	zext.b	t1, a2
+      24:      	snez	t2, a3
+      28:      	seqz	a3, a3
+      2c:      	seqz	t3, a4
+      30:      	subw	a5, a5, a2
+      34:      	and	a2, a0, a7
+      38:      	snez	a4, a4
+      3c:      	addi	a7, t1, -0xff
+      40:      	sllw	a5, a6, a5
+      44:      	addi	a6, t1, -0x7e
+      48:      	snez	a7, a7
+      4c:      	seqz	a6, a6
+      50:      	addiw	t4, a5, -0x1
+      54:      	or	a7, t3, a7
+      58:      	srliw	t3, a5, 0x1
+      5c:      	and	a4, a4, a6
+      60:      	negw	a6, a5
+      64:      	addw	t3, t3, a0
+      68:      	and	t4, t3, t4
+      6c:      	and	a6, a6, t3
+      70:      	sltiu	t3, t1, 0x7f
+      74:      	and	a3, a3, t3
+      78:      	negw	a3, a3
+      7c:      	and	a3, a0, a3
+      80:      	xor	a0, a0, a1
+      84:      	sltiu	t1, t1, 0x96
+      88:      	or	t0, a2, t0
+      8c:      	and	t2, t2, t3
+      90:      	xori	t3, t3, 0x1
+      94:      	not	a5, a5
+      98:      	xor	t0, t0, a2
+      9c:      	and	t3, t1, t3
+      a0:      	addi	t1, t1, -0x1
+      a4:      	negw	t2, t2
+      a8:      	negw	a7, a7
+      ac:      	neg	a4, a4
+      b0:      	negw	t3, t3
+      b4:      	and	a0, a0, a7
+      b8:      	snez	a7, t4
+      bc:      	and	a4, t0, a4
+      c0:      	and	a6, a6, t3
+      c4:      	xor	a0, a0, a1
+      c8:      	addi	a7, a7, -0x1
+      cc:      	xor	a2, a4, a2
+      d0:      	and	a1, a5, a7
+      d4:      	not	a4, a7
+      d8:      	and	a2, a2, t2
+      dc:      	and	a0, a0, t1
+      e0:      	or	a1, a1, a4
+      e4:      	or	a2, a3, a2
+      e8:      	and	a1, a1, a6
+      ec:      	or	a0, a2, a0
+      f0:      	or	a0, a0, a1
+      f4:      	slli	a0, a0, 0x20
+      f8:      	srli	a0, a0, 0x20
+      fc:      	ret

@@ -1,0 +1,80 @@
+# f32_lt_quiet  rounding mode 0  variant flags
+# entry symbol: f32_lt_quiet_rm0_flags_flat
+# one basic block: 68 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f32_lt_quiet.rm0.flags/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f32_lt_quiet_rm0_flags_flat>:
+       0:      	sext.w	a2, a0
+       4:      	sext.w	a3, a1
+       8:      	lui	a4, 0x7f800
+       c:      	lui	a5, 0x800
+      10:      	lui	a6, 0x7fc00
+      14:      	lui	a7, 0x400
+      18:      	xor	t0, a1, a0
+      1c:      	and	t1, a0, a4
+      20:      	and	t2, a1, a4
+      24:      	and	t3, a0, a6
+      28:      	and	a6, a1, a6
+      2c:      	xor	t1, t1, a4
+      30:      	xor	t2, t2, a4
+      34:      	xor	t3, t3, a4
+      38:      	xor	a4, a6, a4
+      3c:      	xor	a6, a2, a3
+      40:      	sltu	a3, a2, a3
+      44:      	slti	a2, a2, 0x0
+      48:      	xor	a2, a2, a3
+      4c:      	or	a3, a1, a0
+      50:      	addi	a5, a5, -0x1
+      54:      	addi	a7, a7, -0x1
+      58:      	snez	a6, a6
+      5c:      	and	a2, a6, a2
+      60:      	and	a6, a0, a5
+      64:      	and	a5, a1, a5
+      68:      	and	a1, a1, a7
+      6c:      	and	a7, a0, a7
+      70:      	and	a0, a0, t0
+      74:      	sext.w	t0, t0
+      78:      	slli	a3, a3, 0x21
+      7c:      	slti	t0, t0, 0x0
+      80:      	sext.w	a0, a0
+      84:      	snez	a3, a3
+      88:      	snez	t1, t1
+      8c:      	seqz	a6, a6
+      90:      	snez	t2, t2
+      94:      	seqz	a5, a5
+      98:      	snez	t3, t3
+      9c:      	seqz	a7, a7
+      a0:      	not	t0, t0
+      a4:      	seqz	a4, a4
+      a8:      	snez	a1, a1
+      ac:      	slti	a0, a0, 0x0
+      b0:      	or	a6, t1, a6
+      b4:      	or	a5, t2, a5
+      b8:      	or	a7, t3, a7
+      bc:      	and	a1, a4, a1
+      c0:      	and	a2, a2, t0
+      c4:      	and	a0, a0, a3
+      c8:      	or	a0, a2, a0
+      cc:      	xori	a2, a5, 0x1
+      d0:      	and	a3, a6, a5
+      d4:      	xori	a4, a6, 0x1
+      d8:      	and	a1, a7, a1
+      dc:      	not	a5, a7
+      e0:      	and	a2, a6, a2
+      e4:      	and	a0, a0, a3
+      e8:      	or	a2, a2, a4
+      ec:      	negw	a0, a0
+      f0:      	andi	a0, a0, 0x100
+      f4:      	and	a1, a2, a1
+      f8:      	and	a2, a2, a5
+      fc:      	or	a1, a1, a2
+     100:      	negw	a1, a1
+     104:      	andi	a1, a1, 0x10
+     108:      	or	a0, a0, a1
+     10c:      	ret

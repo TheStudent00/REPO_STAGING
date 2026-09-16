@@ -1,0 +1,127 @@
+# ui32_to_f16  rounding mode 0  variant flags
+# entry symbol: ui32_to_f16_rm0_flags_flat
+# one basic block: 115 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/ui32_to_f16.rm0.flags/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <ui32_to_f16_rm0_flags_flat>:
+       0:      	snez	a1, a0
+       4:      	srliw	a5, a0, 0x1
+       8:      	lui	t1, 0x55555
+       c:      	lui	t2, 0x33333
+      10:      	lui	a4, 0xf0f1
+      14:      	lui	a6, 0x1010
+      18:      	li	a7, 0x7ff
+      1c:      	srliw	t0, a0, 0xb
+      20:      	srliw	a2, a0, 0xf
+      24:      	lui	a3, 0x6
+      28:      	or	a5, a0, a5
+      2c:      	addi	t1, t1, 0x555
+      30:      	srliw	t3, a5, 0x2
+      34:      	or	a5, a5, t3
+      38:      	srliw	t3, a5, 0x4
+      3c:      	or	a5, a5, t3
+      40:      	srliw	t3, a5, 0x8
+      44:      	or	a5, a5, t3
+      48:      	srliw	t3, a5, 0x10
+      4c:      	or	a5, a5, t3
+      50:      	not	a5, a5
+      54:      	srli	t3, a5, 0x1
+      58:      	and	t1, t3, t1
+      5c:      	li	t3, 0x11
+      60:      	addi	t2, t2, 0x333
+      64:      	sub	a5, a5, t1
+      68:      	and	t1, a5, t2
+      6c:      	srli	a5, a5, 0x2
+      70:      	and	a5, a5, t2
+      74:      	li	t2, 0x2d
+      78:      	add	a5, t1, a5
+      7c:      	srli	t1, a5, 0x4
+      80:      	add	t1, a5, t1
+      84:      	lui	a5, 0x10
+      88:      	addi	t4, a4, -0xf1
+      8c:      	addi	a6, a6, 0x101
+      90:      	sltu	a4, a7, a0
+      94:      	seqz	a7, t0
+      98:      	and	t0, t1, t4
+      9c:      	mul	a6, t0, a6
+      a0:      	srliw	a6, a6, 0x18
+      a4:      	addi	t0, a6, -0x11
+      a8:      	addi	t1, a6, 0xeb
+      ac:      	subw	t3, t3, a6
+      b0:      	srlw	t3, a0, t3
+      b4:      	sllw	t0, a0, t0
+      b8:      	sllw	a0, a0, t1
+      bc:      	zext.b	t1, t1
+      c0:      	slli	t1, t1, 0xa
+      c4:      	sub	t1, a0, t1
+      c8:      	seqz	a0, a2
+      cc:      	and	a7, a1, a7
+      d0:      	and	a1, a1, a0
+      d4:      	neg	t4, a0
+      d8:      	subw	a0, t2, a6
+      dc:      	and	a0, a0, t4
+      e0:      	and	t2, t0, t4
+      e4:      	snez	t0, t0
+      e8:      	or	t0, t3, t0
+      ec:      	lui	t3, 0x8
+      f0:      	snez	a2, a2
+      f4:      	add	a3, t1, a3
+      f8:      	neg	t1, a2
+      fc:      	and	t0, t0, t1
+     100:      	li	t1, 0x1f
+     104:      	addi	a5, a5, -0x8
+     108:      	addi	t3, t3, -0x9
+     10c:      	slli	t1, t1, 0xa
+     110:      	and	a1, a1, a4
+     114:      	neg	a4, a4
+     118:      	negw	a7, a7
+     11c:      	addi	a6, a6, -0x10
+     120:      	snez	a6, a6
+     124:      	or	t0, t0, t2
+     128:      	and	a3, a3, a7
+     12c:      	and	a7, t0, a4
+     130:      	andi	t0, a7, 0xf
+     134:      	and	a5, a7, a5
+     138:      	sltu	a7, t3, a5
+     13c:      	addi	a5, a5, 0x8
+     140:      	seqz	t2, t0
+     144:      	addi	t0, t0, -0x8
+     148:      	or	a6, a6, a7
+     14c:      	srli	a5, a5, 0x4
+     150:      	not	a7, t2
+     154:      	seqz	t0, t0
+     158:      	xori	t2, a6, 0x1
+     15c:      	not	t0, t0
+     160:      	and	a6, a2, a6
+     164:      	and	a2, a2, t2
+     168:      	and	a5, a5, t0
+     16c:      	negw	a6, a6
+     170:      	negw	t0, a2
+     174:      	or	a1, a1, a2
+     178:      	sext.w	a2, a5
+     17c:      	andi	t2, a6, 0x5
+     180:      	and	a6, a6, t1
+     184:      	andi	t0, t0, 0x1d
+     188:      	and	a7, a7, a1
+     18c:      	seqz	a2, a2
+     190:      	negw	a1, a1
+     194:      	or	a0, a0, t0
+     198:      	addi	a2, a2, -0x1
+     19c:      	or	a7, a7, t2
+     1a0:      	and	a0, a0, a4
+     1a4:      	slli	a0, a0, 0xa
+     1a8:      	and	a0, a0, a2
+     1ac:      	add	a0, a5, a0
+     1b0:      	and	a0, a0, a1
+     1b4:      	or	a1, a3, a6
+     1b8:      	or	a0, a1, a0
+     1bc:      	slli	a0, a0, 0x30
+     1c0:      	srli	a0, a0, 0x20
+     1c4:      	or	a0, a0, a7
+     1c8:      	ret

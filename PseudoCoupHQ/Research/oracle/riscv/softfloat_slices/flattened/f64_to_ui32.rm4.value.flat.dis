@@ -1,0 +1,74 @@
+# f64_to_ui32  rounding mode 4  variant value
+# entry symbol: f64_to_ui32_rm4_value_flat
+# one basic block: 62 instructions, 0 branches, 0 jumps, 0 calls,
+# 0 memory (0 stack spill / restore, 0 data)
+# llc -march=riscv64 -mattr=+m -O2
+
+
+<scratch>/fl/run/f64_to_ui32.rm4.value/flat.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <f64_to_ui32_rm4_value_flat>:
+       0:      	srli	a1, a0, 0x34
+       4:      	li	a2, -0x1
+       8:      	li	a3, 0x427
+       c:      	slti	a4, a0, 0x0
+      10:      	lui	a5, 0x80000
+      14:      	andi	a6, a1, 0x7ff
+      18:      	srli	a2, a2, 0xc
+      1c:      	and	a0, a0, a2
+      20:      	addi	a7, a6, -0x7ff
+      24:      	seqz	t0, a0
+      28:      	snez	a7, a7
+      2c:      	or	a7, t0, a7
+      30:      	li	t0, 0x7ff
+      34:      	addi	a1, a1, 0x19
+      38:      	and	a4, a4, a7
+      3c:      	snez	a7, a6
+      40:      	addi	a7, a7, -0x1
+      44:      	add	a2, a0, a2
+      48:      	addi	a2, a2, 0x1
+      4c:      	xor	a0, a0, a2
+      50:      	and	a0, a0, a7
+      54:      	sltiu	a7, a6, 0x427
+      58:      	subw	a3, a3, a6
+      5c:      	sltiu	a6, a6, 0x3e9
+      60:      	xor	a0, a0, a2
+      64:      	not	a2, a6
+      68:      	and	a2, a2, a7
+      6c:      	addi	a7, a7, -0x1
+      70:      	neg	a6, a6
+      74:      	sll	a1, a0, a1
+      78:      	srl	a3, a0, a3
+      7c:      	and	a7, a0, a7
+      80:      	snez	a0, a0
+      84:      	and	a0, a0, a6
+      88:      	addi	a6, a5, -0x1
+      8c:      	srli	a5, a5, 0x14
+      90:      	srli	a6, a6, 0x14
+      94:      	neg	a2, a2
+      98:      	snez	a1, a1
+      9c:      	or	a1, a3, a1
+      a0:      	not	a3, a4
+      a4:      	or	a0, a7, a0
+      a8:      	and	a1, a1, a2
+      ac:      	or	a0, a0, a1
+      b0:      	sltu	a1, a6, a0
+      b4:      	sltu	a2, a0, a5
+      b8:      	addi	a5, a0, 0x7ff
+      bc:      	sltu	a0, t0, a0
+      c0:      	addi	a5, a5, 0x1
+      c4:      	and	a0, a4, a0
+      c8:      	srli	a5, a5, 0xc
+      cc:      	and	a4, a2, a0
+      d0:      	not	a0, a0
+      d4:      	and	a0, a2, a0
+      d8:      	or	a1, a4, a1
+      dc:      	and	a1, a3, a1
+      e0:      	negw	a0, a0
+      e4:      	negw	a1, a1
+      e8:      	and	a0, a5, a0
+      ec:      	or	a0, a1, a0
+      f0:      	sext.w	a0, a0
+      f4:      	ret

@@ -1,0 +1,105 @@
+#include "sfemul.hpp"
+
+namespace sfemul {
+
+
+uint64_t ui64_to_f16_rm0(uint64_t v_arg)
+{
+    const bool v_i = (v_arg == UINT64_C(0x0));
+    const bool v__n13 = (v_i != true);
+    const uint64_t v__k1 = sf_ctlz64(v_arg);
+    const uint64_t v_i2 = v__k1;
+    const uint8_t v_i3 = (uint8_t)(v_i2);
+    const uint64_t v_i18 = (uint64_t)(UINT64_C(0x31) - v_i2);
+    const uint64_t v_i19 = (uint64_t)(v_i18 & UINT64_C(0xff));
+    const bool v_i4 = (v_arg < UINT64_C(0x800));
+    const uint8_t v_i15 = (uint8_t)(v_i3 + UINT32_C(0xcf));
+    const uint8_t v_i6 = (uint8_t)(v_i3 + UINT32_C(0xcb));
+    const uint32_t v_i7 = (uint32_t)(v_i6);
+    const bool v_i16 = (v_arg > UINT64_C(0x7fff));
+    const uint32_t v__sh2 = (uint32_t)((uint32_t)(v_i7) << ((UINT32_C(0xa)) & 31));
+    const uint32_t v_i9 = (uint32_t)(v_arg);
+    const uint32_t v__sh3 = (uint32_t)((uint32_t)(v_i9) << ((v_i7) & 31));
+    const uint32_t v_i10 = v__sh3;
+    const uint32_t v_i11 = (uint32_t)(v_i10 - v__sh2);
+    const uint64_t v_i12 = (uint64_t)(v_i11);
+    const uint64_t v_i13 = (uint64_t)(v_i12 + UINT64_C(0x6000));
+    const uint64_t v__sh4 = (uint64_t)((uint64_t)(v_arg) >> ((v_i19) & 63));
+    const uint64_t v_i20 = v__sh4;
+    const uint64_t v__sh5 = (uint64_t)((uint64_t)(UINT64_C(0xffffffffffffffff)) << ((v_i19) & 63));
+    const uint64_t v_i21 = v__sh5;
+    const uint64_t v_i22 = (uint64_t)(v_i21 ^ UINT64_C(0xffffffffffffffff));
+    const uint64_t v_i23 = (uint64_t)(v_arg & v_i22);
+    const bool v_i24 = (v_i23 != UINT64_C(0x0));
+    const uint64_t v_i25 = (uint64_t)((v_i24) ? 1 : 0);
+    const uint64_t v_i26 = (uint64_t)(v_i20 | v_i25);
+    const uint32_t v_i29 = (uint32_t)(v_i15);
+    const uint32_t v__sh6 = (uint32_t)((uint32_t)(v_i9) << ((v_i29) & 31));
+    const uint32_t v_i30 = v__sh6;
+    const uint64_t v_i31 = (uint64_t)(v_i30);
+    const uint64_t v__m7 = (uint64_t)((v_i16) ? ~(uint64_t)0 : (uint64_t)0);
+    const uint64_t v__a8 = (uint64_t)(v_i26 & v__m7);
+    const bool v__n9 = (v_i16 != true);
+    const uint64_t v__m10 = (uint64_t)((v__n9) ? ~(uint64_t)0 : (uint64_t)0);
+    const uint64_t v__a11 = (uint64_t)(v_i31 & v__m10);
+    const uint64_t v__o12 = (uint64_t)(v__a8 | v__a11);
+    const bool v__n14 = (v_i4 != true);
+    const bool v__c32 = (v__n13 && v_i4);
+    const uint64_t v__m33 = (uint64_t)((v__c32) ? ~(uint64_t)0 : (uint64_t)0);
+    const uint64_t v__a34 = (uint64_t)(v_i13 & v__m33);
+    const uint64_t v__m16 = (uint64_t)((v__n14) ? ~(uint64_t)0 : (uint64_t)0);
+    const uint64_t v__a17 = (uint64_t)(v__o12 & v__m16);
+    const uint32_t v__m26 = (uint32_t)((v__n14) ? ~(uint32_t)0 : (uint32_t)0);
+    const uint32_t v_i34 = (uint32_t)(v__a17);
+    const uint32_t v_i46 = (uint32_t)(v_i34 & UINT32_C(0xfff8));
+    const uint32_t v_i47 = (uint32_t)(v_i46 + UINT32_C(0x8));
+    const uint32_t v__sh28 = (uint32_t)((uint32_t)(v_i47) >> ((UINT32_C(0x4)) & 31));
+    const uint32_t v_i48 = v__sh28;
+    const uint32_t v_i35 = (uint32_t)(int32_t)(int8_t)(v_i15);
+    const uint32_t v_i36 = (uint32_t)(UINT32_C(0x1c) - v_i35);
+    const uint8_t v_i37 = (uint8_t)(v__a17);
+    const uint64_t v_i41 = (uint64_t)(v__a17 & UINT64_C(0xfff8));
+    const bool v_i42 = (v_i41 > UINT64_C(0x7ff7));
+    const uint8_t v_i45 = (uint8_t)(v_i37 & UINT32_C(0xf));
+    const bool v_i50 = (v_i45 == UINT32_C(0x8));
+    const uint32_t v_i51 = (uint32_t)((v_i50) ? 1 : 0);
+    const uint32_t v_i52 = (uint32_t)(v_i51 ^ UINT32_C(0xffffffff));
+    const uint32_t v_i53 = (uint32_t)(v_i48 & v_i52);
+    const bool v_i38 = (v_i15 > UINT32_C(0x1c));
+    const bool v_i40 = (v_i15 != UINT32_C(0xff));
+    const bool v_or_cond = (v_i40 || v_i42);
+    const bool v__n18 = (v_i38 != true);
+    const uint32_t v__m19 = (uint32_t)((v__n18) ? ~(uint32_t)0 : (uint32_t)0);
+    const uint32_t v__a20 = (uint32_t)(v_i36 & v__m19);
+    const bool v__n21 = (v_or_cond != true);
+    const bool v__c44 = (v__n13 && v_or_cond);
+    const bool v__c45 = (v__c44 && v__n14);
+    const bool v__c46 = (v__c45 && v_i38);
+    const uint64_t v__m47 = (uint64_t)((v__c46) ? ~(uint64_t)0 : (uint64_t)0);
+    const uint64_t v__a48 = (uint64_t)(UINT64_C(0x7c00) & v__m47);
+    const uint32_t v__m23 = (uint32_t)((v__n21) ? ~(uint32_t)0 : (uint32_t)0);
+    const uint32_t v__a24 = (uint32_t)(UINT32_C(0x1d) & v__m23);
+    const uint32_t v__o25 = (uint32_t)(v__a20 | v__a24);
+    const uint32_t v__a27 = (uint32_t)(v__o25 & v__m26);
+    const uint32_t v__sh29 = (uint32_t)((uint32_t)(v__a27) << ((UINT32_C(0xa)) & 31));
+    const uint32_t v_i55 = v__sh29;
+    const uint32_t v_i56 = (uint32_t)(v_i55 & UINT32_C(0x3fffc00));
+    const bool v__c37 = (v__n13 && v__n21);
+    const bool v__c36 = (v__n14 && v__n18);
+    const bool v__c38 = (v__c37 && v__n14);
+    const bool v__c40 = (v__c36 || v__c38);
+    const uint64_t v__m41 = (uint64_t)((v__c40) ? ~(uint64_t)0 : (uint64_t)0);
+    const bool v_i54 = (v_i53 == UINT32_C(0x0));
+    const uint32_t v__m30 = (uint32_t)((v_i54) ? ~(uint32_t)0 : (uint32_t)0);
+    const uint32_t v__n31 = (uint32_t)(v__m30 ^ UINT32_C(0xffffffff));
+    const uint32_t v_i57 = (uint32_t)(v_i56 & v__n31);
+    const uint32_t v_i58 = (uint32_t)(v_i53 + v_i57);
+    const uint64_t v_i59 = (uint64_t)(v_i58);
+    const uint64_t v__a42 = (uint64_t)(v_i59 & v__m41);
+    const uint64_t v__o43 = (uint64_t)(v__a34 | v__a42);
+    const uint64_t v__o49 = (uint64_t)(v__o43 | v__a48);
+    const uint64_t v_i61 = (uint64_t)(v__o49 & UINT64_C(0xffff));
+    return v_i61;
+}
+
+}  // namespace sfemul

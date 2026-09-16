@@ -1,0 +1,35 @@
+package emul
+
+
+func Emu_f32_le_rm0(v_arg uint64, v_arg1 uint64) bool {
+	var v_i uint32 = uint32(v_arg)
+	var v_i2 uint32 = uint32(v_arg1)
+	var v_i3 uint32 = (v_i & uint32(0x7f800000))
+	var v_i4 bool = (v_i3 != uint32(0x7f800000))
+	var v_i5 uint32 = (v_i & uint32(0x7fffff))
+	var v_i6 bool = (v_i5 == uint32(0x0))
+	var v_i7 bool = (v_i4 || v_i6)
+	var v_i9 uint32 = (v_i2 & uint32(0x7f800000))
+	var v_i10 bool = (v_i9 != uint32(0x7f800000))
+	var v_i11 uint32 = (v_i2 & uint32(0x7fffff))
+	var v_i12 bool = (v_i11 == uint32(0x0))
+	var v_i13 bool = (v_i10 || v_i12)
+	var v__c5 bool = (v_i7 && v_i13)
+	var v_i15 uint32 = (v_i2 ^ v_i)
+	var v_i16 bool = (int32(v_i15) > int32(-1))
+	var v_i18 bool = (int32(v_i) < int32(0))
+	var v_i19 uint32 = (v_i2 & uint32(0x7fffffff))
+	var v_i20 uint32 = (v_i19 | v_i)
+	var v_i21 bool = (v_i20 == uint32(0x0))
+	var v_i22 bool = (v_i18 || v_i21)
+	var v_i24 bool = (v_i == v_i2)
+	var v_i25 bool = (v_i < v_i2)
+	var v_i27 bool = (v_i18 != v_i25)
+	var v_i28 bool = (v_i24 || v_i27)
+	var v__a3 bool = (v_i28 && v_i16)
+	var v__n1 bool = (v_i16 != true)
+	var v__a2 bool = (v_i22 && v__n1)
+	var v__o4 bool = (v__a2 || v__a3)
+	var v__a6 bool = (v__o4 && v__c5)
+	return v__a6
+}

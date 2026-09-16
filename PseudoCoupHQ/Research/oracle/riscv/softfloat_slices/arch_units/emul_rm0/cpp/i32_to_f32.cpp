@@ -1,0 +1,76 @@
+#include "sfemul.hpp"
+
+namespace sfemul {
+
+
+uint64_t i32_to_f32_rm0(uint32_t v_arg)
+{
+    const uint32_t v_i = (uint32_t)(v_arg & UINT32_C(0x7fffffff));
+    const bool v_i1 = (v_i == UINT32_C(0x0));
+    const bool v_i3 = ((int32_t)(v_arg) < INT32_C(0));
+    const uint64_t v__m1 = (uint64_t)((v_i3) ? ~(uint64_t)0 : (uint64_t)0);
+    const uint64_t v_i4 = (uint64_t)(UINT64_C(0xcf000000) & v__m1);
+    const uint32_t v__k2 = sf_abs32(v_arg);
+    const bool v_i7 = (v_arg == UINT32_C(0x0));
+    const uint32_t v__k3 = sf_ctlz32(v__k2);
+    const uint32_t v_i9 = v__k3;
+    const uint8_t v_i10 = (uint8_t)(v_i9);
+    const uint8_t v_i11 = (uint8_t)(v_i10 + UINT32_C(0xff));
+    const bool v__n4 = (v_i7 != true);
+    const uint8_t v__m5 = (uint8_t)((v__n4) ? ~(uint8_t)0 : (uint8_t)0);
+    const uint8_t v__a6 = (uint8_t)(v_i11 & v__m5);
+    const uint8_t v__m7 = (uint8_t)((v_i7) ? ~(uint8_t)0 : (uint8_t)0);
+    const uint8_t v__a8 = (uint8_t)(UINT32_C(0x1f) & v__m7);
+    const uint8_t v__o9 = (uint8_t)(v__a6 | v__a8);
+    const uint32_t v__m14 = (uint32_t)((v_i7) ? ~(uint32_t)0 : (uint32_t)0);
+    const uint32_t v__n15 = (uint32_t)(v__m14 ^ UINT32_C(0xffffffff));
+    const bool v__n10 = (v_i1 != true);
+    const uint64_t v__m32 = (uint64_t)((v_i1) ? ~(uint64_t)0 : (uint64_t)0);
+    const uint64_t v__a33 = (uint64_t)(v_i4 & v__m32);
+    const uint8_t v__m11 = (uint8_t)((v__n10) ? ~(uint8_t)0 : (uint8_t)0);
+    const uint8_t v__a12 = (uint8_t)(v__o9 & v__m11);
+    const uint32_t v_i14 = (uint32_t)(int32_t)(int8_t)(v__a12);
+    const uint16_t v_i15 = (uint16_t)(int16_t)(int8_t)(v__a12);
+    const uint16_t v_i16 = (uint16_t)(UINT32_C(0x9c) - v_i15);
+    const bool v_i17 = ((int8_t)(v__a12) > INT32_C(6));
+    const uint32_t v_i19 = (uint32_t)(v_i16);
+    const uint32_t v__sh13 = (uint32_t)((uint32_t)(v_i19) << ((UINT32_C(0x17)) & 31));
+    const uint32_t v_i21 = v__sh13;
+    const uint32_t v_i22 = (uint32_t)(v_i21 & v__n15);
+    const uint32_t v_i20 = (uint32_t)(v_arg & UINT32_C(0x80000000));
+    const uint32_t v_i23 = (uint32_t)(v_i14 + UINT32_C(0xfffffff9));
+    const uint32_t v__sh16 = (uint32_t)((uint32_t)(v__k2) << ((v_i23) & 31));
+    const uint32_t v__sh17 = (uint32_t)((uint32_t)(v__k2) << ((v_i14) & 31));
+    const uint32_t v_i24 = v__sh16;
+    const uint32_t v_i25 = (uint32_t)(v_i24 + v_i20);
+    const uint32_t v_i26 = (uint32_t)(v_i25 + v_i22);
+    const uint32_t v_i27 = v__sh17;
+    const uint32_t v_i28 = (uint32_t)(v_i27 + UINT32_C(0x40));
+    const uint32_t v__sh18 = (uint32_t)((uint32_t)(v_i28) >> ((UINT32_C(0x7)) & 31));
+    const uint32_t v_i30 = (uint32_t)(v_i27 & UINT32_C(0x7f));
+    const bool v_i32 = (v_i30 == UINT32_C(0x40));
+    const uint32_t v_i33 = (uint32_t)((v_i32) ? 1 : 0);
+    const uint32_t v_i34 = (uint32_t)(v_i33 ^ UINT32_C(0xffffffff));
+    const uint32_t v_i35 = (uint32_t)(v__sh18 & v_i34);
+    const bool v_i36 = (v_i35 == UINT32_C(0x0));
+    const uint32_t v__m20 = (uint32_t)((v_i36) ? ~(uint32_t)0 : (uint32_t)0);
+    const uint32_t v__n21 = (uint32_t)(v__m20 ^ UINT32_C(0xffffffff));
+    const uint32_t v_i40 = (uint32_t)(v_i21 & v__n21);
+    const uint32_t v_i41 = (uint32_t)(v_i35 | v_i20);
+    const uint32_t v_i42 = (uint32_t)(v_i41 + v_i40);
+    const uint32_t v__m22 = (uint32_t)((v_i17) ? ~(uint32_t)0 : (uint32_t)0);
+    const uint32_t v__a23 = (uint32_t)(v_i26 & v__m22);
+    const bool v__n24 = (v_i17 != true);
+    const uint32_t v__m25 = (uint32_t)((v__n24) ? ~(uint32_t)0 : (uint32_t)0);
+    const uint32_t v__a26 = (uint32_t)(v_i42 & v__m25);
+    const uint32_t v__o27 = (uint32_t)(v__a23 | v__a26);
+    const uint32_t v__m28 = (uint32_t)((v__n10) ? ~(uint32_t)0 : (uint32_t)0);
+    const uint32_t v__a29 = (uint32_t)(v__o27 & v__m28);
+    const uint64_t v_i44 = (uint64_t)(v__a29);
+    const uint64_t v__m30 = (uint64_t)((v__n10) ? ~(uint64_t)0 : (uint64_t)0);
+    const uint64_t v__a31 = (uint64_t)(v_i44 & v__m30);
+    const uint64_t v__o34 = (uint64_t)(v__a31 | v__a33);
+    return v__o34;
+}
+
+}  // namespace sfemul

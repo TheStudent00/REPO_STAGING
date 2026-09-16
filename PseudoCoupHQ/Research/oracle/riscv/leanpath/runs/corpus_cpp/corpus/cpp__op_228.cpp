@@ -1,0 +1,10 @@
+// probe 228 -- binary /
+#include <cstdint>
+#include <compare>
+#include <new>
+
+extern "C" auto
+op_228(float a, int32_t b)
+{
+    return a / b;
+}

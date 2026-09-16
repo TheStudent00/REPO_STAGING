@@ -1,0 +1,151 @@
+[1/7] this lane fetches nothing: http_proxy=unset; the sail and the model it uses, LITERAL
+  at 2026-09-14T00:48:36Z
+  which sail: /persist/opam/default/bin/sail
+  sail --version: Sail 0.20.2 (HEAD @ 8eb1fb6b5bf9f18c0f89f71e94ff0c5894acd7c1)
+  sail --dir: /persist/opam/default/bin/../share/sail
+  z3: /opt/venv/bin/z3 Z3 version 5.1.0 - 64 bit
+  the model: /persist/sail-riscv-6266b40c
+  model commit 6266b40c1c2e8f91153fdd3cfc0196c93566add1 2026-08-20 15:26:43 +0000 Fix a predicate grouping that missed guarding the EEW=32 case for Zvknh. (#1881)
+  config: /persist/sail-riscv-6266b40c/build/config/rv64d_v256_e64.json (29014 bytes, sha256 a3b545eb174247f5...)
+  the cache folder this lane writes: PseudoCoupHQ/Research/oracle/riscv/leanpath/cache/sail-riscv_6266b40c_sail_8eb1fb6b_I_insts_M_insts_postlude_main
+  the two earlier cache folders, NOT touched: PseudoCoupHQ/Research/oracle/riscv/leanpath/cache/sail-riscv_3243f93_I_insts_M_insts_postlude_main PseudoCoupHQ/Research/oracle/riscv/leanpath/cache/sail-riscv_3243f93_sail_5745ea9e_I_insts_M_insts_postlude_main 
+[2/7] sail --list-files I_insts M_insts postlude main riscv.sail_project (seconds; LEAF names, checked first)
+  at 2026-09-14T00:48:36Z
+  files resolved: 89
+    extensions/I/base_insts.sail
+    extensions/M/mext_insts.sail
+    postlude/insts_end.sail
+[3/7] the emit: sail --lean, the invocation of log 274 §3 with this clone's paths, timed (no /work/smtcache made beforehand; the sail process peak resident is the largest-descendant figure)
+  at 2026-09-14T00:48:36Z
+[93mWarning[0m: Incomplete pattern match statement at
+[96mextensions/M/mext_insts.sail[0m:14.0-8:
+14[96m |[0mfunction clause currentlyEnabled(Ext_Zmmul) = hartSupports(Ext_Zmmul) | currentlyEnabled(Ext_M)
+  [91m |[0m[91m^------^[0m
+  [91m |[0m The following expression is unmatched: [93mExt_A[0m
+
+[93mWarning[0m: Incomplete pattern match statement at
+[96mpostlude/insts_end.sail[0m:23.0-8:
+23[96m |[0mfunction clause execute C_ILLEGAL(_s) = Illegal_Instruction()
+  [91m |[0m[91m^------^[0m
+  [91m |[0m The following expression is unmatched: [93mAES32DSI(undefined)[0m
+
+  rc=0 wall=191.4s largest-descendant peak resident=511792 kB
+  emit rc=0
+  cgroup memory.peak: 965939200 bytes; memory.current: 435122176
+[4/7] what the backend wrote (LITERAL sizes), the pins, the leak count of the earlier emits, execute_DIV's line
+  at 2026-09-14T00:51:48Z
+    total 32
+    drwxr-xr-x 3 root root   160 Sep 14 00:51 .
+    drwxr-xr-x 3 root root    60 Sep 14 00:51 ..
+    -rw-r--r-- 1 root root     6 Sep 14 00:51 .gitignore
+    drwxr-xr-x 2 root root  2320 Sep 14 00:51 LeanIM
+    -rw-r--r-- 1 root root 12899 Sep 14 00:51 LeanIM.lean
+    -rw-r--r-- 1 root root   113 Sep 14 00:51 lake-manifest.json
+    -rw-r--r-- 1 root root   284 Sep 14 00:51 lakefile.toml
+    -rw-r--r-- 1 root root    24 Sep 14 00:51 lean-toolchain
+  Lean files: 114; lines: 57270; bytes: 2078200
+  lakefile.toml (LITERAL):
+    name = "Lean_IM"
+    defaultTargets = ["LeanIM"]
+    moreLeanArgs = ["--tstack=400000"]
+    
+    [[lean_lib]]
+    name = "LeanIM"
+    leanOptions.weak.linter.style.nameCheck = false
+    moreLeancArgs= ["-fbracket-depth=500"]
+    
+    [[require]]
+    name = "Sail"
+    git = "https://github.com/rems-project/lean-sail"
+    rev = "v5"  lean-toolchain (LITERAL): leanprover/lean4:v4.29.0
+  lake-manifest.json (LITERAL):
+    {"version": "1.1.0",
+     "packagesDir": ".lake/packages",
+     "packages": [],
+     "name": "Lean_IM",
+     "lakeDir": ".lake"}
+  occurrences of 'is_sv32_mode(' (the earlier emits' leak, 3 sites in Defs.lean): 0
+  Sail call syntax of any type-level function in a Lean abbrev (grep 'abbrev .*[a-z_]([a-z_]' ): 0
+  execute clauses: 29
+  execute_DIV at: /work/leanout/Lean_IM/LeanIM/InstsEnd.lean:4325
+  the DIV clause as this sail wrote it (LITERAL):
+    def execute_DIV (rs2 : regidx) (rs1 : regidx) (rd : regidx) (is_unsigned : Bool) : SailM ExecutionResult := do
+      let rs1_bits ← do (rX_bits rs1)
+      let rs2_bits ← do (rX_bits rs2)
+      let rs1_int :=
+        if (is_unsigned : Bool)
+        then (BitVec.toNatInt rs1_bits)
+        else (BitVec.toInt rs1_bits)
+      let rs2_int :=
+        if (is_unsigned : Bool)
+        then (BitVec.toNatInt rs2_bits)
+        else (BitVec.toInt rs2_bits)
+      let quotient :=
+        if ((rs2_int == 0) : Bool)
+        then (Neg.neg 1)
+        else (Int.tdiv rs1_int rs2_int)
+      let quotient :=
+        if (((not is_unsigned) && (quotient ≥b (2 ^i (xlen -i 1)))) : Bool)
+        then (Neg.neg (2 ^i (xlen -i 1)))
+        else quotient
+      (wX_bits rd (to_bits_truncate (l := 64) quotient))
+      (pure RETIRE_SUCCESS)
+[5/7] copy the emit into the cache folder (a build product; nobody edits a file in it)
+  at 2026-09-14T00:51:48Z
+    total 52
+    drwxr-xr-x 3 root root  4096 Sep 14 00:51 .
+    drwxrwxr-x 5 root root  4096 Sep 14 00:48 ..
+    -rw-r--r-- 1 root root     6 Sep 14 00:51 .gitignore
+    drwxr-xr-x 2 root root  4096 Sep 14 00:51 LeanIM
+    -rw-r--r-- 1 root root 12899 Sep 14 00:51 LeanIM.lean
+    -rw-r--r-- 1 root root  4799 Sep 14 00:51 emit_lane.log
+    -rw-r--r-- 1 root root   113 Sep 14 00:51 lake-manifest.json
+    -rw-r--r-- 1 root root   284 Sep 14 00:51 lakefile.toml
+    -rw-r--r-- 1 root root    24 Sep 14 00:51 lean-toolchain
+  Lean files in the cache: 114; lines: 57270
+[6/7] MANIFEST.md, in the shape of the earlier caches'
+  at 2026-09-14T00:51:48Z
+    # the cached emit: Sail's Lean output for the RISC-V model (third emit: the last pair the model's own Lean CI built green)
+    
+    - model: `sail-riscv` commit 6266b40c (2026-08-20 15:26:43 +0000), the clone
+      `/persist/sail-riscv-6266b40c` on the tower instance `lp1`'s persistent
+      volume (lane `lp1_l10_clone_last_green_model_and_build_sail_8eb1fb6b.sh`),
+      the model's last commit whose Lean workflow (`compile-lean.yml`) ran
+      green (2026-08-20T16:29Z, measured through the GitHub API on
+      2026-09-13 by the coordinator); config
+      `build/config/rv64d_v256_e64.json` produced by that clone's own
+      `config/CMakeLists.txt` (lane `lp1_l10b_cmake_configure_without_asio.sh`,
+      cmake with the model's own `-DDOWNLOAD_ASIO=OFF`; sha256 a3b545eb174247f5552a27dbb60f32c4ee95af85bdc8ea92ce0661254fbff674)
+    - sail: Sail 0.20.2 (HEAD @ 8eb1fb6b5bf9f18c0f89f71e94ff0c5894acd7c1), built from source in lane
+      `lp1_l10_clone_last_green_model_and_build_sail_8eb1fb6b.sh` (branch
+      `sail2`, the head on 2026-08-20; the model's CI builds its Lean with
+      sail "latest" by this recipe), Lean backend; the opam root is the copy
+      `/persist/opam` on the tower instance `lp1`'s persistent volume
+    - modules handed to sail (LEAF names): `I_insts M_insts postlude main`,
+      resolved to 89 source files, `base_insts.sail` and `mext_insts.sail`
+      among them
+    - lane: `lp1_l11_emit_6266b40c_with_sail_8eb1fb6b.sh`, tower instance
+      `lp1`, 2026-09-14, 20 GB cap; the lane's own output is beside this file
+      as `emit_lane.log`; the invocation is in log 274 §3, verbatim but for
+      the clone's two paths
+    - product: `LeanIM/*.lean`, 57270 lines; `execute_DIV` at
+      `LeanIM/InstsEnd.lean:4325`; the lake project requires [[require]] name = "Sail" git = "https://github.com/rems-project/lean-sail" rev = "v5"  and toolchain
+      `leanprover/lean4:v4.29.0` (`lean-toolchain`)
+    - the two earlier emits are the co-folders
+      `sail-riscv_3243f93_I_insts_M_insts_postlude_main/` (sail 0.20.2 from
+      opam; log 275 §4.2) and
+      `sail-riscv_3243f93_sail_5745ea9e_I_insts_M_insts_postlude_main/` (sail
+      built at 5745ea9e; log 276 §4.1), kept as the records of the two build
+      failures; nothing in them is edited
+    - this folder is a BUILD PRODUCT, cached by the model commit, the sail
+      commit and the module list in its name; the regeneration test deletes
+      it and gets it back by running lanes 10, 10b and 11. Nobody edits a
+      file in it.
+[7/7] sizes, the cgroup peak, and the work volume
+  at 2026-09-14T00:51:48Z
+    2.2M	PseudoCoupHQ/Research/oracle/riscv/leanpath/cache/sail-riscv_6266b40c_sail_8eb1fb6b_I_insts_M_insts_postlude_main
+    2.2M	/work/leanout
+    144K	/work/smtcache
+    tmpfs           8.0G  2.4M  8.0G   1% /work
+  cgroup memory.peak: 965939200 bytes; memory.current: 438329344
+lane lp1_l11 done at 2026-09-14T00:51:48Z

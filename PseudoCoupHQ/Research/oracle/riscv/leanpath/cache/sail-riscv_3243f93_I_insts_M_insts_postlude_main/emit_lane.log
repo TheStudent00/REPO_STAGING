@@ -1,0 +1,59 @@
+# script: /drop/sail0_l5_lean_I_insts_M_insts.sh
+# started: 2026-09-13T21:03:00+00:00
+# timeout: 7200s
+# work free before: 4093 MB
+------------------------------------------------------------
+[1/4] what l4's selection resolved to (I M Zicsr postlude main)
+  instruction files: 1
+[2/4] what I_insts M_insts postlude main resolves to
+  files: 91
+  extensions/I/base_insts.sail
+  extensions/M/mext_insts.sail
+[3/4] sail --lean over I_insts M_insts postlude main
+lean rc=0 seconds=2728
+[93mWarning[0m: Incomplete pattern match statement at [96mextensions/M/mext_insts.sail[0m:14.0-8:
+14[96m |[0mfunction clause currentlyEnabled(Ext_Zmmul) = hartSupports(Ext_Zmmul) | currentlyEnabled(Ext_M)
+  [91m |[0m 
+The following expression is unmatched: [93mExt_A[0m
+[93mWarning[0m: Incomplete pattern match statement at [96mpostlude/insts_end.sail[0m:23.0-8:
+[4/4] the DIV clause
+2.5M	/work/leanout/Lean_IM
+  62893 total
+BaseInsts.lean InstsBegin.lean InstsEnd.lean MextInsts.lean ZicfilpInsts.lean 
+file: /work/leanout/Lean_IM/LeanIM/InstsEnd.lean
+--- /out/execute_DIV.lean (22 lines) ---
+def execute_DIV (rs2 : regidx) (rs1 : regidx) (rd : regidx) (is_unsigned : Bool) : SailM ExecutionResult := do
+  let rs1_bits ← do (rX_bits rs1)
+  let rs2_bits ← do (rX_bits rs2)
+  let rs1_int :=
+    if (is_unsigned : Bool)
+    then (BitVec.toNatInt rs1_bits)
+    else (BitVec.toInt rs1_bits)
+  let rs2_int :=
+    if (is_unsigned : Bool)
+    then (BitVec.toNatInt rs2_bits)
+    else (BitVec.toInt rs2_bits)
+  let quotient :=
+    if ((rs2_int == 0) : Bool)
+    then (Neg.neg 1)
+    else (Int.tdiv rs1_int rs2_int)
+  let quotient :=
+    if (((not is_unsigned) && (quotient ≥b (2 ^i (xlen -i 1)))) : Bool)
+    then (Neg.neg (2 ^i (xlen -i 1)))
+    else quotient
+  (wX_bits rd (to_bits_truncate (l := 64) quotient))
+  (pure RETIRE_SUCCESS)
+
+--- the dispatch line and the assembly mapping for DIV ---
+2129:  | .DIV (rs2, rs1, rd, is_unsigned) =>
+4450:  | .DIV (rs2, rs1, rd, is_unsigned) => (execute_DIV rs2 rs1 rd is_unsigned)
+--- Int.tdiv sightings ---
+/work/leanout/Lean_IM/LeanIM/DeviceTree.lean:355:                                  (Int.repr (Int.tdiv clock_freq plat_insns_per_tick))
+/work/leanout/Lean_IM/LeanIM/InstsEnd.lean:4374:    else (Int.tdiv rs1_int rs2_int)
+/work/leanout/Lean_IM/LeanIM/InstsEnd.lean:4397:    else (Int.tdiv rs1_int rs2_int)
+/work/leanout/Lean_IM/LeanIM/SplitAccessUtils.lean:216:  let num_accesses := (Int.tdiv width bytes_per_access)
+2.5M	/out/lean
+done
+------------------------------------------------------------
+# exit 0 in 2729.6s
+# work free after: 4093 MB (consumed 0 MB)

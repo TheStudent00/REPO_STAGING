@@ -1,0 +1,877 @@
+import LeanIMPrExecutable
+open Sail Sail.ConcurrencyInterfaceV1 PreSail LeanIMPrExecutable LeanIMPrExecutable.Functions
+set_option maxHeartbeats 1000000000
+set_option maxRecDepth 100000
+
+/-- a blank machine state, as the emulator's own main starts from -/
+def blank : SequentialState RegisterType trivialChoiceSource :=
+  { regs := ∅, choiceState := (), mem := ∅, tags := (), cycleCount := 0, sailOutput := #[] }
+/-- every register present, with a default value (the emulator's own first step) -/
+def filled : SequentialState RegisterType trivialChoiceSource :=
+  match ((do
+      PreSail.writeReg Register.hart_state default
+      PreSail.writeReg Register.mhpmcounter default
+      PreSail.writeReg Register.mhpmevent default
+      PreSail.writeReg Register.ssp default
+      PreSail.writeReg Register.srmcfg default
+      PreSail.writeReg Register.satp default
+      PreSail.writeReg Register.tlb default
+      PreSail.writeReg Register.pma_regions default
+      PreSail.writeReg Register.htif_payload_writes default
+      PreSail.writeReg Register.htif_cmd_write default
+      PreSail.writeReg Register.htif_exit_code default
+      PreSail.writeReg Register.htif_done default
+      PreSail.writeReg Register.htif_tohost default
+      PreSail.writeReg Register.stimecmp default
+      PreSail.writeReg Register.mtimecmp default
+      PreSail.writeReg Register.htif_tohost_base default
+      PreSail.writeReg Register.pc_reset_address default
+      PreSail.writeReg Register.elp default
+      PreSail.writeReg Register.minstretcfg default
+      PreSail.writeReg Register.mcyclecfg default
+      PreSail.writeReg Register.vcsr default
+      PreSail.writeReg Register.vtype default
+      PreSail.writeReg Register.vl default
+      PreSail.writeReg Register.vstart default
+      PreSail.writeReg Register.vr31 default
+      PreSail.writeReg Register.vr30 default
+      PreSail.writeReg Register.vr29 default
+      PreSail.writeReg Register.vr28 default
+      PreSail.writeReg Register.vr27 default
+      PreSail.writeReg Register.vr26 default
+      PreSail.writeReg Register.vr25 default
+      PreSail.writeReg Register.vr24 default
+      PreSail.writeReg Register.vr23 default
+      PreSail.writeReg Register.vr22 default
+      PreSail.writeReg Register.vr21 default
+      PreSail.writeReg Register.vr20 default
+      PreSail.writeReg Register.vr19 default
+      PreSail.writeReg Register.vr18 default
+      PreSail.writeReg Register.vr17 default
+      PreSail.writeReg Register.vr16 default
+      PreSail.writeReg Register.vr15 default
+      PreSail.writeReg Register.vr14 default
+      PreSail.writeReg Register.vr13 default
+      PreSail.writeReg Register.vr12 default
+      PreSail.writeReg Register.vr11 default
+      PreSail.writeReg Register.vr10 default
+      PreSail.writeReg Register.vr9 default
+      PreSail.writeReg Register.vr8 default
+      PreSail.writeReg Register.vr7 default
+      PreSail.writeReg Register.vr6 default
+      PreSail.writeReg Register.vr5 default
+      PreSail.writeReg Register.vr4 default
+      PreSail.writeReg Register.vr3 default
+      PreSail.writeReg Register.vr2 default
+      PreSail.writeReg Register.vr1 default
+      PreSail.writeReg Register.vr0 default
+      PreSail.writeReg Register.fcsr default
+      PreSail.writeReg Register.f31 default
+      PreSail.writeReg Register.f30 default
+      PreSail.writeReg Register.f29 default
+      PreSail.writeReg Register.f28 default
+      PreSail.writeReg Register.f27 default
+      PreSail.writeReg Register.f26 default
+      PreSail.writeReg Register.f25 default
+      PreSail.writeReg Register.f24 default
+      PreSail.writeReg Register.f23 default
+      PreSail.writeReg Register.f22 default
+      PreSail.writeReg Register.f21 default
+      PreSail.writeReg Register.f20 default
+      PreSail.writeReg Register.f19 default
+      PreSail.writeReg Register.f18 default
+      PreSail.writeReg Register.f17 default
+      PreSail.writeReg Register.f16 default
+      PreSail.writeReg Register.f15 default
+      PreSail.writeReg Register.f14 default
+      PreSail.writeReg Register.f13 default
+      PreSail.writeReg Register.f12 default
+      PreSail.writeReg Register.f11 default
+      PreSail.writeReg Register.f10 default
+      PreSail.writeReg Register.f9 default
+      PreSail.writeReg Register.f8 default
+      PreSail.writeReg Register.f7 default
+      PreSail.writeReg Register.f6 default
+      PreSail.writeReg Register.f5 default
+      PreSail.writeReg Register.f4 default
+      PreSail.writeReg Register.f3 default
+      PreSail.writeReg Register.f2 default
+      PreSail.writeReg Register.f1 default
+      PreSail.writeReg Register.f0 default
+      PreSail.writeReg Register.pmpaddr_n default
+      PreSail.writeReg Register.pmpcfg_n default
+      PreSail.writeReg Register.sig_seip default
+      PreSail.writeReg Register.sig_meip default
+      PreSail.writeReg Register.mideleg default
+      PreSail.writeReg Register.medeleg default
+      PreSail.writeReg Register.mip default
+      PreSail.writeReg Register.mie default
+      PreSail.writeReg Register.tselect default
+      PreSail.writeReg Register.stval default
+      PreSail.writeReg Register.scause default
+      PreSail.writeReg Register.sepc default
+      PreSail.writeReg Register.sscratch default
+      PreSail.writeReg Register.stvec default
+      PreSail.writeReg Register.mconfigptr default
+      PreSail.writeReg Register.mhartid default
+      PreSail.writeReg Register.marchid default
+      PreSail.writeReg Register.mimpid default
+      PreSail.writeReg Register.mvendorid default
+      PreSail.writeReg Register.minstret_increment default
+      PreSail.writeReg Register.minstret default
+      PreSail.writeReg Register.mtime default
+      PreSail.writeReg Register.mcycle default
+      PreSail.writeReg Register.mcountinhibit default
+      PreSail.writeReg Register.mcounteren default
+      PreSail.writeReg Register.scounteren default
+      PreSail.writeReg Register.mscratch default
+      PreSail.writeReg Register.mtval default
+      PreSail.writeReg Register.mepc default
+      PreSail.writeReg Register.mcause default
+      PreSail.writeReg Register.mtvec default
+      PreSail.writeReg Register.cur_inst default
+      PreSail.writeReg Register.x31 default
+      PreSail.writeReg Register.x30 default
+      PreSail.writeReg Register.x29 default
+      PreSail.writeReg Register.x28 default
+      PreSail.writeReg Register.x27 default
+      PreSail.writeReg Register.x26 default
+      PreSail.writeReg Register.x25 default
+      PreSail.writeReg Register.x24 default
+      PreSail.writeReg Register.x23 default
+      PreSail.writeReg Register.x22 default
+      PreSail.writeReg Register.x21 default
+      PreSail.writeReg Register.x20 default
+      PreSail.writeReg Register.x19 default
+      PreSail.writeReg Register.x18 default
+      PreSail.writeReg Register.x17 default
+      PreSail.writeReg Register.x16 default
+      PreSail.writeReg Register.x15 default
+      PreSail.writeReg Register.x14 default
+      PreSail.writeReg Register.x13 default
+      PreSail.writeReg Register.x12 default
+      PreSail.writeReg Register.x11 default
+      PreSail.writeReg Register.x10 default
+      PreSail.writeReg Register.x9 default
+      PreSail.writeReg Register.x8 default
+      PreSail.writeReg Register.x7 default
+      PreSail.writeReg Register.x6 default
+      PreSail.writeReg Register.x5 default
+      PreSail.writeReg Register.x4 default
+      PreSail.writeReg Register.x3 default
+      PreSail.writeReg Register.x2 default
+      PreSail.writeReg Register.x1 default
+      PreSail.writeReg Register.nextPC default
+      PreSail.writeReg Register.PC default
+      PreSail.writeReg Register.menvcfg default
+      PreSail.writeReg Register.mseccfg default
+      PreSail.writeReg Register.senvcfg default
+      PreSail.writeReg Register.sstateen3 default
+      PreSail.writeReg Register.sstateen2 default
+      PreSail.writeReg Register.sstateen1 default
+      PreSail.writeReg Register.sstateen0 default
+      PreSail.writeReg Register.mstateen3 default
+      PreSail.writeReg Register.mstateen2 default
+      PreSail.writeReg Register.mstateen1 default
+      PreSail.writeReg Register.mstateen0 default
+      PreSail.writeReg Register.hstateen3 default
+      PreSail.writeReg Register.hstateen2 default
+      PreSail.writeReg Register.hstateen1 default
+      PreSail.writeReg Register.hstateen0 default
+      PreSail.writeReg Register.mstatus default
+      PreSail.writeReg Register.misa default
+      PreSail.writeReg Register.cur_privilege default
+      PreSail.writeReg Register.rvfi_mem_data_present default
+      PreSail.writeReg Register.rvfi_mem_data default
+      PreSail.writeReg Register.rvfi_int_data_present default
+      PreSail.writeReg Register.rvfi_int_data default
+      PreSail.writeReg Register.rvfi_pc_data default
+      PreSail.writeReg Register.rvfi_inst_data default
+      PreSail.writeReg Register.rvfi_instruction default
+      PreSail.writeReg Register.fp_rounding_global default
+      pure ()) : SailM Unit) blank with | .ok _ s => s | .error _ s => s
+/-- then the model's own init and reset -/
+def s0 : SequentialState RegisterType trivialChoiceSource :=
+  match ((do sail_model_init (); init_model "") : SailM Unit) filled with | .ok _ s => s | .error _ s => s
+
+#eval IO.println ("go_op_312#0\t" ++ ((match (encdec_compressed_backwards (0x952e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("go_op_312#1\t" ++ ((match (encdec_backwards (0x00008067#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_174#0\t" ++ ((match (encdec_backwards (0x02a5853b#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_174#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_714#0\t" ++ ((match (encdec_backwards (0x40b5553b#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_714#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_726#0\t" ++ ((match (encdec_backwards (0x00b55533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_726#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_210#0\t" ++ ((match (encdec_backwards (0x02b5453b#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_210#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_185#0\t" ++ ((match (encdec_backwards (0x0eb55533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_185#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_498#0\t" ++ ((match (encdec_compressed_backwards (0x8d2d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_498#1\t" ++ ((match (encdec_backwards (0x00a03533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_498#2\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_105#0\t" ++ ((match (encdec_backwards (0xd00577d3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_105#1\t" ++ ((match (encdec_backwards (0x00f57553#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_105#2\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_106#0\t" ++ ((match (encdec_backwards (0xd20507d3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_106#1\t" ++ ((match (encdec_backwards (0x02f57553#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_106#2\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_102#0\t" ++ ((match (encdec_compressed_backwards (0x9d2d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("c_op_102#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#0\t" ++ ((match (encdec_compressed_backwards (0x7171#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#1\t" ++ ((match (encdec_compressed_backwards (0xf506#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#2\t" ++ ((match (encdec_compressed_backwards (0xf122#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#3\t" ++ ((match (encdec_compressed_backwards (0xed26#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#4\t" ++ ((match (encdec_compressed_backwards (0xe94a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#5\t" ++ ((match (encdec_compressed_backwards (0xe54e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#6\t" ++ ((match (encdec_compressed_backwards (0xe152#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#7\t" ++ ((match (encdec_compressed_backwards (0xfcd6#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#8\t" ++ ((match (encdec_compressed_backwards (0xf8da#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#9\t" ++ ((match (encdec_compressed_backwards (0xf4de#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#10\t" ++ ((match (encdec_compressed_backwards (0xf0e2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#11\t" ++ ((match (encdec_compressed_backwards (0xece6#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#12\t" ++ ((match (encdec_compressed_backwards (0xe8ea#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#13\t" ++ ((match (encdec_compressed_backwards (0xe4ee#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#14\t" ++ ((match (encdec_compressed_backwards (0xe0ae#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#15\t" ++ ((match (encdec_compressed_backwards (0xfc2a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#16\t" ++ ((match (encdec_backwards (0x03f5d813#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#17\t" ++ ((match (encdec_backwards (0x03f55a13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#18\t" ++ ((match (encdec_backwards (0x03881513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#19\t" ++ ((match (encdec_compressed_backwards (0xf82a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#20\t" ++ ((match (encdec_backwards (0x03281613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#21\t" ++ ((match (encdec_backwards (0x03181593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#22\t" ++ ((match (encdec_backwards (0x03081313#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#23\t" ++ ((match (encdec_backwards (0x02f81793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#24\t" ++ ((match (encdec_backwards (0x02e81893#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#25\t" ++ ((match (encdec_backwards (0x02d81713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#26\t" ++ ((match (encdec_backwards (0x02b81293#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#27\t" ++ ((match (encdec_backwards (0x02a81493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#28\t" ++ ((match (encdec_backwards (0x02781393#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#29\t" ++ ((match (encdec_backwards (0x02681e93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#30\t" ++ ((match (encdec_backwards (0x02281f13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#31\t" ++ ((match (encdec_backwards (0x02181f93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#32\t" ++ ((match (encdec_backwards (0x01c81913#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#33\t" ++ ((match (encdec_backwards (0x01b81d13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#34\t" ++ ((match (encdec_backwards (0x01581d93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#35\t" ++ ((match (encdec_backwards (0x01481093#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#36\t" ++ ((match (encdec_backwards (0x00d81993#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#37\t" ++ ((match (encdec_backwards (0x00c81693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#38\t" ++ ((match (encdec_backwards (0x00481e13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#39\t" ++ ((match (encdec_backwards (0x00381513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#40\t" ++ ((match (encdec_backwards (0x032a1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#41\t" ++ ((match (encdec_compressed_backwards (0x8dd1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#42\t" ++ ((match (encdec_compressed_backwards (0xf42e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#43\t" ++ ((match (encdec_backwards (0x031a1a93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#44\t" ++ ((match (encdec_backwards (0x00f36633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#45\t" ++ ((match (encdec_backwards (0x030a1b13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#46\t" ++ ((match (encdec_backwards (0x00e8e5b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#47\t" ++ ((match (encdec_compressed_backwards (0xf02e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#48\t" ++ ((match (encdec_backwards (0x02fa1c13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#49\t" ++ ((match (encdec_backwards (0x0092e5b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#50\t" ++ ((match (encdec_compressed_backwards (0xec2e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#51\t" ++ ((match (encdec_backwards (0x02ea1b93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#52\t" ++ ((match (encdec_backwards (0x01d3e5b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#53\t" ++ ((match (encdec_compressed_backwards (0xe82e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#54\t" ++ ((match (encdec_backwards (0x02da1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#55\t" ++ ((match (encdec_backwards (0x01ff6733#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#56\t" ++ ((match (encdec_compressed_backwards (0xe43a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#57\t" ++ ((match (encdec_backwards (0x02ba1c93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#58\t" ++ ((match (encdec_backwards (0x01a962b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#59\t" ++ ((match (encdec_backwards (0x02aa1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#60\t" ++ ((match (encdec_backwards (0x001de7b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#61\t" ++ ((match (encdec_compressed_backwards (0xe03e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#62\t" ++ ((match (encdec_backwards (0x027a1d13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#63\t" ++ ((match (encdec_backwards (0x00d9edb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#64\t" ++ ((match (encdec_backwards (0x026a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#65\t" ++ ((match (encdec_backwards (0x00ae6eb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#66\t" ++ ((match (encdec_backwards (0x022a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#67\t" ++ ((match (encdec_backwards (0x008ae933#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#68\t" ++ ((match (encdec_backwards (0x021a1513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#69\t" ++ ((match (encdec_backwards (0x018b6ab3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#70\t" ++ ((match (encdec_backwards (0x01ca1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#71\t" ++ ((match (encdec_backwards (0x00bbe8b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#72\t" ++ ((match (encdec_backwards (0x01ba1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#73\t" ++ ((match (encdec_backwards (0x00ece433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#74\t" ++ ((match (encdec_backwards (0x015a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#75\t" ++ ((match (encdec_backwards (0x00dd6bb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#76\t" ++ ((match (encdec_backwards (0x014a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#77\t" ++ ((match (encdec_backwards (0x00a7ec33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#78\t" ++ ((match (encdec_backwards (0x00da1513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#79\t" ++ ((match (encdec_backwards (0x00b4e333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#80\t" ++ ((match (encdec_backwards (0x00ca1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#81\t" ++ ((match (encdec_backwards (0x00d763b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#82\t" ++ ((match (encdec_backwards (0x004a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#83\t" ++ ((match (encdec_backwards (0x00956b33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#84\t" ++ ((match (encdec_backwards (0x003a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#85\t" ++ ((match (encdec_backwards (0x009760b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#86\t" ++ ((match (encdec_backwards (0x03381493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#87\t" ++ ((match (encdec_compressed_backwards (0x7542#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#88\t" ++ ((match (encdec_backwards (0x409504b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#89\t" ++ ((match (encdec_compressed_backwards (0x8d45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#90\t" ++ ((match (encdec_compressed_backwards (0xf82a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#91\t" ++ ((match (encdec_backwards (0x02c81493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#92\t" ++ ((match (encdec_compressed_backwards (0x7522#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#93\t" ++ ((match (encdec_compressed_backwards (0x8e49#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#94\t" ++ ((match (encdec_backwards (0x02981513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#95\t" ++ ((match (encdec_compressed_backwards (0x7582#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#96\t" ++ ((match (encdec_backwards (0x0095ef33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#97\t" ++ ((match (encdec_backwards (0x02581693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#98\t" ++ ((match (encdec_compressed_backwards (0x65e2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#99\t" ++ ((match (encdec_backwards (0x00a5efb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#100\t" ++ ((match (encdec_backwards (0x02081513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#101\t" ++ ((match (encdec_compressed_backwards (0x65c2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#102\t" ++ ((match (encdec_backwards (0x00d5e9b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#103\t" ++ ((match (encdec_backwards (0x01a81713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#104\t" ++ ((match (encdec_compressed_backwards (0x65a2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#105\t" ++ ((match (encdec_backwards (0x00a5ee33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#106\t" ++ ((match (encdec_backwards (0x01381693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#107\t" ++ ((match (encdec_backwards (0x00e2ecb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#108\t" ++ ((match (encdec_backwards (0x00b81713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#109\t" ++ ((match (encdec_compressed_backwards (0x6502#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#110\t" ++ ((match (encdec_backwards (0x00d56d33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#111\t" ++ ((match (encdec_backwards (0x00281693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#112\t" ++ ((match (encdec_backwards (0x00ededb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#113\t" ++ ((match (encdec_backwards (0x038a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#114\t" ++ ((match (encdec_backwards (0x00deeeb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#115\t" ++ ((match (encdec_backwards (0x033a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#116\t" ++ ((match (encdec_backwards (0x40d706b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#117\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#118\t" ++ ((match (encdec_compressed_backwards (0xf436#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#119\t" ++ ((match (encdec_backwards (0x01596933#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#120\t" ++ ((match (encdec_backwards (0x02ca1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#121\t" ++ ((match (encdec_backwards (0x00e8e8b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#122\t" ++ ((match (encdec_backwards (0x029a1513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#123\t" ++ ((match (encdec_backwards (0x00a46ab3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#124\t" ++ ((match (encdec_backwards (0x025a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#125\t" ++ ((match (encdec_backwards (0x00bbebb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#126\t" ++ ((match (encdec_backwards (0x020a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#127\t" ++ ((match (encdec_backwards (0x00fc62b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#128\t" ++ ((match (encdec_backwards (0x01aa1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#129\t" ++ ((match (encdec_backwards (0x00836333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#130\t" ++ ((match (encdec_backwards (0x013a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#131\t" ++ ((match (encdec_backwards (0x0093e3b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#132\t" ++ ((match (encdec_backwards (0x00ba1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#133\t" ++ ((match (encdec_backwards (0x00db6c33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#134\t" ++ ((match (encdec_backwards (0x002a1513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#135\t" ++ ((match (encdec_backwards (0x00a0eb33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#136\t" ++ ((match (encdec_backwards (0x01e66f33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#137\t" ++ ((match (encdec_backwards (0x02881613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#138\t" ++ ((match (encdec_backwards (0x00cfe0b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#139\t" ++ ((match (encdec_backwards (0x02481513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#140\t" ++ ((match (encdec_backwards (0x00a9efb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#141\t" ++ ((match (encdec_backwards (0x01f81593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#142\t" ++ ((match (encdec_backwards (0x00be69b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#143\t" ++ ((match (encdec_backwards (0x01981693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#144\t" ++ ((match (encdec_backwards (0x00dcecb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#145\t" ++ ((match (encdec_backwards (0x01281713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#146\t" ++ ((match (encdec_backwards (0x00ed6d33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#147\t" ++ ((match (encdec_backwards (0x00a81793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#148\t" ++ ((match (encdec_backwards (0x00fdedb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#149\t" ++ ((match (encdec_backwards (0x00181413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#150\t" ++ ((match (encdec_backwards (0x008eee33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#151\t" ++ ((match (encdec_backwards (0x01196eb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#152\t" ++ ((match (encdec_backwards (0x028a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#153\t" ++ ((match (encdec_backwards (0x009ae4b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#154\t" ++ ((match (encdec_backwards (0x024a1513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#155\t" ++ ((match (encdec_backwards (0x00abe933#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#156\t" ++ ((match (encdec_backwards (0x01fa1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#157\t" ++ ((match (encdec_backwards (0x00b2e2b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#158\t" ++ ((match (encdec_backwards (0x019a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#159\t" ++ ((match (encdec_backwards (0x00c36333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#160\t" ++ ((match (encdec_backwards (0x012a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#161\t" ++ ((match (encdec_backwards (0x00d3e3b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#162\t" ++ ((match (encdec_backwards (0x00aa1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#163\t" ++ ((match (encdec_backwards (0x00ec6ab3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#164\t" ++ ((match (encdec_backwards (0x001a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#165\t" ++ ((match (encdec_backwards (0x00fb68b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#166\t" ++ ((match (encdec_backwards (0x001f67b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#167\t" ++ ((match (encdec_backwards (0x02381413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#168\t" ++ ((match (encdec_backwards (0x008fe433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#169\t" ++ ((match (encdec_backwards (0x01e81513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#170\t" ++ ((match (encdec_backwards (0x00a9e533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#171\t" ++ ((match (encdec_backwards (0x01881593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#172\t" ++ ((match (encdec_backwards (0x00bce5b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#173\t" ++ ((match (encdec_backwards (0x01181613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#174\t" ++ ((match (encdec_backwards (0x00cd6633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#175\t" ++ ((match (encdec_backwards (0x00981693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#176\t" ++ ((match (encdec_backwards (0x00dde6b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#177\t" ++ ((match (encdec_backwards (0x009eeeb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#178\t" ++ ((match (encdec_backwards (0x023a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#179\t" ++ ((match (encdec_backwards (0x00e96f33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#180\t" ++ ((match (encdec_backwards (0x01ea1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#181\t" ++ ((match (encdec_backwards (0x0092e4b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#182\t" ++ ((match (encdec_backwards (0x018a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#183\t" ++ ((match (encdec_backwards (0x00e362b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#184\t" ++ ((match (encdec_backwards (0x011a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#185\t" ++ ((match (encdec_backwards (0x00e3e333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#186\t" ++ ((match (encdec_backwards (0x009a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#187\t" ++ ((match (encdec_backwards (0x00eae733#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#188\t" ++ ((match (encdec_backwards (0x0087e3b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#189\t" ++ ((match (encdec_backwards (0x01d81413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#190\t" ++ ((match (encdec_backwards (0x00856fb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#191\t" ++ ((match (encdec_backwards (0x01781413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#192\t" ++ ((match (encdec_backwards (0x0085e933#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#193\t" ++ ((match (encdec_backwards (0x01081413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#194\t" ++ ((match (encdec_backwards (0x008669b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#195\t" ++ ((match (encdec_backwards (0x00881413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#196\t" ++ ((match (encdec_backwards (0x0086eab3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#197\t" ++ ((match (encdec_backwards (0x03981413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#198\t" ++ ((match (encdec_backwards (0x40800433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#199\t" ++ ((match (encdec_backwards (0x010e67b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#200\t" ++ ((match (encdec_backwards (0x0087ee33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#201\t" ++ ((match (encdec_backwards (0x01eeeeb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#202\t" ++ ((match (encdec_backwards (0x01da1513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#203\t" ++ ((match (encdec_backwards (0x00a4ef33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#204\t" ++ ((match (encdec_backwards (0x017a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#205\t" ++ ((match (encdec_backwards (0x0092e4b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#206\t" ++ ((match (encdec_backwards (0x010a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#207\t" ++ ((match (encdec_backwards (0x00b362b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#208\t" ++ ((match (encdec_backwards (0x008a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#209\t" ++ ((match (encdec_backwards (0x00c76333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#210\t" ++ ((match (encdec_backwards (0x039a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#211\t" ++ ((match (encdec_backwards (0x40e00733#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#212\t" ++ ((match (encdec_backwards (0x0148e6b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#213\t" ++ ((match (encdec_backwards (0x00e6eb33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#214\t" ++ ((match (encdec_backwards (0x01f3e3b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#215\t" ++ ((match (encdec_backwards (0x01681793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#216\t" ++ ((match (encdec_backwards (0x00f967b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#217\t" ++ ((match (encdec_backwards (0x00f81413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#218\t" ++ ((match (encdec_backwards (0x0089e433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#219\t" ++ ((match (encdec_backwards (0x00781513#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#220\t" ++ ((match (encdec_backwards (0x00aae533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#221\t" ++ ((match (encdec_compressed_backwards (0x75c2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#222\t" ++ ((match (encdec_backwards (0x00be68b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#223\t" ++ ((match (encdec_backwards (0x01eee5b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#224\t" ++ ((match (encdec_backwards (0x016a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#225\t" ++ ((match (encdec_compressed_backwards (0x8e45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#226\t" ++ ((match (encdec_backwards (0x00fa1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#227\t" ++ ((match (encdec_backwards (0x0092e4b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#228\t" ++ ((match (encdec_backwards (0x007a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#229\t" ++ ((match (encdec_backwards (0x00d366b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#230\t" ++ ((match (encdec_compressed_backwards (0x7722#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#231\t" ++ ((match (encdec_backwards (0x00eb62b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#232\t" ++ ((match (encdec_backwards (0x00f3e733#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#233\t" ++ ((match (encdec_backwards (0x00e81793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#234\t" ++ ((match (encdec_compressed_backwards (0x8fc1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#235\t" ++ ((match (encdec_backwards (0x00681413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#236\t" ++ ((match (encdec_compressed_backwards (0x8d41#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#237\t" ++ ((match (encdec_compressed_backwards (0x8dd1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#238\t" ++ ((match (encdec_backwards (0x00ea1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#239\t" ++ ((match (encdec_compressed_backwards (0x8e45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#240\t" ++ ((match (encdec_backwards (0x006a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#241\t" ++ ((match (encdec_compressed_backwards (0x8ec5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#242\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#243\t" ++ ((match (encdec_compressed_backwards (0x0816#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#244\t" ++ ((match (encdec_backwards (0x01056533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#245\t" ++ ((match (encdec_compressed_backwards (0x8dd1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#246\t" ++ ((match (encdec_compressed_backwards (0x0a16#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#247\t" ++ ((match (encdec_backwards (0x0146e633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#248\t" ++ ((match (encdec_compressed_backwards (0x8d59#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#249\t" ++ ((match (encdec_compressed_backwards (0x8dd1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#250\t" ++ ((match (encdec_backwards (0x01156533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#251\t" ++ ((match (encdec_backwards (0x0055e5b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#252\t" ++ ((match (encdec_compressed_backwards (0x76e2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#253\t" ++ ((match (encdec_compressed_backwards (0x9d55#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#254\t" ++ ((match (encdec_compressed_backwards (0x6606#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#255\t" ++ ((match (encdec_compressed_backwards (0x9dd1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#256\t" ++ ((match (encdec_backwards (0x02d63633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#257\t" ++ ((match (encdec_compressed_backwards (0x95b2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#258\t" ++ ((match (encdec_compressed_backwards (0x952e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#259\t" ++ ((match (encdec_compressed_backwards (0x70aa#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#260\t" ++ ((match (encdec_compressed_backwards (0x740a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#261\t" ++ ((match (encdec_compressed_backwards (0x64ea#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#262\t" ++ ((match (encdec_compressed_backwards (0x694a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#263\t" ++ ((match (encdec_compressed_backwards (0x69aa#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#264\t" ++ ((match (encdec_compressed_backwards (0x6a0a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#265\t" ++ ((match (encdec_compressed_backwards (0x7ae6#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#266\t" ++ ((match (encdec_compressed_backwards (0x7b46#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#267\t" ++ ((match (encdec_compressed_backwards (0x7ba6#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#268\t" ++ ((match (encdec_compressed_backwards (0x7c06#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#269\t" ++ ((match (encdec_compressed_backwards (0x6ce6#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#270\t" ++ ((match (encdec_compressed_backwards (0x6d46#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#271\t" ++ ((match (encdec_compressed_backwards (0x6da6#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#272\t" ++ ((match (encdec_compressed_backwards (0x614d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_gpr_64__reg_a0__c__native_first#273\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#0\t" ++ ((match (encdec_compressed_backwards (0x7179#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#1\t" ++ ((match (encdec_compressed_backwards (0xf422#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#2\t" ++ ((match (encdec_compressed_backwards (0xf026#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#3\t" ++ ((match (encdec_compressed_backwards (0xec4a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#4\t" ++ ((match (encdec_compressed_backwards (0xe84e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#5\t" ++ ((match (encdec_compressed_backwards (0xe452#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#6\t" ++ ((match (encdec_backwards (0x03f55a13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#7\t" ++ ((match (encdec_backwards (0x038a1813#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#8\t" ++ ((match (encdec_backwards (0x032a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#9\t" ++ ((match (encdec_backwards (0x031a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#10\t" ++ ((match (encdec_backwards (0x030a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#11\t" ++ ((match (encdec_backwards (0x02fa1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#12\t" ++ ((match (encdec_backwards (0x02ea1293#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#13\t" ++ ((match (encdec_backwards (0x02da1313#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#14\t" ++ ((match (encdec_backwards (0x02ba1393#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#15\t" ++ ((match (encdec_backwards (0x02aa1e13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#16\t" ++ ((match (encdec_backwards (0x027a1e93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#17\t" ++ ((match (encdec_backwards (0x026a1f13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#18\t" ++ ((match (encdec_backwards (0x022a1893#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#19\t" ++ ((match (encdec_backwards (0x00b76fb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#20\t" ++ ((match (encdec_backwards (0x021a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#21\t" ++ ((match (encdec_backwards (0x00d66933#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#22\t" ++ ((match (encdec_backwards (0x01ca1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#23\t" ++ ((match (encdec_backwards (0x0062e2b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#24\t" ++ ((match (encdec_backwards (0x01ba1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#25\t" ++ ((match (encdec_backwards (0x01c3e333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#26\t" ++ ((match (encdec_backwards (0x015a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#27\t" ++ ((match (encdec_backwards (0x01eee3b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#28\t" ++ ((match (encdec_backwards (0x014a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#29\t" ++ ((match (encdec_backwards (0x00b8e8b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#30\t" ++ ((match (encdec_backwards (0x00da1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#31\t" ++ ((match (encdec_backwards (0x00d66e33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#32\t" ++ ((match (encdec_backwards (0x00ca1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#33\t" ++ ((match (encdec_backwards (0x00e7eeb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#34\t" ++ ((match (encdec_backwards (0x004a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#35\t" ++ ((match (encdec_backwards (0x00c5ef33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#36\t" ++ ((match (encdec_backwards (0x003a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#37\t" ++ ((match (encdec_backwards (0x00c6e9b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#38\t" ++ ((match (encdec_backwards (0x033a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#39\t" ++ ((match (encdec_backwards (0x40c80633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#40\t" ++ ((match (encdec_backwards (0x00c86833#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#41\t" ++ ((match (encdec_backwards (0x012fefb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#42\t" ++ ((match (encdec_backwards (0x02ca1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#43\t" ++ ((match (encdec_backwards (0x00b2e2b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#44\t" ++ ((match (encdec_backwards (0x029a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#45\t" ++ ((match (encdec_backwards (0x00d366b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#46\t" ++ ((match (encdec_backwards (0x025a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#47\t" ++ ((match (encdec_backwards (0x00e3e733#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#48\t" ++ ((match (encdec_backwards (0x020a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#49\t" ++ ((match (encdec_backwards (0x00f8e7b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#50\t" ++ ((match (encdec_backwards (0x01aa1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#51\t" ++ ((match (encdec_backwards (0x008e6433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#52\t" ++ ((match (encdec_backwards (0x013a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#53\t" ++ ((match (encdec_backwards (0x009ee4b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#54\t" ++ ((match (encdec_backwards (0x00ba1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#55\t" ++ ((match (encdec_backwards (0x00cf6633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#56\t" ++ ((match (encdec_backwards (0x002a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#57\t" ++ ((match (encdec_backwards (0x00b9e333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#58\t" ++ ((match (encdec_backwards (0x005fe8b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#59\t" ++ ((match (encdec_backwards (0x028a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#60\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#61\t" ++ ((match (encdec_backwards (0x024a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#62\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#63\t" ++ ((match (encdec_backwards (0x01fa1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#64\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#65\t" ++ ((match (encdec_backwards (0x019a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#66\t" ++ ((match (encdec_compressed_backwards (0x8fc1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#67\t" ++ ((match (encdec_backwards (0x012a1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#68\t" ++ ((match (encdec_compressed_backwards (0x8c45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#69\t" ++ ((match (encdec_backwards (0x00aa1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#70\t" ++ ((match (encdec_compressed_backwards (0x8e45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#71\t" ++ ((match (encdec_backwards (0x001a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#72\t" ++ ((match (encdec_backwards (0x009362b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#73\t" ++ ((match (encdec_backwards (0x00b8e5b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#74\t" ++ ((match (encdec_backwards (0x023a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#75\t" ++ ((match (encdec_compressed_backwards (0x8ec5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#76\t" ++ ((match (encdec_backwards (0x01ea1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#77\t" ++ ((match (encdec_compressed_backwards (0x8f45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#78\t" ++ ((match (encdec_backwards (0x018a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#79\t" ++ ((match (encdec_compressed_backwards (0x8fc5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#80\t" ++ ((match (encdec_backwards (0x011a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#81\t" ++ ((match (encdec_compressed_backwards (0x8c45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#82\t" ++ ((match (encdec_backwards (0x009a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#83\t" ++ ((match (encdec_compressed_backwards (0x8e45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#84\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#85\t" ++ ((match (encdec_backwards (0x01da1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#86\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#87\t" ++ ((match (encdec_backwards (0x017a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#88\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#89\t" ++ ((match (encdec_backwards (0x010a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#90\t" ++ ((match (encdec_compressed_backwards (0x8fc1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#91\t" ++ ((match (encdec_backwards (0x008a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#92\t" ++ ((match (encdec_compressed_backwards (0x8e45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#93\t" ++ ((match (encdec_backwards (0x039a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#94\t" ++ ((match (encdec_backwards (0x409004b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#95\t" ++ ((match (encdec_backwards (0x0142e433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#96\t" ++ ((match (encdec_compressed_backwards (0x8c45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#97\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#98\t" ++ ((match (encdec_backwards (0x016a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#99\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#100\t" ++ ((match (encdec_backwards (0x00fa1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#101\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#102\t" ++ ((match (encdec_backwards (0x007a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#103\t" ++ ((match (encdec_compressed_backwards (0x8e5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#104\t" ++ ((match (encdec_backwards (0x010467b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#105\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#106\t" ++ ((match (encdec_backwards (0x00ea1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#107\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#108\t" ++ ((match (encdec_backwards (0x006a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#109\t" ++ ((match (encdec_compressed_backwards (0x8e59#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#110\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#111\t" ++ ((match (encdec_compressed_backwards (0x0a16#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#112\t" ++ ((match (encdec_backwards (0x01466633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#113\t" ++ ((match (encdec_compressed_backwards (0x8dd1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#114\t" ++ ((match (encdec_compressed_backwards (0x8ddd#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#115\t" ++ ((match (encdec_compressed_backwards (0x9dc9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#116\t" ++ ((match (encdec_backwards (0x02a53533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#117\t" ++ ((match (encdec_compressed_backwards (0x952e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#118\t" ++ ((match (encdec_compressed_backwards (0x952e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#119\t" ++ ((match (encdec_compressed_backwards (0x7422#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#120\t" ++ ((match (encdec_compressed_backwards (0x7482#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#121\t" ++ ((match (encdec_compressed_backwards (0x6962#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#122\t" ++ ((match (encdec_compressed_backwards (0x69c2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#123\t" ++ ((match (encdec_compressed_backwards (0x6a22#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#124\t" ++ ((match (encdec_compressed_backwards (0x6145#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulh_gpr_gpr_same_64__reg_a0__c__native_first#125\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#0\t" ++ ((match (encdec_compressed_backwards (0x7179#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#1\t" ++ ((match (encdec_compressed_backwards (0xf422#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#2\t" ++ ((match (encdec_compressed_backwards (0xf026#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#3\t" ++ ((match (encdec_compressed_backwards (0xec4a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#4\t" ++ ((match (encdec_compressed_backwards (0xe84e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#5\t" ++ ((match (encdec_compressed_backwards (0xe452#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#6\t" ++ ((match (encdec_backwards (0x03f55a13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#7\t" ++ ((match (encdec_backwards (0x038a1813#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#8\t" ++ ((match (encdec_backwards (0x032a1293#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#9\t" ++ ((match (encdec_backwards (0x031a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#10\t" ++ ((match (encdec_backwards (0x030a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#11\t" ++ ((match (encdec_backwards (0x02fa1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#12\t" ++ ((match (encdec_backwards (0x02ea1313#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#13\t" ++ ((match (encdec_backwards (0x02da1393#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#14\t" ++ ((match (encdec_backwards (0x02ba1e13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#15\t" ++ ((match (encdec_backwards (0x02aa1e93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#16\t" ++ ((match (encdec_backwards (0x027a1f13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#17\t" ++ ((match (encdec_backwards (0x026a1f93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#18\t" ++ ((match (encdec_backwards (0x022a1893#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#19\t" ++ ((match (encdec_backwards (0x005662b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#20\t" ++ ((match (encdec_backwards (0x021a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#21\t" ++ ((match (encdec_backwards (0x00d76933#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#22\t" ++ ((match (encdec_backwards (0x01ca1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#23\t" ++ ((match (encdec_backwards (0x00736333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#24\t" ++ ((match (encdec_backwards (0x01ba1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#25\t" ++ ((match (encdec_backwards (0x01de63b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#26\t" ++ ((match (encdec_backwards (0x015a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#27\t" ++ ((match (encdec_backwards (0x01ff6e33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#28\t" ++ ((match (encdec_backwards (0x014a1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#29\t" ++ ((match (encdec_backwards (0x00c8e8b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#30\t" ++ ((match (encdec_backwards (0x00da1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#31\t" ++ ((match (encdec_backwards (0x00f6eeb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#32\t" ++ ((match (encdec_backwards (0x00ca1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#33\t" ++ ((match (encdec_backwards (0x00876f33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#34\t" ++ ((match (encdec_backwards (0x004a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#35\t" ++ ((match (encdec_backwards (0x00d66fb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#36\t" ++ ((match (encdec_backwards (0x003a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#37\t" ++ ((match (encdec_backwards (0x00d769b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#38\t" ++ ((match (encdec_backwards (0x033a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#39\t" ++ ((match (encdec_backwards (0x40d806b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#40\t" ++ ((match (encdec_backwards (0x00d86833#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#41\t" ++ ((match (encdec_backwards (0x0122e2b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#42\t" ++ ((match (encdec_backwards (0x02ca1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#43\t" ++ ((match (encdec_backwards (0x00c36333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#44\t" ++ ((match (encdec_backwards (0x029a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#45\t" ++ ((match (encdec_backwards (0x00e3e733#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#46\t" ++ ((match (encdec_backwards (0x025a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#47\t" ++ ((match (encdec_backwards (0x00fe67b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#48\t" ++ ((match (encdec_backwards (0x020a1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#49\t" ++ ((match (encdec_backwards (0x0088e433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#50\t" ++ ((match (encdec_backwards (0x01aa1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#51\t" ++ ((match (encdec_backwards (0x009ee4b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#52\t" ++ ((match (encdec_backwards (0x013a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#53\t" ++ ((match (encdec_backwards (0x00df66b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#54\t" ++ ((match (encdec_backwards (0x00ba1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#55\t" ++ ((match (encdec_backwards (0x00cfe8b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#56\t" ++ ((match (encdec_backwards (0x002a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#57\t" ++ ((match (encdec_backwards (0x00c9e3b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#58\t" ++ ((match (encdec_backwards (0x0062e2b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#59\t" ++ ((match (encdec_backwards (0x028a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#60\t" ++ ((match (encdec_backwards (0x00c76333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#61\t" ++ ((match (encdec_backwards (0x024a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#62\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#63\t" ++ ((match (encdec_backwards (0x01fa1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#64\t" ++ ((match (encdec_compressed_backwards (0x8fc1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#65\t" ++ ((match (encdec_backwards (0x019a1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#66\t" ++ ((match (encdec_compressed_backwards (0x8c45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#67\t" ++ ((match (encdec_backwards (0x012a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#68\t" ++ ((match (encdec_backwards (0x0096ee33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#69\t" ++ ((match (encdec_backwards (0x00aa1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#70\t" ++ ((match (encdec_backwards (0x0098eeb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#71\t" ++ ((match (encdec_backwards (0x001a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#72\t" ++ ((match (encdec_backwards (0x00c3e8b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#73\t" ++ ((match (encdec_backwards (0x0062e633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#74\t" ++ ((match (encdec_backwards (0x023a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#75\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#76\t" ++ ((match (encdec_backwards (0x01ea1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#77\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#78\t" ++ ((match (encdec_backwards (0x018a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#79\t" ++ ((match (encdec_compressed_backwards (0x8fc1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#80\t" ++ ((match (encdec_backwards (0x011a1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#81\t" ++ ((match (encdec_backwards (0x008e6433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#82\t" ++ ((match (encdec_backwards (0x009a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#83\t" ++ ((match (encdec_backwards (0x009ee4b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#84\t" ++ ((match (encdec_backwards (0x00d662b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#85\t" ++ ((match (encdec_backwards (0x01da1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#86\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#87\t" ++ ((match (encdec_backwards (0x017a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#88\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#89\t" ++ ((match (encdec_backwards (0x010a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#90\t" ++ ((match (encdec_compressed_backwards (0x8fc1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#91\t" ++ ((match (encdec_backwards (0x008a1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#92\t" ++ ((match (encdec_compressed_backwards (0x8c45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#93\t" ++ ((match (encdec_backwards (0x039a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#94\t" ++ ((match (encdec_backwards (0x409004b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#95\t" ++ ((match (encdec_backwards (0x0148e633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#96\t" ++ ((match (encdec_compressed_backwards (0x8e45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#97\t" ++ ((match (encdec_backwards (0x00d2e6b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#98\t" ++ ((match (encdec_backwards (0x016a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#99\t" ++ ((match (encdec_compressed_backwards (0x8f45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#100\t" ++ ((match (encdec_backwards (0x00fa1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#101\t" ++ ((match (encdec_compressed_backwards (0x8fc5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#102\t" ++ ((match (encdec_backwards (0x007a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#103\t" ++ ((match (encdec_compressed_backwards (0x8c45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#104\t" ++ ((match (encdec_backwards (0x01066633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#105\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#106\t" ++ ((match (encdec_backwards (0x00ea1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#107\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#108\t" ++ ((match (encdec_backwards (0x006a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#109\t" ++ ((match (encdec_compressed_backwards (0x8fc1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#110\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#111\t" ++ ((match (encdec_compressed_backwards (0x0a16#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#112\t" ++ ((match (encdec_backwards (0x0147e733#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#113\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#114\t" ++ ((match (encdec_compressed_backwards (0x8e55#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#115\t" ++ ((match (encdec_compressed_backwards (0x9e4d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#116\t" ++ ((match (encdec_backwards (0x02b53533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#117\t" ++ ((match (encdec_compressed_backwards (0x9532#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#118\t" ++ ((match (encdec_compressed_backwards (0x7422#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#119\t" ++ ((match (encdec_compressed_backwards (0x7482#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#120\t" ++ ((match (encdec_compressed_backwards (0x6962#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#121\t" ++ ((match (encdec_compressed_backwards (0x69c2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#122\t" ++ ((match (encdec_compressed_backwards (0x6a22#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#123\t" ++ ((match (encdec_compressed_backwards (0x6145#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_gpr_64__reg_a0__c__native_first#124\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#0\t" ++ ((match (encdec_compressed_backwards (0x7179#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#1\t" ++ ((match (encdec_compressed_backwards (0xf422#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#2\t" ++ ((match (encdec_compressed_backwards (0xf026#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#3\t" ++ ((match (encdec_compressed_backwards (0xec4a#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#4\t" ++ ((match (encdec_compressed_backwards (0xe84e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#5\t" ++ ((match (encdec_compressed_backwards (0xe452#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#6\t" ++ ((match (encdec_backwards (0x03f55a13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#7\t" ++ ((match (encdec_backwards (0x038a1813#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#8\t" ++ ((match (encdec_backwards (0x032a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#9\t" ++ ((match (encdec_backwards (0x031a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#10\t" ++ ((match (encdec_backwards (0x030a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#11\t" ++ ((match (encdec_backwards (0x02fa1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#12\t" ++ ((match (encdec_backwards (0x02ea1293#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#13\t" ++ ((match (encdec_backwards (0x02da1313#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#14\t" ++ ((match (encdec_backwards (0x02ba1393#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#15\t" ++ ((match (encdec_backwards (0x02aa1e13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#16\t" ++ ((match (encdec_backwards (0x027a1e93#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#17\t" ++ ((match (encdec_backwards (0x026a1f13#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#18\t" ++ ((match (encdec_backwards (0x022a1893#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#19\t" ++ ((match (encdec_backwards (0x00b76fb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#20\t" ++ ((match (encdec_backwards (0x021a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#21\t" ++ ((match (encdec_backwards (0x00d66933#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#22\t" ++ ((match (encdec_backwards (0x01ca1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#23\t" ++ ((match (encdec_backwards (0x0062e2b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#24\t" ++ ((match (encdec_backwards (0x01ba1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#25\t" ++ ((match (encdec_backwards (0x01c3e333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#26\t" ++ ((match (encdec_backwards (0x015a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#27\t" ++ ((match (encdec_backwards (0x01eee3b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#28\t" ++ ((match (encdec_backwards (0x014a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#29\t" ++ ((match (encdec_backwards (0x00b8e8b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#30\t" ++ ((match (encdec_backwards (0x00da1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#31\t" ++ ((match (encdec_backwards (0x00d66e33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#32\t" ++ ((match (encdec_backwards (0x00ca1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#33\t" ++ ((match (encdec_backwards (0x00e7eeb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#34\t" ++ ((match (encdec_backwards (0x004a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#35\t" ++ ((match (encdec_backwards (0x00c5ef33#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#36\t" ++ ((match (encdec_backwards (0x003a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#37\t" ++ ((match (encdec_backwards (0x00c6e9b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#38\t" ++ ((match (encdec_backwards (0x033a1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#39\t" ++ ((match (encdec_backwards (0x40c80633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#40\t" ++ ((match (encdec_backwards (0x00c86833#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#41\t" ++ ((match (encdec_backwards (0x012fefb3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#42\t" ++ ((match (encdec_backwards (0x02ca1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#43\t" ++ ((match (encdec_backwards (0x00b2e2b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#44\t" ++ ((match (encdec_backwards (0x029a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#45\t" ++ ((match (encdec_backwards (0x00d366b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#46\t" ++ ((match (encdec_backwards (0x025a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#47\t" ++ ((match (encdec_backwards (0x00e3e733#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#48\t" ++ ((match (encdec_backwards (0x020a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#49\t" ++ ((match (encdec_backwards (0x00f8e7b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#50\t" ++ ((match (encdec_backwards (0x01aa1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#51\t" ++ ((match (encdec_backwards (0x008e6433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#52\t" ++ ((match (encdec_backwards (0x013a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#53\t" ++ ((match (encdec_backwards (0x009ee4b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#54\t" ++ ((match (encdec_backwards (0x00ba1613#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#55\t" ++ ((match (encdec_backwards (0x00cf6633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#56\t" ++ ((match (encdec_backwards (0x002a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#57\t" ++ ((match (encdec_backwards (0x00b9e333#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#58\t" ++ ((match (encdec_backwards (0x005fe8b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#59\t" ++ ((match (encdec_backwards (0x028a1593#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#60\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#61\t" ++ ((match (encdec_backwards (0x024a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#62\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#63\t" ++ ((match (encdec_backwards (0x01fa1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#64\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#65\t" ++ ((match (encdec_backwards (0x019a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#66\t" ++ ((match (encdec_compressed_backwards (0x8fc1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#67\t" ++ ((match (encdec_backwards (0x012a1413#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#68\t" ++ ((match (encdec_compressed_backwards (0x8c45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#69\t" ++ ((match (encdec_backwards (0x00aa1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#70\t" ++ ((match (encdec_compressed_backwards (0x8e45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#71\t" ++ ((match (encdec_backwards (0x001a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#72\t" ++ ((match (encdec_backwards (0x009362b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#73\t" ++ ((match (encdec_backwards (0x00b8e5b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#74\t" ++ ((match (encdec_backwards (0x023a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#75\t" ++ ((match (encdec_compressed_backwards (0x8ec5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#76\t" ++ ((match (encdec_backwards (0x01ea1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#77\t" ++ ((match (encdec_compressed_backwards (0x8f45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#78\t" ++ ((match (encdec_backwards (0x018a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#79\t" ++ ((match (encdec_compressed_backwards (0x8fc5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#80\t" ++ ((match (encdec_backwards (0x011a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#81\t" ++ ((match (encdec_compressed_backwards (0x8c45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#82\t" ++ ((match (encdec_backwards (0x009a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#83\t" ++ ((match (encdec_compressed_backwards (0x8e45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#84\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#85\t" ++ ((match (encdec_backwards (0x01da1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#86\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#87\t" ++ ((match (encdec_backwards (0x017a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#88\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#89\t" ++ ((match (encdec_backwards (0x010a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#90\t" ++ ((match (encdec_compressed_backwards (0x8fc1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#91\t" ++ ((match (encdec_backwards (0x008a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#92\t" ++ ((match (encdec_compressed_backwards (0x8e45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#93\t" ++ ((match (encdec_backwards (0x039a1493#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#94\t" ++ ((match (encdec_backwards (0x409004b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#95\t" ++ ((match (encdec_backwards (0x0142e433#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#96\t" ++ ((match (encdec_compressed_backwards (0x8c45#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#97\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#98\t" ++ ((match (encdec_backwards (0x016a1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#99\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#100\t" ++ ((match (encdec_backwards (0x00fa1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#101\t" ++ ((match (encdec_compressed_backwards (0x8f5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#102\t" ++ ((match (encdec_backwards (0x007a1793#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#103\t" ++ ((match (encdec_compressed_backwards (0x8e5d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#104\t" ++ ((match (encdec_backwards (0x010467b3#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#105\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#106\t" ++ ((match (encdec_backwards (0x00ea1693#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#107\t" ++ ((match (encdec_compressed_backwards (0x8ed9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#108\t" ++ ((match (encdec_backwards (0x006a1713#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#109\t" ++ ((match (encdec_compressed_backwards (0x8e59#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#110\t" ++ ((match (encdec_compressed_backwards (0x8dd5#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#111\t" ++ ((match (encdec_compressed_backwards (0x0a16#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#112\t" ++ ((match (encdec_backwards (0x01466633#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#113\t" ++ ((match (encdec_compressed_backwards (0x8dd1#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#114\t" ++ ((match (encdec_compressed_backwards (0x8ddd#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#115\t" ++ ((match (encdec_compressed_backwards (0x9dc9#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#116\t" ++ ((match (encdec_backwards (0x02a53533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#117\t" ++ ((match (encdec_compressed_backwards (0x952e#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#118\t" ++ ((match (encdec_compressed_backwards (0x7422#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#119\t" ++ ((match (encdec_compressed_backwards (0x7482#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#120\t" ++ ((match (encdec_compressed_backwards (0x6962#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#121\t" ++ ((match (encdec_compressed_backwards (0x69c2#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#122\t" ++ ((match (encdec_compressed_backwards (0x6a22#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#123\t" ++ ((match (encdec_compressed_backwards (0x6145#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("mulhsu_gpr_gpr_same_64__reg_a0__c__native_first#124\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("probe_mul#0\t" ++ ((match (encdec_compressed_backwards (0x9d4d#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("probe_mul#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("probe_mulh#0\t" ++ ((match (encdec_backwards (0x02a59533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("probe_mulh#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("probe_mulhu#0\t" ++ ((match (encdec_backwards (0x02a5b533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("probe_mulhu#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("probe_mulhsu#0\t" ++ ((match (encdec_backwards (0x02b52533#32)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))
+#eval IO.println ("probe_mulhsu#1\t" ++ ((match (encdec_compressed_backwards (0x8082#16)) (s0) with | .ok i _ => toString (repr i) | .error _ _ => "ERROR")))

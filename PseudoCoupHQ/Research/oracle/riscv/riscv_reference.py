@@ -1,6 +1,21 @@
 #!/usr/bin/env python3
 """riscv_reference.py -- THE ONE SYMBOLIC SIMULATOR OF THE RISC-V MACHINE.
 
+TASK sl1 (2026-09-14): THE TABLE IS GENERATED.  Sections 4, 4b and 5 of
+this file -- the builders a person typed from Sail's text, the compressed
+expansions, and the opcode table -- are gone.  `step` now hands each line
+to `sail_lifter/lifter.py`: the image's assembler turns the text into its
+word, the Sail model's own decoder (`encdec_backwards`, as the sail
+compiler's Lean backend emitted it) turns the word into the model's own
+instruction value, and the model's own `execute` (emitted the same way,
+read by `sail_lifter/lean_reader.py`) applies it to this file's
+MachineState.  Nothing below names an instruction.  The transcription this
+replaced is kept beside it for the record, unread by anything:
+`sail_lifter/riscv_reference_transcription_2026-09-13.py.txt`.  The family
+constants that other files import (R_TYPE, LOAD, ...) are kept as EMPTY
+containers so those imports still resolve; they describe nothing now.
+
+
 Node: hq.research.arch_unit_oracle
 (`PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_2_arch_unit_oracle/CORE_0_3_2_arch_unit_oracle.md`).
 Task rv1, brief `PRIVATE/PseudoCoupHQ/Research/briefs/task_rv1_brief.md`
@@ -435,616 +450,66 @@ class Operands(object):
 
 
 # ------------------------------------------------------------------
-# section 4: the term builders -- one per family, no second table
+# section 4: the definitions -- GENERATED from the Sail model (task sl1)
 # ------------------------------------------------------------------
 #
-# Every builder has the same shape as the x86 file's: it takes the resolved
-# `Operands` of one body line and applies that line's own meaning to the
-# machine state.
-
-R_TYPE = frozenset(["add", "sub", "sll", "slt", "sltu", "xor", "srl",
-                    "sra", "or", "and"])
-R_TYPE_W = frozenset(["addw", "subw", "sllw", "srlw", "sraw"])
-I_TYPE = frozenset(["addi", "slti", "sltiu", "xori", "ori", "andi"])
-SHIFT_I = frozenset(["slli", "srli", "srai"])
-I_TYPE_W = frozenset(["addiw"])
-SHIFT_I_W = frozenset(["slliw", "srliw", "sraiw"])
-UPPER = frozenset(["lui", "auipc"])
-MULTIPLY = frozenset(["mul", "mulh", "mulhsu", "mulhu"])
-MULTIPLY_W = frozenset(["mulw"])
-DIVIDE = frozenset(["div", "divu", "rem", "remu"])
-CONDITIONAL_ZERO = frozenset(["czero.eqz", "czero.nez"])
-DIVIDE_W = frozenset(["divw", "divuw", "remw", "remuw"])
-
-# -- task rv3, section 1 row 1.  THE ROWS clang 21 WRITES AND THIS TABLE
-# -- HAD NO ENTRY FOR, and not one row more.
-#
-# The x86 table's own rule is that no entry is invented for an opcode no
-# body contains.  These five were READ OFF CARVED BODIES: `census_rv3.json`
-# counts `c.zext.w`, `add.uw` and `c.mul` over the 244 inherited sources,
-# and task rv2's `rv_loop.jsonl` carries `bseti` and `fsgnjn.d` with the
-# body line each refused on, quoted in log_260.  Each is checked against
-# the ratified Sail model at points before it is used, exactly as task rv1
-# checked the base set.
-ADD_UNSIGNED_WORD = frozenset(["add.uw"])          # Zba
-BIT_SET_I = frozenset(["bseti"])                   # Zbs
-FLOAT_SIGN_INJECT = {"fsgnjn.d": ("negate", 64)}   # D, sign-injection
-LOAD = {"lb": (8, True), "lh": (16, True), "lw": (32, True),
-        "ld": (64, True), "lbu": (8, False), "lhu": (16, False),
-        "lwu": (32, False)}
-STORE = {"sb": 8, "sh": 16, "sw": 32, "sd": 64}
-BRANCH = frozenset(["beq", "bne", "blt", "bge", "bltu", "bgeu"])
-JUMP = frozenset(["jal", "jalr"])
-NO_OPERATION = frozenset(["fence", "fence.i", "nop", "c.nop", "pause"])
-TRAP = frozenset(["ecall", "ebreak", "c.ebreak", "unimp", "c.unimp"])
-
-
-def shift_amount(value, width):
-    """the shift amount is the low bits of the source: six at 64, five at
-    32.  The architecture masks; it does not refuse."""
-    if width == 64:
-        return value & z3.BitVecVal(0x3F, XLEN)
-    return value & z3.BitVecVal(0x1F, XLEN)
-
-
-def build_r_type(ops):
-    left = ops.read(1)
-    right = ops.read(2)
-    mnemonic = ops.mnemonic
-    if mnemonic == "add":
-        result = left + right
-    elif mnemonic == "sub":
-        result = left - right
-    elif mnemonic == "and":
-        result = left & right
-    elif mnemonic == "or":
-        result = left | right
-    elif mnemonic == "xor":
-        result = left ^ right
-    elif mnemonic == "sll":
-        result = left << shift_amount(right, 64)
-    elif mnemonic == "srl":
-        result = z3.LShR(left, shift_amount(right, 64))
-    elif mnemonic == "sra":
-        result = left >> shift_amount(right, 64)
-    elif mnemonic == "slt":
-        result = z3.If(left < right, z3.BitVecVal(1, XLEN),
-                       z3.BitVecVal(0, XLEN))
-    else:
-        result = z3.If(z3.ULT(left, right), z3.BitVecVal(1, XLEN),
-                       z3.BitVecVal(0, XLEN))
-    ops.write(0, result)
-
-
-def build_r_type_w(ops):
-    left = z3.Extract(31, 0, ops.read(1))
-    right = z3.Extract(31, 0, ops.read(2))
-    mnemonic = ops.mnemonic
-    if mnemonic == "addw":
-        result = left + right
-    elif mnemonic == "subw":
-        result = left - right
-    elif mnemonic == "sllw":
-        amount = z3.Extract(31, 0, shift_amount(ops.read(2), 32))
-        result = left << amount
-    elif mnemonic == "srlw":
-        amount = z3.Extract(31, 0, shift_amount(ops.read(2), 32))
-        result = z3.LShR(left, amount)
-    else:
-        amount = z3.Extract(31, 0, shift_amount(ops.read(2), 32))
-        result = left >> amount
-    ops.write(0, sign_extend_w(result))
-
-
-def build_i_type(ops):
-    left = ops.read(1)
-    right = ops.immediate(2)
-    mnemonic = ops.mnemonic
-    if mnemonic == "addi":
-        result = left + right
-    elif mnemonic == "andi":
-        result = left & right
-    elif mnemonic == "ori":
-        result = left | right
-    elif mnemonic == "xori":
-        result = left ^ right
-    elif mnemonic == "slti":
-        result = z3.If(left < right, z3.BitVecVal(1, XLEN),
-                       z3.BitVecVal(0, XLEN))
-    else:
-        result = z3.If(z3.ULT(left, right), z3.BitVecVal(1, XLEN),
-                       z3.BitVecVal(0, XLEN))
-    ops.write(0, result)
-
-
-def build_shift_i(ops):
-    left = ops.read(1)
-    amount = ops.immediate(2) & z3.BitVecVal(0x3F, XLEN)
-    mnemonic = ops.mnemonic
-    if mnemonic == "slli":
-        result = left << amount
-    elif mnemonic == "srli":
-        result = z3.LShR(left, amount)
-    else:
-        result = left >> amount
-    ops.write(0, result)
-
-
-def build_i_type_w(ops):
-    left = z3.Extract(31, 0, ops.read(1))
-    right = z3.Extract(31, 0, ops.immediate(2))
-    ops.write(0, sign_extend_w(left + right))
-
-
-def build_shift_i_w(ops):
-    left = z3.Extract(31, 0, ops.read(1))
-    amount = z3.Extract(31, 0, ops.immediate(2) & z3.BitVecVal(0x1F, XLEN))
-    mnemonic = ops.mnemonic
-    if mnemonic == "slliw":
-        result = left << amount
-    elif mnemonic == "srliw":
-        result = z3.LShR(left, amount)
-    else:
-        result = left >> amount
-    ops.write(0, sign_extend_w(result))
-
-
-def build_upper(ops):
-    """`lui rd, imm` places the 20-bit immediate in bits 31..12 and
-    sign-extends; `auipc rd, imm` adds that to the program counter.
-
-    `llvm-objdump` prints the immediate ALREADY SHIFTED DOWN -- `lui a0,
-    0x1` means the value 0x1000 -- so the builder shifts it back up."""
-    raw = ops.immediate(1)
-    placed = z3.Extract(31, 0, raw << z3.BitVecVal(12, XLEN))
-    value = z3.SignExt(32, placed)
-    if ops.mnemonic == "lui":
-        ops.write(0, value)
-        return
-    ops.write(0, ops.state.program_counter() + value)
-
-
-def build_multiply(ops):
-    left = ops.read(1)
-    right = ops.read(2)
-    mnemonic = ops.mnemonic
-    if mnemonic == "mul":
-        ops.write(0, left * right)
-        return
-    if mnemonic == "mulh":
-        wide = z3.SignExt(64, left) * z3.SignExt(64, right)
-    elif mnemonic == "mulhu":
-        wide = z3.ZeroExt(64, left) * z3.ZeroExt(64, right)
-    else:
-        wide = z3.SignExt(64, left) * z3.ZeroExt(64, right)
-    ops.write(0, z3.Extract(127, 64, wide))
-
-
-def build_multiply_w(ops):
-    left = z3.Extract(31, 0, ops.read(1))
-    right = z3.Extract(31, 0, ops.read(2))
-    ops.write(0, sign_extend_w(left * right))
-
-
-def build_divide(ops):
-    """THE CAREFUL CASE, and the one that most differs from x86.
-
-    The architecture DEFINES every case; nothing traps.  Quotient by zero
-    is all ones for the signed form and 2^64-1 for the unsigned form (the
-    same bits); remainder by zero is the dividend.  The signed overflow
-    (the most negative dividend divided by minus one) gives that dividend
-    back, with remainder zero.  Rounding is toward zero, so the remainder's
-    sign follows the DIVIDEND -- z3's `SRem`, never its `%`."""
-    left = ops.read(1)
-    right = ops.read(2)
-    mnemonic = ops.mnemonic
-    zero = z3.BitVecVal(0, XLEN)
-    all_ones = z3.BitVecVal((1 << XLEN) - 1, XLEN)
-    most_negative = z3.BitVecVal(1 << (XLEN - 1), XLEN)
-    minus_one = all_ones
-    if mnemonic == "div":
-        overflow = z3.And(left == most_negative, right == minus_one)
-        result = z3.If(right == zero, all_ones,
-                       z3.If(overflow, most_negative, left / right))
-    elif mnemonic == "divu":
-        result = z3.If(right == zero, all_ones, z3.UDiv(left, right))
-    elif mnemonic == "rem":
-        overflow = z3.And(left == most_negative, right == minus_one)
-        result = z3.If(right == zero, left,
-                       z3.If(overflow, zero, z3.SRem(left, right)))
-    else:
-        result = z3.If(right == zero, left, z3.URem(left, right))
-    ops.write(0, result)
-
-
-def build_divide_w(ops):
-    """the 32-bit forms: the same defined cases, computed at 32 bits, the
-    result sign-extended into the whole register."""
-    left = z3.Extract(31, 0, ops.read(1))
-    right = z3.Extract(31, 0, ops.read(2))
-    mnemonic = ops.mnemonic
-    zero = z3.BitVecVal(0, 32)
-    all_ones = z3.BitVecVal((1 << 32) - 1, 32)
-    most_negative = z3.BitVecVal(1 << 31, 32)
-    minus_one = all_ones
-    if mnemonic == "divw":
-        overflow = z3.And(left == most_negative, right == minus_one)
-        result = z3.If(right == zero, all_ones,
-                       z3.If(overflow, most_negative, left / right))
-    elif mnemonic == "divuw":
-        result = z3.If(right == zero, all_ones, z3.UDiv(left, right))
-    elif mnemonic == "remw":
-        overflow = z3.And(left == most_negative, right == minus_one)
-        result = z3.If(right == zero, left,
-                       z3.If(overflow, zero, z3.SRem(left, right)))
-    else:
-        result = z3.If(right == zero, left, z3.URem(left, right))
-    ops.write(0, sign_extend_w(result))
-
-
-def build_conditional_zero(ops):
-    """Zicond's conditional zero, and the instruction clang 21 reaches for
-    where x86 reaches for a conditional move.
-
-    `czero.eqz rd, rs1, rs2` writes zero when rs2 IS zero and rs1
-    otherwise; `czero.nez rd, rs1, rs2` writes zero when rs2 is NOT zero
-    and rs1 otherwise.  There is no flags register in the reading: the
-    condition is the second source register's own value."""
-    value = ops.read(1)
-    condition = ops.read(2)
-    zero = z3.BitVecVal(0, XLEN)
-    if ops.mnemonic == "czero.eqz":
-        result = z3.If(condition == zero, zero, value)
-    else:
-        result = z3.If(condition != zero, zero, value)
-    ops.write(0, result)
-
-
-def build_add_unsigned_word(ops):
-    """Zba's `add.uw rd, rs1, rs2`, and the one thing about it that is not
-    an ordinary add: the FIRST source is cut to its low 32 bits and
-    ZERO-extended before the addition, while the second is read whole.
-
-    Everywhere else in this file a 32-bit form sign-extends; this one does
-    not, because its purpose is to turn an unsigned 32-bit index into a
-    64-bit address.  clang 21 writes it wherever a rendered emulation casts
-    a 32-bit value to a wider unsigned one and adds."""
-    low = z3.Extract(31, 0, ops.read(1))
-    ops.write(0, z3.ZeroExt(32, low) + ops.read(2))
-
-
-def build_bit_set_immediate(ops):
-    """Zbs's `bseti rd, rs1, shamt`: the first source with the single bit
-    `shamt` SET.  The shift amount is the low six bits of the immediate at
-    64, the same masking rule the shift-immediate forms use; the
-    architecture masks, it does not refuse."""
-    value = ops.read(1)
-    amount = ops.immediate(2) & z3.BitVecVal(0x3F, XLEN)
-    one = z3.BitVecVal(1, XLEN)
-    ops.write(0, value | (one << amount))
-
-
-def build_float_sign_inject(ops):
-    """`fsgnjn.d rd, rs1, rs2`: the result carries rs1's every bit BUT the
-    sign, and the OPPOSITE of rs2's sign bit.
-
-    THIS IS A BIT OPERATION AND IS WRITTEN AS ONE.  Sign injection is
-    defined on the encoding, never on the value: it raises no exception,
-    it does not canonicalise a NaN, and it moves a signalling NaN through
-    unchanged.  Writing it through z3's float sort would lose exactly
-    those facts, so the builder works on the bits.  `fsgnjn.d rd, rs, rs`
-    is what an assembler spells `fneg.d`, which is why a carved body has
-    it."""
-    kind, width = FLOAT_SIGN_INJECT[ops.mnemonic]
-    left = ops.read_float(1)
-    right = ops.read_float(2)
-    sign = z3.Extract(width - 1, width - 1, bits_of(right, width))
-    if kind == "negate":
-        sign = ~sign
-    rest = z3.Extract(width - 2, 0, bits_of(left, width))
-    placed = z3.Concat(sign, rest)
-    if width == 32:
-        ops.write_float(0, nan_box(placed))
-        return
-    ops.write_float(0, placed)
-
-
-def build_load(ops):
-    width, signed = LOAD[ops.mnemonic]
-    cell = ops.state.memory_cell(ops.texts[1])
-    value = z3.Extract(width - 1, 0, cell)
-    if width == XLEN:
-        ops.write(0, value)
-        return
-    if signed:
-        ops.write(0, z3.SignExt(XLEN - width, value))
-        return
-    ops.write(0, z3.ZeroExt(XLEN - width, value))
-
-
-def build_store(ops):
-    width = STORE[ops.mnemonic]
-    value = ops.read(0)
-    if width == XLEN:
-        ops.state.set_memory_cell(ops.texts[1], value)
-        return
-    kept = ops.state.memory_cell(ops.texts[1])
-    low = z3.Extract(width - 1, 0, value)
-    high = z3.Extract(XLEN - 1, width, kept)
-    ops.state.set_memory_cell(ops.texts[1], z3.Concat(high, low))
-
-
-def build_branch(ops):
-    left = ops.read(0)
-    right = ops.read(1)
-    mnemonic = ops.mnemonic
-    if mnemonic == "beq":
-        condition = left == right
-    elif mnemonic == "bne":
-        condition = left != right
-    elif mnemonic == "blt":
-        condition = left < right
-    elif mnemonic == "bge":
-        condition = left >= right
-    elif mnemonic == "bltu":
-        condition = z3.ULT(left, right)
-    else:
-        condition = z3.UGE(left, right)
-    ops.state.branch_condition = condition
-
-
-def build_jump(ops):
-    """`jal rd, target` and `jalr rd, off(rs1)` write the return address
-    into `rd` and transfer.  The transfer itself is the walk's business,
-    not the table's; what the table states is the write."""
-    index = ops.register_index(0)
-    if index != ZERO_REGISTER:
-        ops.state.write_register(
-            index, ops.state.program_counter() + z3.BitVecVal(4, XLEN))
-
-
-def build_no_operation(ops):
-    return
-
-
-def build_trap(ops):
-    raise LeavesTheUnit(ops.mnemonic, "a trap")
-
-
-# -- the floating-point family, exactly the instructions the ten carved
-# -- bodies spell.
-
-FLOAT_BINARY = {
-    "fadd.s": ("add", 32), "fadd.d": ("add", 64),
-    "fsub.s": ("sub", 32), "fsub.d": ("sub", 64),
-    "fmul.s": ("mul", 32), "fmul.d": ("mul", 64),
-    "fdiv.s": ("div", 32), "fdiv.d": ("div", 64),
-}
-FLOAT_FROM_INTEGER = {
-    "fcvt.s.w": (32, 32, True), "fcvt.s.wu": (32, 32, False),
-    "fcvt.s.l": (32, 64, True), "fcvt.s.lu": (32, 64, False),
-    "fcvt.d.w": (64, 32, True), "fcvt.d.wu": (64, 32, False),
-    "fcvt.d.l": (64, 64, True), "fcvt.d.lu": (64, 64, False),
-}
-FLOAT_WIDEN = {"fcvt.d.s": (32, 64), "fcvt.s.d": (64, 32)}
-FLOAT_MOVE = {
-    "fmv.w.x": ("to_float", 32), "fmv.x.w": ("to_integer", 32),
-    "fmv.d.x": ("to_float", 64), "fmv.x.d": ("to_integer", 64),
-    "fmv.s": ("float_to_float", 32), "fmv.d": ("float_to_float", 64),
-}
-FLOAT_COMPARE = {"feq.s": ("eq", 32), "flt.s": ("lt", 32),
-                 "fle.s": ("le", 32), "feq.d": ("eq", 64),
-                 "flt.d": ("lt", 64), "fle.d": ("le", 64)}
-FLOAT_LOAD = {"flw": 32, "fld": 64}
-FLOAT_STORE = {"fsw": 32, "fsd": 64}
-
-
-def float_of(ops, index, width):
-    bits = ops.read_float(index)
-    return as_float(bits, width)
-
-
-def placed_float(value, width):
-    bits = from_float(value)
-    if width == 32:
-        return nan_box(bits)
-    return bits
-
-
-def build_float_binary(ops):
-    kind, width = FLOAT_BINARY[ops.mnemonic]
-    left = float_of(ops, 1, width)
-    right = float_of(ops, 2, width)
-    if kind == "add":
-        result = z3.fpAdd(ROUNDING, left, right)
-    elif kind == "sub":
-        result = z3.fpSub(ROUNDING, left, right)
-    elif kind == "mul":
-        result = z3.fpMul(ROUNDING, left, right)
-    else:
-        result = z3.fpDiv(ROUNDING, left, right)
-    ops.write_float(0, placed_float(result, width))
-
-
-def build_float_from_integer(ops):
-    float_width, integer_width, signed = FLOAT_FROM_INTEGER[ops.mnemonic]
-    whole = ops.read(1)
-    if integer_width != XLEN:
-        whole = z3.Extract(integer_width - 1, 0, whole)
-    if signed:
-        value = z3.fpSignedToFP(ROUNDING, whole, FLOAT_SORT[float_width])
-    else:
-        value = z3.fpUnsignedToFP(ROUNDING, whole, FLOAT_SORT[float_width])
-    ops.write_float(0, placed_float(value, float_width))
-
-
-def build_float_widen(ops):
-    source_width, target_width = FLOAT_WIDEN[ops.mnemonic]
-    value = float_of(ops, 1, source_width)
-    widened = z3.fpFPToFP(ROUNDING, value, FLOAT_SORT[target_width])
-    ops.write_float(0, placed_float(widened, target_width))
-
-
-def build_float_move(ops):
-    kind, width = FLOAT_MOVE[ops.mnemonic]
-    if kind == "to_float":
-        bits = ops.read(1)
-        if width == 32:
-            ops.write_float(0, nan_box(z3.Extract(31, 0, bits)))
-            return
-        ops.write_float(0, bits)
-        return
-    if kind == "to_integer":
-        bits = ops.read_float(1)
-        if width == 32:
-            ops.write(0, z3.SignExt(32, z3.Extract(31, 0, bits)))
-            return
-        ops.write(0, bits)
-        return
-    ops.write_float(0, ops.read_float(1))
-
-
-def build_float_compare(ops):
-    kind, width = FLOAT_COMPARE[ops.mnemonic]
-    left = float_of(ops, 1, width)
-    right = float_of(ops, 2, width)
-    if kind == "eq":
-        condition = z3.fpEQ(left, right)
-    elif kind == "lt":
-        condition = z3.fpLT(left, right)
-    else:
-        condition = z3.fpLEQ(left, right)
-    ops.write(0, z3.If(condition, z3.BitVecVal(1, XLEN),
-                       z3.BitVecVal(0, XLEN)))
-
-
-def build_float_load(ops):
-    width = FLOAT_LOAD[ops.mnemonic]
-    cell = ops.state.memory_cell(ops.texts[1])
-    if width == 32:
-        ops.write_float(0, nan_box(z3.Extract(31, 0, cell)))
-        return
-    ops.write_float(0, cell)
-
-
-def build_float_store(ops):
-    width = FLOAT_STORE[ops.mnemonic]
-    value = ops.read_float(0)
-    if width == XLEN:
-        ops.state.set_memory_cell(ops.texts[1], value)
-        return
-    kept = ops.state.memory_cell(ops.texts[1])
-    low = z3.Extract(width - 1, 0, value)
-    high = z3.Extract(XLEN - 1, width, kept)
-    ops.state.set_memory_cell(ops.texts[1], z3.Concat(high, low))
-
-
-# ------------------------------------------------------------------
-# section 4b: the compressed forms -- a spelling, expanded, never a
-# second meaning
-# ------------------------------------------------------------------
-#
-# Each 16-bit instruction of the C extension IS one of the instructions
-# above with its operands restricted.  The architecture manual defines each
-# by its expansion, so this table holds the EXPANSION and the meaning stays
-# in one place.  A function takes the compressed operand list and returns
-# the base mnemonic's operand list.
-
-def _same(texts):
-    return list(texts)
-
-
-def _destination_is_also_source(texts):
-    return [texts[0], texts[0], texts[1]]
-
-
-def _from_zero(texts):
-    return [texts[0], "zero", texts[1]]
-
-
-def _jump_no_link(texts):
-    return ["zero", "0x0(%s)" % texts[0]]
-
-
-def _jump_and_link(texts):
-    return ["ra", "0x0(%s)" % texts[0]]
-
-
-def _branch_against_zero(texts):
-    return [texts[0], "zero", texts[1]]
-
-
-def _jump_target(texts):
-    return ["zero", texts[0]]
-
-
-def _jump_target_linked(texts):
-    return ["ra", texts[0]]
-
-
-def _one_operand_against_zero(texts):
-    """`c.zext.w rd` names ONE register and the manual defines it as
-    `add.uw rd, rd, zero`: the register is both the destination and the
-    first source, and the second source is the zero register."""
-    return [texts[0], texts[0], "zero"]
-
-
-COMPRESSED = {
-    "c.add": ("add", _destination_is_also_source),
-    "c.mv": ("add", _from_zero),
-    "c.sub": ("sub", _destination_is_also_source),
-    "c.and": ("and", _destination_is_also_source),
-    "c.or": ("or", _destination_is_also_source),
-    "c.xor": ("xor", _destination_is_also_source),
-    "c.addw": ("addw", _destination_is_also_source),
-    "c.subw": ("subw", _destination_is_also_source),
-    "c.addi": ("addi", _destination_is_also_source),
-    "c.addiw": ("addiw", _destination_is_also_source),
-    "c.andi": ("andi", _destination_is_also_source),
-    "c.li": ("addi", _from_zero),
-    "c.slli": ("slli", _destination_is_also_source),
-    "c.srli": ("srli", _destination_is_also_source),
-    "c.srai": ("srai", _destination_is_also_source),
-    "c.lui": ("lui", _same),
-    "c.addi16sp": ("addi", _destination_is_also_source),
-    "c.jr": ("jalr", _jump_no_link),
-    "c.jalr": ("jalr", _jump_and_link),
-    "c.j": ("jal", _jump_target),
-    "c.jal": ("jal", _jump_target_linked),
-    "c.beqz": ("beq", _branch_against_zero),
-    "c.bnez": ("bne", _branch_against_zero),
-    "c.ld": ("ld", _same),
-    "c.lw": ("lw", _same),
-    "c.sd": ("sd", _same),
-    "c.sw": ("sw", _same),
-    "c.ldsp": ("ld", _same),
-    "c.lwsp": ("lw", _same),
-    "c.sdsp": ("sd", _same),
-    "c.swsp": ("sw", _same),
-    "c.fld": ("fld", _same),
-    "c.fsd": ("fsd", _same),
-    "c.fldsp": ("fld", _same),
-    "c.fsdsp": ("fsd", _same),
-    # task rv3: the two Zcb forms clang 21 writes.  Each IS one of the
-    # instructions above with its operands restricted, so the meaning
-    # stays in one place and only the expansion is new.
-    "c.mul": ("mul", _destination_is_also_source),
-    "c.zext.w": ("add.uw", _one_operand_against_zero),
-}
+# There is no builder here.  The meaning of every instruction is the Sail
+# model's own `execute` clause, as the sail compiler's Lean backend wrote
+# it, read by `sail_lifter/lean_reader.py`; the decoding of a word is the
+# model's own `encdec` mapping, the same way.  `sail_lifter/lifter.py`
+# holds the bridge.  Below, the names the older drivers import are kept
+# as empty containers: they described the typed table and describe
+# nothing now.
+
+import os as _os
+import sys as _sys
+
+_SAIL_LIFTER = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                             "sail_lifter")
+if _SAIL_LIFTER not in _sys.path:
+    _sys.path.insert(0, _SAIL_LIFTER)
+
+import lifter as GENERATED                                   # noqa: E402
+
+R_TYPE = frozenset()
+R_TYPE_W = frozenset()
+I_TYPE = frozenset()
+SHIFT_I = frozenset()
+I_TYPE_W = frozenset()
+SHIFT_I_W = frozenset()
+UPPER = frozenset()
+MULTIPLY = frozenset()
+MULTIPLY_W = frozenset()
+DIVIDE = frozenset()
+CONDITIONAL_ZERO = frozenset()
+DIVIDE_W = frozenset()
+ADD_UNSIGNED_WORD = frozenset()
+BIT_SET_I = frozenset()
+FLOAT_SIGN_INJECT = {}
+LOAD = {}
+STORE = {}
+BRANCH = frozenset()
+JUMP = frozenset()
+NO_OPERATION = frozenset()
+TRAP = frozenset()
+FLOAT_BINARY = {}
+FLOAT_FROM_INTEGER = {}
+FLOAT_WIDEN = {}
+FLOAT_MOVE = {}
+FLOAT_COMPARE = {}
+FLOAT_LOAD = {}
+FLOAT_STORE = {}
+COMPRESSED = {}
 
 
 def expand_compressed(mnemonic, texts):
-    """(base mnemonic, base operand list) for a compressed instruction, or
-    nothing when the mnemonic is not one."""
-    entry = COMPRESSED.get(mnemonic)
-    if entry is None:
-        return None
-    base, rewrite = entry
-    return base, rewrite(texts)
+    """RETIRED: the model decodes a compressed word itself.  Nothing."""
+    return None
 
 
 # ------------------------------------------------------------------
-# section 5: opcode_table -- THE ONE TABLE (the sub-node)
+# section 5: opcode_table -- kept as an empty frame for the drivers that
+# import it; the definitions live in the generated emit
 # ------------------------------------------------------------------
 
 NAMED = "the operands the instruction names"
@@ -1057,8 +522,7 @@ TRAP_CAUSE = "a trap, and this reference walks a body in text order"
 
 
 class Entry(object):
-    """one arch instruction's meaning: which places it reads, which places
-    it writes, and the builder that turns its operands into a z3 term."""
+    """one arch instruction's meaning: kept for the drivers' imports."""
 
     def __init__(self, mnemonic, reads, writes, build, cause=None):
         self.mnemonic = mnemonic
@@ -1073,95 +537,29 @@ class Entry(object):
 
 
 class OpcodeTable(object):
-    """THE one table from mnemonic to meaning."""
+    """the frame the drivers import; EMPTY, because the table is
+    generated (see section 4)."""
 
     def __init__(self):
         self.entries = {}
-        self._install()
-
-    def add(self, mnemonic, reads, writes, build, cause=None):
-        self.entries[mnemonic] = Entry(mnemonic, reads, writes, build,
-                                       cause)
-
-    def add_many(self, mnemonics, reads, writes, build, cause=None):
-        for mnemonic in mnemonics:
-            self.add(mnemonic, reads, writes, build, cause)
-
-    def _install(self):
-        self.add_many(R_TYPE, (NAMED,), (DESTINATION,), build_r_type)
-        self.add_many(R_TYPE_W, (NAMED,), (DESTINATION,), build_r_type_w)
-        self.add_many(I_TYPE, (NAMED,), (DESTINATION,), build_i_type)
-        self.add_many(SHIFT_I, (NAMED,), (DESTINATION,), build_shift_i)
-        self.add_many(I_TYPE_W, (NAMED,), (DESTINATION,), build_i_type_w)
-        self.add_many(SHIFT_I_W, (NAMED,), (DESTINATION,), build_shift_i_w)
-        self.add("lui", (NAMED,), (DESTINATION,), build_upper)
-        self.add("auipc", (NAMED, THE_PROGRAM_COUNTER), (DESTINATION,),
-                 build_upper)
-        self.add_many(MULTIPLY, (NAMED,), (DESTINATION,), build_multiply)
-        self.add_many(MULTIPLY_W, (NAMED,), (DESTINATION,),
-                      build_multiply_w)
-        self.add_many(DIVIDE, (NAMED,), (DESTINATION,), build_divide)
-        self.add_many(CONDITIONAL_ZERO, (NAMED,), (DESTINATION,),
-                      build_conditional_zero,
-                      "the Zicond extension, not RV64I+M; in the table "
-                      "because a carved body spells it")
-        self.add_many(DIVIDE_W, (NAMED,), (DESTINATION,), build_divide_w)
-        self.add_many(ADD_UNSIGNED_WORD, (NAMED,), (DESTINATION,),
-                      build_add_unsigned_word,
-                      "the Zba extension, not RV64I+M; in the table "
-                      "because carved bodies spell it (task rv3)")
-        self.add_many(BIT_SET_I, (NAMED,), (DESTINATION,),
-                      build_bit_set_immediate,
-                      "the Zbs extension, not RV64I+M; in the table "
-                      "because carved bodies spell it (task rv3)")
-        self.add_many(FLOAT_SIGN_INJECT, (NAMED,), (DESTINATION,),
-                      build_float_sign_inject,
-                      "sign injection of the D extension; in the table "
-                      "because a carved body spells it as the negate "
-                      "idiom (task rv3)")
-        self.add_many(LOAD, (MEMORY,), (DESTINATION,), build_load)
-        self.add_many(STORE, (NAMED,), (MEMORY,), build_store)
-        self.add_many(BRANCH, (NAMED,), (THE_BRANCH_CONDITION,),
-                      build_branch)
-        self.add_many(JUMP, (NAMED,), (DESTINATION,), build_jump)
-        self.add_many(NO_OPERATION, (), (), build_no_operation)
-        self.add_many(TRAP, (), (), None, TRAP_CAUSE)
-        self.add_many(FLOAT_BINARY, (NAMED,), (DESTINATION,),
-                      build_float_binary)
-        self.add_many(FLOAT_FROM_INTEGER, (NAMED,), (DESTINATION,),
-                      build_float_from_integer)
-        self.add_many(FLOAT_WIDEN, (NAMED,), (DESTINATION,),
-                      build_float_widen)
-        self.add_many(FLOAT_MOVE, (NAMED,), (DESTINATION,),
-                      build_float_move)
-        self.add_many(FLOAT_COMPARE, (NAMED,), (DESTINATION,),
-                      build_float_compare)
-        self.add_many(FLOAT_LOAD, (MEMORY,), (DESTINATION,),
-                      build_float_load)
-        self.add_many(FLOAT_STORE, (NAMED,), (MEMORY,), build_float_store)
 
     def entry_for(self, mnemonic):
-        return self.entries.get(mnemonic)
+        return None
 
     def builder_for(self, mnemonic):
-        entry = self.entries.get(mnemonic)
-        if entry is None:
-            return None
-        return entry.build
+        return None
 
     def without_a_builder(self):
-        out = []
-        for mnemonic in sorted(self.entries):
-            if self.entries[mnemonic].build is None:
-                out.append(mnemonic)
-        return out
+        return []
 
 
 # ------------------------------------------------------------------
-# section 6: RiscvReference -- the node's own class
+# section 6: RiscvReference -- the node's own class (the walk, unchanged)
 # ------------------------------------------------------------------
 
 RETURN_LINES = frozenset(["jalr zero, 0x0(ra)", "c.jr ra", "ret"])
+
+RETIRED = "Retire_Success"
 
 
 class RiscvReference(object):
@@ -1169,6 +567,10 @@ class RiscvReference(object):
 
     def __init__(self):
         self.opcode_table = OpcodeTable()
+
+    @property
+    def lifter(self):
+        return GENERATED.shared_lifter()
 
     # -- the node's methods -------------------------------------------
 
@@ -1189,21 +591,47 @@ class RiscvReference(object):
         return state
 
     def step(self, state, line):
-        mnemonic, texts = self.split_line(line)
-        expansion = expand_compressed(mnemonic, texts)
-        if expansion is not None:
-            mnemonic, texts = expansion
-        entry = self.opcode_table.entry_for(mnemonic)
-        if entry is None:
-            raise NotModeled(
-                "no entry in the riscv opcode table for %r (line %r)"
-                % (mnemonic, line))
-        if entry.build is None:
-            raise NotModeled(
-                "%r has no builder: %s (line %r)"
-                % (mnemonic, entry.cause, line))
-        ops = Operands(state, mnemonic, texts)
-        entry.build(ops)
+        """one line: its word by the assembler, its instruction by the
+        model's decoder, its effect by the model's execute."""
+        text = self.split_line(line)
+        del text
+        lifter = self.lifter
+        try:
+            words = lifter.words_of_lines([self.clean_line(line)])
+            word, size = words[0]
+            instr = lifter.decode(word, size)
+            seed_pc = state.program_counter()
+            result, machine = self.execute_at(lifter, instr, state,
+                                              seed_pc, size)
+        except GENERATED.LiftRefused as problem:
+            raise NotModeled("%s (line %r)" % (problem, line))
+        self.record(state, line, result, machine)
+
+    def execute_at(self, lifter, instr, state, seed_pc, size):
+        """the model's own step order: PC is the walk's symbol, nextPC is
+        PC plus the word's size (`Step.lean`), then execute."""
+        lifter.reset_registers["PC"] = seed_pc
+        lifter.reset_registers["nextPC"] = seed_pc + z3.BitVecVal(size, XLEN)
+        return lifter.execute(instr, state)
+
+    def record(self, state, line, result, machine):
+        """what the walk keeps of one executed instruction: a branch's
+        condition (the top conditional of the nextPC the model wrote), and
+        a result that is not a retirement leaves the unit."""
+        written = dict(machine.registers)
+        next_pc = written.get("nextPC")
+        if next_pc is not None and z3.is_bv(next_pc):
+            simplified = z3.simplify(next_pc)
+            if z3.is_app_of(simplified, z3.Z3_OP_ITE):
+                state.branch_condition = simplified.arg(0)
+        name = GENERATED.constructor_name(result)
+        if name not in (RETIRED, "ite"):
+            raise LeavesTheUnit(line, name)
+
+    def clean_line(self, line):
+        text = line.strip()
+        text = re.sub(r"\s*<[^>]*>\s*$", "", text)
+        return text
 
     def split_line(self, line):
         """`add a0, a1, a2` -> ('add', ['a0', 'a1', 'a2']).

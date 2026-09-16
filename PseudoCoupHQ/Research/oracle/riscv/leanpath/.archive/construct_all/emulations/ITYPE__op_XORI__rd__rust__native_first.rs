@@ -1,0 +1,120 @@
+#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
+#![allow(unused_variables, unused_mut)]
+
+// task t4 emulation -- rendered by render_general.py, one named
+// intermediate per node of the term of ITYPE__op_XORI__rd__rust__native_first.
+//   
+#[no_mangle]
+pub extern "C" fn emu_ITYPE__op_XORI__rd__rust__native_first(a: u64, b: u16) -> u64
+{
+    let v0: u32 = (((((a as u64)) >> 0) as u32) & 0xfffu32);
+    let v1: u32 = (((((b as u32)) >> 0) as u32) & 0xfffu32);
+    let v2: u32 = (((((v1) as u32) ^ ((v0) as u32)) as u32) & 0xfffu32);
+    let v3: u32 = (((((a as u64)) >> 12) as u32) & 0x1u32);
+    let v4: u32 = (((((b as u32)) >> 11) as u32) & 0x1u32);
+    let v5: u32 = (((((v4) as u32) ^ ((v3) as u32)) as u32) & 0x1u32);
+    let v6: u32 = (((((a as u64)) >> 13) as u32) & 0x1u32);
+    let v7: u32 = (((((v4) as u32) ^ ((v6) as u32)) as u32) & 0x1u32);
+    let v8: u32 = (((((a as u64)) >> 14) as u32) & 0x1u32);
+    let v9: u32 = (((((v4) as u32) ^ ((v8) as u32)) as u32) & 0x1u32);
+    let v10: u32 = (((((a as u64)) >> 15) as u32) & 0x1u32);
+    let v11: u32 = (((((v4) as u32) ^ ((v10) as u32)) as u32) & 0x1u32);
+    let v12: u32 = (((((a as u64)) >> 16) as u32) & 0x1u32);
+    let v13: u32 = (((((v4) as u32) ^ ((v12) as u32)) as u32) & 0x1u32);
+    let v14: u32 = (((((a as u64)) >> 17) as u32) & 0x1u32);
+    let v15: u32 = (((((v4) as u32) ^ ((v14) as u32)) as u32) & 0x1u32);
+    let v16: u32 = (((((a as u64)) >> 18) as u32) & 0x1u32);
+    let v17: u32 = (((((v4) as u32) ^ ((v16) as u32)) as u32) & 0x1u32);
+    let v18: u32 = (((((a as u64)) >> 19) as u32) & 0x1u32);
+    let v19: u32 = (((((v4) as u32) ^ ((v18) as u32)) as u32) & 0x1u32);
+    let v20: u32 = (((((a as u64)) >> 20) as u32) & 0x1u32);
+    let v21: u32 = (((((v4) as u32) ^ ((v20) as u32)) as u32) & 0x1u32);
+    let v22: u32 = (((((a as u64)) >> 21) as u32) & 0x1u32);
+    let v23: u32 = (((((v4) as u32) ^ ((v22) as u32)) as u32) & 0x1u32);
+    let v24: u32 = (((((a as u64)) >> 22) as u32) & 0x1u32);
+    let v25: u32 = (((((v4) as u32) ^ ((v24) as u32)) as u32) & 0x1u32);
+    let v26: u32 = (((((a as u64)) >> 23) as u32) & 0x1u32);
+    let v27: u32 = (((((v4) as u32) ^ ((v26) as u32)) as u32) & 0x1u32);
+    let v28: u32 = (((((a as u64)) >> 24) as u32) & 0x1u32);
+    let v29: u32 = (((((v4) as u32) ^ ((v28) as u32)) as u32) & 0x1u32);
+    let v30: u32 = (((((a as u64)) >> 25) as u32) & 0x1u32);
+    let v31: u32 = (((((v4) as u32) ^ ((v30) as u32)) as u32) & 0x1u32);
+    let v32: u32 = (((((a as u64)) >> 26) as u32) & 0x1u32);
+    let v33: u32 = (((((v4) as u32) ^ ((v32) as u32)) as u32) & 0x1u32);
+    let v34: u32 = (((((a as u64)) >> 27) as u32) & 0x1u32);
+    let v35: u32 = (((((v4) as u32) ^ ((v34) as u32)) as u32) & 0x1u32);
+    let v36: u32 = (((((a as u64)) >> 28) as u32) & 0x1u32);
+    let v37: u32 = (((((v4) as u32) ^ ((v36) as u32)) as u32) & 0x1u32);
+    let v38: u32 = (((((a as u64)) >> 29) as u32) & 0x1u32);
+    let v39: u32 = (((((v4) as u32) ^ ((v38) as u32)) as u32) & 0x1u32);
+    let v40: u32 = (((((a as u64)) >> 30) as u32) & 0x1u32);
+    let v41: u32 = (((((v4) as u32) ^ ((v40) as u32)) as u32) & 0x1u32);
+    let v42: u32 = (((((a as u64)) >> 31) as u32) & 0x1u32);
+    let v43: u32 = (((((v4) as u32) ^ ((v42) as u32)) as u32) & 0x1u32);
+    let v44: u32 = (((((a as u64)) >> 32) as u32) & 0x1u32);
+    let v45: u32 = (((((v4) as u32) ^ ((v44) as u32)) as u32) & 0x1u32);
+    let v46: u32 = (((((a as u64)) >> 33) as u32) & 0x1u32);
+    let v47: u32 = (((((v4) as u32) ^ ((v46) as u32)) as u32) & 0x1u32);
+    let v48: u32 = (((((a as u64)) >> 34) as u32) & 0x1u32);
+    let v49: u32 = (((((v4) as u32) ^ ((v48) as u32)) as u32) & 0x1u32);
+    let v50: u32 = (((((a as u64)) >> 35) as u32) & 0x1u32);
+    let v51: u32 = (((((v4) as u32) ^ ((v50) as u32)) as u32) & 0x1u32);
+    let v52: u32 = (((((a as u64)) >> 36) as u32) & 0x1u32);
+    let v53: u32 = (((((v4) as u32) ^ ((v52) as u32)) as u32) & 0x1u32);
+    let v54: u32 = (((((a as u64)) >> 37) as u32) & 0x1u32);
+    let v55: u32 = (((((v4) as u32) ^ ((v54) as u32)) as u32) & 0x1u32);
+    let v56: u32 = (((((a as u64)) >> 38) as u32) & 0x1u32);
+    let v57: u32 = (((((v4) as u32) ^ ((v56) as u32)) as u32) & 0x1u32);
+    let v58: u32 = (((((a as u64)) >> 39) as u32) & 0x1u32);
+    let v59: u32 = (((((v4) as u32) ^ ((v58) as u32)) as u32) & 0x1u32);
+    let v60: u32 = (((((a as u64)) >> 40) as u32) & 0x1u32);
+    let v61: u32 = (((((v4) as u32) ^ ((v60) as u32)) as u32) & 0x1u32);
+    let v62: u32 = (((((a as u64)) >> 41) as u32) & 0x1u32);
+    let v63: u32 = (((((v4) as u32) ^ ((v62) as u32)) as u32) & 0x1u32);
+    let v64: u32 = (((((a as u64)) >> 42) as u32) & 0x1u32);
+    let v65: u32 = (((((v4) as u32) ^ ((v64) as u32)) as u32) & 0x1u32);
+    let v66: u32 = (((((a as u64)) >> 43) as u32) & 0x1u32);
+    let v67: u32 = (((((v4) as u32) ^ ((v66) as u32)) as u32) & 0x1u32);
+    let v68: u32 = (((((a as u64)) >> 44) as u32) & 0x1u32);
+    let v69: u32 = (((((v4) as u32) ^ ((v68) as u32)) as u32) & 0x1u32);
+    let v70: u32 = (((((a as u64)) >> 45) as u32) & 0x1u32);
+    let v71: u32 = (((((v4) as u32) ^ ((v70) as u32)) as u32) & 0x1u32);
+    let v72: u32 = (((((a as u64)) >> 46) as u32) & 0x1u32);
+    let v73: u32 = (((((v4) as u32) ^ ((v72) as u32)) as u32) & 0x1u32);
+    let v74: u32 = (((((a as u64)) >> 47) as u32) & 0x1u32);
+    let v75: u32 = (((((v4) as u32) ^ ((v74) as u32)) as u32) & 0x1u32);
+    let v76: u32 = (((((a as u64)) >> 48) as u32) & 0x1u32);
+    let v77: u32 = (((((v4) as u32) ^ ((v76) as u32)) as u32) & 0x1u32);
+    let v78: u32 = (((((a as u64)) >> 49) as u32) & 0x1u32);
+    let v79: u32 = (((((v4) as u32) ^ ((v78) as u32)) as u32) & 0x1u32);
+    let v80: u32 = (((((a as u64)) >> 50) as u32) & 0x1u32);
+    let v81: u32 = (((((v4) as u32) ^ ((v80) as u32)) as u32) & 0x1u32);
+    let v82: u32 = (((((a as u64)) >> 51) as u32) & 0x1u32);
+    let v83: u32 = (((((v4) as u32) ^ ((v82) as u32)) as u32) & 0x1u32);
+    let v84: u32 = (((((a as u64)) >> 52) as u32) & 0x1u32);
+    let v85: u32 = (((((v4) as u32) ^ ((v84) as u32)) as u32) & 0x1u32);
+    let v86: u32 = (((((a as u64)) >> 53) as u32) & 0x1u32);
+    let v87: u32 = (((((v4) as u32) ^ ((v86) as u32)) as u32) & 0x1u32);
+    let v88: u32 = (((((a as u64)) >> 54) as u32) & 0x1u32);
+    let v89: u32 = (((((v4) as u32) ^ ((v88) as u32)) as u32) & 0x1u32);
+    let v90: u32 = (((((a as u64)) >> 55) as u32) & 0x1u32);
+    let v91: u32 = (((((v4) as u32) ^ ((v90) as u32)) as u32) & 0x1u32);
+    let v92: u32 = (((((a as u64)) >> 56) as u32) & 0x1u32);
+    let v93: u32 = (((((v4) as u32) ^ ((v92) as u32)) as u32) & 0x1u32);
+    let v94: u32 = (((((a as u64)) >> 57) as u32) & 0x1u32);
+    let v95: u32 = (((((v4) as u32) ^ ((v94) as u32)) as u32) & 0x1u32);
+    let v96: u32 = (((((a as u64)) >> 58) as u32) & 0x1u32);
+    let v97: u32 = (((((v4) as u32) ^ ((v96) as u32)) as u32) & 0x1u32);
+    let v98: u32 = (((((a as u64)) >> 59) as u32) & 0x1u32);
+    let v99: u32 = (((((v4) as u32) ^ ((v98) as u32)) as u32) & 0x1u32);
+    let v100: u32 = (((((a as u64)) >> 60) as u32) & 0x1u32);
+    let v101: u32 = (((((v4) as u32) ^ ((v100) as u32)) as u32) & 0x1u32);
+    let v102: u32 = (((((a as u64)) >> 61) as u32) & 0x1u32);
+    let v103: u32 = (((((v4) as u32) ^ ((v102) as u32)) as u32) & 0x1u32);
+    let v104: u32 = (((((a as u64)) >> 62) as u32) & 0x1u32);
+    let v105: u32 = (((((v4) as u32) ^ ((v104) as u32)) as u32) & 0x1u32);
+    let v106: u32 = (((((a as u64)) >> 63) as u32) & 0x1u32);
+    let v107: u32 = (((((v4) as u32) ^ ((v106) as u32)) as u32) & 0x1u32);
+    let v108: u64 = (((((v107) as u64) << 63) | (((v105) as u64) << 62) | (((v103) as u64) << 61) | (((v101) as u64) << 60) | (((v99) as u64) << 59) | (((v97) as u64) << 58) | (((v95) as u64) << 57) | (((v93) as u64) << 56) | (((v91) as u64) << 55) | (((v89) as u64) << 54) | (((v87) as u64) << 53) | (((v85) as u64) << 52) | (((v83) as u64) << 51) | (((v81) as u64) << 50) | (((v79) as u64) << 49) | (((v77) as u64) << 48) | (((v75) as u64) << 47) | (((v73) as u64) << 46) | (((v71) as u64) << 45) | (((v69) as u64) << 44) | (((v67) as u64) << 43) | (((v65) as u64) << 42) | (((v63) as u64) << 41) | (((v61) as u64) << 40) | (((v59) as u64) << 39) | (((v57) as u64) << 38) | (((v55) as u64) << 37) | (((v53) as u64) << 36) | (((v51) as u64) << 35) | (((v49) as u64) << 34) | (((v47) as u64) << 33) | (((v45) as u64) << 32) | (((v43) as u64) << 31) | (((v41) as u64) << 30) | (((v39) as u64) << 29) | (((v37) as u64) << 28) | (((v35) as u64) << 27) | (((v33) as u64) << 26) | (((v31) as u64) << 25) | (((v29) as u64) << 24) | (((v27) as u64) << 23) | (((v25) as u64) << 22) | (((v23) as u64) << 21) | (((v21) as u64) << 20) | (((v19) as u64) << 19) | (((v17) as u64) << 18) | (((v15) as u64) << 17) | (((v13) as u64) << 16) | (((v11) as u64) << 15) | (((v9) as u64) << 14) | (((v7) as u64) << 13) | (((v5) as u64) << 12) | ((v2) as u64)) as u64);
+    ((v108) as u64)
+}

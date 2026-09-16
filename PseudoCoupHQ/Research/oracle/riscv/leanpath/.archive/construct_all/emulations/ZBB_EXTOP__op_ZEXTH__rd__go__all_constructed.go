@@ -1,0 +1,21 @@
+// task t4 emulation -- rendered by render_general.py, one named
+// intermediate per node of the term of ZBB_EXTOP__op_ZEXTH__rd__go__all_constructed.
+//   
+package main
+
+//go:noinline
+func emu_ZBB_EXTOP__op_ZEXTH__rd__go__all_constructed(a uint16) uint64 {
+	var v0 uint32 = uint32(a)
+	var v1 uint32 = v0
+	var v2 uint64 = uint64(0x0)
+	var v3 uint64 = (uint64(((uint64(v2)) << 16) | (uint64(v1))))
+	return uint64(v3)
+}
+
+var g0 uint16
+var sink interface{}
+
+func main() {
+	sink = emu_ZBB_EXTOP__op_ZEXTH__rd__go__all_constructed(g0)
+	_ = sink
+}

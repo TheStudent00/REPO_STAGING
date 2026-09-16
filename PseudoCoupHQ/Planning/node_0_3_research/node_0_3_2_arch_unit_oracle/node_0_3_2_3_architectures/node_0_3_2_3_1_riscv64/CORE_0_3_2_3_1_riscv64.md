@@ -84,3 +84,7 @@ per layer) and as `the claim` (x86 term equals riscv64 term, per unit).
 | the surface | rv1 | 2,644 lines in 5 files, the lifter 1,174 (44%); term store, table, bank, proofs untouched |
 | the transfer | rv2 (log_259) | 255 cells; twins 102 at the whole place / 161 at the cell's own width; 734 inherited certificates compiled for riscv64: 103 proved, 0 disproved; the loop over 94 untwinned cells proved 82; 116 of 255 (45.5%) hold a proved riscv64 emulation; the three readings coincide (no flags) at 74 |
 | owed | rv3 (brief written) | Zba/Zbb/Zbs in the lifter (27 rows); twins against ref2's corrected table; rust std target, c/cpp headers for riscv64 in the image; the 734 certificates into the bank with `arch` |
+
+## where those nodes went
+
+- `lean_proof_path` (id `hq.research.arch_unit_oracle.architectures.riscv64.lean_proof_path`), planned 2026-09-13, was superseded on 2026-09-14 at the owner's order ("start over. in a different research node"): its right parts were carried, with new ids and `supersedes` chains, to `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_3_lean_proof_path_resistant_to_churn/`; its wrong parts (`language`, `system`, `the_run`, whose code had drifted into a hand-written swap table) were not carried and are re-planned there. The whole old tree is kept verbatim in `.archive/lean_proof_path_superseded_2026-09-14/` beside this file.

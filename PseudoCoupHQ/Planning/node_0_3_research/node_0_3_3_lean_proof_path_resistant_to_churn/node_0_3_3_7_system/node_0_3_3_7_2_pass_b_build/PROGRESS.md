@@ -1,0 +1,13 @@
+---
+id: hq.research.lean_proof_path_resistant_to_churn.system.pass_b_build.progress
+status: living
+---
+
+# PROGRESS — pass_b_build
+
+- 2026-09-14: planned (status: planned). Written fresh at the owner's order of 2026-09-14 ("start over. in a different research node ... the parts that are fucked up are deleted before you start them over again"); nothing of the superseded node's `pass_b_build` was copied.
+- 2026-09-15: the first wide render on c (lane l64): 7 definitions rendered from a 7-key table, 7 proved; the table is short because the typing pass dropped multi-line #check results (fixed; l68/l69 queued) (status: in-progress).
+- 2026-09-15: renders over the four tables (l72, l74, l75): 46 emulations rendered, 46 lowered and read back, 44 proved equal to a definition; the two not proved are C_NOT (an immediate-carrying definition `equals` has no candidate for) (status: done for this table size).
+- 2026-09-15: the renders again under the flag rule. `render.definitions_of` now takes a definition's arms by the same rule as the candidate reader — a pure form read at every value of its non-register parameters — so a definition whose operation is a flag has arms at all: 75 arms -> 93. Lane l79 renders c from the l78 table, lowers every emulation, reads its meaning back and proves it equal to a definition; l81 does the same for cpp, rust and go from the l80 tables. The gate (l76, l77) rendered 10 of 93 arms from a 10-key table, lowered all 10 and proved all 10 at `same_text`, among them the multiply, both divides and both remainders — the integer-level operations no earlier render could reach (status: in-progress).
+- 2026-09-15: lane l81: the renders of cpp, rust and go from the l80 tables, each lowered at its own corpus's ship flags, read back and proved equal to a definition, each ending in its eye table at `runs/corpus_<lang>/pass_b/eye_table.md`. It replaces the l72/l75 renders (cpp 13 rendered / 13 proved, rust 17 / 16, go 3 / 2), which were written from tables that held no integer-level operation (status: in-progress).
+- 2026-09-15: the four renders under the flag rule, done (lanes l79, l81): 58 emulations rendered of 93 arms (c 18, cpp 18, rust 18, go 4), 58 lowered at their own language's ship flags and read back, 56 proved equal to a definition. New and proved: the 64-bit multiply in all four languages and the signed and unsigned divide and remainder in c and cpp. Still not proved: `C_NOT` in rust and go, the same immediate-carrying definition as before. Every eye table at `runs/<lang>/pass_b/eye_table.md`; every render past the spelling guard (status: done for this table size).

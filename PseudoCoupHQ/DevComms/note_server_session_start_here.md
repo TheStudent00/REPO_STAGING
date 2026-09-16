@@ -8,7 +8,7 @@ machine is much faster than the laptop the bundle came from.
 
 Read this whole file before running anything. Then read, in this order:
 
-1. `projects/Programming/DevComms/LLM_communication_protocol.md` — how to
+1. `projects/Programming/DevComms/comms_protocol.md` — how to
    talk to the owner, the user. All of it. It is not optional and it is not
    generic advice; it is a specific contract with worked examples.
 2. `projects/Programming/PseudoCoupHQ/CLAUDE.md` — the project's own rules.

@@ -1,0 +1,16 @@
+#![allow(dead_code, unused_parens, unused_unsafe, unconditional_panic, non_snake_case, overflowing_literals)]
+#![allow(unused_variables, unused_mut)]
+
+// task t4 emulation -- rendered by render_general.py, one named
+// intermediate per node of the term of mulhsu_gpr_gpr_gpr_64__reg_a0__rust__native_first.
+//   Extract(127, 64, Concat(Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63, v0), Extract(63, 63,
+#[no_mangle]
+pub extern "C" fn emu_mulhsu_gpr_gpr_gpr_64__reg_a0__rust__native_first(a: u64, b: u64) -> u64
+{
+    let v0: u128 = (((((0x0u64) as u128) << 64) | (((b as u64)) as u128)) as u128);
+    let v1: u32 = (((((a as u64)) >> 63) as u32) & 0x1u32);
+    let v2: u128 = (((((v1) as u128) << 127) | (((v1) as u128) << 126) | (((v1) as u128) << 125) | (((v1) as u128) << 124) | (((v1) as u128) << 123) | (((v1) as u128) << 122) | (((v1) as u128) << 121) | (((v1) as u128) << 120) | (((v1) as u128) << 119) | (((v1) as u128) << 118) | (((v1) as u128) << 117) | (((v1) as u128) << 116) | (((v1) as u128) << 115) | (((v1) as u128) << 114) | (((v1) as u128) << 113) | (((v1) as u128) << 112) | (((v1) as u128) << 111) | (((v1) as u128) << 110) | (((v1) as u128) << 109) | (((v1) as u128) << 108) | (((v1) as u128) << 107) | (((v1) as u128) << 106) | (((v1) as u128) << 105) | (((v1) as u128) << 104) | (((v1) as u128) << 103) | (((v1) as u128) << 102) | (((v1) as u128) << 101) | (((v1) as u128) << 100) | (((v1) as u128) << 99) | (((v1) as u128) << 98) | (((v1) as u128) << 97) | (((v1) as u128) << 96) | (((v1) as u128) << 95) | (((v1) as u128) << 94) | (((v1) as u128) << 93) | (((v1) as u128) << 92) | (((v1) as u128) << 91) | (((v1) as u128) << 90) | (((v1) as u128) << 89) | (((v1) as u128) << 88) | (((v1) as u128) << 87) | (((v1) as u128) << 86) | (((v1) as u128) << 85) | (((v1) as u128) << 84) | (((v1) as u128) << 83) | (((v1) as u128) << 82) | (((v1) as u128) << 81) | (((v1) as u128) << 80) | (((v1) as u128) << 79) | (((v1) as u128) << 78) | (((v1) as u128) << 77) | (((v1) as u128) << 76) | (((v1) as u128) << 75) | (((v1) as u128) << 74) | (((v1) as u128) << 73) | (((v1) as u128) << 72) | (((v1) as u128) << 71) | (((v1) as u128) << 70) | (((v1) as u128) << 69) | (((v1) as u128) << 68) | (((v1) as u128) << 67) | (((v1) as u128) << 66) | (((v1) as u128) << 65) | (((v1) as u128) << 64) | (((a as u64)) as u128)) as u128);
+    let v3: u128 = (((((v2) as u128)).wrapping_mul(((v0) as u128))) as u128);
+    let v4: u64 = ((((v3) as u128) >> 64) as u64);
+    ((v4) as u64)
+}

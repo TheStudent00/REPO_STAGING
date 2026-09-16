@@ -16,28 +16,28 @@ A rollup over this node's own sub-tree (itself plus everything beneath it). Rege
 
 ## sub-tree
 
-sub-node count: 121
+sub-node count: 163
 
 ### status breakdown
 
 | status | count |
 | --- | --- |
-| draft | 121 |
+| draft | 163 |
 | superseded | 1 |
 
 ### designation breakdown
 
 | designation | count |
 | --- | --- |
-| code (attribute) | 6 |
-| code (class) | 23 |
+| code (attribute) | 8 |
+| code (class) | 31 |
 | code (function) | 16 |
-| code (method) | 19 |
-| code (module) | 18 |
-| finding | 4 |
+| code (method) | 40 |
+| code (module) | 19 |
+| finding | 5 |
 | grouping | 20 |
-| rule | 20 |
-| work | 18 |
+| rule | 21 |
+| work | 26 |
 
 ## blocked
 
@@ -75,6 +75,8 @@ sub-node count: 121
 - `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/PROGRESS.md` line 54 — - 2026-09-05: the pool over canon40 is BLOCKED by its own refusal, and
 - `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_7_pool/PROGRESS.md` line 61 — agree, and no record was composed for the 44 — **blocked, reported**.
 - `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_1_operator_equivalence/node_0_3_1_9_graph/PROGRESS.md` line 559 — **WHAT RUST AND SWIFT GAINED.** Both are blocked from instrumentation
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_3_lean_proof_path_resistant_to_churn/PROGRESS.md` line 22 — BLOCKED at its foundation and flagged for the coordinator. The cached
+- `PRIVATE/PseudoCoupHQ/Planning/node_0_3_research/node_0_3_3_lean_proof_path_resistant_to_churn/PROGRESS.md` line 48 — BLOCKED AGAIN at `LeanIM/Defs.lean`, 14 error lines, the same three
 
 ## PROGRESS bullet statuses
 
@@ -82,9 +84,9 @@ counted by scanning every PROGRESS.md bullet in this sub-tree for these words; a
 
 | status word | bullet count |
 | --- | --- |
-| planned | 52 |
-| in-progress | 0 |
-| done | 91 |
+| planned | 71 |
+| in-progress | 20 |
+| done | 110 |
 | blocked | 4 |
 | deferred | 2 |
 

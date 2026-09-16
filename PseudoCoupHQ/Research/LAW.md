@@ -4,7 +4,7 @@ Kept in the repository since 2026-09-09: the session scratchpad it lived in
 was wiped twice, and a brief without its law is not a brief. Briefs live
 beside it under `Research/briefs/`.
 
-1. `PRIVATE/DevComms/LLM_communication_protocol.md` — all of it.
+1. `PRIVATE/DevComms/comms_protocol.md` — all of it.
    §1.8 what-is-it in one sentence first; §3.5 walkthrough before
    numbers; §4.3 pipe tables only; §5.1 quote the object; §5.1a every
    rendering says LITERAL or GLOSS; §5.3 report by cause; §8 full paths.

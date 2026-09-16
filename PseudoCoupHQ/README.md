@@ -8,7 +8,109 @@ brought and out of which each can be regenerated with nothing lost.
 The research here answers, with machine-checked proofs, which parts
 of a program already carry.
 
-## The flagship finding, 2026-09-12: what you can code with today, in every language
+## The flagship finding, 2026-09-16: every arch-unit emulated across four languages
+
+Every readable RISC-V arch-unit — a compiler-operator lowered to machine
+instructions — is now computed in c, c++, rust and go using integer
+operators alone, including all the floating-point ones. **474 of 474.**
+
+This is the inter-language connection demonstrated end to end: what one
+language's compiler emitted, the other three reproduce exactly, and the
+answer is checked against each language's own native operator rather
+than against our own machinery.
+
+| | comparisons | mismatches |
+|---|---|---|
+| each arch-unit against its own language's operator | 589,317,696 | **0** |
+| cross-language, byte for byte | 446,526,000 | **0** |
+
+The generated code was disassembled and checked: **no float instruction
+and no vector register anywhere**, in any language. A double division is
+computed from shifts, masks and integer arithmetic.
+
+### What made it possible: the floats had no definition anywhere
+
+RISC-V's floating-point instructions had no meaning in any formal
+backend. The Sail model declares all 67 of them external with no body,
+so Lean, Rocq, Isabelle and SMT all have the same hole; the C simulator
+works only because it links a library. Until this was solved, every
+float arch-unit was a dead end.
+
+The method, and it names no instruction anywhere:
+
+1. **Find where the logic actually lives.** Follow Sail's C backend
+   down: integers land in GMP, floats in Berkeley SoftFloat, which the
+   model already vendors. Both are ordinary integer C.
+2. **Slice.** Compile the operation for riscv64, link only what it
+   reaches, make everything else internal, then inline and delete what
+   is unreachable. One function per operation.
+3. **Specialise to the caller.** Sail fixes the rounding mode and clears
+   the exception flags at every call. Pinning those deletes the dead
+   arms and, with them, every computed jump. 15% smaller, and a whole
+   class of obstacle disappears rather than being worked around.
+4. **Flatten.** With no loops, no calls and no memory left, the control
+   flow graph is acyclic, so every branch becomes arithmetic:
+   `(a & mask) | (b & ~mask)`. One basic block, no jumps.
+5. **Emit and compose.** Print that block as source in each language,
+   then compose the arch-unit's instructions from those pieces.
+
+Each step is mechanical. No person wrote a definition, and no step
+knows the name of any instruction.
+
+### The fourth guarantee
+
+- **EMULATED.** The operation is computed in every language from
+  integer operators alone, checked against that language's own operator
+  and against the other three. The inter-language connection is
+  demonstrated; it is **primed for proof, not lacking it**. The proofs
+  are the work in front of us, and the shape is already in place: a
+  float operation's Lean expression is derived by the same machinery
+  that proves the integer ones, and stands at 21 of 43 today, blocked on
+  a Lean kernel limit rather than on anything about floats.
+
+### Six places where "the same operator" means different things
+
+Found by machine, not by argument, and each one a portability fact the
+line needs:
+
+| what | where |
+|---|---|
+| a NaN's sign and payload are unspecified in C and go; RISC-V pins the canonical quiet NaN, x86 does something else | 92 of 174 float units |
+| C's division is undefined at a zero divisor and at the most negative over minus one; the host faults | 32 units |
+| clang folds `a / (bool)b` into the identity, so at zero the answer is `a`, not all ones | 8 units |
+| go panics where RISC-V does not | 18 units |
+| RISC-V's shift takes the low bits of the count; go gives zero; C is undefined | 18 units |
+| go leaves a 32-bit answer non-canonical in the register | 6 units |
+
+Any round trip claiming bit-exactness must pin these deliberately or
+exclude them.
+
+### What the probe generator did not reach
+
+737 of the 1,244 arch-units have no body at all. The probe asked each
+compiler for `a OP b` in that compiler's own syntax and the compiler
+refused the spelling: go will not implicitly add an `int32` to an
+`int64`, and c will not apply `%` to two doubles.
+
+A refusal is not an operation without meaning, and this is the case the
+line exists for — an operator one language has, carried into a language
+that lacks it. Sorted by what was actually refused, **691 of the 737 are
+buildable from pieces already in the corpus**: widen-then-operate for the
+216 mixed integer widths, convert-then-operate for the 342 mixed
+int-and-float, and either the bit-pattern or the float-semantic reading
+for the 98 integer operators applied to floats. Only 46 are not runtime
+operations at all — `alignof` is a property of a type, and unary `*`,
+`&` and `<-` on a non-pointer compute no value.
+
+Those 691 are open work, not a closed exclusion. Reaching them needs a
+second probe form: one that asks for the emulation rather than for the
+spelling the compiler rejects.
+
+The record: `DevComms/log_293_below_sail_gmp_softfloat_and_the_float_gap_sized.md`.
+The emulations, the slices and the tooling:
+`Research/oracle/riscv/softfloat_slices/`.
+
+## The previous flagship finding, 2026-09-12: what you can code with today, in every language
 
 Fixed-width integers and floats; every arithmetic, logic, shift and
 compare operator in the vocabulary table below; assignment; a compare
@@ -22,6 +124,13 @@ proved on the machine body. Not yet at all: signed divide and
 remainder outside c and c++, float subtraction and float equality on
 go, sign extension into swift, 80-bit floats outside c and c++,
 closures, generators, virtual dispatch, growing containers.
+
+**Superseded in part, 2026-09-16.** The float exclusions above were
+about a language lacking a native operator that lowers. Every one of
+them is now EMULATED: computed from integer operators in c, c++, rust
+and go, and tested. They are no longer refusals, they are unproved.
+The section above is the current statement; this one is kept because
+its proof counts still stand and nothing here has been un-proved.
 
 ### The three guarantees a line can carry
 
@@ -111,8 +220,8 @@ y = int64(int32(x))   # 4 of 5: swift refused (sign-extend 32 -> 64)
 | sign-extend 32 -> 64 and 8 -> 64 | 64 | yes | yes | yes | yes | no | 4 of 5 |
 | sign-extend 8, 16 -> 32 | 32 | no | no | no | yes | no | 1 of 5 |
 | float + * / | 32, 64 | yes | yes | yes | yes | yes | 5 of 5 |
-| float - | 32, 64 | yes | yes | yes | no | yes | 4 of 5 |
-| float == != stored as a value | 32, 64 | yes | yes | yes | no | yes | 4 of 5 |
+| float - | 32, 64 | yes | yes | yes | no (EMULATED) | yes | 4 of 5 proved, 5 of 5 emulated |
+| float == != stored as a value | 32, 64 | yes | yes | yes | no (EMULATED) | yes | 4 of 5 proved, 5 of 5 emulated |
 | int -> float, float -> double, moves between int and float registers | 32, 64 | yes | yes | yes | yes | yes | 5 of 5 |
 | 128-bit register logic, moves, unpack, extract | 128 | yes | yes | yes | yes | yes | 5 of 5 (register forms only) |
 | signed / and % | 32, 64 | yes | yes | no | no | no | 2 of 5; at 8, 16 it is 0 of 5 |
@@ -125,7 +234,7 @@ y = int64(int32(x))   # 4 of 5: swift refused (sign-extend 32 -> 64)
 | you cannot write, or not yet | why | what opens it |
 |---|---|---|
 | `a // b`, `a % b` on rust, go, swift | the divide check runs out; go's own zero check | branch-following walk; divide lemma |
-| `fa - fb`, `fa == fb` on go | undecided at the check | the same walk |
+| `fa - fb`, `fa == fb` on go | undecided at the check | **OPENED 2026-09-16: EMULATED** from integer operators and tested; the proof is what remains |
 | `int64(int32(x))` on swift | the widening move refused at arrival | arrival contract, the convertible verdict |
 | long double outside c, c++ | no holder | the x87 arrival as two words |
 | a condition proved as the branch it feeds | flags only, no answer register | the flags-consumer contract |
@@ -227,8 +336,8 @@ measured it.
 | folder | what it holds |
 |---|---|
 | `Planning/` | the planning tree: `CORE_0.md` at the root; `node_0_3_research/` holds the research plan, and `node_0_3_2_arch_unit_oracle/` the arch-unit oracle whose results are above |
-| `DevComms/` | the record: 275 numbered logs, one per day of work or per task, append-only; `LLM_communication_protocol.md` is the form every report takes |
-| `Research/oracle/` | the arch-unit oracle: `arch_opcodes/` (the cells and level 0), `cross_construction/emulation/` (the emulations, certificates, constructions, Lean lemmas), `riscv/` (the RISC-V line and its primitives as gate netlists), `coverage/` (the banks and reach), `hub/` (the composed round trip) |
+| `DevComms/` | the record: 275 numbered logs, one per day of work or per task, append-only; `comms_protocol.md` is the form every report takes |
+| `Research/oracle/` | the arch-unit oracle: `arch_opcodes/` (the cells and level 0), `cross_construction/emulation/` (the emulations, certificates, constructions, Lean lemmas), `riscv/` (the RISC-V line, its primitives as gate netlists, and `softfloat_slices/`: the float operations sliced and flattened, and every arch-unit emulated in four languages), `coverage/` (the banks and reach), `hub/` (the composed round trip) |
 | `Research/op_pipeline/` | the corpus: every operator of every language compiled, carved and manifested |
 | `Research/briefs/` | the 37 task briefs, each the contract a run was executed under |
 | `Research/GLOSSARY.md`, `Research/LAW.md` | every load-bearing word, defined before use; the rules every run obeys |
@@ -260,9 +369,25 @@ used. The glossary is the source.
   README. The generation at the time of this finding is Claude Fable
   5.1; earlier generations carried the line to that point.
 - **Foundations relied on:** z3, the Sail RISC-V model, the
-  K-framework x86-64 semantics, Lean, the compilers of the five
-  languages (gcc, clang, rustc, go, swiftc), tree-sitter, and podman
-  through the Airlock sandbox.
+  K-framework x86-64 semantics, Lean, Berkeley SoftFloat and GMP (both
+  reached through the Sail model's own C backend), the LLVM toolchain,
+  the compilers of the five languages (gcc, clang, rustc, go, swiftc),
+  tree-sitter, and podman through the Airlock sandbox.
+
+### What is claimed, and what is used
+
+The floating-point logic in the emulations is Berkeley SoftFloat's
+algorithm, sliced and transformed; the integer arithmetic under Sail's
+C backend is GMP's. Neither is ours and neither is claimed.
+
+What is claimed is the method and what it produces: taking an
+instruction's logic out of a reference implementation by machine,
+specialising it to the context its caller fixes, flattening it to a
+single branch-free expression, and composing those into arch-unit
+emulation that carries unchanged across four languages — with no person
+naming an instruction at any step. The pieces are prior art, in the
+ordinary way that every program stands on its compiler. The combination,
+and the inter-language connection it establishes, is the finding.
 
 ## License
 

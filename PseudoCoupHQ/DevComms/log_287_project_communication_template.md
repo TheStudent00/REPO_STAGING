@@ -249,7 +249,7 @@ what each one needs can be read off those bodies rather than guessed.
 
 | language | units | median instructions | branch or call before the end | what it needs |
 |---|---|---|---|---|
-| csharp | 253 | 20 | **0 of 253** | riscv64 codegen only |
+| csharp | 253 | 20 | **0 of 253** | **UNBLOCKED** --- compiles to riscv64 |
 | javascript | 240 | 173 | **240 of 240** | riscv64 codegen AND slicing |
 | swift | 167 | 3 | 29 of 167 | riscv64 stdlib only |
 | dart | 82 | 42 | **82 of 82** | riscv64 codegen AND slicing |
@@ -263,6 +263,61 @@ what each one needs can be read off those bodies rather than guessed.
   - 420 units blocked on one thing each: a riscv64 code generator
 - javascript and dart carry type guards and deoptimisation paths in every
   body, so they need the pin and the flattener as well
+### csharp COMPILES TO RISC-V (2026-09-18)
+
+```
+=== cs7_Ops__op_0   34 bytes      // public static int op_0(int a, int b) => a + b;
+   0: ff010113   addi sp,sp,-16
+   4: 00813023   sd   s0,0(sp)
+   8: 00113423   sd   ra,8(sp)
+   c: 00010413   addi s0,sp,0
+  10: 9d2d       c.addw a0,a1
+  12: 00813083   ld   ra,8(sp)
+  16: 00013403   ld   s0,0(sp)
+  1a: 01010113   addi sp,sp,16
+  1e: 00008067   jalr zero,0(ra)
+```
+
+- straight line, no branch --- as the x86 bodies said all 253 would be
+- crossgen2 writes a per-method map, which is what makes a body addressable:
+  `0x000109B0,34,0,.text,cs7_Ops__op_0,MethodWithGCInfo`
+- the R2R PE machine is 0x2b1d = 0x5064 (RISCV64) XOR 0x7b79, ReadyToRun's
+  Linux override
+- the five things it took, each one measured not guessed
+  1. `CLR_CMAKE_BUILD_COMMUNITY_ALTJITS` gates the riscv64 cross-JIT; the
+     subset that sets it is `clr.alljitscommunity`
+  2. crossgen2 is in `clr.tools` --- `clr.crossgen2` is not a subset
+  3. both must come from the SAME tree: the shipped 9.0.20 crossgen2 with a
+     JIT off main refuses every method, the JIT/EE interface GUID must match
+  4. run crossgen2 with the TREE's own dotnet; it targets 11.0-preview and
+     the installed 9.0.20 cannot host it
+  5. use the published crossgen2 under `bin/.../crossgen2/`, not the
+     intermediate one under `obj/crossgen2_publish/`
+
+- csharp: the riscv64 cross-JIT is BUILT (lp1_l83)
+  - `libclrjit_unix_riscv64_x64.so`, 15M, from /sources/runtime
+  - jit/CMakeLists.txt gates it on `CLR_CMAKE_BUILD_COMMUNITY_ALTJITS`, and
+    `clr.alljitscommunity` is the subset that sets it
+  - `clr.crossgen2` is NOT a subset; crossgen2 is in `clr.tools`
+  - paired with the SHIPPED 9.0.20 crossgen2 the JIT refuses every method
+    (`CodeGenerationFailedException`): the JIT/EE interface GUID has to match,
+    so both must come from the same tree
+- three tower unblocks found on the way
+  - apt needs BOTH `APT::Sandbox::User=root` (for `Failed to setgroups`) and a
+    writable `Dir::Cache::archives` (for `/var/cache/apt/.../partial: Permission
+    denied`); with those it reaches the ubuntu repos and installs
+  - dotnet's build feeds are `pkgs.dev.azure.com`, now allowlisted
+  - CoreCLR's Linux prerequisites are libkrb5-dev, liblttng-ust-dev,
+    libunwind-dev, libicu-dev, libssl-dev
+- csharp's blocker was ONE FILE, measured in lp1_l76
+  - crossgen2 ACCEPTS `--targetarch riscv64`; it then fails on
+    `Unable to load shared library 'clrjit_unix_riscv64_x64'`
+  - the linux-x64 crossgen2 package does not ship the cross-targeting JIT
+  - dotnet/runtime builds exactly it as the `clr.alljits` subset --- the JIT
+    alone, not the runtime; lane lp1_l77 is building it
+- swift genuinely needs a riscv64 stdlib, measured in lp1_l76
+  - `-parse-stdlib` removes the stdlib, and then `Int32` does not exist
+  - swift cannot compile even `a &+ b` without it
 - the toolchain answers, measured in lp1_l58
   - swift: the toolchain ships only x86_64 swiftmodules; no riscv64 stdlib
   - dart: gen_snapshot is built per target; the SDK's is linux_x64

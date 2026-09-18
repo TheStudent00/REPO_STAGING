@@ -1164,6 +1164,22 @@ ruby's promotes to a Bignum, which allocates. Arbitrary precision means the
 overflow arm leaves the arithmetic layer. Do not report ruby's `+` as a pure
 arch-unit; the bounded arm is one, and calling it a unit is the owner's decision.
 
+**Which runtimes have a pure arch-unit for an operator is decided by how they
+represent a value, and it is measured now for three.** Same pin each time:
+
+| runtime | operand | result path | pure | blocks/br/call |
+|---|---|---|---|---|
+| php | `zval` value struct built by the caller | overflow -> double | YES | 1/0/0 |
+| ruby | `VALUE` tagged word | overflow -> Bignum, allocates | no | 6/6/5 |
+| cpython | `PyObject *` heap object | allocates, refcounts, may raise | no | 2460/2186/951 |
+
+cpython's survivors are `_PyLong_New`, `_Py_Dealloc`, `_Py_NewReference`,
+`PyErr_SetString`, `PyErr_NoMemory` --- effects on interpreter state, not
+arithmetic. php reduces because sroa can see a stack-built value struct; a
+`PyObject *` is a pointer the optimiser knows nothing about. **Ask how a
+runtime represents the operand BEFORE building it**: .NET's int is unboxed
+(expect php's answer), V8's Smi is a tagged word (expect ruby's).
+
 **Every remaining language goes the runtime route, measured not assumed.**
 
 | | |

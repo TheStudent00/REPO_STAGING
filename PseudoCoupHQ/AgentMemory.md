@@ -1180,6 +1180,26 @@ arithmetic. php reduces because sroa can see a stack-built value struct; a
 runtime represents the operand BEFORE building it**: .NET's int is unboxed
 (expect php's answer), V8's Smi is a tagged word (expect ruby's).
 
+**csharp COMPILES TO RISC-V as of 2026-09-18.** `op_0(int,int) => a + b` comes
+out as `c.addw a0,a1` with a standard frame, straight line, and crossgen2's
+`--map` gives every method's RVA and size so a body is addressable the way a
+carved symbol is. Five things it took: `clr.alljitscommunity` (the subset that
+sets `CLR_CMAKE_BUILD_COMMUNITY_ALTJITS`, which gates the riscv64 cross-JIT);
+crossgen2 comes from `clr.tools`, not a `clr.crossgen2` subset; both must come
+from the SAME tree or the JIT/EE interface GUID mismatches and the JIT refuses
+every method; run crossgen2 with the TREE's own `.dotnet` (it targets
+11.0-preview); and use the published crossgen2 under `bin/.../crossgen2/`, not
+`obj/crossgen2_publish/`. The R2R PE machine is 0x2b1d = 0x5064 XOR 0x7b79.
+
+**Before that, csharp's 253 units looked blocked on ONE FILE.** crossgen2 accepts
+`--targetarch riscv64` and fails on `Unable to load shared library
+'clrjit_unix_riscv64_x64'` --- the linux-x64 package does not ship the
+cross-targeting JIT, though RyuJIT has had a RISC-V backend since .NET 9.
+`dotnet/runtime`'s `clr.alljits` subset builds exactly that library, the JIT
+alone rather than the runtime. **swift by contrast genuinely needs a riscv64
+stdlib**: `-parse-stdlib` removes the stdlib and then `Int32` does not exist,
+so not even `a &+ b` compiles.
+
 **Every remaining language goes the runtime route, measured not assumed.**
 
 | | |

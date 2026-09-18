@@ -146,8 +146,23 @@ off those bodies rather than guessed:
 | php, ruby, java, cpython | 10 | — | — | measured above |
 
 C# and Swift are not an interpreter problem at all — their bodies are unboxed
-machine values and already straight-line. 420 of the 752 are blocked on one
-thing each: a code generator that emits RISC-V.
+machine values and already straight-line. 420 of the 752 needed one thing each:
+a code generator that emits RISC-V.
+
+**C# now has one.** RyuJIT's RISC-V backend ships in the tree but behind
+`CLR_CMAKE_BUILD_COMMUNITY_ALTJITS`, so no released package carries it. Built
+from source and paired with a crossgen2 from the same tree, `a + b` compiles:
+
+```
+public static int op_0(int a, int b) => a + b;
+
+   0: ff010113   addi   sp,sp,-16
+  10: 9d2d       c.addw a0,a1
+  1e: 00008067   jalr   zero,0(ra)
+```
+
+crossgen2's `--map` gives every method's RVA and size, so a C# method body is
+addressable exactly as a carved symbol is.
 
 ### The interpreted route, proved on php
 

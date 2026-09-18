@@ -82,6 +82,13 @@ def _named(text, which):
         left = set(range(1 << width)) - set(out.values())
         if len(left) == 1:
             out[wild] = left.pop()
+    # x8 has two ABI names.  The psABI defines it as s0/fp and the model emits
+    # `fp` while GNU objdump prints `s0`; they denote the same register, so
+    # whichever spelling the model did not use is added beside it.  This is the
+    # only register in the file with two names.
+    for a, b in (("fp", "s0"), ("s0", "fp")):
+        if a in out and b not in out:
+            out[b] = out[a]
     return out
 
 
@@ -317,6 +324,10 @@ class Reader(object):
         llvm-objdump omits an operand the architecture ignores -- fcvt.d.w's
         rounding mode, because that conversion is exact -- so the text alone
         cannot name every constructor argument.  The encoding can."""
+        # GNU objdump annotates a pc-relative line with the address it
+        # computes -- `addi a0,a0,-1456 # 0x24a88` -- and a branch target with
+        # its symbol.  Neither is part of the instruction.
+        line = re.sub(r"\s*#.*$", "", line)
         got = self._read(line)
         if got[0] is not None or word is None:
             return got

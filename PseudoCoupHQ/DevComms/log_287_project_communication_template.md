@@ -185,6 +185,41 @@ slices, not modelled with a program counter.
 - the slicer eats BITCODE; a carved .o has already been through the backend
   and has nothing left to if-convert
 
+### WHICH RUNTIMES HAVE A PURE ARCH-UNIT FOR `+`, AND WHY
+
+The pin is the same for all three. What differs is how the runtime represents
+an integer, and that alone decides whether the operator is arithmetic.
+
+| runtime | how an operand arrives | what the result path does | pure |
+|---|---|---|---|
+| php | `zval`, a value struct the caller builds | overflow promotes to a double | **yes** |
+| ruby | `VALUE`, a tagged word | overflow allocates a Bignum | no |
+| cpython | `PyObject *`, a heap object throughout | allocates, refcounts, may raise | no |
+
+| runtime | blocks | br | call | instructions |
+|---|---|---|---|---|
+| php, pinned and flattened | 1 | 0 | 0 | 14 |
+| ruby, pinned | 6 | 6 | 5 | 42 |
+| cpython, pinned | 2460 | 2186 | 951 | 7054 |
+
+- what survives in cpython: `_PyLong_New`, `_Py_Dealloc`, `_Py_NewReference`,
+  `PyErr_SetString`, `PyErr_NoMemory`, `__assert_fail`
+  - allocation, reference counting and exception raising
+  - all of them effects on interpreter state, none of them arithmetic
+- php reduces because its operands are a VALUE STRUCT the caller builds on the
+  stack, so sroa makes the type tag a constant
+- cpython cannot: a `PyObject *` is a pointer, and the optimiser knows nothing
+  about what it points at
+- this is a property of each runtime's value representation, NOT of the
+  pipeline
+
+*this decides the shape of the remaining eight languages*
+
+- .NET's `int` is unboxed, like php's long --- expect php's answer
+- V8's Smi is a tagged word, like ruby's VALUE --- expect ruby's
+- the question to ask of each runtime FIRST is how it represents the operand,
+  because that is what decides whether the operator is arithmetic at all
+
 ### ruby DOES NOT COLLAPSE, AND THE REASON IS THE LANGUAGE
 
 | | blocks | br | call | instructions |
@@ -207,27 +242,33 @@ slices, not modelled with a program counter.
   - naming it as a separate bounded unit is a decision for the owner, not one to
     take quietly
 
-### THE PATH FROM 1612 TO 2364
+### THE PATH FROM 1612 TO 2364, MEASURED
 
-752 units, eight languages, one cause: `riscv_carve.py COMPILE` holds a
-compile rule for c, cpp, rust and go and nothing else.
+752 units, eight languages. Their x86-64 bodies are already in the store, so
+what each one needs can be read off those bodies rather than guessed.
 
-| language | units | toolchain | state |
-|---|---|---|---|
-| csharp | 253 | dotnet 9.0.318 | installed, riscv64 being probed |
-| javascript | 240 | V8, /sources/chromium_src | interpreter binary route |
-| swift | 167 | swiftc | no <os> build; 24.04 tarball being tried |
-| dart | 82 | dart 3.13.4 | installed, gen_snapshot is target-locked |
-| php | 4 | php-src | **1 of 4 in Lean**; the route is proved |
-| ruby | 3 | ruby | interpreter binary route |
-| java | 2 | /sources/jdk | interpreter binary route |
-| cpython | 1 | cpython | interpreter binary route |
+| language | units | median instructions | branch or call before the end | what it needs |
+|---|---|---|---|---|
+| csharp | 253 | 20 | **0 of 253** | riscv64 codegen only |
+| javascript | 240 | 173 | **240 of 240** | riscv64 codegen AND slicing |
+| swift | 167 | 3 | 29 of 167 | riscv64 stdlib only |
+| dart | 82 | 42 | **82 of 82** | riscv64 codegen AND slicing |
+| php | 4 | --- | --- | **1 done**; the route is proved |
+| ruby | 3 | --- | --- | not pure: the overflow arm allocates |
+| java | 2 | --- | --- | riscv64 codegen |
+| cpython | 1 | --- | --- | not pure: allocates, refcounts, may raise |
 
-- riscv64-linux-gnu-gcc is in the image, so the C interpreters (cpython,
-  ruby, php) cross-compile directly
-- the route is the one already proven on Berkeley SoftFloat: compile for
-  riscv64, link transitive helpers, internalize, inline, dead-code
-  eliminate, one function per operation
+- csharp and swift are NOT an interpreter problem at all
+  - their bodies are unboxed machine values, already straight line
+  - 420 units blocked on one thing each: a riscv64 code generator
+- javascript and dart carry type guards and deoptimisation paths in every
+  body, so they need the pin and the flattener as well
+- the toolchain answers, measured in lp1_l58
+  - swift: the toolchain ships only x86_64 swiftmodules; no riscv64 stdlib
+  - dart: gen_snapshot is built per target; the SDK's is linux_x64
+  - dotnet: `NETSDK1203`, and nuget has no linux-riscv64 runtime pack at all
+- the sources to build each are already staged: `/sources/runtime` (CoreCLR),
+  `/sources/sdk` (Dart), `/sources/chromium_src` (V8), `/sources/jdk`
 - python, typescript and kotlin are ratified and have no probe manifest
 
 ### 3. the primitives: which arch-units equal which pieces of Sail's definitions

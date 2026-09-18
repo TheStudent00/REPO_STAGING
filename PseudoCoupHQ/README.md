@@ -134,13 +134,20 @@ What is left is 752 units in eight languages, and one dictionary —
 `COMPILE` in `Research/oracle/riscv/riscv_carve.py` — which holds a compile
 rule for c, c++, rust and go and nothing else.
 
-| language | units | route |
-|---|---|---|
-| csharp | 253 | .NET 9 NativeAOT, if it has a riscv64 runtime identifier |
-| javascript | 240 | the interpreter binary |
-| swift | 167 | swiftc targeting riscv64 |
-| dart | 82 | AOT, and `gen_snapshot` is built per target |
-| php, ruby, java, cpython | 10 | the interpreter binary |
+Their x86-64 bodies are already in the store, so what each needs can be read
+off those bodies rather than guessed:
+
+| language | units | median instructions | branch before the end | needs |
+|---|---|---|---|---|
+| csharp | 253 | 20 | **0 of 253** | riscv64 codegen only |
+| javascript | 240 | 173 | **240 of 240** | codegen and slicing |
+| swift | 167 | 3 | 29 of 167 | a riscv64 stdlib only |
+| dart | 82 | 42 | **82 of 82** | codegen and slicing |
+| php, ruby, java, cpython | 10 | — | — | measured above |
+
+C# and Swift are not an interpreter problem at all — their bodies are unboxed
+machine values and already straight-line. 420 of the 752 are blocked on one
+thing each: a code generator that emits RISC-V.
 
 ### The interpreted route, proved on php
 
@@ -170,6 +177,27 @@ And the flattened body uses `fcvt.d.l`, `fadd.d`, `fmv.x.d` — arch-opcodes tha
 have Lean bodies only because step 1.2 gave the 67 float axioms bodies. The
 interpreted route lands on the float layer, and the float layer is no longer a
 hole.
+
+### Which runtimes have a pure arch-unit, and why
+
+The same pin, applied to three runtimes, gives three different answers — and
+the thing that decides it is how each represents an integer.
+
+| runtime | how an operand arrives | what the result path does | pure |
+|---|---|---|---|
+| php | `zval`, a value struct the caller builds | overflow promotes to a double | **yes** |
+| ruby | `VALUE`, a tagged word | overflow allocates a Bignum | no |
+| cpython | `PyObject *`, a heap object throughout | allocates, refcounts, may raise | no |
+
+php reduces to fourteen branchless instructions because `sroa` can see a value
+struct built on the stack and fold its type tag. A `PyObject *` is a pointer the
+optimiser knows nothing about, so CPython's `+` keeps `_PyLong_New`,
+`_Py_Dealloc`, `_Py_NewReference` and `PyErr_NoMemory` — allocation, reference
+counting and exception raising, none of which is arithmetic.
+
+That is a property of each runtime, not of this pipeline, and it is the first
+question to ask of the ones not yet built: .NET's `int` is unboxed like php's
+long, V8's Smi is a tagged word like ruby's `VALUE`.
 
 For the interpreted languages the arch-unit lives in the **interpreter
 binary** — the same route already proven on Berkeley SoftFloat: compile for

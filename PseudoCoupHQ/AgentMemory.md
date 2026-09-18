@@ -1091,6 +1091,106 @@ model of how to write is the owner's own message in cases Appendix C.1 —
 plain vocabulary, terms loudly defined, a loop, a few sentences that
 hold the big picture; not a prose block, not a cold telegraph.
 
+## section 2, the four compiled languages, and what the branches actually are (2026-09-18)
+
+**Section 2 is complete for every compiled language.** 1612 arch-units, all of
+them full-body Lean, `lake build Units` rc=0.
+
+| language | riscv64 arch-units | in Lean |
+|---|---|---|
+| cpp | 770 of 770 | 770 |
+| c | 610 of 610 | 610 |
+| rust | 125 of 125 | 125 |
+| go | 107 of 107 | 107 |
+
+**How an arch-unit's Lean is built, and it does NOT use Sail's decoder.**
+`leanpath/from_asm.py` reads the model's own `assembly_forwards` clause — the
+same clause `SailModel.key_of` reads for the mnemonic — and turns a
+disassembly line back into (constructor, components). `encdec_backwards` is
+`noncomputable` in the proof emit, so `#eval` cannot run it, which is the only
+reason the old walk needed a second EXECUTABLE emit of the model. It never
+needed one. 352 of 354 assembly clauses are readable this way.
+
+**Do not let rv_attest's gate decide what has a Lean expression.** Its
+`WALK_REFUSED` is its own term walker and its own riscv opcode table, neither
+of which `build_unit_lean` uses. 81 units it refused are in Lean.
+
+**The three last gaps were all flags:** cpp's ship flags said `-std=c++17`
+while `<=>` is C++20; the lifter's assembler march string had no `zcb` or
+`zfa`; and `fli` prints a value where the model spells an index, which the
+model's own FLI table inverts.
+
+**Straight line vs a trace — the honest limit.** `build_unit_lean` writes the
+arch-opcode clauses in program order. 1582 of the 1612 are straight line (the
+only transfer of control is the final return) and for those that IS the body.
+30 branch before the end (go 24, rust 6); for those the same sequence is the
+FALL-THROUGH TRACE, and each one says so in a comment above its own
+definition.
+
+**the owner's ruling on the branches, 2026-09-18 — the answer is the GMP route, not
+a PC loop.** He saw it immediately: "is this not similar to the context
+slicing of GMP? if for some reason the branch-full arch-unit cant be
+context-sliced, surely the binary is compiled from something we can slice."
+Correct, and the machinery already exists and is proven on the harder case.
+
+```
+slice_softfloat.py     compile for riscv64, link what it reaches,
+                       internalize, inline, DCE -> one function
+slice_specialised.py   PIN THE CONTEXT the caller always fixes; the
+                       unreachable arms die and the computed jumps with them
+localise.py            internal globals -> allocas -> sroa -> no memory
+flatten_dag.py         if-convert the branchy DAG into ONE basic block
+```
+
+That is why the 67 float ops emit as branchless let-chains in eight
+languages. **The branches were never the obstacle; the un-pinned context
+was.** The pin for an interpreted language is the store's own
+`arrival_annotation`: cpython `i32` (both operands single-digit ints), ruby
+`VALUE (tagged word, Fixnum 2n+1)`, php `typed-pointer (zval*)`. Pin it and
+the big-integer arm dies, taking the calls and the loop with it.
+
+**The build-flag consequence:** the slicer eats BITCODE, not a binary.
+Carving a symbol out of a built `.o` gives machine code that has already been
+through the backend, with nothing left to if-convert. CPython, Ruby and PHP
+must be built to LLVM IR for riscv64.
+
+**The route works on php and does not on ruby, for a reason that is the
+language.** php's `+`: 3000 instructions sliced raw -> 8 pinned -> 14
+branchless riscv64, in Lean, typechecked. ruby's `+` pinned the same way stays
+at 6 blocks / 6 branches / 5 calls, and the calls are
+`rb_wb_protected_newobj_of` and `rb_obj_freeze_inline` --- the GC allocator.
+php's overflow arm promotes to a DOUBLE, which is arithmetic and flattens;
+ruby's promotes to a Bignum, which allocates. Arbitrary precision means the
+overflow arm leaves the arithmetic layer. Do not report ruby's `+` as a pure
+arch-unit; the bounded arm is one, and calling it a unit is the owner's decision.
+
+**Every remaining language goes the runtime route, measured not assumed.**
+
+| | |
+|---|---|
+| swift | the toolchain ships only x86_64 swiftmodules; no riscv64 stdlib |
+| dart | `gen_snapshot` is built per target; the SDK's is linux_x64 |
+| dotnet | `NETSDK1203: AOT is not supported for the RID linux-riscv64`, and nuget has no `Microsoft.NETCore.App.Runtime.linux-riscv64` at all |
+
+A csharp arch-unit is a JIT method body and a dart one an AOT snapshot body,
+so both need their runtime built for riscv64 — which is what `/sources`
+already holds: `runtime` (CoreCLR), `sdk` (Dart), `chromium_src` (V8), `jdk`,
+`graal`. the owner, 2026-09-18: the Intel-only ones are theoretical via the
+cross-architecture mapping until then.
+
+**Tower facts worth not rediscovering.**
+- `/persist/lp1/tools` holds swift 6.1.2, dart 3.13.4, dotnet 9.0.318;
+  `/persist/lp1/lean4-4.29.0` the pinned Lean; `/persist/lp1/proof` the built
+  model with the 1.2 bodies in it.
+- **The Lean toolchain ships its own clang.** Putting `lean4-.../bin` FIRST on
+  PATH shadows `/usr/bin/clang` and every probe compile fails on
+  `stdint.h not found` and `-riscv-add-build-attributes`. Put it after.
+- elan's own installer is what the proxy 403s; the release asset is fine.
+  Take the toolchain straight from it and unpack with `zstandard` from pypi.
+- **apt cannot reach the ubuntu repos from inside the sandbox**
+  (`setgroups: Operation not permitted`). No autoconf. A php git checkout has
+  no `configure`; the php.net release tarball ships one.
+
 ## the Sail Lean model is body-full — stop measuring the flattener and calling it Sail (2026-09-17)
 
 the owner had to say this three times in one session. It is settled.

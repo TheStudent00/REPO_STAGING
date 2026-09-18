@@ -1,0 +1,11 @@
+BitVec.zero : (n : Nat) → BitVec n
+@BitVec.zero_eq : ∀ {n : Nat}, BitVec.zero n = 0#n
+@BitVec.ofNat_eq_ofNat : ∀ {n i : Nat}, OfNat.ofNat i = BitVec.ofNat n i
+@BitVec.sshiftRight : {n : Nat} → BitVec n → Nat → BitVec n
+@BitVec.sshiftRight' : {n m : Nat} → BitVec n → BitVec m → BitVec n
+@BitVec.sshiftRight_eq : ∀ {n : Nat} {x : BitVec n} {i : Nat}, x.sshiftRight i = BitVec.ofInt n (x.toInt >>> i)
+@BitVec.lt_def : ∀ {n : Nat} {x y : BitVec n}, x < y ↔ x.toNat < y.toNat
+@BitVec.ult : {n : Nat} → BitVec n → BitVec n → Bool
+@BitVec.ult_iff_lt : ∀ {w : Nat} {x y : BitVec w}, x.ult y = true ↔ x < y
+@Int.ofNat_lt : ∀ {n m : Nat}, ↑n < ↑m ↔ n < m
+Int.toNat_natCast : ∀ (n : Nat), (↑n).toNat = n

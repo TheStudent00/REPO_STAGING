@@ -1,0 +1,33 @@
+from helpers import (sf_udiv, sf_sgn, sf_ctlz, sf_abs,
+                     sf_usubsat, sf_fshl)
+
+
+def f64_le_quiet_rm1(v_arg, v_arg1):
+    v_i = (v_arg & 0x7ff0000000000000)
+    v_i2 = (1 if v_i != 0x7ff0000000000000 else 0)
+    v_i3 = (v_arg & 0xfffffffffffff)
+    v_i4 = (1 if v_i3 == 0x0 else 0)
+    v_i5 = (v_i2 | v_i4)
+    v_i7 = (v_arg1 & 0x7ff0000000000000)
+    v_i8 = (1 if v_i7 != 0x7ff0000000000000 else 0)
+    v_i9 = (v_arg1 & 0xfffffffffffff)
+    v_i10 = (1 if v_i9 == 0x0 else 0)
+    v_i11 = (v_i8 | v_i10)
+    v__c5 = (v_i5 & v_i11)
+    v_i13 = (v_arg1 ^ v_arg)
+    v_i14 = (1 if sf_sgn(v_i13, 0x40) > (-1) else 0)
+    v_i16 = (1 if sf_sgn(v_arg, 0x40) < (0) else 0)
+    v_i17 = (v_arg1 & 0x7fffffffffffffff)
+    v_i18 = (v_i17 | v_arg)
+    v_i19 = (1 if v_i18 == 0x0 else 0)
+    v_i20 = (v_i16 | v_i19)
+    v_i22 = (1 if v_arg == v_arg1 else 0)
+    v_i23 = (1 if v_arg < v_arg1 else 0)
+    v_i25 = (v_i16 ^ v_i23)
+    v_i26 = (v_i22 | v_i25)
+    v__a3 = (v_i26 & v_i14)
+    v__n1 = (v_i14 ^ 0x1)
+    v__a2 = (v_i20 & v__n1)
+    v__o4 = (v__a2 | v__a3)
+    v__a6 = (v__o4 & v__c5)
+    return v__a6

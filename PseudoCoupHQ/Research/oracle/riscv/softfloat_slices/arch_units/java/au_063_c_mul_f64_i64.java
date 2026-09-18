@@ -1,0 +1,20 @@
+// arch-unit 63  --  c  `a * b`  lhs=double rhs=int64_t
+// symbol op_199   outcome LIFTED
+//
+// the arch-unit, arch-opcode by arch-opcode:
+//   fcvt.d.l fa5, a0, dyn              float    emulation:i64_to_f64_rm0
+//   fmul.d fa0, fa0, fa5, dyn          float    emulation:f64_mul_rm0
+//   c.jr ra                            integer  return
+//
+// answer: f64, 64 bits.  parameters are operand bit patterns.
+public final class au_063_c_mul_f64_i64 {
+    public static long au_063_c_mul_f64_i64(long p0, long p1) {
+    // fa0: operand `a` (double) arrives in fa0
+        final long v1 = p0;
+    // a0: operand `b` (int64_t) arrives in a0
+        final long v2 = p1;
+        final long v3 = i64_to_f64.i64_to_f64_rm0(v2);
+        final long v4 = f64_mul.f64_mul_rm0(v1, v3);
+        return v4;
+    }
+}

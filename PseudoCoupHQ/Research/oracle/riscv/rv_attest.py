@@ -218,6 +218,10 @@ def one_probe(reference, lang, number, probe, work_root,
         row["diagnostic"] = (got.get("diagnostic") or "")[:300]
         return row
     row["body"] = got["body"]
+    # the raw words too: llvm-objdump does not print an operand the
+    # architecture ignores (fcvt.d.w's rounding mode), so the text alone
+    # cannot always name the constructor's arguments -- the encoding can
+    row["bytes"] = got["bytes"]
     row["instruction_count"] = got["instruction_count"]
     kinds = []
     for name in (probe.get("lhs_type"), probe.get("rhs_type")):
@@ -317,7 +321,8 @@ def numbers_for(op_dir, lang, wanted):
     return have[:wanted], len(have), with_a_ship_body
 
 
-def run_command(op_dir, prefix, work_root, c_sample, go_sample):
+def run_command(op_dir, prefix, work_root, c_sample, go_sample,
+                extra_plan=None):
     reference = RV.RiscvReference()
     if not os.path.isdir(work_root):
         os.makedirs(work_root)
@@ -325,7 +330,12 @@ def run_command(op_dir, prefix, work_root, c_sample, go_sample):
     cells = {}
     singletons = {}
     counts = {}
-    plan = [("c", c_sample), ("go", go_sample)]
+    # c and go are the corpus of record and keep their own sample sizes.
+    # 2026-09-16: cpp and rust join them, each with its own riscv64 ship
+    # flags in riscv_carve.SHIP, measured in lane rv1_l16 before being used.
+    # A language is named on the command line or it does not run -- the plan
+    # is never widened silently.
+    plan = [("c", c_sample), ("go", go_sample)] + list(extra_plan or [])
     started = time.time()
     for lang, wanted in plan:
         manifest = read_manifest(op_dir, lang)
@@ -496,8 +506,14 @@ def main():
             c_sample = int(sys.argv[5])
         if sys.argv[6] != "all":
             go_sample = int(sys.argv[6])
+        # OPTIONAL trailing words, each `<lang>:<n|all>`, so every earlier
+        # invocation means exactly what it meant before
+        extra = []
+        for word in sys.argv[7:]:
+            name, _, count = word.partition(":")
+            extra.append((name, None if count in ("", "all") else int(count)))
         return run_command(sys.argv[2], sys.argv[3], sys.argv[4],
-                           c_sample, go_sample)
+                           c_sample, go_sample, extra)
     raise SystemExit("unknown command %r" % command)
 
 

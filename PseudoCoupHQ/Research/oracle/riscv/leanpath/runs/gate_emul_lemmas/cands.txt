@@ -1,0 +1,46 @@
+Cands.lean:11:12: error: The prover found a potentially spurious counterexample:
+- It abstracted the following unsupported expressions as opaque variables: [BitVec.zero 64]
+Consider the following assignment:
+a = 0#64
+BitVec.zero 64 = 9223372036854775808#64
+Cands.lean:23:12: error: The prover found a potentially spurious counterexample:
+- It abstracted the following unsupported expressions as opaque variables: [BitVec.zero 64]
+Consider the following assignment:
+a = 0#64
+BitVec.zero 64 = 9223372036854775808#64
+Cands.lean:29:2: error: The prover found a potentially spurious counterexample:
+- It abstracted the following unsupported expressions as opaque variables: [BitVec.zero 64]
+Consider the following assignment:
+BitVec.zero 64 = 18446744073709551615#64
+Cands.lean:34:12: error: The prover found a potentially spurious counterexample:
+- It abstracted the following unsupported expressions as opaque variables: [zero_reg]
+Consider the following assignment:
+a = 0#64
+zero_reg = 9223372036854775808#64
+Cands.lean:41:12: error: The prover found a potentially spurious counterexample:
+- It abstracted the following unsupported expressions as opaque variables: [a.sshiftRight (↑b.toNat).toNat]
+Consider the following assignment:
+a.sshiftRight (↑b.toNat).toNat = 1#64
+a = 0#64
+b = 0#64
+Cands.lean:61:12: error: The prover found a potentially spurious counterexample:
+- It abstracted the following unsupported expressions as opaque variables: [match
+   ltbStandIn (toNatIntStandIn x) (toNatIntStandIn y) with
+ | true => 1#1
+ | false => 0#1,
+ match x.ult y with
+ | true => 1#1
+ | false => 0#1]
+Consider the following assignment:
+match ltbStandIn (toNatIntStandIn x) (toNatIntStandIn y) with
+| true => 1#1
+| false => 0#1 = 1#1
+match x.ult y with
+| true => 1#1
+| false => 0#1 = 0#1
+Cands.lean:82:12: error: The prover found a potentially spurious counterexample:
+- It abstracted the following unsupported expressions as opaque variables: [decide (x.toNat < y.toNat)]
+Consider the following assignment:
+decide (x.toNat < y.toNat) = true
+x = 18446744073709551615#64
+y = 9223372036854775807#64

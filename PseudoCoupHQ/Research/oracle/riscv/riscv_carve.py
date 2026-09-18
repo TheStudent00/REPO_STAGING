@@ -55,6 +55,8 @@ import sys
 
 
 CLANG = "clang"
+CLANGXX = "clang++"
+RUSTC = "rustc"
 LLVM_OBJDUMP = "llvm-objdump"
 
 # the corpus's own ship optimisation level, per language, with the target
@@ -62,6 +64,21 @@ LLVM_OBJDUMP = "llvm-objdump"
 SHIP = {
     "c": ["-std=c17", "-O1", "--target=riscv64-unknown-linux-gnu",
           "-nostdlibinc"],
+    # cpp CANNOT reuse c's flags: the probes `#include <cstdint>`, `<compare>`
+    # and `<new>`, and `-nostdlibinc` hides them.  Measured in lane
+    # rv1_l16 -- c's flags compiled 0 of 3 cpp probes on `cstdint file not
+    # found`, and dropping `-nostdlibinc` compiled 3 of 3.  The headers found
+    # are the image's own; for these probes that is benign, because every type
+    # they name is fixed-width and both x86-64 and riscv64 are LP64, but it is
+    # the reason this entry differs and is recorded here rather than assumed.
+    "cpp": ["-std=c++17", "-O1", "--target=riscv64-unknown-linux-gnu"],
+    # rust ships riscv64 std in the image.  `riscv64gc-unknown-none-elf`,
+    # which `inherit.py` uses, has NO std and fails these probes outright
+    # (`can't find crate for std`, measured in the same lane); the linux-gnu
+    # target is the one that carries them.
+    "rust": ["--crate-type=lib", "--emit=obj", "-C", "opt-level=1",
+             "-C", "debug-assertions=off",
+             "--target=riscv64gc-unknown-linux-gnu"],
 }
 
 # the extensions a go riscv64 binary uses but does not declare
@@ -210,15 +227,49 @@ def compile_go(source, work):
     return rc, obj, (err or out), "GOARCH=riscv64 GOOS=linux " + " ".join(cmd)
 
 
+def compile_cpp(source, work):
+    src = os.path.join(work, "unit.cpp")
+    obj = os.path.join(work, "unit.o")
+    open(src, "w").write(source)
+    cmd = [CLANGXX] + SHIP["cpp"] + ["-c", src, "-o", obj]
+    rc, out, err = sh(cmd)
+    if rc != 0:
+        # `<=>` is a single token only from C++20, and its result type is
+        # std::strong_ordering; the c++17 ship flags refuse all 22 of those
+        # probes.  Measured, not assumed: the standard is recorded in the
+        # command line this returns.
+        later = [f if f != "-std=c++17" else "-std=c++20" for f in SHIP["cpp"]]
+        cmd2 = [CLANGXX] + later + ["-c", src, "-o", obj]
+        rc2, out2, err2 = sh(cmd2)
+        if rc2 == 0:
+            return rc2, obj, (err2 or out2), " ".join(cmd2)
+    return rc, obj, (err or out), " ".join(cmd)
+
+
+def compile_rust(source, work):
+    src = os.path.join(work, "unit.rs")
+    obj = os.path.join(work, "unit.o")
+    open(src, "w").write(source)
+    cmd = [RUSTC] + SHIP["rust"] + [src, "-o", obj]
+    rc, out, err = sh(cmd)
+    return rc, obj, (err or out), " ".join(cmd)
+
+
+COMPILE = {"c": compile_c, "cpp": compile_cpp, "rust": compile_rust,
+           "go": compile_go}
+
+
 def carve_one(row, work_root):
     name = row["unit"].replace("/", "_")
     work = os.path.join(work_root, name)
     if not os.path.isdir(work):
         os.makedirs(work)
-    if row["lang"] == "c":
-        rc, obj, diag, cmdline = compile_c(row["source"], work)
-    else:
-        rc, obj, diag, cmdline = compile_go(row["source"], work)
+    builder = COMPILE.get(row["lang"])
+    if builder is None:
+        return {"unit": row["unit"], "lang": row["lang"],
+                "outcome": "NO_TOOLCHAIN",
+                "diagnostic": "no riscv64 compile rule for this language"}
+    rc, obj, diag, cmdline = builder(row["source"], work)
     out = {"unit": row["unit"], "lang": row["lang"],
            "compile_command": cmdline, "compile_rc": rc}
     if rc != 0:

@@ -8,7 +8,143 @@ brought and out of which each can be regenerated with nothing lost.
 The research here answers, with machine-checked proofs, which parts
 of a program already carry.
 
-## The flagship finding, 2026-09-16: every arch-unit emulated across four languages
+## The flagship finding, 2026-09-17: the whole chain in Lean, machine-checked
+
+The line from a language's operator down to the machine's own definition
+is one loop with five steps. Each step is a number, and the numbers are
+measured, not asserted.
+
+```python
+# 1.1  every RISC-V instruction, in Lean, from the Sail model
+arch_opcode_leans = {}
+for arch_opcode in sail_riscv_model:
+    arch_opcode_leans[arch_opcode] = get_sail_def(arch_opcode, output="Lean")
+
+# 1.2  the float primitives, which Sail leaves as axioms, given bodies
+for arch_opcode in arch_opcode_leans:
+    arch_opcode_leans[arch_opcode] = gmp_slice_insertion(arch_opcode_leans[arch_opcode])
+
+# 2  every language's compiler-operators, lowered to arch-units, in Lean
+for lang in langs:
+    for compiler_operator in lang.compiler_operators:
+        arch_unit = lower(compiler_operator)              # compile for RISC-V
+        arch_unit.lean = build_unit_lean(arch_unit, arch_opcode_leans)
+        arch_unit.kinds = discover_kinds(arch_unit.lean)  # read off the Lean
+
+# 3  the primitives: which arch-units equal which pieces of Sail's definitions
+sail_lean_primitives = pieces_of(arch_opcode_leans)       # a + b, a xor b, ...
+for lang in langs:
+    for primitive in sail_lean_primitives:
+        for arch_unit in lang.arch_units:
+            if prove_lean_equivalence(primitive, arch_unit.lean):
+                lang.arch_unit_lean_primitives[primitive] = arch_unit
+
+# 4  every arch-opcode emulated in every language, from those primitives only
+for lang in langs:
+    for arch_opcode, definition in arch_opcode_leans.items():
+        emulation = build_emulation(definition, lang.arch_unit_lean_primitives)
+        arch_unit = lower(emulation)
+        arch_unit.lean = build_unit_lean(arch_unit, arch_opcode_leans)
+        emulation.proven = prove_lean_equivalence(definition, arch_unit.lean)
+
+# 5  any language's arch-unit expressed in any other language's
+for lang_i in langs:
+    for lang_j in langs:
+        for arch_unit_i in lang_i.arch_units:
+            for arch_unit_j in lang_j.arch_units:
+                if prove_lean_equivalence(arch_unit_i.lean, arch_unit_j.lean):
+                    equivalents.add(arch_unit_i, arch_unit_j)
+```
+
+| step | | complete |
+|---|---|---|
+| 1.1 | 1038 of 1038 arch-opcodes are full-body Lean | **100%** |
+| 1.2 | 67 of 67 float axioms given a body | **100%** |
+| 2 | 1612 of 2364 arch-units are full-body Lean | **68%** |
+| 3 | | 0% |
+| 4 | artifacts yes, this proof no | 0% |
+| 5 | | 0% |
+
+### 1.1 — the model was already whole
+
+The Sail RISC-V model emitted to Lean has a body for **every** instruction:
+354 `execute_*` clauses, no `sorry`, covering 1038 arch-opcodes because one
+clause covers a whole dispatch enum. `execute_ITYPE` is one clause and six
+arch-opcodes.
+
+### 1.2 — the 67 axioms now have bodies
+
+Sail declares all 67 floating-point externals with a type and no body, so
+Lean, Rocq, Isabelle and SMT all had the same hole. They are now definitions,
+walked from the flattened Berkeley SoftFloat slices over 24 primitive integer
+operations. Nothing was written by hand and no float definition was assumed.
+
+| | |
+|---|---|
+| axioms given a body | 67 of 67 |
+| IR instructions walked into Lean | 111,562 |
+| Lean generated | 114,713 lines, 68 modules |
+| `lake build` of the whole model | 204 jobs, 0 errors |
+| `#print axioms riscv_f64Add` | `[propext, Quot.sound]` — Lean's own two |
+| `axiom` left in the model | 8, all platform hooks, none float |
+
+### 2 — an arch-unit is its arch-opcodes, composed
+
+An arch-unit is a compiler-operator lowered to machine instructions. Every
+one of those instructions already has a Lean body, so the unit's Lean is
+those bodies in order with the unit's own operands:
+
+```lean
+-- c/op_0, which is C's `!` on int32_t
+noncomputable def unit_c_op_0 : SailM ExecutionResult := do
+  let _ ← execute_ITYPE (0x001#12) (regidx.Regidx 0x0a#5) (regidx.Regidx 0x0a#5) (.SLTIU)
+  pure (execute_C_JR (regidx.Regidx 0x01#5))
+```
+
+Which clause, and which operand is which argument, is read out of the model's
+own `assembly_forwards` clause — the same clause that names the mnemonic. Sail's
+decoder is never run: it is `noncomputable` in the proof emit, and it is not
+needed, because the disassembly already names the instruction.
+
+| language | arch-units on riscv64 | full-body Lean |
+|---|---|---|
+| c++ | 770 of 770 | **770** |
+| c | 610 of 610 | **610** |
+| rust | 125 of 125 | **125** |
+| go | 107 of 107 | **107** |
+
+Every compiled language is complete. Lean typechecks all 1612;
+`lake build Units`: 4 modules, 0 errors.
+
+### What is left, and exactly what each piece is
+
+The last three gaps in the compiled languages were all flags, and all three
+are closed: c++'s ship flags said `-std=c++17` while `<=>` is C++20; the
+lifter's assembler targeted a march string without `zcb` or `zfa`; and `fli`
+prints its constant as a value where the model spells it as an index, which
+the model's own FLI table inverts.
+
+What is left is 752 units in eight languages, and one dictionary —
+`COMPILE` in `Research/oracle/riscv/riscv_carve.py` — which holds a compile
+rule for c, c++, rust and go and nothing else.
+
+| language | units | route |
+|---|---|---|
+| csharp | 253 | .NET 9 NativeAOT, if it has a riscv64 runtime identifier |
+| javascript | 240 | the interpreter binary |
+| swift | 167 | swiftc targeting riscv64 |
+| dart | 82 | AOT, and `gen_snapshot` is built per target |
+| php, ruby, java, cpython | 10 | the interpreter binary |
+
+For the interpreted languages the arch-unit lives in the **interpreter
+binary** — the same route already proven on Berkeley SoftFloat: compile for
+riscv64, link the transitive helpers, internalize, inline, dead-code
+eliminate, until one function per operation is left. `riscv64-linux-gnu-gcc`
+is already in the image, so the C interpreters cross-compile directly.
+
+The step-by-step record is `DevComms/log_287_project_communication_template.md`.
+
+## The 2026-09-16 finding: every arch-unit emulated across four languages
 
 Every readable RISC-V arch-unit — a compiler-operator lowered to machine
 instructions — is now computed in c, c++, rust and go using integer
@@ -110,7 +246,7 @@ The record: `DevComms/log_293_below_sail_gmp_softfloat_and_the_float_gap_sized.m
 The emulations, the slices and the tooling:
 `Research/oracle/riscv/softfloat_slices/`.
 
-## The previous flagship finding, 2026-09-12: what you can code with today, in every language
+## The 2026-09-12 finding: what you can code with today, in every language
 
 Fixed-width integers and floats; every arithmetic, logic, shift and
 compare operator in the vocabulary table below; assignment; a compare

@@ -49,7 +49,8 @@ ALT = os.environ.get("EMUL_PIN") == "alt"
 
 WIDTH = {"i1": 1, "i8": 8, "i16": 16, "i32": 32, "i64": 64, "i128": 128}
 
-BIN = {"and", "or", "xor", "add", "sub", "mul", "udiv", "shl", "lshr"}
+BIN = {"and", "or", "xor", "add", "sub", "mul", "udiv", "shl", "lshr",
+       "ashr"}
 CAST = {"trunc", "zext", "sext"}
 
 
@@ -98,24 +99,63 @@ def parse(path):
 
     body = src[m.end():]
     body = body[:body.index("\n}\n")]
-    insts, ret = [], None
+    insts, ret, agg = [], None, {}
     for raw in body.splitlines():
         line = raw.strip()
         if not line or line.startswith(";"):
             continue
         if line.startswith("ret "):
             rm = re.match(r"ret (i\d+) (.*)$", line)
-            ret = (rm.group(1), _operand(rm.group(2)))
+            if rm:
+                ret = (rm.group(1), _operand(rm.group(2)))
+                continue
+            # The `flags` variant returns C's { uint8_t flags; T v; }.  When
+            # that struct needs two words the lp64 ABI returns it as an
+            # array, and the fflags byte is element 0.  Take that element:
+            # dce() then drops everything only the value element reached.
+            ar = re.match(r"ret \[\d+ x (i\d+)\] %([\w.]+)$", line)
+            if not ar:
+                raise ValueError("unhandled ret %r in %s" % (line, path))
+            ret = (ar.group(1), agg[ar.group(2)][0])
             continue
         am = re.match(r"%([\w.]+) = (.*)$", line)
         if not am:
             raise ValueError("unhandled line %r in %s" % (line, path))
         dst, rhs = am.group(1), _RANGE.sub("", am.group(2))
+        if rhs.startswith("insertvalue"):
+            im = re.match(r"insertvalue \[\d+ x i\d+\] (.*), i\d+ (\S+), (\d+)$",
+                          rhs)
+            if not im:
+                raise ValueError("bad insertvalue %r in %s" % (rhs, path))
+            agg[dst] = _agg_base(im.group(1), agg, path)
+            agg[dst][int(im.group(3))] = _operand(im.group(2))
+            continue
         insts.append(_inst(dst, rhs, path))
     if ret is None:
         raise ValueError("no ret in " + path)
+    if rety.startswith("["):
+        rety = ret[0]
     return {"name": fname, "ret": rety, "params": params,
             "insts": insts, "retval": ret}
+
+
+def _agg_base(tok, agg, path):
+    """The value an insertvalue builds on: a previous aggregate, an all-poison
+    one, or a literal array whose settled elements are already constants."""
+    tok = tok.strip()
+    if tok in ("poison", "undef", "zeroinitializer"):
+        return {} if tok != "zeroinitializer" else {}
+    if tok.startswith("%"):
+        return dict(agg[tok[1:]])
+    lm = re.match(r"\[(.*)\]$", tok)
+    if not lm:
+        raise ValueError("bad aggregate base %r in %s" % (tok, path))
+    slots = {}
+    for i, el in enumerate(lm.group(1).split(",")):
+        el = el.strip().split(None, 1)
+        if len(el) == 2 and el[1] not in ("poison", "undef"):
+            slots[i] = _operand(el[1])
+    return slots
 
 
 def _inst(dst, rhs, path):
@@ -529,8 +569,419 @@ class GoBackend(object):
         raise ValueError(base)
 
 
+# ------------------------------------------------- the masked-integer three -
+# python, ruby and javascript share one representation and differ only in
+# spelling.  Every value is a NON-NEGATIVE unbounded integer (a `BigInt` in
+# javascript) held to its width by an EXPLICIT MASK.  The mask is the only
+# thing that makes a width mean anything in these languages, so it rides on
+# every result that can leave the width -- add, sub, mul, shl, trunc -- and is
+# omitted, deliberately, where it cannot: and, or, xor and lshr of in-range
+# operands are in range already.
+#
+# Width 1 is the integer 0 or 1, not a boolean, so `and`, `or` and `xor` are
+# the same three symbols at every width; `icmp` therefore has to CONVERT its
+# boolean result, which each backend does in its own spelling.  Width 128
+# costs nothing here: it is the same unbounded integer with a wider mask.
+#
+# The don't-care pins of the module docstring are honoured by the helpers, not
+# by the language: `sf_udiv` answers zero on a zero divisor, `sf_ctlz` answers
+# the bit width on zero, and a shift takes its amount modulo the width.
+
+
+class _MaskedBackend(object):
+    """Shared shape for the three unbounded-integer languages."""
+    # per-language spelling, set by the subclass
+    fmt_and, fmt_or, fmt_xor = "(%s & %s)", "(%s | %s)", "(%s ^ %s)"
+    suffix = ""                       # "n" for javascript BigInt literals
+    cast_int = "%s"                   # how a python int becomes this language's
+
+    def ut(self, w):
+        return self.UT
+
+    def lit(self, k, w):
+        return "0x%x%s" % (uconst(k, w), self.suffix)
+
+    def val(self, a, w):
+        return sanitize(a[1]) if a[0] == "v" else self.lit(a[1], w)
+
+    def wants_sval(self, pred, w):
+        return pred[0] == "s"
+
+    def binop(self, op, w, x, y):
+        m = self.lit(mask(w), w if w != 128 else 128)
+        if op in ("and", "or", "xor"):
+            # cannot leave the width; no mask
+            return {"and": self.fmt_and, "or": self.fmt_or,
+                    "xor": self.fmt_xor}[op] % (x, y)
+        if op in ("add", "sub", "mul"):
+            return "((%s %s %s) & %s)" % (x, {"add": "+", "sub": "-",
+                                              "mul": "*"}[op], y, m)
+        if op == "udiv":
+            return "%s(%s, %s)" % (self.H["udiv"], x, y)
+        if op == "shl":
+            return "((%s << (%s & 0x%x%s)) & %s)" % (x, y, w - 1,
+                                                     self.suffix, m)
+        if op == "lshr":
+            return "(%s >> (%s & 0x%x%s))" % (x, y, w - 1, self.suffix)
+        raise ValueError(op)
+
+    def cast(self, op, sw, dw, x):
+        if op == "trunc":
+            return "(%s & %s)" % (x, self.lit(mask(dw), dw))
+        if op == "zext":
+            return "(%s)" % x
+        if op == "sext":
+            return "(%s(%s, 0x%x%s) & %s)" % (self.H["sgn"], x, sw,
+                                              self.suffix, self.lit(mask(dw), dw))
+        raise ValueError(op)
+
+    def sval(self, a, w):
+        if a[0] == "v":
+            return "%s(%s, 0x%x%s)" % (self.H["sgn"], sanitize(a[1]), w,
+                                       self.suffix)
+        k = signed(a[1], w)
+        return "(%s%d%s)" % ("-" if k < 0 else "", abs(k), self.suffix)
+
+    def intrinsic(self, base, w, args):
+        if base == "ctlz":
+            return "%s(%s, 0x%x%s)" % (self.H["ctlz"], args[0], w, self.suffix)
+        if base == "abs":
+            return "%s(%s, 0x%x%s)" % (self.H["abs"], args[0], w, self.suffix)
+        if base == "usub.sat":
+            return "%s(%s, %s)" % (self.H["usubsat"], args[0], args[1])
+        if base == "fshl":
+            return "%s(%s, %s, %s, 0x%x%s)" % (self.H["fshl"], args[0],
+                                               args[1], args[2], w,
+                                               self.suffix)
+        raise ValueError(base)
+
+
+# --------------------------------------------------------------- Python ----
+class PythonBackend(_MaskedBackend):
+    lang = "python"
+    ext = "py"
+    UT = "int"
+    header = ("from helpers import (sf_udiv, sf_sgn, sf_ctlz, sf_abs,\n"
+              "                     sf_usubsat, sf_fshl)\n")
+    H = {"udiv": "sf_udiv", "sgn": "sf_sgn", "ctlz": "sf_ctlz",
+         "abs": "sf_abs", "usubsat": "sf_usubsat", "fshl": "sf_fshl"}
+
+    def fn_open(self, fn, rw, params):
+        return "def %s(%s):" % (fn, ", ".join(sanitize(n) for n, _ in params))
+
+    def decl(self, ty, name, expr):
+        return "    %s = %s" % (name, expr)
+
+    def ret(self, e):
+        return "    return %s" % e
+
+    def icmp(self, pred, w, x, y):
+        sym = {"eq": "==", "ne": "!=", "ult": "<", "ule": "<=", "ugt": ">",
+               "uge": ">=", "slt": "<", "sle": "<=", "sgt": ">", "sge": ">="}
+        return "(1 if %s %s %s else 0)" % (x, sym[pred], y)
+
+
+# ----------------------------------------------------------------- Ruby ----
+class RubyBackend(_MaskedBackend):
+    lang = "ruby"
+    ext = "rb"
+    UT = "Integer"
+    header = "require_relative 'helpers'\n"
+    H = {"udiv": "sf_udiv", "sgn": "sf_sgn", "ctlz": "sf_ctlz",
+         "abs": "sf_abs", "usubsat": "sf_usubsat", "fshl": "sf_fshl"}
+
+    def fn_open(self, fn, rw, params):
+        return "def %s(%s)" % (fn, ", ".join(sanitize(n) for n, _ in params))
+
+    def decl(self, ty, name, expr):
+        return "  %s = %s" % (name, expr)
+
+    def ret(self, e):
+        return "  %s\nend" % e
+
+    def icmp(self, pred, w, x, y):
+        sym = {"eq": "==", "ne": "!=", "ult": "<", "ule": "<=", "ugt": ">",
+               "uge": ">=", "slt": "<", "sle": "<=", "sgt": ">", "sge": ">="}
+        return "((%s %s %s) ? 1 : 0)" % (x, sym[pred], y)
+
+
+# ----------------------------------------------------------- JavaScript ----
+# BigInt, not Number: a Number is an IEEE double and loses the low bits of a
+# 64-bit value, which is precisely what these slices carry.  Every literal
+# therefore ends in `n` and every operand stays a BigInt end to end.
+class JsBackend(_MaskedBackend):
+    lang = "js"
+    ext = "js"
+    UT = "BigInt"
+    suffix = "n"
+    header = ("'use strict';\n"
+              "const { sfUdiv, sfSgn, sfCtlz, sfAbs, sfUsubsat, sfFshl }"
+              " = require('./helpers.js');\n")
+    H = {"udiv": "sfUdiv", "sgn": "sfSgn", "ctlz": "sfCtlz",
+         "abs": "sfAbs", "usubsat": "sfUsubsat", "fshl": "sfFshl"}
+
+    def fn_open(self, fn, rw, params):
+        self._fn = fn
+        return "function %s(%s) {" % (fn, ", ".join(sanitize(n)
+                                                    for n, _ in params))
+
+    def decl(self, ty, name, expr):
+        return "  const %s = %s;" % (name, expr)
+
+    def ret(self, e):
+        return "  return %s;\n}\nmodule.exports = { %s };" % (e, self._fn)
+
+    def icmp(self, pred, w, x, y):
+        sym = {"eq": "===", "ne": "!==", "ult": "<", "ule": "<=", "ugt": ">",
+               "uge": ">=", "slt": "<", "sle": "<=", "sgt": ">", "sge": ">="}
+        return "((%s %s %s) ? 1n : 0n)" % (x, sym[pred], y)
+
+
+# ----------------------------------------------------------------- Java ----
+# The one language here with fixed widths and NO unsigned type.  A value is
+# kept as its BIT PATTERN in the natural signed container -- `boolean` at 1,
+# `int` at 8, 16 and 32, `long` at 64 -- and unsignedness lives in the
+# OPERATIONS, not in the type:
+#
+#   * at 8 and 16 the pattern is held non-negative by a mask after every
+#     arithmetic result, so an unsigned compare is the ordinary `<`;
+#   * at 32 and 64 two's-complement wrap already IS arithmetic modulo 2^w, so
+#     add, sub and mul need no mask -- but `<` would read the sign bit, so
+#     every unsigned compare goes through `Integer.compareUnsigned` /
+#     `Long.compareUnsigned` and every logical right shift through `>>>`;
+#   * a SIGNED compare at 8 or 16 must first sign-extend out of the masked
+#     pattern (`Sf.s8`, `Sf.s16`); at 32 and 64 the pattern is the signed
+#     value already.
+#
+# Java's shift count is taken modulo the operand width by the language itself,
+# which is the same rule this emitter pins, and the `& (w-1)` is written
+# anyway so the source says what it means at 8 and 16 too.  A `long` shift
+# takes an `int` count, hence the cast.
+J_UT = {1: "boolean", 8: "int", 16: "int", 32: "int", 64: "long",
+        128: "Sf.U128"}
+
+
+class JavaBackend(object):
+    lang = "java"
+    ext = "java"
+    header = ""          # no imports: the helpers are `Sf.*`, same directory
+
+    def ut(self, w):
+        return J_UT[w]
+
+    def lit(self, k, w):
+        v = uconst(k, w)
+        if w == 1:
+            return "true" if k else "false"
+        if w == 128:
+            return "Sf.u128(0x%xL, 0x%xL)" % (v >> 64, v & mask(64))
+        if w == 64:
+            return "0x%xL" % v
+        return "0x%x" % v        # hex int literals may set the sign bit
+
+    def val(self, a, w):
+        return sanitize(a[1]) if a[0] == "v" else self.lit(a[1], w)
+
+    def wants_sval(self, pred, w):
+        return pred[0] == "s" and w != 128
+
+    def sval(self, a, w):
+        """An operand read as SIGNED.  At 32 and 64 the pattern already is."""
+        if a[0] == "v":
+            v = sanitize(a[1])
+            return "Sf.s%d(%s)" % (w, v) if w in (8, 16) else v
+        k = signed(a[1], w)
+        return "%dL" % k if w == 64 else "(%d)" % k
+
+    def fn_open(self, fn, rw, params):
+        # the class name is the FILE name, which `main` spells `<op>.java`,
+        # and the entry is `<op>_rm<mode>` -- so the class is the entry with
+        # its mode suffix removed.  Java requires the two to agree.
+        cls = fn.rsplit("_rm", 1)[0]
+        args = ", ".join("%s %s" % (self.ut(w), sanitize(n))
+                         for n, w in params)
+        return ("public final class %s {\n"
+                "    public static %s %s(%s) {" % (cls, self.ut(rw), fn, args))
+
+    def decl(self, ty, name, expr):
+        return "        final %s %s = %s;" % (ty, name, expr)
+
+    def ret(self, e):
+        return "        return %s;\n    }\n}" % e
+
+    def binop(self, op, w, x, y):
+        if w == 1:
+            try:
+                return {"and": "(%s && %s)", "or": "(%s || %s)",
+                        "xor": "(%s != %s)"}[op] % (x, y)
+            except KeyError:
+                raise ValueError("%s at width 1" % op)
+        if w == 128:
+            return "Sf.u128%s(%s, %s)" % (op.capitalize(), x, y)
+        sym = {"and": "&", "or": "|", "xor": "^", "add": "+", "sub": "-",
+               "mul": "*"}.get(op)
+        if sym:
+            e = "(%s %s %s)" % (x, sym, y)
+            # 32 and 64 wrap on their own; 8 and 16 are held by the mask
+            return e if w in (32, 64) or op in ("and", "or", "xor") \
+                else "((%s %s %s) & 0x%x)" % (x, sym, y, mask(w))
+        if op == "udiv":
+            return "Sf.udiv%d(%s, %s)" % (w, x, y)
+        if op in ("shl", "lshr"):
+            arrow = "<<" if op == "shl" else ">>>"
+            cnt = ("(int)(%s & %dL)" % (y, w - 1)) if w == 64 \
+                else ("(%s & %d)" % (y, w - 1))
+            e = "(%s %s %s)" % (x, arrow, cnt)
+            return e if w in (32, 64) or op == "lshr" \
+                else "((%s %s %s) & 0x%x)" % (x, arrow, cnt, mask(w))
+        raise ValueError(op)
+
+    def cast(self, op, sw, dw, x):
+        if op == "trunc":
+            if sw == 128:
+                return "Sf.u128Lo%d(%s)" % (dw, x)
+            if dw == 1:
+                return "((%s & %s) != %s)" % (x, *(("1L", "0L") if sw == 64
+                                                   else ("1", "0")))
+            if sw == 64:
+                return "(int)(%s)" % x if dw == 32 \
+                    else "(int)(%s & 0x%xL)" % (x, mask(dw))
+            return "(%s & 0x%x)" % (x, mask(dw))
+        if op == "zext":
+            if dw == 128:
+                return "Sf.u128Zext%d(%s)" % (sw, x)
+            if sw == 1:
+                return "Sf.b2%s(%s)" % ("l" if dw == 64 else "i", x)
+            if dw == 64:
+                # an int at 32 may carry the sign bit; mask it off
+                return "((long)%s & 0x%xL)" % (x, mask(sw))
+            return "(%s)" % x                 # 8 or 16 into 16 or 32
+        if op == "sext":
+            if dw == 128:
+                return "Sf.u128Sext%d(%s)" % (sw, x)
+            if sw == 1:
+                return "Sf.sext1%s(%s)" % ("l" if dw == 64 else "i", x)
+            src = "Sf.s%d(%s)" % (sw, x) if sw in (8, 16) else x
+            if dw == 64:
+                return "((long)%s)" % src
+            return "(%s)" % src if dw == 32 else "(%s & 0x%x)" % (src,
+                                                                  mask(dw))
+        raise ValueError(op)
+
+    def icmp(self, pred, w, x, y):
+        sym = {"eq": "==", "ne": "!=", "ult": "<", "ule": "<=", "ugt": ">",
+               "uge": ">=", "slt": "<", "sle": "<=", "sgt": ">", "sge": ">="}
+        if w == 128:
+            if pred in ("eq", "ne"):
+                return "(Sf.u128Eq(%s, %s) %s true)" % (
+                    x, y, "==" if pred == "eq" else "!=")
+            cmpf = "u128Ucmp" if pred[0] == "u" else "u128Scmp"
+            return "(Sf.%s(%s, %s) %s 0)" % (cmpf, x, y, sym[pred])
+        if w == 1:
+            if pred in ("eq", "ne"):
+                return "(%s %s %s)" % (x, sym[pred], y)
+            return "(Sf.b2i(%s) %s Sf.b2i(%s))" % (x, sym[pred], y)
+        if pred[0] == "u" and w in (32, 64) and pred not in ("eq", "ne"):
+            box = "Integer" if w == 32 else "Long"
+            return "(%s.compareUnsigned(%s, %s) %s 0)" % (box, x, y,
+                                                          sym[pred])
+        return "(%s %s %s)" % (x, sym[pred], y)
+
+    def intrinsic(self, base, w, args):
+        if base == "ctlz":
+            return "Sf.ctlz%d(%s)" % (w, args[0])
+        if base == "abs":
+            return "Sf.abs%d(%s)" % (w, args[0])
+        if base == "usub.sat":
+            return "Sf.usubsat%d(%s, %s)" % (w, args[0], args[1])
+        if base == "fshl":
+            return "Sf.fshl%d(%s, %s, %s)" % (w, args[0], args[1], args[2])
+        raise ValueError(base)
+
+
+# ----------------------------------------------------------------- Lean ----
+# `BitVec w` is exactly w bits wide, so none of the masking the unbounded
+# languages carry is needed here: and/or/xor/add/sub/mul stay in the width by
+# construction.  The pins the other backends spell out by hand are Lean's own
+# defaults -- udiv by zero is zero because Nat division by zero is zero, and a
+# shift past the width is zero -- except the shift AMOUNT, which LLVM leaves
+# poison and the emulations wrap, so that mask is written out.
+class LeanBackend(object):
+    lang = "lean"
+    ext = "lean"
+    header = ""
+
+    def ut(self, w):
+        return "BitVec %d" % w
+
+    def lit(self, k, w):
+        return "0x%x#%d" % (uconst(k, w), w)
+
+    def val(self, a, w):
+        return sanitize(a[1]) if a[0] == "v" else self.lit(a[1], w)
+
+    def wants_sval(self, pred, w):
+        return False              # BitVec.slt/sle read the same bits signed
+
+    def sval(self, a, w):
+        return self.val(a, w)
+
+    def fn_open(self, fn, rw, params):
+        ps = " ".join("(%s : BitVec %d)" % (sanitize(n), w)
+                      for n, w in params)
+        return "def %s %s : BitVec %d :=" % (fn, ps, rw)
+
+    def decl(self, ty, name, expr):
+        return "  let %s : %s := %s" % (name, ty, expr)
+
+    def ret(self, e):
+        return "  %s" % e
+
+    def binop(self, op, w, x, y):
+        if op in ("and", "or", "xor", "add", "sub", "mul"):
+            return "(%s %s %s)" % (x, {"and": "&&&", "or": "|||", "xor": "^^^",
+                                       "add": "+", "sub": "-",
+                                       "mul": "*"}[op], y)
+        if op == "udiv":
+            return "(BitVec.udiv %s %s)" % (x, y)
+        if op in ("shl", "lshr"):
+            arrow = "<<<" if op == "shl" else ">>>"
+            return "(%s %s (%s &&& %s).toNat)" % (x, arrow, y,
+                                                  self.lit(w - 1, w))
+        if op == "ashr":
+            return "(BitVec.sshiftRight %s (%s &&& %s).toNat)" % (
+                x, y, self.lit(w - 1, w))
+        raise ValueError(op)
+
+    def cast(self, op, sw, dw, x):
+        if op in ("trunc", "zext"):
+            return "(BitVec.setWidth %d %s)" % (dw, x)
+        if op == "sext":
+            return "(BitVec.signExtend %d %s)" % (dw, x)
+        raise ValueError(op)
+
+    def icmp(self, pred, w, x, y):
+        if pred in ("eq", "ne"):
+            inner = "(%s %s %s)" % (x, "==" if pred == "eq" else "!=", y)
+        else:
+            fn, a, b = {"ult": ("ult", x, y), "ule": ("ule", x, y),
+                        "ugt": ("ult", y, x), "uge": ("ule", y, x),
+                        "slt": ("slt", x, y), "sle": ("sle", x, y),
+                        "sgt": ("slt", y, x), "sge": ("sle", y, x)}[pred]
+            inner = "(BitVec.%s %s %s)" % (fn, a, b)
+        return "(BitVec.ofBool %s)" % inner
+
+    def intrinsic(self, base, w, args):
+        return {"ctlz": "(sfCtlz %s)",
+                "abs": "(sfAbs %s)",
+                "usub.sat": "(sfUsubsat %s %s)",
+                "fshl": "(sfFshl %s %s %s)"}[base] % tuple(args)
+
+
 BACKENDS = ([CBackend()] if ALT
-            else [CBackend(), CppBackend(), RustBackend(), GoBackend()])
+            else [CBackend(), CppBackend(), RustBackend(), GoBackend(),
+                  JavaBackend(), PythonBackend(), RubyBackend(),
+                  JsBackend()])
 
 
 # ------------------------------------------------------------------ emit ---
@@ -641,7 +1092,8 @@ def main():
                                        "i128" if rec["i128"] else ""))
     write_glue(recs, mode)
     json.dump(recs, open(os.path.join(OUT, "_emitted.json"), "w"), indent=1)
-    print("emitted %d operations x 4 languages" % len(recs))
+    print("emitted %d operations x %d languages"
+          % (len(recs), len(BACKENDS)))
 
 
 def write_glue(recs, mode):
@@ -686,8 +1138,40 @@ def write_glue(recs, mode):
     open(os.path.join(OUT, "go", "go.mod"), "w").write(
         "module softfloat_emul\n\ngo 1.21\n")
 
+    # the four added 2026-09-16.  java needs no glue -- `javac *.java`
+    # compiles the directory and each class is its own file -- so only the
+    # three script languages get an index, and each is the same shape: a map
+    # from operation name to the callable that emulates it.
+    if "python" in have:
+        py = ['"""Every emulated operation, by name.  Generated."""', ""]
+        for op in ops:
+            py.append("from %s import %s" % (op, recs[op]["languages"]["python"]["entry"]))
+        py += ["", "OPS = {"]
+        for op in ops:
+            py.append('    "%s": %s,' % (op, recs[op]["languages"]["python"]["entry"]))
+        py += ["}", ""]
+        open(os.path.join(OUT, "python", "index.py"), "w").write("\n".join(py))
+
+    if "ruby" in have:
+        rb = ["# Every emulated operation, by name.  Generated.", ""]
+        for op in ops:
+            rb.append("require_relative '%s'" % op)
+        rb += ["", "OPS = {"]
+        for op in ops:
+            rb.append("  '%s' => method(:%s)," % (op, recs[op]["languages"]["ruby"]["entry"]))
+        rb += ["}.freeze", ""]
+        open(os.path.join(OUT, "ruby", "index.rb"), "w").write("\n".join(rb))
+
+    if "js" in have:
+        js = ["'use strict';", "// Every emulated operation, by name.  Generated.", "",
+              "const OPS = {"]
+        for op in ops:
+            js.append("  '%s': require('./%s.js').%s," % (op, op, recs[op]["languages"]["js"]["entry"]))
+        js += ["};", "", "module.exports = { OPS };", ""]
+        open(os.path.join(OUT, "js", "index.js"), "w").write("\n".join(js))
+
     idx = {op: {lang: recs[op]["languages"][lang]["entry"]
-                for lang in ("c", "cpp", "rust", "go")} for op in ops}
+                for lang in sorted(have)} for op in ops}
     json.dump({"mode": mode, "entries": idx},
               open(os.path.join(OUT, "_index.json"), "w"), indent=1)
 

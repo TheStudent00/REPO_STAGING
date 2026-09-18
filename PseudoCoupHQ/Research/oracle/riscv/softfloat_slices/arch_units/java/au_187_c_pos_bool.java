@@ -1,0 +1,16 @@
+// arch-unit 187  --  c  `+a`  lhs=bool rhs=None
+// symbol op_23   outcome LIFTED   1 arch-opcodes
+//
+// the arch-unit, arch-opcode by arch-opcode:
+//   c.jr ra                              integer    return
+//
+// answer: int32_t, 32 bits.  parameters are operand bit patterns.
+public final class au_187_c_pos_bool {
+
+    public static long au_187_c_pos_bool(long p0) {
+        // a0: operand `a` (bool) zero-extended to XLEN
+        final long v1 = ((p0) & 0x1L);
+        // the answer is int32_t, 32 bits
+        return ((v1) & 0xffffffffL);
+    }
+}

@@ -1090,3 +1090,89 @@ communication, 2026-09-10 (cards in the protocol, cases Appendix D): the
 model of how to write is the owner's own message in cases Appendix C.1 —
 plain vocabulary, terms loudly defined, a loop, a few sentences that
 hold the big picture; not a prose block, not a cold telegraph.
+
+## the Sail Lean model is body-full — stop measuring the flattener and calling it Sail (2026-09-17)
+
+the owner had to say this three times in one session. It is settled.
+
+The Sail RISC-V model emitted to Lean has a body for EVERY arch-opcode.
+
+| | |
+|---|---|
+| `def execute_*` clauses | 354 |
+| clauses with a body | 354 |
+| `sorry` in the whole model | 0 |
+| arch-opcodes those clauses cover | 1038 |
+
+354, not 1038, because one clause covers a whole dispatch enum —
+`execute_ITYPE` is one clause and six arch-opcodes (ADDI SLTI SLTIU ANDI
+ORI XORI). Multiply by the enum to get 1038; never report 354 as coverage.
+
+**The error to never repeat.** "N of 1038 have Lean expressions" where N <
+1038 is a measurement of OUR FLATTENER — whether `leanpath/strip.py` can
+reduce a body to a standalone expression — not of Sail's output. Reporting
+it as Sail's output said the model was 34% done when it was 100% done.
+Same shape as "the 737 have nothing to emulate" and "python has no
+lowering": describing a limit of the probe as a property of the world.
+See [[interpreters-are-an-intermediate-step]]. When the flattener refuses
+(vector element width is machine state, a match on a tuple, the rounding
+mode read out of fcsr), say *the flattener refuses*, and name which.
+
+**What was actually body-less: 67 `axiom` in `LeanIM/RiscvExtras.lean`** —
+the Berkeley SoftFloat externals, a type and no body, each returning
+(fflags, value). Nothing else in the model. Those 67 were the entire
+content of step 1.2.
+
+**Step 1.2 is done, 2026-09-17.** `softfloat_slices/scripts/emit_lean_gmp.py`
+walks the flattened slices to Lean bodies over the GMP primitives and
+patches RiscvExtras; nothing is written by hand and no float definition is
+assumed.
+
+| | |
+|---|---|
+| axioms given a body | 67 of 67 |
+| IR instructions walked | 111562 |
+| lines of Lean generated | 114713, 68 modules |
+| `lake build` | 68 of 68, 0 failed, 60s (lp3_l130) |
+| `#print axioms riscv_f64Add` | [propext, Quot.sound] — Lean's own two, no sorry |
+| `axiom` left in RiscvExtras | 8, all platform hooks, none float |
+
+**There are 24 GMP primitives, not 23.** `ashr` is the 24th. It appears only
+in rounding modes 3 and 4, and the eight-language emission only ever ran
+rounding mode 1, which is why it was missed. The set:
+
+```
+add and ashr freeze lshr mul or sext shl sub trunc udiv xor zext
+eq ne sgt slt ugt ult
+abs ctlz fshl usub.sat
+```
+
+`insertvalue` is not a 25th: it is how the `flags` slice returns C's
+`{ uint8_t flags; T v; }` when the lp64 ABI needs two words. Element 0 is
+the fflags byte.
+
+## history rewriting — settled, stop re-deriving it
+
+`stage.sh` carries the sentence "History is never rewritten". It means
+**ordinary operation only ever APPENDS** — stage.sh and the daemon's normal
+commit/push path never rewrite, never force push, never delete a commit, and
+tidiness is never a reason to. It does **NOT** mean a pushed byte is
+permanent. Read that way on 2026-09-16, it nearly changed a decision.
+
+**Two rewrites are sanctioned:**
+
+1. **The one allowed history rewrite (the owner, 2026-09-12)** —
+   `shard_and_recut` in `repo_daemon.py`. UNPUSHED commits are collapsed and
+   re-cut into size-bounded commits, every file over GitHub's 100 MB per-file
+   line replaced by its parts, so the work can push at all. **Nothing pushed
+   is touched.**
+2. **`purge_history.sh`** — removes a leaked token from the FULL history of a
+   public repo, *including what is already pushed*, and force pushes. Keeps
+   bare-mirror backups and the old→new hash map; reversible; idempotent.
+   **Remediation for a leak, never routine.**
+
+**A secret reaching the public record CAN be unpublished.** Nothing is
+one-way. This is also why the diff-only scrub is safe: not because published
+bytes are permanent, but because an unchanged file under an unchanged rule set
+cannot yield a new detection — and when the rules change, everything is read
+again. Full statement: `PRIVATE/RepoDaemon/README.md`.

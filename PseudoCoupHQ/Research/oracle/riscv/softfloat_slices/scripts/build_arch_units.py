@@ -165,12 +165,20 @@ INTEGER_OK = {"sltu", "sltiu", "xori", "c.or", "c.and", "andn", "c.jr",
 
 # ------------------------------------------------------------------ backends --
 class Backend(object):
+    line_comment = "//"          # the file-header prefix; c overrides with " *"
+    body_comment = "    // %s"   # one note inside a function body
+
     def entry(self, name):
         return name
+
+    def note(self, s):
+        return self.body_comment % s
 
 
 class C(Backend):
     lang, ext = "c", "c"
+    line_comment = " *"
+    body_comment = "    /* %s */"
 
     def head(self, unit, uses_emul):
         return ['#include "arch_units.h"', ""]
@@ -210,6 +218,7 @@ class C(Backend):
 
 class Cpp(C):
     lang, ext = "cpp", "cpp"
+    line_comment = "//"
 
     def head(self, unit, uses_emul):
         return ['#include "arch_units.hpp"', "", "namespace archunits {", ""]
@@ -265,6 +274,7 @@ class Rust(Backend):
 
 class Go(Backend):
     lang, ext = "go", "go"
+    body_comment = "\t// %s"
 
     def entry(self, name):
         return "Au" + name[2:]        # exported out of package archunits
@@ -308,7 +318,199 @@ class Go(Backend):
         return "uint64(0x%x)" % v
 
 
-BACKENDS = [C(), Cpp(), Rust(), Go()]
+
+
+# --------------------------------------------- the four added 2026-09-16 ----
+# The composition threads the machine's registers as unsigned 64-bit locals,
+# so java's `long` carries them directly and python, ruby and javascript hold
+# them in an unbounded integer with an explicit 64-bit mask.
+#
+# THE ONE TRAP IS JAVA'S. An emulation whose IR return width is 32 hands back
+# an `int`, and `(long) anInt` SIGN-extends -- which would put ones in the top
+# half of a register that must be zero.  Every call is therefore masked to the
+# emulation's own return width, read from the corpus record rather than
+# guessed.  python, ruby and javascript need no such care: their emulations
+# already return a non-negative value held to that width.
+_RET_W = {}
+_PAR_W = {}
+
+
+def _par_widths(op):
+    _ret_width(op)                      # fills the cache
+    return _PAR_W.get(op, [])
+
+
+def _ret_width(op):
+    if not _RET_W:
+        import json as _json
+        rec = _json.load(open(os.path.join(EMUL, "_emitted.json")))
+        for k, v in rec.items():
+            _RET_W[k] = v["signature"]["ret"]
+            _PAR_W[k] = v["signature"]["params"]
+    return _RET_W.get(op, 64)
+
+
+class Java(Backend):
+    lang, ext = "java", "java"
+
+    def head(self, unit, uses_emul):
+        return []                      # same directory; no import needed
+
+    def fn_open(self, name, nparams):
+        args = ", ".join("long p%d" % i for i in range(nparams))
+        return ["public final class %s {" % name,
+                "    public static long %s(%s) {" % (name, args)]
+
+    def fn_close(self):
+        return ["    }", "}"]
+
+    def let(self, v, e):
+        return "        final long %s = %s;" % (v, e)
+
+    def ret(self, e):
+        return "        return %s;" % e
+
+    def call(self, op, args, boolean):
+        # narrow each argument to the parameter width the emulation declares:
+        # a 32-bit parameter is an `int`, and java will not pass a `long` for
+        # one.  Then widen the result back, ZERO-extending, because
+        # `(long) anInt` sign-extends and would fill the top half with ones.
+        cut = []
+        for a, w in zip(args, _par_widths(op)):
+            if w == 1:
+                cut.append("(((%s) & 1L) != 0L)" % a)
+            elif w >= 64:
+                cut.append(a)
+            else:
+                cut.append("((int)((%s) & 0x%xL))" % (a, (1 << w) - 1))
+        c = "%s.%s_rm%d(%s)" % (op, op, RM, ", ".join(cut))
+        if boolean or _ret_width(op) == 1:
+            return "(%s ? 1L : 0L)" % c
+        w = _ret_width(op)
+        if w >= 64:
+            return c
+        return "(((long) %s) & 0x%xL)" % (c, (1 << w) - 1)
+
+    def u32(self, e):
+        return "((%s) & 0xffffffffL)" % e
+
+    def sext32(self, e):
+        return "((long)(int)(%s))" % e
+
+    def nott(self, e):
+        return "(~(%s))" % e
+
+    def lt(self, a, b):
+        return "(Long.compareUnsigned(%s, %s) < 0 ? 1L : 0L)" % (a, b)
+
+    def lit(self, v):
+        return "0x%xL" % v
+
+
+class _Masked(Backend):
+    """python, ruby and javascript: unbounded integers held by a 64-bit mask."""
+    N = ""                             # "n" for javascript BigInt literals
+
+    def head(self, unit, uses_emul):
+        return list(self.HEAD)
+
+    def call(self, op, args, boolean):
+        # a width-1 emulation already answers with the integer 0 or 1 in these
+        # three languages, so a boolean result needs no widening here
+        return self.CALL % (op, RM, ", ".join(args))
+
+    def u32(self, e):
+        return "((%s) & 0xffffffff%s)" % (e, self.N)
+
+    def sext32(self, e):
+        # (x ^ 2^31) - 2^31 over the low 32 bits IS the sign extension, and it
+        # is written in masks and subtraction only so no language's own
+        # conversion rule can enter
+        return ("(((((%s) & 0xffffffff%s) ^ 0x80000000%s) - 0x80000000%s)"
+                " & 0xffffffffffffffff%s)" % (e, self.N, self.N, self.N,
+                                              self.N))
+
+    def nott(self, e):
+        return "((~(%s)) & 0xffffffffffffffff%s)" % (e, self.N)
+
+    def lit(self, v):
+        return "0x%x%s" % (v, self.N)
+
+
+class Python(_Masked):
+    lang, ext = "python", "py"
+    line_comment = "#"
+    body_comment = "    # %s"
+    HEAD = ["from au_float import *        # noqa: F401,F403", ""]
+    CALL = "%s_rm%d(%s)"
+
+    def fn_open(self, name, nparams):
+        return ["def %s(%s):" % (name, ", ".join("p%d" % i
+                                                 for i in range(nparams)))]
+
+    def fn_close(self):
+        return []
+
+    def let(self, v, e):
+        return "    %s = %s" % (v, e)
+
+    def ret(self, e):
+        return "    return %s" % e
+
+    def lt(self, a, b):
+        return "(1 if (%s) < (%s) else 0)" % (a, b)
+
+
+class Ruby(_Masked):
+    lang, ext = "ruby", "rb"
+    line_comment = "#"
+    body_comment = "  # %s"
+    HEAD = ["require_relative 'au_float'", ""]
+    CALL = "%s_rm%d(%s)"
+
+    def fn_open(self, name, nparams):
+        return ["def %s(%s)" % (name, ", ".join("p%d" % i
+                                                for i in range(nparams)))]
+
+    def fn_close(self):
+        return ["end"]
+
+    def let(self, v, e):
+        return "  %s = %s" % (v, e)
+
+    def ret(self, e):
+        return "  %s" % e
+
+    def lt(self, a, b):
+        return "(((%s) < (%s)) ? 1 : 0)" % (a, b)
+
+
+class Js(_Masked):
+    lang, ext = "js", "js"
+    body_comment = "  // %s"
+    N = "n"
+    HEAD = ["'use strict';", "const AF = require('./au_float.js');", ""]
+    CALL = "AF.%s_rm%d(%s)"
+
+    def fn_open(self, name, nparams):
+        self._fn = name
+        return ["function %s(%s) {" % (name, ", ".join("p%d" % i
+                                                       for i in range(nparams)))]
+
+    def fn_close(self):
+        return ["}", "", "module.exports = { %s };" % self._fn]
+
+    def let(self, v, e):
+        return "  const %s = %s;" % (v, e)
+
+    def ret(self, e):
+        return "  return %s;" % e
+
+    def lt(self, a, b):
+        return "(((%s) < (%s)) ? 1n : 0n)" % (a, b)
+
+
+BACKENDS = [C(), Cpp(), Rust(), Go(), Java(), Python(), Ruby(), Js()]
 
 
 # ------------------------------------------------------------- composition --
@@ -384,9 +586,7 @@ class Composer(object):
                 e = p
                 note = "%s: operand `%s` (%s) arrives in %s" % (reg, nm, ty,
                                                                reg)
-            self.lines.append("    /* %s */" % note if be.lang in ("c", "cpp")
-                              else ("\t// " + note if be.lang == "go"
-                                    else "    // " + note))
+            self.lines.append(be.note(note))
             self.reg[reg] = self.fresh(e)
 
     # -- one arch-opcode -----------------------------------------------------
@@ -518,7 +718,7 @@ def OPERAND_SLUG(t):
 def header_lines(be, i, r, steps, reduced):
     kind, w = result_of(r)
     ln = []
-    c = "//" if be.lang in ("rust", "go", "cpp") else " *"
+    c = be.line_comment
     open_, close_ = ("/*", " */") if be.lang == "c" else ("", "")
     if open_:
         ln.append(open_)
@@ -691,6 +891,36 @@ def write_glue(record):
         lib.append('#[path = "%s.rs"]' % n)
         lib.append("pub mod %s;" % n)
     open(os.path.join(OUT, "rust", "lib.rs"), "w").write("\n".join(lib) + "\n")
+
+    # the three script languages reach the rm0 emulations through one
+    # re-export apiece, so an arch-unit file names the operation and nothing
+    # about where it lives
+    import json as _json
+    _ops = sorted(_json.load(open(os.path.join(EMUL, "_index.json")))["entries"])
+
+    py = ["\"\"\"The rm0 emulations, re-exported for the arch-units. Generated.\"\"\"",
+          "import os", "import sys", "",
+          "sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),",
+          "                               '..', 'emul_rm0', 'python'))", ""]
+    for _o in _ops:
+        py.append("from %s import %s_rm%d" % (_o, _o, RM))
+    d = os.path.join(OUT, "python"); os.makedirs(d, exist_ok=True)
+    open(os.path.join(d, "au_float.py"), "w").write("\n".join(py) + "\n")
+
+    rb = ["# The rm0 emulations, re-exported for the arch-units. Generated.", ""]
+    for _o in _ops:
+        rb.append("require_relative '../emul_rm0/ruby/%s'" % _o)
+    d = os.path.join(OUT, "ruby"); os.makedirs(d, exist_ok=True)
+    open(os.path.join(d, "au_float.rb"), "w").write("\n".join(rb) + "\n")
+
+    js = ["'use strict';",
+          "// The rm0 emulations, re-exported for the arch-units. Generated.",
+          "module.exports = Object.assign({},"]
+    for _o in _ops:
+        js.append("  require('../emul_rm0/js/%s.js')," % _o)
+    js += [");", ""]
+    d = os.path.join(OUT, "js"); os.makedirs(d, exist_ok=True)
+    open(os.path.join(d, "au_float.js"), "w").write("\n".join(js) + "\n")
 
     open(os.path.join(OUT, "go", "go.mod"), "w").write(
         "module archunits\n\ngo 1.21\n\n"

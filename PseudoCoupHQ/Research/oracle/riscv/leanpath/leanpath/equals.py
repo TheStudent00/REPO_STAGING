@@ -38,6 +38,218 @@ STAGES = [
     ("fixed_width", ["  try simp only [%(defs)s]", "  all_goals bv_decide"]),
 ]
 
+
+# ---------------------------------------------------------------- core level
+# Unfolding the emitted definitions and the lean-sail helpers is not the whole
+# rule. Under both of those sits LEAN'S OWN library, and three of its terms are
+# outside `bv_decide`'s BitVec fragment in the spelling the emit produces. Each
+# entry here is (the term that calls for it, the lemmas that answer it).
+#
+# NOT A GUESS LIST. Every name was put to the toolchain on its own `#check`
+# line first, and every lemma was then put to `bv_decide` one at a time against
+# the shape the gate's own residuals named (lane lp3_l101, and on the host at
+# v4.30.0 and v4.34.0 before it). A name that is merely plausible is worse here
+# than no name at all: `try simp only [...]` SWALLOWS the elaboration error of
+# an unknown identifier -- measured, not assumed -- and then skips the ENTIRE
+# simp set, so one bad name leaves every definition folded and `bv_decide`
+# answers with a spurious counterexample that reads exactly like hard
+# mathematics. `equals` guards against that by emitting a `#check` for each
+# lemma it injects, which fails loudly instead.
+#
+#   BitVec.zero n     `zeros` (Prelude) is `BitVec.zero n`, and `bv_decide`
+#                     abstracts it. `BitVec.zero_eq` rewrites it to `0#n`.
+#   an Int-derived    Sail's shift helpers hand `BitVec.sshiftRight` a Nat
+#   shift             coerced out of an Int. `bv_decide` takes the shift when
+#                     it is a plain `BitVec.toNat`, and abstracts the whole
+#                     shift when the Int round-trip is still in the term;
+#                     `Int.toNat_natCast` removes the round-trip.
+#   an Int comparison Sail's unsigned comparisons leave a decidable `<` over
+#                     two Ints. The bridge must go TOWARDS BitVec, never away:
+#                     unfolding `BitVec.ult` into Nat breaks goals `bv_decide`
+#                     proves natively (measured), while `Int.ofNat_lt` then
+#                     `← BitVec.lt_def` then `BitVec.ult_iff_lt` puts the
+#                     comparison back inside the fragment and harms nothing.
+CORE_NORMALISE = (
+    ("BitVec.zero", ("BitVec.zero_eq",)),
+    ("sshiftRight", ("Int.toNat_natCast",)),
+    ("toNatInt", ("Int.ofNat_lt", "← BitVec.lt_def", "BitVec.ult_iff_lt")),
+)
+
+
+def core_normalise(texts):
+    """The Lean-core lemmas the given texts call for, by the rule above.
+
+    Nothing is added unconditionally: a lemma rides only when the term it
+    answers actually occurs in the closure being unfolded, so a theorem that
+    never leaves the BitVec fragment carries none of them."""
+    joined = "\n".join(t for t in texts if t)
+    out = []
+    for term, lemmas in CORE_NORMALISE:
+        # whole token, not substring: `Sail.BitVec.zeroExtend` contains the
+        # letters of `BitVec.zero` and is a different function entirely
+        if re.search(r"\b%s\b" % re.escape(term), joined):
+            out += [lm for lm in lemmas if lm not in out]
+    return out
+
+
+# --------------------------------------------------------- the Sail bridge --
+# Layer four, and it is not a library lemma: Sail's Lean backend defines every
+# comparison over Int (`zopz0zI_u x y = toNatInt x <b toNatInt y`), `bv_decide`
+# cannot bitblast `Int.blt`, and Sail ships NO lemma to `BitVec.ult` -- which
+# is the same predicate, inside the fragment. Lane lp3_l104 measured that no
+# library lemma closes it; lp3_l105 sized it at 35 of 186 classes UNDECIDED.
+#
+# `leanpath/sail_bridge.py` GENERATES the lemmas by reading each definition out
+# of the Prelude, and lane lp3_l107 put all eight to Lean: the four signed ones
+# hold by `rfl` (they are definitionally the BitVec predicate) and the four
+# unsigned by `simp`. They are emitted INTO the theorem file rather than
+# imported, so a file carries its own proof of every rewrite it uses.
+_BRIDGE_CACHE = {}
+
+
+def bridge_lemmas(project, module):
+    """(lemma text lines, the names they define) for this project's Prelude.
+
+    Generated, never typed: a definition whose shape sail_bridge does not
+    recognise is skipped there and simply has no lemma here, so a rename in
+    Sail becomes a missing rewrite and never a wrong one."""
+    key = (project, module)
+    if key in _BRIDGE_CACHE:
+        return _BRIDGE_CACHE[key]
+    try:
+        from .sail_bridge import (read_defs, lemma_for,
+                                  read_bool_defs, bool_lemma_for)
+        prelude = os.path.join(project, module, "Prelude.lean")
+        text = open(prelude).read()
+    except Exception:
+        _BRIDGE_CACHE[key] = ([], [])
+        return _BRIDGE_CACHE[key]
+    lines, names = [], []
+    # two families: the comparisons, and the Bool-to-bit wrapper around them.
+    # lane lp3_l109 moved two classes with the comparisons alone and its
+    # residuals named the wrapper as what stayed opaque, so both ride.
+    found = [(n, b, y, lemma_for) for n, b, y in read_defs(text)]
+    found += [(n, b, y, bool_lemma_for) for n, b, y in read_bool_defs(text)]
+    for name, binder, body, maker in found:
+        got, _why = maker(name, binder, body)
+        if got is None:
+            continue
+        lemma, meta = got
+        lines += lemma.split("\n") + [""]
+        names.append(("sail_bridge_" + name, meta["definition"]))
+    _BRIDGE_CACHE[key] = (lines, names)
+    return _BRIDGE_CACHE[key]
+
+
+def bridge_for(project, module, texts):
+    """(lemma text, the lemma names, the definitions that must be DROPPED).
+
+    A lemma rides only when the Sail definition it bridges occurs in the
+    closure being unfolded, exactly as core_normalise does it.
+
+    THE THIRD RETURN IS NOT OPTIONAL. A simp set cannot both UNFOLD a
+    definition and REWRITE it: `simp only [zopz0zI_s, sail_bridge_zopz0zI_s]`
+    unfolds first, and the bridge then has nothing left to match. Lane
+    lp3_l108 ran exactly that and moved nothing -- every residual showed the
+    comparison already spelled `(...).toInt <b (...).toInt`, which is the
+    unfolded form. The definition a bridge covers must leave the set with it,
+    which is why this returns them together and the caller is given no way to
+    take one without the other."""
+    lines, names = bridge_lemmas(project, module)
+    joined = "\n".join(t for t in texts if t)
+    wanted = [n for n, defined in names
+              if re.search(r"\b%s\b" % re.escape(defined), joined)]
+    bridged = {n: d for n, d in names}
+    drop = [bridged[n] for n in wanted]
+    if not wanted:
+        return [], [], []
+    keep, emit = set(wanted), []
+    block = []
+    for line in lines:
+        block.append(line)
+        if line == "":
+            head = "\n".join(block)
+            m = re.search(r"^theorem (sail_bridge_\w+)", head, re.M)
+            if m and m.group(1) in keep:
+                emit += block
+            block = []
+    return emit, wanted, drop
+
+
+def core_guards(defs):
+    """The injected core lemmas, as bare names, for the `#check` guard."""
+    named = {lm for _, lemmas in CORE_NORMALISE for lm in lemmas}
+    return [d.replace("←", "").strip() for d in defs if d in named]
+
+
+def simp_set(defs_index, heads, name, bodies, F, G):
+    """Every definition `simp only` must unfold for one theorem, in order.
+
+    ONE place, deliberately. This was three copies -- two here and a third in
+    a lane's heredoc -- and on 2026-09-16 a fix landed in one of them while the
+    gate ran another, so the run reported UNDECIDED against code that had not
+    changed. A caller that assembles its own set will drift the same way.
+
+    Seeded from the pure bodies AND from the theorem STATEMENT. The statement
+    names helpers no body mentions: a candidate carries constants in its
+    operand list (`pure_ZBA_RTYPEUW a zero_reg 0b00#2`), and `zero_reg` is an
+    emitted definition nothing else would reach. Without it `bv_decide`
+    abstracts the constant as an opaque variable and answers with a spurious
+    counterexample.
+
+    Three layers, in this order: the emitted definitions the text reaches, the
+    lean-sail helpers those call, and Lean's own normalisations for whatever
+    the first two leave outside `bv_decide`'s fragment. The third layer is read
+    off the TEXT OF THE UNFOLDED CLOSURE, not off the statement: `BitVec.zero`
+    is never written by the emit at the call site -- it is the body of `zeros`,
+    which is the body of `zero_reg`, which is what the statement carries.
+    """
+    # A `pure_` name rides only if the bodies handed in actually DEFINE it.
+    # The rule used to take every head and the name on faith, which is safe for
+    # the corpus driver (its `name` is a clause) and a trap for any caller whose
+    # `name` is a unit tag or whose head was refused a body: the definition does
+    # not exist, `simp only` cannot elaborate the list, `try` eats the error
+    # without a word, and the WHOLE set -- every emitted definition, every
+    # library helper -- is skipped. The run then reports UNDECIDED for a
+    # spelling. Measured on this toolchain as candidate u0 of lane lp3_l101.
+    body_text = "\n".join(bodies)
+    defined = lambda nm: re.search(r"^def pure_%s\b" % re.escape(nm), body_text, re.M) is not None
+    defs = []
+    for nm in list(heads) + [name]:
+        if defined(nm) and ("pure_%s" % nm) not in defs:
+            defs.append("pure_%s" % nm)
+    pure_text = "\n".join(re.findall(r"^def pure_.*?(?=^theorem|\Z)", body_text, re.S | re.M))
+    seed = "\n".join([pure_text, F, G])
+    defs += [d for d in reachable(defs_index, seed) if d not in defs]
+    defs += [d for d in library_refs(defs_index, defs, extra_texts=[seed]) if d not in defs]
+    closure = [seed] + [defs_index.get(d, "") for d in defs]
+    defs += [d for d in core_normalise(closure) if d not in defs]
+    return defs
+
+def simp_set_with_bridge(defs_index, heads, name, bodies, F, G,
+                        project, module):
+    """(the simp set, the lemma text to emit) -- `simp_set` plus the bridge.
+
+    ONE PLACE, and it exists because getting the bridge right by hand is two
+    mistakes deep. Lane lp3_l108 added the bridge lemmas and left the Sail
+    definitions in the set: simp unfolded first and nothing moved. Lane
+    lp3_l109 dropped the definitions and moved two of thirty-five. Lane
+    lp3_l110 added the second family -- the Bool-to-bit wrapper around the
+    comparison -- and moved thirty-one.
+
+    A caller that assembles this itself will get one of those three, and two
+    of them look like hard mathematics. So the drop and the emit come back
+    together from here or not at all."""
+    defs = simp_set(defs_index, heads, name, bodies, F, G)
+    closure = [F, G] + list(bodies) + [defs_index.get(d, "") for d in defs]
+    emit, names, drop = bridge_for(project, module, closure)
+    if not names:
+        return defs, []
+    dropped = set(drop)
+    defs = [d for d in defs if d not in dropped] + names
+    return defs, emit
+
+
 def theorem_text(name, unknowns, lhs, rhs, stage, defs):
     unk = " ".join("(%s : BitVec 64)" % v for v in unknowns)
     # the same text is instant when it holds; a cap keeps `rfl` from unfolding a composite for minutes
@@ -52,10 +264,17 @@ def theorem_text(name, unknowns, lhs, rhs, stage, defs):
 def equals(proof_project, header, closers, bodies, name, unknowns, lhs, rhs, defs, out_dir, timeout_s=120, stages=None):
     """Try the stages in order; return the first that proves, with times."""
     tried = []
+    # The guard for the churn this path has already been bitten by. A lemma
+    # name that no longer exists does NOT announce itself inside
+    # `try simp only [...]`: the `try` eats the elaboration error, the whole
+    # set is skipped, and the run reports UNDECIDED for a vanished name. One
+    # `#check` per injected core lemma turns that into an error on its own
+    # line, which `rc` and `errors` below both carry.
+    guard = ["#check @%s" % g for g in core_guards(defs)]
     for stage, _ in STAGES:
         if stages is not None and stage not in stages:
             continue
-        text = "\n".join(header + ["set_option linter.unusedVariables false", ""] + bodies +
+        text = "\n".join(header + ["set_option linter.unusedVariables false", ""] + guard + [""] + bodies +
                          ["", theorem_text(name, unknowns, lhs, rhs, stage, defs), ""] + closers + [""])
         path = os.path.join(out_dir, "Equals_%s_%s.lean" % (name, stage))
         open(path, "w").write(text)
@@ -227,17 +446,7 @@ def cmd_equals(argv, say, write_json, check_memory):
                     bodies += ST.lean_body(clauses[h], ST.propose(clauses[h]))
             G = G_of((name, combo))
             tag = re.sub(r"\W", "_", "%s__%s_%02d" % (u["unit"], name, k))[:120]
-            defs = ["pure_%s" % h for h in heads] + ["pure_%s" % name]
-            pure_text = "\n".join(re.findall(r"^def pure_.*?(?=^theorem|\Z)", "\n".join(bodies), re.S | re.M))
-            # The THEOREM STATEMENT names helpers no pure body mentions: a candidate
-            # carries constants in its operand list (`pure_ZBA_RTYPEUW a zero_reg 0b00#2`),
-            # and `zero_reg` is an emitted definition that nothing else would reach.
-            # Seeding with F and G is what lets `simp only` turn it into `0#64`; without
-            # it `bv_decide` abstracts the constant as an opaque variable and returns a
-            # spurious counterexample (gate_emul, 2026-09-16: 6 of 12 undecided this way).
-            seed = "\n".join([pure_text, F, G])
-            defs += [d for d in reachable(defs_index, seed) if d not in defs]
-            defs += [d for d in library_refs(defs_index, defs, extra_texts=[seed]) if d not in defs]
+            defs = simp_set(defs_index, heads, name, bodies, F, G)
             return k, equals(proof_project, header, closers, bodies, tag, unknowns, F, G, defs, out_dir, budget_s, stages)
         found = False
         # round 1, one Lean run: the same text and the integer level over every candidate
@@ -246,17 +455,7 @@ def cmd_equals(argv, say, write_json, check_memory):
             cl = clauses[name]
             bodies = ST.lean_body(cl, ST.propose(cl))
             G = G_of((name, combo))
-            defs = ["pure_%s" % h for h in heads] + ["pure_%s" % name]
-            pure_text = "\n".join(re.findall(r"^def pure_.*?(?=^theorem|\Z)", "\n".join(bodies), re.S | re.M))
-            # The THEOREM STATEMENT names helpers no pure body mentions: a candidate
-            # carries constants in its operand list (`pure_ZBA_RTYPEUW a zero_reg 0b00#2`),
-            # and `zero_reg` is an emitted definition that nothing else would reach.
-            # Seeding with F and G is what lets `simp only` turn it into `0#64`; without
-            # it `bv_decide` abstracts the constant as an opaque variable and returns a
-            # spurious counterexample (gate_emul, 2026-09-16: 6 of 12 undecided this way).
-            seed = "\n".join([pure_text, F, G])
-            defs += [d for d in reachable(defs_index, seed) if d not in defs]
-            defs += [d for d in library_refs(defs_index, defs, extra_texts=[seed]) if d not in defs]
+            defs = simp_set(defs_index, heads, name, bodies, F, G)
             prepared.append((name, bodies, G, defs))
         shared, seen_clauses = [], set()
         for h in list(heads) + [nm for nm, _, _, _ in prepared]:

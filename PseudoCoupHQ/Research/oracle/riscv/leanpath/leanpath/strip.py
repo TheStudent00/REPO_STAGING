@@ -274,6 +274,17 @@ def propose(clause):
     """The rule. Returns a dict with shape, reads, lets, value, or a refusal."""
     regs = [n for n, t in clause["params"] if t == "regidx"]
     others = [(n, t) for n, t in clause["params"] if t != "regidx"]
+    split = merge_var_arms(clause) if clause.get("monadic", True) else None
+    if split is not None:
+        proposals = []
+        for ctor, sub in split:
+            proposals.append((ctor, sub, propose(sub)))
+        usable = [t for t in proposals if "refused" not in t[2]]
+        if not usable:
+            return {"refused": "every merge_var arm refused: %s"
+                    % proposals[0][2].get("refused", "")[:70]}
+        return {"shape": "merge_arms", "merge_arms": proposals,
+                "regs": regs, "others": others}
     els = elements(clause["body"])
     reads, lets, write, value, alias = [], [], None, None, None
     ended = False
@@ -500,6 +511,86 @@ def lean_file(clause, prop, lib, namespaces, lean_dir=None):
                 "namespace Leanpath", ""]
         closers = ["end Leanpath"]
     return "\n".join(head + lean_body(clause, prop) + closers + [""])
+
+
+# ------------------------------------------------ the tuple-match shape ----
+# A THIRD ARM SHAPE, and the most common refusal in the model. `UTYPE` puts its
+# match inside the WRITTEN VALUE; these put it at the top of the do-block, over
+# a tuple of every parameter, and each arm is a COMPLETE body with its own
+# reads, its own write and its own retire:
+#
+#     def execute_F_UN_TYPE_X_S (arg0 : fregidx) (arg1 : regidx)
+#                               (arg2 : f_un_op_x_S) : SailM … := do
+#       let merge_var := (arg0, arg1, arg2)
+#       match merge_var with
+#       | (rs1, rd, .FCLASS_S) => (do … wX_bits rd … ; pure RETIRE_SUCCESS)
+#       | (rs1, rd, .FMV_X_W)  => (do … wX_bits rd … ; pure RETIRE_SUCCESS)
+#
+# So an arm cannot share one `write` and one `value` with its siblings the way
+# the UTYPE arms do; each needs the WHOLE rule run on it. That is what this
+# does: it splits the clause into one synthetic sub-clause per arm, with the
+# arm's binders standing in for the parameters and the dispatch parameter
+# pinned to the arm's constructor, and `propose` recurses into each.
+#
+# 16 clauses in the model take this shape, and they expand to 218 arch-opcodes
+# -- the largest single block of refusals there is.
+# NAMES: MERGE_LET, TUPLE_LET, TUPLE_MATCH and TUPLE_ARM are ALL already
+# taken in this file, with different capture groups. Collided with two of
+# them before checking. These three are prefixed so they cannot.
+ARMSPLIT_LET = re.compile(r"^let\s+(\w+)\s*:=\s*\(([^()]*)\)\s*$")
+ARMSPLIT_MATCH = re.compile(r"^match\s+(\w+)\s+with\s*$")
+ARMSPLIT_ARM = re.compile(r"^\|\s*\(([^)]*)\)\s*=>\s*(.*)$", re.S)
+
+
+def merge_var_arms(clause):
+    """[(ctor, sub-clause)] for the tuple-match shape, or None if not it.
+
+    Returns None rather than a refusal: a clause that is not this shape must
+    fall through to the ordinary rule untouched."""
+    els = elements(clause["body"])
+    if len(els) < 3:
+        return None
+    m0 = ARMSPLIT_LET.match(els[0].strip())
+    m1 = ARMSPLIT_MATCH.match(els[1].strip())
+    if not m0 or not m1 or m1.group(1) != m0.group(1):
+        return None
+    names = [x.strip() for x in m0.group(2).split(",")]
+    params = [n for n, _ in clause["params"]]
+    if names != params:
+        return None                      # the tuple must BE the parameter list
+    out = []
+    for e in els[2:]:
+        ma = ARMSPLIT_ARM.match(e.strip())
+        if ma is None:
+            return None
+        pat = [x.strip() for x in ma.group(1).split(",")]
+        if len(pat) != len(params):
+            return None
+        dispatch = [i for i, x in enumerate(pat) if x.startswith(".")]
+        if len(dispatch) != 1:
+            return None                  # exactly one position selects the arm
+        i = dispatch[0]
+        body = ma.group(2).strip()
+        if not body.startswith("(do"):
+            return None
+        # `elements` takes a LIST OF LINES and splits on the first line's
+        # indentation; handing it a string makes `body[0]` a character and it
+        # degenerates into one element per character. So the arm's body is
+        # rebuilt as lines: strip the `(do … )` wrapper, drop the `do` line,
+        # and keep the rest at their own indentation, which is then the base.
+        inner = strip_outer_parens(body)
+        lines = inner.split("\n")
+        if not lines or lines[0].strip() != "do":
+            return None
+        lines = [ln for ln in lines[1:] if ln.strip()]
+        if not lines:
+            return None
+        sub = {"name": clause["name"], "monadic": True, "body": lines,
+               "params": [(pat[j], clause["params"][j][1])
+                          for j in range(len(pat)) if j != i],
+               "arm_binders": pat, "case_pos": i}
+        out.append((pat[i], sub))
+    return out or None
 
 
 def arm_ident(ctor):

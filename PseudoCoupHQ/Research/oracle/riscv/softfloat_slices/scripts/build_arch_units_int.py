@@ -115,6 +115,8 @@ def unit_name(i, r):
 
 # --------------------------------------------------------------- backends ---
 class Backend(object):
+    line_comment = "//"          # the file-header prefix; c overrides with " *"
+
     def entry(self, name):
         return name
 
@@ -124,9 +126,10 @@ class Backend(object):
 
 class C(Backend):
     lang, ext = "c", "c"
+    line_comment = " *"
     U = "UINT64_C(0x%x)"
 
-    def head(self):
+    def head(self, name=None):
         return ['#include "arch_units_int.h"', ""]
 
     def tail(self):
@@ -154,8 +157,9 @@ class C(Backend):
 
 class Cpp(C):
     lang, ext = "cpp", "cpp"
+    line_comment = "//"
 
-    def head(self):
+    def head(self, name=None):
         return ['#include "arch_units_int.hpp"', "",
                 "namespace archunits {", ""]
 
@@ -169,7 +173,7 @@ class Rust(Backend):
     def comment(self, s):
         return "    // %s" % s
 
-    def head(self):
+    def head(self, name=None):
         return ["#![allow(unused_parens, unused_variables, unused_imports,"
                 " clippy::all)]",
                 "use crate::au_int::*;", ""]
@@ -206,7 +210,7 @@ class Go(Backend):
     def comment(self, s):
         return "\t// %s" % s
 
-    def head(self):
+    def head(self, name=None):
         return ["package archunits", ""]
 
     def tail(self):
@@ -234,7 +238,153 @@ class Go(Backend):
         return "%s(%s)" % (fn, ", ".join(args))
 
 
-BACKENDS = [C(), Cpp(), Rust(), Go()]
+
+
+# --------------------------------------------- the four added 2026-09-16 ----
+# Every arch-opcode in this builder goes through an `au_*` helper, so a
+# language is its backend plus its helper library and nothing else.  java's
+# `long` is exactly 64 bits and carries the pattern directly; python, ruby and
+# javascript hold it in an unbounded integer and the helper library masks.
+
+
+class Java(Backend):
+    lang, ext = "java", "java"
+
+    def comment(self, s):
+        return "        // %s" % s
+
+    def head(self, name=None):
+        # only a PUBLIC top-level class must match the file name, and this one
+        # does: both are the arch-unit's name.  A method may share its class's
+        # name so long as it declares a return type, which is why the entry
+        # keeps the spelling every other language uses.
+        return ["public final class %s {" % name, ""]
+
+    def tail(self):
+        return ["}"]
+
+    def fn_open(self, name, nparams):
+        args = ", ".join("long p%d" % i for i in range(nparams))
+        return ["    public static long %s(%s) {" % (name, args)]
+
+    def fn_close(self):
+        return ["    }"]
+
+    def let(self, v, e):
+        return "        final long %s = %s;" % (v, e)
+
+    def ret(self, e):
+        return "        return %s;" % e
+
+    def lit(self, v):
+        return "0x%xL" % v
+
+    def call(self, fn, *args):
+        return "AuInt.%s(%s)" % (fn, ", ".join(args))
+
+
+class Python(Backend):
+    line_comment = "#"
+    lang, ext = "python", "py"
+
+    def comment(self, s):
+        return "    # %s" % s
+
+    def head(self, name=None):
+        return ["from au_int import *        # noqa: F401,F403", ""]
+
+    def tail(self):
+        return []
+
+    def fn_open(self, name, nparams):
+        args = ", ".join("p%d" % i for i in range(nparams))
+        return ["def %s(%s):" % (name, args)]
+
+    def fn_close(self):
+        return []
+
+    def let(self, v, e):
+        return "    %s = %s" % (v, e)
+
+    def ret(self, e):
+        return "    return %s" % e
+
+    def lit(self, v):
+        return "0x%x" % v
+
+    def call(self, fn, *args):
+        return "%s(%s)" % (fn, ", ".join(args))
+
+
+class Ruby(Backend):
+    line_comment = "#"
+    lang, ext = "ruby", "rb"
+
+    def comment(self, s):
+        return "  # %s" % s
+
+    def head(self, name=None):
+        return ["require_relative 'au_int'", ""]
+
+    def tail(self):
+        return []
+
+    def fn_open(self, name, nparams):
+        args = ", ".join("p%d" % i for i in range(nparams))
+        return ["def %s(%s)" % (name, args)]
+
+    def fn_close(self):
+        return ["end"]
+
+    def let(self, v, e):
+        return "  %s = %s" % (v, e)
+
+    def ret(self, e):
+        return "  %s" % e
+
+    def lit(self, v):
+        return "0x%x" % v
+
+    def call(self, fn, *args):
+        return "%s(%s)" % (fn, ", ".join(args))
+
+
+class Js(Backend):
+    lang, ext = "js", "js"
+
+    def comment(self, s):
+        return "  // %s" % s
+
+    def head(self, name=None):
+        self._fn = []
+        return ["'use strict';",
+                "const AU = require('./au_int.js');", ""]
+
+    def tail(self):
+        return ["", "module.exports = { %s };" % ", ".join(self._fn)]
+
+    def fn_open(self, name, nparams):
+        self._fn.append(name)
+        args = ", ".join("p%d" % i for i in range(nparams))
+        return ["function %s(%s) {" % (name, args)]
+
+    def fn_close(self):
+        return ["}"]
+
+    def let(self, v, e):
+        return "  const %s = %s;" % (v, e)
+
+    def ret(self, e):
+        return "  return %s;" % e
+
+    def lit(self, v):
+        return "0x%xn" % v
+
+    def call(self, fn, *args):
+        return "AU.%s(%s)" % (fn, ", ".join(args))
+
+
+BACKENDS = [C(), Cpp(), Rust(), Go(), Java(), Python(), Ruby(), Js()]
 
 MASK64 = 0xFFFFFFFFFFFFFFFF
 
@@ -629,7 +779,7 @@ def compose_addr(be, r):
 def header_lines(be, i, r, steps, reduced, has_trap):
     tag = S.result_tag(r)
     ln = []
-    c = "//" if be.lang in ("rust", "go", "cpp") else " *"
+    c = be.line_comment
     if be.lang == "c":
         ln.append("/*")
 
@@ -710,7 +860,7 @@ def main():
                     trap_body = Composer(be, r, "trap").run()
             L = (header_lines(be, i, r, steps, bool(reduced or blocked),
                               has_trap)
-                 + be.head()
+                 + be.head(name)
                  + be.fn_open(be.entry(name), nparams) + body + be.fn_close())
             if trap_body is not None:
                 L += [""] + be.fn_open(be.entry(name) + "_trap", nparams) \
@@ -1199,6 +1349,399 @@ def write_helpers():
     open(os.path.join(OUT, "cpp", "au_int.hpp"), "w").write(cp)
     open(os.path.join(OUT, "rust", "au_int.rs"), "w").write(RUST_HELPERS)
     open(os.path.join(OUT, "go", "helpers_int.go"), "w").write(GO_HELPERS)
+    for lang, fname, text in (("java", "AuInt.java", JAVA_HELPERS),
+                              ("python", "au_int.py", PY_HELPERS),
+                              ("ruby", "au_int.rb", RB_HELPERS),
+                              ("js", "au_int.js", JS_HELPERS)):
+        d = os.path.join(OUT, lang)
+        os.makedirs(d, exist_ok=True)
+        open(os.path.join(d, fname), "w").write(text)
+
+
+
+JAVA_HELPERS = r'''// generated by scripts/build_arch_units_int.py
+// The RV64 integer arch-opcodes as java.  A `long` is exactly 64 bits and
+// two's complement, so it carries the pattern directly; unsignedness lives in
+// the operations -- `>>>` for the logical shift, `Long.compareUnsigned` for
+// the unsigned compare.  Shift counts are masked to the width RISC-V uses;
+// au_sra / au_sraw are written out in unsigned bit operations; signed divide
+// and remainder go through unsigned magnitudes so the sign rule is RISC-V's
+// (truncate toward zero) and not the host language's.
+public final class AuInt {
+    private AuInt() { }
+
+    static final long ONES  = -1L;                    // 0xffffffffffffffff
+    static final long MIN64 = Long.MIN_VALUE;         // 0x8000000000000000
+    static final long M32   = 0xffffffffL;
+
+    public static long au_b2u(boolean b)       { return b ? 1L : 0L; }
+    public static long au_sext32(long x)       { return (long) (int) x; }
+    public static long au_add(long a, long b)  { return a + b; }
+    public static long au_sub(long a, long b)  { return a - b; }
+    public static long au_and(long a, long b)  { return a & b; }
+    public static long au_or(long a, long b)   { return a | b; }
+    public static long au_xor(long a, long b)  { return a ^ b; }
+    public static long au_andn(long a, long b) { return a & ~b; }
+    public static long au_mul(long a, long b)  { return a * b; }
+    public static long au_addw(long a, long b) { return au_sext32(a + b); }
+    public static long au_subw(long a, long b) { return au_sext32(a - b); }
+    public static long au_mulw(long a, long b) { return au_sext32(a * b); }
+
+    public static long au_sll(long a, long s)  { return a << (int) (s & 63L); }
+    public static long au_srl(long a, long s)  { return a >>> (int) (s & 63L); }
+    public static long au_sra(long a, long n) {
+        int s = (int) (n & 63L);
+        long r = a >>> s;
+        long m = -(a >>> 63);
+        return r | ((m << (63 - s)) << 1);
+    }
+    public static long au_sllw(long a, long n) {
+        return au_sext32((a << (int) (n & 31L)) & M32);
+    }
+    public static long au_srlw(long a, long n) {
+        return au_sext32((a & M32) >>> (int) (n & 31L));
+    }
+    public static long au_sraw(long a, long n) {
+        int s = (int) (n & 31L);
+        long r = (a & M32) >>> s;
+        long m = -((a >>> 31) & 1L);
+        r |= ((m << (31 - s)) << 1) & M32;
+        return au_sext32(r);
+    }
+
+    public static long au_slt(long a, long b)  { return au_b2u(a < b); }
+    public static long au_sltu(long a, long b) {
+        return au_b2u(Long.compareUnsigned(a, b) < 0);
+    }
+    public static long au_eqz(long a) { return au_b2u(a == 0L); }
+    public static long au_nez(long a) { return au_b2u(a != 0L); }
+    public static long au_ltz(long a) { return au_b2u(a < 0L); }
+    public static long au_gez(long a) { return au_b2u(a >= 0L); }
+    public static long au_czeqz(long v, long c) { return c == 0L ? 0L : v; }
+    public static long au_cznez(long v, long c) { return c != 0L ? 0L : v; }
+
+    public static long au_divu(long a, long b) {
+        return b == 0L ? ONES : Long.divideUnsigned(a, b);
+    }
+    public static long au_remu(long a, long b) {
+        return b == 0L ? a : Long.remainderUnsigned(a, b);
+    }
+    public static long au_div(long a, long b) {
+        if (b == 0L) return ONES;
+        if (a == MIN64 && b == ONES) return MIN64;
+        long na = a >>> 63, nb = b >>> 63;
+        long ua = na != 0L ? -a : a, ub = nb != 0L ? -b : b;
+        long q = Long.divideUnsigned(ua, ub);
+        return (na ^ nb) != 0L ? -q : q;
+    }
+    public static long au_rem(long a, long b) {
+        if (b == 0L) return a;
+        if (a == MIN64 && b == ONES) return 0L;
+        long na = a >>> 63, nb = b >>> 63;
+        long ua = na != 0L ? -a : a, ub = nb != 0L ? -b : b;
+        long r = Long.remainderUnsigned(ua, ub);
+        return na != 0L ? -r : r;
+    }
+    public static long au_divw(long a, long b) {
+        return au_sext32(au_div(au_sext32(a), au_sext32(b)));
+    }
+    public static long au_remw(long a, long b) {
+        return au_sext32(au_rem(au_sext32(a), au_sext32(b)));
+    }
+    public static long au_divuw(long a, long b) {
+        return au_sext32(au_divu(a & M32, b & M32));
+    }
+    public static long au_remuw(long a, long b) {
+        return au_sext32(au_remu(a & M32, b & M32));
+    }
+}
+'''
+
+PY_HELPERS = r'''"""generated by scripts/build_arch_units_int.py
+
+The RV64 integer arch-opcodes as python.  A python int is unbounded, so the
+64-bit width is carried by an EXPLICIT MASK on every result that can leave it;
+`au_s` reads a pattern signed.  Shift counts are masked to the width RISC-V
+uses; au_sra / au_sraw are written out in unsigned bit operations; signed
+divide and remainder go through unsigned magnitudes so the sign rule is
+RISC-V's (truncate toward zero) and not python's (which floors).
+"""
+
+M64 = 0xffffffffffffffff
+M32 = 0xffffffff
+ONES = M64
+MIN64 = 0x8000000000000000
+
+
+def au_s(x):                       # the signed reading of a 64-bit pattern
+    x &= M64
+    return x - (1 << 64) if x >> 63 else x
+
+
+def au_b2u(b):       return 1 if b else 0
+def au_sext32(x):    return (x & M32) - (1 << 32) & M64 if (x >> 31) & 1 else x & M32
+def au_add(a, b):    return (a + b) & M64
+def au_sub(a, b):    return (a - b) & M64
+def au_and(a, b):    return a & b
+def au_or(a, b):     return a | b
+def au_xor(a, b):    return a ^ b
+def au_andn(a, b):   return a & (~b & M64)
+def au_mul(a, b):    return (a * b) & M64
+def au_addw(a, b):   return au_sext32((a + b) & M64)
+def au_subw(a, b):   return au_sext32((a - b) & M64)
+def au_mulw(a, b):   return au_sext32((a * b) & M64)
+def au_sll(a, s):    return (a << (s & 63)) & M64
+def au_srl(a, s):    return (a >> (s & 63)) & M64
+
+
+def au_sra(a, n):
+    s = n & 63
+    r = a >> s
+    m = (0 - (a >> 63)) & M64
+    return (r | ((m << (63 - s) << 1) & M64)) & M64
+
+
+def au_sllw(a, n):   return au_sext32(((a << (n & 31)) & M32))
+def au_srlw(a, n):   return au_sext32(((a & M32) >> (n & 31)))
+
+
+def au_sraw(a, n):
+    s = n & 31
+    r = (a & M32) >> s
+    m = (0 - ((a >> 31) & 1)) & M64
+    r |= ((m << (31 - s) << 1) & M32)
+    return au_sext32(r & M32)
+
+
+def au_slt(a, b):    return au_b2u(au_s(a) < au_s(b))
+def au_sltu(a, b):   return au_b2u((a & M64) < (b & M64))
+def au_eqz(a):       return au_b2u((a & M64) == 0)
+def au_nez(a):       return au_b2u((a & M64) != 0)
+def au_ltz(a):       return au_b2u(au_s(a) < 0)
+def au_gez(a):       return au_b2u(au_s(a) >= 0)
+def au_czeqz(v, c):  return 0 if (c & M64) == 0 else v
+def au_cznez(v, c):  return 0 if (c & M64) != 0 else v
+
+
+def au_divu(a, b):   return ONES if b == 0 else (a // b) & M64
+def au_remu(a, b):   return a if b == 0 else (a % b) & M64
+
+
+def au_div(a, b):
+    if b == 0:
+        return ONES
+    if a == MIN64 and b == ONES:
+        return MIN64
+    na, nb = a >> 63, b >> 63
+    ua = (0 - a) & M64 if na else a
+    ub = (0 - b) & M64 if nb else b
+    q = ua // ub
+    return ((0 - q) & M64) if (na ^ nb) else (q & M64)
+
+
+def au_rem(a, b):
+    if b == 0:
+        return a
+    if a == MIN64 and b == ONES:
+        return 0
+    na, nb = a >> 63, b >> 63
+    ua = (0 - a) & M64 if na else a
+    ub = (0 - b) & M64 if nb else b
+    r = ua % ub
+    return ((0 - r) & M64) if na else (r & M64)
+
+
+def au_divw(a, b):   return au_sext32(au_div(au_sext32(a), au_sext32(b)))
+def au_remw(a, b):   return au_sext32(au_rem(au_sext32(a), au_sext32(b)))
+def au_divuw(a, b):  return au_sext32(au_divu(a & M32, b & M32))
+def au_remuw(a, b):  return au_sext32(au_remu(a & M32, b & M32))
+'''
+
+RB_HELPERS = r'''# generated by scripts/build_arch_units_int.py
+#
+# The RV64 integer arch-opcodes as ruby.  A ruby Integer is unbounded, so the
+# 64-bit width is carried by an EXPLICIT MASK on every result that can leave
+# it; +au_s+ reads a pattern signed.  Shift counts are masked to the width
+# RISC-V uses; au_sra / au_sraw are written out in unsigned bit operations;
+# signed divide and remainder go through unsigned magnitudes so the sign rule
+# is RISC-V's (truncate toward zero) and not ruby's (which floors).
+
+M64   = 0xffffffffffffffff
+M32   = 0xffffffff
+ONES  = M64
+MIN64 = 0x8000000000000000
+
+def au_s(x)                        # the signed reading of a 64-bit pattern
+  x &= M64
+  (x >> 63) == 1 ? x - (1 << 64) : x
+end
+
+def au_b2u(b)      = b ? 1 : 0
+def au_sext32(x)   = ((x >> 31) & 1) == 1 ? (((x & M32) - (1 << 32)) & M64) : (x & M32)
+def au_add(a, b)   = (a + b) & M64
+def au_sub(a, b)   = (a - b) & M64
+def au_and(a, b)   = a & b
+def au_or(a, b)    = a | b
+def au_xor(a, b)   = a ^ b
+def au_andn(a, b)  = a & (~b & M64)
+def au_mul(a, b)   = (a * b) & M64
+def au_addw(a, b)  = au_sext32((a + b) & M64)
+def au_subw(a, b)  = au_sext32((a - b) & M64)
+def au_mulw(a, b)  = au_sext32((a * b) & M64)
+def au_sll(a, s)   = (a << (s & 63)) & M64
+def au_srl(a, s)   = (a >> (s & 63)) & M64
+
+def au_sra(a, n)
+  s = n & 63
+  r = a >> s
+  m = (0 - (a >> 63)) & M64
+  (r | (((m << (63 - s)) << 1) & M64)) & M64
+end
+
+def au_sllw(a, n)  = au_sext32(((a << (n & 31)) & M32))
+def au_srlw(a, n)  = au_sext32(((a & M32) >> (n & 31)))
+
+def au_sraw(a, n)
+  s = n & 31
+  r = (a & M32) >> s
+  m = (0 - ((a >> 31) & 1)) & M64
+  r |= (((m << (31 - s)) << 1) & M32)
+  au_sext32(r & M32)
+end
+
+def au_slt(a, b)   = au_b2u(au_s(a) < au_s(b))
+def au_sltu(a, b)  = au_b2u((a & M64) < (b & M64))
+def au_eqz(a)      = au_b2u((a & M64) == 0)
+def au_nez(a)      = au_b2u((a & M64) != 0)
+def au_ltz(a)      = au_b2u(au_s(a) < 0)
+def au_gez(a)      = au_b2u(au_s(a) >= 0)
+def au_czeqz(v, c) = (c & M64) == 0 ? 0 : v
+def au_cznez(v, c) = (c & M64) != 0 ? 0 : v
+
+def au_divu(a, b)  = b == 0 ? ONES : (a / b) & M64
+def au_remu(a, b)  = b == 0 ? a : (a % b) & M64
+
+def au_div(a, b)
+  return ONES if b == 0
+  return MIN64 if a == MIN64 && b == ONES
+  na = a >> 63; nb = b >> 63
+  ua = na == 1 ? ((0 - a) & M64) : a
+  ub = nb == 1 ? ((0 - b) & M64) : b
+  q = ua / ub
+  (na ^ nb) == 1 ? ((0 - q) & M64) : (q & M64)
+end
+
+def au_rem(a, b)
+  return a if b == 0
+  return 0 if a == MIN64 && b == ONES
+  na = a >> 63; nb = b >> 63
+  ua = na == 1 ? ((0 - a) & M64) : a
+  ub = nb == 1 ? ((0 - b) & M64) : b
+  r = ua % ub
+  na == 1 ? ((0 - r) & M64) : (r & M64)
+end
+
+def au_divw(a, b)  = au_sext32(au_div(au_sext32(a), au_sext32(b)))
+def au_remw(a, b)  = au_sext32(au_rem(au_sext32(a), au_sext32(b)))
+def au_divuw(a, b) = au_sext32(au_divu(a & M32, b & M32))
+def au_remuw(a, b) = au_sext32(au_remu(a & M32, b & M32))
+'''
+
+JS_HELPERS = r''''use strict';
+// generated by scripts/build_arch_units_int.py
+//
+// The RV64 integer arch-opcodes as javascript.  Every value is a BigInt and
+// the 64-bit width is carried by an EXPLICIT MASK on every result that can
+// leave it; `au_s` reads a pattern signed.  BigInt and not Number: a Number
+// is an IEEE double and would lose the low bits.  Shift counts are masked to
+// the width RISC-V uses; au_sra / au_sraw are written out in unsigned bit
+// operations; signed divide and remainder go through unsigned magnitudes so
+// the sign rule is RISC-V's (truncate toward zero).
+
+const M64 = 0xffffffffffffffffn;
+const M32 = 0xffffffffn;
+const ONES = M64;
+const MIN64 = 0x8000000000000000n;
+
+function au_s(x) { x &= M64; return (x >> 63n) ? x - (1n << 64n) : x; }
+
+const au_b2u = (b) => (b ? 1n : 0n);
+const au_sext32 = (x) =>
+  ((x >> 31n) & 1n) ? (((x & M32) - (1n << 32n)) & M64) : (x & M32);
+const au_add = (a, b) => (a + b) & M64;
+const au_sub = (a, b) => (a - b) & M64;
+const au_and = (a, b) => a & b;
+const au_or = (a, b) => a | b;
+const au_xor = (a, b) => a ^ b;
+const au_andn = (a, b) => a & (~b & M64);
+const au_mul = (a, b) => (a * b) & M64;
+const au_addw = (a, b) => au_sext32((a + b) & M64);
+const au_subw = (a, b) => au_sext32((a - b) & M64);
+const au_mulw = (a, b) => au_sext32((a * b) & M64);
+const au_sll = (a, s) => (a << (s & 63n)) & M64;
+const au_srl = (a, s) => (a >> (s & 63n)) & M64;
+
+function au_sra(a, n) {
+  const s = n & 63n;
+  const r = a >> s;
+  const m = (0n - (a >> 63n)) & M64;
+  return (r | (((m << (63n - s)) << 1n) & M64)) & M64;
+}
+
+const au_sllw = (a, n) => au_sext32((a << (n & 31n)) & M32);
+const au_srlw = (a, n) => au_sext32((a & M32) >> (n & 31n));
+
+function au_sraw(a, n) {
+  const s = n & 31n;
+  let r = (a & M32) >> s;
+  const m = (0n - ((a >> 31n) & 1n)) & M64;
+  r |= ((m << (31n - s)) << 1n) & M32;
+  return au_sext32(r & M32);
+}
+
+const au_slt = (a, b) => au_b2u(au_s(a) < au_s(b));
+const au_sltu = (a, b) => au_b2u((a & M64) < (b & M64));
+const au_eqz = (a) => au_b2u((a & M64) === 0n);
+const au_nez = (a) => au_b2u((a & M64) !== 0n);
+const au_ltz = (a) => au_b2u(au_s(a) < 0n);
+const au_gez = (a) => au_b2u(au_s(a) >= 0n);
+const au_czeqz = (v, c) => ((c & M64) === 0n ? 0n : v);
+const au_cznez = (v, c) => ((c & M64) !== 0n ? 0n : v);
+
+const au_divu = (a, b) => (b === 0n ? ONES : (a / b) & M64);
+const au_remu = (a, b) => (b === 0n ? a : (a % b) & M64);
+
+function au_div(a, b) {
+  if (b === 0n) return ONES;
+  if (a === MIN64 && b === ONES) return MIN64;
+  const na = a >> 63n, nb = b >> 63n;
+  const ua = na ? (0n - a) & M64 : a, ub = nb ? (0n - b) & M64 : b;
+  const q = ua / ub;
+  return (na ^ nb) ? (0n - q) & M64 : q & M64;
+}
+
+function au_rem(a, b) {
+  if (b === 0n) return a;
+  if (a === MIN64 && b === ONES) return 0n;
+  const na = a >> 63n, nb = b >> 63n;
+  const ua = na ? (0n - a) & M64 : a, ub = nb ? (0n - b) & M64 : b;
+  const r = ua % ub;
+  return na ? (0n - r) & M64 : r & M64;
+}
+
+const au_divw = (a, b) => au_sext32(au_div(au_sext32(a), au_sext32(b)));
+const au_remw = (a, b) => au_sext32(au_rem(au_sext32(a), au_sext32(b)));
+const au_divuw = (a, b) => au_sext32(au_divu(a & M32, b & M32));
+const au_remuw = (a, b) => au_sext32(au_remu(a & M32, b & M32));
+
+module.exports = {
+  au_s, au_b2u, au_sext32, au_add, au_sub, au_and, au_or, au_xor, au_andn,
+  au_mul, au_addw, au_subw, au_mulw, au_sll, au_srl, au_sra, au_sllw,
+  au_srlw, au_sraw, au_slt, au_sltu, au_eqz, au_nez, au_ltz, au_gez,
+  au_czeqz, au_cznez, au_divu, au_remu, au_div, au_rem, au_divw, au_remw,
+  au_divuw, au_remuw,
+};
+'''
 
 
 def write_glue(record):

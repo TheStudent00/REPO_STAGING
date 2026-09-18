@@ -144,3 +144,29 @@ Rules that follow from this:
 - The tower guest has <ram> and runs one heavy lane at a time. Your instance
   is capped at 8 cpus / 20g; the memory bound you state in your script still
   governs, and `work_size` is memory-backed and counts inside the 20g.
+
+## history rewriting — settled, stop re-deriving it
+
+`stage.sh` carries the sentence "History is never rewritten". It means
+**ordinary operation only ever APPENDS** — stage.sh and the daemon's normal
+commit/push path never rewrite, never force push, never delete a commit, and
+tidiness is never a reason to. It does **NOT** mean a pushed byte is
+permanent. Read that way on 2026-09-16, it nearly changed a decision.
+
+**Two rewrites are sanctioned:**
+
+1. **The one allowed history rewrite (the owner, 2026-09-12)** —
+   `shard_and_recut` in `repo_daemon.py`. UNPUSHED commits are collapsed and
+   re-cut into size-bounded commits, every file over GitHub's 100 MB per-file
+   line replaced by its parts, so the work can push at all. **Nothing pushed
+   is touched.**
+2. **`purge_history.sh`** — removes a leaked token from the FULL history of a
+   public repo, *including what is already pushed*, and force pushes. Keeps
+   bare-mirror backups and the old→new hash map; reversible; idempotent.
+   **Remediation for a leak, never routine.**
+
+**A secret reaching the public record CAN be unpublished.** Nothing is
+one-way. This is also why the diff-only scrub is safe: not because published
+bytes are permanent, but because an unchanged file under an unchanged rule set
+cannot yield a new detection — and when the rules change, everything is read
+again. Full statement: `PRIVATE/RepoDaemon/README.md`.

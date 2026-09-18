@@ -1,0 +1,75 @@
+
+
+public final class f32_to_ui32 {
+    public static int f32_to_ui32_rm1(long v_arg) {
+        final int v_i = (int)(v_arg);
+        final int v_i1 = (v_i >>> (0x17 & 31));
+        final int v_i2 = (v_i & 0x7fffff);
+        final int v_i3 = (v_i1 & 0xff);
+        final int v__neg = (v_i1 + 0x16);
+        final int v_i17 = (v__neg & 0x3f);
+        final long v_i18 = ((long)v_i17 & 0xffffffffL);
+        final int v_i4 = (v_i & 0x7f800000);
+        final boolean v_i5 = (v_i4 == 0x0);
+        final int v__m1 = Sf.sext1i(v_i5);
+        final boolean v_i29 = (v_i < (0));
+        final int v_i6 = (v_i2 | 0x800000);
+        final int v__a2 = (v_i2 & v__m1);
+        final int v__n3 = (v__m1 ^ 0xffffffff);
+        final int v__a4 = (v_i6 & v__n3);
+        final int v_i7 = (v__a2 | v__a4);
+        final boolean v_i27 = (v_i2 == 0x0);
+        final long v_i8 = ((long)v_i7 & 0xffffffffL);
+        final long v_i9 = (v_i8 << (int)(0x20L & 63L));
+        final long v__sh6 = (v_i9 << (int)(v_i18 & 63L));
+        final long v_i19 = v__sh6;
+        final boolean v_i20 = (v_i19 != 0x0L);
+        final long v_i21 = Sf.b2l(v_i20);
+        final boolean v_i24 = (v_i7 != 0x0);
+        final long v_i25 = Sf.b2l(v_i24);
+        final boolean v_i10 = (Integer.compareUnsigned(v_i3, 0xaa) < 0);
+        final boolean v_i12 = (Integer.compareUnsigned(v_i3, 0x6b) > 0);
+        final int v_i14 = (0xaa - v_i3);
+        final long v_i15 = ((long)v_i14 & 0xffffffffL);
+        final long v__sh5 = (v_i9 >>> (int)(v_i15 & 63L));
+        final long v_i16 = v__sh5;
+        final long v_i22 = (v_i16 | v_i21);
+        final boolean v_i28 = (v_i3 != 0xff);
+        final boolean v_i30 = (v_i27 || v_i28);
+        final boolean v_i31 = (v_i29 && v_i30);
+        final boolean v__n7 = (v_i10 != true);
+        final long v__m8 = Sf.sext1l(v__n7);
+        final long v__a9 = (v_i9 & v__m8);
+        final boolean v__c10 = (v_i10 && v_i12);
+        final long v__m11 = Sf.sext1l(v__c10);
+        final long v__a12 = (v_i22 & v__m11);
+        final long v__o13 = (v__a9 | v__a12);
+        final boolean v__n14 = (v_i12 != true);
+        final long v__m16 = Sf.sext1l(v__n14);
+        final long v__a17 = (v_i25 & v__m16);
+        final long v__o18 = (v__o13 | v__a17);
+        final boolean v_i32 = (v__o18 == 0x0L);
+        final boolean v_or_cond = (v_i31 && v_i32);
+        final boolean v__n20 = (v_or_cond != true);
+        final boolean v_i34 = (Long.compareUnsigned(v__o18, 0x100000000000L) < 0);
+        final long v__sh19 = (v__o18 >>> (int)(0xcL & 63L));
+        final long v_i36 = v__sh19;
+        final int v_i37 = (int)(v_i36);
+        final boolean v_i38 = (Long.compareUnsigned(v__o18, 0xfffL) > 0);
+        final boolean v_i39 = (v_i31 && v_i38);
+        final boolean v_i41 = (v_i31 != true);
+        final int v_i42 = Sf.sext1i(v_i41);
+        final boolean v__c21 = (v_i34 && v_i39);
+        final boolean v__n28 = (v_i39 != true);
+        final boolean v__c29 = (v_i34 && v__n28);
+        final boolean v__n23 = (v_i34 != true);
+        final boolean v__c25 = (v__c21 || v__n23);
+        final boolean v__c30 = (v__c29 && v__n20);
+        final int v__m26 = Sf.sext1i(v__c25);
+        final int v__a27 = (v_i42 & v__m26);
+        final int v__m31 = Sf.sext1i(v__c30);
+        final int v__a32 = (v_i37 & v__m31);
+        final int v__o33 = (v__a27 | v__a32);
+        return v__o33;
+    }
+}

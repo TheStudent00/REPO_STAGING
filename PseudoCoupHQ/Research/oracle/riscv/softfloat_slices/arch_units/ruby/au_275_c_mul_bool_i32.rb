@@ -1,0 +1,19 @@
+# arch-unit 275  --  c  `a * b`  lhs=bool rhs=int32_t
+# symbol op_204   outcome LIFTED   2 arch-opcodes
+#
+# the arch-unit, arch-opcode by arch-opcode:
+#   czero.eqz a0, a1, a0                 integer    conditional select
+#   c.jr ra                              integer    return
+#
+# answer: int32_t, 32 bits.  parameters are operand bit patterns.
+require_relative 'au_int'
+
+def au_275_c_mul_bool_i32(p0, p1)
+  # a0: operand `a` (bool) zero-extended to XLEN
+  v1 = ((p0) & 0x1)
+  # a1: operand `b` (int32_t) sign-extended to XLEN, as the ABI presents it
+  v2 = au_sext32(p1)
+  v3 = au_czeqz(v2, v1)
+  # the answer is int32_t, 32 bits
+  ((v3) & 0xffffffff)
+end

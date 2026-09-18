@@ -179,10 +179,80 @@ def at_width(term, width):
     return z3.ZeroExt(width - term.size(), term)
 
 
-def decide(left, right):
+# ---------------------------------------------------------------- the psABI -
+# WHY THIS EXISTS. Comparing the two bodies over UNCONSTRAINED 64-bit
+# arguments asks a question neither compiler was answering. Both ABIs say what
+# a narrow argument looks like in a wide register on arrival, and both bodies
+# were emitted on that promise:
+#
+#   riscv64     a 32-bit integer arrives SIGN-extended, signed or not
+#               (the psABI's own rule, which is why `addw`/`sext.w` are rare)
+#   x86-64 SysV the high half of a register holding a 32-bit argument is
+#               UNSPECIFIED, so a body may read it as garbage
+#
+# Without the promise the solver is free to put garbage in the high half and
+# the two bodies then genuinely disagree -- which is a true statement about a
+# situation neither compiler permits. Supplying it is not weakening the
+# question; it is asking the question the code was compiled to answer. The
+# same distinction, found independently on the Lean path, is log 294 section
+# 2.3: every `plain` counterexample there was a high-bit input too.
+#
+# A `bool` is 0 or 1 by both ABIs. A 64-bit argument carries no promise and
+# gets no assumption.
+NARROW_SIGNED = frozenset(["int32_t", "int32", "int", "long"])
+NARROW_UNSIGNED = frozenset(["uint32_t", "uint32", "unsigned"])
+BOOLS = frozenset(["bool", "_Bool"])
+# A 32-bit float has its own arrival promise, and it is RISC-V's alone:
+# NAN-BOXING. A single-precision value in a 64-bit f-register must carry all
+# ones in bits 63:32, and an operation is free to rely on it -- that is what
+# makes `feq.s` on a 64-bit register well defined. x86 has no such rule: its
+# xmm holds the value in the low 32 bits and the rest is unconstrained.
+#
+# The first version of this file skipped every xmm place outright, so float
+# arguments got NO promise at all, and the arch-opcode table shows exactly
+# what that cost: every single-precision opcode -- feq.s, fadd.s, fsub.s,
+# fmul.s, fdiv.s, fmv.w.x and the fcvt.s.* family -- lands in "never agrees",
+# while their double-precision twins mostly agree. A double needs no boxing
+# and so needed no promise; a single needed one and did not get it.
+#
+# `riscv_term` takes `Extract(63, 0, symbol)` as the f-register, so the
+# promise is on bits 63:32 of the shared symbol. The x86 side reads only
+# 31:0 and is untouched by it.
+NARROW_FLOATS = frozenset(["float", "float32"])
+
+
+def abi_assumptions(row, places):
+    """The arrival promises, as z3 constraints on the argument symbols."""
+    names = [row.get("lhs_type"), row.get("rhs_type")]
+    named = [n for n in names if kind_of(n) is not None]
+    out = []
+    for index, (_kind, family, _register) in enumerate(places):
+        if index >= len(named):
+            break
+        declared = (named[index] or "").strip()
+        if family.startswith("xmm"):
+            if declared in NARROW_FLOATS:
+                boxed = z3.BitVec("arg%d" % index, 128)
+                out.append(z3.Extract(63, 32, boxed)
+                           == z3.BitVecVal(0xFFFFFFFF, 32))
+            continue
+        symbol = z3.BitVec("arg%d" % index, 64)
+        low = z3.Extract(31, 0, symbol)
+        if declared in NARROW_SIGNED:
+            out.append(symbol == z3.SignExt(32, low))
+        elif declared in NARROW_UNSIGNED:
+            out.append(symbol == z3.ZeroExt(32, low))
+        elif declared in BOOLS:
+            out.append(z3.ULE(symbol, z3.BitVecVal(1, 64)))
+    return out
+
+
+def decide(left, right, assumptions=()):
     """(outcome, counterexample) for `left == right` on every input."""
     solver = z3.Solver()
     solver.set("timeout", SOLVER_TIMEOUT_MS)
+    for constraint in assumptions:
+        solver.add(constraint)
     solver.add(left != right)
     verdict = solver.check()
     if verdict == z3.unsat:
@@ -196,11 +266,22 @@ def decide(left, right):
     return "DIFFER", shown
 
 
+ASSUME_ABI = False
+
+
 def main():
+    global ASSUME_ABI
     op_dir = sys.argv[1]
     units_path = sys.argv[2]
     carved_path = sys.argv[3]
     out_prefix = sys.argv[4]
+    # an OPTIONAL fifth word, so every earlier invocation means exactly what
+    # it meant before and the rv1 run of record reproduces unchanged
+    ASSUME_ABI = len(sys.argv) > 5 and sys.argv[5] == "assume-abi"
+    if ASSUME_ABI:
+        print("psABI arrival promises ARE assumed (see abi_assumptions)")
+    else:
+        print("psABI arrival promises are NOT assumed; arguments are free")
 
     sys.path.insert(0, op_dir)
     import reference as X86                                 # noqa: E402
@@ -284,7 +365,9 @@ def main():
         record["rederivation_matches_the_store"] = (
             record["x86_term_rederived"] ==
             record["x86_term_from_the_store"])
-        outcome, counterexample = decide(left_cut, right_cut)
+        assumptions = abi_assumptions(row, places) if ASSUME_ABI else []
+        record["abi_assumed"] = [str(a) for a in assumptions]
+        outcome, counterexample = decide(left_cut, right_cut, assumptions)
         if record["identical_after_normalize"]:
             record["outcome"] = "IDENTICAL_AFTER_NORMALIZE"
         else:
@@ -305,6 +388,7 @@ def main():
             "what": "each unit's riscv64 term against its own x86-64 term, "
                     "per written place, at the unit's own answer width",
             "solver_timeout_ms": SOLVER_TIMEOUT_MS,
+            "abi_arrival_promises_assumed": ASSUME_ABI,
             "x86_term_note": "re-derived by walking the unit's recorded "
                              "ship body with op_pipeline/reference.py; the "
                              "term store's recorded text is on every row "

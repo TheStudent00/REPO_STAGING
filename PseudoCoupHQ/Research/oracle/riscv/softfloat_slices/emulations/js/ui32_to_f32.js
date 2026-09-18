@@ -1,0 +1,50 @@
+'use strict';
+const { sfUdiv, sfSgn, sfCtlz, sfAbs, sfUsubsat, sfFshl } = require('./helpers.js');
+
+
+function ui32_to_f32_rm1(v_arg) {
+  const v_i = ((v_arg === 0x0n) ? 1n : 0n);
+  const v__n23 = (v_i ^ 0x1n);
+  const v__m24 = (sfSgn(v__n23, 0x1n) & 0xffffffffn);
+  const v_i2 = ((sfSgn(v_arg, 0x20n) > (-1n)) ? 1n : 0n);
+  const v__k1 = sfCtlz(v_arg, 0x20n);
+  const v_i10 = v__k1;
+  const v_i11 = (v_i10 & 0xffn);
+  const v_i12 = ((v_i11 + 0xffn) & 0xffn);
+  const v_i13 = (v_i12);
+  const v_i14 = (v_i12);
+  const v_i15 = ((0x9cn - v_i14) & 0xffffn);
+  const v_i16 = ((v_arg < 0x1000000n) ? 1n : 0n);
+  const v__sh3 = (v_arg >> (0x8n & 0x1fn));
+  const v_i8 = ((v__sh3 + 0x4e800000n) & 0xffffffffn);
+  const v_i18 = (v_i15);
+  const v__sh4 = ((v_i18 << (0x17n & 0x1fn)) & 0xffffffffn);
+  const v_i19 = v__sh4;
+  const v_i20 = ((v_i13 + 0xfffffff9n) & 0xffffffffn);
+  const v__sh5 = ((v_arg << (v_i20 & 0x1fn)) & 0xffffffffn);
+  const v_i21 = v__sh5;
+  const v_i22 = ((v_i21 + v_i19) & 0xffffffffn);
+  const v__sh6 = ((v_arg << (v_i13 & 0x1fn)) & 0xffffffffn);
+  const v_i23 = v__sh6;
+  const v__sh7 = (v_i23 >> (0x7n & 0x1fn));
+  const v_i27 = ((v_i23 < 0x80n) ? 1n : 0n);
+  const v__m9 = (sfSgn(v_i27, 0x1n) & 0xffffffffn);
+  const v__n10 = (v__m9 ^ 0xffffffffn);
+  const v_i30 = (v_i19 & v__n10);
+  const v_i31 = ((v__sh7 + v_i30) & 0xffffffffn);
+  const v__n11 = (v_i2 ^ 0x1n);
+  const v__m12 = (sfSgn(v__n11, 0x1n) & 0xffffffffn);
+  const v__a13 = (v_i8 & v__m12);
+  const v__m15 = (sfSgn(v_i16, 0x1n) & 0xffffffffn);
+  const v__a16 = (v_i22 & v__m15);
+  const v__o17 = (v__a13 | v__a16);
+  const v__n18 = (v_i16 ^ 0x1n);
+  const v__c19 = (v__n18 & v_i2);
+  const v__m20 = (sfSgn(v__c19, 0x1n) & 0xffffffffn);
+  const v__a21 = (v_i31 & v__m20);
+  const v__o22 = (v__o17 | v__a21);
+  const v__a25 = (v__o22 & v__m24);
+  const v_i32 = (v__a25);
+  return v_i32;
+}
+module.exports = { ui32_to_f32_rm1 };

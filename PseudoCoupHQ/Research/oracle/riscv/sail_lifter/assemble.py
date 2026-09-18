@@ -17,7 +17,7 @@ import os
 import re
 import subprocess
 
-MARCH = "rv64gc_zba_zbb_zbs_zicond"
+MARCH = "rv64gc_zba_zbb_zbs_zicond_zcb_zfa"
 OBJDUMP_LINE = re.compile(r"^\s*[0-9a-f]+:\s+((?:[0-9a-f]{2} ?)+|[0-9a-f]{4,8})\s*(.*)$")
 
 
@@ -38,7 +38,7 @@ def words_of(lines, work):
     if proc.returncode != 0:
         raise AssemblyRefused(proc.stderr.decode("utf-8", "replace")[:600])
     proc = subprocess.run(["llvm-objdump", "-d", "-M", "no-aliases",
-                           "--mattr=+m,+a,+f,+d,+c,+zba,+zbb,+zbs,+zicond",
+                           "--mattr=+m,+a,+f,+d,+c,+zba,+zbb,+zbs,+zicond,+zcb,+zfa",
                            obj], stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE)
     if proc.returncode != 0:

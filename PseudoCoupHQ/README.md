@@ -116,6 +116,12 @@ needed, because the disassembly already names the instruction.
 Every compiled language is complete. Lean typechecks all 1612;
 `lake build Units`: 4 modules, 0 errors.
 
+**1582 of the 1612 are straight line** — the only transfer of control is the
+final return — and for those the clauses in program order are the body. The
+other 30 (go 24, rust 6) branch before the end, so the same sequence is the
+fall-through trace rather than the whole body; each one says so in a comment
+above its own definition.
+
 ### What is left, and exactly what each piece is
 
 The last three gaps in the compiled languages were all flags, and all three
@@ -135,6 +141,35 @@ rule for c, c++, rust and go and nothing else.
 | swift | 167 | swiftc targeting riscv64 |
 | dart | 82 | AOT, and `gen_snapshot` is built per target |
 | php, ruby, java, cpython | 10 | the interpreter binary |
+
+### The interpreted route, proved on php
+
+`add_function` — the Zend engine's `+` — carved straight out of a built object
+is 117 instructions with eighteen control transfers, because an interpreter
+handler is mostly questions: is it an int, a float, a string, did it overflow.
+Composing that in program order gives one path through those questions, not the
+function.
+
+It is the same problem the floats had, and the same pipeline answers it. Pin
+the context the caller always fixes — for SoftFloat the rounding mode, here the
+**arrival**: php's operands arrive as `zval*`, and the pair a caller builds for
+integer `+` are both `IS_LONG`. Build them locally and `sroa` turns the type tag
+into a constant, which deletes the dispatch.
+
+| | blocks | branches | calls | instructions |
+|---|---|---|---|---|
+| `add_function`, sliced raw | 729 | 715 | 170 | 3000 |
+| pinned to the arrival | 3 | 3 | 1 | 8 |
+| flattened, compiled for riscv64 | 1 | **0** | 0 | **14** |
+
+What survives is php's actual semantics — add, and if it overflows redo it as a
+double — with both arms computed, masked and or'd, exactly as the float slices
+are. Lean typechecks the result. **php is the fifth language.**
+
+And the flattened body uses `fcvt.d.l`, `fadd.d`, `fmv.x.d` — arch-opcodes that
+have Lean bodies only because step 1.2 gave the 67 float axioms bodies. The
+interpreted route lands on the float layer, and the float layer is no longer a
+hole.
 
 For the interpreted languages the arch-unit lives in the **interpreter
 binary** — the same route already proven on Berkeley SoftFloat: compile for

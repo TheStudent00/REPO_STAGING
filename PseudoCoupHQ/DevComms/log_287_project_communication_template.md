@@ -125,6 +125,11 @@ Complete: 68% (1612 of 2364 total arch-units)
 - every compiled language is complete; 1612 = 770 + 610 + 125 + 107
 - 1612 of 1612 are full-body Lean expressions, 0 refused
   - lake build Units: 4 of 4 modules, 0 errors (lp1_l57)
+- 1582 of the 1612 are straight line: the only jump is the final return
+  - for those, the clauses in program order ARE the body
+- 30 branch before the end (go 24, rust 6)
+  - for those the same sequence is the fall-through trace, not the whole
+    body; each carries that line as a comment in its Lean
 
 * cpp arch-units: 770 of 770 --- in Lean: 770
 * c arch-units: 610 of 610 --- in Lean: 610
@@ -152,6 +157,56 @@ Complete: 68% (1612 of 2364 total arch-units)
   - that gate is rv_attest's own term walker, not Sail; build_unit_lean
     does not use it
 
+### THE INTERPRETER ROUTE, PROVED ON php (2026-09-18)
+
+php's `+` is a full-body Lean arch-unit, typechecked by Lean. It is the fifth
+language. the owner's ruling: a branch-full arch-unit is context-sliced like the GMP
+slices, not modelled with a program counter.
+
+| step | | blocks | br | call | instructions |
+|---|---|---|---|---|---|
+| carved from the built .o | machine code, already through the backend | - | 18 transfers | - | 117 |
+| `add_function` sliced raw | internalize, inline, globaldce | 729 | 715 | 170 | 3000 |
+| pinned to the arrival | both operands IS_LONG, zvals built locally | 3 | 3 | 1 | 8 |
+| flattened | flatten_dag.py, if-converted | 1 | 0 | 1 | 13 |
+| compiled for riscv64 | | 1 | **0** | 0 | **14** |
+
+- the pin is the store's own `arrival_annotation`, nothing new
+  - php `zval*`; ruby `VALUE (tagged word)`; cpython `i32`
+  - built LOCALLY so sroa makes the type tag a constant, which is what
+    deletes the dispatch --- exactly what pinning the rounding mode did to
+    SoftFloat's switch
+- what survives is php's real semantics: add, and if it overflows redo it as
+  a double --- both arms computed, masked, or'd
+- the flattened body uses fcvt.d.l, fadd.d, fmv.x.d
+  - those have Lean bodies ONLY because 1.2 gave the 67 float axioms bodies
+  - the interpreted route lands on the float layer and the float layer is no
+    longer a hole
+- the slicer eats BITCODE; a carved .o has already been through the backend
+  and has nothing left to if-convert
+
+### ruby DOES NOT COLLAPSE, AND THE REASON IS THE LANGUAGE
+
+| | blocks | br | call | instructions |
+|---|---|---|---|---|
+| php `+`, pinned and flattened | 1 | 0 | 0 | 14 |
+| ruby `+`, pinned the same way | 6 | 6 | 5 | 42 |
+
+- the calls that survive in ruby are `rb_wb_protected_newobj_of` and
+  `rb_obj_freeze_inline` --- the GC allocator
+- php's overflow arm promotes to a double, which is arithmetic and flattens
+- ruby's integers are arbitrary precision, so its overflow arm ALLOCATES a
+  Bignum: a heap side effect, not arithmetic
+- that is a property of ruby, not a limit of the pipeline
+- stating the bound in the wrapper (`__builtin_unreachable` on overflow)
+  became an `llvm.assume` the optimiser did not carry into the tagged
+  domain; the Bignum arm stayed
+- so ruby's `+` is NOT a pure arch-unit
+  - the bounded arm is, and it is visible in the slice as
+    shl / or / sadd.with.overflow --- `LONG2FIX(FIX2LONG(x) + FIX2LONG(y))`
+  - naming it as a separate bounded unit is a decision for the owner, not one to
+    take quietly
+
 ### THE PATH FROM 1612 TO 2364
 
 752 units, eight languages, one cause: `riscv_carve.py COMPILE` holds a
@@ -163,7 +218,7 @@ compile rule for c, cpp, rust and go and nothing else.
 | javascript | 240 | V8, /sources/chromium_src | interpreter binary route |
 | swift | 167 | swiftc | no <os> build; 24.04 tarball being tried |
 | dart | 82 | dart 3.13.4 | installed, gen_snapshot is target-locked |
-| php | 4 | php-src | interpreter binary route |
+| php | 4 | php-src | **1 of 4 in Lean**; the route is proved |
 | ruby | 3 | ruby | interpreter binary route |
 | java | 2 | /sources/jdk | interpreter binary route |
 | cpython | 1 | cpython | interpreter binary route |

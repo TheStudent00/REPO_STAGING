@@ -25,6 +25,19 @@ set_option maxRecDepth 100000
 """
 
 
+BRANCH = re.compile(r"^(c\.)?(beq|bne|blt|bge|bltu|bgeu|beqz|bnez|j|jal|jalr|jr|ret)\b")
+
+
+def straight_line(unit):
+    """True when the only transfer of control is the final return.
+
+    The composition below runs the arch-opcode clauses in program order. For
+    a straight-line body that IS the body's meaning. Where a branch sits
+    before the end, the same sequence is the FALL-THROUGH TRACE and not the
+    whole semantics, so it is recorded rather than claimed."""
+    return not any(BRANCH.match(m) for m in unit["mnems"][:-1])
+
+
 def lean_name(unit):
     return "unit_" + re.sub(r"[^A-Za-z0-9_]", "_", unit)
 
@@ -62,8 +75,12 @@ def unit_lean(unit, reader, kinds):
         args = " ".join("(%s)" % qualify(c) for c in comps)
         calls.append(("execute_%s" % ctor, args, line.strip()))
     # the whole emitted model sits in a `noncomputable section`
-    body = ["noncomputable def %s : SailM ExecutionResult := do"
-            % lean_name(unit["unit"])]
+    body = []
+    if not straight_line(unit):
+        body.append("-- NOT STRAIGHT LINE: this is the fall-through trace,"
+                    " not the whole body")
+    body.append("noncomputable def %s : SailM ExecutionResult := do"
+                % lean_name(unit["unit"]))
     for i, (fn, args, asm) in enumerate(calls):
         monadic = kinds.get(fn[len("execute_"):], True)
         last = i == len(calls) - 1
@@ -88,7 +105,7 @@ def main():
     units = json.load(open(units_json))["units"]
     os.makedirs(out_dir, exist_ok=True)
     per_lang = collections.defaultdict(list)
-    built, refused = [], collections.Counter()
+    built, refused, branching = [], collections.Counter(), []
     why_first = {}
     for u in units:
         text, why = unit_lean(u, reader, kinds)
@@ -102,6 +119,8 @@ def main():
             continue
         per_lang[u["lang"]].append(text)
         built.append(u["unit"])
+        if not straight_line(u):
+            branching.append(u["unit"])
     modules = []
     for lang, texts in sorted(per_lang.items()):
         mod = "Unit" + lang.capitalize()
@@ -113,9 +132,12 @@ def main():
         "\n".join("import Units." + m for m in modules) + "\n")
     print("  built %d of %d; refused %d" % (len(built), len(units),
                                             sum(refused.values())))
+    print("  straight line: %d    a branch before the end: %d"
+          % (len(built) - len(branching), len(branching)))
     for k, n in refused.most_common(10):
         print("    %-14s %4d   %s" % (k, n, (why_first.get(k) or "")[:70]))
     json.dump({"built": built, "refused": dict(refused),
+               "branching": branching,
                "modules": modules,
                "assembly_clauses_readable": len(reader.rules),
                "assembly_clauses_unreadable": len(reader.unreadable)},

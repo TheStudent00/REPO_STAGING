@@ -107,14 +107,18 @@ for lang in langs:
  arch_unit.kinds = discover_kinds(arch_unit.lean) # kinds read off the Lean, not written by hand
 ```
 
-Complete: 79% (1866 of 2356 total arch-units)
+Complete: 86% (2016 of 2356 total arch-units)
 
 *notes:*
 
-- 1866 arch-units lowered for riscv64; 1866 of 1866 in Lean, 0 refused
-- lake build Units + UnitsCs: 5 of 5 modules, 0 errors
-- 1818 are straight line; 48 branch before the end and are the fall-through
-  trace, each marked as such in its own Lean
+- 2016 arch-units lowered for riscv64; 2016 of 2016 in Lean, 0 refused
+- lake build Units + UnitsCs + UnitsSw: 6 of 6 modules, 0 errors
+- 1956 are straight line; 60 branch before the end
+  - those 60 are the fall-through trace, each marked as such in its own Lean
+  - their branch immediate is objdump's printed target, not the encoded
+    offset, so it is also not to be trusted; the fix is to decode it from
+    the word, which every row carries
+  - no straight-line unit has a pc-relative immediate, so none is affected
 - csharp needed a riscv64 code generator, which no released package ships
   - RyuJIT's RISC-V backend is behind CLR_CMAKE_BUILD_COMMUNITY_ALTJITS
   - built from /sources/runtime with crossgen2 from the same tree
@@ -126,7 +130,7 @@ Complete: 79% (1866 of 2356 total arch-units)
 * php arch-units in Lean: 1 --- `+` on (long, long); no manifest, no denominator
 * csharp arch-units in Lean: 253 of 253 --- 942 in the manifest, 253 the compiler accepts
 * javascript arch-units in Lean: 0 of 240
-* swift arch-units in Lean: 0 of 167
+* swift arch-units in Lean: 150 of 167 --- 1086 in the manifest, 167 swiftc accepts
 * dart arch-units in Lean: 0 of 82
 * ruby arch-units in Lean: 0 --- `+` not pure, the overflow arm allocates
 * java arch-units in Lean: 0

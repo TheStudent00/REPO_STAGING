@@ -200,3 +200,49 @@ what each one needs can be read off those bodies rather than guessed.
     1.0, which objdump renders as `c.unimp` and a `c.fld`.  Every body here is
     straight line, so the first return is the end and what follows is data.
     10 bodies, 74 lines trimmed
+
+### swift ONLINE --- 150 of 167 in Lean (2026-09-18)
+
+swift.org publishes no riscv64 toolchain (404; aarch64 is 200) and the stdlib
+swiftmodules are target-tagged, so the front end cannot be aimed at riscv64.
+It does not need to be.
+
+| | |
+|---|---|
+| hi-op x holder probes in the manifest | 1086 |
+| swiftc accepts | 167 |
+| swiftc refuses | 919 |
+| carved from the riscv64 object | 157 |
+| full-body Lean, typechecked | **150** |
+
+- 167 is exactly what the x86 store holds a body for --- the same gate
+- the 919 are mostly `++a` and `--a`, removed from swift in version 3
+- the route: `-emit-ir` on x86_64, then retarget the module and drop
+  - `target-cpu` / `target-features` --- how to codegen for x86, not what the
+    function is
+  - `swiftcc` --- LLVM's RISC-V backend has no lowering for it, and the
+    corpus's probes are `@_cdecl`, which is ccc already
+- THE ASSUMPTION, stated: x86-64 and riscv64 are both LP64 little-endian with
+  the same scalar alignments, and these are leaf functions over fixed-width
+  scalars touching no stdlib runtime, so the front end's output does not
+  depend on which of the two it was told
+
+```
+@_cdecl("op_0") public func op_0(_ a: Int32, _ b: Int32) -> Int32 { a &+ b }
+   0: 9d2d       c.addw a0,a1
+   2: 8082       c.jr   ra
+```
+
+### A DEFECT TO FIX: the branch immediate comes from the text
+
+`from_asm` reads a branch's immediate out of the disassembly, and GNU objdump
+prints a branch TARGET (an address inside the function) where the encoding
+holds a pc-relative OFFSET, in bare hex with no `0x`.  So for any unit with a
+branch before the end, that operand is wrong.
+
+- 60 units of 2016 are affected, and they are exactly the ones already marked
+  as a fall-through trace rather than a whole body
+- no straight-line unit carries a pc-relative immediate, so none of the 1956
+  is affected
+- the fix is to decode the immediate from the instruction WORD, which every
+  row already carries; the model's own encdec clause gives the bit layout

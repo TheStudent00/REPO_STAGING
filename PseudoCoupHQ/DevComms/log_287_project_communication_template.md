@@ -28,13 +28,13 @@ Number of go arch-units: 107
 
 Number of dart arch-units: 82
 
-Number of php arch-units: not measured
+Number of java arch-units: not lowered yet (540 hi-ops in the manifest)
 
-Number of ruby arch-units: not measured
+Number of php arch-units: not lowered yet (324 hi-ops in the manifest)
 
-Number of java arch-units: not measured
+Number of ruby arch-units: not lowered yet (270 hi-ops in the manifest)
 
-Number of cpython arch-units: not measured
+Number of python arch-units: not lowered yet (267 hi-ops in the manifest)
 
 Number of x86-64 arch-units, all languages measured: 2356
 
@@ -42,10 +42,12 @@ Number of x86-64 arch-units, all languages measured: 2356
 
 * an arch-unit is one hi-op with its holders, lowered and sliced to context
 * the counts above are hi-op x holder, from each language's probe manifest
-* php, ruby, java and cpython have NO probe manifest
-  * what was recorded for them is a handful of hand-named interpreter symbols
-    (add_function, vm_opt_plus, _PyLong_Add), which is not a population
-  * a manifest has to be generated for each before they have a number
+* php, ruby, java and python now HAVE a manifest (probe_gen_runtime.py)
+  * what stood there before was a handful of hand-named interpreter symbols
+    (add_function, vm_opt_plus, _PyLong_Add), which counts nothing
+  * the operators come from kind_fuzz_clustering/operator_arity.json, the same
+    source every other language reads; none is written out
+  * how many of them LOWER is section 2's business and is not yet measured
 * these twelve are not the ratified twelve
 * c, javascript and cpython are here and are not on that list
 * python, typescript and kotlin are on that list and have no probes
@@ -126,14 +128,14 @@ Complete: 86% (2023 of 2356 total arch-units)
 * c arch-units in Lean: 610 of 610
 * rust arch-units in Lean: 125 of 125
 * go arch-units in Lean: 107 of 107
-* php arch-units in Lean: 1 --- `+` on (long, long); no manifest, no denominator
+* php arch-units in Lean: 1 of 324 --- `+` on (long, long), sliced and flattened
 * csharp arch-units in Lean: 253 of 253 --- 942 in the manifest, 253 the compiler accepts
 * javascript arch-units in Lean: 0 of 240
 * swift arch-units in Lean: 157 of 167 --- 1086 in the manifest, 167 swiftc accepts
 * dart arch-units in Lean: 0 of 82
-* ruby arch-units in Lean: 0 --- `+` not pure, the overflow arm allocates
-* java arch-units in Lean: 0
-* cpython arch-units in Lean: 0 --- `+` not pure, allocates and refcounts
+* ruby arch-units in Lean: 0 of 270 --- `+` not pure, the overflow arm allocates
+* java arch-units in Lean: 0 of 540
+* python arch-units in Lean: 0 of 267 --- `+` not pure, allocates and refcounts
 
 - the working notes are log_301
 

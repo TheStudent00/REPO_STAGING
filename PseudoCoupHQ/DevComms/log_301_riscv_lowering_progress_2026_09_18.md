@@ -233,7 +233,7 @@ It does not need to be.
    2: 8082       c.jr   ra
 ```
 
-### A DEFECT TO FIX: the branch immediate comes from the text
+### A DEFECT, FOUND AND FIXED: the branch immediate came from the text
 
 `from_asm` reads a branch's immediate out of the disassembly, and GNU objdump
 prints a branch TARGET (an address inside the function) where the encoding
@@ -244,5 +244,16 @@ branch before the end, that operand is wrong.
   as a fall-through trace rather than a whole body
 - no straight-line unit carries a pc-relative immediate, so none of the 1956
   is affected
-- the fix is to decode the immediate from the instruction WORD, which every
-  row already carries; the model's own encdec clause gives the bit layout
+FIXED the same day, and it needed no encoding knowledge. A disassembler
+prints the target ADDRESS and the encoding holds `target - addr`, so the
+offset is a subtraction. The instruction's own address is recoverable from the
+lengths of the words before it, which every row already carries, so nothing
+was re-carved.
+
+- a target is told apart from an ordinary immediate by its `<symbol+0x..>`
+  annotation; `addi a0,a0,-1456 # 0x24a88` carries a `#` comment instead and
+  its operand is already the immediate
+- without an address the reader now REFUSES a branch line rather than reading
+  the target as the offset --- it fails loudly instead of quietly
+- all 2023 rebuilt and typechecked with the operand corrected
+- it also recovered swift's last 7: 157 of 157 carved units now read

@@ -242,6 +242,7 @@ class Reader(object):
         self._nul = {}
         self._rm = None
         self._rm_args = {}
+        self._pc = None
         self.fli = fli_tables(text)
         self.clauses = clauses(text)
         self.rules = []
@@ -319,19 +320,27 @@ class Reader(object):
                 self._rm[int(pat[2:], 2)] = "." + v
         return self._rm
 
-    def read(self, line, word=None):
+    def read(self, line, word=None, addr=None):
         """word is the instruction's own encoding, when the record kept it.
         llvm-objdump omits an operand the architecture ignores -- fcvt.d.w's
         rounding mode, because that conversion is exact -- so the text alone
-        cannot name every constructor argument.  The encoding can."""
-        # GNU objdump annotates a pc-relative line with the address it
-        # computes -- `addi a0,a0,-1456 # 0x24a88` -- and a branch target with
-        # its symbol.  Neither is part of the instruction.
+        cannot name every constructor argument.  The encoding can.
+
+        addr is the instruction's own address.  A disassembler prints a branch
+        or jump TARGET -- an address -- where the encoding holds a pc-relative
+        OFFSET, so that operand has to be turned back into the offset, and the
+        offset is target - addr.  A target is exactly what carries a
+        `<symbol+0x..>` annotation, which is how one is told apart from an
+        ordinary immediate; `addi a0,a0,-1456 # 0x24a88` carries a `#` comment
+        instead and its operand is already the immediate."""
+        target = bool(re.search(r"<[^>]*>\s*$", line.strip()))
         line = re.sub(r"\s*#.*$", "", line)
+        self._pc = addr if (target and addr is not None) else None
         got = self._read(line)
-        if got[0] is not None or word is None:
-            return got
-        return self._read(line, word)
+        if got[0] is None and word is not None:
+            got = self._read(line, word)
+        self._pc = None
+        return got
 
     def _read(self, line, word=None):
         line = re.sub(r"\s*<[^>]*>\s*$", "", line.strip())
@@ -383,6 +392,13 @@ class Reader(object):
             return ctor, comps, None
         return None, None, "no assembly clause matches %r" % line
 
+    def _imm(self, v, tok):
+        shift, src_w = tok[3], tok[4]
+        if shift:
+            v = v >> shift
+        w = src_w or tok[1] or 12
+        return "0x%0*x#%d" % ((w + 3) // 4, v & ((1 << w) - 1), w)
+
     def _component(self, tok, got, ctor=None):
         kind = tok[0]
         if kind == "reg":
@@ -405,6 +421,13 @@ class Reader(object):
                 return "%s 0x%x#3" % (holder, n - 8)
             return "%s 0x%02x#5" % (holder, n)
         if kind == "imm":
+            if self._pc is not None:
+                # a branch or jump target: printed as a bare-hex address, and
+                # what the encoding holds is the offset to it
+                try:
+                    return self._imm(int(got, 16) - self._pc, tok)
+                except ValueError:
+                    pass
             try:
                 v = int(got, 0)
             except ValueError:
@@ -416,11 +439,7 @@ class Reader(object):
                 if bits is None or bits not in table:
                     return None
                 v = table[bits]
-            shift, src_w = tok[3], tok[4]
-            if shift:
-                v = v >> shift
-            w = src_w or tok[1] or 12
-            return "0x%0*x#%d" % ((w + 3) // 4, v & ((1 << w) - 1), w)
+            return self._imm(v, tok)
         table = self.maps.get(tok[1], {})
         back = {}
         for pat, s in table.items():

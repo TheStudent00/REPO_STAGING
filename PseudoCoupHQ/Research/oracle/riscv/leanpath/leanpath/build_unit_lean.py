@@ -65,11 +65,24 @@ def clause_kinds(lean_dir):
     return {m.group(1): bool(m.group(2)) for m in SIG.finditer(text)}
 
 
+def addresses(words):
+    """each instruction's own address, from the lengths of the ones before it.
+
+    A branch's operand is printed as a target address, and what the encoding
+    holds is the offset to it, so the reader needs to know where the
+    instruction sits.  The words are contiguous, so counting them gives it."""
+    out, pc = [], 0
+    for w in words:
+        out.append(pc)
+        pc += len(w) // 2 if w else 4
+    return out
+
+
 def unit_lean(unit, reader, kinds):
     calls = []
     words = unit.get("words") or [None] * len(unit["body"])
-    for line, word in zip(unit["body"], words):
-        ctor, comps, why = reader.read(line, word)
+    for line, word, pc in zip(unit["body"], words, addresses(words)):
+        ctor, comps, why = reader.read(line, word, pc)
         if ctor is None:
             return None, why
         args = " ".join("(%s)" % qualify(c) for c in comps)
@@ -111,8 +124,9 @@ def main():
         text, why = unit_lean(u, reader, kinds)
         if text is None:
             words = u.get("words") or [None] * len(u["body"])
-            mn = [l.strip().split()[0] for l, w in zip(u["body"], words)
-                  if reader.read(l, w)[0] is None]
+            mn = [l.strip().split()[0]
+                  for l, w, pc in zip(u["body"], words, addresses(words))
+                  if reader.read(l, w, pc)[0] is None]
             key = mn[0] if mn else "?"
             refused[key] += 1
             why_first.setdefault(key, why)

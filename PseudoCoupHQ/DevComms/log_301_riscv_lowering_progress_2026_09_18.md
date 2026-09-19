@@ -257,3 +257,30 @@ was re-carved.
   the target as the offset --- it fails loudly instead of quietly
 - all 2023 rebuilt and typechecked with the operand corrected
 - it also recovered swift's last 7: 157 of 157 carved units now read
+
+### THE FOUR RUNTIME LANGUAGES NOW HAVE A POPULATION (2026-09-18)
+
+An arch-unit is one hi-op with its holders, so a language's population is the
+hi-op x holder product.  php, ruby, python and java had no probe manifest, so
+what stood for them in section 0 was a handful of hand-named interpreter
+symbols -- `add_function`, `vm_opt_plus`, `_PyLong_Add` -- which counts
+nothing.
+
+`op_pipeline/probe_gen_runtime.py` is probe_gen_jit.py's shape with four more
+languages: a holder list, a result rule and a source template each.  Every
+operator comes from `kind_fuzz_clustering/operator_arity.json`, the same source
+c, cpp, rust, go, swift, csharp, javascript and dart all read.
+
+| language | hi-ops x holders | holders |
+|---|---|---|
+| java | 540 | int, long, float, double, boolean |
+| php | 324 | int, float, bool |
+| ruby | 270 | Integer, Float, Boolean |
+| python | 267 | int, float, bool |
+
+- php's typed signature IS the arrival annotation: `function op_0(int $a, int
+  $b): int` is the pin the slicer needs, written by the generator
+- ruby declares nothing, so its holder is what the caller passes and the
+  probe's own comment records it
+- how many of these lower is section 2's business and is not yet measured;
+  php's `+` on (int,int) is the one that has been, and it flattens

@@ -284,3 +284,38 @@ c, cpp, rust, go, swift, csharp, javascript and dart all read.
   probe's own comment records it
 - how many of these lower is section 2's business and is not yet measured;
   php's `+` on (int,int) is the one that has been, and it flattens
+
+### php's hi-op -> Zend routine, derived from php's own source (2026-09-18)
+
+Lowering php's 324 needs, per hi-op, the Zend routine it lowers to.  That is
+not written out: php carries the association and it is read from there.
+
+| step | source | result |
+|---|---|---|
+| operator -> token spelling | `Zend/zend_language_scanner.l` | `"=="` returns `T_IS_EQUAL` |
+| operator -> opcode | `Zend/zend_language_parser.y` | 20 binary operators |
+| opcode -> routine | `Zend/zend_vm_def.h` | 21 handlers |
+
+```
+ZEND_ADD             -> fast_long_add_function
+ZEND_SUB             -> fast_long_sub_function
+ZEND_DIV             -> div_function
+ZEND_POW             -> pow_function
+ZEND_IS_IDENTICAL    -> fast_is_identical_function
+ZEND_SPACESHIP       -> compare_function
+```
+
+**A wrong map, caught by reading it.**  The first pass ran each handler's span
+from its macro to the next one's, so a handler whose own body calls no routine
+swallowed its neighbour's: `%` came out as `shift_left_function` and `|` as
+`bitwise_and_function`, each off by exactly one.  Brace-matching the handler
+body fixes it --- a handler that calls nothing now reports nothing rather than
+borrowing.
+
+**What is left, named precisely.**  186 of 207 handlers call no routine in
+their own body; `ZEND_MOD`, `ZEND_BW_AND`, `ZEND_BW_OR`, `ZEND_BW_XOR`,
+`ZEND_SL`, `ZEND_SR`, `ZEND_IS_EQUAL`, `ZEND_IS_SMALLER` and the rest delegate
+through `ZEND_VM_DISPATCH_TO_HELPER` or a `ZEND_TRY_BINARY_OP*` macro.
+Following that delegation is one more derivation from the same file, and it is
+the next step.  Until it is done the route resolves 96 of php's 324 hi-ops, and
+the ones it does resolve are correct.
